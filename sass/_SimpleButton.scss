@@ -1,0 +1,112 @@
+div.btn {
+  box-shadow: $panel-shadow;
+  background-color: $light;
+  margin: 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  //transition: all 0.2s ease;
+  cursor: pointer;
+  color: $grey-darkest;
+  position: relative;
+  padding: 5px;
+  height: 25px;
+  width: 150px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 13pt;
+  line-height: 1.5;
+  span {
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    &::selection {
+      background: $light;
+    }
+  }
+  &:hover {
+    color: $light;
+    text-shadow: $text-shadow;
+    background-color: $red;
+    &::selection {
+      background: $red;
+    }
+  }
+  &.setbreak {
+    margin-top:30px;
+  }
+  &.disabled {
+    background-color: $grey-darker;
+    color: $grey-medium;
+    cursor: not-allowed;
+    &:hover {
+      background-color: $grey-darker;
+      color: $grey-medium;
+      text-shadow: none;
+    }
+  }
+  &.square {
+    width: 35px;
+    height: 35px;
+    font-size: 16pt;
+  }
+  &.circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 16pt;
+  }
+  &.hexagon {
+    width: 42px;
+    height: 24.25px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6); /* these need special shadows */
+    padding: 0;
+    span {
+      position: absolute;
+      background: inherit;
+      top:0;
+      left: 0;
+      width:42px;
+      height:24.2487px;
+    }
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: 29.70px;
+      height: 29.70px;
+      -webkit-transform: scaleY(0.5774) rotate(-45deg);
+      -ms-transform: scaleY(0.5774) rotate(-45deg);
+      transform: scaleY(0.5774) rotate(-45deg);
+      background-color: inherit;
+      left: 6.1508px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6); /* these need special shadows */
+    }
+    &:before {
+      top: -14.8492px;
+    }
+    &:after {
+      bottom: -14.8492px;
+    }
+    &:nth-child(even) {
+      left: 21px;
+      top: -14.8492px;
+    }
+  }
+  &.square,
+  &.circle,
+  &.hexagon {
+    div.glyph {
+      margin-right: 0;
+    }
+  }
+}
+
+
