@@ -22,18 +22,18 @@ class DialogWindow {
      */
     build() {
         const me = this;
-        me._container = $('<div />').addClass('window-container');
+        this._container = $('<div />').addClass('window-container');
 
-        me._window = $('<div />').addClass('dialog');
+        this._window = $('<div />').addClass('dialog');
 
-        if (me.id) {
-            me.getWindow().attr('id', me.id);
+        if (this.id) {
+            this.getWindow().attr('id', this.id);
         }
 
-        if (me.title) {
-            me._title = $('<h2 />').append( $('<span />').html(me.title) );
-            me.getWindow().append(me.getTitle());
-            me._closeButton = new SimpleButton({
+        if (this.title) {
+            this._title = $('<h2 />').append( $('<span />').html(this.title) );
+            this.getWindow().append(me.getTitle());
+            this._closeButton = new SimpleButton({
                 glyph: 'echx',
                 css: "closebutton",
                 action: function(e) {
@@ -41,14 +41,14 @@ class DialogWindow {
                     me.close();
                 }
             });
-            me.getWindow().append(me.getCloseButton());
+            this.getWindow().append(this.getCloseButton());
         }
 
-        if (me.content) {
-            me._content = $('<div />')
+        if (this.content) {
+            this._content = $('<div />')
                 .addClass('content')
-                .append(me.content);
-            me.getWindow().append(me.getContent());
+                .append(this.content);
+            this.getWindow().append(this.getContent());
         }
 
         $(document).bind("keyup.DialogWindow", function(e) {
@@ -63,19 +63,19 @@ class DialogWindow {
      */
     open() {
         const me = this;
-        me._mask = $('<div />')
+        this._mask = $('<div />')
             .addClass('window-mask')
             .click(function(e) {
                 e.preventDefault();
                 me.close();
             });
-        me.getContainer().append(me.getWindow());
+        this.getContainer().append(me.getWindow());
 
         $('body')
-            .append(me.getMask())
-            .append(me.getContainer())
+            .append(this.getMask())
+            .append(this.getContainer())
             .addClass('modalopen');
-        return me;
+        return this;
     }
 
     /**
@@ -83,7 +83,7 @@ class DialogWindow {
      */
     close() {
         const me = this;
-        me.getContainer().animate({ opacity: 0 }, 200, function() {
+        this.getContainer().animate({ opacity: 0 }, 200, function() {
             me.getContainer().remove();
             me.getMask().animate({ opacity: 0 }, 100, function() {
                 me.getMask().remove();
