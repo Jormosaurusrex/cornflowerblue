@@ -62,8 +62,13 @@ div.window-container {
       z-index: 1046;
       box-shadow: none;
       touch-action: manipulation;
+      margin: 0;
+      background: none;
+      color: $light;
+      text-shadow: $text-shadow;
       &:hover {
         opacity: 1;
+        background: none;
       }
     }
   }

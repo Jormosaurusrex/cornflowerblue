@@ -35,13 +35,15 @@ class DialogWindow {
             this.getWindow().append(me.getTitle());
             this._closeButton = new SimpleButton({
                 glyph: 'echx',
+                text: "Close",
+                shape: "square",
                 css: "closebutton",
                 action: function(e) {
                     e.preventDefault();
                     me.close();
                 }
             });
-            this.getWindow().append(this.getCloseButton());
+            this.getWindow().append(this.getCloseButton().build());
         }
 
         if (this.content) {

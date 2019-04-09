@@ -2,13 +2,13 @@
     Defines a button object used in the map's navigation system.
 
 
-    - text=string :: The text of the button. For shaped buttons, you probably want only one character
-    - shape=(square|circle|hexagon) :: Make the button one of these shapes.
+    - text=string :: The text of the button. If the button is shaped, only displays if a glyph isn't provided.
+    - shape=(square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
+    - css=string :: one or more css classes to be applied to the button
     - id=string :: An id for the element
     - disabled=boolean :: Disable the button if true. Used only during initialization; to enable/disable
                         the button programmatically, use enable() and disable().
-    - setbreak=boolean :: If true, add additional space above/below (in context) so that the button isn't
-                        visually grouped with the previous buttons.  Mostly useful with hexagon shapes.
+    - icononly=boolean :: if true
     - action=function(e, button) {} :: What to do if clicked on. Passed this button object as second argument.
 
  */
@@ -26,6 +26,7 @@ class SimpleButton {
                 me[k] = definition[k];
             });
         }
+        if (!this.text) { this.text = "No Text"; }
     }
 
     /**
@@ -35,42 +36,45 @@ class SimpleButton {
     build() {
         const me = this;
 
-        me._button = $('<div />').addClass('btn');
+        this._button = $('<div />')
+            .addClass('btn')
+            .attr('aria-label', this.text)
+            .data('self', this);
 
-        if (me.shape) {
-            me.getButton().addClass(me.shape);
-            if (me.shape === 'hexagon') {
-                if (me.glyph) {
-                    me.getButton().append($('<span />').append(SimpleButton.makeGlyph(me.glyph)));
+        if (this.id) { this.getButton().attr('id', this.id); }
+        if (this.css) { this.getButton().addClass(this.css); }
+        if (this.disabled) { this.getButton().addClass('disabled'); }
+
+        if (this.shape) {
+            this.getButton().addClass(me.shape);
+            if (this.shape === 'hexagon') {
+                if (this.glyph) {
+                    this.getButton().append($('<span />').append(this.makeGlyph(this.glyph)));
                 } else if (me.text) {
-                    me.getButton().append($('<span />').html(me.text));
+                    this.getButton().append($('<span />').html(this.text));
                 }
             } else {
-                if (me.glyph) {
-                    me.getButton().append(SimpleButton.makeGlyph(me.glyph));
-                } else if (me.text) {
-                    me.getButton().html(me.text)
+                if (this.glyph) {
+                    this.getButton().append(this.makeGlyph(this.glyph));
+                } else if (this.text) {
+                    this.getButton().html(this.text)
                 }
             }
 
         } else {
-            if (me.glyph) {
-                me.getButton().append(SimpleButton.makeGlyph(me.glyph));
+            if (this.glyph) {
+                this.getButton().append(this.makeGlyph(this.glyph));
             }
-            if (me.text) {
-                me.getButton().append(
-                    $('<div />').addClass('text').html(me.text)
+            if (this.text) {
+                this.getButton().append(
+                    $('<div />').addClass('text').html(this.text)
                 )
             }
         }
 
-        if (me.id) { me.getButton().attr('id', me.id); }
-        if (me.css) { me.getButton().addClass(me.css); }
-        if (me.setbreak) { me.getButton().addClass('setbreak'); }
-        if (me.disabled) { me.getButton().addClass('disabled'); }
 
-        if ((me.action) && (typeof me.action === 'function')) {
-            me.getButton().click(function (e) {
+        if ((this.action) && (typeof this.action === 'function')) {
+            this.getButton().click(function (e) {
                 if (!me.disabled) {
                     me.action(e, me);
                 }
@@ -102,10 +106,17 @@ class SimpleButton {
     /**
      * Makes a glyph object
      * @param glyph the glyph
+     * @param hidden whether or not the glyph should be
      * @returns {jQuery} a span element
      */
-    static makeGlyph(glyph) {
-        return $('<span />').addClass("icon-" + glyph);
+    makeGlyph(glyph, hidden) {
+        let g = $('<span />').addClass("icon-" + glyph);
+        if (this.shape) {
+            g.attr('aria-label', this.text);
+        } else {
+            g.attr('aria-hidden', true);
+        }
+        return g;
     }
 
     /**
