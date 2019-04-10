@@ -1,20 +1,24 @@
+"use strict";
+
 class DialogWindow {
 
+    static DEFAULT_CONFIG = {
+        id: null,
+        classes: [],             // apply these classes to the dialog, if any.
+        title: null,                // Adds a title to the dialog if present
+        resizable: false,           // Allows for dialog to be resized
+        content: $('<p />').html("No provided content"), // This is the content of the dialog
+        showCloseButton: true      // Show or hide the X button in the corner (requires title != null)
+    };
     /**
      * Define a DialogWindow
-     * @param definition a dictionary object
+     * @param config a dictionary object
      * @return self
      */
-    constructor(definition) {
-        const me = this;
-
-        if ((definition) && (typeof definition === 'object')) {
-            Object.keys(definition).forEach(function(k) {
-                me[k] = definition[k];
-            });
-        }
-        me.build();
-        return me;
+    constructor(config) {
+        this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
+        this.build();
+        return this;
     }
 
     /**
@@ -26,30 +30,34 @@ class DialogWindow {
 
         this._window = $('<div />').addClass('dialog');
 
-        if (this.id) {
-            this.getWindow().attr('id', this.id);
+        if (this.config.id) {
+            this.getWindow().attr('id', this.config.id);
         }
 
-        if (this.title) {
-            this._title = $('<h2 />').append( $('<span />').html(this.title) );
-            this.getWindow().append(me.getTitle());
-            this._closeButton = new SimpleButton({
-                glyph: 'echx',
-                text: "Close",
-                shape: "square",
-                css: "closebutton",
-                action: function(e) {
-                    e.preventDefault();
-                    me.close();
-                }
-            });
-            this.getWindow().append(this.getCloseButton().build());
+        if (this.config.classes) { this.getWindow().addClass(this.config.classes.join(' ')); }
+
+        if (this.config.title) {
+            this._title = $('<h2 />').append( $('<span />').html(this.config.title) );
+            this.getWindow().append(this.getTitle());
+            if (this.config.showCloseButton) {
+                this._closeButton = new SimpleButton({
+                    glyph: 'echx',
+                    text: "Close",
+                    shape: "square",
+                    classes: ["closebutton"],
+                    action: function(e) {
+                        e.preventDefault();
+                        me.close();
+                    }
+                });
+                this.getWindow().append(this.getCloseButton().build());
+            }
         }
 
-        if (this.content) {
+        if (this.config.content) {
             this._content = $('<div />')
                 .addClass('content')
-                .append(this.content);
+                .append(this.config.content);
             this.getWindow().append(this.getContent());
         }
 
@@ -102,7 +110,7 @@ class DialogWindow {
      * @returns {string}
      */
     toString () {
-        return `DialogWindow | id: ${this.id} :: title: ${this.title}`;
+        return `DialogWindow | id: ${this.config.id} :: title: ${this.config.title}`;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

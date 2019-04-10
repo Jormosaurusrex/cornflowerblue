@@ -54,7 +54,8 @@ div.window-container {
       overflow: auto;
       margin: 0;
     }
-    div.closebutton {
+    button.closebutton,
+    div.btn.closebutton {
       position: absolute;
       right: 0;
       top: 0;
@@ -64,6 +65,7 @@ div.window-container {
       touch-action: manipulation;
       margin: 0;
       background: none;
+      border: none;
       color: $light;
       text-shadow: $text-shadow;
       &:hover {
