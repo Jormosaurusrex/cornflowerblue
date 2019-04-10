@@ -49,50 +49,50 @@ class SimpleButton {
 
         if (this.config.shape) {
             if (this.config.shape === 'hexagon') {
-                this._button = $('<div />').addClass('btn');
+                this.button = $('<div />').addClass('btn');
                 if (this.config.glyph) {
-                    this.getButton().append($('<span />').append(this.makeGlyph(this.config.glyph)));
+                    this.button.append($('<span />').append(this.makeGlyph(this.config.glyph)));
                 } else if (this.config.text) {
-                    this.getButton().append($('<span />').html(this.config.text));
+                    this.button.append($('<span />').html(this.config.text));
                 }
             } else {
-                this._button = $('<button />');
+                this.button = $('<button />');
                 if (this.config.glyph) {
-                    this.getButton().append(this.makeGlyph(this.config.glyph));
+                    this.button.append(this.makeGlyph(this.config.glyph));
                 } else if (this.config.text) {
-                    this.getButton().html(this.text)
+                    this.button.html(this.text)
                 }
             }
-            this.getButton().addClass(me.config.shape);
+            this.button.addClass(me.config.shape);
         } else {
-            this._button = $('<button />');
+            this.button = $('<button />');
             if (this.config.glyph) {
-                this.getButton().append(this.makeGlyph(this.config.glyph));
+                this.button.append(this.makeGlyph(this.config.glyph));
             }
             if (this.config.text) {
-                this.getButton().append(
+                this.button.append(
                     $('<div />').addClass('text').html(this.config.text)
                 )
             }
         }
 
-        this.getButton()
+        this.button
             .attr('aria-label', this.config.text)
             .data('self', this);
 
-        if (this.config.id) { this.getButton().attr('id', this.config.id); }
-        if (this.config.classes) { this.getButton().addClass(this.config.classes.join(' ')); }
-        if (this.config.disabled) { this.getButton().addClass('disabled'); }
+        if (this.config.id) { this.button.attr('id', this.config.id); }
+        if (this.config.classes) { this.button.addClass(this.config.classes.join(' ')); }
+        if (this.config.disabled) { this.button.addClass('disabled'); }
 
 
         if ((this.config.action) && (typeof this.config.action === 'function')) {
-            this.getButton().click(function (e) {
+            this.button.click(function (e) {
                 if (!me.config.disabled) {
                     me.config.action(e, me);
                 }
             });
         }
-        return me.getButton();
+        return this.button;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -101,7 +101,7 @@ class SimpleButton {
      * Enable the NavButton
      */
     disable() {
-        this.getButton().addClass('disabled');
+        this.button.addClass('disabled');
         this.config.disabled = true;
     }
 
@@ -109,7 +109,7 @@ class SimpleButton {
      * Disable the NavButton
      */
     enable() {
-        this.getButton().removeClass('disabled');
+        this.button.removeClass('disabled');
         this.config.disabled = false;
     }
 
@@ -136,13 +136,20 @@ class SimpleButton {
      * @returns {string}
      */
     toString () {
-        return `NavButton | id: ${this.config.id} :: text: ${this.config.text} :: shape: ${this.config.shape} :: disabled: ${this.config.disabled}`;
+        return `SimpleButton | id: ${this.config.id} :: text: ${this.config.text} :: shape: ${this.config.shape} :: disabled: ${this.config.disabled}`;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    getButton() { return this._button; }
+    set button(button) { this._button = button; }
 
-    getGlyph() { return this._glyph; }
+    get button() {
+        if (!this._button) { this.button = this.build(); }
+        return this._button;
+    }
+
+    set glyph(glyph) { this._glyph = glyph; }
+
+    get glyph() { return this._glyph; }
 
 }

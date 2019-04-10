@@ -26,21 +26,21 @@ class DialogWindow {
      */
     build() {
         const me = this;
-        this._container = $('<div />').addClass('window-container');
+        this.container = $('<div />').addClass('window-container');
 
-        this._window = $('<div />').addClass('dialog');
+        this.window = $('<div />').addClass('dialog');
 
         if (this.config.id) {
-            this.getWindow().attr('id', this.config.id);
+            this.window.attr('id', this.config.id);
         }
 
-        if (this.config.classes) { this.getWindow().addClass(this.config.classes.join(' ')); }
+        if (this.config.classes) { this.window.addClass(this.config.classes.join(' ')); }
 
         if (this.config.title) {
-            this._title = $('<h2 />').append( $('<span />').html(this.config.title) );
-            this.getWindow().append(this.getTitle());
+            this.title = $('<h2 />').append( $('<span />').html(this.config.title) );
+            this.window.append(this.title);
             if (this.config.showCloseButton) {
-                this._closeButton = new SimpleButton({
+                this.closeButton = new SimpleButton({
                     glyph: 'echx',
                     text: "Close",
                     shape: "square",
@@ -50,15 +50,15 @@ class DialogWindow {
                         me.close();
                     }
                 });
-                this.getWindow().append(this.getCloseButton().build());
+                this.window.append(this.closeButton.button);
             }
         }
 
         if (this.config.content) {
-            this._content = $('<div />')
+            this.content = $('<div />')
                 .addClass('content')
                 .append(this.config.content);
-            this.getWindow().append(this.getContent());
+            this.window.append(this.content);
         }
 
         $(document).bind("keyup.DialogWindow", function(e) {
@@ -73,17 +73,17 @@ class DialogWindow {
      */
     open() {
         const me = this;
-        this._mask = $('<div />')
+        this.mask = $('<div />')
             .addClass('window-mask')
             .click(function(e) {
                 e.preventDefault();
                 me.close();
             });
-        this.getContainer().append(me.getWindow());
+        this.container.append(me.window);
 
         $('body')
-            .append(this.getMask())
-            .append(this.getContainer())
+            .append(this.mask)
+            .append(this.container)
             .addClass('modalopen');
         return this;
     }
@@ -93,10 +93,10 @@ class DialogWindow {
      */
     close() {
         const me = this;
-        this.getContainer().animate({ opacity: 0 }, 200, function() {
-            me.getContainer().remove();
-            me.getMask().animate({ opacity: 0 }, 100, function() {
-                me.getMask().remove();
+        this.container.animate({ opacity: 0 }, 200, function() {
+            me.container.remove();
+            me.mask.animate({ opacity: 0 }, 100, function() {
+                me.mask.remove();
                 $(document).bind("keyup.DialogWindow"); // get rid of our keyup
             });
         });
@@ -115,16 +115,24 @@ class DialogWindow {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    getCloseButton() { return this._closeButton; }
+    get closeButton() { return this._closeButton; }
 
-    getContainer() { return this._container; }
+    set closeButton(button) { this._closeButton = button; }
 
-    getContent() { return this._content; }
+    get container() { return this._container; }
 
-    getMask() { return this._mask; }
+    set container(container) { this._container = container; }
 
-    getTitle() { return this._title; }
+    get mask() { return this._mask; }
 
-    getWindow() { return this._window; }
+    set mask(mask) { this._mask = mask; }
+
+    get title() { return this._title; }
+
+    set title(title) { this._title = title; }
+
+    get window() { return this._window; }
+
+    set window(window) { this._window = window; }
 
 }

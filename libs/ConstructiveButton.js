@@ -1,12 +1,12 @@
 "use strict";
 
 class ConstructiveButton extends SimpleButton {
-    constructor(definition) {
-        if (definition.classes) {
-            definition.classes.push('constructive');
+    constructor(config) {
+        if (config.classes) {
+            config.classes.push('constructive');
         } else {
-            definition.classes = ['constructive'];
+            config.classes = ['constructive'];
         }
-        super(definition);
+        super(config);
     }
 }

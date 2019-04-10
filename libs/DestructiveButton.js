@@ -1,12 +1,12 @@
 "use strict";
 
 class DestructiveButton extends SimpleButton {
-    constructor(definition) {
-        if (definition.classes) {
-            definition.classes.push('destructive');
+    constructor(config) {
+        if (config.classes) {
+            config.classes.push('destructive');
         } else {
-            definition.classes = ['destructive'];
+            config.classes = ['destructive'];
         }
-        super(definition);
+        super(config);
     }
 }
