@@ -1,5 +1,4 @@
-button,
-div.btn {
+button {
   position: relative;
   font-family: "Helvetica Neue", Arial, serif;
   font-weight: normal;
@@ -60,6 +59,7 @@ div.btn {
     height: 24.25px;
     box-shadow: 0 0 20px rgba(0,0,0,0.6); /* these need special shadows */
     padding: 0;
+    border: none;
     span {
       position: absolute;
       background: inherit;
@@ -93,13 +93,6 @@ div.btn {
       top: -14.8492px;
     }
   }
-  &.square,
-  &.circle,
-  &.hexagon {
-    div.glyph {
-      margin-right: 0;
-    }
-  }
   &.constructive {
     color: $white;
     text-shadow: $text-shadow;
@@ -128,7 +121,6 @@ div.btn {
       text-shadow: $text-shadow;
     }
   }
-  &.disabled,
   &:disabled {
     color: $grey-light;
     background-color: $light;

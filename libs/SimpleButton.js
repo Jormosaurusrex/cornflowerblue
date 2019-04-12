@@ -49,7 +49,7 @@ class SimpleButton {
 
         if (this.config.shape) {
             if (this.config.shape === 'hexagon') {
-                this.button = $('<div />').addClass('btn');
+                this.button = $('<button />');
                 if (this.config.glyph) {
                     this.button.append($('<span />').append(this.makeGlyph(this.config.glyph)));
                 } else if (this.config.text) {
@@ -90,6 +90,7 @@ class SimpleButton {
                 if (!me.config.disabled) {
                     me.config.action(e, me);
                 }
+                this.blur();
             });
         }
         return this.button;
