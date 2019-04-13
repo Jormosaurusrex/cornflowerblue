@@ -47,48 +47,48 @@ class SimpleButton {
     build() {
         const me = this;
 
-        if (this.config.shape) {
-            if (this.config.shape === 'hexagon') {
+        if (this.shape) {
+            if (this.shape === 'hexagon') {
                 this.button = $('<button />');
-                if (this.config.glyph) {
-                    this.button.append($('<span />').append(this.makeGlyph(this.config.glyph)));
-                } else if (this.config.text) {
-                    this.button.append($('<span />').html(this.config.text));
+                if (this.glyph) {
+                    this.button.append($('<span />').append(this.makeIcon(this.glyph)));
+                } else if (this.text) {
+                    this.button.append($('<span />').html(this.text));
                 }
             } else {
                 this.button = $('<button />');
-                if (this.config.glyph) {
-                    this.button.append(this.makeGlyph(this.config.glyph));
-                } else if (this.config.text) {
+                if (this.glyph) {
+                    this.button.append(this.makeIcon(this.glyph));
+                } else if (this.text) {
                     this.button.html(this.text)
                 }
             }
-            this.button.addClass(me.config.shape);
+            this.button.addClass(this.shape);
         } else {
             this.button = $('<button />');
-            if (this.config.glyph) {
-                this.button.append(this.makeGlyph(this.config.glyph));
+            if (this.glyph) {
+                this.button.append(this.makeIcon(this.glyph));
             }
-            if (this.config.text) {
+            if (this.text) {
                 this.button.append(
-                    $('<div />').addClass('text').html(this.config.text)
+                    $('<div />').addClass('text').html(this.text)
                 )
             }
         }
 
         this.button
-            .attr('aria-label', this.config.text)
+            .attr('aria-label', this.text)
             .data('self', this);
 
-        if (this.config.id) { this.button.attr('id', this.config.id); }
-        if (this.config.classes) { this.button.addClass(this.config.classes.join(' ')); }
-        if (this.config.disabled) { this.button.addClass('disabled'); }
+        if (this.id) { this.button.attr('id', this.id); }
+        if (this.classes) { this.button.addClass(this.classes.join(' ')); }
+        if (this.disabled) { this.button.addClass('disabled'); }
 
 
-        if ((this.config.action) && (typeof this.config.action === 'function')) {
+        if ((this.action) && (typeof this.action === 'function')) {
             this.button.click(function (e) {
-                if (!me.config.disabled) {
-                    me.config.action(e, me);
+                if (!me.disabled) {
+                    me.action(e, me);
                 }
                 this.blur();
             });
@@ -103,7 +103,7 @@ class SimpleButton {
      */
     disable() {
         this.button.addClass('disabled');
-        this.config.disabled = true;
+        this.disabled = true;
     }
 
     /**
@@ -111,25 +111,25 @@ class SimpleButton {
      */
     enable() {
         this.button.removeClass('disabled');
-        this.config.disabled = false;
+        this.disabled = false;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
-     * Makes a glyph object
+     * Makes an icon object
      * @param glyph the glyph
      * @param hidden whether or not the glyph should be
      * @returns {jQuery} a span element
      */
-    makeGlyph(glyph, hidden) {
-        let g = $('<span />').addClass("icon-" + glyph);
-        if (this.config.shape) {
-            g.attr('aria-label', this.config.text);
+    makeIcon(glyph, hidden) {
+        let i = $('<span />').addClass("icon-" + glyph);
+        if (this.shape) {
+            i.attr('aria-label', this.text);
         } else {
-            g.attr('aria-hidden', true);
+            i.attr('aria-hidden', true);
         }
-        return g;
+        return i;
     }
 
     /**
@@ -137,20 +137,44 @@ class SimpleButton {
      * @returns {string}
      */
     toString () {
-        return `SimpleButton | id: ${this.config.id} :: text: ${this.config.text} :: shape: ${this.config.shape} :: disabled: ${this.config.disabled}`;
+        return `SimpleButton | id: ${this.id} :: text: ${this.text} :: shape: ${this.shape} :: disabled: ${this.disabled}`;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    set button(button) { this._button = button; }
+    get action() { return this.config.action; }
+    set action(action) {
+        if (typeof action != 'function') {
+            console.log("Action provided to button is not a function!");
+        }
+        this.config.action = action;
+    }
 
     get button() {
         if (!this._button) { this.button = this.build(); }
         return this._button;
     }
+    set button(button) { this._button = button; }
 
-    set glyph(glyph) { this._glyph = glyph; }
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
 
-    get glyph() { return this._glyph; }
+    get disabled() { return this.config.disabled; }
+    set disabled(disabled) { this.config.disabled = disabled; }
+
+    get glyph() { return this.config.glyph; }
+    set glyph(glyph) { this.config.glyph = glyph; }
+
+    get icon() { return this._icon; }
+    set icon(icon) { this._icon = icon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get shape() { return this.config.shape; }
+    set shape(shape) { this.config.shape = shape; }
+
+    get text() { return this.config.text; }
+    set text(text) { this.config.text = text; }
 
 }

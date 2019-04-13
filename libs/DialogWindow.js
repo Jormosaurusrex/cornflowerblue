@@ -13,7 +13,7 @@ class DialogWindow {
     /**
      * Define a DialogWindow
      * @param config a dictionary object
-     * @return self
+     * @return DialogWindow
      */
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
@@ -116,23 +116,18 @@ class DialogWindow {
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get closeButton() { return this._closeButton; }
-
     set closeButton(button) { this._closeButton = button; }
 
     get container() { return this._container; }
-
     set container(container) { this._container = container; }
 
     get mask() { return this._mask; }
-
     set mask(mask) { this._mask = mask; }
 
     get title() { return this._title; }
-
     set title(title) { this._title = title; }
 
     get window() { return this._window; }
-
     set window(window) { this._window = window; }
 
 }
