@@ -116,8 +116,7 @@ class Utils {
      * @param max the maximum value (default 20)
      * @return {number} a number
      */
-    static randomNumber(max) {
-        if (!max) { max = 100; }
+    static randomNumber(max = 100) {
         return Math.floor(1 + (Math.random() * max));
     }
 
@@ -134,8 +133,22 @@ class Utils {
      * @param dieSize the number of sides on the die.
      * @return {number}
      */
-    static dieRoll(dieSize) {
+    static dieRoll(dieSize = 6) {
         return Math.floor(Math.random() * dieSize) + 1;
+    }
+
+    /**
+     * Gets a unique key
+     * @param length the length of the key (optional, default 30 characters)
+     * @returns {string}
+     */
+    static getUniqueKey(length = 30) {
+        let text = "";
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (let i = 0; i < length; i++ ) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
     }
 
     /* MOBILE DETECTION METHODS_________________________________________________________ */

@@ -1,0 +1,47 @@
+div.input-container {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  position: relative;
+}
+label {
+  display: block;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 13pt;
+}
+input[type="text"],
+input[type="number"],
+input[type="password"],
+textarea {
+  font-family: inherit;
+  width: 100%;
+  background-color: $ultralight;
+  margin: 0;
+  font-size: 13pt;
+  border: 1px solid $grey-medium;
+  padding: 5px 5px 5px 11px;
+  border-radius: 1px;
+  color: $grey-darker;
+  vertical-align: middle;
+
+  &:disabled {
+    border-color: $grey-light;
+    background-color: $light;
+    color: $grey-medium;
+  }
+  &::-webkit-input-placeholder,
+  &::-moz-placeholder,
+  &:-ms-input-placeholder,
+  &:-moz-placeholder,
+  &::placeholder {
+    color: $grey-light;
+    font-weight: normal;
+  }
+  &:focus {
+    border-color: $green;
+    box-shadow: inset 7px 0 0 $green;
+  }
+}

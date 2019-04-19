@@ -42,7 +42,7 @@ class SimpleButton {
 
     /**
      * Builds the button's DOM.
-     * @returns {jQuery} jQuery representation of the NavButton
+     * @returns {jQuery} jQuery representation of the SimpleButton
      */
     build() {
         const me = this;

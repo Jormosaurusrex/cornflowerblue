@@ -1,0 +1,39 @@
+
+$blue: #0054a6 !default;
+$red: #910000 !default;
+$orange: #ff9900 !default;
+$yellow: #ffdd1b !default;
+$green: #005e20 !default;
+$tan: #eadcbc !default;
+$pink: #ff00de !default;
+$lightblue: #a0e1fa !default;
+
+$white: #fff !default;
+$ultralight: #fdfdfd !default;
+$morelight: #eee !default;
+$light: #ddd !default;
+$grey-light: #ccc !default;
+$grey-medium: #999 !default;
+$grey-dark: #666 !default;
+$grey-meddark: #555 !default;
+$grey-darker: #444 !default;
+$grey-darkest: #222 !default;
+$black: #000 !default;
+
+$text-shadow: 0 1px 1px rgba(0,0,0,0.5) !default;
+$on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3) !default;
+
+$text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.1) !default;
+$text-shadow-grey-medium: 0 -1px 1px rgba(102, 102, 102, 0.1) !default;
+$text-shadow-grey-dark: 0 -1px 1px rgba(153, 153, 153, 0.1) !default;
+$text-shadow-grey-darkest: 0 -1px 1px rgba(0, 0, 0, 0.1) !default;
+
+
+$box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5) !default;
+//$panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5) !default;
+$panel-shadow: 0px 0px 30px rgba(52, 38, 13, .5) !default;
+$interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.7) !default;
+$interior-shadow-inverse: 0px -3px 5px 0px rgba(0,0,0,0.75) !default;
+$interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
+
+$focus-box-shadow: inset 5px 0px 0px 0px $blue;
