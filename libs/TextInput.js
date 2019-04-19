@@ -136,5 +136,5 @@ class TextInput {
         this.config.value = value;
         this.input.val(value);
     }
-    
+
 }
