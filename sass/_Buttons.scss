@@ -7,6 +7,7 @@ $hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
 $hexagon-shadow: 0 0 15px rgba(0,0,0,0.6);
 
 button {
+  box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: row;
