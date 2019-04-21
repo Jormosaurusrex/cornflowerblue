@@ -1,0 +1,199 @@
+
+div.growlbox {
+  z-index: 50000;
+  position: fixed;
+  &.top-left {
+    top: 10px;
+    left: 10px;
+  }
+  &.top-right {
+    top: 10px;
+    right: 10px;
+  }
+  &.bottom-left {
+    bottom: 10px;
+    left: 10px;
+  }
+  &.bottom-right {
+    bottom: 10px;
+    right: 10px;
+  }
+  &.top-center {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    .growl {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  &.bottom-center {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    .growl {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+.growler {
+  opacity: 0;
+  position: relative;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  box-shadow: $panel-shadow;
+  margin-bottom: 20px;
+  width: 250px;
+  button.dclose {
+    border-radius: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    opacity: 0.65;
+    font-style:normal;
+    overflow: visible;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    display: block;
+    outline: none;
+    padding: 0;
+    z-index: 1046;
+    box-shadow: none;
+    touch-action: manipulation;
+    font-size: 28px;
+    color: $light !important;
+    &:hover {
+      color: $white !important;
+      opacity: 1;
+    }
+  }
+  .title {
+    font-size: 16pt;
+    line-height: 24px;
+    padding: 10px;
+    margin-bottom: 0;
+  }
+  .message {
+    font-size: 13pt;
+    line-height: 18px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    .icon {
+      font-size: 36pt;
+      margin-right: 10px;
+    }
+    .mtext {
+      padding-top: 10px;
+    }
+  }
+  &.inline {
+    .title {
+      .icon {
+        font-size: 16pt;
+        margin-right: 10px;
+      }
+    }
+  }
+  &.default,
+  &.death {
+    color: $grey-darkest;
+    background-color: $white;
+    border-color: $grey-darkest;
+    .title {
+      background-color: $grey-darkest;
+      color: $white;
+      text-shadow: $text-shadow;
+      font-size: 16pt;
+      line-height: 24px;
+    }
+    .message {
+      .icon {
+        color: $grey-darkest;
+      }
+    }
+  }
+  &.injury,
+  &.score_down,
+  &.cash_remove {
+    color: $grey-darkest;
+    background-color: $white;
+    border-color: $red;
+    .title {
+      background-color: $red;
+      color: $white;
+      text-shadow: $text-shadow;
+      font-size: 16pt;
+      line-height: 24px;
+    }
+    .message {
+      .icon {
+        color: $red;
+      }
+    }
+  }
+  &.score_up,
+  &.cash_add {
+    color: $grey-darkest;
+    background-color: $white;
+    border-color: $green;
+    .title {
+      background-color: $green;
+      color: $white;
+      text-shadow: $text-shadow;
+      font-size: 16pt;
+      line-height: 24px;
+    }
+    .message {
+      .icon {
+        color: $green;
+      }
+    }
+  }
+  &.xp_up,
+  &.level_up {
+    color: $grey-darkest;
+    background-color: $white;
+    border-color: $blue;
+    .title {
+      background-color: $blue;
+      color: $white;
+      text-shadow: $text-shadow;
+      font-size: 16pt;
+      line-height: 24px;
+    }
+    .message {
+      .icon {
+        color: $green;
+      }
+    }
+  }
+  &.celebrate,
+  &.trophy_earned {
+    color: $grey-darkest;
+    background-color: $white;
+    border-color: $orange;
+    .title {
+      background-color: $orange;
+      color: $white;
+      text-shadow: $text-shadow;
+      font-size: 16pt;
+      line-height: 24px;
+    }
+    .message {
+      .icon {
+        color: $orange;
+      }
+    }
+  }
+}

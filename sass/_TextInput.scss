@@ -1,6 +1,35 @@
 $standard-color: $grey-dark;
 $focus-color: $green;
 
+[hidden] { display: none; }
+[title-x] {
+  position: relative;
+  cursor: help;
+}
+
+[title-x]::before {
+  content: attr(title);
+  position: absolute;
+  top: -26px;
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+[title-x]::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  display: inline-block;
+  color: #fff;
+  border: 8px solid transparent;
+  border-bottom: 8px solid #000;
+}
 div.input-container {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -9,13 +38,20 @@ div.input-container {
   position: relative;
   &.mute {
     label {
-      display: none;
+      visibility: hidden;
+    }
+    &.active,
+    &.filled {
+      label {
+        visibility: visible;
+      }
     }
   }
 }
 label {
   display: block;
   font-weight: normal;
+  position: relative;
   margin-top: 10px;
   margin-bottom: 5px;
   font-size: 13pt;
@@ -26,6 +62,7 @@ input[type="number"],
 input[type="password"],
 textarea {
   outline: none;
+  position: relative;
   font-family: inherit;
   width: 100%;
   background-color: $ultralight;
@@ -44,6 +81,7 @@ textarea {
     border-color: $grey-light;
     background-color: $light;
     color: $grey-medium;
+    cursor: not-allowed;
   }
   &:focus {
     border-color: $focus-color;

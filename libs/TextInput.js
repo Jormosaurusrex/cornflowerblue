@@ -15,7 +15,11 @@ class TextInput {
         value: null, // value to use (pre-population).  Used during construction and then discarded.
         disabled: false, // if true, disable the field.
         classes: [], //Extra css classes to apply
-        action: $.noop // The click handler. passed (event, self) as arguments.
+        onreturn: $.noop, // action to execute on hitting the return key. Passed (event, self) as arguments.
+        ontab: $.noop, // action to execute on hitting the tab key. Passed (event, self) as arguments.
+        keyup: $.noop, // action to execute on key up. Passed (event, self) as arguments.
+        focusin: $.noop, // action to execute on focus in. Passed (event, self) as arguments.
+        focusout: $.noop // action to execute on focus out. Passed (event, self) as arguments.
     };
 
 
@@ -26,19 +30,42 @@ class TextInput {
     constructor(config) {
         this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
 
-        if (!this.arialabel) {
+        if (!this.arialabel) { // munch aria label.
             if (this.label) {
                 this.arialabel = this.label;
             } else if (this.title) {
                 this.arialabel = this.title;
             }
         }
+
         if (!this.id) { // need to generate an id for label stuff
             this.id = "input-" + Utils.getUniqueKey();
         }
 
+        if (this.config.value) { // store the supplied value if any
+            this.origval = this.config.value;
+        }
+
     }
 
+    /* STATE METHODS____________________________________________________________________ */
+
+
+    /**
+     * Has the field been changed or not?
+     * @return {boolean} true or false, depending.
+     */
+    isDirty() {
+        return (this.origval !== this.value);
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds and returns a container object for all parts.
+     * This gets over-ridden in elements that have additional structures, like a character counter
+     * @returns {jQuery} jQuery representation of the label and the input together.
+     */
     buildContainer() {
         this.container = $('<div />')
             .addClass('input-container')
@@ -56,20 +83,64 @@ class TextInput {
             .data('self', this)
             .attr('type', this.type)
             .attr('name', this.name)
+            .attr('title', this.title)
             .attr('autocomplete', this.autocomplete)
             .attr('placeholder', this.placeholder)
             .attr('aria-label', this.arialabel)
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
-            .focusin(function() {
-                if (($(this).data('self').mute) && ($(this).data('self').placeholder)) {
-                    $(this).attr('placeholder', $(this).data('self').placeholder);
+            .on('keyup', function(e) {
+                const me = $(this).data('self');
+                if ((me.value) && (me.value.length > 0) && (me.container)) {
+                    me.container.addClass('filled');
+                } else {
+                    me.container.removeClass('filled');
+                }
+                if (me.isDirty()) {
+                    if (me.container) { me.container.addClass('dirty'); }
+                    me.input.addClass('dirty');
+                } else {
+                    if (me.container) { me.container.removeClass('dirty'); }
+                    me.input.removeClass('dirty');
+                }
+                if ((e.keyCode === 13) // Return key
+                    && (me.onreturn) && (typeof me.onreturn === 'function')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.onreturn(e, me);
+                } else if (e.keyCode === 9) { // Tab key
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if ((me.ontab) && (typeof me.ontab === 'function')) {
+                        me.ontab(e, me);
+                    }
+                } else if ((me.keyup) && (typeof me.keyup === 'function')) {
+                    me.keyup(e, me);
                 }
             })
-            .focusout(function() {
-                if (($(this).data('self').mute) && ($(this).data('self').label)) {
-                    $(this).attr('placeholder', $(this).data('self').label);
+            .focusin(function(e) {
+                const me = $(this).data('self');
+                if ((me.mute) && (me.placeholder)) {
+                    $(this).attr('placeholder', me.placeholder);
+                }
+                if (me.container) {
+                    me.container.addClass('active');
+                }
+                if ((me.focusin) && (typeof me.focusin === 'function')) {
+                    me.focusin(e, me);
+                }
+            })
+            .focusout(function(e) {
+                const me = $(this).data('self');
+                if ((me.mute) && (me.label)) {
+                    $(this).attr('placeholder', me.label);
+                }
+                if (me.container) {
+                    me.container.removeClass('active');
+                }
+                if ((me.focusout) && (typeof me.focusout === 'function')) {
+                    me.focusout(e, me);
                 }
             })
             .val(this.config.value);
@@ -116,6 +187,22 @@ class TextInput {
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
 
+    get focusin() { return this.config.focusin; }
+    set focusin(focusin) {
+        if (typeof focusin != 'function') {
+            console.log("Action provided for focusin is not a function!");
+        }
+        this.config.focusin = focusin;
+    }
+
+    get focusout() { return this.config.focusout; }
+    set focusout(focusout) {
+        if (typeof focusout != 'function') {
+            console.log("Action provided for focusout is not a function!");
+        }
+        this.config.focusout = focusout;
+    }
+
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
 
@@ -139,6 +226,25 @@ class TextInput {
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get onreturn() { return this.config.onreturn; }
+    set onreturn(onreturn) {
+        if (typeof onreturn != 'function') {
+            console.log("Action provided for onreturn is not a function!");
+        }
+        this.config.onreturn = onreturn;
+    }
+
+    get ontab() { return this.config.ontab; }
+    set ontab(ontab) {
+        if (typeof ontab != 'function') {
+            console.log("Action provided for ontab is not a function!");
+        }
+        this.config.ontab = ontab;
+    }
+
+    get origval() { return this.config.origval; }
+    set origval(origval) { this.config.origval = origval; }
 
     get placeholder() { return this.config.placeholder; }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }

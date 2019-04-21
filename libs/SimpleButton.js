@@ -101,7 +101,6 @@ class SimpleButton {
                 this.blur();
             });
         }
-        return this.button;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -160,7 +159,7 @@ class SimpleButton {
     }
 
     get button() {
-        if (!this._button) { this.button = this.build(); }
+        if (!this._button) { this.build(); }
         return this._button;
     }
     set button(button) { this._button = button; }

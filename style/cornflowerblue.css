@@ -88,6 +88,22 @@ button {
     button.destructive:hover, button.destructive:active, button.destructive:focus {
       color: #ddd;
       background-color: #910000; }
+  button:disabled {
+    color: #999;
+    background-color: #ddd;
+    border-color: #ddd;
+    cursor: not-allowed;
+    text-shadow: none;
+    box-shadow: none;
+    pointer-events: none; }
+    button:disabled:hover, button:disabled:focus, button:disabled:active {
+      color: #999;
+      background-color: #ddd;
+      border-color: #999;
+      text-shadow: none;
+      box-shadow: none; }
+    button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6); }
   button.mute {
     background-color: transparent;
     border-color: transparent; }
@@ -97,14 +113,30 @@ button {
     button.mute.destructive {
       color: #910000;
       text-shadow: none; }
-    button.mute:hover {
+    button.mute:hover, button.mute:active, button.mute:focus {
       color: #fff;
       text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
       background-color: #666; }
-      button.mute:hover.constructive {
+      button.mute:hover.constructive, button.mute:active.constructive, button.mute:focus.constructive {
         background-color: #005e20; }
-      button.mute:hover.destructive {
+      button.mute:hover.destructive, button.mute:active.destructive, button.mute:focus.destructive {
         background-color: #910000; }
+    button.mute:disabled {
+      color: #999;
+      background-color: transparent;
+      border-color: transparent;
+      cursor: not-allowed;
+      text-shadow: none;
+      box-shadow: none;
+      pointer-events: none; }
+      button.mute:disabled:hover, button.mute:disabled:focus, button.mute:disabled:active {
+        color: #999;
+        background-color: transparent;
+        border-color: transparent;
+        text-shadow: none;
+        box-shadow: none; }
+      button.mute:disabled.hexagon, button.mute:disabled.hexagon::before, button.mute:disabled.hexagon::after {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.6); }
   button.hot {
     color: #ddd;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
@@ -217,6 +249,36 @@ div.window-mask {
   bottom: 0;
   z-index: 2000; }
 
+[hidden] {
+  display: none; }
+
+[title-x] {
+  position: relative;
+  cursor: help; }
+
+[title-x]::before {
+  content: attr(title);
+  position: absolute;
+  top: -26px;
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-family: sans-serif;
+  white-space: nowrap; }
+
+[title-x]::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  display: inline-block;
+  color: #fff;
+  border: 8px solid transparent;
+  border-bottom: 8px solid #000; }
+
 div.input-container {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -224,11 +286,14 @@ div.input-container {
   margin-right: 30px;
   position: relative; }
   div.input-container.mute label {
-    display: none; }
+    visibility: hidden; }
+  div.input-container.mute.active label, div.input-container.mute.filled label {
+    visibility: visible; }
 
 label {
   display: block;
   font-weight: normal;
+  position: relative;
   margin-top: 10px;
   margin-bottom: 5px;
   font-size: 13pt;
@@ -239,6 +304,7 @@ input[type="number"],
 input[type="password"],
 textarea {
   outline: none;
+  position: relative;
   font-family: inherit;
   width: 100%;
   background-color: #fdfdfd;
@@ -261,7 +327,8 @@ textarea {
   textarea:disabled {
     border-color: #ccc;
     background-color: #ddd;
-    color: #999; }
+    color: #999;
+    cursor: not-allowed; }
   input[type="text"]:focus,
   input[type="number"]:focus,
   input[type="password"]:focus,

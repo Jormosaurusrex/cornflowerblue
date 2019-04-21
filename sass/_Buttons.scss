@@ -122,6 +122,29 @@ button {
     }
   }
 
+  &:disabled {
+    color: $grey-medium;
+    background-color: $light;
+    border-color: $light;
+    cursor: not-allowed;
+    text-shadow: none;
+    box-shadow: none;
+    pointer-events: none;
+    &:hover,
+    &:focus,
+    &:active {
+      color: $grey-medium;
+      background-color: $light;
+      border-color: $grey-medium;
+      text-shadow: none;
+      box-shadow: none;
+    }
+    &.hexagon,
+    &.hexagon::before,
+    &.hexagon::after {
+      box-shadow: $hexagon-shadow;
+    }
+  }
 
   &.mute {
     background-color: transparent;
@@ -134,7 +157,9 @@ button {
       color: $destructive-color;
       text-shadow: none;
     }
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
       color: $white;
       text-shadow: $text-shadow;
       background-color: $grey-dark;
@@ -143,6 +168,29 @@ button {
       }
       &.destructive {
         background-color: $destructive-color;
+      }
+    }
+    &:disabled { // special disabled for mute styles
+      color: $grey-medium;
+      background-color: transparent;
+      border-color: transparent;
+      cursor: not-allowed;
+      text-shadow: none;
+      box-shadow: none;
+      pointer-events: none;
+      &:hover,
+      &:focus,
+      &:active {
+        color: $grey-medium;
+        background-color: transparent;
+        border-color: transparent;
+        text-shadow: none;
+        box-shadow: none;
+      }
+      &.hexagon,
+      &.hexagon::before,
+      &.hexagon::after {
+        box-shadow: $hexagon-shadow;
       }
     }
   }
@@ -159,9 +207,6 @@ button {
     &.destructive {
       background-color: $destructive-color;
       border-color: $destructive-color;
-    }
-    &:hover {
-
     }
   }
 

@@ -71,6 +71,7 @@
                     .append(
                         new TextInput({
                             label: "Element Label",
+                            title: "Test Tooltip title text",
                             placeholder: "An input placeholder."
                         }).container
                     )
@@ -273,6 +274,13 @@
                             text: "X",
                             shape: "square",
                             disabeled: true
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "square",
+                            mute: true
                         }).button
                     )
                     .append(
