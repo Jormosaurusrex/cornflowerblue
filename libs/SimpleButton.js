@@ -27,7 +27,8 @@ class SimpleButton {
         icononly : false,  // If true, the text will not display on the button, only the icon.
         disabled: false, // if true, make the button disabled.
         purpose: null, // (null|constructive|destructive)
-        mute: false, //if true, make the button mute. Otherwise it's bold.
+        mute: false, //if true, make the button mute.
+        hot: false, //if true, make the button hot.
         action: $.noop // The click handler. passed (event, self) as arguments.
     };
 
@@ -38,6 +39,7 @@ class SimpleButton {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleButton.DEFAULT_CONFIG, config);
+        return this;
     }
 
     /**
@@ -46,7 +48,6 @@ class SimpleButton {
      */
     build() {
         const me = this;
-
         if (this.shape) {
             if (this.shape === 'hexagon') {
                 this.button = $('<button />');
@@ -82,7 +83,13 @@ class SimpleButton {
 
         if (this.id) { this.button.attr('id', this.id); }
         if (this.classes) { this.button.addClass(this.classes.join(' ')); }
-        if (this.disabled) { this.button.addClass('disabled'); }
+
+        if (this.disabled) { this.disable(); }
+        if (this.hot) { // hot takes precidence over mute
+            this.button.addClass('hot');
+        } else if (this.mute) {
+            this.button.addClass('mute');
+        }
 
 
         if ((this.action) && (typeof this.action === 'function')) {
@@ -99,20 +106,21 @@ class SimpleButton {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
-     * Enable the NavButton
+     * Enable the button
      */
     disable() {
-        this.button.addClass('disabled');
+        this.button.prop('disabled', true);
         this.disabled = true;
     }
 
     /**
-     * Disable the NavButton
+     * Disable the button
      */
     enable() {
-        this.button.removeClass('disabled');
+        this.button.removeAttr('disabled');
         this.disabled = false;
     }
+
 
     /* UTILITY METHODS__________________________________________________________________ */
 
@@ -165,11 +173,17 @@ class SimpleButton {
     get glyph() { return this.config.glyph; }
     set glyph(glyph) { this.config.glyph = glyph; }
 
+    get hot() { return this.config.hot; }
+    set hot(hot) { this.config.hot = hot; }
+
     get icon() { return this._icon; }
     set icon(icon) { this._icon = icon; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get shape() { return this.config.shape; }
     set shape(shape) { this.config.shape = shape; }

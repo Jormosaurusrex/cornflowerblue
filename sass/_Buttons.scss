@@ -1,0 +1,193 @@
+$standard-color: $grey-dark;
+$constructive-color: $green;
+$destructive-color: $red;
+$hot-text-color: $light;
+$hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+$button-border-radius: $border-radius;
+
+button {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  text-decoration: none;
+  white-space: nowrap;
+  margin: 10px 5px 10px 5px;
+  padding: 0.4em 1em 0.4em 1em;
+  font-family: "Helvetica Neue", Arial, serif;
+  font-weight: normal;
+  font-size: 100%;
+  line-height: 1.5;
+  cursor: pointer;
+  color: $standard-color;
+  background-color: transparent;
+  border: 2px solid $standard-color;
+  border-radius: $button-border-radius;
+  span {
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  &.square,
+  &.circle {
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    font-size: 120%;
+    line-height: 1;
+  }
+  &.circle {
+    border-radius: 50%;
+  }
+  &.hexagon {
+    width: 42px;
+    height: 24.25px;
+    font-size: 120%;
+    line-height: 1;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6); /* these need special shadows */
+    padding: 0;
+    border: none;
+    background-color: $light;
+    span {
+      position: absolute;
+      background: inherit;
+      top:0;
+      left: 0;
+      width:42px;
+      height:24.2487px;
+    }
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: 29.70px;
+      height: 29.70px;
+      -webkit-transform: scaleY(0.5774) rotate(-45deg);
+      -ms-transform: scaleY(0.5774) rotate(-45deg);
+      transform: scaleY(0.5774) rotate(-45deg);
+      background-color: inherit;
+      left: 6.1508px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6); /* these need special shadows */
+    }
+    &:before {
+      top: -14.8492px;
+    }
+    &:after {
+      bottom: -14.8492px;
+    }
+    &:nth-child(even) {
+      left: 21px;
+      top: -14.8492px;
+    }
+  }
+
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $hot-text-color;
+    text-shadow: $text-shadow;
+    background-color: $standard-color;
+    box-shadow: $hover-box-shadow;
+  }
+  &.constructive {
+    border-color: $constructive-color;
+    color: $constructive-color;
+    &:hover,
+    &:active,
+    &:focus {
+      color: $hot-text-color;
+      background-color: $constructive-color;
+    }
+  }
+  &.destructive {
+    border-color: $destructive-color;
+    color: $destructive-color;
+    &:hover,
+    &:active,
+    &:focus {
+      color: $hot-text-color;
+      background-color: $destructive-color;
+    }
+  }
+
+
+  &.mute {
+    background-color: transparent;
+    border-color: transparent;
+    &.constructive {
+      color: $constructive-color;
+      text-shadow: none;
+    }
+    &.destructive {
+      color: $destructive-color;
+      text-shadow: none;
+    }
+    &:hover {
+      color: $white;
+      text-shadow: $text-shadow;
+      background-color: $grey-dark;
+      &.constructive {
+        background-color: $constructive-color;
+      }
+      &.destructive {
+        background-color: $destructive-color;
+      }
+    }
+  }
+
+  &.hot {
+    color: $light;
+    text-shadow: $text-shadow;
+    background-color: $standard-color;
+    border-color: $standard-color;
+    &.constructive {
+      background-color: $constructive-color;
+      border-color: $constructive-color;
+    }
+    &.destructive {
+      background-color: $destructive-color;
+      border-color: $destructive-color;
+    }
+    &:hover {
+
+    }
+  }
+
+  &:disabled {
+    color: $grey-medium;
+    background-color: $light;
+    border-color: $light;
+    cursor: not-allowed;
+    text-shadow: none;
+    box-shadow: none;
+    pointer-events: none;
+    &:hover,
+    &:focus,
+    &:active {
+      color: $grey-medium;
+      background-color: $light;
+      border-color: $grey-medium;
+      text-shadow: none;
+      box-shadow: none;
+    }
+    &.hexagon,
+    &.hexagon::before,
+    &.hexagon::after {
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
+  }
+
+}
+
+

@@ -11,6 +11,8 @@
             height: 100%;
             width: 100vw;
             min-width: 100vw;
+            font-family: "Helvetica Neue", Arial, serif;
+            font-size: 13pt;
         }
         #container {
             height: 100%;
@@ -18,9 +20,33 @@
             margin-right: auto;
             width: 50%;
             background-color: #eee;
+            padding: 40px;
+        }
+        h3 {
+            font-weight: normal;
+            color: #666;
+            border-bottom: 1px solid #666;
+        }
+        h4 {
+            font-weight: normal;
+            text-transform: uppercase;
+            color: #888;
+        }
+        .section {
+            margin: 0 20px 0 20px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .section button {
+            margin: 20px;
+        }
+        button.hexagon:nth-child(even) {
+            left: 0;
+            top: 0;
         }
     </style>
-    <script type="text/javascript" src="../../external/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="libs/jquery-min.js"></script>
     <script type="text/javascript" src="../libs/DialogWindow.js"></script>
     <script type="text/javascript" src="../libs/SimpleButton.js"></script>
     <script type="text/javascript" src="../libs/ConstructiveButton.js"></script>
@@ -30,6 +56,237 @@
         if (!window.console) { console={}; console.log = function(){}; }
         $(document).ready( function() {
 
+            const $c = $('#container');
+
+            $c.append($('<h3 />').html("Buttons"));
+            $c.append($('<h4 />').html("Standard Phase"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new SimpleButton({
+                            text: "Normal"
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "Constructive"
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "Destructive"
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "Disabled",
+                            disabled: true
+                        }).button
+                    )
+            );
+            $c.append($('<h4 />').html("Mute Phase"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new SimpleButton({
+                            text: "Normal",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "Constructive",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "Destructive",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "Disabled",
+                            disabled: true,
+                            mute: true
+                        }).button
+                    )
+            );
+            $c.append($('<h4 />').html("Hot Phase"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new SimpleButton({
+                            text: "Normal",
+                            hot: true
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "Constructive",
+                            hot: true
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "Destructive",
+                            hot: true
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "Disabled",
+                            disabled: true,
+                            hot: true
+                        }).button
+                    )
+            );
+            $c.append($('<h4 />').html("Square"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "square"
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "X",
+                            shape: "square"
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "X",
+                            shape: "square"
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "square",
+                            disabeled: true
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "X",
+                            shape: "square",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "X",
+                            shape: "square",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "square",
+                            disabled: true,
+                            mute: true
+                        }).button
+                    )
+            );
+            $c.append($('<h4 />').html("Circle"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "circle"
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "X",
+                            shape: "circle"
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "X",
+                            shape: "circle"
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "circle",
+                            disabled: true
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "circle",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "X",
+                            shape: "circle",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "X",
+                            shape: "circle",
+                            mute: true
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "circle",
+                            disabled: true,
+                            mute: true
+                        }).button
+                    )
+            );
+            $c.append($('<h4 />').html("Hexagon"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "hexagon"
+                        }).button
+                    )
+                    .append(
+                        new ConstructiveButton({
+                            text: "X",
+                            shape: "hexagon"
+                        }).button
+                    )
+                    .append(
+                        new DestructiveButton({
+                            text: "X",
+                            shape: "hexagon"
+                        }).button
+                    )
+                    .append(
+                        new SimpleButton({
+                            text: "X",
+                            shape: "hexagon",
+                            disabled: true
+                        }).button
+                    )
+            );
+
+
+
+
+
+
+            let $inputs = $('<div />').addClass('section');
 
 
         });
