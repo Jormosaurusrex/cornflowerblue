@@ -1,9 +1,12 @@
 "use strict";
 
 class TextInput {
+
     static DEFAULT_CONFIG = {
         id : null, // Component id
         name: null,
+        counter: null, // A value for a character counter. Null means 'no counter'
+                    // Possible values: null, 'remaining', 'limit', and 'sky'
         type: 'text', // Type of input, defaults to "text"
         label : null, // Input label. If null, does not show up.
         placeholder: null, // Input placeholder. If null, does not appear
@@ -70,8 +73,54 @@ class TextInput {
         this.container = $('<div />')
             .addClass('input-container')
             .append(this.labelobj)
-            .append(this.input);
+            .append(this.input)
+            .append(this.charactercounter);
+
         if (this.mute) { this.container.addClass('mute'); }
+    }
+
+    /**
+     * Draws a text counter in the field
+     */
+    buildCharacterCounter() {
+        var me = this;
+        if (this.counter) {
+            this.countchars = $('<span />');
+            this.charactercounter = $('<div />')
+                .addClass('charcounter')
+                .addClass(this.counter);
+            if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
+            if (this.counter === 'limit') {
+                this.charactercounter.append(this.countchars).append($('<span />').html(" of " + this.maxlength + " characters entered."));
+            } else if (this.counter === 'sky') {
+                this.charactercounter.append(this.countchars).append($('<span />').html(" characters entered."));
+            } else { // remaining
+                this.charactercounter.append(this.countchars).append($('<span />').html(" characters remaining."));
+            }
+            me.updateCounter();
+        }
+    }
+
+    /**
+     * Updates the counter
+     */
+    updateCounter() {
+        if (!this.counter) { return; }
+        if ((this.counter === 'limit') || (this.counter === 'sky')) {
+            this.countchars.html(this.value.length);
+        } else {
+            this.countchars.html(this.maxlength - this.value.length);
+        }
+        if ((this.maxlength) && (this.value.length >= this.maxlength)) {
+            this.charactercounter.addClass('outofbounds');
+        } else if ((this.counter !== 'sky')
+            && (this.value.length >= (this.maxlength * .90))) {
+            this.charactercounter.removeClass('outofbounds');
+            this.charactercounter.addClass('danger');
+        } else {
+            this.charactercounter.removeClass('danger');
+            this.charactercounter.removeClass('outofbounds');
+        }
     }
 
     /**
@@ -79,6 +128,7 @@ class TextInput {
      * @returns {jQuery} jQuery representation of the input
      */
     buildInput() {
+        const me = this;
         this.input = $('<input />')
             .data('self', this)
             .attr('type', this.type)
@@ -91,12 +141,15 @@ class TextInput {
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
             .on('keyup', function(e) {
-                const me = $(this).data('self');
+                me.updateCounter();
+            })
+            .on('keyup', function(e) {
                 if ((me.value) && (me.value.length > 0) && (me.container)) {
                     me.container.addClass('filled');
                 } else {
                     me.container.removeClass('filled');
                 }
+
                 if (me.isDirty()) {
                     if (me.container) { me.container.addClass('dirty'); }
                     me.input.addClass('dirty');
@@ -118,9 +171,9 @@ class TextInput {
                 } else if ((me.keyup) && (typeof me.keyup === 'function')) {
                     me.keyup(e, me);
                 }
+
             })
             .focusin(function(e) {
-                const me = $(this).data('self');
                 if ((me.mute) && (me.placeholder)) {
                     $(this).attr('placeholder', me.placeholder);
                 }
@@ -132,7 +185,6 @@ class TextInput {
                 }
             })
             .focusout(function(e) {
-                const me = $(this).data('self');
                 if ((me.mute) && (me.label)) {
                     $(this).attr('placeholder', me.label);
                 }
@@ -175,6 +227,12 @@ class TextInput {
     }
     set input(input) { this._input = input; }
 
+    get charactercounter() {
+        if (!this._charactercounter) { this.buildCharacterCounter(); }
+        return this._charactercounter;
+    }
+    set charactercounter(charactercounter) { this._charactercounter = charactercounter; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -183,6 +241,12 @@ class TextInput {
         return this._container;
     }
     set container(container) { this._container = container; }
+
+    get countchars() { return this._countchars; }
+    set countchars(countchars) { this._countchars = countchars; }
+
+    get counter() { return this.config.counter; }
+    set counter(counter) { this.config.counter = counter; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }

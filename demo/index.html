@@ -159,6 +159,8 @@
                         new TextInput({
                             label: "Element Label",
                             title: "Test Tooltip title text",
+                            counter: 'remaining',
+                            maxlength: 100,
                             placeholder: "An input placeholder."
                         }).container
                     )
@@ -171,6 +173,8 @@
                         new TextInput({
                             label: "Element Label",
                             mute: true,
+                            counter: 'limit',
+                            maxlength: 100,
                             placeholder: "An input placeholder."
                         }).container
                     )
@@ -182,6 +186,7 @@
                     .append(
                         new PasswordInput({
                             label: "Password",
+                            counter: 'sky',
                             placeholder: "Enter your password."
                         }).container
                     )

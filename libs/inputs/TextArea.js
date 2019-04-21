@@ -1,10 +1,10 @@
 "use strict";
 
 class TextArea extends TextInput {
+
     constructor(config) {
         super(config);
     }
-
 
     /**
      * Builds the input's DOM.

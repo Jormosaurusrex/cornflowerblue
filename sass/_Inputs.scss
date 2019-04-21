@@ -36,6 +36,20 @@ div.input-container {
   margin-left: 30px;
   margin-right: 30px;
   position: relative;
+  box-sizing: border-box;
+  div.charcounter {
+    color: $grey-medium;
+    display: block;
+    font-size: 85%;
+    font-style: oblique;
+    text-align: right;
+    &.danger {
+      color: $orange;
+    }
+    &.outofbounds {
+      color: $red;
+    }
+  }
   &.mute {
     label {
       visibility: hidden;
@@ -61,6 +75,7 @@ input[type="text"],
 input[type="number"],
 input[type="password"],
 textarea {
+  box-sizing: border-box;
   outline: none;
   position: relative;
   font-family: inherit;

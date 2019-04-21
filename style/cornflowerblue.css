@@ -104,7 +104,18 @@ div.input-container {
   margin-bottom: 20px;
   margin-left: 30px;
   margin-right: 30px;
-  position: relative; }
+  position: relative;
+  box-sizing: border-box; }
+  div.input-container div.charcounter {
+    color: #999;
+    display: block;
+    font-size: 85%;
+    font-style: oblique;
+    text-align: right; }
+    div.input-container div.charcounter.danger {
+      color: #ff9900; }
+    div.input-container div.charcounter.outofbounds {
+      color: #910000; }
   div.input-container.mute label {
     visibility: hidden; }
   div.input-container.mute.active label, div.input-container.mute.filled label {
@@ -123,6 +134,7 @@ input[type="text"],
 input[type="number"],
 input[type="password"],
 textarea {
+  box-sizing: border-box;
   outline: none;
   position: relative;
   font-family: inherit;
@@ -197,6 +209,7 @@ textarea.mute {
     box-shadow: inset 10px 0 0 #005e20; }
 
 button {
+  box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: row;
