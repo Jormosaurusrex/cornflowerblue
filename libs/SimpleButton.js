@@ -131,7 +131,7 @@ class SimpleButton {
      * @returns {jQuery} a span element
      */
     makeIcon(glyph, hidden) {
-        let i = $('<span />').addClass("icon-" + glyph);
+        let i = $('<span />').addClass("cfb-" + glyph);
         if (this.shape) {
             i.attr('aria-label', this.text);
         } else {

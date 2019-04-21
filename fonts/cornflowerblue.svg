@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Brandon Harris</metadata>
+<defs>
+<font id="cornflowerblue" horiz-adv-x="1000" >
+<font-face font-family="cornflowerblue" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="echx" unicode="&#x21;" d="M818 597l-71 71-247-247-247 247-71-71 247-247-247-247 71-71 247 247 247-247 71 71-247 247 247 247z" horiz-adv-x="1000" />
+
+<glyph glyph-name="legend" unicode="&#x22;" d="M402 92h480v60h-480z m0 258h480v60h-480z m0 314v-60h480v60z m-258-636h192v190h-192z m189 352c0 51-42 92-94 92s-93-41-93-92 42-93 93-93 94 42 94 93z m-94 160l113 190h-226z" horiz-adv-x="1000" />
+
+<glyph glyph-name="minimize" unicode="&#x23;" d="M712 322l-42 42-140-140v526h-60v-524l-140 138-42-42 212-212z m-632-312v-80h800v80z" horiz-adv-x="1000" />
+
+<glyph glyph-name="map" unicode="&#x24;" d="M610 665l-220 50-240-55v-680l240 55 220-50 240 55v680z m-240-595l-180-40v600l180 40z m220-40l-180 40v600l180-40z m220 40l-180-40v600l180 40z" horiz-adv-x="1000" />
+
+<glyph glyph-name="minus" unicode="&#x25;" d="M100 400h800v-100h-800v100z" horiz-adv-x="1000" />
+
+<glyph glyph-name="plus" unicode="&#x26;" d="M550 400v350h-100v-350h-350v-100h350v-350h100v350h350v100h-350z" horiz-adv-x="1000" />
+
+<glyph glyph-name="popout" unicode="&#x27;" d="M820-10h-680v680h380v60h-440v-800h800v440h-60z m-200 780v-60h199l-372-371 43-43 370 371v-197h60v300z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>
