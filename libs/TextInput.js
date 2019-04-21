@@ -44,6 +44,7 @@ class TextInput {
             .addClass('input-container')
             .append(this.labelobj)
             .append(this.input);
+        if (this.mute) { this.container.addClass('mute'); }
     }
 
     /**
@@ -52,7 +53,7 @@ class TextInput {
      */
     buildInput() {
         this.input = $('<input />')
-            .data('self', this) // attach ourselves to the element
+            .data('self', this)
             .attr('type', this.type)
             .attr('name', this.name)
             .attr('autocomplete', this.autocomplete)
@@ -61,7 +62,21 @@ class TextInput {
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
+            .focusin(function() {
+                if (($(this).data('self').mute) && ($(this).data('self').placeholder)) {
+                    $(this).attr('placeholder', $(this).data('self').placeholder);
+                }
+            })
+            .focusout(function() {
+                if (($(this).data('self').mute) && ($(this).data('self').label)) {
+                    $(this).attr('placeholder', $(this).data('self').label);
+                }
+            })
             .val(this.config.value);
+        if (this.mute) {
+            this.input.addClass('mute');
+            if (this.label) { this.input.attr('placeholder', this.label); }
+        }
     }
 
     /**
@@ -84,7 +99,7 @@ class TextInput {
     set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }
 
     get input() {
-        if (!this._input) { this.input = this.buildInput(); }
+        if (!this._input) { this.buildInput(); }
         return this._input;
     }
     set input(input) { this._input = input; }
@@ -93,7 +108,7 @@ class TextInput {
     set classes(classes) { this.config.classes = classes; }
 
     get container() {
-        if (!this._container) { this.container = this.buildContainer(); }
+        if (!this._container) { this.buildContainer(); }
         return this._container;
     }
     set container(container) { this._container = container; }
@@ -111,13 +126,16 @@ class TextInput {
     set label(label) { this.config.label = label; }
 
     get labelobj() {
-        if (!this._labelobj) { this.labelobj = this.buildLabel(); }
+        if (!this._labelobj) { this.buildLabel(); }
         return this._labelobj;
     }
     set labelobj(labelobj) { this._labelobj = labelobj; }
 
     get maxlength() { return this.config.maxlength; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }

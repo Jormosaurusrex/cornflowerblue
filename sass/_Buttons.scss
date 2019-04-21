@@ -2,8 +2,9 @@ $standard-color: $grey-dark;
 $constructive-color: $green;
 $destructive-color: $red;
 $hot-text-color: $light;
-$hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
 $button-border-radius: $border-radius;
+$hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+$hexagon-shadow: 0 0 15px rgba(0,0,0,0.6);
 
 button {
   position: relative;
@@ -18,7 +19,7 @@ button {
   white-space: nowrap;
   margin: 10px 5px 10px 5px;
   padding: 0.4em 1em 0.4em 1em;
-  font-family: "Helvetica Neue", Arial, serif;
+  font-family: $default-font-family;
   font-weight: normal;
   font-size: 100%;
   line-height: 1.5;
@@ -53,7 +54,7 @@ button {
     height: 24.25px;
     font-size: 120%;
     line-height: 1;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6); /* these need special shadows */
+    box-shadow: $hexagon-shadow;
     padding: 0;
     border: none;
     background-color: $light;
@@ -77,7 +78,7 @@ button {
       transform: scaleY(0.5774) rotate(-45deg);
       background-color: inherit;
       left: 6.1508px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6); /* these need special shadows */
+      box-shadow: $hexagon-shadow;
     }
     &:before {
       top: -14.8492px;
@@ -184,7 +185,7 @@ button {
     &.hexagon,
     &.hexagon::before,
     &.hexagon::after {
-      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      box-shadow: $hexagon-shadow;
     }
   }
 

@@ -38,6 +38,9 @@
             flex-direction: row;
             flex-wrap: wrap;
         }
+        .section.vert {
+            flex-direction: column;
+        }
         .section button {
             margin: 20px;
         }
@@ -51,12 +54,114 @@
     <script type="text/javascript" src="../libs/SimpleButton.js"></script>
     <script type="text/javascript" src="../libs/ConstructiveButton.js"></script>
     <script type="text/javascript" src="../libs/DestructiveButton.js"></script>
+    <script type="text/javascript" src="../libs/TextInput.js"></script>
+    <script type="text/javascript" src="../libs/TextArea.js"></script>
+    <script type="text/javascript" src="../libs/PasswordInput.js"></script>
     <script type="text/javascript" src="../libs/Utils.js"></script>
     <script type="text/javascript">
         if (!window.console) { console={}; console.log = function(){}; }
         $(document).ready( function() {
 
             const $c = $('#container');
+
+            $c.append($('<h3 />').html("Inputs"));
+            $c.append($('<h4 />').html("Standard"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new TextInput({
+                            label: "Element Label",
+                            placeholder: "An input placeholder."
+                        }).container
+                    )
+            );
+
+            $c.append($('<h4 />').html("Mute"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new TextInput({
+                            label: "Element Label",
+                            mute: true,
+                            placeholder: "An input placeholder."
+                        }).container
+                    )
+            );
+
+            $c.append($('<h4 />').html("Password"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new PasswordInput({
+                            label: "Password",
+                            placeholder: "Enter your password."
+                        }).container
+                    )
+            );
+
+            $c.append($('<h4 />').html("Mute Password"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new PasswordInput({
+                            label: "Password",
+                            mute: true,
+                            placeholder: "Enter your password."
+                        }).container
+                    )
+            );
+
+            $c.append($('<h4 />').html("Disabled"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new TextInput({
+                            disabled: true,
+                            label: "Element Label",
+                            placeholder: "Enter the text."
+                        }).container
+                    )
+            );
+
+            $c.append($('<h4 />').html("Mute Disabled"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new TextInput({
+                            disabled: true,
+                            label: "Element Label",
+                            placeholder: "Enter the text.",
+                            mute: true
+                        }).container
+                    )
+            );
+            $c.append($('<h3 />').html("Text Areas"));
+
+
+            $c.append($('<h4 />').html("Standard"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new TextArea({
+                            label: "Element Label",
+                            placeholder: "An input placeholder."
+                        }).container
+                    )
+            );
+
+            $c.append($('<h4 />').html("Mute"));
+            $c.append(
+                $('<div />').addClass('section').addClass('vert')
+                    .append(
+                        new TextArea({
+                            label: "Element Label",
+                            mute: true,
+                            placeholder: "An input placeholder."
+                        }).container
+                    )
+            );
+
+
 
             $c.append($('<h3 />').html("Buttons"));
             $c.append($('<h4 />').html("Standard Phase"));

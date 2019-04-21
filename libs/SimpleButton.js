@@ -85,6 +85,7 @@ class SimpleButton {
         if (this.classes) { this.button.addClass(this.classes.join(' ')); }
 
         if (this.disabled) { this.disable(); }
+
         if (this.hot) { // hot takes precidence over mute
             this.button.addClass('hot');
         } else if (this.mute) {

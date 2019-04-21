@@ -1,9 +1,12 @@
 
-$blue: #0054a6 !default;
-$red: #910000 !default;
+$blue: rgb(0, 84, 166) !default; // #0054a6
+$blue-half: rgba(0, 84, 166, 0.5) !default; // #0054a6
+$red: rgb(145, 0, 0) !default; // #910000
+$red-half: rgba(145, 0, 0, 0.5) !default; // #910000
 $orange: #ff9900 !default;
 $yellow: #ffdd1b !default;
-$green: #005e20 !default;
+$green: rgb(0, 94, 32) !default; // #005e20
+$green-half: rgba(0, 94, 32, 0.5) !default; // #005e20
 $tan: #eadcbc !default;
 $pink: #ff00de !default;
 $lightblue: #a0e1fa !default;
@@ -19,6 +22,8 @@ $grey-meddark: #555 !default;
 $grey-darker: #444 !default;
 $grey-darkest: #222 !default;
 $black: #000 !default;
+
+$default-font-family: "Helvetica Neue", Arial, serif !default;
 
 $border-radius: 3px !default;
 $text-shadow: 0 1px 1px rgba(0,0,0,0.5) !default;
@@ -37,4 +42,3 @@ $interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.7) !default;
 $interior-shadow-inverse: 0px -3px 5px 0px rgba(0,0,0,0.75) !default;
 $interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
 
-$focus-box-shadow: inset 5px 0px 0px 0px $blue;

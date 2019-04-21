@@ -1,9 +1,17 @@
+$standard-color: $grey-dark;
+$focus-color: $green;
+
 div.input-container {
   margin-top: 10px;
   margin-bottom: 20px;
   margin-left: 30px;
   margin-right: 30px;
   position: relative;
+  &.mute {
+    label {
+      display: none;
+    }
+  }
 }
 label {
   display: block;
@@ -11,37 +19,69 @@ label {
   margin-top: 10px;
   margin-bottom: 5px;
   font-size: 13pt;
+  color: $grey-darker;
 }
 input[type="text"],
 input[type="number"],
 input[type="password"],
 textarea {
+  outline: none;
   font-family: inherit;
   width: 100%;
   background-color: $ultralight;
   margin: 0;
-  font-size: 13pt;
-  border: 1px solid $grey-medium;
-  padding: 5px 5px 5px 11px;
+  font-size: 105%;
+  border: 2px solid $standard-color;
+  padding: 10px 10px 10px 20px;
   border-radius: 1px;
   color: $grey-darker;
   vertical-align: middle;
-
+  &::placeholder {
+    color: $grey-medium;
+    font-weight: normal;
+  }
   &:disabled {
     border-color: $grey-light;
     background-color: $light;
     color: $grey-medium;
   }
-  &::-webkit-input-placeholder,
-  &::-moz-placeholder,
-  &:-ms-input-placeholder,
-  &:-moz-placeholder,
-  &::placeholder {
-    color: $grey-light;
-    font-weight: normal;
-  }
   &:focus {
-    border-color: $green;
-    box-shadow: inset 7px 0 0 $green;
+    border-color: $focus-color;
+    box-shadow: inset 10px 0 0 $focus-color;
+    &::placeholder {
+      opacity: 0.3;
+    }
+  }
+  &.mute {
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 10px;
+    &::placeholder {
+      color: $grey-darker;
+    }
+    &:disabled {
+      &::placeholder {
+        color: $grey-medium;
+      }
+    }
+    &:focus {
+      border-bottom-color: $focus-color;
+      background-color: rgba(255,255,255, 0.5);
+      box-shadow: inset 0px -4px 0 0 $focus-color;
+    }
+  }
+}
+textarea {
+  &.mute {
+    padding: 10px 10px 10px 20px;
+    border-left: 2px solid $standard-color;
+    border-bottom: none;
+    &:focus {
+      border-left-color: $focus-color;
+      background-color: rgba(255,255,255, 0.5);
+      box-shadow: inset 10px 0 0 $focus-color;
+    }
   }
 }
