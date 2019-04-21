@@ -41,7 +41,7 @@ class DialogWindow {
             this.window.append(this.title);
             if (this.config.showCloseButton) {
                 this.closeButton = new SimpleButton({
-                    glyph: 'echx',
+                    icon: 'echx',
                     text: "Close",
                     shape: "square",
                     classes: ["closebutton"],

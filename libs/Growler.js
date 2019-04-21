@@ -6,6 +6,8 @@ class Growler {
         id : null, // the id
         title: null, // the growler title
         text : null, // the growler text payload
+        duration: 4000, // length of time in milliseconds to display,
+        icon: null, // optional icon
         position: 'topright', // (topright|bottomright|bottomleft|topleft) position for growler
         classes: [] //Extra css classes to apply
     };
@@ -25,29 +27,63 @@ class Growler {
      * @returns {jQuery} jQuery representation
      */
     build() {
-        const me = this;
+
+        this.growl = $('<div />')
+            .addClass('growler')
+            .addClass(this.position);
+        if (!$growlbox.length) {
+            $growlbox = $('<div />')
+                .addClass('growlbox')
+                .addClass(me.config.position);
+            $('body').append($growlbox);
+        }
+
+        me._container = $('<div />')
+            .data('self', me)
+            .addClass('growler')
+            .addClass(me.config.style);
+
+        me._closebutton = new cfb.SimpleButton({
+            text: 'Close',
+            icon: 'fa-close',
+            icononly: true,
+            cssclasses: ['dclose'],
+            action: function(e) {
+                e.preventDefault();
+                me.close();
+            }
+        });
+        me.getContainer().append(me._closebutton);
+
+        if (me.config.message) {
+            me._title = $('<div />').addClass('title').html(me.config.title);
+            me.getContainer().append(me.getTitle());
+            me._message = $('<div />').addClass('message');
+            if (me.config.icon) {
+                me.getMessage().append($('<div />').addClass('fa').addClass('icon').addClass(me.config.icon));
+            }
+            me.getMessage().append($('<div />').addClass('mtext').html(me.config.message));
+            me.getContainer().append(me.getMessage());
+        } else {
+            me.getContainer().addClass('inline');
+            me._title = $('<div />').addClass('title');
+            if (me.config.icon) {
+                me.getTitle().append($('<div />').addClass('fa').addClass('icon').addClass(me.config.icon));
+            }
+            me.getTitle().append($('<span />').html(me.config.title));
+            me.getContainer().append(me.getTitle());
+        }
+
+        $growlbox.append(me.getContainer());
+        me.show();
+
+        me._timer = setTimeout(function() {
+            me.close();
+        }, me.config.duration);
+
 
         return this.button;
     }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Enable the button
-     */
-    disable() {
-        this.button.prop('disabled', true);
-        this.disabled = true;
-    }
-
-    /**
-     * Disable the button
-     */
-    enable() {
-        this.button.removeAttr('disabled');
-        this.disabled = false;
-    }
-
 
     /* UTILITY METHODS__________________________________________________________________ */
 
@@ -58,13 +94,9 @@ class Growler {
      * @returns {jQuery} a span element
      */
     makeIcon(glyph, hidden) {
-        let i = $('<span />').addClass("icon-" + glyph);
-        if (this.shape) {
-            i.attr('aria-label', this.text);
-        } else {
-            i.attr('aria-hidden', true);
-        }
-        return i;
+        return $('<span />')
+            .attr('aria-hidden', true)
+            .addClass("icon-" + glyph);
     }
 
     /**
@@ -72,50 +104,33 @@ class Growler {
      * @returns {string}
      */
     toString () {
-        return `SimpleButton | id: ${this.id} :: text: ${this.text} :: shape: ${this.shape} :: disabled: ${this.disabled}`;
+        return `Growler | id: ${this.id} :: text: ${this.text} :: shape: ${this.shape} :: disabled: ${this.disabled}`;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get action() { return this.config.action; }
-    set action(action) {
-        if (typeof action != 'function') {
-            console.log("Action provided to button is not a function!");
-        }
-        this.config.action = action;
+    get growler() {
+        if (!this._growler) { this.growler = this.build(); }
+        return this._growler;
     }
-
-    get button() {
-        if (!this._button) { this.button = this.build(); }
-        return this._button;
-    }
-    set button(button) { this._button = button; }
+    set button(growler) { this._growler = growler; }
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
-    get disabled() { return this.config.disabled; }
-    set disabled(disabled) { this.config.disabled = disabled; }
-
-    get glyph() { return this.config.glyph; }
-    set glyph(glyph) { this.config.glyph = glyph; }
-
-    get hot() { return this.config.hot; }
-    set hot(hot) { this.config.hot = hot; }
-
-    get icon() { return this._icon; }
-    set icon(icon) { this._icon = icon; }
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get mute() { return this.config.mute; }
-    set mute(mute) { this.config.mute = mute; }
-
-    get shape() { return this.config.shape; }
-    set shape(shape) { this.config.shape = shape; }
+    get position() { return this.config.position; }
+    set position(position) { this.config.position = position; }
 
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }
+
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
 
 }

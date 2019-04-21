@@ -2,7 +2,7 @@
     Defines a button object used in the map's navigation system.
 
 
-    - text=string :: The text of the button. If the button is shaped, only displays if a glyph isn't provided.
+    - text=string :: The text of the button. If the button is shaped, only displays if a icon isn't provided.
     - shape=(square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
     - css=string :: one or more css classes to be applied to the button
     - id=string :: An id for the element
@@ -22,7 +22,7 @@ class SimpleButton {
         text : 'Button Text', // The text for the button. This is also used as aria-label.
         shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
         classes: [], //Extra css classes to apply
-        glyph : null, // If present, will be attached to the text inside the button
+        icon : null, // If present, will be attached to the text inside the button
                      // This can be passed a jQuery object
         icononly : false,  // If true, the text will not display on the button, only the icon.
         disabled: false, // if true, make the button disabled.
@@ -51,15 +51,15 @@ class SimpleButton {
         if (this.shape) {
             if (this.shape === 'hexagon') {
                 this.button = $('<button />');
-                if (this.glyph) {
-                    this.button.append($('<span />').append(this.makeIcon(this.glyph)));
+                if (this.icon) {
+                    this.button.append($('<span />').append(this.makeIcon(this.icon)));
                 } else if (this.text) {
                     this.button.append($('<span />').html(this.text));
                 }
             } else {
                 this.button = $('<button />');
-                if (this.glyph) {
-                    this.button.append(this.makeIcon(this.glyph));
+                if (this.icon) {
+                    this.button.append(this.makeIcon(this.icon));
                 } else if (this.text) {
                     this.button.html(this.text)
                 }
@@ -67,8 +67,8 @@ class SimpleButton {
             this.button.addClass(this.shape);
         } else {
             this.button = $('<button />');
-            if (this.glyph) {
-                this.button.append(this.makeIcon(this.glyph));
+            if (this.icon) {
+                this.button.append(this.makeIcon(this.icon));
             }
             if (this.text) {
                 this.button.append(
@@ -126,12 +126,12 @@ class SimpleButton {
 
     /**
      * Makes an icon object
-     * @param glyph the glyph
-     * @param hidden whether or not the glyph should be
+     * @param icon the icon
+     * @param hidden whether or not the icon should be
      * @returns {jQuery} a span element
      */
-    makeIcon(glyph, hidden) {
-        let i = $('<span />').addClass("cfb-" + glyph);
+    makeIcon(icon, hidden) {
+        let i = $('<span />').addClass("cfb-" + icon);
         if (this.shape) {
             i.attr('aria-label', this.text);
         } else {
@@ -170,15 +170,12 @@ class SimpleButton {
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
 
-    get glyph() { return this.config.glyph; }
-    set glyph(glyph) { this.config.glyph = glyph; }
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
 
     get hot() { return this.config.hot; }
     set hot(hot) { this.config.hot = hot; }
-
-    get icon() { return this._icon; }
-    set icon(icon) { this._icon = icon; }
-
+    
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
