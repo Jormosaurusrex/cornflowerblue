@@ -1,18 +1,3 @@
-/*
-    Defines a button object used in the map's navigation system.
-
-
-    - text=string :: The text of the button. If the button is shaped, only displays if a icon isn't provided.
-    - shape=(square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
-    - css=string :: one or more css classes to be applied to the button
-    - id=string :: An id for the element
-    - disabled=boolean :: Disable the button if true. Used only during initialization; to enable/disable
-                        the button programmatically, use enable() and disable().
-    - icononly=boolean :: if true
-    - action=function(e, button) {} :: What to do if clicked on. Passed this button object as second argument.
-
- */
-
 "use strict";
 
 class SimpleButton {
@@ -175,7 +160,7 @@ class SimpleButton {
 
     get hot() { return this.config.hot; }
     set hot(hot) { this.config.hot = hot; }
-    
+
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 

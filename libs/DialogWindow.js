@@ -8,7 +8,7 @@ class DialogWindow {
         title: null,                // Adds a title to the dialog if present
         resizable: false,           // Allows for dialog to be resized
         content: $('<p />').html("No provided content"), // This is the content of the dialog
-        showCloseButton: true      // Show or hide the X button in the corner (requires title != null)
+        showclose: true      // Show or hide the X button in the corner (requires title != null)
     };
     /**
      * Define a DialogWindow
@@ -30,17 +30,15 @@ class DialogWindow {
 
         this.window = $('<div />').addClass('dialog');
 
-        if (this.config.id) {
-            this.window.attr('id', this.config.id);
-        }
+        this.window.attr('id', this.id);
 
         if (this.config.classes) { this.window.addClass(this.config.classes.join(' ')); }
 
         if (this.config.title) {
             this.title = $('<h2 />').append( $('<span />').html(this.config.title) );
             this.window.append(this.title);
-            if (this.config.showCloseButton) {
-                this.closeButton = new SimpleButton({
+            if (this.config.showclose) {
+                this.closebutton = new SimpleButton({
                     icon: 'echx',
                     text: "Close",
                     shape: "square",
@@ -50,7 +48,7 @@ class DialogWindow {
                         me.close();
                     }
                 });
-                this.window.append(this.closeButton.button);
+                this.window.append(this.closebutton.button);
             }
         }
 
@@ -110,19 +108,25 @@ class DialogWindow {
      * @returns {string}
      */
     toString () {
-        return `DialogWindow | id: ${this.config.id} :: title: ${this.config.title}`;
+        return `DialogWindow | id: ${this.id} :: title: ${this.title}`;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get closeButton() { return this._closeButton; }
-    set closeButton(button) { this._closeButton = button; }
+    get closebutton() { return this._closebutton; }
+    set closebutton(closebutton) { this._closebutton = closebutton; }
 
     get container() { return this._container; }
     set container(container) { this._container = container; }
 
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }
+
+    get showclose() { return this.config.showclose; }
+    set showclose(showclose) { this.config.showclose = showclose; }
 
     get title() { return this._title; }
     set title(title) { this._title = title; }

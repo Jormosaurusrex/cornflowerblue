@@ -1,7 +1,11 @@
-
+$growler-core-color: $blue;
+$growler-max-width: 300px;
 div.growlbox {
   z-index: 50000;
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  max-width: $growler-max-width;
   &.top-left {
     top: 10px;
     left: 10px;
@@ -22,7 +26,9 @@ div.growlbox {
     top: 10px;
     right: 10px;
     left: 10px;
-    .growl {
+    margin-left: auto;
+    margin-right: auto;
+    .growler {
       margin-left: auto;
       margin-right: auto;
     }
@@ -31,7 +37,9 @@ div.growlbox {
     bottom: 10px;
     right: 10px;
     left: 10px;
-    .growl {
+    margin-left: auto;
+    margin-right: auto;
+    .growler {
       margin-left: auto;
       margin-right: auto;
     }
@@ -41,159 +49,78 @@ div.growlbox {
 .growler {
   opacity: 0;
   position: relative;
+  box-sizing: border-box;
   border-radius: 3px;
-  border: 2px solid transparent;
+  border: 2px solid $growler-core-color;
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
   box-shadow: $panel-shadow;
+  color: $grey-darkest;
+  background-color: $light;
   margin-bottom: 20px;
-  width: 250px;
-  button.dclose {
-    border-radius: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 44px;
-    height: 44px;
-    line-height: 44px;
-    opacity: 0.65;
-    font-style:normal;
-    overflow: visible;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    -webkit-appearance: none;
-    display: block;
-    outline: none;
-    padding: 0;
-    z-index: 1046;
-    box-shadow: none;
-    touch-action: manipulation;
-    font-size: 28px;
-    color: $light !important;
+  width: $growler-max-width;
+  max-width: $growler-max-width;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  button.closebutton {
+    margin:0;
+    opacity: 0.6;
+    color: $grey-medium;
+    border-color: transparent;
+    background-color: transparent;
+    &:active,
+    &:focus,
     &:hover {
-      color: $white !important;
       opacity: 1;
+      outline: none;
+      box-shadow: none;
+      text-shadow: none;
     }
   }
-  .title {
-    font-size: 16pt;
-    line-height: 24px;
-    padding: 10px;
-    margin-bottom: 0;
-  }
-  .message {
-    font-size: 13pt;
-    line-height: 18px;
+  div.title {
+    font-size: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: $growler-core-color;
+    color: $light;
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    div.icon {
+      text-shadow: $text-shadow;
+    }
+    div.t {
+      text-shadow: $text-shadow;
+      padding: 5px 10px 5px 10px;
+    }
+    button.closebutton {
+      color: $light;
+      margin-right: 0;
+      margin-left: auto;
+      position: relative;
+      left: auto;
+      top: auto;
+      &:hover {
+        text-shadow: $text-shadow;
+      }
+    }
+  }
+  div.payload {
     padding: 10px;
-    .icon {
-      font-size: 36pt;
-      margin-right: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    div.icon {
+      font-size: 30pt;
     }
-    .mtext {
-      padding-top: 10px;
-    }
-  }
-  &.inline {
-    .title {
-      .icon {
-        font-size: 16pt;
-        margin-right: 10px;
-      }
-    }
-  }
-  &.default,
-  &.death {
-    color: $grey-darkest;
-    background-color: $white;
-    border-color: $grey-darkest;
-    .title {
-      background-color: $grey-darkest;
-      color: $white;
-      text-shadow: $text-shadow;
-      font-size: 16pt;
-      line-height: 24px;
-    }
-    .message {
-      .icon {
-        color: $grey-darkest;
-      }
-    }
-  }
-  &.injury,
-  &.score_down,
-  &.cash_remove {
-    color: $grey-darkest;
-    background-color: $white;
-    border-color: $red;
-    .title {
-      background-color: $red;
-      color: $white;
-      text-shadow: $text-shadow;
-      font-size: 16pt;
-      line-height: 24px;
-    }
-    .message {
-      .icon {
-        color: $red;
-      }
-    }
-  }
-  &.score_up,
-  &.cash_add {
-    color: $grey-darkest;
-    background-color: $white;
-    border-color: $green;
-    .title {
-      background-color: $green;
-      color: $white;
-      text-shadow: $text-shadow;
-      font-size: 16pt;
-      line-height: 24px;
-    }
-    .message {
-      .icon {
-        color: $green;
-      }
-    }
-  }
-  &.xp_up,
-  &.level_up {
-    color: $grey-darkest;
-    background-color: $white;
-    border-color: $blue;
-    .title {
-      background-color: $blue;
-      color: $white;
-      text-shadow: $text-shadow;
-      font-size: 16pt;
-      line-height: 24px;
-    }
-    .message {
-      .icon {
-        color: $green;
-      }
-    }
-  }
-  &.celebrate,
-  &.trophy_earned {
-    color: $grey-darkest;
-    background-color: $white;
-    border-color: $orange;
-    .title {
-      background-color: $orange;
-      color: $white;
-      text-shadow: $text-shadow;
-      font-size: 16pt;
-      line-height: 24px;
-    }
-    .message {
-      .icon {
-        color: $orange;
-      }
+    div.text {
+      font-size: 90%;
+      padding: 5px 10px 5px 10px;
     }
   }
 }
