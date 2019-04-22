@@ -37,6 +37,7 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            justify-content: space-evenly;
         }
         .section.vert {
             flex-direction: column;
@@ -50,6 +51,7 @@
         }
     </style>
     <script type="text/javascript" src="libs/jquery-min.js"></script>
+    <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
     <script type="text/javascript" src="../libs/DialogWindow.js"></script>
     <script type="text/javascript" src="../libs/buttons/SimpleButton.js"></script>
     <script type="text/javascript" src="../libs/buttons/ConstructiveButton.js"></script>
@@ -65,8 +67,67 @@
 
             const $c = $('#container');
 
-            $c.append($('<h3 />').html("Growlers"));
 
+            $c.append($('<h3 />').html("Checkboxes and Toggles"));
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new BooleanToggle({
+                            label: "Normal"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            label: "Toggled"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            disabled: true,
+                            label: "Disabled"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            disabled: true,
+                            label: "Disabled Toggled"
+                        }).container
+                    )
+            );
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new BooleanToggle({
+                            labelside: 'right',
+                            label: "Normal"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            labelside: 'right',
+                            label: "Toggled"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            labelside: 'right',
+                            disabled: true,
+                            label: "Disabled"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            labelside: 'right',
+                            checked: true,
+                            disabled: true,
+                            label: "Disabled Toggled"
+                        }).container
+                    )
+            );
+            $c.append($('<h3 />').html("Growlers"));
             $c.append(
                 $('<div />').addClass('section')
                     .append(

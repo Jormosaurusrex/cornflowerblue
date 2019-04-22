@@ -8,6 +8,82 @@
   "copyright": "Brandon Harris",
   "glyphs": [
     {
+      "uid": "9a76bc135eac17d2c8b8ad4a5774fc87",
+      "css": "download",
+      "code": 40,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "6d75f2613070f87c3ef816f889680fc2",
+      "css": "trashcan",
+      "code": 42,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M699.1 236V80.1L278.4 80 278.4 236H120V342.6H226L225.3 920 751 919.8 751.7 342.6H856V236ZM331.1 131H646.5V183.5H331.1ZM383.7 866.8H278.5V340.4L383.7 340.3ZM541.4 866.8H436.2V340.4L541.4 340.3ZM699.1 866.8H594V340.4L699.2 340.3Z",
+        "width": 1000
+      },
+      "search": [
+        "trashcan"
+      ]
+    },
+    {
+      "uid": "ca2c9e8e739187b7c56a8ec83831619b",
+      "css": "pencil",
+      "code": 33,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M101.8 748.8L82 918 252.9 900 838.6 314.4 687.5 163.3ZM167.9 890.5L111.2 833.8 120.7 767.8 200 801.8 234 881.1ZM800.8 314.5L252.8 862.2 224.6 796 753.6 267.2ZM205.7 777.1L139.5 748.8 687.5 201.1 734.8 248.3ZM914.2 201.1L800.8 87.7A26.7 26.7 0 0 0 763 87.7L706.4 144.4 857.5 295.5 914.2 238.8A26.7 26.7 0 0 0 914.2 201.1Z",
+        "width": 1000
+      },
+      "search": [
+        "pencil"
+      ]
+    },
+    {
+      "uid": "5bb7caa3305195efd88dff8ccba973df",
+      "css": "chevrons-vertical",
+      "code": 34,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M480 78L160 462H800ZM160 538L480 922 800 538Z",
+        "width": 1000
+      },
+      "search": [
+        "chevrons-vertical"
+      ]
+    },
+    {
+      "uid": "5a851335fa13d7570e98163c1d11439c",
+      "css": "chevrons-horizontal",
+      "code": 35,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M518 180V820L902 500ZM442 820V180L58 500Z",
+        "width": 1000
+      },
+      "search": [
+        "chevrons-horizontal"
+      ]
+    },
+    {
+      "uid": "173cef727c59cc4b132a56a102925072",
+      "css": "calendar",
+      "code": 41,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M80 100V840H920V100ZM276 780H140V636H276ZM276 576H140V440H276ZM276 380H140V246H276ZM470 780H336V636H470ZM470 576H336V440H470ZM470 380H336V246H470ZM666 780H530V636H666ZM666 576H530V440H666ZM666 380H530V246H666ZM860 780H726V636H860ZM860 576H726V440H860ZM860 380H726V246H860Z",
+        "width": 1000
+      },
+      "search": [
+        "calendar"
+      ]
+    },
+    {
       "uid": "31abbb10ee71b6032288cfed1da484a2",
       "css": "popout",
       "code": 39,
@@ -66,7 +142,7 @@
     {
       "uid": "d15f8707cd755c3ce90ff5f2d1535886",
       "css": "minimize",
-      "code": 35,
+      "code": 43,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -80,7 +156,7 @@
     {
       "uid": "d83be009a0597589e04bc74c634a9a24",
       "css": "legend",
-      "code": 34,
+      "code": 44,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -94,7 +170,7 @@
     {
       "uid": "5a8b951997c990b108a99498569ca9b5",
       "css": "echx",
-      "code": 33,
+      "code": 45,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -103,6 +179,132 @@
       },
       "search": [
         "echx"
+      ]
+    },
+    {
+      "uid": "fe8a8d2e4fdcdf4b55b2e6c3db02016c",
+      "css": "chevron-down",
+      "code": 46,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M80 248L500 752 920 248H80Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-down"
+      ]
+    },
+    {
+      "uid": "daeeb1f5d4006daff2e5e25a49f51c62",
+      "css": "chevron-left",
+      "code": 47,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M248 500L752 920V80L248 500Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-left"
+      ]
+    },
+    {
+      "uid": "5012744571938f527fc4a14f39f067db",
+      "css": "chevron-mini-down",
+      "code": 48,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M160 538L480 922 800 538H160Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-mini-down"
+      ]
+    },
+    {
+      "uid": "5aa2f66003c5c6bf4b81dd1a9c49ef32",
+      "css": "chevron-mini-left",
+      "code": 49,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M58 500L442 820V180L58 500Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-mini-left"
+      ]
+    },
+    {
+      "uid": "b4d73a822c91c0b66c32b32a9a34ce1e",
+      "css": "chevron-mini-right",
+      "code": 50,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M518 180V820L902 500 518 180Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-mini-right"
+      ]
+    },
+    {
+      "uid": "2dd9d7b8b918c34e9ebef9f116367305",
+      "css": "chevron-mini-up",
+      "code": 51,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M480 78L160 462H800L480 78Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-mini-up"
+      ]
+    },
+    {
+      "uid": "c67d921e209f47be71ec56da76d6774f",
+      "css": "chevron-right",
+      "code": 52,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M248 80V920L752 500 248 80Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-right"
+      ]
+    },
+    {
+      "uid": "c99b14e048fb5ce9f83ef5d4bb62fcd8",
+      "css": "chevron-up",
+      "code": 53,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M500 248L80 752H920L500 248Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron-up"
+      ]
+    },
+    {
+      "uid": "c2a699fab95d8dae2c62b96e6a118478",
+      "css": "checkbox",
+      "code": 54,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M875.6 146L417.2 667 119 491.6 81.8 538.6 427.2 811.2 922.8 183.2 875.6 146Z",
+        "width": 1000
+      },
+      "search": [
+        "checkbox"
       ]
     }
   ]

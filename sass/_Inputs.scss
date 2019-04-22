@@ -2,6 +2,16 @@ $standard-color: $grey-dark;
 $focus-color: $green;
 
 [hidden] { display: none; }
+label {
+  display: block;
+  font-weight: normal;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 13pt;
+  color: $grey-darker;
+}
+
 [title-x] {
   position: relative;
   cursor: help;
@@ -61,15 +71,6 @@ div.input-container {
       }
     }
   }
-}
-label {
-  display: block;
-  font-weight: normal;
-  position: relative;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-size: 13pt;
-  color: $grey-darker;
 }
 input[type="text"],
 input[type="number"],

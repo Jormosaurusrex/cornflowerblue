@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?65953028');
-  src: url('../font/cornflowerblue.eot?65953028#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?65953028') format('woff2'),
-       url('../font/cornflowerblue.woff?65953028') format('woff'),
-       url('../font/cornflowerblue.ttf?65953028') format('truetype'),
-       url('../font/cornflowerblue.svg?65953028#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?95111848');
+  src: url('../font/cornflowerblue.eot?95111848#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?95111848') format('woff2'),
+       url('../font/cornflowerblue.woff?95111848') format('woff'),
+       url('../font/cornflowerblue.ttf?95111848') format('truetype'),
+       url('../font/cornflowerblue.svg?95111848#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?65953028#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?95111848#cornflowerblue') format('svg');
   }
 }
 */
@@ -55,10 +55,25 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.cfb-echx:before { content: '\21'; } /* '!' */
-.cfb-legend:before { content: '\22'; } /* '&quot;' */
-.cfb-minimize:before { content: '\23'; } /* '#' */
+.cfb-pencil:before { content: '\21'; } /* '!' */
+.cfb-chevrons-vertical:before { content: '\22'; } /* '&quot;' */
+.cfb-chevrons-horizontal:before { content: '\23'; } /* '#' */
 .cfb-map:before { content: '\24'; } /* '$' */
 .cfb-minus:before { content: '\25'; } /* '%' */
 .cfb-plus:before { content: '\26'; } /* '&amp;' */
 .cfb-popout:before { content: '\27'; } /* ''' */
+.cfb-download:before { content: '\28'; } /* '(' */
+.cfb-calendar:before { content: '\29'; } /* ')' */
+.cfb-trashcan:before { content: '\2a'; } /* '*' */
+.cfb-minimize:before { content: '\2b'; } /* '+' */
+.cfb-legend:before { content: '\2c'; } /* ',' */
+.cfb-echx:before { content: '\2d'; } /* '-' */
+.cfb-chevron-down:before { content: '\2e'; } /* '.' */
+.cfb-chevron-left:before { content: '\2f'; } /* '/' */
+.cfb-chevron-mini-down:before { content: '\30'; } /* '0' */
+.cfb-chevron-mini-left:before { content: '\31'; } /* '1' */
+.cfb-chevron-mini-right:before { content: '\32'; } /* '2' */
+.cfb-chevron-mini-up:before { content: '\33'; } /* '3' */
+.cfb-chevron-right:before { content: '\34'; } /* '4' */
+.cfb-chevron-up:before { content: '\35'; } /* '5' */
+.cfb-checkbox:before { content: '\36'; } /* '6' */

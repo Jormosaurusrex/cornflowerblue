@@ -1,16 +1,16 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Brandon Harris</metadata>
+<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
 <defs>
 <font id="cornflowerblue" horiz-adv-x="1000" >
 <font-face font-family="cornflowerblue" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
 <missing-glyph horiz-adv-x="1000" />
-<glyph glyph-name="echx" unicode="&#x21;" d="M818 597l-71 71-247-247-247 247-71-71 247-247-247-247 71-71 247 247 247-247 71 71-247 247 247 247z" horiz-adv-x="1000" />
+<glyph glyph-name="pencil" unicode="&#x21;" d="M102 101l-20-169 171 18 586 586-151 151z m66-142l-57 57 10 66 79-34 34-79z m633 577l-548-548-28 66 529 529z m-595-463l-66 28 548 548 47-47z m708 576l-113 113a27 27 0 0 1-38 0l-57-56 152-151 56 56a27 27 0 0 1 0 38z" horiz-adv-x="1000" />
 
-<glyph glyph-name="legend" unicode="&#x22;" d="M402 92h480v60h-480z m0 258h480v60h-480z m0 314v-60h480v60z m-258-636h192v190h-192z m189 352c0 51-42 92-94 92s-93-41-93-92 42-93 93-93 94 42 94 93z m-94 160l113 190h-226z" horiz-adv-x="1000" />
+<glyph glyph-name="chevrons-vertical" unicode="&#x22;" d="M480 772l-320-384h640z m-320-460l320-384 320 384z" horiz-adv-x="1000" />
 
-<glyph glyph-name="minimize" unicode="&#x23;" d="M712 322l-42 42-140-140v526h-60v-524l-140 138-42-42 212-212z m-632-312v-80h800v80z" horiz-adv-x="1000" />
+<glyph glyph-name="chevrons-horizontal" unicode="&#x23;" d="M518 670v-640l384 320z m-76-640v640l-384-320z" horiz-adv-x="1000" />
 
 <glyph glyph-name="map" unicode="&#x24;" d="M610 665l-220 50-240-55v-680l240 55 220-50 240 55v680z m-240-595l-180-40v600l180 40z m220-40l-180 40v600l180-40z m220 40l-180-40v600l180 40z" horiz-adv-x="1000" />
 
@@ -19,6 +19,36 @@
 <glyph glyph-name="plus" unicode="&#x26;" d="M550 400v350h-100v-350h-350v-100h350v-350h100v350h350v100h-350z" horiz-adv-x="1000" />
 
 <glyph glyph-name="popout" unicode="&#x27;" d="M820-10h-680v680h380v60h-440v-800h800v440h-60z m-200 780v-60h199l-372-371 43-43 370 371v-197h60v300z" horiz-adv-x="1000" />
+
+<glyph glyph-name="download" unicode="&#x28;" d="M714 100q0 15-10 25t-25 11-25-11-11-25 11-25 25-11 25 11 10 25z m143 0q0 15-10 25t-26 11-25-11-10-25 10-25 25-11 26 11 10 25z m72 125v-179q0-22-16-37t-38-16h-821q-23 0-38 16t-16 37v179q0 22 16 38t38 16h259l75-76q33-32 76-32t76 32l76 76h259q22 0 38-16t16-38z m-182 318q10-23-8-39l-250-250q-10-11-25-11t-25 11l-250 250q-17 16-8 39 10 21 33 21h143v250q0 15 11 25t25 11h143q14 0 25-11t10-25v-250h143q24 0 33-21z" horiz-adv-x="928.6" />
+
+<glyph glyph-name="calendar" unicode="&#x29;" d="M80 750v-740h840v740z m196-680h-136v144h136z m0 204h-136v136h136z m0 196h-136v134h136z m194-400h-134v144h134z m0 204h-134v136h134z m0 196h-134v134h134z m196-400h-136v144h136z m0 204h-136v136h136z m0 196h-136v134h136z m194-400h-134v144h134z m0 204h-134v136h134z m0 196h-134v134h134z" horiz-adv-x="1000" />
+
+<glyph glyph-name="trashcan" unicode="&#x2a;" d="M699 614v156l-421 0 0-156h-158v-107h106l-1-577 526 0 1 577h104v107z m-368 105h316v-52h-316z m53-736h-105v527l105 0z m157 0h-105v527l105 0z m158 0h-105v527l105 0z" horiz-adv-x="1000" />
+
+<glyph glyph-name="minimize" unicode="&#x2b;" d="M712 322l-42 42-140-140v526h-60v-524l-140 138-42-42 212-212z m-632-312v-80h800v80z" horiz-adv-x="1000" />
+
+<glyph glyph-name="legend" unicode="&#x2c;" d="M402 92h480v60h-480z m0 258h480v60h-480z m0 314v-60h480v60z m-258-636h192v190h-192z m189 352c0 51-42 92-94 92s-93-41-93-92 42-93 93-93 94 42 94 93z m-94 160l113 190h-226z" horiz-adv-x="1000" />
+
+<glyph glyph-name="echx" unicode="&#x2d;" d="M818 597l-71 71-247-247-247 247-71-71 247-247-247-247 71-71 247 247 247-247 71 71-247 247 247 247z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-down" unicode="&#x2e;" d="M80 602l420-504 420 504h-840z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-left" unicode="&#x2f;" d="M248 350l504-420v840l-504-420z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-mini-down" unicode="&#x30;" d="M160 312l320-384 320 384h-640z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-mini-left" unicode="&#x31;" d="M58 350l384-320v640l-384-320z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-mini-right" unicode="&#x32;" d="M518 670v-640l384 320-384 320z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-mini-up" unicode="&#x33;" d="M480 772l-320-384h640l-320 384z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-right" unicode="&#x34;" d="M248 770v-840l504 420-504 420z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chevron-up" unicode="&#x35;" d="M500 602l-420-504h840l-420 504z" horiz-adv-x="1000" />
+
+<glyph glyph-name="checkbox" unicode="&#x36;" d="M876 704l-459-521-298 175-37-47 345-272 496 628-47 37z" horiz-adv-x="1000" />
 </font>
 </defs>
 </svg>

@@ -4,7 +4,7 @@ class TextInput {
 
     static DEFAULT_CONFIG = {
         id : null, // Component id
-        name: null,
+        name: null, // Name attribute
         counter: null, // A value for a character counter. Null means 'no counter'
                     // Possible values: null, 'remaining', 'limit', and 'sky'
         type: 'text', // Type of input, defaults to "text"
@@ -14,15 +14,15 @@ class TextInput {
         hidden: false, // Whether or not to be hidden
         autocomplete: 'off', // Enable browser autocomplete. Default is off.
         arialabel: null, // The aria-label value. If null, follows: label > title > null
-        maxlength: null, // maxlength value
-        value: null, // value to use (pre-population).  Used during construction and then discarded.
-        disabled: false, // if true, disable the field.
-        classes: [], //Extra css classes to apply
-        onreturn: $.noop, // action to execute on hitting the return key. Passed (event, self) as arguments.
-        ontab: $.noop, // action to execute on hitting the tab key. Passed (event, self) as arguments.
-        keyup: $.noop, // action to execute on key up. Passed (event, self) as arguments.
-        focusin: $.noop, // action to execute on focus in. Passed (event, self) as arguments.
-        focusout: $.noop // action to execute on focus out. Passed (event, self) as arguments.
+        maxlength: null, // Value for maxlength.
+        value: null, // Value to use (pre-population).  Used during construction and then discarded.
+        disabled: false, // If true, disable the field.
+        classes: [], // Extra css classes to apply
+        onreturn: $.noop, // action to execute on hitting the return key. Passed (event, self).
+        ontab: $.noop, // action to execute on hitting the tab key. Passed (event, self).
+        keyup: $.noop, // action to execute on key up. Passed (event, self).
+        focusin: $.noop, // action to execute on focus in. Passed (event, self).
+        focusout: $.noop // action to execute on focus out. Passed (event, self).
     };
 
 
@@ -52,8 +52,7 @@ class TextInput {
     }
 
     /* STATE METHODS____________________________________________________________________ */
-
-
+    
     /**
      * Has the field been changed or not?
      * @return {boolean} true or false, depending.
@@ -61,46 +60,7 @@ class TextInput {
     isDirty() {
         return (this.origval !== this.value);
     }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Builds and returns a container object for all parts.
-     * This gets over-ridden in elements that have additional structures, like a character counter
-     * @returns {jQuery} jQuery representation of the label and the input together.
-     */
-    buildContainer() {
-        this.container = $('<div />')
-            .addClass('input-container')
-            .append(this.labelobj)
-            .append(this.input)
-            .append(this.charactercounter);
-
-        if (this.mute) { this.container.addClass('mute'); }
-    }
-
-    /**
-     * Draws a text counter in the field
-     */
-    buildCharacterCounter() {
-        var me = this;
-        if (this.counter) {
-            this.countchars = $('<span />');
-            this.charactercounter = $('<div />')
-                .addClass('charcounter')
-                .addClass(this.counter);
-            if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
-            if (this.counter === 'limit') {
-                this.charactercounter.append(this.countchars).append($('<span />').html(" of " + this.maxlength + " characters entered."));
-            } else if (this.counter === 'sky') {
-                this.charactercounter.append(this.countchars).append($('<span />').html(" characters entered."));
-            } else { // remaining
-                this.charactercounter.append(this.countchars).append($('<span />').html(" characters remaining."));
-            }
-            me.updateCounter();
-        }
-    }
-
+    
     /**
      * Updates the counter
      */
@@ -121,6 +81,23 @@ class TextInput {
             this.charactercounter.removeClass('danger');
             this.charactercounter.removeClass('outofbounds');
         }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds and returns a container object for all parts.
+     * This gets over-ridden in elements that have additional structures, like a character counter
+     * @returns {jQuery} jQuery representation of the label and the input together.
+     */
+    buildContainer() {
+        this.container = $('<div />')
+            .addClass('input-container')
+            .append(this.labelobj)
+            .append(this.input)
+            .append(this.charactercounter);
+
+        if (this.mute) { this.container.addClass('mute'); }
     }
 
     /**
@@ -171,7 +148,6 @@ class TextInput {
                 } else if ((me.keyup) && (typeof me.keyup === 'function')) {
                     me.keyup(e, me);
                 }
-
             })
             .focusin(function(e) {
                 if ((me.mute) && (me.placeholder)) {
@@ -212,7 +188,29 @@ class TextInput {
             .attr('for', this.id)
             .html(this.label);
     }
-
+    
+    /**
+     * Draws a text counter in the field
+     */
+    buildCharacterCounter() {
+        var me = this;
+        if (this.counter) {
+            this.countchars = $('<span />');
+            this.charactercounter = $('<div />')
+                .addClass('charcounter')
+                .addClass(this.counter);
+            if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
+            if (this.counter === 'limit') {
+                this.charactercounter.append(this.countchars).append($('<span />').html(" of " + this.maxlength + " characters entered."));
+            } else if (this.counter === 'sky') {
+                this.charactercounter.append(this.countchars).append($('<span />').html(" characters entered."));
+            } else { // remaining
+                this.charactercounter.append(this.countchars).append($('<span />').html(" characters remaining."));
+            }
+            me.updateCounter();
+        }
+    }
+    
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get arialabel() { return this.config.arialabel; }

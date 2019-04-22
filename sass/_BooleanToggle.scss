@@ -1,0 +1,72 @@
+div.checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  label {
+    display: inline-block;
+    margin: 0 5px 0 5px;
+  }
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid $grey-dark;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  padding: 9px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 18px;
+  height: 18px;
+  max-width: 18px;
+  max-height: 18px;
+  &:checked {
+    border-color: $grey-dark;
+    &:after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      max-width: 10px;
+      max-height: 10px;
+      background-color: $grey-dark;
+      position: absolute;
+      left: 4px;
+      top: 4px;
+    }
+  }
+  &:focus,
+  &:active,
+  &:hover {
+    background-color: $focus-color;
+  }
+  &:focus:checked,
+  &:active:checked,
+  &:hover:checked {
+    border-color: $focus-color;
+    background-color: $focus-color;
+    &:after {
+      background-color: $light;
+    }
+  }
+  &:disabled,
+  &:disabled:hover {
+    color: $grey-light;
+    background-color: $light;
+    border-color: $grey-light;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none;
+    &:checked:after {
+      background-color: $grey-light;
+    }
+  }
+  &:checked:disabled:after {
+    background-color: $grey-light;
+  }
+}
+
