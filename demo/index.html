@@ -101,6 +101,9 @@
                         labelside: 'right'
                     })
                 ],
+                onsubmit: function() {
+                    Growler.growl('Submit button clicked', "Clickify");
+                },
                 actions: [
                     new ConstructiveButton({ text: "Submit", icon: "check" }),
                     new SimpleButton({ text: "Something Else" }),

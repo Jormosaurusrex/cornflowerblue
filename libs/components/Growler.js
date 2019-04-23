@@ -17,6 +17,13 @@ class Growler {
         classes: [] //Extra css classes to apply
     };
 
+    static growl(text, title) {
+        return new Growler({
+            text: text,
+            title: title
+        })
+    }
+
     /**
      * Builds a growlbox and inserts it into the dom.
      * @param position the position to create it at.
