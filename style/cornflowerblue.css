@@ -447,6 +447,8 @@ div.checkbox {
     margin: 0 5px 0 5px; }
 
 input[type="checkbox"] {
+  transition: all .2s;
+  box-sizing: border-box;
   -webkit-appearance: none;
   background-color: transparent;
   border: 2px solid #666;
@@ -457,29 +459,45 @@ input[type="checkbox"] {
   cursor: pointer;
   margin-left: 5px;
   margin-right: 5px;
-  width: 18px;
-  height: 18px;
-  max-width: 18px;
-  max-height: 18px; }
+  width: 30px;
+  height: 30px;
+  max-width: 30px;
+  max-height: 30px; }
+  input[type="checkbox"]:after {
+    display: none;
+    box-sizing: border-box;
+    content: '';
+    width: 20px;
+    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    background-color: #ddd;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    border: 7px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5); }
   input[type="checkbox"]:checked {
-    border-color: #666; }
+    border-color: #666;
+    background-color: #999;
+    box-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2); }
     input[type="checkbox"]:checked:after {
-      content: '';
-      width: 10px;
-      height: 10px;
-      max-width: 10px;
-      max-height: 10px;
-      background-color: #666;
-      position: absolute;
-      left: 4px;
-      top: 4px; }
+      display: block; }
   input[type="checkbox"]:focus, input[type="checkbox"]:active, input[type="checkbox"]:hover {
-    background-color: #005e20; }
-  input[type="checkbox"]:focus:checked, input[type="checkbox"]:active:checked, input[type="checkbox"]:hover:checked {
+    outline: none;
     border-color: #005e20;
-    background-color: #005e20; }
-    input[type="checkbox"]:focus:checked:after, input[type="checkbox"]:active:checked:after, input[type="checkbox"]:hover:checked:after {
-      background-color: #ddd; }
+    background-color: #005e20;
+    box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5); }
+    input[type="checkbox"]:focus:after, input[type="checkbox"]:active:after, input[type="checkbox"]:hover:after {
+      display: block;
+      background-color: transparent;
+      border: 1px dotted #ddd; }
+    input[type="checkbox"]:focus:checked, input[type="checkbox"]:active:checked, input[type="checkbox"]:hover:checked {
+      box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2); }
+      input[type="checkbox"]:focus:checked:after, input[type="checkbox"]:active:checked:after, input[type="checkbox"]:hover:checked:after {
+        border: 7px solid #ddd;
+        background-color: #999; }
   input[type="checkbox"]:disabled, input[type="checkbox"]:disabled:hover {
     color: #ccc;
     background-color: #ddd;
@@ -487,10 +505,67 @@ input[type="checkbox"] {
     cursor: not-allowed;
     box-shadow: none;
     pointer-events: none; }
+    input[type="checkbox"]:disabled:after, input[type="checkbox"]:disabled:hover:after {
+      box-shadow: none; }
     input[type="checkbox"]:disabled:checked:after, input[type="checkbox"]:disabled:hover:checked:after {
-      background-color: #ccc; }
-  input[type="checkbox"]:checked:disabled:after {
-    background-color: #ccc; }
+      background-color: #ccc;
+      border-color: #ccc;
+      box-shadow: none; }
+  input[type="checkbox"].round {
+    border-radius: 50%; }
+    input[type="checkbox"].round:checked:after, input[type="checkbox"].round:hover:after {
+      border-radius: 50%; }
+  input[type="checkbox"].toggle, input[type="checkbox"].switch {
+    width: 60px;
+    height: 30px;
+    max-width: 60px;
+    max-height: 30px;
+    background-color: #999;
+    border-color: #ccc;
+    box-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2); }
+    input[type="checkbox"].toggle:after, input[type="checkbox"].switch:after {
+      display: block;
+      box-sizing: border-box;
+      content: '';
+      width: 20px;
+      height: 20px;
+      max-width: 20px;
+      max-height: 20px;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      border-radius: 3px;
+      border: 7px solid #ddd;
+      background-color: #ddd;
+      box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+      transition: all .2s; }
+    input[type="checkbox"].toggle:hover, input[type="checkbox"].toggle:hover:checked, input[type="checkbox"].switch:hover, input[type="checkbox"].switch:hover:checked {
+      box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+      border-color: #005e20; }
+      input[type="checkbox"].toggle:hover:after, input[type="checkbox"].toggle:hover:checked:after, input[type="checkbox"].switch:hover:after, input[type="checkbox"].switch:hover:checked:after {
+        background-color: #999; }
+    input[type="checkbox"].toggle:checked, input[type="checkbox"].switch:checked {
+      border-color: #ccc; }
+      input[type="checkbox"].toggle:checked:after, input[type="checkbox"].switch:checked:after {
+        border: 7px solid #ddd;
+        left: auto;
+        right: 3px; }
+      input[type="checkbox"].toggle:checked:hover, input[type="checkbox"].switch:checked:hover {
+        background-color: #999; }
+    input[type="checkbox"].toggle:disabled, input[type="checkbox"].toggle:disabled:hover, input[type="checkbox"].switch:disabled, input[type="checkbox"].switch:disabled:hover {
+      background-color: #ddd;
+      border-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+      pointer-events: none; }
+      input[type="checkbox"].toggle:disabled:after, input[type="checkbox"].toggle:disabled:checked:after, input[type="checkbox"].toggle:disabled:hover:after, input[type="checkbox"].toggle:disabled:hover:checked:after, input[type="checkbox"].switch:disabled:after, input[type="checkbox"].switch:disabled:checked:after, input[type="checkbox"].switch:disabled:hover:after, input[type="checkbox"].switch:disabled:hover:checked:after {
+        border-color: #ccc;
+        background-color: #ccc;
+        box-shadow: none; }
+  input[type="checkbox"].toggle {
+    border-radius: 1.5em; }
+    input[type="checkbox"].toggle:after, input[type="checkbox"].toggle:checked:after {
+      border-radius: 50%; }
 
 div.growlbox {
   z-index: 50000;

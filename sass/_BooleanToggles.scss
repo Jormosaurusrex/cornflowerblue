@@ -1,0 +1,167 @@
+div.checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  label {
+    display: inline-block;
+    margin: 0 5px 0 5px;
+  }
+}
+input[type="checkbox"] {
+  transition: all .2s;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid $grey-dark;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  padding: 9px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 30px;
+  height: 30px;
+  max-width: 30px;
+  max-height: 30px;
+  &:after {
+    display: none;
+    box-sizing: border-box;
+    content: '';
+    width: 20px;
+    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    background-color: $light;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    border: 7px solid $light;
+    border-radius: 3px;
+    box-shadow: $hover-box-shadow;
+  }
+  &:checked {
+    border-color: $grey-dark;
+    background-color: $grey-medium;
+    box-shadow: $checkbox-checked-shadow;
+    &:after {
+      display: block;
+    }
+  }
+  &:focus,
+  &:active,
+  &:hover {
+    outline: none;
+    border-color: $focus-color;
+    background-color: $focus-color;
+    box-shadow: $hover-box-shadow;
+    &:after {
+      display: block;
+      background-color: transparent;
+      border: 1px dotted $light;
+    }
+    &:checked {
+      box-shadow: $checkbox-checked-shadow-hover;
+      &:after {
+        border: 7px solid $light;
+        background-color: $grey-medium;
+      }
+    }
+  }
+  &:disabled,
+  &:disabled:hover {
+    color: $grey-light;
+    background-color: $light;
+    border-color: $grey-light;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none;
+    &:after {
+      box-shadow: none;
+    }
+    &:checked:after {
+      background-color: $grey-light;
+      border-color: $grey-light;
+      box-shadow: none;
+    }
+  }
+  &.round {
+    border-radius: 50%;
+    &:checked,
+    &:hover {
+      &:after {
+        border-radius: 50%;
+      }
+    }
+  }
+  &.toggle,
+  &.switch {
+    width: 60px;
+    height: 30px;
+    max-width: 60px;
+    max-height: 30px;
+    background-color: $grey-medium;
+    border-color: $grey-light;
+    box-shadow: $checkbox-checked-shadow;
+    &:after {
+      display: block;
+      box-sizing: border-box;
+      content: '';
+      width: 20px;
+      height: 20px;
+      max-width: 20px;
+      max-height: 20px;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      border-radius: 3px;
+      border: 7px solid $light;
+      background-color: $light;
+      box-shadow: $hover-box-shadow;
+      transition: all .2s;
+    }
+    &:hover,
+    &:hover:checked {
+      box-shadow: $checkbox-checked-shadow-hover;
+      border-color: $focus-color;
+      &:after {
+        background-color: $grey-medium;
+      }
+    }
+    &:checked {
+      border-color: $grey-light;
+      &:after {
+        border: 7px solid $light;
+        left: auto;
+        right: 3px;
+      }
+      &:hover {
+        background-color: $grey-medium;
+      }
+    }
+    &:disabled,
+    &:disabled:hover {
+      background-color: $light;
+      border-color: $grey-light;
+      cursor: not-allowed;
+      box-shadow: none;
+      pointer-events: none;
+      &:after,
+      &:checked:after {
+        border-color: $grey-light;
+        background-color: $grey-light;
+        box-shadow: none;
+      }
+    }
+  }
+  &.toggle {
+    border-radius: 1.5em;
+    &:after,
+    &:checked:after {
+      border-radius: 50%;
+    }
+  }
+}
+

@@ -33,7 +33,7 @@
             color: #888;
         }
         .section {
-            margin: 0 20px 0 20px;
+            margin: 0 20px 20px 20px;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -101,7 +101,7 @@
                     .append(
                         new BooleanToggle({
                             labelside: 'right',
-                            label: "Normal"
+                            label: "Labelside: 'right'"
                         }).container
                     )
                     .append(
@@ -124,6 +124,101 @@
                             checked: true,
                             disabled: true,
                             label: "Disabled Toggled"
+                        }).container
+                    )
+            );
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new BooleanToggle({
+                            label: "Style: 'round'",
+                            style: "round"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            label: "Toggled",
+                            style: "round"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            disabled: true,
+                            label: "Disabled",
+                            style: "round"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            disabled: true,
+                            label: "Disabled Toggled",
+                            style: "round"
+                        }).container
+                    )
+            );
+
+
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new BooleanToggle({
+                            label: "Style: 'switch'",
+                            style: "switch"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            label: "Toggled",
+                            style: "switch"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            disabled: true,
+                            label: "Disabled",
+                            style: "switch"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            disabled: true,
+                            label: "Disabled Toggled",
+                            style: "switch"
+                        }).container
+                    )
+            );
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new BooleanToggle({
+                            label: "Style: 'toggle'",
+                            style: "toggle"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            label: "Toggled",
+                            style: "toggle"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            disabled: true,
+                            label: "Disabled",
+                            style: "toggle"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            disabled: true,
+                            label: "Disabled Toggled",
+                            style: "toggle"
                         }).container
                     )
             );

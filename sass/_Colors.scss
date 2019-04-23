@@ -26,17 +26,29 @@ $black: #000 !default;
 $default-font-family: "Helvetica Neue", Arial, serif !default;
 
 $border-radius: 3px !default;
+$button-border-radius: $border-radius;
+
 $text-shadow: 0 1px 1px rgba(0,0,0,0.5) !default;
 $on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3) !default;
-
 $text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.1) !default;
 $text-shadow-grey-medium: 0 -1px 1px rgba(102, 102, 102, 0.1) !default;
 $text-shadow-grey-dark: 0 -1px 1px rgba(153, 153, 153, 0.1) !default;
 $text-shadow-grey-darkest: 0 -1px 1px rgba(0, 0, 0, 0.1) !default;
 
 $box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5) !default;
+$hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+
+$checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
+$checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
+
 $panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5) !default;
 $interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.7) !default;
 $interior-shadow-inverse: 0px -3px 5px 0px rgba(0,0,0,0.75) !default;
 $interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
+$hexagon-shadow: 0 0 15px rgba(0,0,0,0.6);
 
+$standard-color: $grey-dark;
+$focus-color: $green;
+$constructive-color: $green;
+$destructive-color: $red;
+$hot-text-color: $light;

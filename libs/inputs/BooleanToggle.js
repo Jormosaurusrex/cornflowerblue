@@ -10,6 +10,7 @@ class BooleanToggle {
         classes: [], // Extra css classes to apply
         disabled: false, // If true, make the checkbox disabled.
         labelside: 'left', // Which side to put the label on.
+        style: null, // Default to box
         onchange: $.noop // The change handler. Passed (event, self).
     };
 
@@ -77,6 +78,9 @@ class BooleanToggle {
                     me.onchange(e, me);
                 }
             });
+        if (this.style) {
+            this.toggle.addClass(this.style);
+        }
 
     }
 
@@ -173,6 +177,10 @@ class BooleanToggle {
 
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
+
 
     get toggle() {
         if (!this._toggle) { this.build(); }
