@@ -158,6 +158,37 @@
                         }).container
                     )
             );
+            $c.append(
+                $('<div />').addClass('section')
+                    .append(
+                        new BooleanToggle({
+                            label: "Style: 'check'",
+                            style: "check"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            label: "Toggled",
+                            style: "check"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            disabled: true,
+                            label: "Disabled",
+                            style: "check"
+                        }).container
+                    )
+                    .append(
+                        new BooleanToggle({
+                            checked: true,
+                            disabled: true,
+                            label: "Disabled Toggled",
+                            style: "check"
+                        }).container
+                    )
+            );
 
 
             $c.append(
@@ -262,15 +293,19 @@
                             }
                         }).button
                     )
+            );
+            $c.append(
+                $('<div />').addClass('section')
                     .append(
                         new SimpleButton({
-                            text: "Bottom Right",
+                            text: "Bottom Left",
                             action: function() {
                                 new Growler({
-                                    position: 'bottom-right',
+                                    position: 'bottom-left',
                                     icon: 'legend',
-                                    title: 'Bottom Right Growler',
-                                    text: 'Another growler over here!'
+                                    title: 'Bottom Left Growler',
+                                    text: 'Another growler over here!',
+                                    duration: 0
                                 });
                             }
                         }).button
@@ -291,14 +326,13 @@
                     )
                     .append(
                         new SimpleButton({
-                            text: "Bottom Left",
+                            text: "Bottom Right",
                             action: function() {
                                 new Growler({
-                                    position: 'bottom-left',
+                                    position: 'bottom-right',
                                     icon: 'legend',
-                                    title: 'Bottom Left Growler',
-                                    text: 'Another growler over here!',
-                                    duration: 0
+                                    title: 'Bottom Right Growler',
+                                    text: 'Another growler over here!'
                                 });
                             }
                         }).button

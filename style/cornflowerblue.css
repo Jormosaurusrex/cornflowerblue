@@ -459,29 +459,29 @@ input[type="checkbox"] {
   cursor: pointer;
   margin-left: 5px;
   margin-right: 5px;
-  width: 30px;
-  height: 30px;
-  max-width: 30px;
-  max-height: 30px; }
+  width: 25px;
+  height: 25px;
+  max-width: 25px;
+  max-height: 25px; }
   input[type="checkbox"]:after {
     display: none;
     box-sizing: border-box;
     content: '';
-    width: 20px;
-    height: 20px;
-    max-width: 20px;
-    max-height: 20px;
+    width: 17px;
+    height: 17px;
+    max-width: 17px;
+    max-height: 17px;
     background-color: #ddd;
     position: absolute;
-    left: 3px;
-    top: 3px;
+    left: 2px;
+    top: 2px;
     border: 7px solid #ddd;
     border-radius: 3px;
     box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5); }
   input[type="checkbox"]:checked {
     border-color: #666;
-    background-color: #999;
-    box-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2); }
+    box-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+    background-color: #005e20; }
     input[type="checkbox"]:checked:after {
       display: block; }
   input[type="checkbox"]:focus, input[type="checkbox"]:active, input[type="checkbox"]:hover {
@@ -497,7 +497,9 @@ input[type="checkbox"] {
       box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2); }
       input[type="checkbox"]:focus:checked:after, input[type="checkbox"]:active:checked:after, input[type="checkbox"]:hover:checked:after {
         border: 7px solid #ddd;
-        background-color: #999; }
+        background-color: #ddd; }
+  input[type="checkbox"]:hover:checked:after {
+    background-color: #999; }
   input[type="checkbox"]:disabled, input[type="checkbox"]:disabled:hover {
     color: #ccc;
     background-color: #ddd;
@@ -513,15 +515,53 @@ input[type="checkbox"] {
       box-shadow: none; }
   input[type="checkbox"].round {
     border-radius: 50%; }
-    input[type="checkbox"].round:checked:after, input[type="checkbox"].round:hover:after {
+    input[type="checkbox"].round:checked:after, input[type="checkbox"].round:focus:after, input[type="checkbox"].round:active:after, input[type="checkbox"].round:hover:after {
       border-radius: 50%; }
+  input[type="checkbox"].check:after, input[type="checkbox"].check:checked:after {
+    display: none; }
+  input[type="checkbox"].check:before {
+    display: none;
+    font-family: "cornflowerblue";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em;
+    content: '\36';
+    font-size: 15pt;
+    position: absolute;
+    top: 0;
+    left: 2px;
+    color: #ddd;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
+  input[type="checkbox"].check:checked:before {
+    display: inline-block; }
+  input[type="checkbox"].check:disabled, input[type="checkbox"].check:disabled:hover {
+    color: #ccc;
+    background-color: #ddd;
+    border-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none; }
+    input[type="checkbox"].check:disabled:before, input[type="checkbox"].check:disabled:hover:before {
+      box-shadow: none;
+      text-shadow: none; }
+    input[type="checkbox"].check:disabled:checked:before, input[type="checkbox"].check:disabled:hover:checked:before {
+      color: #ccc;
+      box-shadow: none;
+      text-shadow: none; }
   input[type="checkbox"].toggle, input[type="checkbox"].switch {
     width: 60px;
     height: 30px;
     max-width: 60px;
     max-height: 30px;
     background-color: #999;
-    border-color: #ccc;
     box-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2); }
     input[type="checkbox"].toggle:after, input[type="checkbox"].switch:after {
       display: block;
@@ -545,13 +585,12 @@ input[type="checkbox"] {
       input[type="checkbox"].toggle:hover:after, input[type="checkbox"].toggle:hover:checked:after, input[type="checkbox"].switch:hover:after, input[type="checkbox"].switch:hover:checked:after {
         background-color: #999; }
     input[type="checkbox"].toggle:checked, input[type="checkbox"].switch:checked {
-      border-color: #ccc; }
+      border-color: #ccc;
+      background-color: #005e20; }
       input[type="checkbox"].toggle:checked:after, input[type="checkbox"].switch:checked:after {
         border: 7px solid #ddd;
         left: auto;
         right: 3px; }
-      input[type="checkbox"].toggle:checked:hover, input[type="checkbox"].switch:checked:hover {
-        background-color: #999; }
     input[type="checkbox"].toggle:disabled, input[type="checkbox"].toggle:disabled:hover, input[type="checkbox"].switch:disabled, input[type="checkbox"].switch:disabled:hover {
       background-color: #ddd;
       border-color: #ccc;

@@ -10,6 +10,7 @@ class DialogWindow {
         content: $('<p />').html("No provided content"), // This is the content of the dialog
         showclose: true      // Show or hide the X button in the corner (requires title != null)
     };
+
     /**
      * Define a DialogWindow
      * @param config a dictionary object
@@ -20,6 +21,7 @@ class DialogWindow {
         this.build();
         return this;
     }
+
 
     /**
      * Constructs the DialogWindow's DOM elements

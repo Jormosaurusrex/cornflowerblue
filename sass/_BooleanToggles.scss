@@ -22,30 +22,30 @@ input[type="checkbox"] {
   cursor: pointer;
   margin-left: 5px;
   margin-right: 5px;
-  width: 30px;
-  height: 30px;
-  max-width: 30px;
-  max-height: 30px;
+  width: 25px;
+  height: 25px;
+  max-width: 25px;
+  max-height: 25px;
   &:after {
     display: none;
     box-sizing: border-box;
     content: '';
-    width: 20px;
-    height: 20px;
-    max-width: 20px;
-    max-height: 20px;
+    width: 17px;
+    height: 17px;
+    max-width: 17px;
+    max-height: 17px;
     background-color: $light;
     position: absolute;
-    left: 3px;
-    top: 3px;
+    left: 2px;
+    top: 2px;
     border: 7px solid $light;
     border-radius: 3px;
     box-shadow: $hover-box-shadow;
   }
   &:checked {
     border-color: $grey-dark;
-    background-color: $grey-medium;
     box-shadow: $checkbox-checked-shadow;
+    background-color: $focus-color;
     &:after {
       display: block;
     }
@@ -66,6 +66,13 @@ input[type="checkbox"] {
       box-shadow: $checkbox-checked-shadow-hover;
       &:after {
         border: 7px solid $light;
+        background-color: $light;
+      }
+    }
+  }
+  &:hover {
+    &:checked {
+      &:after {
         background-color: $grey-medium;
       }
     }
@@ -90,12 +97,64 @@ input[type="checkbox"] {
   &.round {
     border-radius: 50%;
     &:checked,
+    &:focus,
+    &:active,
     &:hover {
       &:after {
         border-radius: 50%;
       }
     }
   }
+  &.check {
+    &:after,
+    &:checked:after {
+      display: none;
+    }
+    &:before {
+      display: none;
+      font-family: "cornflowerblue";
+      font-style: normal;
+      font-weight: normal;
+      speak: none;
+      text-decoration: inherit;
+      width: 1em;
+      margin-right: .2em;
+      text-align: center;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1em;
+      margin-left: .2em;
+      content: '\36';
+      font-size: 15pt;
+      position: absolute;
+      top: 0;
+      left: 2px;
+      color: $light;
+      text-shadow: $text-shadow;
+    }
+    &:checked:before {
+      display: inline-block;
+    }
+    &:disabled,
+    &:disabled:hover {
+      color: $grey-light;
+      background-color: $light;
+      border-color: $grey-light;
+      cursor: not-allowed;
+      box-shadow: none;
+      pointer-events: none;
+      &:before {
+        box-shadow: none;
+        text-shadow: none;
+      }
+      &:checked:before {
+        color: $grey-light;
+        box-shadow: none;
+        text-shadow: none;
+      }
+    }
+  }
+
   &.toggle,
   &.switch {
     width: 60px;
@@ -103,7 +162,6 @@ input[type="checkbox"] {
     max-width: 60px;
     max-height: 30px;
     background-color: $grey-medium;
-    border-color: $grey-light;
     box-shadow: $checkbox-checked-shadow;
     &:after {
       display: block;
@@ -132,13 +190,11 @@ input[type="checkbox"] {
     }
     &:checked {
       border-color: $grey-light;
+      background-color: $focus-color;
       &:after {
         border: 7px solid $light;
         left: auto;
         right: 3px;
-      }
-      &:hover {
-        background-color: $grey-medium;
       }
     }
     &:disabled,
