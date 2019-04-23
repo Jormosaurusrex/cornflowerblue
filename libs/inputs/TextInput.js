@@ -109,6 +109,7 @@ class TextInput {
         this.input = $('<input />')
             .data('self', this)
             .attr('type', this.type)
+            .attr('id', this.id)
             .attr('name', this.name)
             .attr('title', this.title)
             .attr('autocomplete', this.autocomplete)
@@ -186,7 +187,10 @@ class TextInput {
         if (!this.label) { return null; }
         this.labelobj = $('<label />')
             .attr('for', this.id)
-            .html(this.label);
+            .html(this.label)
+            .click(function(e) {
+                $('#' + $(this).attr('for')).focus();
+            });
     }
     
     /**

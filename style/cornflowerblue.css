@@ -368,7 +368,8 @@ button {
     color: #ddd;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
     background-color: #666;
-    box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5); }
+    box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+    outline: none; }
   button.constructive {
     border-color: #005e20;
     color: #005e20; }

@@ -99,6 +99,7 @@ button {
     text-shadow: $text-shadow;
     background-color: $standard-color;
     box-shadow: $hover-box-shadow;
+    outline: none;
     //box-shadow: $hover-box-shadow, inset 0px -4px 0 0 $grey-darker;
   }
   &.constructive {
