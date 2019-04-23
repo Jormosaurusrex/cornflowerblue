@@ -1,0 +1,52 @@
+form {
+  box-sizing: border-box;
+  margin: 10px 30px 10px 30px;
+  border: 2px solid transparent;
+  background-color: $light;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  div.header {
+    flex-grow: 1;
+
+    div.instructions {
+      background-color: $morelight;
+    }
+  }
+  div.elements {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-grow: 2;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 20px;
+    div.input-container {
+      margin: 10px 0 10px 0;
+    }
+  }
+  div.actions {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background-color: $morelight;
+    padding: 20px;
+    border-top: 2px solid $grey-medium;
+    button {
+      margin-right: 10px;
+    }
+    button:first-child {
+      margin-left: 0;
+    }
+    button:last-child {
+      align-self: flex-end;
+      margin-left: auto;
+      margin-right: 10px;
+    }
+  }
+}

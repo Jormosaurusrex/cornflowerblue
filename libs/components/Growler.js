@@ -32,18 +32,6 @@ class Growler {
     }
 
     /**
-     * Makes an icon object
-     * @param icon the icon
-     * @returns {jQuery} a span element
-     */
-    static makeIcon(icon) {
-        return $('<div />')
-            .addClass('icon')
-            .attr('aria-hidden', true)
-            .addClass("cfb-" + icon);
-    }
-
-    /**
      * Define a growler
      * @param config a dictionary object
      */
@@ -103,9 +91,8 @@ class Growler {
         const me = this;
         this.growler = $('<div />')
             .data('self', me)
+            .addClass(this.classes.join(' '))
             .addClass('growler');
-
-        if (this.classes) { this.growler.addClass(this.classes.join(' ')); }
 
         this.closebutton = new SimpleButton({
             icon: 'echx',
@@ -122,7 +109,7 @@ class Growler {
             let $tbox = $('<div />').addClass('title');
 
             if ((this.icon) && (!this.text)) {
-                $tbox.append(Growler.makeIcon(this.icon));
+                $tbox.append(IconFactory.makeIcon(this.icon));
             }
 
             $tbox.append($('<div />').addClass('t').html(this.title))
@@ -133,7 +120,7 @@ class Growler {
         if (this.text) {
             let $payload = $('<div />').addClass('payload');
             if (this.icon) {
-                $payload.append(Growler.makeIcon(this.icon));
+                $payload.append(IconFactory.makeIcon(this.icon));
             }
             $payload.append(
                 $('<div />')

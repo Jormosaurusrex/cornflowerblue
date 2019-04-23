@@ -11,7 +11,8 @@ class BooleanToggle {
         disabled: false, // If true, make the checkbox disabled.
         labelside: 'left', // Which side to put the label on.
         style: null, // Default to box
-        onchange: $.noop // The change handler. Passed (event, self).
+        onchange: $.noop, // The change handler. Passed (event, self).
+        validator: $.noop // A function to run to test validity. Passed the self; returns true or false.
     };
 
 
@@ -38,6 +39,18 @@ class BooleanToggle {
     /* STATE METHODS____________________________________________________________________ */
 
     /**
+     * Runs validation and returns true or false, depending.
+     * @return {boolean}
+     */
+    validate() {
+        let valid = true;
+        if ((this.validator) && (typeof this.validator === 'function')) {
+            valid = this.validator(this);
+        }
+        return valid;
+    }
+    
+    /**
      * Has the field been changed or not?
      * @return {boolean} true or false, depending.
      */
@@ -49,9 +62,12 @@ class BooleanToggle {
 
     buildContainer() {
         this.container = $('<div />')
+            .addClass('input-container')
             .addClass('checkbox');
         if (this.labelside === 'right') {
-            this.container.append(this.toggle).append(this.labelobj);
+            this.container
+                .addClass('rightside')
+                .append(this.toggle).append(this.labelobj);
         } else {
             this.container.append(this.labelobj).append(this.toggle);
         }
@@ -73,15 +89,13 @@ class BooleanToggle {
             .attr('checked', this.checked)
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
+            .addClass(this.classes.join(' '))
+            .addClass(this.style)
             .change(function(e) {
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }
             });
-        if (this.style) {
-            this.toggle.addClass(this.style);
-        }
-
     }
 
     /**
@@ -169,7 +183,7 @@ class BooleanToggle {
 
     get onchange() { return this.config.onchange; }
     set onchange(onchange) {
-        if (typeof onchange != 'function') {
+        if (typeof onchange !== 'function') {
             console.log("Action provided for onchange is not a function!");
         }
         this.config.onchange = onchange;
@@ -181,11 +195,13 @@ class BooleanToggle {
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }
 
-
     get toggle() {
         if (!this._toggle) { this.build(); }
         return this._toggle;
     }
     set toggle(toggle) { this._toggle = toggle; }
+
+    get validator() { return this.config.validator; }
+    set validator(validator) { this.config.validator = validator; }
 
 }

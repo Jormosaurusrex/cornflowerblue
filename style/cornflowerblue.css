@@ -144,48 +144,8 @@
 [hidden] {
   display: none; }
 
-label {
-  display: block;
-  font-weight: normal;
-  position: relative;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-size: 13pt;
-  color: #444;
-  text-shadow: 0 1px 1px rgba(102, 102, 102, 0.3); }
-
-[title-x] {
-  position: relative;
-  cursor: help; }
-
-[title-x]::before {
-  content: attr(title);
-  position: absolute;
-  top: -26px;
-  display: inline-block;
-  padding: 3px 6px;
-  border-radius: 2px;
-  background: #000;
-  color: #fff;
-  font-size: 12px;
-  font-family: sans-serif;
-  white-space: nowrap; }
-
-[title-x]::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 8px;
-  display: inline-block;
-  color: #fff;
-  border: 8px solid transparent;
-  border-bottom: 8px solid #000; }
-
 div.input-container {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin: 10px 30px 10px 30px;
   position: relative;
   box-sizing: border-box; }
   div.input-container div.charcounter {
@@ -202,6 +162,21 @@ div.input-container {
     visibility: hidden; }
   div.input-container.mute.active label, div.input-container.mute.filled label {
     visibility: visible; }
+  div.input-container.required label:after {
+    color: #910000;
+    content: 'required';
+    font-size: 75%;
+    margin-left: 5px; }
+
+label {
+  display: block;
+  font-weight: normal;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 13pt;
+  color: #444;
+  text-shadow: 0 1px 1px rgba(102, 102, 102, 0.3); }
 
 input[type="text"],
 input[type="number"],
@@ -285,6 +260,33 @@ textarea.mute {
     border-left-color: #005e20;
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: inset 10px 0 0 #005e20; }
+
+[title-x] {
+  position: relative;
+  cursor: help; }
+
+[title-x]::before {
+  content: attr(title);
+  position: absolute;
+  top: -26px;
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-family: sans-serif;
+  white-space: nowrap; }
+
+[title-x]::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  display: inline-block;
+  color: #fff;
+  border: 8px solid transparent;
+  border-bottom: 8px solid #000; }
 
 button {
   --maincolor: #666;
@@ -462,10 +464,20 @@ div.checkbox {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  align-content: center; }
+  align-content: center;
+  margin: 10px 30px 10px 30px;
+  position: relative;
+  box-sizing: border-box; }
   div.checkbox label {
     display: inline-block;
-    margin: 0 5px 0 5px; }
+    margin: 0 5px 0 5px;
+    flex-grow: 2; }
+  div.checkbox input[type="checkbox"] {
+    margin-left: 5px;
+    margin-right: 0; }
+  div.checkbox.rightside input[type="checkbox"] {
+    margin-left: 0;
+    margin-right: 5px; }
 
 input[type="checkbox"] {
   transition: all .2s;
@@ -478,8 +490,6 @@ input[type="checkbox"] {
   position: relative;
   padding: 9px;
   cursor: pointer;
-  margin-left: 5px;
-  margin-right: 5px;
   width: 25px;
   height: 25px;
   max-width: 25px;
@@ -631,6 +641,48 @@ input[type="checkbox"] {
     input[type="checkbox"].toggle:after, input[type="checkbox"].toggle:checked:after {
       border-radius: 50%; }
 
+form {
+  box-sizing: border-box;
+  margin: 10px 30px 10px 30px;
+  border: 2px solid transparent;
+  background-color: #ddd;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap; }
+  form div.header {
+    flex-grow: 1; }
+    form div.header div.instructions {
+      background-color: #eee; }
+  form div.elements {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-grow: 2;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 20px; }
+    form div.elements div.input-container {
+      margin: 10px 0 10px 0; }
+  form div.actions {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background-color: #eee;
+    padding: 20px;
+    border-top: 2px solid #999; }
+    form div.actions button {
+      margin-right: 10px; }
+    form div.actions button:first-child {
+      margin-left: 0; }
+    form div.actions button:last-child {
+      align-self: flex-end;
+      margin-left: auto;
+      margin-right: 10px; }
+
 div.growlbox {
   z-index: 50000;
   position: fixed;
@@ -733,6 +785,24 @@ div.growlbox {
     .growler div.payload div.text {
       font-size: 90%;
       padding: 5px 10px 5px 10px; }
+
+div.instructions {
+  margin: 10px 30px 10px 30px;
+  padding: 10px;
+  background-color: #ddd;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  align-content: flex-start; }
+  div.instructions span.icon {
+    font-size: 30pt; }
+  div.instructions ul {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin: 0; }
 
 div.window-container {
   width: 100%;

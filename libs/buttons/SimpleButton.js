@@ -3,7 +3,7 @@
 class SimpleButton {
 
     static DEFAULT_CONFIG = {
-        id : null, // the button id
+        id : null, // the id
         text : 'Button Text', // The text for the button. This is also used as aria-label.
         shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
         classes: [], //Extra css classes to apply
@@ -18,7 +18,7 @@ class SimpleButton {
 
 
     /**
-     * Define a button
+     * Define the element
      * @param config a dictionary object
      */
     constructor(config) {
@@ -36,14 +36,14 @@ class SimpleButton {
             if (this.shape === 'hexagon') {
                 this.button = $('<button />');
                 if (this.icon) {
-                    this.button.append($('<span />').append(this.makeIcon(this.icon)));
+                    this.button.append($('<span />').append(IconFactory.makeIcon(this.icon, this.text)));
                 } else if (this.text) {
                     this.button.append($('<span />').html(this.text));
                 }
             } else {
                 this.button = $('<button />');
                 if (this.icon) {
-                    this.button.append(this.makeIcon(this.icon));
+                    this.button.append(IconFactory.makeIcon(this.icon, this.text));
                 } else if (this.text) {
                     this.button.html(this.text)
                 }
@@ -52,7 +52,7 @@ class SimpleButton {
         } else {
             this.button = $('<button />');
             if (this.icon) {
-                this.button.append(this.makeIcon(this.icon));
+                this.button.append(IconFactory.makeIcon(this.icon));
             }
             if (this.text) {
                 this.button.append(
@@ -63,10 +63,9 @@ class SimpleButton {
 
         this.button
             .attr('aria-label', this.text)
-            .data('self', this);
-
-        if (this.id) { this.button.attr('id', this.id); }
-        if (this.classes) { this.button.addClass(this.classes.join(' ')); }
+            .attr('id', this.id)
+            .data('self', this)
+            .addClass(this.classes.join(' '));
 
         if (this.disabled) { this.disable(); }
 
@@ -109,22 +108,6 @@ class SimpleButton {
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
-     * Makes an icon object
-     * @param icon the icon
-     * @param hidden whether or not the icon should be
-     * @returns {jQuery} a span element
-     */
-    makeIcon(icon, hidden) {
-        let i = $('<span />').addClass("cfb-" + icon);
-        if (this.shape) {
-            i.attr('aria-label', this.text);
-        } else {
-            i.attr('aria-hidden', true);
-        }
-        return i;
-    }
-
-    /**
      * Dump this object as a string.
      * @returns {string}
      */
@@ -136,7 +119,7 @@ class SimpleButton {
 
     get action() { return this.config.action; }
     set action(action) {
-        if (typeof action != 'function') {
+        if (typeof action !== 'function') {
             console.log("Action provided to button is not a function!");
         }
         this.config.action = action;
@@ -150,6 +133,9 @@ class SimpleButton {
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
+
+    get container() { return this.button; }
+    set container(container) { this.button = container; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }

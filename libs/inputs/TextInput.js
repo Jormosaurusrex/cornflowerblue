@@ -11,6 +11,7 @@ class TextInput {
         label : null, // Input label. If null, does not show up.
         placeholder: null, // Input placeholder. If null, does not appear
         title: null,
+        required: false, // Is this a required field or not
         hidden: false, // Whether or not to be hidden
         autocomplete: 'off', // Enable browser autocomplete. Default is off.
         arialabel: null, // The aria-label value. If null, follows: label > title > null
@@ -22,9 +23,10 @@ class TextInput {
         ontab: $.noop, // action to execute on hitting the tab key. Passed (event, self).
         keyup: $.noop, // action to execute on key up. Passed (event, self).
         focusin: $.noop, // action to execute on focus in. Passed (event, self).
-        focusout: $.noop // action to execute on focus out. Passed (event, self).
-    };
+        focusout: $.noop, // action to execute on focus out. Passed (event, self).
+        validator: $.noop // A function to run to test validity. Passed the self.
 
+    };
 
     /**
      * Define a the input
@@ -52,7 +54,22 @@ class TextInput {
     }
 
     /* STATE METHODS____________________________________________________________________ */
-    
+
+    /**
+     * Runs validation.  Shows errors, if any. Returns true or false, depending.
+     * @return {boolean}
+     */
+    validate() {
+        let errors = [];
+        if ((this.required) && ((!this.value) || (this.value.length === 0))) {
+            errors.push('This field is required.');
+        }
+        if ((this.validator) && (typeof this.validator === 'function')) {
+            errors.push(this.validator(this));
+        }
+        return (errors.length < 1);
+    }
+
     /**
      * Has the field been changed or not?
      * @return {boolean} true or false, depending.
@@ -97,6 +114,7 @@ class TextInput {
             .append(this.input)
             .append(this.charactercounter);
 
+        if (this.required) { this.container.addClass('required'); }
         if (this.mute) { this.container.addClass('mute'); }
     }
 
@@ -118,7 +136,8 @@ class TextInput {
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
-            .on('keyup', function(e) {
+            .addClass(this.classes.join(' '))
+            .on('keyup', function() {
                 me.updateCounter();
             })
             .on('keyup', function(e) {
@@ -188,7 +207,7 @@ class TextInput {
         this.labelobj = $('<label />')
             .attr('for', this.id)
             .html(this.label)
-            .click(function(e) {
+            .click(function() {
                 $('#' + $(this).attr('for')).focus();
             });
     }
@@ -197,7 +216,7 @@ class TextInput {
      * Draws a text counter in the field
      */
     buildCharacterCounter() {
-        var me = this;
+        const me = this;
         if (this.counter) {
             this.countchars = $('<span />');
             this.charactercounter = $('<div />')
@@ -255,7 +274,7 @@ class TextInput {
 
     get focusin() { return this.config.focusin; }
     set focusin(focusin) {
-        if (typeof focusin != 'function') {
+        if (typeof focusin !== 'function') {
             console.log("Action provided for focusin is not a function!");
         }
         this.config.focusin = focusin;
@@ -263,7 +282,7 @@ class TextInput {
 
     get focusout() { return this.config.focusout; }
     set focusout(focusout) {
-        if (typeof focusout != 'function') {
+        if (typeof focusout !== 'function') {
             console.log("Action provided for focusout is not a function!");
         }
         this.config.focusout = focusout;
@@ -295,7 +314,7 @@ class TextInput {
 
     get onreturn() { return this.config.onreturn; }
     set onreturn(onreturn) {
-        if (typeof onreturn != 'function') {
+        if (typeof onreturn !== 'function') {
             console.log("Action provided for onreturn is not a function!");
         }
         this.config.onreturn = onreturn;
@@ -303,7 +322,7 @@ class TextInput {
 
     get ontab() { return this.config.ontab; }
     set ontab(ontab) {
-        if (typeof ontab != 'function') {
+        if (typeof ontab !== 'function') {
             console.log("Action provided for ontab is not a function!");
         }
         this.config.ontab = ontab;
@@ -315,11 +334,17 @@ class TextInput {
     get placeholder() { return this.config.placeholder; }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
 
+    get required() { return this.config.required; }
+    set required(required) { this.config.required = required; }
+
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
 
     get type() { return this.config.type; }
     set type(type) { this.config.type = type; }
+
+    get validator() { return this.config.validator; }
+    set validator(validator) { this.config.validator = validator; }
 
     get value() { return this.input.val(); }
     set value(value) {

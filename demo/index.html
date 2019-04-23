@@ -52,11 +52,14 @@
     </style>
     <script type="text/javascript" src="libs/jquery-min.js"></script>
     <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
-    <script type="text/javascript" src="../libs/DialogWindow.js"></script>
+    <script type="text/javascript" src="../libs/components/DialogWindow.js"></script>
+    <script type="text/javascript" src="../libs/factory/IconFactory.js"></script>
     <script type="text/javascript" src="../libs/buttons/SimpleButton.js"></script>
     <script type="text/javascript" src="../libs/buttons/ConstructiveButton.js"></script>
     <script type="text/javascript" src="../libs/buttons/DestructiveButton.js"></script>
-    <script type="text/javascript" src="../libs/Growler.js"></script>
+    <script type="text/javascript" src="../libs/components/InstructionBox.js"></script>
+    <script type="text/javascript" src="../libs/SimpleForm.js"></script>
+    <script type="text/javascript" src="../libs/components/Growler.js"></script>
     <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
     <script type="text/javascript" src="../libs/inputs/TextArea.js"></script>
     <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
@@ -66,6 +69,47 @@
         $(document).ready( function() {
 
             const $c = $('#container');
+
+            $c.append($('<h3 />').html("Complex Form"));
+
+            var f = new SimpleForm({
+                urlaction: './index.html',
+                instructions: {
+                    icon: 'legend',
+                    instructions: [
+                        "Line one of instructions.",
+                        "Vestibulum id ligula porta felis euismod semper.",
+                        "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit."
+                    ]
+                },
+                elements: [
+                    new TextInput({
+                        label: "User Name",
+                        title: "Your user name on this sitie",
+                        maxlength: 100,
+                        required: true,
+                        placeholder: "Enter your user name."
+                    }),
+                    new PasswordInput({
+                        label: "Password",
+                        counter: 'sky',
+                        required: true,
+                        placeholder: "Enter your password."
+                    }),
+                    new BooleanToggle({
+                        label: "Remember Me",
+                        labelside: 'right'
+                    })
+                ],
+                actions: [
+                    new ConstructiveButton({ text: "Submit", icon: "check" }),
+                    new SimpleButton({ text: "Something Else" }),
+                    new DestructiveButton({ text: "Cancel", mute: true }),
+                ]
+            });
+
+            $c.append(f.container);
+
 
 
             $c.append($('<h3 />').html("Checkboxes and Toggles"));
