@@ -181,6 +181,16 @@ div.input-container {
     content: 'required';
     font-size: 75%;
     margin-left: 5px; }
+  div.input-container.error input {
+    border-color: #910000; }
+    div.input-container.error input:focus {
+      border-color: #910000;
+      box-shadow: inset 10px 0 0 #910000; }
+  div.input-container.warning input {
+    border-color: #ff9900; }
+    div.input-container.warning input:focus {
+      border-color: #ff9900;
+      box-shadow: inset 10px 0 0 #ff9900; }
 
 label {
   display: block;

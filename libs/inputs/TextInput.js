@@ -7,9 +7,11 @@ class TextInput {
         name: null, // Name attribute
         counter: null, // A value for a character counter. Null means 'no counter'
                     // Possible values: null, 'remaining', 'limit', and 'sky'
+        forceconstraints: null, // if true, force constraints defined in sub classes (text input doesn't havea any)
         type: 'text', // Type of input, defaults to "text"
         label : null, // Input label. If null, does not show up.
-        placeholder: null, // Input placeholder. If null, does not appear
+        placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
+                           // To insure a blank placeholder, set the value to ""
         title: null,
         required: false, // Is this a required field or not
         hidden: false, // Whether or not to be hidden
@@ -25,7 +27,6 @@ class TextInput {
         focusin: $.noop, // action to execute on focus in. Passed (event, self).
         focusout: $.noop, // action to execute on focus out. Passed (event, self).
         validator: null // A function to run to test validity. Passed the self.
-
     };
 
     /**
@@ -53,7 +54,7 @@ class TextInput {
 
     }
 
-    /* STATE METHODS____________________________________________________________________ */
+    /* CORE METHODS_____________________________________________________________________ */
 
     /**
      * Runs validation.  Shows errors, if any. Returns true or false, depending.
@@ -79,6 +80,9 @@ class TextInput {
         return (this.errors.length < 1);
     }
 
+    /**
+     * Show messages and warnings
+     */
     showMessages() {
         this.messagebox.empty();
         for (let error of this.errors) {
@@ -87,20 +91,36 @@ class TextInput {
         for (let warning of this.warnings) {
             this.addWarning(warning);
         }
+        if (this.errors.length > 0) {
+            this.container.addClass('error');
+        } else if (this.warnings.length > 0) {
+            this.container.addClass('warning');
+        }
         this.messagebox.addClass('shown');
     }
 
+    /**
+     * Clears all messages from the element.
+     */
     clearMessages() {
         this.errors = [];
         this.warnings = [];
-        this.messagebox.empty();
-        this.messagebox.removeClass('shown');
+        this.messagebox.empty().removeClass('shown');
+        this.container.removeClasas('error').removeClass('warning');
     }
 
+    /**
+     * Add an error.
+     * @param error the error to add
+     */
     addError(error) {
         this.messagebox.append($('<li />').addClass('error').html(error));
     }
 
+    /**
+     * Add a warning
+     * @param warning the warning to add
+     */
     addWarning(warning) {
         this.messagebox.append($('<li />').addClass('warning').html(warning));
     }
@@ -135,6 +155,15 @@ class TextInput {
         }
     }
 
+    /**
+     * Calculate what the placeholder should be. This method is often overridden.
+     * @return {null|*}
+     */
+    calculatePlaceholder() {
+        if (this.placeholder) { return this.placeholder; }
+        return null;
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -167,7 +196,7 @@ class TextInput {
             .attr('name', this.name)
             .attr('title', this.title)
             .attr('autocomplete', this.autocomplete)
-            .attr('placeholder', this.placeholder)
+            .attr('placeholder', this.calculatePlaceholder())
             .attr('aria-label', this.arialabel)
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
@@ -339,6 +368,9 @@ class TextInput {
         }
         this.config.focusout = focusout;
     }
+
+    get forceconstraints() { return this.config.forceconstraints; }
+    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }

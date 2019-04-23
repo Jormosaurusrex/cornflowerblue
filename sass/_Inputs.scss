@@ -58,6 +58,24 @@ div.input-container {
       }
     }
   }
+  &.error {
+    input {
+      border-color: $red;
+      &:focus {
+        border-color: $red;
+        box-shadow: inset 10px 0 0 $red;
+      }
+    }
+  }
+  &.warning {
+    input {
+      border-color: $orange;
+      &:focus {
+        border-color: $orange;
+        box-shadow: inset 10px 0 0 $orange;
+      }
+    }
+  }
 }
 
 label {
