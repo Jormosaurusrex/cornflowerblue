@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
+<metadata>Brandon Harris</metadata>
 <defs>
 <font id="cornflowerblue" horiz-adv-x="1000" >
 <font-face font-family="cornflowerblue" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
@@ -19,8 +19,6 @@
 <glyph glyph-name="plus" unicode="&#x26;" d="M550 400v350h-100v-350h-350v-100h350v-350h100v350h350v100h-350z" horiz-adv-x="1000" />
 
 <glyph glyph-name="popout" unicode="&#x27;" d="M820-10h-680v680h380v60h-440v-800h800v440h-60z m-200 780v-60h199l-372-371 43-43 370 371v-197h60v300z" horiz-adv-x="1000" />
-
-<glyph glyph-name="download" unicode="&#x28;" d="M714 100q0 15-10 25t-25 11-25-11-11-25 11-25 25-11 25 11 10 25z m143 0q0 15-10 25t-26 11-25-11-10-25 10-25 25-11 26 11 10 25z m72 125v-179q0-22-16-37t-38-16h-821q-23 0-38 16t-16 37v179q0 22 16 38t38 16h259l75-76q33-32 76-32t76 32l76 76h259q22 0 38-16t16-38z m-182 318q10-23-8-39l-250-250q-10-11-25-11t-25 11l-250 250q-17 16-8 39 10 21 33 21h143v250q0 15 11 25t25 11h143q14 0 25-11t10-25v-250h143q24 0 33-21z" horiz-adv-x="928.6" />
 
 <glyph glyph-name="calendar" unicode="&#x29;" d="M80 750v-740h840v740z m196-680h-136v144h136z m0 204h-136v136h136z m0 196h-136v134h136z m194-400h-134v144h134z m0 204h-134v136h134z m0 196h-134v134h134z m196-400h-136v144h136z m0 204h-136v136h136z m0 196h-136v134h136z m194-400h-134v144h134z m0 204h-134v136h134z m0 196h-134v134h134z" horiz-adv-x="1000" />
 
@@ -48,7 +46,15 @@
 
 <glyph glyph-name="chevron-up" unicode="&#x35;" d="M500 602l-420-504h840l-420 504z" horiz-adv-x="1000" />
 
-<glyph glyph-name="checkbox" unicode="&#x36;" d="M876 704l-459-521-298 175-37-47 345-272 496 628-47 37z" horiz-adv-x="1000" />
+<glyph glyph-name="check" unicode="&#x36;" d="M832 654l-438-439-226 227-85-85 311-311 523 523-85 85z" horiz-adv-x="1000" />
+
+<glyph glyph-name="chat" unicode="&#x37;" d="M501 646c-232 0-421-108-421-241 0-114 138-210 324-235-15-43-41-93-80-118 76 0 151 59 203 112 220 8 395 112 395 241 0 133-188 241-421 241z" horiz-adv-x="1000" />
+
+<glyph glyph-name="heart" unicode="&#x38;" d="M762 724c-135 27-225-47-263-140-1 2-3 7-4 8-37 82-104 144-224 138-105-14-169-75-189-174-14-125 50-197 113-255 20-20 42-37 65-55 83-64 172-122 243-200a575 575 0 0 0 51 52c66 60 142 111 213 168 68 55 130 117 151 218 15 133-55 212-156 240z" horiz-adv-x="1000" />
+
+<glyph glyph-name="no" unicode="&#x39;" d="M500 770c-232 0-420-188-420-420s188-420 420-420 420 188 420 420-188 420-420 420z m-320-420c0 176 144 320 320 320a318 318 0 0 0 182-57l-436-457a318 318 0 0 0-66 194z m320-320a318 318 0 0 0-182 57l436 457a318 318 0 0 0 66-194c0-176-144-320-320-320z" horiz-adv-x="1000" />
+
+<glyph glyph-name="refresh" unicode="&#x3a;" d="M819 215l116 213-81-10a398 398 0 0 1-289 315c-212 57-430-69-487-281s69-431 281-487c165-45 334 22 427 153l-87 73a285 285 0 0 0-310-117c-152 41-242 197-201 349a285 285 0 0 0 554-20l-88-11z" horiz-adv-x="1000" />
 </font>
 </defs>
 </svg>

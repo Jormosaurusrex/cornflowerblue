@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?95111848');
-  src: url('../font/cornflowerblue.eot?95111848#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?95111848') format('woff2'),
-       url('../font/cornflowerblue.woff?95111848') format('woff'),
-       url('../font/cornflowerblue.ttf?95111848') format('truetype'),
-       url('../font/cornflowerblue.svg?95111848#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?2110419');
+  src: url('../font/cornflowerblue.eot?2110419#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?2110419') format('woff2'),
+       url('../font/cornflowerblue.woff?2110419') format('woff'),
+       url('../font/cornflowerblue.ttf?2110419') format('truetype'),
+       url('../font/cornflowerblue.svg?2110419#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?95111848#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?2110419#cornflowerblue') format('svg');
   }
 }
 */
@@ -62,7 +62,6 @@
 .cfb-minus:before { content: '\25'; } /* '%' */
 .cfb-plus:before { content: '\26'; } /* '&amp;' */
 .cfb-popout:before { content: '\27'; } /* ''' */
-.cfb-download:before { content: '\28'; } /* '(' */
 .cfb-calendar:before { content: '\29'; } /* ')' */
 .cfb-trashcan:before { content: '\2a'; } /* '*' */
 .cfb-minimize:before { content: '\2b'; } /* '+' */
@@ -76,4 +75,8 @@
 .cfb-chevron-mini-up:before { content: '\33'; } /* '3' */
 .cfb-chevron-right:before { content: '\34'; } /* '4' */
 .cfb-chevron-up:before { content: '\35'; } /* '5' */
-.cfb-checkbox:before { content: '\36'; } /* '6' */
+.cfb-check:before { content: '\36'; } /* '6' */
+.cfb-chat:before { content: '\37'; } /* '7' */
+.cfb-heart:before { content: '\38'; } /* '8' */
+.cfb-no:before { content: '\39'; } /* '9' */
+.cfb-refresh:before { content: '\3a'; } /* ':' */
