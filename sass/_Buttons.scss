@@ -1,4 +1,5 @@
 button {
+  transition: all .2s;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -43,6 +44,7 @@ button {
     border-radius: 50%;
   }
   &.hexagon {
+    transition: none;
     width: 42px;
     height: 24.25px;
     font-size: 120%;
@@ -50,7 +52,7 @@ button {
     box-shadow: $hexagon-shadow;
     padding: 0;
     border: none;
-    background-color: $light;
+    background-color: $morelight;
     span {
       position: absolute;
       background: inherit;
@@ -71,7 +73,7 @@ button {
       transform: scaleY(0.5774) rotate(-45deg);
       background-color: inherit;
       left: 6.1508px;
-      box-shadow: $hexagon-shadow;
+      box-shadow: inherit;
     }
     &:before {
       top: -14.8492px;
@@ -83,9 +85,13 @@ button {
       left: 21px;
       top: -14.8492px;
     }
+    &:disabled,
+    &:disabled:before,
+    &:disabled:after,
+    &:disabled:hover {
+      box-shadow: none;
+    }
   }
-
-
   &:hover,
   &:focus,
   &:active {
@@ -93,6 +99,7 @@ button {
     text-shadow: $text-shadow;
     background-color: $standard-color;
     box-shadow: $hover-box-shadow;
+    //box-shadow: $hover-box-shadow, inset 0px -4px 0 0 $grey-darker;
   }
   &.constructive {
     border-color: $constructive-color;
@@ -100,6 +107,7 @@ button {
     &:hover,
     &:active,
     &:focus {
+      border-color: $constructive-color-half;
       color: $hot-text-color;
       background-color: $constructive-color;
     }
@@ -114,7 +122,6 @@ button {
       background-color: $destructive-color;
     }
   }
-
   &:disabled {
     color: $grey-medium;
     background-color: $light;
@@ -187,7 +194,6 @@ button {
       }
     }
   }
-
   &.hot {
     color: $light;
     text-shadow: $text-shadow;
@@ -202,7 +208,6 @@ button {
       border-color: $destructive-color;
     }
   }
-
   &:disabled {
     color: $grey-medium;
     background-color: $light;
@@ -223,7 +228,7 @@ button {
     &.hexagon,
     &.hexagon::before,
     &.hexagon::after {
-      box-shadow: $hexagon-shadow;
+      box-shadow: none;
     }
   }
 

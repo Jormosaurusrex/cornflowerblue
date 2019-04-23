@@ -125,14 +125,20 @@ input[type="checkbox"] {
       line-height: 1em;
       margin-left: .2em;
       content: '\36';
-      font-size: 15pt;
+      font-size: 20pt;
       position: absolute;
-      top: 0;
-      left: 2px;
+      top: -3px;
+      left: -8px;
       color: $light;
       text-shadow: $text-shadow;
     }
-    &:checked:before {
+    &:hover:before {
+      display: inline-block;
+      opacity: 0.2;
+    }
+    &:checked:before,
+    &:checked:hover:before {
+      opacity: 1;
       display: inline-block;
     }
     &:disabled,

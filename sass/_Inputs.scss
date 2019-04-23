@@ -1,5 +1,6 @@
 
 [hidden] { display: none; }
+
 label {
   display: block;
   font-weight: normal;
@@ -8,6 +9,7 @@ label {
   margin-bottom: 5px;
   font-size: 13pt;
   color: $grey-darker;
+  text-shadow:$text-shadow-grey-medium;
 }
 
 [title-x] {
@@ -74,6 +76,7 @@ input[type="text"],
 input[type="number"],
 input[type="password"],
 textarea {
+  transition: all .2s;
   box-sizing: border-box;
   outline: none;
   position: relative;
@@ -86,16 +89,19 @@ textarea {
   padding: 10px 10px 10px 20px;
   border-radius: 1px;
   color: $grey-darker;
+  text-shadow:$text-shadow-grey-medium;
   vertical-align: middle;
   &::placeholder {
     color: $grey-medium;
     font-weight: normal;
+    text-shadow:none;
   }
   &:disabled {
     border-color: $grey-light;
     background-color: $light;
     color: $grey-medium;
     cursor: not-allowed;
+    text-shadow:none;
   }
   &:focus {
     border-color: $focus-color;
@@ -112,6 +118,7 @@ textarea {
     padding: 10px;
     &::placeholder {
       color: $grey-darker;
+      text-shadow:$text-shadow-grey-medium;
     }
     &:disabled {
       &::placeholder {
