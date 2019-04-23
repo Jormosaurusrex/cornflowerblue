@@ -11,6 +11,8 @@ div.input-container {
     font-size: 85%;
     font-style: oblique;
     text-align: right;
+    position: absolute;
+    right: 0;
     &.danger {
       color: $orange;
     }
@@ -18,16 +20,21 @@ div.input-container {
       color: $red;
     }
   }
-  ul.errorbox {
+  ul.messagebox {
     display: none;
     font-size: 90%;
-    color: $red;
     margin: 5px 0 5px 0;
     &.shown {
       display: block;
     }
     li {
       margin: 5px 0 5px 0;
+      &.error {
+        color: $red;
+      }
+      &.warning {
+        color: $orange;
+      }
     }
   }
   &.mute {

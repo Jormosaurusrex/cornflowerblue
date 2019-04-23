@@ -61,6 +61,7 @@ class TextInput {
      */
     validate() {
         this.errors = [];
+        this.warnings = [];
         if ((this.required) && ((!this.value) || (this.value.length === 0))) {
             this.errors.push('This field is required.');
         }
@@ -70,30 +71,38 @@ class TextInput {
         if ((this.validator) && (typeof this.validator === 'function')) {
             this.validator(this);
         }
-        if (this.errors.length > 0) {
-            this.showErrors();
+        if ((this.errors.length > 0) || (this.warnings.length > 0)) {
+            this.showMessages();
         } else {
-            this.clearErrors();
+            this.clearMessages();
         }
         return (this.errors.length < 1);
     }
 
-    showErrors() {
-        this.errorbox.empty();
+    showMessages() {
+        this.messagebox.empty();
         for (let error of this.errors) {
             this.addError(error);
         }
-        this.errorbox.addClass('shown');
+        for (let warning of this.warnings) {
+            this.addWarning(warning);
+        }
+        this.messagebox.addClass('shown');
     }
 
-    clearErrors() {
+    clearMessages() {
         this.errors = [];
-        this.errorbox.empty();
-        this.errorbox.removeClass('shown');
+        this.warnings = [];
+        this.messagebox.empty();
+        this.messagebox.removeClass('shown');
     }
 
     addError(error) {
-        this.errorbox.append($('<li />').html(error));
+        this.messagebox.append($('<li />').addClass('error').html(error));
+    }
+
+    addWarning(warning) {
+        this.messagebox.append($('<li />').addClass('warning').html(warning));
     }
 
     /**
@@ -139,7 +148,7 @@ class TextInput {
             .append(this.labelobj)
             .append(this.input)
             .append(this.charactercounter)
-            .append(this.errorbox);
+            .append(this.messagebox);
 
         if (this.required) { this.container.addClass('required'); }
         if (this.mute) { this.container.addClass('mute'); }
@@ -242,8 +251,8 @@ class TextInput {
     /**
      * Build the error box.
      */
-    buildErrorBox() {
-        this.errorbox = $('<ul />').addClass('errorbox');
+    buildmessagebox() {
+        this.messagebox = $('<ul />').addClass('messagebox');
     }
 
     /**
@@ -306,15 +315,14 @@ class TextInput {
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
 
-    get errorbox() {
-        if (!this._errorbox) { this.buildErrorBox(); }
-        return this._errorbox;
+    get messagebox() {
+        if (!this._messagebox) { this.buildmessagebox(); }
+        return this._messagebox;
     }
-    set errorbox(errorbox) { this._errorbox = errorbox; }
+    set messagebox(messagebox) { this._messagebox = messagebox; }
 
     get errors() { return this._errors; }
     set errors(errors) { this._errors = errors; }
-
 
     get focusin() { return this.config.focusin; }
     set focusin(focusin) {
@@ -395,5 +403,9 @@ class TextInput {
         this.config.value = value;
         this.input.val(value);
     }
+
+    get warnings() { return this._warnings; }
+    set warnings(warnings) { this._warnings = warnings; }
+
 
 }

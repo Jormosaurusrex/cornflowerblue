@@ -153,20 +153,25 @@ div.input-container {
     display: block;
     font-size: 85%;
     font-style: oblique;
-    text-align: right; }
+    text-align: right;
+    position: absolute;
+    right: 0; }
     div.input-container div.charcounter.danger {
       color: #ff9900; }
     div.input-container div.charcounter.outofbounds {
       color: #910000; }
-  div.input-container ul.errorbox {
+  div.input-container ul.messagebox {
     display: none;
     font-size: 90%;
-    color: #910000;
     margin: 5px 0 5px 0; }
-    div.input-container ul.errorbox.shown {
+    div.input-container ul.messagebox.shown {
       display: block; }
-    div.input-container ul.errorbox li {
+    div.input-container ul.messagebox li {
       margin: 5px 0 5px 0; }
+      div.input-container ul.messagebox li.error {
+        color: #910000; }
+      div.input-container ul.messagebox li.warning {
+        color: #ff9900; }
   div.input-container.mute label {
     visibility: hidden; }
   div.input-container.mute.active label, div.input-container.mute.filled label {
