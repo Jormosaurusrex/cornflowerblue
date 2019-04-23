@@ -61,6 +61,8 @@
     <script type="text/javascript" src="../libs/SimpleForm.js"></script>
     <script type="text/javascript" src="../libs/components/Growler.js"></script>
     <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
+    <script type="text/javascript" src="../libs/inputs/EmailField.js"></script>
+    <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
     <script type="text/javascript" src="../libs/inputs/TextArea.js"></script>
     <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
     <script type="text/javascript" src="../libs/Utils.js"></script>
@@ -83,18 +85,23 @@
                     ]
                 },
                 elements: [
-                    new TextInput({
-                        label: "User Name",
-                        title: "Your user name on this sitie",
+                    new EmailField({
+                        label: "Email",
+                        title: "Your email address",
                         maxlength: 100,
                         required: true,
-                        placeholder: "Enter your user name."
+                        placeholder: "Enter your email address."
                     }),
                     new PasswordInput({
                         label: "Password",
                         counter: 'sky',
                         required: true,
-                        placeholder: "Enter your password."
+                        placeholder: "Enter your password.",
+                        validator: function(self) {
+                            if ((self.value) && (self.value.length < 5)) {
+                                self.errors.push('Password must be 5 characters or more.');
+                            }
+                        }
                     }),
                     new BooleanToggle({
                         label: "Remember Me",

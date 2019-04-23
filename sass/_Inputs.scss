@@ -18,6 +18,18 @@ div.input-container {
       color: $red;
     }
   }
+  ul.errorbox {
+    display: none;
+    font-size: 90%;
+    color: $red;
+    margin: 5px 0 5px 0;
+    &.shown {
+      display: block;
+    }
+    li {
+      margin: 5px 0 5px 0;
+    }
+  }
   &.mute {
     label {
       visibility: hidden;

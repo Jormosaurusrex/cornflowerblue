@@ -24,7 +24,7 @@ class TextInput {
         keyup: $.noop, // action to execute on key up. Passed (event, self).
         focusin: $.noop, // action to execute on focus in. Passed (event, self).
         focusout: $.noop, // action to execute on focus out. Passed (event, self).
-        validator: $.noop // A function to run to test validity. Passed the self.
+        validator: null // A function to run to test validity. Passed the self.
 
     };
 
@@ -60,14 +60,40 @@ class TextInput {
      * @return {boolean}
      */
     validate() {
-        let errors = [];
+        this.errors = [];
         if ((this.required) && ((!this.value) || (this.value.length === 0))) {
-            errors.push('This field is required.');
+            this.errors.push('This field is required.');
+        }
+        if ((this.localValidator) && (typeof this.localValidator === 'function')) {
+            this.localValidator();
         }
         if ((this.validator) && (typeof this.validator === 'function')) {
-            errors.push(this.validator(this));
+            this.validator(this);
         }
-        return (errors.length < 1);
+        if (this.errors.length > 0) {
+            this.showErrors();
+        } else {
+            this.clearErrors();
+        }
+        return (this.errors.length < 1);
+    }
+
+    showErrors() {
+        this.errorbox.empty();
+        for (let error of this.errors) {
+            this.addError(error);
+        }
+        this.errorbox.addClass('shown');
+    }
+
+    clearErrors() {
+        this.errors = [];
+        this.errorbox.empty();
+        this.errorbox.removeClass('shown');
+    }
+
+    addError(error) {
+        this.errorbox.append($('<li />').html(error));
     }
 
     /**
@@ -77,7 +103,7 @@ class TextInput {
     isDirty() {
         return (this.origval !== this.value);
     }
-    
+
     /**
      * Updates the counter
      */
@@ -112,7 +138,8 @@ class TextInput {
             .addClass('input-container')
             .append(this.labelobj)
             .append(this.input)
-            .append(this.charactercounter);
+            .append(this.charactercounter)
+            .append(this.errorbox);
 
         if (this.required) { this.container.addClass('required'); }
         if (this.mute) { this.container.addClass('mute'); }
@@ -211,7 +238,14 @@ class TextInput {
                 $('#' + $(this).attr('for')).focus();
             });
     }
-    
+
+    /**
+     * Build the error box.
+     */
+    buildErrorBox() {
+        this.errorbox = $('<ul />').addClass('errorbox');
+    }
+
     /**
      * Draws a text counter in the field
      */
@@ -233,7 +267,7 @@ class TextInput {
             me.updateCounter();
         }
     }
-    
+
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get arialabel() { return this.config.arialabel; }
@@ -271,6 +305,16 @@ class TextInput {
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
+
+    get errorbox() {
+        if (!this._errorbox) { this.buildErrorBox(); }
+        return this._errorbox;
+    }
+    set errorbox(errorbox) { this._errorbox = errorbox; }
+
+    get errors() { return this._errors; }
+    set errors(errors) { this._errors = errors; }
+
 
     get focusin() { return this.config.focusin; }
     set focusin(focusin) {

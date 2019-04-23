@@ -29,11 +29,9 @@ class SimpleForm {
     /* ACTION METHODS___________________________________________________________________ */
 
     submit(e) {
-        console.log("SUBMIT CLICKED");
-        if (this.validate) {
+        if (this.validate()) {
             if ((this.onsubmit) && (typeof this.onsubmit === 'function')) {
                 this.onsubmit(e);
-                console.log("foo");
             } else if (this.urlaction) {
                 this.form[0].submit();
             } else {
@@ -45,11 +43,9 @@ class SimpleForm {
     validate() {
         let valid = true;
         for (let element of this.elements) {
-            if (valid) {
-
-            }
+            let localValid = element.validate();
+            if (!localValid) { valid = false;}
         }
-
         return valid;
     }
 

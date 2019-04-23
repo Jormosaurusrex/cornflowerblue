@@ -158,6 +158,15 @@ div.input-container {
       color: #ff9900; }
     div.input-container div.charcounter.outofbounds {
       color: #910000; }
+  div.input-container ul.errorbox {
+    display: none;
+    font-size: 90%;
+    color: #910000;
+    margin: 5px 0 5px 0; }
+    div.input-container ul.errorbox.shown {
+      display: block; }
+    div.input-container ul.errorbox li {
+      margin: 5px 0 5px 0; }
   div.input-container.mute label {
     visibility: hidden; }
   div.input-container.mute.active label, div.input-container.mute.filled label {
