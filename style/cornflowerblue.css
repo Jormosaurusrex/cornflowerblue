@@ -287,6 +287,9 @@ textarea.mute {
     box-shadow: inset 10px 0 0 #005e20; }
 
 button {
+  --maincolor: #666;
+  --textcolor: var(--maincolor);
+  --hovertextcolor: #ddd;
   transition: all .2s;
   box-sizing: border-box;
   position: relative;
@@ -306,9 +309,9 @@ button {
   font-size: 100%;
   line-height: 1.5;
   cursor: pointer;
-  color: #666;
+  color: var(--maincolor);
   background-color: transparent;
-  border: 2px solid #666;
+  border: 2px solid var(--maincolor);
   border-radius: 3px; }
   button span {
     z-index: 3;
@@ -318,71 +321,17 @@ button {
     justify-content: center;
     align-items: center;
     white-space: nowrap; }
-  button.square, button.circle {
-    padding: 5px;
-    width: 35px;
-    height: 35px;
-    font-size: 120%;
-    line-height: 1; }
-  button.circle {
-    border-radius: 50%; }
-  button.hexagon {
-    transition: none;
-    width: 42px;
-    height: 24.25px;
-    font-size: 120%;
-    line-height: 1;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-    padding: 0;
-    border: none;
-    background-color: #eee; }
-    button.hexagon span {
-      position: absolute;
-      background: inherit;
-      top: 0;
-      left: 0;
-      width: 42px;
-      height: 24.2487px; }
-    button.hexagon:before, button.hexagon:after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      width: 29.70px;
-      height: 29.70px;
-      -webkit-transform: scaleY(0.5774) rotate(-45deg);
-      -ms-transform: scaleY(0.5774) rotate(-45deg);
-      transform: scaleY(0.5774) rotate(-45deg);
-      background-color: inherit;
-      left: 6.1508px;
-      box-shadow: inherit; }
-    button.hexagon:before {
-      top: -14.8492px; }
-    button.hexagon:after {
-      bottom: -14.8492px; }
-    button.hexagon:nth-child(even) {
-      left: 21px;
-      top: -14.8492px; }
-    button.hexagon:disabled, button.hexagon:disabled:before, button.hexagon:disabled:after, button.hexagon:disabled:hover {
-      box-shadow: none; }
   button:hover, button:focus, button:active {
-    color: #ddd;
+    color: var(--hovertextcolor);
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-    background-color: #666;
+    background-color: var(--maincolor);
     box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
-    outline: none; }
+    outline: none;
+    text-decoration: underline; }
   button.constructive {
-    border-color: #005e20;
-    color: #005e20; }
-    button.constructive:hover, button.constructive:active, button.constructive:focus {
-      border-color: rgba(0, 94, 32, 0.5);
-      color: #ddd;
-      background-color: #005e20; }
+    --maincolor: #005e20; }
   button.destructive {
-    border-color: #910000;
-    color: #910000; }
-    button.destructive:hover, button.destructive:active, button.destructive:focus {
-      color: #ddd;
-      background-color: #910000; }
+    --maincolor: #910000; }
   button:disabled {
     color: #999;
     background-color: #ddd;
@@ -458,6 +407,54 @@ button {
       text-shadow: none;
       box-shadow: none; }
     button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {
+      box-shadow: none; }
+  button.square, button.circle {
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    font-size: 120%;
+    line-height: 1; }
+    button.square:hover, button.square:focus, button.square:active, button.circle:hover, button.circle:focus, button.circle:active {
+      text-decoration: none; }
+  button.circle {
+    border-radius: 50%; }
+  button.hexagon {
+    transition: none;
+    width: 42px;
+    height: 24.25px;
+    font-size: 120%;
+    line-height: 1;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    padding: 0;
+    border: none;
+    background-color: #eee; }
+    button.hexagon span {
+      position: absolute;
+      background: inherit;
+      top: 0;
+      left: 0;
+      width: 42px;
+      height: 24.2487px; }
+    button.hexagon:before, button.hexagon:after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: 29.70px;
+      height: 29.70px;
+      -webkit-transform: scaleY(0.5774) rotate(-45deg);
+      -ms-transform: scaleY(0.5774) rotate(-45deg);
+      transform: scaleY(0.5774) rotate(-45deg);
+      background-color: inherit;
+      left: 6.1508px;
+      box-shadow: inherit; }
+    button.hexagon:before {
+      top: -14.8492px; }
+    button.hexagon:after {
+      bottom: -14.8492px; }
+    button.hexagon:nth-child(even) {
+      left: 21px;
+      top: -14.8492px; }
+    button.hexagon:disabled, button.hexagon:disabled:before, button.hexagon:disabled:after, button.hexagon:disabled:hover {
       box-shadow: none; }
 
 div.checkbox {
