@@ -79,6 +79,11 @@ div.input-container {
         visibility: visible;
       }
     }
+    div.wrap {
+      &:after {
+        right: 0;
+      }
+    }
   }
   &.required {
     label {

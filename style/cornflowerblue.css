@@ -206,6 +206,8 @@ div.input-container {
     visibility: hidden; }
   div.input-container.mute.active label, div.input-container.mute.filled label {
     visibility: visible; }
+  div.input-container.mute div.wrap:after {
+    right: 0; }
   div.input-container.required label:after {
     color: #910000;
     content: 'required';
