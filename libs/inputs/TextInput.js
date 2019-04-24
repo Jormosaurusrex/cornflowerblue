@@ -45,7 +45,7 @@ class TextInput {
         }
 
         if (!this.id) { // need to generate an id for label stuff
-            this.id = "input-" + Utils.getUniqueKey();
+            this.id = "e-" + Utils.getUniqueKey(5);
         }
 
         if (this.config.value) { // store the supplied value if any
@@ -74,11 +74,27 @@ class TextInput {
         }
         if ((this.errors.length > 0) || (this.warnings.length > 0)) {
             this.showMessages();
+            if (this.errors.length > 0) {
+                this.input.attr('aria-invalid', true);
+            } else {
+                this.input.attr('aria-invalid', false);
+            }
         } else {
             this.clearMessages();
+            this.input.attr('aria-invalid', false);
+            if (this.isDirty()) {
+                this.container.addClass('dirty');
+            } else {
+                this.container.removeClass('dirty');
+            }
         }
         return (this.errors.length < 1);
     }
+
+    /**
+     * Local datatype validator, intended for overriding
+     */
+    localValidator() { }
 
     /**
      * Show messages and warnings
@@ -106,7 +122,7 @@ class TextInput {
         this.errors = [];
         this.warnings = [];
         this.messagebox.empty().removeClass('shown');
-        this.container.removeClasas('error').removeClass('warning');
+        this.container.removeClass('error').removeClass('warning');
     }
 
     /**
@@ -138,11 +154,18 @@ class TextInput {
      */
     updateCounter() {
         if (!this.counter) { return; }
-        if ((this.counter === 'limit') || (this.counter === 'sky')) {
-            this.countchars.html(this.value.length);
-        } else {
-            this.countchars.html(this.maxlength - this.value.length);
+
+        let ctext = "";
+        if (this.counter === 'limit') {
+            ctext = `${this.value.length} of ${this.maxlength} characters entered.`;
+        } else if (this.counter === 'sky') {
+            ctext = `${this.value.length} characters entered.`;
+        } else { // remaining
+            ctext = `${(this.maxlength - this.value.length)} characters remaining.`;
         }
+
+        this.charactercounter.html(ctext);
+
         if ((this.maxlength) && (this.value.length >= this.maxlength)) {
             this.charactercounter.addClass('outofbounds');
         } else if ((this.counter !== 'sky')
@@ -175,7 +198,7 @@ class TextInput {
         this.container = $('<div />')
             .addClass('input-container')
             .append(this.labelobj)
-            .append(this.input)
+            .append($('<div />').addClass('wrap').append(this.input))
             .append(this.charactercounter)
             .append(this.messagebox);
 
@@ -198,11 +221,17 @@ class TextInput {
             .attr('autocomplete', this.autocomplete)
             .attr('placeholder', this.calculatePlaceholder())
             .attr('aria-label', this.arialabel)
+            .attr('aria-describedby', `msg-${this.id}`)
+            .attr('aria-invalid', false)
+            .attr('role', 'textbox')
+            .attr('tabindex', 0) // always 0
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
             .addClass(this.classes.join(' '))
             .on('keydown', function() {
+                // Reset this to keep readers from constantly beeping. It will re-validate later.
+                me.input.attr('aria-invalid', false);
                 me.updateCounter();
             })
             .on('keyup', function(e) {
@@ -210,14 +239,6 @@ class TextInput {
                     me.container.addClass('filled');
                 } else {
                     me.container.removeClass('filled');
-                }
-
-                if (me.isDirty()) {
-                    if (me.container) { me.container.addClass('dirty'); }
-                    me.input.addClass('dirty');
-                } else {
-                    if (me.container) { me.container.removeClass('dirty'); }
-                    me.input.removeClass('dirty');
                 }
                 if ((e.keyCode === 13) // Return key
                     && (me.onreturn) && (typeof me.onreturn === 'function')) {
@@ -246,12 +267,18 @@ class TextInput {
                 if (me.container) {
                     me.container.removeClass('active');
                 }
+
                 me.validate();
                 if ((me.focusout) && (typeof me.focusout === 'function')) {
                     me.focusout(e, me);
                 }
             })
             .val(this.config.value);
+
+        if (this.required) {
+            this.input.attr('required', true);
+        }
+
         if (this.mute) {
             this.input.addClass('mute');
             if (this.label) { this.input.attr('placeholder', this.label); }
@@ -276,7 +303,9 @@ class TextInput {
      * Build the error box.
      */
     buildmessagebox() {
-        this.messagebox = $('<ul />').addClass('messagebox');
+        this.messagebox = $('<ul />')
+            .attr('id', `msg-${this.id}`)
+            .addClass('messagebox');
     }
 
     /**
@@ -285,18 +314,11 @@ class TextInput {
     buildCharacterCounter() {
         const me = this;
         if (this.counter) {
-            this.countchars = $('<span />');
             this.charactercounter = $('<div />')
                 .addClass('charcounter')
                 .addClass(this.counter);
             if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
-            if (this.counter === 'limit') {
-                this.charactercounter.append(this.countchars).append($('<span />').html(" of " + this.maxlength + " characters entered."));
-            } else if (this.counter === 'sky') {
-                this.charactercounter.append(this.countchars).append($('<span />').html(" characters entered."));
-            } else { // remaining
-                this.charactercounter.append(this.countchars).append($('<span />').html(" characters remaining."));
-            }
+
             me.updateCounter();
         }
     }

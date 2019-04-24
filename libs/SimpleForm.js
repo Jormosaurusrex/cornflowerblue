@@ -66,10 +66,12 @@ class SimpleForm {
         const me = this;
         this.form = $('<form />')
             .attr('id', this.id)
+            .attr('novalidate', true) // turn off browser validation 'cause we do it by hand
             .attr('name', this.name)
             .attr('method', this.method)
             .attr('target', this.target)
             .attr('enctype', this.enctype)
+            .attr('role', 'form')
             .attr('autocomplete', this.autocomplete)
             .attr('action', this.urlaction)
             .addClass('cornflowerblue')

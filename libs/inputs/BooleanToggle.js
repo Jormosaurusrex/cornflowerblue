@@ -85,13 +85,19 @@ class BooleanToggle {
             .attr('type', "checkbox")
             .attr('id', this.id)
             .attr('name', this.name)
+            .attr('tabindex', 0) // always 0
             .attr('aria-label', this.arialabel)
+            .attr('aria-invalid', false)
+            .attr('aria-checked', this.checked)
             .attr('checked', this.checked)
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
+            .attr('role', 'checkbox')
             .addClass(this.classes.join(' '))
             .addClass(this.style)
             .change(function(e) {
+                $(this).prop('aria-checked', $(this).prop('checked'));
+                
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }

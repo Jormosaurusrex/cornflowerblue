@@ -4,6 +4,7 @@ class SimpleButton {
 
     static DEFAULT_CONFIG = {
         id : null, // the id
+        issubmit: false, // If true, force "type='submit'"
         text : 'Button Text', // The text for the button. This is also used as aria-label.
         shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
         classes: [], //Extra css classes to apply
@@ -64,6 +65,8 @@ class SimpleButton {
         this.button
             .attr('aria-label', this.text)
             .attr('id', this.id)
+            .attr('role', 'button')
+            .attr('type', (this.issubmit ? 'submit' : 'button'))
             .data('self', this)
             .addClass(this.classes.join(' '));
 
@@ -74,7 +77,6 @@ class SimpleButton {
         } else if (this.mute) {
             this.button.addClass('mute');
         }
-
 
         if ((this.action) && (typeof this.action === 'function')) {
             this.button.click(function (e) {
@@ -148,6 +150,9 @@ class SimpleButton {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get issubmit() { return this.config.issubmit; }
+    set issubmit(issubmit) { this.config.issubmit = issubmit; }
 
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
