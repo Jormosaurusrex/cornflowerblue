@@ -144,7 +144,7 @@ class Utils {
      */
     static getUniqueKey(length = 30) {
         let text = "";
-        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         for (let i = 0; i < length; i++ ) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
