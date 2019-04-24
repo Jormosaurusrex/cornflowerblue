@@ -12,18 +12,21 @@ div.checkbox {
     margin: 0 5px 0 5px;
     flex-grow: 2;
   }
-  input[type="checkbox"] {
+  input[type="checkbox"],
+  input[type="radio"] {
     margin-left: 5px;
     margin-right: 0;
   }
   &.rightside {
-    input[type="checkbox"] {
+    input[type="checkbox"],
+    input[type="radio"] {
       margin-left: 0;
       margin-right: 5px;
     }
   }
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"]{
   transition: all .2s;
   box-sizing: border-box;
   -webkit-appearance: none;
@@ -234,6 +237,31 @@ input[type="checkbox"] {
     border-radius: 1.5em;
     &:after,
     &:checked:after {
+      border-radius: 50%;
+    }
+  }
+}
+input[type="radio"] {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  &:after {
+    width: 14px;
+    height: 14px;
+    max-width: 14px;
+    max-height: 14px;
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+  }
+
+  &:checked,
+  &:focus,
+  &:active,
+  &:hover {
+    &:after {
       border-radius: 50%;
     }
   }

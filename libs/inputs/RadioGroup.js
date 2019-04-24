@@ -1,110 +1,85 @@
 "use strict";
 
-class BooleanToggle {
+class RadioGroup {
 
     static DEFAULT_CONFIG = {
         id : null, // The button id
         name: null,
         label: null, // The text for the label.
-        checked: false, // Initial state.
         classes: [], // Extra css classes to apply
-        disabled: false, // If true, make the checkbox disabled.
-        labelside: 'left', // Which side to put the label on.
-        style: null, // Default to box
+        disabled: false, // If true, make this disabled.
+        options: [], // Array of option dictionary objects.  Printed in order given.
+                     // { label: "Label to show", value: "v", checked: true }
         onchange: $.noop, // The change handler. Passed (event, self).
         validator: $.noop // A function to run to test validity. Passed the self; returns true or false.
     };
 
 
     /**
-     * Define the BooleanToggle
+     * Define the RadioGroup
      * @param config a dictionary object
      */
     constructor(config) {
-        this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
-        
+        this.config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
+
         if ((!this.arialabel) && (this.label)) { // munch aria label.
             this.arialabel = this.label;
         }
 
         if (!this.id) { // need to generate an id for label stuff
-            this.id = "input-" + Utils.getUniqueKey();
+            this.id = "radiogroup-" + Utils.getUniqueKey();
         }
         if (!this.name) { this.name = this.id; }
-        this.origval = this.checked;
-        
+
+        //this.origval = this.checked;
+
         return this;
-    }
-
-    /* STATE METHODS____________________________________________________________________ */
-
-    /**
-     * Runs validation and returns true or false, depending.
-     * @return {boolean}
-     */
-    validate() {
-        let valid = true;
-        if ((this.validator) && (typeof this.validator === 'function')) {
-            valid = this.validator(this);
-        }
-        return valid;
-    }
-    
-    /**
-     * Has the field been changed or not?
-     * @return {boolean} true or false, depending.
-     */
-    isDirty() {
-        return (this.origval !== this.value);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
         this.container = $('<div />')
-            .addClass('input-container')
-            .addClass('checkbox');
-
+            .addClass('radiogroup')
+            .append(this.labelobj)
+            .append(this.optionlist);
         if (this.hidden) { this.container.css('display', 'none'); }
-
-        if (this.labelside === 'right') {
-            this.container
-                .addClass('rightside')
-                .append(this.toggle).append(this.labelobj);
-        } else {
-            this.container.append(this.labelobj).append(this.toggle);
-        }
     }
 
-    /**
-     * Builds the DOM.
-     * @returns {jQuery} jQuery representation of the BooleanToggle
-     */
-    build() {
+
+    buildOption(def) {
         const me = this;
-        
-        this.toggle = $('<input />')
+        const lId = this.id + '-' + Utils.getUniqueKey();
+        let $op = $('<input />')
             .data('self', this)
-            .attr('type', "checkbox")
-            .attr('id', this.id)
+            .attr('id', lId)
+            .attr('type', 'radio')
             .attr('name', this.name)
             .attr('tabindex', 0) // always 0
-            .attr('aria-label', this.arialabel)
-            .attr('aria-invalid', false)
-            .attr('aria-checked', this.checked)
-            .attr('checked', this.checked)
-            .attr('hidden', this.hidden)
-            .attr('disabled', this.disabled)
-            .attr('role', 'checkbox')
+            .attr('aria-label', def.label)
+            .attr('aria-checked', def.checked)
+            .attr('checked', def.checked)
+            .attr('role', 'radio')
             .addClass(this.classes.join(' '))
-            .addClass(this.style)
             .change(function(e) {
                 $(this).prop('aria-checked', $(this).prop('checked'));
-
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }
             });
+        let $opLabel = $('<label />')
+            .attr('for', lId)
+            .html(def.label);
+
+        return $('<li />').append($op).append($opLabel);
+    }
+
+    buildOptions() {
+        this.optionlist = $('<ul />')
+            .attr('role', 'radiogroup');
+        for (let opt of this.options) {
+            this.optionlist.append(this.buildOption(opt));
+        }
     }
 
     /**
@@ -118,24 +93,6 @@ class BooleanToggle {
             .html(this.label);
     }
 
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Enable the button
-     */
-    disable() {
-        this.toggle.prop('disabled', true);
-        this.disabled = true;
-    }
-
-    /**
-     * Disable the button
-     */
-    enable() {
-        this.toggle.removeAttr('disabled');
-        this.disabled = false;
-    }
-
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
@@ -143,16 +100,13 @@ class BooleanToggle {
      * @returns {string}
      */
     toString () {
-        return `BooleanToggle | id: ${this.id} :: label: ${this.label} :: checked: ${this.checked} :: name: ${this.name} :: disabled: ${this.disabled}`;
+        return `RadioGroup | id: ${this.id} :: label: ${this.label} :: checked: ${this.checked} :: name: ${this.name} :: disabled: ${this.disabled}`;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
-
-    get checked() { return this.config.checked; }
-    set checked(checked) { this.config.checked = checked; }
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
@@ -184,8 +138,14 @@ class BooleanToggle {
     }
     set labelobj(labelobj) { this._labelobj = labelobj; }
 
-    get labelside() { return this.config.labelside; }
-    set labelside(labelside) { this.config.labelside = labelside; }
+    get optionlist() {
+        if (!this._optionlist) { this.buildOptions(); }
+        return this._optionlist;
+    }
+    set optionlist(optionlist) { this._optionlist = optionlist; }
+
+    get options() { return this.config.options; }
+    set options(options) { this.config.options = options; }
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
@@ -201,16 +161,8 @@ class BooleanToggle {
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
 
-    get style() { return this.config.style; }
-    set style(style) { this.config.style = style; }
-
-    get toggle() {
-        if (!this._toggle) { this.build(); }
-        return this._toggle;
-    }
-    set toggle(toggle) { this._toggle = toggle; }
-
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 
 }
+

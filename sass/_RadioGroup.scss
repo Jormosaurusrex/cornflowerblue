@@ -1,0 +1,23 @@
+div.radiogroup {
+  ul {
+    list-style-type: none;
+    li {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: center;
+      margin: 5px 0 10px 0;
+      input[type="radio"] {
+        display: inline-block;
+        margin: 0 10px 0 0;
+      }
+      label {
+        display: inline-block;
+        margin: 0;
+      }
+    }
+  }
+
+}

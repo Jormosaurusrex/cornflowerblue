@@ -61,6 +61,7 @@
     <script type="text/javascript" src="../libs/SimpleForm.js"></script>
     <script type="text/javascript" src="../libs/components/Growler.js"></script>
     <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
+    <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
     <script type="text/javascript" src="../libs/inputs/EmailField.js"></script>
     <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
     <script type="text/javascript" src="../libs/inputs/TextArea.js"></script>
@@ -85,6 +86,17 @@
                     ]
                 },
                 elements: [
+                    new RadioGroup({
+                        label: "Favorite Taylor Swift Song",
+                        name: "tswift",
+                        options: [
+                            { label: "Blank Space", value: "blank_space" },
+                            { label: "Shake it Off", value: "shake_off", checked: true },
+                            { label: "Out of the Woods", value: "out_of_woods" },
+                            { label: "...Ready For It?", value: "ready_for_t" },
+                        ]
+
+                    }),
                     new TextArea({
                         label: "Text Area",
                         required: true
