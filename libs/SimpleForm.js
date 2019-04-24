@@ -8,7 +8,7 @@ class SimpleForm {
         enctype: null, // Encapsulation type.
         autocomplete: 'off', // Autocomplete value
         urlaction: null, // Where to post this form to. If null, assumes to be an xhr action.
-        method: 'get', // Default method for the form.
+        method: 'get', // Method for the form.  Also used in API calls.
         header: null, // Stuff to put at the header. This is expected to be a jQuery element
         instructions: null, // Instructions configuration.  See InstructionBox.
         classes: [], // Extra css classes to apply,
@@ -28,6 +28,10 @@ class SimpleForm {
 
     /* ACTION METHODS___________________________________________________________________ */
 
+    /**
+     * Submits the form.  Runs the validator first.
+     * @param e the event object, passed to an onsubmit handler
+     */
     submit(e) {
         if (this.validate()) {
             if ((this.onsubmit) && (typeof this.onsubmit === 'function')) {
@@ -40,6 +44,10 @@ class SimpleForm {
         }
     }
 
+    /**
+     * Validates the form. Runs all validators.
+     * @return {boolean}
+     */
     validate() {
         let valid = true;
         for (let element of this.elements) {
@@ -55,7 +63,7 @@ class SimpleForm {
      * Build the form object itself
      */
     buildForm() {
-        var me = this;
+        const me = this;
         this.form = $('<form />')
             .attr('id', this.id)
             .attr('name', this.name)
@@ -63,7 +71,7 @@ class SimpleForm {
             .attr('target', this.target)
             .attr('enctype', this.enctype)
             .attr('autocomplete', this.autocomplete)
-            .attr('action', this.urlmethod)
+            .attr('action', this.urlaction)
             .addClass('cornflowerblue')
             .on('submit', function(e) {
                 e.preventDefault();
@@ -139,7 +147,7 @@ class SimpleForm {
     set elementbox(elementbox) { this._elementbox = elementbox; }
 
     get elements() { return this.config.elements; }
-    set elements(id) { this.config.elements = elements; }
+    set elements(elements) { this.config.elements = elements; }
 
     get enctype() { return this.config.enctype; }
     set enctype(enctype) { this.config.enctype = enctype; }

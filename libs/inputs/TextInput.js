@@ -202,7 +202,7 @@ class TextInput {
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
             .addClass(this.classes.join(' '))
-            .on('keyup', function() {
+            .on('keydown', function() {
                 me.updateCounter();
             })
             .on('keyup', function(e) {
@@ -224,12 +224,6 @@ class TextInput {
                     e.preventDefault();
                     e.stopPropagation();
                     me.onreturn(e, me);
-                } else if (e.keyCode === 9) { // Tab key
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if ((me.ontab) && (typeof me.ontab === 'function')) {
-                        me.ontab(e, me);
-                    }
                 } else if ((me.keyup) && (typeof me.keyup === 'function')) {
                     me.keyup(e, me);
                 }
@@ -252,6 +246,7 @@ class TextInput {
                 if (me.container) {
                     me.container.removeClass('active');
                 }
+                me.validate();
                 if ((me.focusout) && (typeof me.focusout === 'function')) {
                     me.focusout(e, me);
                 }

@@ -10,6 +10,8 @@ $green-half: rgba(0, 94, 32, 0.5) !default; // #005e20
 $tan: #eadcbc !default;
 $pink: #ff00de !default;
 $lightblue: #a0e1fa !default;
+$red-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(145, 0, 0, 0.05) 5px, rgba(145, 0, 0, 0.05) 10px);
+
 
 $white: #fff !default;
 $ultralight: #fdfdfd !default;
@@ -55,3 +57,4 @@ $constructive-color-half: $green-half;
 $destructive-color: $red;
 $destructive-color-helf: $red-half;
 $hot-text-color: $light;
+

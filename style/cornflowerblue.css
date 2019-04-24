@@ -163,7 +163,9 @@ div.input-container {
   div.input-container ul.messagebox {
     display: none;
     font-size: 90%;
-    margin: 5px 0 5px 0; }
+    margin: 0;
+    padding-top: 6px;
+    padding-bottom: 6px; }
     div.input-container ul.messagebox.shown {
       display: block; }
     div.input-container ul.messagebox li {
@@ -186,6 +188,11 @@ div.input-container {
     div.input-container.error input:focus {
       border-color: #910000;
       box-shadow: inset 10px 0 0 #910000; }
+  div.input-container.error ul.messagebox {
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(145, 0, 0, 0.05) 5px, rgba(145, 0, 0, 0.05) 10px);
+    border-left: 1px dashed rgba(145, 0, 0, 0.5);
+    border-right: 1px dashed rgba(145, 0, 0, 0.5);
+    border-bottom: 1px dashed rgba(145, 0, 0, 0.5); }
   div.input-container.warning input {
     border-color: #ff9900; }
     div.input-container.warning input:focus {
@@ -489,7 +496,7 @@ div.checkbox {
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  margin: 10px 30px 10px 30px;
+  margin: 10px;
   position: relative;
   box-sizing: border-box; }
   div.checkbox label {
