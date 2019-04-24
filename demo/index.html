@@ -85,8 +85,14 @@
                     ]
                 },
                 elements: [
+                    new TextArea({
+                        label: "Text Area",
+                        required: true
+                    }),
                     new EmailField({
                         label: "Email",
+                        autocomplete: 'off',
+                        counter: 'sky',
                         title: "Your email address",
                         required: true
                     }),
@@ -103,7 +109,13 @@
                     Growler.growl('Submit button clicked', "Clickify");
                 },
                 actions: [
-                    new ConstructiveButton({ text: "Submit", icon: "check" }),
+                    new ConstructiveButton({
+                        text: "Login",
+                        icon: "check",
+                        action: function(e) {
+                            f.submit();
+                        }
+                    }),
                     new SimpleButton({ text: "Something Else" }),
                     new DestructiveButton({ text: "Cancel", mute: true }),
                 ]

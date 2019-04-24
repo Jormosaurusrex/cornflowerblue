@@ -148,6 +148,33 @@ div.input-container {
   margin: 10px 30px 10px 30px;
   position: relative;
   box-sizing: border-box; }
+  div.input-container div.wrap {
+    position: relative; }
+    div.input-container div.wrap:after {
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      bottom: 2px;
+      width: 45px;
+      margin: 0;
+      background-color: #910000;
+      font-family: "cornflowerblue";
+      font-style: normal;
+      font-weight: normal;
+      speak: none;
+      text-decoration: inherit;
+      text-align: center;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1em;
+      content: '\36';
+      font-size: 20pt;
+      color: #ddd;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
   div.input-container div.charcounter {
     color: #999;
     display: block;
@@ -155,7 +182,8 @@ div.input-container {
     font-style: oblique;
     text-align: right;
     position: absolute;
-    right: 0; }
+    right: 0;
+    top: 12px; }
     div.input-container div.charcounter.danger {
       color: #ff9900; }
     div.input-container div.charcounter.outofbounds {
@@ -173,7 +201,7 @@ div.input-container {
       div.input-container ul.messagebox li.error {
         color: #910000; }
       div.input-container ul.messagebox li.warning {
-        color: #ff9900; }
+        color: #222; }
   div.input-container.mute label {
     visibility: hidden; }
   div.input-container.mute.active label, div.input-container.mute.filled label {
@@ -183,9 +211,15 @@ div.input-container {
     content: 'required';
     font-size: 75%;
     margin-left: 5px; }
-  div.input-container.error input {
+  div.input-container.error input[type="text"],
+  div.input-container.error input[type="number"],
+  div.input-container.error input[type="password"],
+  div.input-container.error textarea {
     border-color: #910000; }
-    div.input-container.error input:focus {
+    div.input-container.error input[type="text"]:focus,
+    div.input-container.error input[type="number"]:focus,
+    div.input-container.error input[type="password"]:focus,
+    div.input-container.error textarea:focus {
       border-color: #910000;
       box-shadow: inset 10px 0 0 #910000; }
   div.input-container.error ul.messagebox {
@@ -193,11 +227,41 @@ div.input-container {
     border-left: 1px dashed rgba(145, 0, 0, 0.5);
     border-right: 1px dashed rgba(145, 0, 0, 0.5);
     border-bottom: 1px dashed rgba(145, 0, 0, 0.5); }
-  div.input-container.warning input {
+  div.input-container.error div.wrap:after {
+    display: flex;
+    background-color: #910000;
+    content: '\39'; }
+  div.input-container.warning input[type="text"],
+  div.input-container.warning input[type="number"],
+  div.input-container.warning input[type="password"],
+  div.input-container.warning textarea {
     border-color: #ff9900; }
-    div.input-container.warning input:focus {
+    div.input-container.warning input[type="text"]:focus,
+    div.input-container.warning input[type="number"]:focus,
+    div.input-container.warning input[type="password"]:focus,
+    div.input-container.warning textarea:focus {
       border-color: #ff9900;
       box-shadow: inset 10px 0 0 #ff9900; }
+  div.input-container.warning ul.messagebox {
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255, 153, 0, 0.05) 5px, rgba(255, 153, 0, 0.05) 10px);
+    border-left: 1px dashed rgba(255, 153, 0, 0.5);
+    border-right: 1px dashed rgba(255, 153, 0, 0.5);
+    border-bottom: 1px dashed rgba(255, 153, 0, 0.5); }
+  div.input-container.warning div.wrap:after {
+    display: flex;
+    background-color: #ff9900;
+    color: #222;
+    content: '\36'; }
+  div.input-container.dirty div.wrap:after {
+    display: flex;
+    background-color: #666;
+    content: '\36'; }
+  div.input-container.dirty.active div.wrap:after {
+    background-color: #005e20; }
+
+div.textarea-container div.wrap:after {
+  justify-content: flex-start;
+  padding-top: 8px; }
 
 label {
   display: block;
@@ -291,33 +355,6 @@ textarea.mute {
     border-left-color: #005e20;
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: inset 10px 0 0 #005e20; }
-
-[title-x] {
-  position: relative;
-  cursor: help; }
-
-[title-x]::before {
-  content: attr(title);
-  position: absolute;
-  top: -26px;
-  display: inline-block;
-  padding: 3px 6px;
-  border-radius: 2px;
-  background: #000;
-  color: #fff;
-  font-size: 12px;
-  font-family: sans-serif;
-  white-space: nowrap; }
-
-[title-x]::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 8px;
-  display: inline-block;
-  color: #fff;
-  border: 8px solid transparent;
-  border-bottom: 8px solid #000; }
 
 button {
   --maincolor: #666;
