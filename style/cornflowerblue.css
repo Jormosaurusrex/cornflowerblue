@@ -1123,6 +1123,8 @@ div.window-container {
       flex-grow: 2;
       overflow: auto;
       margin: 0; }
+      div.window-container .dialog div.content form {
+        margin: 0; }
     div.window-container .dialog button.closebutton,
     div.window-container .dialog div.btn.closebutton {
       position: absolute;

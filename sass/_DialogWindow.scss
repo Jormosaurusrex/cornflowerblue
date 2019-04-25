@@ -53,6 +53,9 @@ div.window-container {
       flex-grow: 2;
       overflow: auto;
       margin: 0;
+      form {
+        margin: 0;
+      }
     }
     button.closebutton,
     div.btn.closebutton {
