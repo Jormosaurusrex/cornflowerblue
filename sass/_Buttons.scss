@@ -90,7 +90,7 @@ button {
     &:hover,
     &:active,
     &:focus {
-      color: $white;
+      color: var(--white);
       text-shadow: var(--text-shadow);
       background-color: var(--grey-dark);
       &.constructive {
