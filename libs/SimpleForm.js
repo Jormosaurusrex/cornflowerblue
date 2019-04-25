@@ -82,6 +82,9 @@ class SimpleForm {
         this.buildHeaderBox();
         this.buildElementBox();
         this.buildActionBox();
+
+        this.contentbox.append(this.headerbox).append(this.elementbox);
+        this.form.append(this.contentbox).append(this.actionbox);
     }
 
     /**
@@ -94,7 +97,6 @@ class SimpleForm {
             if (this.instructions) {
                 this.headerbox.append(new InstructionBox(this.instructions).container );
             }
-            this.form.append(this.headerbox);
         }
     }
 
@@ -106,7 +108,14 @@ class SimpleForm {
         for (let element of this.elements) {
             this.elementbox.append(element.container);
         }
-        this.form.append(this.elementbox);
+
+    }
+
+    /**
+     * Draw the content box
+     */
+    buildContentBox() {
+        this.contentbox = $('<div />').addClass('contentbox');
     }
 
     /**
@@ -118,7 +127,6 @@ class SimpleForm {
             for (let action of this.actions) {
                 this.actionbox.append(action.container);
             }
-            this.form.append(this.actionbox);
         }
     }
 
@@ -141,6 +149,13 @@ class SimpleForm {
 
     get container() { return this.form; } // shorthand to form.
     set container(container) { this.form = container; }
+
+    get contentbox() {
+        if (!this._contentbox) { this.buildContentBox(); }
+        return this._contentbox;
+    }
+    set contentbox(contentbox) { this._contentbox = contentbox; }
+
 
     get elementbox() {
         if (!this._elementbox) { this.buildElementBox(); }

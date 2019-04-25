@@ -12,12 +12,12 @@ div.window-container {
   vertical-align: middle;
   display: flex;
   pointer-events: none;
-  .dialog {
+  div.dialog {
     background-color: var(--ultralight);
     padding: 0;
     text-align: left;
     min-width: 50%;
-    max-width: 90%;
+    max-width: 50%;
     max-height: 90%;
     margin: 40px auto;
     position: relative;
@@ -33,6 +33,9 @@ div.window-container {
     align-items: stretch;
     align-content: flex-start;
     transition: all 0.5s;
+    animation-duration: .2s;
+    animation-name: dialogEntry;
+
     h2 {
       background-color: var(--grey-dark);
       color: var(--light);
@@ -42,30 +45,27 @@ div.window-container {
       font-size: 16pt;
       padding-top: 10px;
       padding-bottom: 10px;
+      position: relative;
       width: 100%;
       border-bottom: 1px solid var(--grey-darkest);
+      box-shadow: var(--interior-shadow);
+      z-index: 20;
       span {
         padding-left: 10px;
         padding-right: 10px;
       }
     }
     div.content {
-      flex-grow: 2;
-      overflow: auto;
       margin: 0;
-      form {
-        margin: 0;
-      }
+      overflow: auto;
     }
-    button.closebutton,
-    div.btn.closebutton {
+    button.closebutton {
       position: absolute;
       right: 0;
       top: 0;
       opacity: 0.5;
       z-index: 1046;
       box-shadow: none;
-      touch-action: manipulation;
       margin: 0;
       background: none;
       border: none;
@@ -74,6 +74,36 @@ div.window-container {
       &:hover {
         opacity: 1;
         background: none;
+      }
+    }
+
+    &.isform {
+      div.content {
+        margin: 0;
+        overflow: hidden;
+        form {
+          position: relative;
+          margin: 0;
+          border: 0;
+          div.contentbox {
+            position: relative;
+            flex-grow: 1;
+            overflow: auto;
+            //height: calc(100% - 100px);
+            //min-height: 200px;
+            height: 400px;
+            z-index: 10;
+          }
+          div.actions {
+            box-shadow: var(--interior-shadow-inverse);
+            position: relative;
+            flex-grow: 0;
+            z-index: 50;
+            height: 100px;
+            min-height: 100px;
+            max-height: 100px;
+          }
+        }
       }
     }
   }
@@ -89,4 +119,33 @@ div.window-mask {
   right: 0;
   bottom: 0;
   z-index: 2000;
+}
+
+@keyframes dialogEntry {
+  0% {
+    //transform: scale(4);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    //transform: scale(1);
+  }
+}
+
+@keyframes windowMaskEntry {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: .6;
+  }
+}
+
+@keyframes panelFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

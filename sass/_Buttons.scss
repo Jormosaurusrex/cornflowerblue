@@ -21,6 +21,7 @@ button {
   font-weight: normal;
   font-size: 100%;
   line-height: 1.5;
+  touch-action: manipulation;
   cursor: pointer;
   color: var(--maincolor);
   background-color: transparent;

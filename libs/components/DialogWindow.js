@@ -4,10 +4,11 @@ class DialogWindow {
 
     static DEFAULT_CONFIG = {
         id: null,
+        form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+        content: $('<p />').html("No provided content"), // This is the content of the dialog
         classes: [],             // apply these classes to the dialog, if any.
         title: null,                // Adds a title to the dialog if present
         resizable: false,           // Allows for dialog to be resized
-        content: $('<p />').html("No provided content"), // This is the content of the dialog
         showclose: true      // Show or hide the X button in the corner (requires title != null)
     };
 
@@ -54,11 +55,17 @@ class DialogWindow {
             }
         }
 
-        if (this.config.content) {
-            this.content = $('<div />')
+        if (this.form) { // it's a SimpleForm
+            this.window.addClass('isform');
+            this.contentbox = $('<div />')
                 .addClass('content')
-                .append(this.config.content);
-            this.window.append(this.content);
+                .append(this.form.form);
+            this.window.append(this.contentbox);
+        } else if (this.content) { // It's a jQuery object
+            this.contentbox = $('<div />')
+                .addClass('content')
+                .append(this.content);
+            this.window.append(this.contentbox);
         }
 
         $(document).bind("keyup.DialogWindow", function(e) {
@@ -120,6 +127,15 @@ class DialogWindow {
 
     get container() { return this._container; }
     set container(container) { this._container = container; }
+
+    get content() { return this.config.content; }
+    set content(content) { this.config.content = content; }
+
+    get contentbox() { return this._contentbox; }
+    set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
