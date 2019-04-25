@@ -2,6 +2,7 @@ button {
   --maincolor: $standard-color;
   --textcolor: var(--maincolor);
   --hovertextcolor: $hot-text-color;
+  --disabledcolor: $light;
   transition: all .2s;
   box-sizing: border-box;
   position: relative;
@@ -53,7 +54,7 @@ button {
   }
   &:disabled {
     color: $grey-medium;
-    background-color: $light;
+    background-color: var(--disabledcolor);
     border-color: $light;
     cursor: not-allowed;
     text-shadow: none;
@@ -63,7 +64,7 @@ button {
     &:focus,
     &:active {
       color: $grey-medium;
-      background-color: $light;
+      background-color: var(--disabledcolor);
       border-color: $grey-medium;
       text-shadow: none;
       box-shadow: none;
@@ -218,11 +219,28 @@ button {
       left: 21px;
       top: -14.8492px;
     }
+    &:hover,
+    &:focus,
+    &:active {
+      color: var(--hovertextcolor);
+      text-shadow: $text-shadow;
+      background-color: var(--maincolor);
+      box-shadow: $hover-box-shadow;
+      outline: none;
+      text-decoration: none;
+    }
+    &.constructive {
+      --maincolor: $constructive-color;
+    }
+    &.destructive {
+      --maincolor: $destructive-color;
+    }
     &:disabled,
     &:disabled:before,
     &:disabled:after,
     &:disabled:hover {
-      box-shadow: none;
+      background-color: var(--disabledcolor);
+      box-shadow: $hexagon-shadow-disabled;
     }
   }
 }

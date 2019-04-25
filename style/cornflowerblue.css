@@ -362,6 +362,7 @@ button {
   --maincolor: #666;
   --textcolor: var(--maincolor);
   --hovertextcolor: #ddd;
+  --disabledcolor: #ddd;
   transition: all .2s;
   box-sizing: border-box;
   position: relative;
@@ -406,7 +407,7 @@ button {
     --maincolor: #910000; }
   button:disabled {
     color: #999;
-    background-color: #ddd;
+    background-color: var(--disabledcolor);
     border-color: #ddd;
     cursor: not-allowed;
     text-shadow: none;
@@ -414,7 +415,7 @@ button {
     pointer-events: none; }
     button:disabled:hover, button:disabled:focus, button:disabled:active {
       color: #999;
-      background-color: #ddd;
+      background-color: var(--disabledcolor);
       border-color: #999;
       text-shadow: none;
       box-shadow: none; }
@@ -526,8 +527,20 @@ button {
     button.hexagon:nth-child(even) {
       left: 21px;
       top: -14.8492px; }
+    button.hexagon:hover, button.hexagon:focus, button.hexagon:active {
+      color: var(--hovertextcolor);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+      background-color: var(--maincolor);
+      box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+      outline: none;
+      text-decoration: none; }
+    button.hexagon.constructive {
+      --maincolor: #005e20; }
+    button.hexagon.destructive {
+      --maincolor: #910000; }
     button.hexagon:disabled, button.hexagon:disabled:before, button.hexagon:disabled:after, button.hexagon:disabled:hover {
-      box-shadow: none; }
+      background-color: var(--disabledcolor);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); }
 
 div.checkbox {
   display: flex;

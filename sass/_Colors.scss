@@ -51,6 +51,7 @@ $interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.7) !default;
 $interior-shadow-inverse: 0px -3px 5px 0px rgba(0,0,0,0.75) !default;
 $interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
 $hexagon-shadow: 0 0 5px rgba(0,0,0,0.6);
+$hexagon-shadow-disabled: 0 0 5px rgba(0,0,0,0.2);
 
 $standard-color: $grey-dark;
 $focus-color: $green;

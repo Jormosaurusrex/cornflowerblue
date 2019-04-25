@@ -204,6 +204,10 @@ class TextInput {
 
         if (this.required) { this.container.addClass('required'); }
         if (this.mute) { this.container.addClass('mute'); }
+        if (this.hidden) {
+            this.container.css('display', 'none');
+            this.container.attr('aria-hidden', true);
+        }
     }
 
     /**
@@ -227,6 +231,7 @@ class TextInput {
             .attr('tabindex', 0) // always 0
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
+            .attr('aria-hidden', this.hidden)
             .attr('disabled', this.disabled)
             .addClass(this.classes.join(' '))
             .on('keydown', function() {
