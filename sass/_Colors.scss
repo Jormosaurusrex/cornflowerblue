@@ -1,64 +1,98 @@
 
-$blue: rgb(0, 84, 166) !default; // #0054a6
-$blue-half: rgba(0, 84, 166, 0.5) !default; // #0054a6
-$red: rgb(145, 0, 0) !default; // #910000
-$red-half: rgba(145, 0, 0, 0.5) !default; // #910000
-$orange: rgb(255, 153, 0) !default; // #ff9900
-$yellow: rgb(255, 221, 27) !default; // #ffdd1b
-$green: rgb(0, 94, 32) !default; // #005e20
-$green-half: rgba(0, 94, 32, 0.5) !default; // #005e20
-$tan: #eadcbc !default;
-$pink: #ff00de !default;
-$lightblue: #a0e1fa !default;
-$red-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(145, 0, 0, 0.05) 5px, rgba(145, 0, 0, 0.05) 10px);
-$orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255, 153, 0, 0.05) 5px, rgba(255, 153, 0, 0.05) 10px);
-$yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(51, 89, 100, 0.05) 5px, rgba(51, 89, 100, 0.05) 10px);
-$green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 94, 32, 0.05) 5px, rgba(0, 94, 32, 0.05) 10px);
+/*
+  We want to use variables so that they can be re-themed
+ */
 
 
-$white: #fff !default;
-$ultralight: #fdfdfd !default;
-$morelight: #eee !default;
-$light: #ddd !default;
-$grey-light: #ccc !default;
-$grey-medium: #999 !default;
-$grey-dark: #666 !default;
-$grey-meddark: #555 !default;
-$grey-darker: #444 !default;
-$grey-darkest: #222 !default;
-$black: #000 !default;
+:root {
+  // Raw colors
+  --blue: rgb(0, 84, 166); // #0054a6
+  --red: rgb(145, 0, 0); // #910000
+  --orange: rgb(255, 153, 0); // #ff9900
+  --yellow: rgb(255, 221, 27); // #ffdd1b
+  --green: rgb(0, 94, 32); // #005e20
+  --tan: #eadcbc;
+  --pink: #ff00de;
+  --lightblue: #a0e1fa;
+  --white: #fff;
+  --ultralight: #fdfdfd;
+  --morelight: #eee;
+  --light: #ddd;
+  --grey-light: #ccc;
+  --grey-medium: #999;
+  --grey-dark: #666;
+  --grey-meddark: #555;
+  --grey-darker: #444;
+  --grey-darkest: #222;
+  --black: #000;
 
-$default-font-family: "Helvetica Neue", Arial, serif !default;
+  // Half opacity colors
+  --white-half: rgba(255, 255, 255, 0.5); // #fff
+  --blue-half: rgba(0, 84, 166, 0.5); // #0054a6
+  --green-half: rgba(0, 94, 32, 0.5); // #005e20
+  --red-half: rgba(145, 0, 0, 0.5); // #910000
+  --orange-half: rgba(255, 153, 0, 0.5); // #ff9900
+  --yellow-half: rgba(255, 221, 27, 0.5); // #ffdd1b
 
-$border-radius: 3px !default;
-$button-border-radius: $border-radius;
+  // Stripes
 
-$text-shadow: 0 1px 1px rgba(0,0,0,0.5) !default;
-$on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3) !default;
-$text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.3) !default;
-$text-shadow-grey-medium: 0 1px 1px rgba(102, 102, 102, 0.3) !default;
-$text-shadow-grey-dark: 0 1px 1px rgba(153, 153, 153, 0.3) !default;
-$text-shadow-grey-darkest: 0 1px 1px rgba(0, 0, 0, 0.3) !default;
+  --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(145, 0, 0, 0.05) 5px, rgba(145, 0, 0, 0.05) 10px);
+  --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255, 153, 0, 0.05) 5px, rgba(255, 153, 0, 0.05) 10px);
+  --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(51, 89, 100, 0.05) 5px, rgba(51, 89, 100, 0.05) 10px);
+  --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 94, 32, 0.05) 5px, rgba(0, 94, 32, 0.05) 10px);
+  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 84, 166, 0.05) 5px, rgba(0, 84, 166, 0.05) 10px);
 
-$box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5) !default;
-$hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
 
-$checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
-$checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
+  // Semantic colors
+  --standard-color: var(--grey-dark);
+  --focus-color: var(--green);
+  --focus-color-half: var(--green-half);
+  --constructive-color: var(--green);
+  --constructive-color-half: var(--green-half);
+  --destructive-color: var(--red);
+  --destructive-color-helf: var(--red-half);
+  --hot-text-color: var(--light);
 
-$panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5) !default;
-$interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.7) !default;
-$interior-shadow-inverse: 0px -3px 5px 0px rgba(0,0,0,0.75) !default;
-$interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2) !default;
-$hexagon-shadow: 0 0 5px rgba(0,0,0,0.6);
-$hexagon-shadow-disabled: 0 0 5px rgba(0,0,0,0.2);
+  --accept-color: var(--green);
+  --accept-color-half: var(--green-half);
+  --accept-stripes: var(--green-stripes);
+  --error-color: var(--red);
+  --error-color-half: var(--red-half);
+  --error-stripes: var(--red-stripes);
+  --warn-color: var(--orange);
+  --warn-color-half: var(--orange-half);
+  --warn-stripes: var(--orange-stripes);
+  --caution-color: var(--yellow);
+  --caution-color-half: var(--yellow-half);
+  --caution-stripes: var(--yellow-stripes);
 
-$standard-color: $grey-dark;
-$focus-color: $green;
-$focus-color-half: $green-half;
-$constructive-color: $green;
-$constructive-color-half: $green-half;
-$destructive-color: $red;
-$destructive-color-helf: $red-half;
-$hot-text-color: $light;
+  --growler-core-color: --blue;
+
+
+  // Misc Values
+  --growler-max-width: 300px;
+  --default-font-family: "Helvetica Neue", Arial, serif;
+  --border-radius: 3px;
+  --button-border-radius: var(--border-radius);
+
+  // Shadows
+  --text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+  --on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3);
+  --text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.3);
+  --text-shadow-grey-medium: 0 1px 1px rgba(102, 102, 102, 0.3);
+  --text-shadow-grey-dark: 0 1px 1px rgba(153, 153, 153, 0.3);
+  --text-shadow-grey-darkest: 0 1px 1px rgba(0, 0, 0, 0.3);
+  --box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5);
+  --hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+  --checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
+  --interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.7);
+  --interior-shadow-inverse: 0px -3px 5px 0px rgba(0,0,0,0.75);
+  --interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --hexagon-shadow: 0 0 5px rgba(0,0,0,0.6);
+  --hexagon-shadow-disabled: 0 0 5px rgba(0,0,0,0.2);
+}
+
+
 

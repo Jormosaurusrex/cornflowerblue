@@ -31,7 +31,7 @@ input[type="radio"]{
   box-sizing: border-box;
   -webkit-appearance: none;
   background-color: transparent;
-  border: 2px solid $grey-dark;
+  border: 2px solid var(--grey-dark);
   border-radius: 3px;
   display: inline-block;
   position: relative;
@@ -49,18 +49,18 @@ input[type="radio"]{
     height: 17px;
     max-width: 17px;
     max-height: 17px;
-    background-color: $light;
+    background-color: var(--light);
     position: absolute;
     left: 2px;
     top: 2px;
-    border: 7px solid $light;
+    border: 7px solid var(--light);
     border-radius: 3px;
-    box-shadow: $hover-box-shadow;
+    box-shadow: var(--hover-box-shadow);
   }
   &:checked {
-    border-color: $grey-dark;
-    box-shadow: $checkbox-checked-shadow;
-    background-color: $focus-color;
+    border-color: var(--grey-dark);
+    box-shadow: var(--checkbox-checked-shadow);
+    background-color: var(--focus-color);
     &:after {
       display: block;
     }
@@ -69,34 +69,34 @@ input[type="radio"]{
   &:active,
   &:hover {
     outline: none;
-    border-color: $focus-color;
-    background-color: $focus-color;
-    box-shadow: $hover-box-shadow;
+    border-color: var(--focus-color);
+    background-color: var(--focus-color);
+    box-shadow: var(--hover-box-shadow);
     &:after {
       display: block;
       background-color: transparent;
-      border: 1px dotted $light;
+      border: 1px dotted var(--light);
     }
     &:checked {
-      box-shadow: $checkbox-checked-shadow-hover;
+      box-shadow: var(--checkbox-checked-shadow-hover);
       &:after {
-        border: 7px solid $light;
-        background-color: $light;
+        border: 7px solid var(--light);
+        background-color: var(--light);
       }
     }
   }
   &:hover {
     &:checked {
       &:after {
-        background-color: $grey-medium;
+        background-color: var(--grey-medium);
       }
     }
   }
   &:disabled,
   &:disabled:hover {
-    color: $grey-light;
-    background-color: $light;
-    border-color: $grey-light;
+    color: var(--grey-light);
+    background-color: var(--light);
+    border-color: var(--grey-light);
     cursor: not-allowed;
     box-shadow: none;
     pointer-events: none;
@@ -104,8 +104,8 @@ input[type="radio"]{
       box-shadow: none;
     }
     &:checked:after {
-      background-color: $grey-light;
-      border-color: $grey-light;
+      background-color: var(--grey-light);
+      border-color: var(--grey-light);
       box-shadow: none;
     }
   }
@@ -144,8 +144,8 @@ input[type="radio"]{
       position: absolute;
       top: -3px;
       left: -8px;
-      color: $light;
-      text-shadow: $text-shadow;
+      color: var(--light);
+      text-shadow: var(--text-shadow);
     }
     &:hover:before {
       display: inline-block;
@@ -158,9 +158,9 @@ input[type="radio"]{
     }
     &:disabled,
     &:disabled:hover {
-      color: $grey-light;
-      background-color: $light;
-      border-color: $grey-light;
+      color: var(--grey-light);
+      background-color: var(--light);
+      border-color: var(--grey-light);
       cursor: not-allowed;
       box-shadow: none;
       pointer-events: none;
@@ -169,7 +169,7 @@ input[type="radio"]{
         text-shadow: none;
       }
       &:checked:before {
-        color: $grey-light;
+        color: var(--grey-light);
         box-shadow: none;
         text-shadow: none;
       }
@@ -182,8 +182,8 @@ input[type="radio"]{
     height: 30px;
     max-width: 60px;
     max-height: 30px;
-    background-color: $grey-medium;
-    box-shadow: $checkbox-checked-shadow;
+    background-color: var(--grey-medium);
+    box-shadow: var(--checkbox-checked-shadow);
     &:after {
       display: block;
       box-sizing: border-box;
@@ -196,39 +196,39 @@ input[type="radio"]{
       left: 3px;
       top: 3px;
       border-radius: 3px;
-      border: 7px solid $light;
-      background-color: $light;
-      box-shadow: $hover-box-shadow;
+      border: 7px solid var(--light);
+      background-color: var(--light);
+      box-shadow: var(--hover-box-shadow);
       transition: all .2s;
     }
     &:hover,
     &:hover:checked {
-      box-shadow: $checkbox-checked-shadow-hover;
-      border-color: $focus-color;
+      box-shadow: var(--checkbox-checked-shadow-hover);
+      border-color: var(--focus-color);
       &:after {
-        background-color: $grey-medium;
+        background-color: var(--grey-medium);
       }
     }
     &:checked {
-      border-color: $grey-light;
-      background-color: $focus-color;
+      border-color: var(--grey-light);
+      background-color: var(--focus-color);
       &:after {
-        border: 7px solid $light;
+        border: 7px solid var(--light);
         left: auto;
         right: 3px;
       }
     }
     &:disabled,
     &:disabled:hover {
-      background-color: $light;
-      border-color: $grey-light;
+      background-color: var(--light);
+      border-color: var(--grey-light);
       cursor: not-allowed;
       box-shadow: none;
       pointer-events: none;
       &:after,
       &:checked:after {
-        border-color: $grey-light;
-        background-color: $grey-light;
+        border-color: var(--grey-light);
+        background-color: var(--grey-light);
         box-shadow: none;
       }
     }

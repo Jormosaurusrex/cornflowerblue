@@ -1,8 +1,8 @@
 button {
-  --maincolor: $standard-color;
+  --maincolor: var(--standard-color);
   --textcolor: var(--maincolor);
-  --hovertextcolor: $hot-text-color;
-  --disabledcolor: $light;
+  --hovertextcolor: var(--hot-text-color);
+  --disabledcolor: var(--light);
   transition: all .2s;
   box-sizing: border-box;
   position: relative;
@@ -17,7 +17,7 @@ button {
   white-space: nowrap;
   margin: 10px 5px 10px 5px;
   padding: 0.4em 1em 0.4em 1em;
-  font-family: $default-font-family;
+  font-family: var(--default-font-family);
   font-weight: normal;
   font-size: 100%;
   line-height: 1.5;
@@ -25,7 +25,7 @@ button {
   color: var(--maincolor);
   background-color: transparent;
   border: 2px solid var(--maincolor);
-  border-radius: $button-border-radius;
+  border-radius: var(--button-border-radius);
   span {
     z-index: 3;
     position: relative;
@@ -39,23 +39,23 @@ button {
   &:focus,
   &:active {
     color: var(--hovertextcolor);
-    text-shadow: $text-shadow;
+    text-shadow: var(--text-shadow);
     background-color: var(--maincolor);
-    box-shadow: $hover-box-shadow;
+    box-shadow: var(--hover-box-shadow);
     outline: none;
     text-decoration: underline;
-    //box-shadow: $hover-box-shadow, inset 0px -4px 0 0 $grey-darker;
+    //box-shadow: $hover-box-shadow, inset 0px -4px 0 0 var(--grey-dark)er;
   }
   &.constructive {
-    --maincolor: $constructive-color;
+    --maincolor: var(--constructive-color);
   }
   &.destructive {
-    --maincolor: $destructive-color;
+    --maincolor: var(--destructive-color);
   }
   &:disabled {
-    color: $grey-medium;
+    color: var(--grey-medium);
     background-color: var(--disabledcolor);
-    border-color: $light;
+    border-color: var(--light);
     cursor: not-allowed;
     text-shadow: none;
     box-shadow: none;
@@ -63,16 +63,16 @@ button {
     &:hover,
     &:focus,
     &:active {
-      color: $grey-medium;
+      color: var(--grey-medium);
       background-color: var(--disabledcolor);
-      border-color: $grey-medium;
+      border-color: var(--grey-medium);
       text-shadow: none;
       box-shadow: none;
     }
     &.hexagon,
     &.hexagon::before,
     &.hexagon::after {
-      box-shadow: $hexagon-shadow;
+      box-shadow: var(--hexagon-shadow);
     }
   }
 
@@ -80,28 +80,28 @@ button {
     background-color: transparent;
     border-color: transparent;
     &.constructive {
-      color: $constructive-color;
+      color: var(--constructive-color);
       text-shadow: none;
     }
     &.destructive {
-      color: $destructive-color;
+      color: var(--destructive-color);
       text-shadow: none;
     }
     &:hover,
     &:active,
     &:focus {
       color: $white;
-      text-shadow: $text-shadow;
-      background-color: $grey-dark;
+      text-shadow: var(--text-shadow);
+      background-color: var(--grey-dark);
       &.constructive {
-        background-color: $constructive-color;
+        background-color: var(--constructive-color);
       }
       &.destructive {
-        background-color: $destructive-color;
+        background-color: var(--destructive-color);
       }
     }
     &:disabled { // special disabled for mute styles
-      color: $grey-medium;
+      color: var(--grey-medium);
       background-color: transparent;
       border-color: transparent;
       cursor: not-allowed;
@@ -111,7 +111,7 @@ button {
       &:hover,
       &:focus,
       &:active {
-        color: $grey-medium;
+        color: var(--grey-medium);
         background-color: transparent;
         border-color: transparent;
         text-shadow: none;
@@ -120,28 +120,28 @@ button {
       &.hexagon,
       &.hexagon::before,
       &.hexagon::after {
-        box-shadow: $hexagon-shadow;
+        box-shadow: var(--hexagon-shadow);
       }
     }
   }
   &.hot {
-    color: $light;
-    text-shadow: $text-shadow;
-    background-color: $standard-color;
-    border-color: $standard-color;
+    color: var(--light);
+    text-shadow: var(--text-shadow);
+    background-color: var(--standard-color);
+    border-color: var(--standard-color);
     &.constructive {
-      background-color: $constructive-color;
-      border-color: $constructive-color;
+      background-color: var(--constructive-color);
+      border-color: var(--constructive-color);
     }
     &.destructive {
-      background-color: $destructive-color;
-      border-color: $destructive-color;
+      background-color: var(--destructive-color);
+      border-color: var(--destructive-color);
     }
   }
   &:disabled {
-    color: $grey-medium;
-    background-color: $light;
-    border-color: $light;
+    color: var(--grey-medium);
+    background-color: var(--light);
+    border-color: var(--light);
     cursor: not-allowed;
     text-shadow: none;
     box-shadow: none;
@@ -149,9 +149,9 @@ button {
     &:hover,
     &:focus,
     &:active {
-      color: $grey-medium;
-      background-color: $light;
-      border-color: $grey-medium;
+      color: var(--grey-medium);
+      background-color: var(--light);
+      border-color: var(--grey-medium);
       text-shadow: none;
       box-shadow: none;
     }
@@ -183,10 +183,10 @@ button {
     height: 24.25px;
     font-size: 120%;
     line-height: 1;
-    box-shadow: $hexagon-shadow;
+    box-shadow: var(--hexagon-shadow);
     padding: 0;
     border: none;
-    background-color: $morelight;
+    background-color: var(--morelight);
     span {
       position: absolute;
       background: inherit;
@@ -223,24 +223,24 @@ button {
     &:focus,
     &:active {
       color: var(--hovertextcolor);
-      text-shadow: $text-shadow;
+      text-shadow: var(--text-shadow);
       background-color: var(--maincolor);
-      box-shadow: $hover-box-shadow;
+      box-shadow: var(--hover-box-shadow);
       outline: none;
       text-decoration: none;
     }
     &.constructive {
-      --maincolor: $constructive-color;
+      --maincolor: var(--constructive-color);
     }
     &.destructive {
-      --maincolor: $destructive-color;
+      --maincolor: var(--destructive-color);
     }
     &:disabled,
     &:disabled:before,
     &:disabled:after,
     &:disabled:hover {
       background-color: var(--disabledcolor);
-      box-shadow: $hexagon-shadow-disabled;
+      box-shadow: var(--hexagon-shadow-disabled);
     }
   }
 }

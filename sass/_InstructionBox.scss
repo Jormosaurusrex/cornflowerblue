@@ -1,7 +1,7 @@
 div.instructions {
   margin: 10px 30px 10px 30px;
   padding: 10px;
-  background-color: $light;
+  background-color: var(--light);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

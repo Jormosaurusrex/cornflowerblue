@@ -13,7 +13,7 @@ div.window-container {
   display: flex;
   pointer-events: none;
   .dialog {
-    background-color: $ultralight;
+    background-color: var(--ultralight);
     padding: 0;
     text-align: left;
     min-width: 50%;
@@ -23,7 +23,7 @@ div.window-container {
     position: relative;
     border-radius: 3px;
     overflow: hidden;
-    box-shadow: $panel-shadow;
+    box-shadow: var(--panel-shadow);
     flex-grow: 0;
     pointer-events: auto;
     display: flex;
@@ -34,16 +34,16 @@ div.window-container {
     align-content: flex-start;
     transition: all 0.5s;
     h2 {
-      background-color: $grey-dark;
-      color: $light;
-      text-shadow: $text-shadow;
+      background-color: var(--grey-dark);
+      color: var(--light);
+      text-shadow: var(--text-shadow);
       margin: 0;
       font-weight: normal;
       font-size: 16pt;
       padding-top: 10px;
       padding-bottom: 10px;
       width: 100%;
-      border-bottom: 1px solid $grey-darkest;
+      border-bottom: 1px solid var(--grey-darkest);
       span {
         padding-left: 10px;
         padding-right: 10px;
@@ -66,8 +66,8 @@ div.window-container {
       margin: 0;
       background: none;
       border: none;
-      color: $light;
-      text-shadow: $text-shadow;
+      color: var(--light);
+      text-shadow: var(--text-shadow);
       &:hover {
         opacity: 1;
         background: none;
@@ -76,7 +76,7 @@ div.window-container {
   }
 }
 div.window-mask {
-  background-color: $white;
+  background-color: var(--white);
   opacity: .75;
   width: 100%;
   height: 100%;

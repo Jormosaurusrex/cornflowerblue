@@ -2,7 +2,7 @@ form {
   box-sizing: border-box;
   margin: 10px 30px 10px 30px;
   border: 2px solid transparent;
-  background-color: $light;
+  background-color: var(--light);
 
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@ form {
     flex-grow: 1;
 
     div.instructions {
-      background-color: $morelight;
+      background-color: var(--morelight);
     }
   }
   div.elements {
@@ -34,9 +34,9 @@ form {
     align-content: center;
     justify-content: space-between;
     box-sizing: border-box;
-    background-color: $morelight;
+    background-color: var(--morelight);
     padding: 20px;
-    border-top: 2px solid $grey-medium;
+    border-top: 2px solid var(--grey-medium);
     button {
       margin-right: 10px;
     }

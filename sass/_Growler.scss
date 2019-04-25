@@ -1,11 +1,10 @@
-$growler-core-color: $blue;
-$growler-max-width: 300px;
+
 div.growlbox {
   z-index: 50000;
   position: fixed;
   display: flex;
   flex-direction: column;
-  max-width: $growler-max-width;
+  max-width: var(--growler-max-width);
   &.top-left {
     top: 10px;
     left: 10px;
@@ -51,16 +50,16 @@ div.growlbox {
   position: relative;
   box-sizing: border-box;
   border-radius: 3px;
-  border: 2px solid $growler-core-color;
+  border: 2px solid var(--growler-core-color);
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
-  box-shadow: $panel-shadow;
-  color: $grey-darkest;
-  background-color: $light;
+  box-shadow: var(--panel-shadow);
+  color: var(--grey-darkest);
+  background-color: var(--light);
   margin-bottom: 20px;
-  width: $growler-max-width;
-  max-width: $growler-max-width;
+  width: var(--growler-max-width);
+  max-width: var(--growler-max-width);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -68,7 +67,7 @@ div.growlbox {
   button.closebutton {
     margin:0;
     opacity: 0.6;
-    color: $grey-medium;
+    color: var(--grey-medium);
     border-color: transparent;
     background-color: transparent;
     &:active,
@@ -84,28 +83,28 @@ div.growlbox {
     font-size: 100%;
     padding: 0;
     margin: 0;
-    background-color: $growler-core-color;
-    color: $light;
+    background-color: var(--growler-core-color);
+    color: var(--light);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     div.icon {
-      text-shadow: $text-shadow;
+      text-shadow: var(--text-shadow);
     }
     div.t {
-      text-shadow: $text-shadow;
+      text-shadow: var(--text-shadow);
       padding: 5px 10px 5px 10px;
     }
     button.closebutton {
-      color: $light;
+      color: var(--light);
       margin-right: 0;
       margin-left: auto;
       position: relative;
       left: auto;
       top: auto;
       &:hover {
-        text-shadow: $text-shadow;
+        text-shadow: var(--text-shadow);
       }
     }
   }

@@ -14,7 +14,7 @@ div.input-container {
       bottom: 2px;
       width: 45px;
       margin: 0;
-      background-color: $red;
+      background-color: var(--red);
       font-family: "cornflowerblue";
       font-style: normal;
       font-weight: normal;
@@ -26,8 +26,8 @@ div.input-container {
       line-height: 1em;
       content: '\36'; // checkmark
       font-size: 20pt;
-      color: $light;
-      text-shadow: $text-shadow;
+      color: var(--light);
+      text-shadow: var(--text-shadow);
       display: none;
       flex-direction: column;
       justify-content: center;
@@ -35,7 +35,7 @@ div.input-container {
     }
   }
   div.charcounter {
-    color: $grey-medium;
+    color: var(--grey-medium);
     display: block;
     font-size: 85%;
     font-style: oblique;
@@ -44,10 +44,10 @@ div.input-container {
     right: 0;
     top: 12px;
     &.danger {
-      color: $orange;
+      color: var(--warn-color);
     }
     &.outofbounds {
-      color: $red;
+      color: var(--error-color);
     }
   }
   ul.messagebox {
@@ -62,10 +62,10 @@ div.input-container {
     li {
       margin: 5px 0 5px 0;
       &.error {
-        color: $red;
+        color: var(--error-color);
       }
       &.warning {
-        color: $grey-darkest;
+        color: var(--grey-darkest);
       }
     }
   }
@@ -88,7 +88,7 @@ div.input-container {
   &.required {
     label {
       &:after {
-        color: $red;
+        color: var(--error-color);
         content: 'required';
         font-size: 75%;
         margin-left: 5px;
@@ -100,22 +100,22 @@ div.input-container {
     input[type="number"],
     input[type="password"],
     textarea {
-      border-color: $red;
+      border-color: var(--error-color);
       &:focus {
-        border-color: $red;
-        box-shadow: inset 10px 0 0 $red;
+        border-color: var(--error-color);
+        box-shadow: inset 10px 0 0 var(--error-color);
       }
     }
     ul.messagebox {
-      background-image: $red-stripes;
-      border-left: 1px dashed rgba(145, 0, 0, 0.5);
-      border-right: 1px dashed rgba(145, 0, 0, 0.5);
-      border-bottom: 1px dashed rgba(145, 0, 0, 0.5);
+      background-image: var(--error-stripes);
+      border-left: 1px dashed var(--error-half);
+      border-right: 1px dashed var(--error-half);
+      border-bottom: 1px dashed var(--error-half);
     }
     div.wrap {
       &:after {
         display: flex;
-        background-color: $red;
+        background-color: var(--error-color);
         content: '\39';
       }
     }
@@ -125,23 +125,23 @@ div.input-container {
     input[type="number"],
     input[type="password"],
     textarea {
-      border-color: $orange;
+      border-color: var(--warn-color);
       &:focus {
-        border-color: $orange;
-        box-shadow: inset 10px 0 0 $orange;
+        border-color: var(--warn-color);
+        box-shadow: inset 10px 0 0 var(--warn-color);
       }
     }
     ul.messagebox {
-      background-image: $orange-stripes;
-      border-left: 1px dashed rgba(255, 153, 0, 0.5);
-      border-right: 1px dashed rgba(255, 153, 0, 0.5);
-      border-bottom: 1px dashed rgba(255, 153, 0, 0.5);
+      background-image: var(--warn-stripes);
+      border-left: 1px dashed var(--warn-color-half);
+      border-right: 1px dashed var(--warn-color-half);
+      border-bottom: 1px dashed var(--warn-color-half);
     }
     div.wrap {
       &:after {
         display: flex;
-        background-color: $orange;
-        color: $grey-darkest;
+        background-color: var(--warn-color);
+        color: var(--grey-darkest);
         content: '\36';
       }
     }
@@ -150,14 +150,14 @@ div.input-container {
     div.wrap {
       &:after {
         display: flex;
-        background-color: $standard-color;
+        background-color: var(--standard-color);
         content: '\36';
       }
     }
     &.active {
       div.wrap {
         &:after {
-          background-color: $focus-color;
+          background-color: var(--focus-color);
         }
       }
     }
@@ -178,8 +178,8 @@ label {
   margin-top: 10px;
   margin-bottom: 5px;
   font-size: 13pt;
-  color: $grey-darker;
-  text-shadow:$text-shadow-grey-medium;
+  color: var(--grey-darker);
+  text-shadow:var(--text-shadow-grey-medium);
 }
 
 input[type="text"],
@@ -192,30 +192,30 @@ textarea {
   position: relative;
   font-family: inherit;
   width: 100%;
-  background-color: $ultralight;
+  background-color: var(--ultralight);
   margin: 0;
   font-size: 105%;
-  border: 2px solid $standard-color;
+  border: 2px solid var(--standard-color);
   padding: 10px 10px 10px 20px;
   border-radius: 1px;
-  color: $grey-darker;
-  text-shadow:$text-shadow-grey-medium;
+  color: var(--grey-darker);
+  text-shadow:var(--text-shadow-grey-medium);
   vertical-align: middle;
   &::placeholder {
-    color: $grey-medium;
+    color: var(--grey-medium);
     font-weight: normal;
     text-shadow:none;
   }
   &:disabled {
-    border-color: $grey-light;
-    background-color: $light;
-    color: $grey-medium;
+    border-color: var(--grey-light);
+    background-color: var(--light);
+    color: var(--grey-medium);
     cursor: not-allowed;
     text-shadow:none;
   }
   &:focus {
-    border-color: $focus-color;
-    box-shadow: inset 10px 0 0 $focus-color;
+    border-color: var(--focus-color);
+    box-shadow: inset 10px 0 0 var(--focus-color);
     &::placeholder {
       opacity: 0.3;
     }
@@ -227,30 +227,30 @@ textarea {
     border-right: none;
     padding: 10px;
     &::placeholder {
-      color: $grey-darker;
-      text-shadow:$text-shadow-grey-medium;
+      color: var(--grey-darker);
+      text-shadow:var(--text-shadow-grey-medium);
     }
     &:disabled {
       &::placeholder {
-        color: $grey-medium;
+        color: var(--grey-medium);
       }
     }
     &:focus {
-      border-bottom-color: $focus-color;
-      background-color: rgba(255,255,255, 0.5);
-      box-shadow: inset 0px -4px 0 0 $focus-color;
+      border-bottom-color: var(--focus-color);
+      background-color: var(--white-half);
+      box-shadow: inset 0px -4px 0 0 var(--focus-color);
     }
   }
 }
 textarea {
   &.mute {
     padding: 10px 10px 10px 20px;
-    border-left: 2px solid $standard-color;
+    border-left: 2px solid var(--standard-color);
     border-bottom: none;
     &:focus {
-      border-left-color: $focus-color;
-      background-color: rgba(255,255,255, 0.5);
-      box-shadow: inset 10px 0 0 $focus-color;
+      border-left-color: var(--focus-color);
+      background-color: var(--white-half);
+      box-shadow: inset 10px 0 0 var(--focus-color);
     }
   }
 }
