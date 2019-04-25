@@ -41,6 +41,7 @@ class RadioGroup {
     buildContainer() {
         this.container = $('<div />')
             .addClass('radiogroup')
+            .addClass(this.classes.join(' '))
             .append(this.labelobj)
             .append(this.optionlist);
         if (this.hidden) { this.container.css('display', 'none'); }

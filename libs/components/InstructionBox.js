@@ -23,7 +23,9 @@ class InstructionBox {
      * Build the actual DOM container.
      */
     buildContainer() {
-        this.container = $('<div />').addClass('instructions');
+        this.container = $('<div />')
+            .addClass('instructions')
+            .addClass(this.classes.join(' '));
         if (this.icon) {
             this.container.append(IconFactory.makeIcon(this.icon));
         }

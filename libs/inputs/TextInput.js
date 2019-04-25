@@ -197,6 +197,7 @@ class TextInput {
     buildContainer() {
         this.container = $('<div />')
             .addClass('input-container')
+            .addClass(this.classes.join(' '))
             .append(this.labelobj)
             .append($('<div />').addClass('wrap').append(this.input))
             .append(this.charactercounter)

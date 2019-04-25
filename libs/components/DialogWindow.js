@@ -7,9 +7,9 @@ class DialogWindow {
         form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
         content: $('<p />').html("No provided content"), // This is the content of the dialog
         classes: [],             // apply these classes to the dialog, if any.
-        title: null,                // Adds a title to the dialog if present
-        resizable: false,           // Allows for dialog to be resized
-        showclose: true      // Show or hide the X button in the corner (requires title != null)
+        header: null, // jQuery object, will be used if passed before title.
+        title: null,  // Adds a title to the dialog if present. header must be null.
+        showclose: true  // Show or hide the X button in the corner (requires title != null)
     };
 
     /**
@@ -31,16 +31,22 @@ class DialogWindow {
         const me = this;
         this.container = $('<div />').addClass('window-container');
 
-        this.window = $('<div />').addClass('dialog');
+        this.window = $('<div />')
+            .addClass('dialog')
+            .addClass(this.classes.join(' '))
+            .attr('id', this.id);
 
-        this.window.attr('id', this.id);
 
-        if (this.config.classes) { this.window.addClass(this.config.classes.join(' ')); }
+        if ((this.title) || (this.header)) {
 
-        if (this.config.title) {
-            this.title = $('<h2 />').append( $('<span />').html(this.config.title) );
-            this.window.append(this.title);
-            if (this.config.showclose) {
+            if (this.header) {
+                this.window.append(this.header);
+            } else {
+                this.title = $('<h2 />').append( $('<span />').html(this.title) );
+                this.window.append(this.title);
+            }
+
+            if (this.showclose) {
                 this.closebutton = new SimpleButton({
                     icon: 'echx',
                     text: "Close",
@@ -122,6 +128,9 @@ class DialogWindow {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
     get closebutton() { return this._closebutton; }
     set closebutton(closebutton) { this._closebutton = closebutton; }
 
@@ -137,6 +146,12 @@ class DialogWindow {
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
 
+    get header() { return this.config.header; }
+    set header(header) { this.config.header = header; }
+
+    get headerbox() { return this._headerbox; }
+    set headerbox(headerbox) { this._headerbox = headerbox; }
+
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
@@ -146,8 +161,11 @@ class DialogWindow {
     get showclose() { return this.config.showclose; }
     set showclose(showclose) { this.config.showclose = showclose; }
 
-    get title() { return this._title; }
-    set title(title) { this._title = title; }
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
+
+    get titlebox() { return this._titlebox; }
+    set titlebox(titlebox) { this._titlebox = titlebox; }
 
     get window() { return this._window; }
     set window(window) { this._window = window; }

@@ -75,6 +75,7 @@ class SimpleForm {
             .attr('autocomplete', this.autocomplete)
             .attr('action', this.urlaction)
             .addClass('cornflowerblue')
+            .addClass(this.classes.join(' '))
             .on('submit', function(e) {
                 e.preventDefault();
                 me.submit();
