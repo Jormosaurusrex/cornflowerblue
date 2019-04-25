@@ -944,7 +944,7 @@ form {
       margin-right: 10px; }
     form div.actions button:first-child {
       margin-left: 0; }
-    form div.actions button:last-child {
+    form div.actions button:last-child:not(:only-of-type) {
       align-self: flex-end;
       margin-left: auto;
       margin-right: 10px; }

@@ -43,7 +43,7 @@ form {
     button:first-child {
       margin-left: 0;
     }
-    button:last-child {
+    button:last-child:not(:only-of-type) {
       align-self: flex-end;
       margin-left: auto;
       margin-right: 10px;
