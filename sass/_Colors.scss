@@ -77,6 +77,16 @@
   --caution-color-half: var(--yellow-half);
   --caution-stripes: var(--yellow-stripes);
 
+  --disabled-base-color: var(--light);
+  --disabled-highlight-color: var(--grey-medium);
+
+  --button-default-color: var(--standard-color);
+  --button-default-text-color: var(--button-default-color);
+  --button-hover-text-color: var(--hot-text-color);
+  --button-font-family: var(--default-font-family);
+  --button-text-shadow: var(--text-shadow);
+  --button-disabled-color: var(--disabled-base-color);
+  --button-disabled-text-color: var(--disabled-highlight-color);
 
 
   --checkbox-border-color: var(--grey-dark);

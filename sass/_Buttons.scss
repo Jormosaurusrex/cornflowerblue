@@ -1,8 +1,4 @@
 button {
-  --maincolor: var(--standard-color);
-  --textcolor: var(--maincolor);
-  --hovertextcolor: var(--hot-text-color);
-  --disabledcolor: var(--light);
   transition: all .2s;
   box-sizing: border-box;
   position: relative;
@@ -17,15 +13,15 @@ button {
   white-space: nowrap;
   margin: 10px 5px 10px 5px;
   padding: 0.4em 1em 0.4em 1em;
-  font-family: var(--default-font-family);
+  font-family: var(--button-font-family);
   font-weight: normal;
   font-size: 100%;
   line-height: 1.5;
   touch-action: manipulation;
   cursor: pointer;
-  color: var(--maincolor);
+  color: var(--button-default-color);
   background-color: transparent;
-  border: 2px solid var(--maincolor);
+  border: 2px solid var(--button-default-color);
   border-radius: var(--button-border-radius);
   span {
     z-index: 3;
@@ -39,24 +35,24 @@ button {
   &:hover,
   &:focus,
   &:active {
-    color: var(--hovertextcolor);
-    text-shadow: var(--text-shadow);
-    background-color: var(--maincolor);
+    color: var(--button-hover-text-color);
+    text-shadow: var(--button-text-shadow);
+    background-color: var(--button-default-color);
     box-shadow: var(--hover-box-shadow);
     outline: none;
     text-decoration: underline;
     //box-shadow: $hover-box-shadow, inset 0px -4px 0 0 var(--grey-dark)er;
   }
   &.constructive {
-    --maincolor: var(--constructive-color);
+    --button-default-color: var(--constructive-color);
   }
   &.destructive {
-    --maincolor: var(--destructive-color);
+    --button-default-color: var(--destructive-color);
   }
   &:disabled {
-    color: var(--grey-medium);
-    background-color: var(--disabledcolor);
-    border-color: var(--light);
+    color: var(--button-disabled-text-color);
+    background-color: var(--button-disabled-color);
+    border-color: var(--button-disabled-color);
     cursor: not-allowed;
     text-shadow: none;
     box-shadow: none;
@@ -64,9 +60,9 @@ button {
     &:hover,
     &:focus,
     &:active {
-      color: var(--grey-medium);
-      background-color: var(--disabledcolor);
-      border-color: var(--grey-medium);
+      color: var(--button-disabled-text-color);
+      background-color: var(--button-disabled-color);
+      border-color: var(--button-disabled-color);
       text-shadow: none;
       box-shadow: none;
     }
@@ -76,7 +72,6 @@ button {
       box-shadow: var(--hexagon-shadow);
     }
   }
-
   &.mute {
     background-color: transparent;
     border-color: transparent;
@@ -91,9 +86,9 @@ button {
     &:hover,
     &:active,
     &:focus {
-      color: var(--white);
-      text-shadow: var(--text-shadow);
-      background-color: var(--grey-dark);
+      color: var(--button-hover-text-color);
+      text-shadow: var(--button-text-shadow);
+      background-color: var(--button-default-color);
       &.constructive {
         background-color: var(--constructive-color);
       }
@@ -102,7 +97,7 @@ button {
       }
     }
     &:disabled { // special disabled for mute styles
-      color: var(--grey-medium);
+      color: var(--button-disabled-color);
       background-color: transparent;
       border-color: transparent;
       cursor: not-allowed;
@@ -112,7 +107,7 @@ button {
       &:hover,
       &:focus,
       &:active {
-        color: var(--grey-medium);
+        color: var(--button-disabled-color);
         background-color: transparent;
         border-color: transparent;
         text-shadow: none;
@@ -126,10 +121,10 @@ button {
     }
   }
   &.hot {
-    color: var(--light);
-    text-shadow: var(--text-shadow);
-    background-color: var(--standard-color);
-    border-color: var(--standard-color);
+    color: var(--button-hover-text-color);
+    text-shadow: var(--button-text-shadow);
+    background-color: var(--button-default-color);
+    border-color: var(--button-default-color);
     &.constructive {
       background-color: var(--constructive-color);
       border-color: var(--constructive-color);
@@ -140,9 +135,9 @@ button {
     }
   }
   &:disabled {
-    color: var(--grey-medium);
-    background-color: var(--light);
-    border-color: var(--light);
+    color: var(--button-disabled-text-color);
+    background-color: var(--button-disabled-color);
+    border-color: var(--button-disabled-color);
     cursor: not-allowed;
     text-shadow: none;
     box-shadow: none;
@@ -150,9 +145,9 @@ button {
     &:hover,
     &:focus,
     &:active {
-      color: var(--grey-medium);
-      background-color: var(--light);
-      border-color: var(--grey-medium);
+      color: var(--button-disabled-text-color);
+      background-color: var(--button-disabled-color);
+      border-color: var(--button-disabled-color);
       text-shadow: none;
       box-shadow: none;
     }
@@ -178,6 +173,22 @@ button {
   &.circle {
     border-radius: 50%;
   }
+
+  &.small {
+    font-size: 80%;
+  }
+  &.large {
+    font-size: 120%;
+  }
+  &.fill {
+    font-size: 120%;
+    width: 100%;
+    height: 100%;
+  }
+  &.pill {
+    border-radius: 1.5em;
+  }
+
   &.hexagon {
     transition: none;
     width: 42px;
@@ -223,24 +234,24 @@ button {
     &:hover,
     &:focus,
     &:active {
-      color: var(--hovertextcolor);
-      text-shadow: var(--text-shadow);
-      background-color: var(--maincolor);
+      color: var(--button-hover-text-color);
+      text-shadow: var(--button-text-shadow);
+      background-color: var(--button-default-color);
       box-shadow: var(--hover-box-shadow);
       outline: none;
       text-decoration: none;
     }
     &.constructive {
-      --maincolor: var(--constructive-color);
+      --button-default-color: var(--constructive-color);
     }
     &.destructive {
-      --maincolor: var(--destructive-color);
+      --button-default-color: var(--destructive-color);
     }
     &:disabled,
     &:disabled:before,
     &:disabled:after,
     &:disabled:hover {
-      background-color: var(--disabledcolor);
+      background-color: var(--button-disabled-color);
       box-shadow: var(--hexagon-shadow-disabled);
     }
   }

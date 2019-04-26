@@ -7,6 +7,7 @@ class SimpleButton {
         issubmit: false, // If true, force "type='submit'"
         text : 'Button Text', // The text for the button. This is also used as aria-label.
         shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
+        size : 'medium', // size of the button: small, medium (default), large, fill
         classes: [], //Extra css classes to apply
         icon : null, // If present, will be attached to the text inside the button
                      // This can be passed a jQuery object
@@ -68,6 +69,7 @@ class SimpleButton {
             .attr('role', 'button')
             .attr('type', (this.issubmit ? 'submit' : 'button'))
             .data('self', this)
+            .addClass(this.size)
             .addClass(this.classes.join(' '));
 
         if (this.disabled) { this.disable(); }
@@ -159,6 +161,9 @@ class SimpleButton {
 
     get shape() { return this.config.shape; }
     set shape(shape) { this.config.shape = shape; }
+
+    get size() { return this.config.size; }
+    set size(size) { this.config.size = size; }
 
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }

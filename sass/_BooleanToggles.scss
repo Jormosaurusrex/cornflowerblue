@@ -92,11 +92,12 @@ input[type="radio"]{
       }
     }
   }
+
   &:disabled,
   &:disabled:hover {
-    color: var(--grey-light);
-    background-color: var(--light);
-    border-color: var(--grey-light);
+    color: var(--disabled-highlight-color);
+    background-color: var(--disabled-base-color);
+    border-color: var(--disabled-highlight-color);
     cursor: not-allowed;
     box-shadow: none;
     pointer-events: none;
@@ -104,8 +105,8 @@ input[type="radio"]{
       box-shadow: none;
     }
     &:checked:after {
-      background-color: var(--grey-light);
-      border-color: var(--grey-light);
+      background-color: var(--disabled-highlight-color);
+      border-color: var(--disabled-highlight-color);
       box-shadow: none;
     }
   }
@@ -162,11 +163,12 @@ input[type="radio"]{
       opacity: 1;
       display: inline-block;
     }
+
     &:disabled,
     &:disabled:hover {
-      color: var(--grey-light);
-      background-color: var(--light);
-      border-color: var(--grey-light);
+      color: var(--disabled-highlight-color);
+      background-color: var(--disabled-base-color);
+      border-color: var(--disabled-highlight-color);
       cursor: not-allowed;
       box-shadow: none;
       pointer-events: none;
@@ -175,7 +177,7 @@ input[type="radio"]{
         text-shadow: none;
       }
       &:checked:before {
-        color: var(--grey-light);
+        color: var(--disabled-highlight-color);
         box-shadow: none;
         text-shadow: none;
       }
@@ -224,17 +226,18 @@ input[type="radio"]{
         right: 3px;
       }
     }
+
     &:disabled,
     &:disabled:hover {
-      background-color: var(--light);
-      border-color: var(--grey-light);
+      background-color: var(--disabled-base-color);
+      border-color: var(--disabled-highlight-color);
       cursor: not-allowed;
       box-shadow: none;
       pointer-events: none;
       &:after,
       &:checked:after {
-        border-color: var(--grey-light);
-        background-color: var(--grey-light);
+        border-color: var(--disabled-highlight-color);
+        background-color: var(--disabled-highlight-color);
         box-shadow: none;
       }
     }
