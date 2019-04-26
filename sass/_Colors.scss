@@ -45,26 +45,48 @@
 
   // Semantic colors
   --standard-color: var(--grey-dark);
+  --label-color: var(--grey-dark);
+  --label-text-shadow: var(--text-shadow-grey-medium);
+  --placeholder-color: var(--grey-medium);
+
   --focus-color: var(--green);
   --focus-color-half: var(--green-half);
+
   --constructive-color: var(--green);
   --constructive-color-half: var(--green-half);
+
   --destructive-color: var(--red);
   --destructive-color-helf: var(--red-half);
+
   --hot-text-color: var(--light);
+  --required-color: var(--red);
 
   --accept-color: var(--green);
   --accept-color-half: var(--green-half);
   --accept-stripes: var(--green-stripes);
+
   --error-color: var(--red);
   --error-color-half: var(--red-half);
   --error-stripes: var(--red-stripes);
+
   --warn-color: var(--orange);
   --warn-color-half: var(--orange-half);
   --warn-stripes: var(--orange-stripes);
+
   --caution-color: var(--yellow);
   --caution-color-half: var(--yellow-half);
   --caution-stripes: var(--yellow-stripes);
+
+
+
+  --checkbox-border-color: var(--grey-dark);
+  --checkbox-focus-color: var(--focus-color);
+  --checkbox-center-background-color: var(--light);
+  --checkbox-center-border-color: var(--light);
+  --checkbox-checked-border-color: var(--grey-dark);
+  --checkbox-checkmark-color: var(--light);
+  --checkbox-checkmark-checked-background-color: var(--checkbox-focus-color);
+  --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
 
   --growler-core-color: --blue;
 

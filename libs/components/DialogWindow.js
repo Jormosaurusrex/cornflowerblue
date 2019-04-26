@@ -9,6 +9,8 @@ class DialogWindow {
         classes: [],             // apply these classes to the dialog, if any.
         header: null, // jQuery object, will be used if passed before title.
         title: null,  // Adds a title to the dialog if present. header must be null.
+        clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+        escapecloses: true, // Allow the window to be closed by the escape key
         showclose: true  // Show or hide the X button in the corner (requires title != null)
     };
 
@@ -35,7 +37,6 @@ class DialogWindow {
             .addClass('dialog')
             .addClass(this.classes.join(' '))
             .attr('id', this.id);
-
 
         if ((this.title) || (this.header)) {
 
@@ -74,11 +75,13 @@ class DialogWindow {
             this.window.append(this.contentbox);
         }
 
-        $(document).bind("keyup.DialogWindow", function(e) {
-            if (e.keyCode === 27) { // escape key maps to keycode `27`
-                me.close();
-            }
-        });
+        if (this.escapecloses) {
+            $(document).bind("keyup.DialogWindow", function(e) {
+                if (e.keyCode === 27) { // escape key maps to keycode `27`
+                    me.close();
+                }
+            });
+        }
     }
 
     /**
@@ -90,7 +93,9 @@ class DialogWindow {
             .addClass('window-mask')
             .click(function(e) {
                 e.preventDefault();
-                me.close();
+                if (me.clickoutsidetoclose) {
+                    me.close();
+                }
             });
         this.container.append(me.window);
 
@@ -106,6 +111,7 @@ class DialogWindow {
      */
     close() {
         const me = this;
+        console.log("close");
         this.container.animate({ opacity: 0 }, 200, function() {
             me.container.remove();
             me.mask.animate({ opacity: 0 }, 100, function() {
@@ -131,6 +137,9 @@ class DialogWindow {
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
+    get clickoutsidetoclose() { return this.config.clickoutsidetoclose; }
+    set clickoutsidetoclose(clickoutsidetoclose) { this.config.clickoutsidetoclose = clickoutsidetoclose; }
+
     get closebutton() { return this._closebutton; }
     set closebutton(closebutton) { this._closebutton = closebutton; }
 
@@ -142,6 +151,9 @@ class DialogWindow {
 
     get contentbox() { return this._contentbox; }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get escapecloses() { return this.config.escapecloses; }
+    set escapecloses(escapecloses) { this.config.escapecloses = escapecloses; }
 
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
