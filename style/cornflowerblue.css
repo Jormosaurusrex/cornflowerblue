@@ -624,11 +624,11 @@ button {
   text-decoration: none;
   white-space: nowrap;
   margin: 10px 5px 10px 5px;
-  padding: 0.4em 1em 0.4em 1em;
+  padding: 0.6em 1em 0.6em 1em;
   font-family: var(--button-font-family);
   font-weight: normal;
   font-size: 100%;
-  line-height: 1.5;
+  line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
   color: var(--button-default-color);
