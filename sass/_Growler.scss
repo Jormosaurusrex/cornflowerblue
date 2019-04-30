@@ -50,13 +50,13 @@ div.growlbox {
   position: relative;
   box-sizing: border-box;
   border-radius: 3px;
-  border: 2px solid var(--growler-core-color);
+  border: 2px solid var(--growler-default-border-color);
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
-  box-shadow: var(--panel-shadow);
-  color: var(--grey-darkest);
-  background-color: var(--light);
+  box-shadow: var(--growler-box-shadow);
+  color: var(--growler-default-text-color);
+  background-color: var(--growler-default-background-color);
   margin-bottom: 20px;
   width: var(--growler-max-width);
   max-width: var(--growler-max-width);
@@ -67,7 +67,7 @@ div.growlbox {
   button.closebutton {
     margin:0;
     opacity: 0.6;
-    color: var(--grey-medium);
+    color: var(--growler-notitle-closebutton-color);
     border-color: transparent;
     background-color: transparent;
     &:active,
@@ -83,17 +83,17 @@ div.growlbox {
     font-size: 100%;
     padding: 0;
     margin: 0;
-    background-color: var(--growler-core-color);
-    color: var(--light);
+    background-color: var(--growler-title-background-color);
+    color: var(--growler-title-text-color);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     div.icon {
-      text-shadow: var(--text-shadow);
+      text-shadow: var(--growler-title-text-shadow);
     }
     div.t {
-      text-shadow: var(--text-shadow);
+      text-shadow: var(--growler-title-text-shadow);
       padding: 5px 10px 5px 10px;
     }
     button.closebutton {
@@ -104,7 +104,7 @@ div.growlbox {
       left: auto;
       top: auto;
       &:hover {
-        text-shadow: var(--text-shadow);
+        text-shadow: var(--growler-title-text-shadow);
       }
     }
   }

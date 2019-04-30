@@ -13,7 +13,7 @@ div.window-container {
   display: flex;
   pointer-events: none;
   div.dialog {
-    background-color: var(--ultralight);
+    background-color: var(--dialog-background-color);
     padding: 0;
     text-align: left;
     max-width: 50%;
@@ -22,7 +22,7 @@ div.window-container {
     position: relative;
     border-radius: 3px;
     overflow: hidden;
-    box-shadow: var(--panel-shadow);
+    box-shadow: var(--dialog-box-shadow);
     flex-grow: 0;
     pointer-events: auto;
     display: flex;
@@ -35,9 +35,9 @@ div.window-container {
     animation-duration: .2s;
     animation-name: dialogEntry;
     h2 {
-      background-color: var(--grey-dark);
-      color: var(--light);
-      text-shadow: var(--text-shadow);
+      background-color: var(--dialog-header-background-color);
+      color: var(--dialog-header-text-color);
+      text-shadow: var(--dialog-header-text-shadow);
       margin: 0;
       font-weight: normal;
       font-size: 16pt;
@@ -45,8 +45,8 @@ div.window-container {
       padding-bottom: 10px;
       position: relative;
       width: 100%;
-      border-bottom: 1px solid var(--grey-darkest);
-      box-shadow: var(--interior-shadow);
+      border-bottom: 1px solid var(--dialog-header-border-color);
+      box-shadow: var(--dialog-header-box-shadow);
       z-index: 20;
       span {
         padding-left: 10px;
@@ -67,8 +67,8 @@ div.window-container {
       margin: 0;
       background: none;
       border: none;
-      color: var(--light);
-      text-shadow: var(--text-shadow);
+      color: var(--dialog-header-text-color);
+      text-shadow: var(--dialog-header-text-shadow);
       &:hover {
         opacity: 1;
         background: none;
@@ -93,7 +93,7 @@ div.window-container {
             z-index: 10;
           }
           div.actions {
-            box-shadow: var(--interior-shadow-inverse);
+            box-shadow: var(--dialog-actions-box-shadow);
             position: relative;
             flex-grow: 0;
             z-index: 50;
@@ -106,8 +106,9 @@ div.window-container {
     }
   }
 }
+
 div.window-mask {
-  background-color: var(--white);
+  background-color: var(--dialog-window-mask-color);
   opacity: .75;
   width: 100%;
   height: 100%;

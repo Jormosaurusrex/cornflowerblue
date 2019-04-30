@@ -2,6 +2,8 @@
 [hidden] { display: none; }
 
 div.input-container {
+
+
   margin: 10px 30px 10px 30px;
   position: relative;
   box-sizing: border-box;
@@ -14,7 +16,7 @@ div.input-container {
       bottom: 2px;
       width: 45px;
       margin: 0;
-      background-color: var(--red);
+      background-color: var(--input-status-default-background-color);
       font-family: "cornflowerblue";
       font-style: normal;
       font-weight: normal;
@@ -26,8 +28,8 @@ div.input-container {
       line-height: 1em;
       content: '\36'; // checkmark
       font-size: 20pt;
-      color: var(--light);
-      text-shadow: var(--text-shadow);
+      color: var(--input-status-icon-color);
+      text-shadow: var(--input-status-icon-text-shadow);
       display: none;
       flex-direction: column;
       justify-content: center;
@@ -35,7 +37,7 @@ div.input-container {
     }
   }
   div.charcounter {
-    color: var(--grey-medium);
+    color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
     font-style: oblique;
@@ -44,10 +46,10 @@ div.input-container {
     right: 0;
     top: 12px;
     &.danger {
-      color: var(--warn-color);
+      color: var(--input-subline-warn-text-color);
     }
     &.outofbounds {
-      color: var(--error-color);
+      color: var(--input-subline-error-text-color);
     }
   }
   ul.messagebox {
@@ -62,10 +64,10 @@ div.input-container {
     li {
       margin: 5px 0 5px 0;
       &.error {
-        color: var(--error-color);
+        color: var(--input-messages-error-text-color);
       }
       &.warning {
-        color: var(--grey-darkest);
+        color: var(--input-messages-warn-text-color);
       }
     }
   }
@@ -89,7 +91,7 @@ div.input-container {
   &.required {
     label {
       &:after {
-        color: var(--required-color);
+        color: var(--label-required-marker-color);
         content: 'required';
         font-size: 75%;
         margin-left: 5px;
@@ -97,6 +99,7 @@ div.input-container {
     }
   }
   &.error {
+
     input[type="text"],
     input[type="number"],
     input[type="password"],
@@ -116,7 +119,9 @@ div.input-container {
     div.wrap {
       &:after {
         display: flex;
-        background-color: var(--error-color);
+        background-color: var(--input-status-error-background-color);
+        color: var(--input-status-icon-color);
+        text-shadow: var(--input-status-error-icon-text-shadow);
         content: '\39';
       }
     }
@@ -153,8 +158,9 @@ div.input-container {
     div.wrap {
       &:after {
         display: flex;
-        background-color: var(--warn-color);
-        color: var(--grey-darkest);
+        background-color: var(--input-status-warning-background-color);
+        text-shadow: var(--input-status-warning-icon-text-shadow);
+        color: var(--input-status-warning-icon-color);
         content: '\36';
       }
     }
@@ -163,14 +169,18 @@ div.input-container {
     div.wrap {
       &:after {
         display: flex;
-        background-color: var(--standard-color);
+        background-color: var(--input-status-dirty-background-color);
+        text-shadow: var(--input-status-dirty-icon-text-shadow);
+        color: var(--input-status-dirty-icon-color);
         content: '\36';
       }
     }
     &.active {
       div.wrap {
         &:after {
-          background-color: var(--focus-color);
+          background-color: var(--input-status-active-background-color);
+          text-shadow: var(--input-status-active-icon-text-shadow);
+          color: var(--input-status-active-icon-color);
         }
       }
     }
@@ -184,6 +194,7 @@ div.textarea-container {
     }
   }
 }
+
 label {
   display: block;
   font-weight: normal;
@@ -205,30 +216,30 @@ textarea {
   position: relative;
   font-family: inherit;
   width: 100%;
-  background-color: var(--ultralight);
+  background-color: var(--input-default-background-color);
   margin: 0;
   font-size: 105%;
-  border: 2px solid var(--standard-color);
+  border: 2px solid var(--input-default-border-color);
   padding: 10px 10px 10px 20px;
   border-radius: 1px;
-  color: var(--grey-darker);
-  text-shadow:var(--text-shadow-grey-medium);
+  color: var(--input-default-text-color);
+  text-shadow:var(--input-default-text-shadow);
   vertical-align: middle;
   &::placeholder {
-    color: var(--placeholder-color);
+    color: var(--input-default-placeholder-color);
     font-weight: normal;
     text-shadow:none;
   }
   &:disabled {
-    border-color: var(--grey-light);
-    background-color: var(--light);
-    color: var(--grey-medium);
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-background-color);
+    color: var(--input-disabled-text-color);
     cursor: not-allowed;
     text-shadow:none;
   }
   &:focus {
-    border-color: var(--focus-color);
-    box-shadow: inset 10px 0 0 var(--focus-color);
+    border-color: var(--input-focused-border-color);
+    box-shadow: inset 10px 0 0 var(--input-focused-border-color);
     &::placeholder {
       opacity: 0.3;
     }
@@ -245,12 +256,12 @@ textarea {
     }
     &:disabled {
       &::placeholder {
-        color: var(--grey-medium);
+        color: var(--input-disabled-placeholder-color);
       }
     }
     &:focus {
       border-bottom-color: var(--focus-color);
-      background-color: var(--white-half);
+      background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color);
     }
   }
@@ -258,11 +269,11 @@ textarea {
 textarea {
   &.mute {
     padding: 10px 10px 10px 20px;
-    border-left: 2px solid var(--standard-color);
+    border-left: 2px solid var(--input-default-border-color);
     border-bottom: none;
     &:focus {
       border-left-color: var(--focus-color);
-      background-color: var(--white-half);
+      background-color: var(--input-mute-background-color);
       box-shadow: inset 10px 0 0 var(--focus-color);
     }
   }

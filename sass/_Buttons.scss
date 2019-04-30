@@ -41,7 +41,6 @@ button {
     box-shadow: var(--hover-box-shadow);
     outline: none;
     text-decoration: underline;
-    //box-shadow: $hover-box-shadow, inset 0px -4px 0 0 var(--grey-dark)er;
   }
   &.constructive {
     --button-default-color: var(--constructive-color);

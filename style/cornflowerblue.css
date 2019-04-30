@@ -32,9 +32,26 @@
   --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(51, 89, 100, 0.05) 5px, rgba(51, 89, 100, 0.05) 10px);
   --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 94, 32, 0.05) 5px, rgba(0, 94, 32, 0.05) 10px);
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 84, 166, 0.05) 5px, rgba(0, 84, 166, 0.05) 10px);
+  --text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  --on-white-text-shadow: 0 1px 1px rgba(50, 50, 50, 0.3);
+  --text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.3);
+  --text-shadow-grey-medium: 0 1px 1px rgba(102, 102, 102, 0.3);
+  --text-shadow-grey-dark: 0 1px 1px rgba(153, 153, 153, 0.3);
+  --text-shadow-grey-darkest: 0 1px 1px rgba(0, 0, 0, 0.3);
+  --box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5);
+  --hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
+  --checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
+  --interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.2);
+  --interior-shadow-inverse: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
+  --hexagon-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  --hexagon-shadow-disabled: 0 0 5px rgba(0, 0, 0, 0.2);
+  --default-font-family: "Helvetica Neue", Arial, serif;
+  --border-radius: 3px;
+  --button-border-radius: var(--border-radius);
   --standard-color: var(--grey-dark);
-  --label-color: var(--grey-dark);
-  --label-text-shadow: var(--text-shadow-grey-medium);
   --placeholder-color: var(--grey-medium);
   --focus-color: var(--green);
   --focus-color-half: var(--green-half);
@@ -73,27 +90,66 @@
   --checkbox-checkmark-color: var(--light);
   --checkbox-checkmark-checked-background-color: var(--checkbox-focus-color);
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
-  --growler-core-color: --blue;
+  --growler-core-color: var(--blue);
   --growler-max-width: 300px;
-  --default-font-family: "Helvetica Neue", Arial, serif;
-  --border-radius: 3px;
-  --button-border-radius: var(--border-radius);
-  --text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-  --on-white-text-shadow: 0 1px 1px rgba(50, 50, 50, 0.3);
-  --text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.3);
-  --text-shadow-grey-medium: 0 1px 1px rgba(102, 102, 102, 0.3);
-  --text-shadow-grey-dark: 0 1px 1px rgba(153, 153, 153, 0.3);
-  --text-shadow-grey-darkest: 0 1px 1px rgba(0, 0, 0, 0.3);
-  --box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5);
-  --hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
-  --checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
-  --interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.2);
-  --interior-shadow-inverse: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --hexagon-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-  --hexagon-shadow-disabled: 0 0 5px rgba(0, 0, 0, 0.2); }
+  --growler-box-shadow: var --panel-shadow;
+  --growler-default-text-color: var --grey-darkest;
+  --growler-default-background-color: var --light;
+  --growler-default-border-color: var(--growler-core-color);
+  --growler-notitle-closebutton-color: var(--grey-medium);
+  --growler-title-text-color: var(--light);
+  --growler-title-closebutton-color: var(--growler-title-text-color);
+  --growler-title-background-color: var(--growler-core-color);
+  --growler-title-text-shadow: var(--text-shadow);
+  --dialog-background-color: var(--ultralight);
+  --dialog-box-shadow: var(--panel-shadow);
+  --dialog-header-background-color: var(--grey-dark);
+  --dialog-header-text-color: var(--light);
+  --dialog-header-text-shadow: var(--text-shadow);
+  --dialog-header-border-color: var(--grey-darkest);
+  --dialog-header-box-shadow: var(--interior-shadow);
+  --dialog-window-mask-color: var(--white);
+  --dialog-actions-box-shadow: var(--interior-shadow-inverse);
+  --instructions-background-color: var(--morelight);
+  --instructions-text-color: var(--grey-darkest);
+  --form-background-color: var(--light);
+  --form-actions-background-color: var(--morelight);
+  --form-actions-border-color: var(--grey-medium);
+  --label-color: var(--grey-dark);
+  --label-text-shadow: var(--text-shadow-grey-medium);
+  --label-required-marker-color: var(--required-color);
+  --input-default-background-color: var(--ultralight);
+  --input-default-border-color: var(--standard-color);
+  --input-default-text-color: var(--grey-darker);
+  --input-default-text-shadow: var(--text-shadow-grey-medium);
+  --input-default-placeholder-color: var(--placeholder-color);
+  --input-disabled-background-color: var(--disabled-base-color);
+  --input-disabled-border-color: var(--disabled-highlight-color);
+  --input-disabled-text-color: var(--disabled-highlight-color);
+  --input-disabled-placeholder-color: var(--disabled-highlight-color);
+  --input-focused-border-color: var(--focus-color);
+  --input-focused-mute-background-color: var(--white-half);
+  --input-subline-text-color: var(--grey-medium);
+  --input-subline-warn-text-color: var(--warn-color);
+  --input-subline-error-text-color: var(--error-color);
+  --input-messages-text-color: var(--grey-darkest);
+  --input-messages-warn-text-color: var(--grey-darkest);
+  --input-messages-error-text-color: var(--error-color);
+  --input-status-default-background-color: var(--grey-dark);
+  --input-status-icon-color: var(--light);
+  --input-status-icon-text-shadow: var(--text-shadow);
+  --input-status-warning-background-color: var(--warn-color);
+  --input-status-warning-icon-color: var(--grey-darkest);
+  --input-status-warning-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-error-background-color: var(--error-color);
+  --input-status-error-icon-color: var(--input-status-icon-color);
+  --input-status-error-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-dirty-background-color: var(--standard-color);
+  --input-status-dirty-icon-color: var(--input-status-icon-color);
+  --input-status-dirty-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-active-background-color: var(--focus-color);
+  --input-status-active-icon-color: var(--input-status-icon-color);
+  --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow); }
 
 @font-face {
   font-family: 'cornflowerblue';
@@ -334,7 +390,7 @@ div.input-container {
       bottom: 2px;
       width: 45px;
       margin: 0;
-      background-color: var(--red);
+      background-color: var(--input-status-default-background-color);
       font-family: "cornflowerblue";
       font-style: normal;
       font-weight: normal;
@@ -346,14 +402,14 @@ div.input-container {
       line-height: 1em;
       content: '\36';
       font-size: 20pt;
-      color: var(--light);
-      text-shadow: var(--text-shadow);
+      color: var(--input-status-icon-color);
+      text-shadow: var(--input-status-icon-text-shadow);
       display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center; }
   div.input-container div.charcounter {
-    color: var(--grey-medium);
+    color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
     font-style: oblique;
@@ -362,9 +418,9 @@ div.input-container {
     right: 0;
     top: 12px; }
     div.input-container div.charcounter.danger {
-      color: var(--warn-color); }
+      color: var(--input-subline-warn-text-color); }
     div.input-container div.charcounter.outofbounds {
-      color: var(--error-color); }
+      color: var(--input-subline-error-text-color); }
   div.input-container ul.messagebox {
     display: none;
     font-size: 90%;
@@ -376,9 +432,9 @@ div.input-container {
     div.input-container ul.messagebox li {
       margin: 5px 0 5px 0; }
       div.input-container ul.messagebox li.error {
-        color: var(--error-color); }
+        color: var(--input-messages-error-text-color); }
       div.input-container ul.messagebox li.warning {
-        color: var(--grey-darkest); }
+        color: var(--input-messages-warn-text-color); }
   div.input-container.mute label {
     visibility: hidden;
     margin-top: 0; }
@@ -387,7 +443,7 @@ div.input-container {
   div.input-container.mute div.wrap:after {
     right: 0; }
   div.input-container.required label:after {
-    color: var(--required-color);
+    color: var(--label-required-marker-color);
     content: 'required';
     font-size: 75%;
     margin-left: 5px; }
@@ -409,7 +465,9 @@ div.input-container {
     border-bottom: 1px dashed var(--error-half); }
   div.input-container.error div.wrap:after {
     display: flex;
-    background-color: var(--error-color);
+    background-color: var(--input-status-error-background-color);
+    color: var(--input-status-icon-color);
+    text-shadow: var(--input-status-error-icon-text-shadow);
     content: '\39'; }
   div.input-container.error.mute input[type="text"],
   div.input-container.error.mute input[type="number"],
@@ -440,15 +498,20 @@ div.input-container {
     border-bottom: 1px dashed var(--warn-color-half); }
   div.input-container.warning div.wrap:after {
     display: flex;
-    background-color: var(--warn-color);
-    color: var(--grey-darkest);
+    background-color: var(--input-status-warning-background-color);
+    text-shadow: var(--input-status-warning-icon-text-shadow);
+    color: var(--input-status-warning-icon-color);
     content: '\36'; }
   div.input-container.dirty div.wrap:after {
     display: flex;
-    background-color: var(--standard-color);
+    background-color: var(--input-status-dirty-background-color);
+    text-shadow: var(--input-status-dirty-icon-text-shadow);
+    color: var(--input-status-dirty-icon-color);
     content: '\36'; }
   div.input-container.dirty.active div.wrap:after {
-    background-color: var(--focus-color); }
+    background-color: var(--input-status-active-background-color);
+    text-shadow: var(--input-status-active-icon-text-shadow);
+    color: var(--input-status-active-icon-color); }
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
@@ -474,37 +537,37 @@ textarea {
   position: relative;
   font-family: inherit;
   width: 100%;
-  background-color: var(--ultralight);
+  background-color: var(--input-default-background-color);
   margin: 0;
   font-size: 105%;
-  border: 2px solid var(--standard-color);
+  border: 2px solid var(--input-default-border-color);
   padding: 10px 10px 10px 20px;
   border-radius: 1px;
-  color: var(--grey-darker);
-  text-shadow: var(--text-shadow-grey-medium);
+  color: var(--input-default-text-color);
+  text-shadow: var(--input-default-text-shadow);
   vertical-align: middle; }
   input[type="text"]::placeholder,
   input[type="number"]::placeholder,
   input[type="password"]::placeholder,
   textarea::placeholder {
-    color: var(--placeholder-color);
+    color: var(--input-default-placeholder-color);
     font-weight: normal;
     text-shadow: none; }
   input[type="text"]:disabled,
   input[type="number"]:disabled,
   input[type="password"]:disabled,
   textarea:disabled {
-    border-color: var(--grey-light);
-    background-color: var(--light);
-    color: var(--grey-medium);
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-background-color);
+    color: var(--input-disabled-text-color);
     cursor: not-allowed;
     text-shadow: none; }
   input[type="text"]:focus,
   input[type="number"]:focus,
   input[type="password"]:focus,
   textarea:focus {
-    border-color: var(--focus-color);
-    box-shadow: inset 10px 0 0 var(--focus-color); }
+    border-color: var(--input-focused-border-color);
+    box-shadow: inset 10px 0 0 var(--input-focused-border-color); }
     input[type="text"]:focus::placeholder,
     input[type="number"]:focus::placeholder,
     input[type="password"]:focus::placeholder,
@@ -529,22 +592,22 @@ textarea {
     input[type="number"].mute:disabled::placeholder,
     input[type="password"].mute:disabled::placeholder,
     textarea.mute:disabled::placeholder {
-      color: var(--grey-medium); }
+      color: var(--input-disabled-placeholder-color); }
     input[type="text"].mute:focus,
     input[type="number"].mute:focus,
     input[type="password"].mute:focus,
     textarea.mute:focus {
       border-bottom-color: var(--focus-color);
-      background-color: var(--white-half);
+      background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color); }
 
 textarea.mute {
   padding: 10px 10px 10px 20px;
-  border-left: 2px solid var(--standard-color);
+  border-left: 2px solid var(--input-default-border-color);
   border-bottom: none; }
   textarea.mute:focus {
     border-left-color: var(--focus-color);
-    background-color: var(--white-half);
+    background-color: var(--input-mute-background-color);
     box-shadow: inset 10px 0 0 var(--focus-color); }
 
 button {
@@ -1035,14 +1098,12 @@ form {
   box-sizing: border-box;
   margin: 10px 30px 10px 30px;
   border: 2px solid transparent;
-  background-color: var(--light);
+  background-color: var(--form-background-color);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap; }
   form div.header {
     flex-grow: 1; }
-    form div.header div.instructions {
-      background-color: var(--morelight); }
   form div.elements {
     display: flex;
     flex-direction: column;
@@ -1061,9 +1122,9 @@ form {
     align-content: center;
     justify-content: space-between;
     box-sizing: border-box;
-    background-color: var(--morelight);
+    background-color: var(--form-actions-background-color);
     padding: 20px;
-    border-top: 2px solid var(--grey-medium); }
+    border-top: 2px solid var(--form-actions-border-color); }
     form div.actions button {
       margin-right: 10px; }
     form div.actions button:first-child {
@@ -1115,13 +1176,13 @@ div.growlbox {
   position: relative;
   box-sizing: border-box;
   border-radius: 3px;
-  border: 2px solid var(--growler-core-color);
+  border: 2px solid var(--growler-default-border-color);
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
-  box-shadow: var(--panel-shadow);
-  color: var(--grey-darkest);
-  background-color: var(--light);
+  box-shadow: var(--growler-box-shadow);
+  color: var(--growler-default-text-color);
+  background-color: var(--growler-default-background-color);
   margin-bottom: 20px;
   width: var(--growler-max-width);
   max-width: var(--growler-max-width);
@@ -1132,7 +1193,7 @@ div.growlbox {
   .growler button.closebutton {
     margin: 0;
     opacity: 0.6;
-    color: var(--grey-medium);
+    color: var(--growler-notitle-closebutton-color);
     border-color: transparent;
     background-color: transparent; }
     .growler button.closebutton:active, .growler button.closebutton:focus, .growler button.closebutton:hover {
@@ -1144,16 +1205,16 @@ div.growlbox {
     font-size: 100%;
     padding: 0;
     margin: 0;
-    background-color: var(--growler-core-color);
-    color: var(--light);
+    background-color: var(--growler-title-background-color);
+    color: var(--growler-title-text-color);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center; }
     .growler div.title div.icon {
-      text-shadow: var(--text-shadow); }
+      text-shadow: var(--growler-title-text-shadow); }
     .growler div.title div.t {
-      text-shadow: var(--text-shadow);
+      text-shadow: var(--growler-title-text-shadow);
       padding: 5px 10px 5px 10px; }
     .growler div.title button.closebutton {
       color: var(--light);
@@ -1163,7 +1224,7 @@ div.growlbox {
       left: auto;
       top: auto; }
       .growler div.title button.closebutton:hover {
-        text-shadow: var(--text-shadow); }
+        text-shadow: var(--growler-title-text-shadow); }
   .growler div.payload {
     padding: 10px;
     display: flex;
@@ -1179,7 +1240,7 @@ div.growlbox {
 div.instructions {
   margin: 10px 30px 10px 30px;
   padding: 10px;
-  background-color: var(--light);
+  background-color: var(--instructions-background-color);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -1192,7 +1253,8 @@ div.instructions {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    margin: 0; }
+    margin: 0;
+    color: var(--instructions-text-color); }
 
 div.window-container {
   width: 100%;
@@ -1209,7 +1271,7 @@ div.window-container {
   display: flex;
   pointer-events: none; }
   div.window-container div.dialog {
-    background-color: var(--ultralight);
+    background-color: var(--dialog-background-color);
     padding: 0;
     text-align: left;
     max-width: 50%;
@@ -1218,7 +1280,7 @@ div.window-container {
     position: relative;
     border-radius: 3px;
     overflow: hidden;
-    box-shadow: var(--panel-shadow);
+    box-shadow: var(--dialog-box-shadow);
     flex-grow: 0;
     pointer-events: auto;
     display: flex;
@@ -1231,9 +1293,9 @@ div.window-container {
     animation-duration: .2s;
     animation-name: dialogEntry; }
     div.window-container div.dialog h2 {
-      background-color: var(--grey-dark);
-      color: var(--light);
-      text-shadow: var(--text-shadow);
+      background-color: var(--dialog-header-background-color);
+      color: var(--dialog-header-text-color);
+      text-shadow: var(--dialog-header-text-shadow);
       margin: 0;
       font-weight: normal;
       font-size: 16pt;
@@ -1241,8 +1303,8 @@ div.window-container {
       padding-bottom: 10px;
       position: relative;
       width: 100%;
-      border-bottom: 1px solid var(--grey-darkest);
-      box-shadow: var(--interior-shadow);
+      border-bottom: 1px solid var(--dialog-header-border-color);
+      box-shadow: var(--dialog-header-box-shadow);
       z-index: 20; }
       div.window-container div.dialog h2 span {
         padding-left: 10px;
@@ -1260,8 +1322,8 @@ div.window-container {
       margin: 0;
       background: none;
       border: none;
-      color: var(--light);
-      text-shadow: var(--text-shadow); }
+      color: var(--dialog-header-text-color);
+      text-shadow: var(--dialog-header-text-shadow); }
       div.window-container div.dialog button.closebutton:hover {
         opacity: 1;
         background: none; }
@@ -1279,7 +1341,7 @@ div.window-container {
           height: 400px;
           z-index: 10; }
         div.window-container div.dialog.isform div.content form div.actions {
-          box-shadow: var(--interior-shadow-inverse);
+          box-shadow: var(--dialog-actions-box-shadow);
           position: relative;
           flex-grow: 0;
           z-index: 50;
@@ -1288,7 +1350,7 @@ div.window-container {
           max-height: 100px; }
 
 div.window-mask {
-  background-color: var(--white);
+  background-color: var(--dialog-window-mask-color);
   opacity: .75;
   width: 100%;
   height: 100%;

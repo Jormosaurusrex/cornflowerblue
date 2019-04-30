@@ -2,16 +2,12 @@ form {
   box-sizing: border-box;
   margin: 10px 30px 10px 30px;
   border: 2px solid transparent;
-  background-color: var(--light);
+  background-color: var(--form-background-color);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   div.header {
     flex-grow: 1;
-
-    div.instructions {
-      background-color: var(--morelight);
-    }
   }
   div.elements {
     display: flex;
@@ -33,9 +29,9 @@ form {
     align-content: center;
     justify-content: space-between;
     box-sizing: border-box;
-    background-color: var(--morelight);
+    background-color: var(--form-actions-background-color);
     padding: 20px;
-    border-top: 2px solid var(--grey-medium);
+    border-top: 2px solid var(--form-actions-border-color);
     button {
       margin-right: 10px;
     }
