@@ -1,3 +1,8 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; }
+
 /*
   We want to use variables so that they can be re-themed
  */
@@ -64,12 +69,15 @@
   --accept-color: var(--green);
   --accept-color-half: var(--green-half);
   --accept-stripes: var(--green-stripes);
+  --success-color: var(--green);
+  --success-color-half: var(--green-half);
+  --success-stripes: var(--green-stripes);
   --error-color: var(--red);
   --error-color-half: var(--red-half);
   --error-stripes: var(--red-stripes);
-  --warn-color: var(--orange);
-  --warn-color-half: var(--orange-half);
-  --warn-stripes: var(--orange-stripes);
+  --warning-color: var(--orange);
+  --warning-color-half: var(--orange-half);
+  --warning-stripes: var(--orange-stripes);
   --caution-color: var(--yellow);
   --caution-color-half: var(--yellow-half);
   --caution-stripes: var(--yellow-stripes);
@@ -92,9 +100,9 @@
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
   --growler-core-color: var(--blue);
   --growler-max-width: 300px;
-  --growler-box-shadow: var --panel-shadow;
-  --growler-default-text-color: var --grey-darkest;
-  --growler-default-background-color: var --light;
+  --growler-box-shadow: var(--panel-shadow);
+  --growler-default-text-color: var(--grey-darkest);
+  --growler-default-background-color: var(--light);
   --growler-default-border-color: var(--growler-core-color);
   --growler-notitle-closebutton-color: var(--grey-medium);
   --growler-title-text-color: var(--light);
@@ -112,6 +120,19 @@
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
   --instructions-background-color: var(--morelight);
   --instructions-text-color: var(--grey-darkest);
+  --resultsbox-icon-background-color: var(--grey-darkest);
+  --resultsbox-icon-color: var(--light);
+  --resultsbox-icon-tex-shadow: var(--text-shadow);
+  --resultsbox-default-text-color: var(--grey-darkest);
+  --resultsbox-header-background-color: var(--grey-darkest);
+  --resultsbox-header-text-color: var(--light);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-success-color-base: var(--success-color);
+  --resultsbox-error-color-base: var(--error-color);
+  --resultsbox-warning-color-base: var(--warning-color);
+  --resultsbox-success-stripes: var(--success-stripes);
+  --resultsbox-error-stripes: var(--error-stripes);
+  --resultsbox-warning-stripes: var(--warning-stripes);
   --form-background-color: var(--light);
   --form-actions-background-color: var(--morelight);
   --form-actions-border-color: var(--grey-medium);
@@ -130,15 +151,15 @@
   --input-focused-border-color: var(--focus-color);
   --input-focused-mute-background-color: var(--white-half);
   --input-subline-text-color: var(--grey-medium);
-  --input-subline-warn-text-color: var(--warn-color);
+  --input-subline-warning-text-color: var(--warning-color);
   --input-subline-error-text-color: var(--error-color);
   --input-messages-text-color: var(--grey-darkest);
-  --input-messages-warn-text-color: var(--grey-darkest);
+  --input-messages-warning-text-color: var(--grey-darkest);
   --input-messages-error-text-color: var(--error-color);
   --input-status-default-background-color: var(--grey-dark);
   --input-status-icon-color: var(--light);
   --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-warning-background-color: var(--warn-color);
+  --input-status-warning-background-color: var(--warning-color);
   --input-status-warning-icon-color: var(--grey-darkest);
   --input-status-warning-icon-text-shadow: var(--input-status-icon-text-shadow);
   --input-status-error-background-color: var(--error-color);
@@ -418,7 +439,7 @@ div.input-container {
     right: 0;
     top: 12px; }
     div.input-container div.charcounter.danger {
-      color: var(--input-subline-warn-text-color); }
+      color: var(--input-subline-warning-text-color); }
     div.input-container div.charcounter.outofbounds {
       color: var(--input-subline-error-text-color); }
   div.input-container ul.messagebox {
@@ -434,7 +455,7 @@ div.input-container {
       div.input-container ul.messagebox li.error {
         color: var(--input-messages-error-text-color); }
       div.input-container ul.messagebox li.warning {
-        color: var(--input-messages-warn-text-color); }
+        color: var(--input-messages-warning-text-color); }
   div.input-container.mute label {
     visibility: hidden;
     margin-top: 0; }
@@ -484,18 +505,18 @@ div.input-container {
   div.input-container.warning input[type="number"],
   div.input-container.warning input[type="password"],
   div.input-container.warning textarea {
-    border-color: var(--warn-color); }
+    border-color: var(--warning-color); }
     div.input-container.warning input[type="text"]:focus,
     div.input-container.warning input[type="number"]:focus,
     div.input-container.warning input[type="password"]:focus,
     div.input-container.warning textarea:focus {
-      border-color: var(--warn-color);
-      box-shadow: inset 0px -4px 0 0 var(--warn-color); }
+      border-color: var(--warning-color);
+      box-shadow: inset 0px -4px 0 0 var(--warning-color); }
   div.input-container.warning ul.messagebox {
-    background-image: var(--warn-stripes);
-    border-left: 1px dashed var(--warn-color-half);
-    border-right: 1px dashed var(--warn-color-half);
-    border-bottom: 1px dashed var(--warn-color-half); }
+    background-image: var(--warning-stripes);
+    border-left: 1px dashed var(--warning-color-half);
+    border-right: 1px dashed var(--warning-color-half);
+    border-bottom: 1px dashed var(--warning-color-half); }
   div.input-container.warning div.wrap:after {
     display: flex;
     background-color: var(--input-status-warning-background-color);
@@ -649,7 +670,8 @@ button {
     background-color: var(--button-default-color);
     box-shadow: var(--hover-box-shadow);
     outline: none;
-    text-decoration: underline; }
+    text-decoration: underline;
+    filter: brightness(120%); }
   button.constructive {
     --button-default-color: var(--constructive-color); }
   button.destructive {
@@ -1176,10 +1198,10 @@ div.growlbox {
   position: relative;
   box-sizing: border-box;
   border-radius: 3px;
-  border: 2px solid var(--growler-default-border-color);
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
+  border: 2px solid var(--growler-default-border-color);
   box-shadow: var(--growler-box-shadow);
   color: var(--growler-default-text-color);
   background-color: var(--growler-default-background-color);
@@ -1247,7 +1269,22 @@ div.instructions {
   align-items: flex-start;
   align-content: flex-start; }
   div.instructions span.icon {
-    font-size: 30pt; }
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 60pt;
+    margin: 10px;
+    width: 112px;
+    height: 112px;
+    min-width: 112px;
+    min-height: 112px;
+    max-width: 112px;
+    max-height: 112px;
+    border-radius: 50%;
+    color: var(--resultsbox-icon-color);
+    text-shadow: var(--text-shadow); }
   div.instructions ul {
     flex-grow: 2;
     display: flex;
@@ -1255,6 +1292,70 @@ div.instructions {
     flex-wrap: nowrap;
     margin: 0;
     color: var(--instructions-text-color); }
+
+div.messagebox {
+  margin: 10px 30px 10px 30px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  align-content: flex-start; }
+  div.messagebox div.box {
+    --color-base: var(--resultsbox-success-color-base);
+    --stripe-base: var(--resultsbox-success-stripes);
+    border: 2px solid var(--color-base);
+    background-image: var(--stripe-base);
+    margin: 0 0 5px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap; }
+    div.messagebox div.box h4 {
+      font-weight: normal;
+      font-size: 15pt;
+      border: none;
+      margin: 0;
+      padding: 5px;
+      flex-grow: 0;
+      background-color: var(--color-base);
+      color: var(--resultsbox-header-text-color);
+      text-shadow: var(--resultsbox-header-text-shadow); }
+    div.messagebox div.box div.lbox {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      align-content: flex-start; }
+      div.messagebox div.box div.lbox span.icon {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 60pt;
+        margin: 10px;
+        width: 112px;
+        height: 112px;
+        min-width: 112px;
+        min-height: 112px;
+        max-width: 112px;
+        max-height: 112px;
+        border-radius: 50%;
+        background-color: var(--color-base);
+        color: var(--resultsbox-icon-color);
+        text-shadow: var(--resultsbox-icon-text-shadow); }
+      div.messagebox div.box div.lbox ul {
+        flex-grow: 1;
+        padding-left: 5px; }
+        div.messagebox div.box div.lbox ul li {
+          color: var(--resultsbox-default-text-color); }
+    div.messagebox div.box.errors {
+      --color-base: var(--resultsbox-error-color-base);
+      --stripe-base: var(--resultsbox-error-stripes); }
+    div.messagebox div.box.warnings {
+      --color-base: var(--resultsbox-warning-color-base);
+      --stripe-base: var(--resultsbox-warning-stripes); }
 
 div.window-container {
   width: 100%;
@@ -1329,7 +1430,7 @@ div.window-container {
         background: none; }
     div.window-container div.dialog.isform div.content {
       margin: 0;
-      overflow: hidden; }
+      overflow: auto; }
       div.window-container div.dialog.isform div.content form {
         position: relative;
         margin: 0;

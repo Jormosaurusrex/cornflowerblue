@@ -41,6 +41,7 @@ button {
     box-shadow: var(--hover-box-shadow);
     outline: none;
     text-decoration: underline;
+    filter: brightness(120%);
   }
   &.constructive {
     --button-default-color: var(--constructive-color);
