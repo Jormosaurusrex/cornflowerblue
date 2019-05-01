@@ -9,7 +9,22 @@ div.instructions {
   align-items: flex-start;
   align-content: flex-start;
   span.icon {
-     font-size: 30pt;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 60pt;
+    margin: 10px;
+    width: 112px;
+    height: 112px;
+    min-width: 112px;
+    min-height: 112px;
+    max-width: 112px;
+    max-height: 112px;
+    border-radius: 50%;
+    color: var(--resultsbox-icon-color);
+    text-shadow: var(--text-shadow);
   }
   ul {
     flex-grow: 2;
