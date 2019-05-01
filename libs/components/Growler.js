@@ -32,7 +32,6 @@ class Growler {
     static buildGrowlbox(position) {
         let $gb = $('<div />')
             .addClass('growlbox')
-            .addClass(this.classes.join(' '))
             .attr('id', Growler.GROWLBOX_ID + position)
             .addClass(position);
         $('body').append($gb);
