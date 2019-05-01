@@ -21,7 +21,6 @@ class TextArea extends TextInput {
         this.container = $('<div />')
             .addClass('input-container')
             .addClass('textarea-container')
-            .addClass(this.classes.join(' '))
             .append(this.labelobj)
             .append(this.charactercounter)
             .append($('<div />').addClass('wrap').append(this.input))
@@ -39,7 +38,6 @@ class TextArea extends TextInput {
         const me = this;
         this.input = $('<textarea />')
             .data('self', this)
-            .addClass(this.classes.join(' '))
             .attr('name', this.name)
             .attr('autocomplete', this.autocomplete)
             .attr('placeholder', this.placeholder)

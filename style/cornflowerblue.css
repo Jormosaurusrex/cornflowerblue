@@ -398,13 +398,16 @@
 [hidden] {
   display: none; }
 
-div.input-container {
+div.input-container,
+div.textarea-container {
   margin: 10px 30px 10px 30px;
   position: relative;
   box-sizing: border-box; }
-  div.input-container div.wrap {
+  div.input-container div.wrap,
+  div.textarea-container div.wrap {
     position: relative; }
-    div.input-container div.wrap:after {
+    div.input-container div.wrap:after,
+    div.textarea-container div.wrap:after {
       position: absolute;
       right: 2px;
       top: 0;
@@ -412,7 +415,7 @@ div.input-container {
       width: 45px;
       margin: 0;
       background-color: var(--input-status-default-background-color);
-      font-family: "cornflowerblue";
+      font-family: "cornflowerblue", serif;
       font-style: normal;
       font-weight: normal;
       speak: none;
@@ -429,7 +432,8 @@ div.input-container {
       flex-direction: column;
       justify-content: center;
       align-items: center; }
-  div.input-container div.charcounter {
+  div.input-container div.charcounter,
+  div.textarea-container div.charcounter {
     color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
@@ -438,32 +442,44 @@ div.input-container {
     position: absolute;
     right: 0;
     top: 12px; }
-    div.input-container div.charcounter.danger {
+    div.input-container div.charcounter.danger,
+    div.textarea-container div.charcounter.danger {
       color: var(--input-subline-warning-text-color); }
-    div.input-container div.charcounter.outofbounds {
+    div.input-container div.charcounter.outofbounds,
+    div.textarea-container div.charcounter.outofbounds {
       color: var(--input-subline-error-text-color); }
-  div.input-container ul.messagebox {
+  div.input-container ul.messagebox,
+  div.textarea-container ul.messagebox {
     display: none;
     font-size: 90%;
     margin: 0;
     padding-top: 6px;
     padding-bottom: 6px; }
-    div.input-container ul.messagebox.shown {
+    div.input-container ul.messagebox.shown,
+    div.textarea-container ul.messagebox.shown {
       display: block; }
-    div.input-container ul.messagebox li {
+    div.input-container ul.messagebox li,
+    div.textarea-container ul.messagebox li {
       margin: 5px 0 5px 0; }
-      div.input-container ul.messagebox li.error {
+      div.input-container ul.messagebox li.error,
+      div.textarea-container ul.messagebox li.error {
         color: var(--input-messages-error-text-color); }
-      div.input-container ul.messagebox li.warning {
+      div.input-container ul.messagebox li.warning,
+      div.textarea-container ul.messagebox li.warning {
         color: var(--input-messages-warning-text-color); }
-  div.input-container.mute label {
+  div.input-container.mute label,
+  div.textarea-container.mute label {
     visibility: hidden;
     margin-top: 0; }
-  div.input-container.mute.active label, div.input-container.mute.filled label {
+  div.input-container.mute.active label, div.input-container.mute.filled label,
+  div.textarea-container.mute.active label,
+  div.textarea-container.mute.filled label {
     visibility: visible; }
-  div.input-container.mute div.wrap:after {
+  div.input-container.mute div.wrap:after,
+  div.textarea-container.mute div.wrap:after {
     right: 0; }
-  div.input-container.required label:after {
+  div.input-container.required label:after,
+  div.textarea-container.required label:after {
     color: var(--label-required-marker-color);
     content: 'required';
     font-size: 75%;
@@ -471,20 +487,30 @@ div.input-container {
   div.input-container.error input[type="text"],
   div.input-container.error input[type="number"],
   div.input-container.error input[type="password"],
-  div.input-container.error textarea {
+  div.input-container.error textarea,
+  div.textarea-container.error input[type="text"],
+  div.textarea-container.error input[type="number"],
+  div.textarea-container.error input[type="password"],
+  div.textarea-container.error textarea {
     border-color: var(--error-color); }
     div.input-container.error input[type="text"]:focus,
     div.input-container.error input[type="number"]:focus,
     div.input-container.error input[type="password"]:focus,
-    div.input-container.error textarea:focus {
+    div.input-container.error textarea:focus,
+    div.textarea-container.error input[type="text"]:focus,
+    div.textarea-container.error input[type="number"]:focus,
+    div.textarea-container.error input[type="password"]:focus,
+    div.textarea-container.error textarea:focus {
       border-color: var(--error-color);
       box-shadow: inset 10px 0 0 var(--error-color); }
-  div.input-container.error ul.messagebox {
+  div.input-container.error ul.messagebox,
+  div.textarea-container.error ul.messagebox {
     background-image: var(--error-stripes);
     border-left: 1px dashed var(--error-half);
     border-right: 1px dashed var(--error-half);
     border-bottom: 1px dashed var(--error-half); }
-  div.input-container.error div.wrap:after {
+  div.input-container.error div.wrap:after,
+  div.textarea-container.error div.wrap:after {
     display: flex;
     background-color: var(--input-status-error-background-color);
     color: var(--input-status-icon-color);
@@ -493,50 +519,66 @@ div.input-container {
   div.input-container.error.mute input[type="text"],
   div.input-container.error.mute input[type="number"],
   div.input-container.error.mute input[type="password"],
-  div.input-container.error.mute textarea {
+  div.input-container.error.mute textarea,
+  div.textarea-container.error.mute input[type="text"],
+  div.textarea-container.error.mute input[type="number"],
+  div.textarea-container.error.mute input[type="password"],
+  div.textarea-container.error.mute textarea {
     border-color: var(--error-color); }
     div.input-container.error.mute input[type="text"]:focus,
     div.input-container.error.mute input[type="number"]:focus,
     div.input-container.error.mute input[type="password"]:focus,
-    div.input-container.error.mute textarea:focus {
+    div.input-container.error.mute textarea:focus,
+    div.textarea-container.error.mute input[type="text"]:focus,
+    div.textarea-container.error.mute input[type="number"]:focus,
+    div.textarea-container.error.mute input[type="password"]:focus,
+    div.textarea-container.error.mute textarea:focus {
       border-color: var(--error-color);
       box-shadow: inset 0px -4px 0 0 var(--error-color); }
   div.input-container.warning input[type="text"],
   div.input-container.warning input[type="number"],
   div.input-container.warning input[type="password"],
-  div.input-container.warning textarea {
+  div.input-container.warning textarea,
+  div.textarea-container.warning input[type="text"],
+  div.textarea-container.warning input[type="number"],
+  div.textarea-container.warning input[type="password"],
+  div.textarea-container.warning textarea {
     border-color: var(--warning-color); }
     div.input-container.warning input[type="text"]:focus,
     div.input-container.warning input[type="number"]:focus,
     div.input-container.warning input[type="password"]:focus,
-    div.input-container.warning textarea:focus {
+    div.input-container.warning textarea:focus,
+    div.textarea-container.warning input[type="text"]:focus,
+    div.textarea-container.warning input[type="number"]:focus,
+    div.textarea-container.warning input[type="password"]:focus,
+    div.textarea-container.warning textarea:focus {
       border-color: var(--warning-color);
       box-shadow: inset 0px -4px 0 0 var(--warning-color); }
-  div.input-container.warning ul.messagebox {
+  div.input-container.warning ul.messagebox,
+  div.textarea-container.warning ul.messagebox {
     background-image: var(--warning-stripes);
     border-left: 1px dashed var(--warning-color-half);
     border-right: 1px dashed var(--warning-color-half);
     border-bottom: 1px dashed var(--warning-color-half); }
-  div.input-container.warning div.wrap:after {
+  div.input-container.warning div.wrap:after,
+  div.textarea-container.warning div.wrap:after {
     display: flex;
     background-color: var(--input-status-warning-background-color);
     text-shadow: var(--input-status-warning-icon-text-shadow);
     color: var(--input-status-warning-icon-color);
     content: '\36'; }
-  div.input-container.dirty div.wrap:after {
+  div.input-container.dirty div.wrap:after,
+  div.textarea-container.dirty div.wrap:after {
     display: flex;
     background-color: var(--input-status-dirty-background-color);
     text-shadow: var(--input-status-dirty-icon-text-shadow);
     color: var(--input-status-dirty-icon-color);
     content: '\36'; }
-  div.input-container.dirty.active div.wrap:after {
+  div.input-container.dirty.active div.wrap:after,
+  div.textarea-container.dirty.active div.wrap:after {
     background-color: var(--input-status-active-background-color);
     text-shadow: var(--input-status-active-icon-text-shadow);
     color: var(--input-status-active-icon-color); }
-
-div.textarea-container div.wrap:after {
-  justify-content: flex-start;
-  padding-top: 8px; }
 
 label {
   display: block;
@@ -613,7 +655,8 @@ textarea {
     input[type="number"].mute:disabled::placeholder,
     input[type="password"].mute:disabled::placeholder,
     textarea.mute:disabled::placeholder {
-      color: var(--input-disabled-placeholder-color); }
+      color: var(--input-disabled-placeholder-color);
+      text-shadow: none; }
     input[type="text"].mute:focus,
     input[type="number"].mute:focus,
     input[type="password"].mute:focus,
@@ -630,6 +673,12 @@ textarea.mute {
     border-left-color: var(--focus-color);
     background-color: var(--input-mute-background-color);
     box-shadow: inset 10px 0 0 var(--focus-color); }
+
+div.textarea-container div.wrap:after {
+  justify-content: flex-start;
+  padding-top: 8px; }
+div.textarea-container.mute div.charcounter {
+  top: 7px; }
 
 button {
   transition: all .2s;

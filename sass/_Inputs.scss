@@ -1,9 +1,8 @@
 
 [hidden] { display: none; }
 
-div.input-container {
-
-
+div.input-container,
+div.textarea-container {
   margin: 10px 30px 10px 30px;
   position: relative;
   box-sizing: border-box;
@@ -17,7 +16,7 @@ div.input-container {
       width: 45px;
       margin: 0;
       background-color: var(--input-status-default-background-color);
-      font-family: "cornflowerblue";
+      font-family: "cornflowerblue", serif;
       font-style: normal;
       font-weight: normal;
       speak: none;
@@ -99,7 +98,6 @@ div.input-container {
     }
   }
   &.error {
-
     input[type="text"],
     input[type="number"],
     input[type="password"],
@@ -186,14 +184,6 @@ div.input-container {
     }
   }
 }
-div.textarea-container {
-  div.wrap {
-    &:after {
-      justify-content: flex-start;
-      padding-top: 8px;
-    }
-  }
-}
 
 label {
   display: block;
@@ -228,7 +218,7 @@ textarea {
   &::placeholder {
     color: var(--input-default-placeholder-color);
     font-weight: normal;
-    text-shadow:none;
+    text-shadow: none;
   }
   &:disabled {
     border-color: var(--input-disabled-border-color);
@@ -257,6 +247,7 @@ textarea {
     &:disabled {
       &::placeholder {
         color: var(--input-disabled-placeholder-color);
+        text-shadow: none;
       }
     }
     &:focus {
@@ -275,6 +266,19 @@ textarea {
       border-left-color: var(--focus-color);
       background-color: var(--input-mute-background-color);
       box-shadow: inset 10px 0 0 var(--focus-color);
+    }
+  }
+}
+div.textarea-container {
+  div.wrap {
+    &:after {
+      justify-content: flex-start;
+      padding-top: 8px;
+    }
+  }
+  &.mute {
+    div.charcounter {
+      top: 7px;
     }
   }
 }
