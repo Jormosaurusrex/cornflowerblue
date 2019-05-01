@@ -50,10 +50,10 @@ div.growlbox {
   position: relative;
   box-sizing: border-box;
   border-radius: 3px;
-  border: 2px solid var(--growler-default-border-color);
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
+  border: 2px solid var(--growler-default-border-color);
   box-shadow: var(--growler-box-shadow);
   color: var(--growler-default-text-color);
   background-color: var(--growler-default-background-color);
