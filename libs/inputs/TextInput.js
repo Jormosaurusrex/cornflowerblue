@@ -256,7 +256,6 @@ class TextInput {
                 }
             })
             .focusin(function(e) {
-                console.log(`[${me.placeholder}][${me.label}]`);
                 if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
                     $(this).attr('placeholder', me.placeholder);
                 }
