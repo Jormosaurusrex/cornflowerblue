@@ -12,7 +12,7 @@ class BooleanToggle {
         labelside: 'left', // Which side to put the label on.
         style: null, // Default to box
         onchange: $.noop, // The change handler. Passed (event, self).
-        validator: $.noop // A function to run to test validity. Passed the self; returns true or false.
+        validator: null // A function to run to test validity. Passed the self; returns true or false.
     };
 
 
