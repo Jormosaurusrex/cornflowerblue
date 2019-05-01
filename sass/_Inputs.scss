@@ -46,7 +46,7 @@ div.input-container {
     right: 0;
     top: 12px;
     &.danger {
-      color: var(--input-subline-warn-text-color);
+      color: var(--input-subline-warning-text-color);
     }
     &.outofbounds {
       color: var(--input-subline-error-text-color);
@@ -67,7 +67,7 @@ div.input-container {
         color: var(--input-messages-error-text-color);
       }
       &.warning {
-        color: var(--input-messages-warn-text-color);
+        color: var(--input-messages-warning-text-color);
       }
     }
   }
@@ -143,17 +143,17 @@ div.input-container {
     input[type="number"],
     input[type="password"],
     textarea {
-      border-color: var(--warn-color);
+      border-color: var(--warning-color);
       &:focus {
-        border-color: var(--warn-color);
-        box-shadow: inset 0px -4px 0 0 var(--warn-color);
+        border-color: var(--warning-color);
+        box-shadow: inset 0px -4px 0 0 var(--warning-color);
       }
     }
     ul.messagebox {
-      background-image: var(--warn-stripes);
-      border-left: 1px dashed var(--warn-color-half);
-      border-right: 1px dashed var(--warn-color-half);
-      border-bottom: 1px dashed var(--warn-color-half);
+      background-image: var(--warning-stripes);
+      border-left: 1px dashed var(--warning-color-half);
+      border-right: 1px dashed var(--warning-color-half);
+      border-bottom: 1px dashed var(--warning-color-half);
     }
     div.wrap {
       &:after {
