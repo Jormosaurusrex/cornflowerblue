@@ -19,7 +19,6 @@ class TextArea extends TextInput {
      */
     buildContainer() {
         this.container = $('<div />')
-            .addClass('input-container')
             .addClass('textarea-container')
             .append(this.labelobj)
             .append(this.charactercounter)

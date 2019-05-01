@@ -184,7 +184,19 @@ div.textarea-container {
     }
   }
 }
-
+div.textarea-container {
+  div.wrap {
+    &:after {
+      justify-content: flex-start;
+      padding-top: 8px;
+    }
+  }
+  &.mute {
+    div.charcounter {
+      top: 5px;
+    }
+  }
+}
 label {
   display: block;
   font-weight: normal;
@@ -244,16 +256,17 @@ textarea {
       color: var(--label-color);
       text-shadow:var(--label-text-shadow);
     }
+    &:focus {
+      border-bottom-color: var(--focus-color);
+      background-color: red;
+      //background-color: var(--input-focused-mute-background-color);
+      box-shadow: inset 0px -4px 0 0 var(--focus-color);
+    }
     &:disabled {
       &::placeholder {
         color: var(--input-disabled-placeholder-color);
         text-shadow: none;
       }
-    }
-    &:focus {
-      border-bottom-color: var(--focus-color);
-      background-color: var(--input-focused-mute-background-color);
-      box-shadow: inset 0px -4px 0 0 var(--focus-color);
     }
   }
 }
@@ -264,21 +277,8 @@ textarea {
     border-bottom: none;
     &:focus {
       border-left-color: var(--focus-color);
-      background-color: var(--input-mute-background-color);
+      background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 10px 0 0 var(--focus-color);
-    }
-  }
-}
-div.textarea-container {
-  div.wrap {
-    &:after {
-      justify-content: flex-start;
-      padding-top: 8px;
-    }
-  }
-  &.mute {
-    div.charcounter {
-      top: 7px;
     }
   }
 }
