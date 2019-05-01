@@ -57,6 +57,12 @@ class SimpleForm {
         return valid;
     }
 
+    handleResults(results) {
+        if (this.messagebox) { this.messagebox.remove(); }
+        this.messagebox = new MessageBox(results).container;
+        this.container.prepend(this.messagebox);
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -95,8 +101,12 @@ class SimpleForm {
         if ((this.header) || (this.instructions)) {
             this.headerbox = $('<div />').addClass('header');
             if (this.header) { this.headerbox.append(this.header); }
+
+            this.messagebox = $('<div />').addClass('messagebox');
+            this.headerbox.append(this.messagebox);
+
             if (this.instructions) {
-                this.headerbox.append(new InstructionBox(this.instructions).container );
+                this.headerbox.append(new InstructionBox(this.instructions).container);
             }
         }
     }
@@ -157,7 +167,6 @@ class SimpleForm {
     }
     set contentbox(contentbox) { this._contentbox = contentbox; }
 
-
     get elementbox() {
         if (!this._elementbox) { this.buildElementBox(); }
         return this._elementbox;
@@ -190,6 +199,9 @@ class SimpleForm {
 
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }
+
+    get messagebox() { return this._messagebox; }
+    set messagebox(messagebox) { this._messagebox = messagebox; }
 
     get method() { return this.config.method; }
     set method(method) { this.config.method = method; }
