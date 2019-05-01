@@ -53,6 +53,7 @@
   --checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
   --checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
   --panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
+  --panel-shadow-light: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
   --interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.2);
   --interior-shadow-inverse: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -198,7 +199,6 @@
   --input-messages-warning-text-color: var(--grey-darkest);
   --input-messages-error-text-color: var(--error-color);
 
-
   --input-status-default-background-color: var(--grey-dark);
   --input-status-icon-color: var(--light);
   --input-status-icon-text-shadow: var(--text-shadow);
@@ -211,10 +211,25 @@
   --input-status-dirty-background-color: var(--standard-color);
   --input-status-dirty-icon-color: var(--input-status-icon-color);
   --input-status-dirty-icon-text-shadow: var(--input-status-icon-text-shadow);
-
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+
+  // TabBars
+  --tabbar-background-color: var(--morelight);
+  --tabbar-box-shadow: var(--panel-shadow-light);
+  --tabbar-text-color: var(--grey-dark);
+  --tabbar-text-shadow: none;
+  --tabbar-selected-tab-background-color: var(--morelight);
+  --tabbar-selected-tab-highlight-color: var(--focus-color);
+  --tabbar-selected-tab-text-color: var(--focus-color);
+  --tabbar-selected-tab-text-shadow: none;
+
+  --tabbar-hover-tab-background-color: var(--focus-color);
+  --tabbar-hover-tab-highlight-color: var(--focus-color);
+  --tabbar-hover-tab-text-color: var(--light);
+  --tabbar-hover-tab-text-shadow: var(--text-shadow);
+
 
 }
 
