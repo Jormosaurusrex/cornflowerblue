@@ -19,7 +19,10 @@ form {
     flex-grow: 2;
     box-sizing: border-box;
     overflow: auto;
-    padding: 40px;
+    padding-top: var(--form-elements-top-padding);
+    padding-right: var(--form-side-padding);
+    padding-bottom: var(--form-elements-bottom-padding);
+    padding-left: var(--form-side-padding);
     div.input-container,
     div.textarea-container {
       margin: 10px 0 10px 0;
@@ -34,7 +37,12 @@ form {
     justify-content: space-between;
     box-sizing: border-box;
     background-color: var(--form-actions-background-color);
-    padding: 20px;
+    padding-top: var(--form-actions-top-padding);
+    padding-right: var(--form-side-padding);
+    padding-bottom: var(--form-actions-bottom-padding);
+    padding-left: var(--form-side-padding);
+
+
     border-top: 2px solid var(--form-actions-border-color);
     button {
       margin-right: 10px;

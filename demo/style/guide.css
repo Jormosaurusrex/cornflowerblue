@@ -145,13 +145,19 @@
   --form-background-color: var(--light);
   --form-actions-background-color: var(--morelight);
   --form-actions-border-color: var(--grey-medium);
+  --form-side-padding: 40px;
+  --form-elements-top-padding: 40px;
+  --form-elements-bottom-padding: 40px;
+  --form-actions-top-padding: 40px;
+  --form-actions-bottom-padding: 20px;
   --label-color: var(--grey-dark);
   --label-text-shadow: var(--text-shadow-grey-medium);
   --label-required-marker-color: var(--required-color);
+  --label-text-transform: uppercase;
   --input-default-background-color: var(--ultralight);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
-  --input-default-text-shadow: var(--text-shadow-grey-medium);
+  --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);
   --input-disabled-background-color: var(--disabled-base-color);
   --input-disabled-border-color: var(--disabled-highlight-color);
@@ -430,7 +436,8 @@ label {
   margin-bottom: 5px;
   font-size: 13pt;
   color: var(--label-color);
-  text-shadow: var(--label-text-shadow); }
+  text-shadow: var(--label-text-shadow);
+  text-transform: var(--label-text-transform); }
 
 div.input-container,
 div.textarea-container {
@@ -674,13 +681,15 @@ textarea {
     border-top: none;
     border-left: none;
     border-right: none;
-    padding: 10px; }
+    padding: 10px;
+    padding-left: 0; }
     input[type="text"].mute::placeholder,
     input[type="number"].mute::placeholder,
     input[type="password"].mute::placeholder,
     textarea.mute::placeholder {
       color: var(--label-color);
-      text-shadow: var(--label-text-shadow); }
+      text-shadow: var(--label-text-shadow);
+      text-transform: var(--label-text-transform); }
     input[type="text"].mute:focus,
     input[type="number"].mute:focus,
     input[type="password"].mute:focus,
@@ -688,6 +697,11 @@ textarea {
       border-bottom-color: var(--focus-color);
       background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color); }
+      input[type="text"].mute:focus::placeholder,
+      input[type="number"].mute:focus::placeholder,
+      input[type="password"].mute:focus::placeholder,
+      textarea.mute:focus::placeholder {
+        opacity: 0; }
     input[type="text"].mute:disabled::placeholder,
     input[type="number"].mute:disabled::placeholder,
     input[type="password"].mute:disabled::placeholder,
@@ -1260,7 +1274,10 @@ form {
     flex-grow: 2;
     box-sizing: border-box;
     overflow: auto;
-    padding: 40px; }
+    padding-top: var(--form-elements-top-padding);
+    padding-right: var(--form-side-padding);
+    padding-bottom: var(--form-elements-bottom-padding);
+    padding-left: var(--form-side-padding); }
     form div.elements div.input-container,
     form div.elements div.textarea-container {
       margin: 10px 0 10px 0; }
@@ -1273,7 +1290,10 @@ form {
     justify-content: space-between;
     box-sizing: border-box;
     background-color: var(--form-actions-background-color);
-    padding: 20px;
+    padding-top: var(--form-actions-top-padding);
+    padding-right: var(--form-side-padding);
+    padding-bottom: var(--form-actions-bottom-padding);
+    padding-left: var(--form-side-padding);
     border-top: 2px solid var(--form-actions-border-color); }
     form div.actions button {
       margin-right: 10px; }

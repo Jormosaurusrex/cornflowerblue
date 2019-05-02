@@ -10,6 +10,7 @@ label {
   font-size: 13pt;
   color: var(--label-color);
   text-shadow:var(--label-text-shadow);
+  text-transform: var(--label-text-transform);
 }
 
 div.input-container,
@@ -253,14 +254,19 @@ textarea {
     border-left: none;
     border-right: none;
     padding: 10px;
+    padding-left: 0;
     &::placeholder {
       color: var(--label-color);
       text-shadow:var(--label-text-shadow);
+      text-transform: var(--label-text-transform);
     }
     &:focus {
       border-bottom-color: var(--focus-color);
       background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color);
+      &::placeholder {
+        opacity: 0;
+      }
     }
     &:disabled {
       &::placeholder {
