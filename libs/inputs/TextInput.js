@@ -209,6 +209,9 @@ class TextInput {
             this.container.css('display', 'none');
             this.container.attr('aria-hidden', true);
         }
+        if ((this.config.value) && (this.config.value.length > 0)) {
+            this.container.addClass('filled');
+        }
     }
 
     /**
