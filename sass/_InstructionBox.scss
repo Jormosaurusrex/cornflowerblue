@@ -23,8 +23,8 @@ div.instructions {
     max-width: 112px;
     max-height: 112px;
     border-radius: 50%;
-    color: var(--resultsbox-icon-color);
-    text-shadow: var(--text-shadow);
+    color: var(--instructions-icon-color);
+    text-shadow: var(--instructions-icon-text-shadow);
   }
   ul {
     flex-grow: 2;
@@ -32,6 +32,7 @@ div.instructions {
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
+    padding: 1.2em 0 0 1.2em;
     color: var(--instructions-text-color);
   }
 }
