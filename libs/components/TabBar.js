@@ -56,7 +56,7 @@ class TabBar {
                 });
 
             if (tabdef.id) {
-                $tab.attr('data-local-id', tabdef.id);
+                $tab.attr('data-tabid', tabdef.id);
             }
 
             if (tabdef.selected) {
@@ -74,7 +74,7 @@ class TabBar {
 
     select(tab) {
         if (typeof tab === 'string') {
-            tab = this.container.find(`[data-local-id='${tab}']`);
+            tab = this.container.find(`[data-tabid='${tab}']`);
         }
         if (this.selected) { this.selected.removeClass('selected'); }
         this.selected = tab.addClass('selected');
