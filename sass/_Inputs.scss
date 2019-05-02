@@ -1,6 +1,17 @@
 
 [hidden] { display: none; }
 
+label {
+  display: block;
+  font-weight: normal;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 13pt;
+  color: var(--label-color);
+  text-shadow:var(--label-text-shadow);
+}
+
 div.input-container,
 div.textarea-container {
   margin: 10px 30px 10px 30px;
@@ -196,16 +207,6 @@ div.textarea-container {
       top: 5px;
     }
   }
-}
-label {
-  display: block;
-  font-weight: normal;
-  position: relative;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-size: 13pt;
-  color: var(--label-color);
-  text-shadow:var(--label-text-shadow);
 }
 
 input[type="text"],
