@@ -55,6 +55,7 @@
   --hexagon-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   --hexagon-shadow-disabled: 0 0 5px rgba(0, 0, 0, 0.2);
   --default-font-family: "Helvetica Neue", Arial, serif;
+  --default-font-size: 13pt;
   --border-radius: 3px;
   --standard-color: var(--grey-dark);
   --placeholder-color: var(--grey-medium);
@@ -179,10 +180,13 @@
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
-  --tabbar-background-color: var(--morelight);
   --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-text-color: var(--grey-dark);
-  --tabbar-text-shadow: none;
+  --tabbar-background-color: var(--morelight);
+  --tabbar-interior-box-shadow: var(--interior-shadows-inside);
+  --tabbar-tab-box-shadow: none;
+  --tabbar-tab-text-color: var(--grey-dark);
+  --tabbar-tab-background-color: var(--light);
+  --tabbar-tab-text-shadow: none;
   --tabbar-selected-tab-background-color: var(--morelight);
   --tabbar-selected-tab-highlight-color: var(--focus-color);
   --tabbar-selected-tab-text-color: var(--focus-color);
@@ -1234,7 +1238,8 @@ div.radiogroup ul {
       margin: 0 10px 0 0; }
     div.radiogroup ul li label {
       display: inline-block;
-      margin: 0; }
+      margin: 0;
+      text-shadow: none; }
 
 form {
   box-sizing: border-box;
@@ -1246,6 +1251,8 @@ form {
   flex-wrap: nowrap; }
   form div.header {
     flex-grow: 1; }
+    form div.header div.instructions {
+      margin: 10px 40px 10px 40px; }
   form div.elements {
     display: flex;
     flex-direction: column;
@@ -1253,8 +1260,9 @@ form {
     flex-grow: 2;
     box-sizing: border-box;
     overflow: auto;
-    padding: 20px; }
-    form div.elements div.input-container {
+    padding: 40px; }
+    form div.elements div.input-container,
+    form div.elements div.textarea-container {
       margin: 10px 0 10px 0; }
   form div.actions {
     flex-grow: 1;
@@ -1395,7 +1403,7 @@ div.instructions {
     align-items: center;
     justify-content: center;
     font-size: 60pt;
-    margin: 10px;
+    margin: 0 20px 0 10px;
     width: 112px;
     height: 112px;
     min-width: 112px;
@@ -1619,8 +1627,9 @@ ul.tabbar {
     margin-right: 20px;
     border-bottom: 4px solid transparent;
     cursor: pointer;
-    color: var(--tabbar-text-color);
-    text-shadow: var(--tabbar-text-shadow); }
+    background-color: var(--tabbar-tab-background-color);
+    color: var(--tabbar-tab-text-color);
+    text-shadow: var(--tabbar-tab-text-shadow); }
     ul.tabbar li.selected {
       background-color: var(--tabbar-selected-tab-background-color);
       border-color: var(--tabbar-selected-tab-highlight-color);
@@ -1631,5 +1640,80 @@ ul.tabbar {
       border-color: var(--tabbar-hover-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color);
       text-shadow: var(--tabbar-hover-tab-text-shadow); }
+  ul.tabbar.vertical {
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 0; }
+    ul.tabbar.vertical li {
+      padding: 10px 15px 10px 15px;
+      margin: 0; }
 
-/*# sourceMappingURL=cornflowerblue.css.map */
+:root {
+  --tabbar-background-color: var(--light);
+  --tabbar-box-shadow: none; }
+
+body {
+  background-color: var(--grey-darkest);
+  height: 100vw;
+  min-height: 100vw;
+  width: 100vw;
+  min-width: 100vw;
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size); }
+
+div.container {
+  height: 100%;
+  min-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 50%;
+  max-width: 75%;
+  background-color: var(--grey-dark);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch; }
+  div.container ul.tabbar {
+    flex-grow: 0;
+    padding-top: 25px; }
+  div.container div.displaybox {
+    flex-grow: 1;
+    background-color: var(--morelight);
+    padding: 50px; }
+    div.container div.displaybox h2 {
+      font-weight: normal;
+      color: var(--grey-dark);
+      border-bottom: 1px solid var(--grey-dark);
+      margin-bottom: 10px; }
+    div.container div.displaybox h4 {
+      font-weight: normal;
+      text-transform: uppercase;
+      color: var(--grey-medium); }
+  div.container div.codebox {
+    flex-grow: 0;
+    padding: 50px 10px 0 10px;
+    background-color: var(--light);
+    width: 300px; }
+    div.container div.codebox h2 {
+      font-weight: normal;
+      color: var(--grey-dark);
+      border-bottom: 1px solid var(--grey-dark);
+      margin-bottom: 10px; }
+    div.container div.codebox div.config {
+      padding: 0 10px 0 10px;
+      white-space: pre; }
+
+.section {
+  margin: 20px 0 20px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly; }
+  .section.vert {
+    flex-direction: column; }
+  .section button {
+    margin: 10px; }
+    .section button.hexagon:nth-child(even) {
+      left: 0;
+      top: 0; }
+
+/*# sourceMappingURL=guide.css.map */

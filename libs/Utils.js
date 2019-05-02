@@ -74,6 +74,37 @@ class Utils {
     }
 
     /**
+     * Dumps an objects configuration properties
+     * @param obj the object to dump
+     * @return {string}
+     */
+    static getConfig(obj) {
+        let keys = Object.keys(obj.config).sort(function(a, b){
+            var a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if(a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+        let vlines = [];
+        for (let k of keys) {
+            if (typeof obj[k] === 'function') {
+                vlines.push(`\t ${k} : function(e, self) { ... }`);
+            } else if (Array.isArray(obj[k])) {
+                vlines.push(`\t ${k} : [${obj[k]}]`);
+            } else if (typeof obj[k] === 'string') {
+                vlines.push(`\t ${k} : "${obj[k]}"`);
+            } else {
+                vlines.push(`\t ${k} : ${obj[k]}`);
+            }
+        }
+        let config = obj.constructor.name + " {\n";
+        config += vlines.join(",\n");
+        config += "\n}\n";
+        return config;
+    }
+
+
+    /**
      * Format a number as money.
      * @param value the value to display.
      * @param decPlaces the decimal places (default '2')

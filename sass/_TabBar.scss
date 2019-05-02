@@ -20,8 +20,9 @@ ul.tabbar {
     margin-right: 20px;
     border-bottom: 4px solid transparent;
     cursor: pointer;
-    color: var(--tabbar-text-color);
-    text-shadow: var(--tabbar-text-shadow);
+    background-color: var(--tabbar-tab-background-color);
+    color: var(--tabbar-tab-text-color);
+    text-shadow: var(--tabbar-tab-text-shadow);
     &.selected {
       background-color: var(--tabbar-selected-tab-background-color);
       border-color: var(--tabbar-selected-tab-highlight-color);
@@ -36,6 +37,14 @@ ul.tabbar {
       color: var(--tabbar-hover-tab-text-color);
       text-shadow: var(--tabbar-hover-tab-text-shadow);
     }
-
+  }
+  &.vertical {
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 0;
+    li {
+      padding: 10px 15px 10px 15px;
+      margin: 0;
+    }
   }
 }

@@ -63,6 +63,7 @@
 
   // Misc Values
   --default-font-family: "Helvetica Neue", Arial, serif;
+  --default-font-size: 13pt;
   --border-radius: 3px;
 
   // Semantic colors
@@ -226,10 +227,15 @@
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
 
   // TabBars
-  --tabbar-background-color: var(--morelight);
   --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-text-color: var(--grey-dark);
-  --tabbar-text-shadow: none;
+  --tabbar-background-color: var(--morelight);
+  --tabbar-interior-box-shadow: var(--interior-shadows-inside);
+
+  --tabbar-tab-box-shadow: none;
+  --tabbar-tab-text-color: var(--grey-dark);
+  --tabbar-tab-background-color: var(--light);
+  --tabbar-tab-text-shadow: none;
+
   --tabbar-selected-tab-background-color: var(--morelight);
   --tabbar-selected-tab-highlight-color: var(--focus-color);
   --tabbar-selected-tab-text-color: var(--focus-color);

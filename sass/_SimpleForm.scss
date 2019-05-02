@@ -8,6 +8,9 @@ form {
   flex-wrap: nowrap;
   div.header {
     flex-grow: 1;
+    div.instructions {
+      margin: 10px 40px 10px 40px;
+    }
   }
   div.elements {
     display: flex;
@@ -16,8 +19,9 @@ form {
     flex-grow: 2;
     box-sizing: border-box;
     overflow: auto;
-    padding: 20px;
-    div.input-container {
+    padding: 40px;
+    div.input-container,
+    div.textarea-container {
       margin: 10px 0 10px 0;
     }
   }

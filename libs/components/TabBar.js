@@ -4,9 +4,11 @@ class TabBar {
 
     static DEFAULT_CONFIG = {
         id : null, // The id
-        tabdefs: [], // An array of tab definitions
+        vertical: false, // Vertical or horizontal
+        tabs: [], // An array of tab definitions
         // {
         //    label: "Tab Text", // text
+        //    id: null, // tab id, used with "activate(tabid)"
         //    selected: false, // if true, start selected
         //    action: function() { } // what to do when the tab is clicked.
         // }
@@ -36,7 +38,11 @@ class TabBar {
             .addClass(this.classes.join(' '))
             .addClass('tabbar');
 
-        for (let tabdef of this.tabdefs) {
+        if (this.vertical) {
+            this.container.addClass('vertical');
+        }
+
+        for (let tabdef of this.tabs) {
 
             let $tab = $('<li />')
                 .html(tabdef.label)
@@ -48,6 +54,10 @@ class TabBar {
                         tabdef.action(e);
                     }
                 });
+
+            if (tabdef.id) {
+                $tab.attr('data-local-id', tabdef.id);
+            }
 
             if (tabdef.selected) {
                 this.select($tab);
@@ -63,6 +73,9 @@ class TabBar {
     }
 
     select(tab) {
+        if (typeof tab === 'string') {
+            tab = this.container.find(`[data-local-id='${tab}']`);
+        }
         if (this.selected) { this.selected.removeClass('selected'); }
         this.selected = tab.addClass('selected');
     }
@@ -91,7 +104,10 @@ class TabBar {
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }
 
-    get tabdefs() { return this.config.tabdefs; }
-    set tabdefs(tabdefs) { this.config.tabdefs = tabdefs; }
+    get tabs() { return this.config.tabs; }
+    set tabs(tabs) { this.config.tabs = tabs; }
+
+    get vertical() { return this.config.vertical; }
+    set vertical(vertical) { this.config.vertical = vertical; }
 
 }
