@@ -335,9 +335,7 @@ class TextInput {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () {
-        return Utils.getConfig(this);
-    }
+    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
@@ -389,7 +387,7 @@ class TextInput {
     get focusin() { return this.config.focusin; }
     set focusin(focusin) {
         if (typeof focusin !== 'function') {
-            console.log("Action provided for focusin is not a function!");
+            console.error("Action provided for focusin is not a function!");
         }
         this.config.focusin = focusin;
     }
@@ -397,7 +395,7 @@ class TextInput {
     get focusout() { return this.config.focusout; }
     set focusout(focusout) {
         if (typeof focusout !== 'function') {
-            console.log("Action provided for focusout is not a function!");
+            console.error("Action provided for focusout is not a function!");
         }
         this.config.focusout = focusout;
     }
@@ -432,7 +430,7 @@ class TextInput {
     get onreturn() { return this.config.onreturn; }
     set onreturn(onreturn) {
         if (typeof onreturn !== 'function') {
-            console.log("Action provided for onreturn is not a function!");
+            console.error("Action provided for onreturn is not a function!");
         }
         this.config.onreturn = onreturn;
     }
@@ -440,7 +438,7 @@ class TextInput {
     get ontab() { return this.config.ontab; }
     set ontab(ontab) {
         if (typeof ontab !== 'function') {
-            console.log("Action provided for ontab is not a function!");
+            console.error("Action provided for ontab is not a function!");
         }
         this.config.ontab = ontab;
     }

@@ -142,9 +142,7 @@ class BooleanToggle {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () {
-        return Utils.getConfig(this);
-    }
+    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
@@ -193,7 +191,7 @@ class BooleanToggle {
     get onchange() { return this.config.onchange; }
     set onchange(onchange) {
         if (typeof onchange !== 'function') {
-            console.log("Action provided for onchange is not a function!");
+            console.error("Action provided for onchange is not a function!");
         }
         this.config.onchange = onchange;
     }

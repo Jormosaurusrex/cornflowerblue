@@ -154,7 +154,7 @@ class RadioGroup {
     get onchange() { return this.config.onchange; }
     set onchange(onchange) {
         if (typeof onchange !== 'function') {
-            console.log("Action provided for onchange is not a function!");
+            console.error("Action provided for onchange is not a function!");
         }
         this.config.onchange = onchange;
     }

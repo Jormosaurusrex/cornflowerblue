@@ -147,9 +147,7 @@ class SimpleForm {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () {
-        return Utils.getConfig(this);
-    }
+    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
@@ -222,7 +220,7 @@ class SimpleForm {
     get onsubmit() { return this.config.onsubmit; }
     set onsubmit(onsubmit) {
         if (typeof onsubmit !== 'function') {
-            console.log("Action provided for onsubmit is not a function!");
+            console.error("Action provided for onsubmit is not a function!");
         }
         this.config.onsubmit = onsubmit;
     }
