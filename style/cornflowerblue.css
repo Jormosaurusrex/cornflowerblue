@@ -580,6 +580,12 @@ div.textarea-container {
     text-shadow: var(--input-status-active-icon-text-shadow);
     color: var(--input-status-active-icon-color); }
 
+div.textarea-container div.wrap:after {
+  justify-content: flex-start;
+  padding-top: 8px; }
+div.textarea-container.mute div.charcounter {
+  top: 5px; }
+
 label {
   display: block;
   font-weight: normal;
@@ -651,12 +657,6 @@ textarea {
     textarea.mute::placeholder {
       color: var(--label-color);
       text-shadow: var(--label-text-shadow); }
-    input[type="text"].mute:disabled::placeholder,
-    input[type="number"].mute:disabled::placeholder,
-    input[type="password"].mute:disabled::placeholder,
-    textarea.mute:disabled::placeholder {
-      color: var(--input-disabled-placeholder-color);
-      text-shadow: none; }
     input[type="text"].mute:focus,
     input[type="number"].mute:focus,
     input[type="password"].mute:focus,
@@ -664,6 +664,12 @@ textarea {
       border-bottom-color: var(--focus-color);
       background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color); }
+    input[type="text"].mute:disabled::placeholder,
+    input[type="number"].mute:disabled::placeholder,
+    input[type="password"].mute:disabled::placeholder,
+    textarea.mute:disabled::placeholder {
+      color: var(--input-disabled-placeholder-color);
+      text-shadow: none; }
 
 textarea.mute {
   padding: 10px 10px 10px 20px;
@@ -671,14 +677,7 @@ textarea.mute {
   border-bottom: none; }
   textarea.mute:focus {
     border-left-color: var(--focus-color);
-    background-color: var(--input-mute-background-color);
     box-shadow: inset 10px 0 0 var(--focus-color); }
-
-div.textarea-container div.wrap:after {
-  justify-content: flex-start;
-  padding-top: 8px; }
-div.textarea-container.mute div.charcounter {
-  top: 7px; }
 
 button {
   transition: all .2s;

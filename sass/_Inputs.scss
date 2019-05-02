@@ -258,8 +258,7 @@ textarea {
     }
     &:focus {
       border-bottom-color: var(--focus-color);
-      background-color: red;
-      //background-color: var(--input-focused-mute-background-color);
+      background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color);
     }
     &:disabled {
@@ -277,7 +276,6 @@ textarea {
     border-bottom: none;
     &:focus {
       border-left-color: var(--focus-color);
-      background-color: var(--input-focused-mute-background-color);
       box-shadow: inset 10px 0 0 var(--focus-color);
     }
   }
