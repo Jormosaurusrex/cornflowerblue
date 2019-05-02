@@ -65,16 +65,15 @@ class TabBar {
 
             this.container.append($tab);
         }
-
-        if (!this.selected) {
-            this.select(this.container.children()[0]);
-        }
-
     }
 
     select(tab) {
         if (typeof tab === 'string') {
             tab = this.container.find(`[data-tabid='${tab}']`);
+        }
+        if (!tab) {
+            console.warn(`Tab does not exist: ${tab}`);
+            return;
         }
         if (this.selected) { this.selected.removeClass('selected'); }
         this.selected = tab.addClass('selected');
