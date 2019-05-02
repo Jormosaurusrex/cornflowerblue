@@ -129,7 +129,7 @@ class DialogWindow {
      * @returns {string}
      */
     toString () {
-        return `DialogWindow | id: ${this.id} :: title: ${this.title}`;
+        return Utils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

@@ -143,7 +143,7 @@ class BooleanToggle {
      * @returns {string}
      */
     toString () {
-        return `BooleanToggle | id: ${this.id} :: label: ${this.label} :: checked: ${this.checked} :: name: ${this.name} :: disabled: ${this.disabled}`;
+        return Utils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

@@ -97,6 +97,15 @@ class MessageBox {
         return $box.append($lbox);
     }
 
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () {
+        return Utils.getConfig(this);
+    }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

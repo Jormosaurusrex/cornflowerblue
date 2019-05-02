@@ -847,7 +847,7 @@ class CornflowerBlueDemo {
     }
 
 
-    
+
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
@@ -855,8 +855,9 @@ class CornflowerBlueDemo {
      * @returns {string}
      */
     toString () {
-        return `CornflowerBlueDemo | (no parameters)`;
+        return Utils.getConfig(this);
     }
+
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

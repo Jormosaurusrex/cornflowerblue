@@ -45,7 +45,7 @@ class InstructionBox {
      * @returns {string}
      */
     toString () {
-        return `InstructionBox | id: ${this.id} :: icon: ${this.icon} :: instructions: ${this.instructions}`;
+        return Utils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

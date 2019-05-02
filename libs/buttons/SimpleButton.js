@@ -116,7 +116,7 @@ class SimpleButton {
      * @returns {string}
      */
     toString () {
-        return `SimpleButton | id: ${this.id} :: text: ${this.text} :: shape: ${this.shape} :: disabled: ${this.disabled}`;
+        return Utils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

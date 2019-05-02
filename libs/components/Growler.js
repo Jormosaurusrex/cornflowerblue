@@ -159,7 +159,7 @@ class Growler {
      * @returns {string}
      */
     toString () {
-        return `Growler | id: ${this.id} :: title: ${this.title} :: text: ${this.text} :: icon: ${this.icon} :: duration: ${this.duration}`;
+        return Utils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

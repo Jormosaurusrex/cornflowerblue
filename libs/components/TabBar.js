@@ -87,7 +87,7 @@ class TabBar {
      * @returns {string}
      */
     toString () {
-        return `TabBar | id: ${this.id}`;
+        return Utils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
