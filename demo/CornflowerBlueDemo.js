@@ -111,7 +111,9 @@ class CornflowerBlueDemo {
 
     showButtons() {
         const me = this;
+
         this.navigation.select('buttons');
+
         this.titlebox.html("Buttons");
 
         this.demobox.empty();
