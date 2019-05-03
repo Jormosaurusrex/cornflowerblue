@@ -79,7 +79,7 @@
   --destructive-color: var(--red);
   --destructive-color-helf: var(--red-half);
 
-  --hot-text-color: var(--light);
+  --hot-text-color: var(--ultralight);
   --required-color: var(--red);
 
   --accept-color: var(--green);
@@ -121,7 +121,7 @@
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);
-  --button-menu-item-hover-text-color: var(--light);
+  --button-menu-item-hover-text-color: var(--hot-text-color);
   --button-menu-item-hover-text-shadow: var(--text-shadow);
 
 
@@ -162,8 +162,11 @@
   // Instruction box keys
   --instructions-background-color: var(--morelight);
   --instructions-text-color: var(--grey-darkest);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--grey-medium);
 
   // Results box keys
+  --resultsbox-margin: 10px 30px 10px 30px;
   --resultsbox-icon-background-color: var(--grey-darkest);
   --resultsbox-icon-color: var(--light);
   --resultsbox-icon-tex-shadow: var(--text-shadow);
@@ -180,19 +183,25 @@
 
   // Form keys
   --form-background-color: var(--light);
-  --form-actions-background-color: var(--morelight);
+  --form-actions-background-color: var(--ultralight);
   --form-actions-border-color: var(--grey-medium);
+  --form-side-padding: 40px;
+  --form-elements-top-padding: 20px;
+  --form-elements-bottom-padding: 20px;
+  --form-actions-top-padding: 0;
+  --form-actions-bottom-padding: 20px;
 
   // Labels
   --label-color: var(--grey-dark);
   --label-text-shadow: var(--text-shadow-grey-medium);
   --label-required-marker-color: var(--required-color);
+  --label-text-transform: uppercase;
 
   // Input
   --input-default-background-color: var(--ultralight);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
-  --input-default-text-shadow: var(--text-shadow-grey-medium);
+  --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);
   --input-disabled-background-color: var(--disabled-base-color);
   --input-disabled-border-color: var(--disabled-highlight-color);
@@ -226,17 +235,24 @@
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
 
+  --selectmenu-menu-background-color: var(--ultralight);
+  --selectmenu-menu-alternate-background-color: var(--morelight);
+  --selectmenu-menu-item-hover-background-color: var(--focus-color);
+  --selectmenu-menu-item-hover-text-color: var(--hot-text-color);
+  --selectmenu-menu-item-hover-text-shadow: var(--text-shadow);
+
   // TabBars
   --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-background-color: var(--morelight);
+  --tabbar-background-color: var(--ultralight);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
+  --tabbar-border-radius: 5px;
 
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
   --tabbar-tab-background-color: var(--light);
   --tabbar-tab-text-shadow: none;
 
-  --tabbar-selected-tab-background-color: var(--morelight);
+  --tabbar-selected-tab-background-color: var(--ultralight);
   --tabbar-selected-tab-highlight-color: var(--focus-color);
   --tabbar-selected-tab-text-color: var(--focus-color);
   --tabbar-selected-tab-text-shadow: none;

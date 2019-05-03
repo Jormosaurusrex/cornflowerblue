@@ -71,16 +71,6 @@ class ButtonMenu extends SimpleButton {
 
     }
 
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () {
-        return Utils.getConfig(this);
-    }
-
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get classes() { return this.config.classes; }

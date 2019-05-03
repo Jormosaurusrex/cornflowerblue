@@ -115,16 +115,14 @@ class SimpleButton {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () {
-        return Utils.getConfig(this);
-    }
+    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get action() { return this.config.action; }
     set action(action) {
         if (typeof action !== 'function') {
-            console.log("Action provided to button is not a function!");
+            console.error("Action provided to button is not a function!");
         }
         this.config.action = action;
     }

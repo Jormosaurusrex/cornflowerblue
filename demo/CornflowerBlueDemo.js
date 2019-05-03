@@ -111,7 +111,9 @@ class CornflowerBlueDemo {
 
     showButtons() {
         const me = this;
+
         this.navigation.select('buttons');
+
         this.titlebox.html("Buttons");
 
         this.demobox.empty();
@@ -122,34 +124,26 @@ class CornflowerBlueDemo {
                 .append(
                     new SimpleButton({
                         text: "Normal",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new SimpleButton({
                         text: "Disabled",
                         disabled: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
         );
@@ -160,27 +154,21 @@ class CornflowerBlueDemo {
                     new SimpleButton({
                         text: "Normal",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -188,9 +176,7 @@ class CornflowerBlueDemo {
                         text: "Disabled",
                         disabled: true,
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
         );
@@ -201,27 +187,21 @@ class CornflowerBlueDemo {
                     new SimpleButton({
                         text: "Normal",
                         hot: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive",
                         hot: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive",
                         hot: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -229,9 +209,7 @@ class CornflowerBlueDemo {
                         text: "Disabled",
                         disabled: true,
                         hot: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
         );
@@ -242,27 +220,21 @@ class CornflowerBlueDemo {
                     new SimpleButton({
                         icon: "echx",
                         shape: "square",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new ConstructiveButton({
                         icon: "plus",
                         shape: "square",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new DestructiveButton({
                         icon: "minus",
                         shape: "square",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -270,9 +242,7 @@ class CornflowerBlueDemo {
                         icon: "legend",
                         shape: "square",
                         disabled: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -280,9 +250,7 @@ class CornflowerBlueDemo {
                         icon: "popout",
                         shape: "square",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -290,9 +258,7 @@ class CornflowerBlueDemo {
                         icon: "minimize",
                         shape: "square",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -300,9 +266,7 @@ class CornflowerBlueDemo {
                         icon: "map",
                         shape: "square",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -311,9 +275,7 @@ class CornflowerBlueDemo {
                         shape: "square",
                         disabled: true,
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
         );
@@ -324,27 +286,21 @@ class CornflowerBlueDemo {
                     new SimpleButton({
                         icon: "echx",
                         shape: "circle",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new ConstructiveButton({
                         icon: "minus",
                         shape: "circle",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new DestructiveButton({
                         icon: "plus",
                         shape: "circle",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -352,9 +308,7 @@ class CornflowerBlueDemo {
                         icon: "map",
                         shape: "circle",
                         disabled: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -362,9 +316,7 @@ class CornflowerBlueDemo {
                         icon: "minimize",
                         shape: "circle",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -372,9 +324,7 @@ class CornflowerBlueDemo {
                         icon: "legend",
                         shape: "circle",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -382,9 +332,7 @@ class CornflowerBlueDemo {
                         icon: "popout",
                         shape: "circle",
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -393,9 +341,7 @@ class CornflowerBlueDemo {
                         shape: "circle",
                         disabled: true,
                         mute: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
         );
@@ -406,27 +352,21 @@ class CornflowerBlueDemo {
                     new SimpleButton({
                         icon: "echx",
                         shape: "hexagon",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new ConstructiveButton({
                         icon: "echx",
                         shape: "hexagon",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
                     new DestructiveButton({
                         icon: "echx",
                         shape: "hexagon",
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
                 .append(
@@ -434,9 +374,7 @@ class CornflowerBlueDemo {
                         icon: "echx",
                         shape: "hexagon",
                         disabled: true,
-                        action: function(e, self) {
-                            me.dumpConfig(self);
-                        }
+                        action: function(e, self) { me.dumpConfig(self); }
                     }).button
                 )
         );

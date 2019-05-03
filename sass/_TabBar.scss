@@ -5,7 +5,7 @@ ul.tabbar {
   justify-content: space-around;
   align-items: stretch;
   padding: 0;
-  border-radius: 5px;
+  border-radius: var(--tabbar-border-radius);
   z-index: 2;
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);

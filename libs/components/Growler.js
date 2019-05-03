@@ -158,9 +158,7 @@ class Growler {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () {
-        return Utils.getConfig(this);
-    }
+    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

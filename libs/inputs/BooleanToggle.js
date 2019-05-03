@@ -11,7 +11,7 @@ class BooleanToggle {
         disabled: false, // If true, make the checkbox disabled.
         labelside: 'left', // Which side to put the label on.
         style: null, // Default to box
-        onchange: $.noop, // The change handler. Passed (event, self).
+        onchange: null, // The change handler. Passed (event, self).
         validator: null // A function to run to test validity. Passed the self; returns true or false.
     };
 
@@ -82,7 +82,7 @@ class BooleanToggle {
      */
     build() {
         const me = this;
-        
+
         this.toggle = $('<input />')
             .data('self', this)
             .attr('type', "checkbox")
@@ -142,9 +142,7 @@ class BooleanToggle {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () {
-        return Utils.getConfig(this);
-    }
+    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
@@ -193,7 +191,7 @@ class BooleanToggle {
     get onchange() { return this.config.onchange; }
     set onchange(onchange) {
         if (typeof onchange !== 'function') {
-            console.log("Action provided for onchange is not a function!");
+            console.error("Action provided for onchange is not a function!");
         }
         this.config.onchange = onchange;
     }
