@@ -121,7 +121,7 @@
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);
-  --button-menu-item-hover-text-color: var(--light);
+  --button-menu-item-hover-text-color: var(--hot-text-color);
   --button-menu-item-hover-text-shadow: var(--text-shadow);
 
 
@@ -234,6 +234,12 @@
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+
+  --selectmenu-menu-background-color: var(--ultralight);
+  --selectmenu-menu-alternate-background-color: var(--morelight);
+  --selectmenu-menu-item-hover-background-color: var(--focus-color);
+  --selectmenu-menu-item-hover-text-color: var(--hot-text-color);
+  --selectmenu-menu-item-hover-text-shadow: var(--text-shadow);
 
   // TabBars
   --tabbar-box-shadow: var(--panel-shadow-light);

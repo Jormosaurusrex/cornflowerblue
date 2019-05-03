@@ -97,7 +97,7 @@
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);
-  --button-menu-item-hover-text-color: var(--light);
+  --button-menu-item-hover-text-color: var(--hot-text-color);
   --button-menu-item-hover-text-shadow: var(--text-shadow);
   --checkbox-border-color: var(--grey-dark);
   --checkbox-focus-color: var(--focus-color);
@@ -189,6 +189,11 @@
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --selectmenu-menu-background-color: var(--ultralight);
+  --selectmenu-menu-alternate-background-color: var(--morelight);
+  --selectmenu-menu-item-hover-background-color: var(--focus-color);
+  --selectmenu-menu-item-hover-text-color: var(--hot-text-color);
+  --selectmenu-menu-item-hover-text-shadow: var(--text-shadow);
   --tabbar-box-shadow: var(--panel-shadow-light);
   --tabbar-background-color: var(--ultralight);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
@@ -429,9 +434,6 @@
   content: '\4d'; }
 
 /* 'M' */
-[hidden] {
-  display: none; }
-
 label {
   display: block;
   font-weight: normal;
@@ -631,6 +633,9 @@ div.textarea-container div.wrap:after {
 div.textarea-container.mute div.charcounter {
   top: 5px; }
 
+[hidden] {
+  display: none; }
+
 input[type="text"],
 input[type="number"],
 input[type="password"],
@@ -720,6 +725,79 @@ textarea.mute {
   textarea.mute:focus {
     border-left-color: var(--focus-color);
     box-shadow: inset 10px 0 0 var(--focus-color); }
+
+div.select-container div.trigger {
+  transition: all .2s;
+  box-sizing: border-box;
+  outline: none;
+  position: relative;
+  font-family: inherit;
+  width: 100%;
+  background-color: var(--input-default-background-color);
+  margin: 0;
+  font-size: 105%;
+  border: 2px solid var(--input-default-border-color);
+  padding: 1em 1em 1em 2em;
+  border-radius: 1px;
+  color: var(--input-default-text-color);
+  text-shadow: var(--input-default-text-shadow);
+  vertical-align: middle; }
+  div.select-container div.trigger:before {
+    position: absolute;
+    left: .5em;
+    top: 1.2em;
+    margin: 0;
+    font-family: "cornflowerblue", serif;
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    text-decoration: inherit;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    content: '\2e';
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+div.select-container ul.selectmenu {
+  list-style-type: none;
+  display: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: var(--selectmenu-menu-background-color);
+  border: 2px solid var(--input-default-border-color);
+  border-top: none;
+  overflow: auto;
+  max-height: 10em; }
+  div.select-container ul.selectmenu li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 0;
+    margin: 0; }
+    div.select-container ul.selectmenu li input[type="radio"] {
+      display: none; }
+    div.select-container ul.selectmenu li label {
+      display: inline-block;
+      padding: 1em 1em 1em 2em;
+      margin: 0;
+      text-shadow: none;
+      width: 100%;
+      min-width: 100%; }
+    div.select-container ul.selectmenu li:nth-child(even) {
+      background-color: var(--selectmenu-menu-alternate-background-color); }
+    div.select-container ul.selectmenu li:hover {
+      background-color: var(--selectmenu-menu-item-hover-background-color);
+      color: var(--selectmenu-menu-item-hover-text-color); }
+      div.select-container ul.selectmenu li:hover label {
+        color: var(--selectmenu-menu-item-hover-text-color);
+        text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
+  div.select-container ul.selectmenu.open {
+    display: flex; }
 
 button {
   transition: all .2s;

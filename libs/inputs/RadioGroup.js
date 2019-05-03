@@ -10,8 +10,8 @@ class RadioGroup {
         disabled: false, // If true, make this disabled.
         options: [], // Array of option dictionary objects.  Printed in order given.
                      // { label: "Label to show", value: "v", checked: true }
-        onchange: $.noop, // The change handler. Passed (event, self).
-        validator: $.noop // A function to run to test validity. Passed the self; returns true or false.
+        onchange: null, // The change handler. Passed (event, self).
+        validator: null // A function to run to test validity. Passed the self; returns true or false.
     };
 
 
@@ -30,8 +30,6 @@ class RadioGroup {
             this.id = "radiogroup-" + Utils.getUniqueKey();
         }
         if (!this.name) { this.name = this.id; }
-
-        //this.origval = this.checked;
 
         return this;
     }
@@ -57,6 +55,7 @@ class RadioGroup {
             .attr('type', 'radio')
             .attr('name', this.name)
             .attr('tabindex', 0) // always 0
+            .attr('value', def.value)
             .attr('aria-label', def.label)
             .attr('aria-checked', def.checked)
             .attr('checked', def.checked)
@@ -71,6 +70,10 @@ class RadioGroup {
         let $opLabel = $('<label />')
             .attr('for', lId)
             .html(def.label);
+
+        if (def.checked) {
+            this.origval = def.value;
+        }
 
         return $('<li />').append($op).append($opLabel);
     }

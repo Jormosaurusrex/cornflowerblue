@@ -1,0 +1,88 @@
+div.select-container {
+
+  div.trigger {
+    transition: all .2s;
+    box-sizing: border-box;
+    outline: none;
+    position: relative;
+    font-family: inherit;
+    width: 100%;
+    background-color: var(--input-default-background-color);
+    margin: 0;
+    font-size: 105%;
+    border: 2px solid var(--input-default-border-color);
+    padding: 1em 1em 1em 2em;
+    border-radius: 1px;
+    color: var(--input-default-text-color);
+    text-shadow:var(--input-default-text-shadow);
+    vertical-align: middle;
+    &:before {
+      position: absolute;
+      left: .5em;
+      top: 1.2em;
+      margin: 0;
+      font-family: "cornflowerblue", serif;
+      font-style: normal;
+      font-weight: normal;
+      speak: none;
+      text-decoration: inherit;
+      text-align: center;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1em;
+      content: '\2e'; // arrow down
+      //font-size: 18pt;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  ul.selectmenu {
+    list-style-type: none;
+    display: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: var(--selectmenu-menu-background-color);
+    border: 2px solid var(--input-default-border-color);
+    border-top: none;
+    overflow: auto;
+    max-height: 10em;
+    li {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: center;
+      padding: 0;
+      margin: 0;
+      input[type="radio"] {
+        display: none;
+      }
+      label {
+        display: inline-block;
+        padding: 1em 1em 1em 2em;
+        margin: 0;
+        text-shadow: none;
+        width: 100%;
+        min-width: 100%;
+      }
+      &:nth-child(even) {
+        background-color: var(--selectmenu-menu-alternate-background-color);
+      }
+      &:hover {
+        background-color: var(--selectmenu-menu-item-hover-background-color);
+        color: var(--selectmenu-menu-item-hover-text-color);
+        label {
+          color: var(--selectmenu-menu-item-hover-text-color);
+          text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
+        }
+      }
+    }
+
+    &.open {
+      display: flex;
+    }
+  }
+}
+

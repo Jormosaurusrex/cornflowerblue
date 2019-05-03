@@ -11,7 +11,7 @@ class BooleanToggle {
         disabled: false, // If true, make the checkbox disabled.
         labelside: 'left', // Which side to put the label on.
         style: null, // Default to box
-        onchange: $.noop, // The change handler. Passed (event, self).
+        onchange: null, // The change handler. Passed (event, self).
         validator: null // A function to run to test validity. Passed the self; returns true or false.
     };
 
@@ -82,7 +82,7 @@ class BooleanToggle {
      */
     build() {
         const me = this;
-        
+
         this.toggle = $('<input />')
             .data('self', this)
             .attr('type', "checkbox")
