@@ -44,3 +44,9 @@
 .cfb-star:before { content: '\4b'; } /* 'K' */
 .cfb-user-circle:before { content: '\4c'; } /* 'L' */
 .cfb-user:before { content: '\4d'; } /* 'M' */
+.cfb-exclaim:before { content: '\4e'; } /* 'N' */
+.cfb-shape-hex:before { content: '\4f'; } /* 'O' */
+.cfb-shape-rounded-triangle:before { content: '\50'; } /* 'P' */
+.cfb-warn-circle:before { content: '\51'; } /* 'Q' */
+.cfb-warn-hex:before { content: '\52'; } /* 'R' */
+.cfb-warn-triangle:before { content: '\53'; } /* 'S' */
