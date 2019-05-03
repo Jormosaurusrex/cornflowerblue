@@ -117,7 +117,6 @@ class SelectMenu extends RadioGroup {
             .attr('role', 'radio')
             .addClass(this.classes.join(' '))
             .change(function(e) {
-                console.log("TRIGGER");
                 $(this).prop('aria-checked', $(this).prop('checked'));
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
@@ -133,6 +132,7 @@ class SelectMenu extends RadioGroup {
                     .removeAttr('aria-checked');
 
                 $(this).prop('checked', true)
+                    .prop('aria-checked', true)
                     .attr('checked', 'checked')
                     .attr('aria-checked', 'checked');
 
