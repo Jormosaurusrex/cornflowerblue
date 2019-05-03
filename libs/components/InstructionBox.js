@@ -29,7 +29,7 @@ class InstructionBox {
         if (this.icon) {
             this.container.append(IconFactory.makeIcon(this.icon));
         }
-        if ((this.instructions) && (this.instructions.length > 1)) {
+        if ((this.instructions) && (this.instructions.length > 0)) {
             let $list = $('<ul />');
             for (let text of this.instructions) {
                 $list.append($('<li>').html(text));

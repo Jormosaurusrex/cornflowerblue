@@ -65,7 +65,7 @@
   --constructive-color-half: var(--green-half);
   --destructive-color: var(--red);
   --destructive-color-helf: var(--red-half);
-  --hot-text-color: var(--morelight);
+  --hot-text-color: var(--ultralight);
   --required-color: var(--red);
   --accept-color: var(--green);
   --accept-color-half: var(--green-half);
@@ -127,10 +127,11 @@
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
-  --instructions-background-color: var(--light);
+  --instructions-background-color: var(--morelight);
   --instructions-text-color: var(--grey-darkest);
   --instructions-icon-text-shadow: none;
   --instructions-icon-color: var(--grey-medium);
+  --resultsbox-margin: 10px 30px 10px 30px;
   --resultsbox-icon-background-color: var(--grey-darkest);
   --resultsbox-icon-color: var(--light);
   --resultsbox-icon-tex-shadow: var(--text-shadow);
@@ -145,7 +146,7 @@
   --resultsbox-error-stripes: var(--error-stripes);
   --resultsbox-warning-stripes: var(--warning-stripes);
   --form-background-color: var(--light);
-  --form-actions-background-color: var(--morelight);
+  --form-actions-background-color: var(--ultralight);
   --form-actions-border-color: var(--grey-medium);
   --form-side-padding: 40px;
   --form-elements-top-padding: 20px;
@@ -189,13 +190,14 @@
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
   --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-background-color: var(--morelight);
+  --tabbar-background-color: var(--ultralight);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
+  --tabbar-border-radius: 5px;
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
   --tabbar-tab-background-color: var(--light);
   --tabbar-tab-text-shadow: none;
-  --tabbar-selected-tab-background-color: var(--morelight);
+  --tabbar-selected-tab-background-color: var(--ultralight);
   --tabbar-selected-tab-highlight-color: var(--focus-color);
   --tabbar-selected-tab-text-color: var(--focus-color);
   --tabbar-selected-tab-text-shadow: none;
@@ -1441,7 +1443,7 @@ div.instructions {
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
-    padding: 1.2em 0 0 1.2em;
+    padding: 1.2em 1.2em 1.2em 1.2em;
     color: var(--instructions-text-color); }
 
 div.messagebox {
@@ -1450,14 +1452,14 @@ div.messagebox {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: stretch;
   align-content: flex-start; }
   div.messagebox div.box {
     --color-base: var(--resultsbox-success-color-base);
     --stripe-base: var(--resultsbox-success-stripes);
     border: 2px solid var(--color-base);
     background-image: var(--stripe-base);
-    margin: 0 0 5px 0;
+    margin: var(--resultsbox-margin);
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -1635,7 +1637,7 @@ ul.tabbar {
   justify-content: space-around;
   align-items: stretch;
   padding: 0;
-  border-radius: 5px;
+  border-radius: var(--tabbar-border-radius);
   z-index: 2;
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow); }
