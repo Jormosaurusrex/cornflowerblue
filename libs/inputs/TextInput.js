@@ -2,33 +2,6 @@
 
 class TextInput {
 
-    static DEFAULT_CONFIG = {
-        id : null, // Component id
-        name: null, // Name attribute
-        counter: null, // A value for a character counter. Null means 'no counter'
-                    // Possible values: null, 'remaining', 'limit', and 'sky'
-        forceconstraints: null, // if true, force constraints defined in sub classes (text input doesn't havea any)
-        type: 'text', // Type of input, defaults to "text"
-        label : null, // Input label. If null, does not show up.
-        placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
-                           // To insure a blank placeholder, set the value to ""
-        title: null,
-        required: false, // Is this a required field or not
-        hidden: false, // Whether or not to be hidden
-        autocomplete: 'off', // Enable browser autocomplete. Default is off.
-        arialabel: null, // The aria-label value. If null, follows: label > title > null
-        maxlength: null, // Value for maxlength.
-        value: null, // Value to use (pre-population).  Used during construction and then discarded.
-        disabled: false, // If true, disable the field.
-        classes: [], // Extra css classes to apply
-        onreturn: $.noop, // action to execute on hitting the return key. Passed (event, self).
-        ontab: $.noop, // action to execute on hitting the tab key. Passed (event, self).
-        keyup: $.noop, // action to execute on key up. Passed (event, self).
-        focusin: $.noop, // action to execute on focus in. Passed (event, self).
-        focusout: $.noop, // action to execute on focus out. Passed (event, self).
-        validator: null // A function to run to test validity. Passed the self.
-    };
-
     /**
      * Define a the input
      * @param config a dictionary object
@@ -473,5 +446,31 @@ class TextInput {
     get warnings() { return this._warnings; }
     set warnings(warnings) { this._warnings = warnings; }
 
-
 }
+
+TextInput.DEFAULT_CONFIG = {
+    id : null, // Component id
+    name: null, // Name attribute
+    counter: null, // A value for a character counter. Null means 'no counter'
+    // Possible values: null, 'remaining', 'limit', and 'sky'
+    forceconstraints: null, // if true, force constraints defined in sub classes (text input doesn't havea any)
+    type: 'text', // Type of input, defaults to "text"
+    label : null, // Input label. If null, does not show up.
+    placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
+                       // To insure a blank placeholder, set the value to ""
+    title: null,
+    required: false, // Is this a required field or not
+    hidden: false, // Whether or not to be hidden
+    autocomplete: 'off', // Enable browser autocomplete. Default is off.
+    arialabel: null, // The aria-label value. If null, follows: label > title > null
+    maxlength: null, // Value for maxlength.
+    value: null, // Value to use (pre-population).  Used during construction and then discarded.
+    disabled: false, // If true, disable the field.
+    classes: [], // Extra css classes to apply
+    onreturn: $.noop, // action to execute on hitting the return key. Passed (event, self).
+    ontab: $.noop, // action to execute on hitting the tab key. Passed (event, self).
+    keyup: $.noop, // action to execute on key up. Passed (event, self).
+    focusin: $.noop, // action to execute on focus in. Passed (event, self).
+    focusout: $.noop, // action to execute on focus out. Passed (event, self).
+    validator: null // A function to run to test validity. Passed the self.
+};

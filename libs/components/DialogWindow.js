@@ -2,18 +2,6 @@
 
 class DialogWindow {
 
-    static DEFAULT_CONFIG = {
-        id: null,
-        form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-        content: $('<p />').html("No provided content"), // This is the content of the dialog
-        classes: [],             // apply these classes to the dialog, if any.
-        header: null, // jQuery object, will be used if passed before title.
-        title: null,  // Adds a title to the dialog if present. header must be null.
-        clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
-        escapecloses: true, // Allow the window to be closed by the escape key
-        showclose: true  // Show or hide the X button in the corner (requires title != null)
-    };
-
     /**
      * Define a DialogWindow
      * @param config a dictionary object
@@ -181,3 +169,15 @@ class DialogWindow {
     set window(window) { this._window = window; }
 
 }
+
+DialogWindow.DEFAULT_CONFIG = {
+    id: null,
+    form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+    content: $('<p />').html("No provided content"), // This is the content of the dialog
+    classes: [],             // apply these classes to the dialog, if any.
+    header: null, // jQuery object, will be used if passed before title.
+    title: null,  // Adds a title to the dialog if present. header must be null.
+    clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+    escapecloses: true, // Allow the window to be closed by the escape key
+    showclose: true  // Show or hide the X button in the corner (requires title != null)
+};

@@ -2,18 +2,6 @@
 
 class SelectMenu extends RadioGroup {
 
-    static DEFAULT_CONFIG = {
-        id : null, // The button id
-        name: null,
-        label: null, // The text for the label.
-        classes: [], // Extra css classes to apply
-        disabled: false, // If true, make this disabled.
-        options: [], // Array of option dictionary objects.  Printed in order given.
-                     // { label: "Label to show", value: "v", checked: true }
-        onchange: null, // The change handler. Passed (event, self).
-        validator: null // A function to run to test validity. Passed the self; returns true or false.
-    };
-
     /**
      * Define the SelectMenu
      * @param config a dictionary object
@@ -180,5 +168,16 @@ class SelectMenu extends RadioGroup {
 
 }
 
+SelectMenu.DEFAULT_CONFIG = {
+    id : null, // The button id
+    name: null,
+    label: null, // The text for the label.
+    classes: [], // Extra css classes to apply
+    disabled: false, // If true, make this disabled.
+    options: [], // Array of option dictionary objects.  Printed in order given.
+                 // { label: "Label to show", value: "v", checked: true }
+    onchange: null, // The change handler. Passed (event, self).
+    validator: null // A function to run to test validity. Passed the self; returns true or false.
+};
 
 

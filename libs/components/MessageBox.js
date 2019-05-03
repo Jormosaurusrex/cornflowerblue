@@ -3,20 +3,6 @@
 
 class MessageBox {
 
-    static DEFAULT_CONFIG = {
-        id : null, // the id
-        errors: null, // array of errors
-        warnings: null, // array of warning strings
-        results: null, // array of result or success message strings
-        errorstitle: "Error",
-        successtitle: "Success",
-        warningstitle: "Warning",
-        erroricon: 'no', // If present, will be displayed large next to texts
-        warningicon : 'triangle-down', // If present, will be displayed large next to texts
-        successicon: 'check', // If present, will be displayed large next to texts
-        classes: [] //Extra css classes to apply
-    };
-
     /**
      * Define the element
      * @param config a dictionary object
@@ -147,3 +133,17 @@ class MessageBox {
     set warningicon(warningicon) { this.config.warningicon = warningicon; }
 
 }
+
+MessageBox.DEFAULT_CONFIG = {
+    id : null, // the id
+    errors: null, // array of errors
+    warnings: null, // array of warning strings
+    results: null, // array of result or success message strings
+    errorstitle: "Error",
+    successtitle: "Success",
+    warningstitle: "Warning",
+    erroricon: 'no', // If present, will be displayed large next to texts
+    warningicon : 'triangle-down', // If present, will be displayed large next to texts
+    successicon: 'check', // If present, will be displayed large next to texts
+    classes: [] //Extra css classes to apply
+};

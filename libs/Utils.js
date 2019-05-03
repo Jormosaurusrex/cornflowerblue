@@ -103,17 +103,58 @@ class Utils {
         return config;
     }
 
+
+    // Returns if browser supports the crypto api
+    static supportsCrypto () {
+        return window.crypto && crypto.subtle && window.TextEncoder;
+    }
+
+    static hash(algo, str) {
+        return crypto.subtle.digest(algo, new TextEncoder().encode(str));
+    }
+
+    // Hex function for ArrayBuffer
+    static hex(buff) {
+        return [].map.call(new Uint8Array(buff), b => ('00' + b.toString(16)).slice(-2)).join('');
+    }
+
+// Base64 encode
+    static encode64(buff) {
+        return btoa(new Uint8Array(buff).reduce((s, b) => s + String.fromCharCode(b), ''));
+    }
+
     /**
-     * Encrypt a text string
+     * Hash a text string
      * @param message the string to encrypt
      * @return {Promise<string>}
      */
-    async static sha256(message) {
+    static async sha256(message) {
         // encode as UTF-8
         const msgBuffer = new TextEncoder('utf-8').encode(message);
 
         // hash the message
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+        // convert ArrayBuffer to Array
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+        // convert bytes to hex string
+        return hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+
+    }
+
+    /**
+     * Encrypt a text string
+     * @param message the string to encrypt
+     * @param secret the secret to use.
+     * @return {Promise<string>}
+     */
+    static async sha256Encrypt(message, secret) {
+        // encode as UTF-8
+        const msgBuffer = new TextEncoder('utf-8').encode(message);
+
+        // hash the message
+        const hashBuffer = await crypto.subtle.encrypt('SHA-256', secret, msgBuffer);
 
         // convert ArrayBuffer to Array
         const hashArray = Array.from(new Uint8Array(hashBuffer));

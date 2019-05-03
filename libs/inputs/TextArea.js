@@ -2,11 +2,6 @@
 
 class TextArea extends TextInput {
 
-    static DEFAULT_CONFIG = {
-        counter: 'sky', // A value for a character counter. Null means 'no counter'
-        // Possible values: null, 'remaining', 'limit', and 'sky'
-    };
-
     constructor(config) {
         config = Object.assign({}, TextArea.DEFAULT_CONFIG, config);
         super(config);
@@ -105,3 +100,8 @@ class TextArea extends TextInput {
     }
 
 }
+
+TextArea.DEFAULT_CONFIG = {
+    counter: 'sky', // A value for a character counter. Null means 'no counter'
+    // Possible values: null, 'remaining', 'limit', and 'sky'
+};

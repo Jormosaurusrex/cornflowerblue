@@ -2,19 +2,6 @@
 
 class TabBar {
 
-    static DEFAULT_CONFIG = {
-        id : null, // The id
-        vertical: false, // Vertical or horizontal
-        tabs: [], // An array of tab definitions
-        // {
-        //    label: "Tab Text", // text
-        //    id: null, // tab id, used with "activate(tabid)"
-        //    selected: false, // if true, start selected
-        //    action: function() { } // what to do when the tab is clicked.
-        // }
-        classes: [] //Extra css classes to apply
-    };
-
     /**
      * Define a TabBar
      * @param config a dictionary object
@@ -108,3 +95,16 @@ class TabBar {
     set vertical(vertical) { this.config.vertical = vertical; }
 
 }
+
+TabBar.DEFAULT_CONFIG = {
+    id : null, // The id
+    vertical: false, // Vertical or horizontal
+    tabs: [], // An array of tab definitions
+    // {
+    //    label: "Tab Text", // text
+    //    id: null, // tab id, used with "activate(tabid)"
+    //    selected: false, // if true, start selected
+    //    action: function() { } // what to do when the tab is clicked.
+    // }
+    classes: [] //Extra css classes to apply
+};

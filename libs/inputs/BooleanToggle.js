@@ -2,20 +2,6 @@
 
 class BooleanToggle {
 
-    static DEFAULT_CONFIG = {
-        id : null, // The button id
-        name: null,
-        label: null, // The text for the label.
-        checked: false, // Initial state.
-        classes: [], // Extra css classes to apply
-        disabled: false, // If true, make the checkbox disabled.
-        labelside: 'left', // Which side to put the label on.
-        style: null, // Default to box
-        onchange: null, // The change handler. Passed (event, self).
-        validator: null // A function to run to test validity. Passed the self; returns true or false.
-    };
-
-
     /**
      * Define the BooleanToggle
      * @param config a dictionary object
@@ -212,3 +198,16 @@ class BooleanToggle {
     set validator(validator) { this.config.validator = validator; }
 
 }
+
+BooleanToggle.DEFAULT_CONFIG = {
+    id : null, // The button id
+    name: null,
+    label: null, // The text for the label.
+    checked: false, // Initial state.
+    classes: [], // Extra css classes to apply
+    disabled: false, // If true, make the checkbox disabled.
+    labelside: 'left', // Which side to put the label on.
+    style: null, // Default to box
+    onchange: null, // The change handler. Passed (event, self).
+    validator: null // A function to run to test validity. Passed the self; returns true or false.
+};

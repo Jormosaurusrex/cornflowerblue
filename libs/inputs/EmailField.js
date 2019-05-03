@@ -2,11 +2,6 @@
 
 class EmailField extends TextInput {
 
-    static DEFAULT_CONFIG = {
-        type: 'text',
-        forceconstraints: true
-    };
-
     /**
      * Tests whether or not a string is a valid email address.
      * @param email The email address to check
@@ -49,3 +44,8 @@ class EmailField extends TextInput {
     }
 
 }
+
+EmailField.DEFAULT_CONFIG = {
+    type: 'text',
+    forceconstraints: true
+};
