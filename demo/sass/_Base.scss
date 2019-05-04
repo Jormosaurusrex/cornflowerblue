@@ -41,7 +41,6 @@ div.container {
   div.codebox {
     flex-grow: 0;
     padding: 50px 10px 0 10px;
-
     background-color: var(--morelight);
     width: 300px;
     div.config {
@@ -51,7 +50,6 @@ div.container {
   }
 }
 
-
 .section {
   margin: 20px 0 20px 0;
   display: flex;
@@ -60,6 +58,9 @@ div.container {
   justify-content: space-evenly;
   &.vert {
     flex-direction: column;
+  }
+  div.checkbox {
+    margin: 1em .5em 1em .5em
   }
   button {
     margin: 10px;

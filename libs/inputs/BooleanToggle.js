@@ -52,6 +52,7 @@ class BooleanToggle {
             .addClass('checkbox');
 
         if (this.hidden) { this.container.css('display', 'none'); }
+        if (this.disabled) { this.container.addClass('disabled'); }
 
         if (this.labelside === 'right') {
             this.container
@@ -107,19 +108,21 @@ class BooleanToggle {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
-     * Enable the button
+     * Enable the toggle
      */
     disable() {
         this.toggle.prop('disabled', true);
         this.disabled = true;
+        if (this.container) { this.container.addClass('disabled'); }
     }
 
     /**
-     * Disable the button
+     * Disable the toggle
      */
     enable() {
         this.toggle.removeAttr('disabled');
         this.disabled = false;
+        if (this.container) { this.container.removeClass('disabled'); }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

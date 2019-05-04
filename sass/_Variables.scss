@@ -44,10 +44,9 @@
   // Shadows
   --text-shadow: 0 1px 1px rgba(0,0,0,0.3);
   --on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3);
-  --text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.3);
-  --text-shadow-grey-medium: 0 1px 1px rgba(102, 102, 102, 0.3);
-  --text-shadow-grey-dark: 0 1px 1px rgba(153, 153, 153, 0.3);
-  --text-shadow-grey-darkest: 0 1px 1px rgba(0, 0, 0, 0.3);
+  --text-shadow-heavy: 0 1px 1px rgba(0,0,0,0.5);
+  --text-shadow-heavier: 0 1px 1px rgba(0,0,0,0.7);
+
   --box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5);
   --hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
   --checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -183,14 +182,16 @@
 
 
   // Checkbox keys
+  --checkbox-toggle-chrome-color: var(--light);
+  --checkbox-toggle-chrome-hovermark-color: var(--focus-color);
+
   --checkbox-border-color: var(--grey-dark);
   --checkbox-focus-color: var(--focus-color);
-  --checkbox-center-background-color: var(--light);
-  --checkbox-center-border-color: var(--light);
   --checkbox-checked-border-color: var(--grey-dark);
   --checkbox-checkmark-color: var(--light);
   --checkbox-checkmark-checked-background-color: var(--checkbox-focus-color);
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
+  --checkbox-check-text-shadow: var(--text-shadow-heavier);
 
   // Growler keys
   --growler-core-color: var(--blue);

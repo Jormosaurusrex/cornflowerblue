@@ -160,6 +160,26 @@ class TextInput {
         return null;
     }
 
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Enable the element
+     */
+    disable() {
+        this.input.prop('disabled', true);
+        this.disabled = true;
+        if (this.container) { this.container.addClass('disabled'); }
+    }
+
+    /**
+     * Disable the element
+     */
+    enable() {
+        this.input.removeAttr('disabled');
+        this.disabled = false;
+        if (this.container) { this.container.removeClass('disabled'); }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**

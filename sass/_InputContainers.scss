@@ -180,6 +180,11 @@ div.textarea-container {
       }
     }
   }
+  &.disabled {
+    label {
+      text-shadow: none;
+    }
+  }
 }
 div.textarea-container {
   div.wrap {
