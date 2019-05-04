@@ -48,6 +48,7 @@ class BooleanToggle {
 
     buildContainer() {
         this.container = $('<div />')
+            .data('self', this)
             .addClass('input-container')
             .addClass('checkbox');
 

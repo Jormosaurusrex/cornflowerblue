@@ -113,7 +113,34 @@ class CornflowerBlueDemo {
         this.codebox.empty();
         this.codebox.append($('<h2 />').html(o.constructor.name));
 
-        this.codebox.append($('<div />').addClass('config').html(Utils.getConfig(o)));
+        this.codebox.append($('<div />').addClass('config').html(this.prettyPrintConfig(o)));
+    }
+
+    prettyPrintConfig(obj) {
+        let keys = Object.keys(obj.config).sort(function(a, b){
+            var a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if(a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+        let vlines = [];
+        for (let k of keys) {
+            if ((k === 'id') || (k === 'name')) {
+                vlines.push(`\t ${k} : &lt;string&gt;`);
+            } else if (typeof obj[k] === 'function') {
+                vlines.push(`\t ${k} : function(e, self) { ... }`);
+            } else if (Array.isArray(obj[k])) {
+                vlines.push(`\t ${k} : [${obj[k]}]`);
+            } else if (typeof obj[k] === 'string') {
+                vlines.push(`\t ${k} : "${obj[k]}"`);
+            } else {
+                vlines.push(`\t ${k} : ${obj[k]}`);
+            }
+        }
+        let config = obj.constructor.name + " {\n";
+        config += vlines.join(",\n");
+        config += "\n}\n";
+        return config;
     }
 
     showButtons() {
@@ -539,47 +566,60 @@ class CornflowerBlueDemo {
     }
 
 
+    /**
+     * Display the page of toggles
+     */
     showToggles() {
+        var me = this;
         this.navigation.select('toggles');
 
         this.titlebox.html("Checkboxes and Toggles");
 
         this.demobox.empty();
 
+        this.demobox.append($('<h3 />').html("Normal/Default"));
         this.demobox.append(
             $('<div />').addClass('section')
                 .append(
                     new BooleanToggle({
                         label: "Normal"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         checked: true,
-                        label: "Toggled"
+                        label: "Checked"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         disabled: true,
                         label: "Disabled"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         checked: true,
                         disabled: true,
-                        label: "Disabled Toggled"
+                        label: "Disabled"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
+
+        this.demobox.append($('<h3 />').html("Normal/Default, Right Sided"));
+
         this.demobox.append(
             $('<div />').addClass('section')
                 .append(
                     new BooleanToggle({
                         labelside: 'right',
-                        label: "Labelside: 'right'"
+                        label: "Normal"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -587,6 +627,7 @@ class CornflowerBlueDemo {
                         labelside: 'right',
                         label: "Toggled"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -594,118 +635,143 @@ class CornflowerBlueDemo {
                         disabled: true,
                         label: "Disabled"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         labelside: 'right',
                         checked: true,
                         disabled: true,
-                        label: "Disabled Toggled"
+                        label: "Disabled"
                     }).container
-                )
-        );
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new BooleanToggle({
-                        label: "Style: 'round'",
-                        style: "round"
-                    }).container
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "round"
-                    }).container
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled Toggled",
-                        style: "round"
-                    }).container
-                )
-        );
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new BooleanToggle({
-                        label: "Style: 'check'",
-                        style: "check"
-                    }).container
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "check"
-                    }).container
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "check"
-                    }).container
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled Toggled",
-                        style: "check"
-                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 
+        this.demobox.append($('<h3 />').html("Round Style"));
 
         this.demobox.append(
             $('<div />').addClass('section')
                 .append(
                     new BooleanToggle({
-                        label: "Style: 'switch'",
-                        style: "switch"
+                        label: "Normal",
+                        style: "round"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         checked: true,
                         label: "Toggled",
-                        style: "switch"
+                        style: "round"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         disabled: true,
                         label: "Disabled",
-                        style: "switch"
+                        style: "round"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         checked: true,
                         disabled: true,
-                        label: "Disabled Toggled",
-                        style: "switch"
+                        label: "Disabled",
+                        style: "round"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
+
+        this.demobox.append($('<h3 />').html("Check Style"));
+
         this.demobox.append(
             $('<div />').addClass('section')
                 .append(
                     new BooleanToggle({
-                        label: "Style: 'toggle'",
+                        label: "Normal",
+                        style: "check"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "check"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "check"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "check"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h3 />').html("Switch Style"));
+
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "switch"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "switch"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "switch"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "switch"
+                    }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h3 />').html("Toggle Style"));
+
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
                         style: "toggle"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -713,6 +779,7 @@ class CornflowerBlueDemo {
                         label: "Toggled",
                         style: "toggle"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -720,14 +787,16 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "toggle"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         checked: true,
                         disabled: true,
-                        label: "Disabled Toggled",
+                        label: "Disabled",
                         style: "toggle"
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 

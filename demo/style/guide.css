@@ -1921,7 +1921,7 @@ div.container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly; }
+  justify-content: space-between; }
   .section.vert {
     flex-direction: column; }
   .section div.checkbox {
