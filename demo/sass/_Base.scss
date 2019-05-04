@@ -5,7 +5,7 @@
 
 body {
   background-color: var(--grey-darkest);
-  height: 100vw;
+  //height: 100vw;
   min-height: 100vw;
   width: 100vw;
   min-width: 100vw;
@@ -21,7 +21,6 @@ div.container {
   min-width: 50%;
   max-width: 75%;
   background-color: var(--grey-dark);
-
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -29,38 +28,22 @@ div.container {
   ul.tabbar {
     flex-grow: 0;
     padding-top: 25px;
+    width: 200px;
+    min-width: 200px;
   }
 
   div.displaybox {
     flex-grow: 1;
-    background-color: var(--morelight);
+    background-color: var(--ultralight);
     padding: 50px;
-
-    h2 {
-      font-weight: normal;
-      color: var(--grey-dark);
-      border-bottom: 1px solid var(--grey-dark);
-      margin-bottom: 10px;
-    }
-    h4 {
-      font-weight: normal;
-      text-transform: uppercase;
-      color: var(--grey-medium);
-    }
   }
 
   div.codebox {
     flex-grow: 0;
     padding: 50px 10px 0 10px;
 
-    background-color: var(--light);
+    background-color: var(--morelight);
     width: 300px;
-    h2 {
-      font-weight: normal;
-      color: var(--grey-dark);
-      border-bottom: 1px solid var(--grey-dark);
-      margin-bottom: 10px;
-    }
     div.config {
       padding: 0 10px 0 10px;
       white-space: pre;

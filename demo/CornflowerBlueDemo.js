@@ -6,7 +6,7 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showButtons();
+        this.showToggles();
     }
 
 
@@ -23,6 +23,13 @@ class CornflowerBlueDemo {
                     id: 'intro',
                     action: function() {
                         me.showIntro();
+                    }
+                },
+                {
+                    label: 'Headers',
+                    id: 'headers',
+                    action: function() {
+                        me.showHeaders();
                     }
                 },
                 {
@@ -497,6 +504,40 @@ class CornflowerBlueDemo {
         );
 
     }
+
+    showHeaders() {
+        this.navigation.select('headers');
+
+        this.titlebox.html("Headers");
+
+        this.demobox.empty();
+
+        this.demobox.append($('<h1 />').html("H1 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a href=\"adfasdfadfadfadf\">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h2 />').html("H2 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a href=\"#asafdds\">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h3 />').html("H3 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h4 />').html("H4 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h5 />').html("H5 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h6 />').html("H6 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h3 />').html("H3 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h4 />').html("H4 Standard"));
+        this.demobox.append($('<h5 />').html("H5 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h4 />').html("H4 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<h5 />').html("H5 Standard"));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+
+
+    }
+
 
     showToggles() {
         this.navigation.select('toggles');

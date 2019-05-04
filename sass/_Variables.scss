@@ -42,7 +42,7 @@
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 84, 166, 0.05) 5px, rgba(0, 84, 166, 0.05) 10px);
 
   // Shadows
-  --text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+  --text-shadow: 0 1px 1px rgba(0,0,0,0.3);
   --on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3);
   --text-shadow-red: 0 -1px 1px rgba(119, 0, 0, 0.3);
   --text-shadow-grey-medium: 0 1px 1px rgba(102, 102, 102, 0.3);
@@ -104,6 +104,63 @@
 
   --disabled-base-color: var(--light);
   --disabled-highlight-color: var(--grey-medium);
+
+
+  --paragraph-text-color: var(--grey-darkest);
+
+  // Links
+  --link-link-color: var(--focus-color);
+  --link-active-color: var(--focus-color);
+  --link-hover-color: var(--focus-color);
+  --link-visited-color: var(--focus-color);
+  --link-color: var(--focus-color);
+  --link-text-shadow: var(--on-white-text-shadow);
+
+  // Headers
+  --elements-headers-h1-text-color: var(--grey-darkest);
+  --elements-headers-h1-text-shadow: none;
+  --elements-headers-h1-text-transform: none;
+  --elements-headers-h1-background-color: transparent;
+  --elements-headers-h1-border-color: var(--grey-darkest);
+
+  --elements-headers-h2-text-color: var(--grey-darker);
+  --elements-headers-h2-text-shadow: none;
+  --elements-headers-h2-text-transform: none;
+  --elements-headers-h2-background-color: transparent;
+  --elements-headers-h2-border-color: var(--grey-darker);
+
+  --elements-headers-h3-text-color: var(--grey-darker);
+  --elements-headers-h3-text-shadow: none;
+  --elements-headers-h3-text-transform: uppercase;
+  --elements-headers-h3-background-color: transparent;
+  --elements-headers-h3-border-color: var(--grey-darker);
+
+  --elements-headers-h4-text-color: var(--grey-dark);
+  --elements-headers-h4-text-shadow: none;
+  --elements-headers-h4-text-transform: uppercase;
+  --elements-headers-h4-background-color: transparent;
+  --elements-headers-h4-border-color: var(--grey-dark);
+
+  --elements-headers-h5-text-color: var(--grey-darker);
+  --elements-headers-h5-text-shadow: none;
+  --elements-headers-h5-text-transform: none;
+  --elements-headers-h5-background-color: transparent;
+  --elements-headers-h5-border-color: var(--grey-dark);
+
+  --elements-headers-h6-text-color: var(--grey-dark);
+  --elements-headers-h6-text-shadow: none;
+  --elements-headers-h6-text-transform: none;
+  --elements-headers-h6-background-color: transparent;
+  --elements-headers-h6-border-color: var(--grey-dark);
+
+
+
+  // Labels
+  --label-color: var(--grey-dark);
+  --label-text-shadow: var(--on-white-text-shadow);
+  --label-required-marker-color: var(--required-color);
+  --label-text-transform: none;
+
 
   // Button keys
   --button-border-radius: var(--border-radius);
@@ -190,12 +247,6 @@
   --form-elements-bottom-padding: 20px;
   --form-actions-top-padding: 0;
   --form-actions-bottom-padding: 20px;
-
-  // Labels
-  --label-color: var(--grey-dark);
-  --label-text-shadow: var(--text-shadow-grey-medium);
-  --label-required-marker-color: var(--required-color);
-  --label-text-transform: uppercase;
 
   // Input
   --input-default-background-color: var(--ultralight);
