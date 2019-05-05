@@ -5,7 +5,7 @@ class DestructiveButton extends SimpleButton {
         if (config.classes) {
             config.classes.push('destructive');
         } else {
-            config.classes = ['destructive'];
+            config.classes = ['destructive', 'foobar'];
         }
         super(config);
     }

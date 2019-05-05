@@ -117,23 +117,69 @@ class Utils {
         });
         let vlines = [];
         for (let k of keys) {
+            let line = "";
             if ((k === 'id') || (k === 'name')) {
-                vlines.push(`\t <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`);
+                line = `\t <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`;
             } else if (typeof obj[k] === 'function') {
-                vlines.push(`\t <span class="key">${k}</span> : function(e, self) { ... }`);
+                line = `\t <span class="key">${k}</span> : function(e, self) { ... }`;
             } else if (Array.isArray(obj[k])) {
-                vlines.push(`\t <span class="key">${k}</span> : <span class="value">[${obj[k]}]</span>`);
+                //line = `\t <span class="key">${k}</span> : [<span class="value">${obj[k]}</span>]`;
+                line = `\t <span class="key">${k}</span> : [`;
+                if ((obj[k] !== null) && (obj[k].length > 0)) {
+                    let elements = [];
+                    for (let c of obj[k]) {
+                        if (typeof c === 'string') {
+                            elements.push(`"<span class="value">${c}</span>"`);
+                        } else {
+                            elements.push(`<span class="value">${c}</span>`);
+                        }
+                    }
+                    line += elements.join(", ");
+                }
+                line += `]`;
+
             } else if (typeof obj[k] === 'string') {
-                vlines.push(`\t <span class="key">${k}</span> : "<span class="value">${obj[k]}</span>"`);
+                line = `\t <span class="key">${k}</span> : "<span class="value">${obj[k]}</span>"`;
             } else {
-                vlines.push(`\t <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`);
+                line = `\t <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`;
             }
+            if ((Array.isArray(obj[k])) && (Utils.arrayEquals(obj[k], obj.constructor.DEFAULT_CONFIG[k]))) {
+                line = `<span class="default">${line}</span>`
+            } else if (obj[k] === obj.constructor.DEFAULT_CONFIG[k]) {
+                line = `<span class="default">${line}</span>`
+            }
+
+            vlines.push(line);
         }
         let config = obj.constructor.name + " {\n";
         config += vlines.join(",\n");
         config += "\n}\n";
         return config;
     }
+
+    static arrayEquals(a, b) {
+        if (a === b) return true;
+        if (a == null || b == null) return false;
+        if (a.length !== b.length) return false;
+        a.sort(function(a, b){
+            var a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if(a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+        b.sort(function(a, b){
+            var a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if(a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+
+        for (let i = 0; i < a.length; ++i) {
+            if (a[i] !== b[i]) return false;
+        }
+        return true;
+    }
+
 
     // Returns if browser supports the crypto api
     static supportsCrypto () {

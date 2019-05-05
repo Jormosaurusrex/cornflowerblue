@@ -1953,6 +1953,9 @@ div.container {
         font-weight: bold; }
       div.container div.codebox div.config span.value {
         color: var(--blue); }
+      div.container div.codebox div.config span.default span.value,
+      div.container div.codebox div.config span.default span.key {
+        color: var(--grey-medium); }
 
 .section {
   margin: 20px 0 20px 0;

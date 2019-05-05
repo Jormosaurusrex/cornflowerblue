@@ -47,14 +47,18 @@ div.container {
     div.config {
       padding: 0 10px 0 10px;
       white-space: pre;
-
-
       span.key {
         color: var(--grey-darkest);
         font-weight: bold;
       }
       span.value {
         color: var(--blue);
+      }
+      span.default {
+        span.value,
+        span.key {
+          color: var(--grey-medium);
+        }
       }
     }
   }

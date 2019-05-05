@@ -12,7 +12,6 @@ class SimpleButton {
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a jQuery object
-            icononly : false,  // If true, the text will not display on the button, only the icon.
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
