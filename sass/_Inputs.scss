@@ -68,6 +68,10 @@ textarea {
   }
 }
 textarea {
+  height: 4em;
+  &:focus {
+    height: 8em;
+  }
   &.mute {
     padding: 10px 10px 10px 20px;
     border-left: 2px solid var(--input-default-border-color);

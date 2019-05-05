@@ -22,6 +22,7 @@ class TextArea extends TextInput {
 
         if (this.required) { this.container.addClass('required'); }
         if (this.mute) { this.container.addClass('mute'); }
+        if (this.disabled) { this.container.addClass('disabled'); }
     }
 
     /**

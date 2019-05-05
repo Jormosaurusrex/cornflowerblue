@@ -47,6 +47,10 @@
   --interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
   --hexagon-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   --hexagon-shadow-disabled: 0 0 5px rgba(0, 0, 0, 0.2);
+  --standard-measure: 33em;
+  --wide-measure: 40em;
+  --thin-measure: 25em;
+  --paragraph-measure: var(--standard-measure);
   --default-font-family: "Helvetica Neue", Arial, serif;
   --default-font-size: 13pt;
   --border-radius: 3px;
@@ -93,27 +97,27 @@
   --elements-headers-h2-text-shadow: none;
   --elements-headers-h2-text-transform: none;
   --elements-headers-h2-background-color: transparent;
-  --elements-headers-h2-border-color: var(--grey-darker);
+  --elements-headers-h2-border-color: var(--grey-medium);
   --elements-headers-h3-text-color: var(--grey-darker);
   --elements-headers-h3-text-shadow: none;
   --elements-headers-h3-text-transform: uppercase;
   --elements-headers-h3-background-color: transparent;
-  --elements-headers-h3-border-color: var(--grey-darker);
+  --elements-headers-h3-border-color: var(--grey-light);
   --elements-headers-h4-text-color: var(--grey-dark);
   --elements-headers-h4-text-shadow: none;
   --elements-headers-h4-text-transform: uppercase;
   --elements-headers-h4-background-color: transparent;
-  --elements-headers-h4-border-color: var(--grey-dark);
-  --elements-headers-h5-text-color: var(--grey-darker);
+  --elements-headers-h4-border-color: var(--grey-light);
+  --elements-headers-h5-text-color: var(--grey-dark);
   --elements-headers-h5-text-shadow: none;
   --elements-headers-h5-text-transform: none;
   --elements-headers-h5-background-color: transparent;
   --elements-headers-h5-border-color: var(--grey-dark);
-  --elements-headers-h6-text-color: var(--grey-dark);
+  --elements-headers-h6-text-color: var(--grey-medium);
   --elements-headers-h6-text-shadow: none;
   --elements-headers-h6-text-transform: none;
   --elements-headers-h6-background-color: transparent;
-  --elements-headers-h6-border-color: var(--grey-dark);
+  --elements-headers-h6-border-color: var(--grey-medium);
   --label-color: var(--grey-dark);
   --label-text-shadow: var(--on-white-text-shadow);
   --label-required-marker-color: var(--required-color);
@@ -249,52 +253,55 @@
 
 h1 {
   font-weight: normal;
+  font-size: 2em;
+  margin: .5em 0 1em 0;
   color: var(--elements-headers-h1-text-color);
   text-shadow: var(--elements-headers-h1-text-shadow);
-  text-transform: var(--elements-headers-h1-text-transform);
-  font-size: 2em;
-  margin-bottom: 1em; }
+  text-transform: var(--elements-headers-h1-text-transform); }
 
 h2 {
   font-weight: normal;
   font-size: 1.5em;
-  margin-bottom: 10px;
+  margin: .5em 0 1em 0;
   text-transform: var(--elements-headers-h2-text-transform);
   color: var(--elements-headers-h2-text-color);
-  border-bottom: 2px solid var(--elements-headers-h2-text-color); }
+  border-bottom: 2px solid var(--elements-headers-h2-border-color); }
 
 h3 {
   font-weight: normal;
   font-size: 1.2em;
-  margin-bottom: 1em;
+  margin: .5em 0 1em 0;
   text-transform: var(--elements-headers-h3-text-transform);
-  color: var(--elements-headers-h3-text-color); }
+  color: var(--elements-headers-h3-text-color);
+  border-bottom: 2px solid var(--elements-headers-h3-border-color); }
 
 h4 {
   font-weight: normal;
   font-size: 1em;
-  margin-bottom: 1em;
+  margin: .5em 0 1em 0;
   text-transform: var(--elements-headers-h4-text-transform);
-  color: var(--elements-headers-h4-text-color); }
+  color: var(--elements-headers-h4-text-color);
+  border-bottom: 2px solid var(--elements-headers-h4-border-color); }
 
 h5 {
   font-weight: normal;
   font-size: 1em;
-  margin-bottom: 1em;
+  margin: .5em 0 1em 0;
   text-transform: var(--elements-headers-h5-text-transform);
   color: var(--elements-headers-h5-text-color); }
 
 h6 {
   font-weight: normal;
   font-size: 1em;
-  margin-bottom: 1em;
+  margin: .5em 0 1em 0;
   text-transform: var(--elements-headers-h6-text-transform);
   color: var(--elements-headers-h6-text-color); }
 
 p {
   margin: 1em 0 1em 0;
   line-height: 1.4;
-  color: var(--paragraph-text-color); }
+  color: var(--paragraph-text-color);
+  width: var(--paragraph-measure); }
 
 label {
   display: block;
@@ -752,6 +759,9 @@ div.textarea-container {
   div.input-container.disabled label,
   div.textarea-container.disabled label {
     text-shadow: none; }
+  div.input-container.active div.wrap:after,
+  div.textarea-container.active div.wrap:after {
+    display: none; }
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
@@ -844,13 +854,17 @@ textarea {
       color: var(--input-disabled-placeholder-color);
       text-shadow: none; }
 
-textarea.mute {
-  padding: 10px 10px 10px 20px;
-  border-left: 2px solid var(--input-default-border-color);
-  border-bottom: none; }
-  textarea.mute:focus {
-    border-left-color: var(--focus-color);
-    box-shadow: inset 10px 0 0 var(--focus-color); }
+textarea {
+  height: 4em; }
+  textarea:focus {
+    height: 8em; }
+  textarea.mute {
+    padding: 10px 10px 10px 20px;
+    border-left: 2px solid var(--input-default-border-color);
+    border-bottom: none; }
+    textarea.mute:focus {
+      border-left-color: var(--focus-color);
+      box-shadow: inset 10px 0 0 var(--focus-color); }
 
 div.select-container div.trigger {
   transition: all .2s;
@@ -1915,6 +1929,11 @@ div.container {
     div.container div.codebox div.config {
       padding: 0 10px 0 10px;
       white-space: pre; }
+      div.container div.codebox div.config span.key {
+        color: var(--grey-darkest);
+        font-weight: bold; }
+      div.container div.codebox div.config span.value {
+        color: var(--blue); }
 
 .section {
   margin: 20px 0 20px 0;

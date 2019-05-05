@@ -59,6 +59,10 @@
   --hexagon-shadow: 0 0 5px rgba(0,0,0,0.6);
   --hexagon-shadow-disabled: 0 0 5px rgba(0,0,0,0.2);
 
+  --standard-measure: 33em;
+  --wide-measure: 40em;
+  --thin-measure: 25em;
+  --paragraph-measure: var(--standard-measure);
 
   // Misc Values
   --default-font-family: "Helvetica Neue", Arial, serif;
@@ -126,31 +130,31 @@
   --elements-headers-h2-text-shadow: none;
   --elements-headers-h2-text-transform: none;
   --elements-headers-h2-background-color: transparent;
-  --elements-headers-h2-border-color: var(--grey-darker);
+  --elements-headers-h2-border-color: var(--grey-medium);
 
   --elements-headers-h3-text-color: var(--grey-darker);
   --elements-headers-h3-text-shadow: none;
   --elements-headers-h3-text-transform: uppercase;
   --elements-headers-h3-background-color: transparent;
-  --elements-headers-h3-border-color: var(--grey-darker);
+  --elements-headers-h3-border-color: var(--grey-light);
 
   --elements-headers-h4-text-color: var(--grey-dark);
   --elements-headers-h4-text-shadow: none;
   --elements-headers-h4-text-transform: uppercase;
   --elements-headers-h4-background-color: transparent;
-  --elements-headers-h4-border-color: var(--grey-dark);
+  --elements-headers-h4-border-color: var(--grey-light);
 
-  --elements-headers-h5-text-color: var(--grey-darker);
+  --elements-headers-h5-text-color: var(--grey-dark);
   --elements-headers-h5-text-shadow: none;
   --elements-headers-h5-text-transform: none;
   --elements-headers-h5-background-color: transparent;
   --elements-headers-h5-border-color: var(--grey-dark);
 
-  --elements-headers-h6-text-color: var(--grey-dark);
+  --elements-headers-h6-text-color: var(--grey-medium);
   --elements-headers-h6-text-shadow: none;
   --elements-headers-h6-text-transform: none;
   --elements-headers-h6-background-color: transparent;
-  --elements-headers-h6-border-color: var(--grey-dark);
+  --elements-headers-h6-border-color: var(--grey-medium);
 
 
 

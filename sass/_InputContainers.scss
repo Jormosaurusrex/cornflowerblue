@@ -185,6 +185,13 @@ div.textarea-container {
       text-shadow: none;
     }
   }
+  &.active {
+    div.wrap {
+      &:after {
+        display:none;
+      }
+    }
+  }
 }
 div.textarea-container {
   div.wrap {

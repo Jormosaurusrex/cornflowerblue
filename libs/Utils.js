@@ -103,6 +103,37 @@ class Utils {
         return config;
     }
 
+    /**
+     * Dumps a pretty-print version of the configuration
+     * @param obj the object to dum
+     * @return {string}
+     */
+    static prettyPrintConfig(obj) {
+        let keys = Object.keys(obj.config).sort(function(a, b){
+            var a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if(a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+        let vlines = [];
+        for (let k of keys) {
+            if ((k === 'id') || (k === 'name')) {
+                vlines.push(`\t <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`);
+            } else if (typeof obj[k] === 'function') {
+                vlines.push(`\t <span class="key">${k}</span> : function(e, self) { ... }`);
+            } else if (Array.isArray(obj[k])) {
+                vlines.push(`\t <span class="key">${k}</span> : <span class="value">[${obj[k]}]</span>`);
+            } else if (typeof obj[k] === 'string') {
+                vlines.push(`\t <span class="key">${k}</span> : "<span class="value">${obj[k]}</span>"`);
+            } else {
+                vlines.push(`\t <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`);
+            }
+        }
+        let config = obj.constructor.name + " {\n";
+        config += vlines.join(",\n");
+        config += "\n}\n";
+        return config;
+    }
 
     // Returns if browser supports the crypto api
     static supportsCrypto () {
