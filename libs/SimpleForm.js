@@ -2,6 +2,24 @@
 
 class SimpleForm {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // Component id
+            name: null, // Name attribute
+            target: null, // Target attribute
+            enctype: null, // Encapsulation type.
+            autocomplete: 'off', // Autocomplete value
+            urlaction: null, // Where to post this form to. If null, assumes to be an xhr action.
+            method: 'get', // Method for the form.  Also used in API calls.
+            header: null, // Stuff to put at the header. This is expected to be a jQuery element
+            instructions: null, // Instructions configuration.  See InstructionBox.
+            classes: [], // Extra css classes to apply,
+            elements: [], // An array of form elements. These are the objects, not the rendered dom.
+            actions: [], // An array of action elements. This are buttons or keywords.
+            onsubmit: null, // action to execute on submit.
+        };
+    }
+
     /**
      * Define a simple form
      * @param config a dictionary object
@@ -217,19 +235,3 @@ class SimpleForm {
     set urlaction(urlaction) { this.config.urlaction = urlaction; }
 
 }
-
-SimpleForm.DEFAULT_CONFIG = {
-    id : null, // Component id
-    name: null, // Name attribute
-    target: null, // Target attribute
-    enctype: null, // Encapsulation type.
-    autocomplete: 'off', // Autocomplete value
-    urlaction: null, // Where to post this form to. If null, assumes to be an xhr action.
-    method: 'get', // Method for the form.  Also used in API calls.
-    header: null, // Stuff to put at the header. This is expected to be a jQuery element
-    instructions: null, // Instructions configuration.  See InstructionBox.
-    classes: [], // Extra css classes to apply,
-    elements: [], // An array of form elements. These are the objects, not the rendered dom.
-    actions: [], // An array of action elements. This are buttons or keywords.
-    onsubmit: null, // action to execute on submit.
-};

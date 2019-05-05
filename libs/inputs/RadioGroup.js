@@ -2,6 +2,20 @@
 
 class RadioGroup {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The button id
+            name: null,
+            label: null, // The text for the label.
+            classes: [], // Extra css classes to apply
+            disabled: false, // If true, make this disabled.
+            options: [], // Array of option dictionary objects.  Printed in order given.
+                         // { label: "Label to show", value: "v", checked: true }
+            onchange: null, // The change handler. Passed (event, self).
+            validator: null // A function to run to test validity. Passed the self; returns true or false.
+        };
+    }
+
     /**
      * Define the RadioGroup
      * @param config a dictionary object
@@ -157,15 +171,3 @@ class RadioGroup {
     set validator(validator) { this.config.validator = validator; }
 
 }
-
-RadioGroup.DEFAULT_CONFIG = {
-    id : null, // The button id
-    name: null,
-    label: null, // The text for the label.
-    classes: [], // Extra css classes to apply
-    disabled: false, // If true, make this disabled.
-    options: [], // Array of option dictionary objects.  Printed in order given.
-                 // { label: "Label to show", value: "v", checked: true }
-    onchange: null, // The change handler. Passed (event, self).
-    validator: null // A function to run to test validity. Passed the self; returns true or false.
-};

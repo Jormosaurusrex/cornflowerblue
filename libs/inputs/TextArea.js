@@ -2,16 +2,18 @@
 
 class TextArea extends TextInput {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            counter: 'sky', // A value for a character counter. Null means 'no counter'
+            // Possible values: null, 'remaining', 'limit', and 'sky'
+        };
+    }
+
     constructor(config) {
         config = Object.assign({}, TextArea.DEFAULT_CONFIG, config);
         super(config);
     }
 
-    /**
-     * Builds and returns a container object for all parts.
-     * This gets over-ridden in elements that have additional structures, like a character counter
-     * @returns {jQuery} jQuery representation of the label and the input together.
-     */
     buildContainer() {
         this.container = $('<div />')
             .addClass('textarea-container')
@@ -26,10 +28,6 @@ class TextArea extends TextInput {
         if (this.disabled) { this.container.addClass('disabled'); }
     }
 
-    /**
-     * Builds the input's DOM.
-     * @returns {jQuery} jQuery representation of the input
-     */
     buildInput() {
         const me = this;
         this.input = $('<textarea />')
@@ -100,10 +98,4 @@ class TextArea extends TextInput {
             if (this.label) { this.input.attr('placeholder', this.label); }
         }
     }
-
 }
-
-TextArea.DEFAULT_CONFIG = {
-    counter: 'sky', // A value for a character counter. Null means 'no counter'
-    // Possible values: null, 'remaining', 'limit', and 'sky'
-};

@@ -2,6 +2,23 @@
 
 class Growler {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The id
+            title: null, // The growler title
+            text : null, // The growler text payload
+            duration: 4000, // Length of time in milliseconds to display. If 0, stays open.
+            icon: null, // An optional icon. Position of this depends on whether there is text or a title.
+                        // If a title is given but no text, it will be in the titlebar. Else it
+                        // gets placed in the text area.
+            position: 'bottom-right', // Position for the growler. Valid values:
+            // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    static get GROWLBOX_ID() { return 'gbox-'; }
+
     static growl(text, title) {
         return new Growler({
             text: text,
@@ -182,17 +199,3 @@ class Growler {
 
 }
 
-Growler.GROWLBOX_ID = 'gbox-';
-
-Growler.DEFAULT_CONFIG = {
-    id : null, // The id
-    title: null, // The growler title
-    text : null, // The growler text payload
-    duration: 4000, // Length of time in milliseconds to display. If 0, stays open.
-    icon: null, // An optional icon. Position of this depends on whether there is text or a title.
-                // If a title is given but no text, it will be in the titlebar. Else it
-                // gets placed in the text area.
-    position: 'bottom-right', // Position for the growler. Valid values:
-    // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
-    classes: [] //Extra css classes to apply
-};

@@ -2,6 +2,16 @@
 
 class PasswordInput extends TextInput {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            minlength: 5,
+            suggestedlength: 8,
+            maxlength: 30,
+            forceconstraints: true,
+            type: 'password'
+        };
+    }
+
     /**
      * Define the object
      * @param config a dictionary object
@@ -51,11 +61,3 @@ class PasswordInput extends TextInput {
     set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
 
 }
-
-PasswordInput.DEFAULT_CONFIG = {
-    minlength: 5,
-    suggestedlength: 8,
-    maxlength: 30,
-    forceconstraints: true,
-    type: 'password'
-};

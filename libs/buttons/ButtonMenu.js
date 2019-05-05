@@ -2,6 +2,20 @@
 
 class ButtonMenu extends SimpleButton {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            action: function(e, self) { self.toggleMenu(e, self); },
+            icon: 'triangle-down',
+            items: [] // list of menuitems
+            // {
+            //    label: "Menu Text", // text
+            //    tooltip: null, // Tooltip text
+            //    icon: null, // Icon to use, if any
+            //    action: function() { } // what to do when the tab is clicked.
+            // }
+        };
+    }
+
     constructor(config) {
         config = Object.assign({}, ButtonMenu.DEFAULT_CONFIG, config);
         if (config.classes) {
@@ -77,15 +91,3 @@ class ButtonMenu extends SimpleButton {
     set menu(menu) { this._menu = menu; }
 
 }
-
-ButtonMenu.DEFAULT_CONFIG = {
-    action: function(e, self) { self.toggleMenu(e, self); },
-    icon: 'triangle-down',
-    items: [] // list of menuitems
-    // {
-    //    label: "Menu Text", // text
-    //    tooltip: null, // Tooltip text
-    //    icon: null, // Icon to use, if any
-    //    action: function() { } // what to do when the tab is clicked.
-    // }
-};

@@ -2,6 +2,15 @@
 
 class InstructionBox {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            icon : null, // If present, will be displayed large next to texts
+            id : null, // the id
+            instructions: [], // An array of instruction texts
+            classes: [] //Extra css classes to apply
+        };
+    }
+
     /**
      * Define the element
      * @param config a dictionary object
@@ -66,10 +75,3 @@ class InstructionBox {
     set title(title) { this.config.title = title; }
 
 }
-
-InstructionBox.DEFAULT_CONFIG = {
-    icon : null, // If present, will be displayed large next to texts
-    id : null, // the id
-    instructions: [], // An array of instruction texts
-    classes: [] //Extra css classes to apply
-};
