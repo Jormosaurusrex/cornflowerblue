@@ -25,6 +25,7 @@ class SelectMenu extends RadioGroup {
         this.container = $('<div />')
             .addClass('input-container')
             .addClass('select-container')
+            .data('self', this)
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
             .append(this.triggerbox)

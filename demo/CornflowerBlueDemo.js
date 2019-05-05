@@ -6,7 +6,7 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showTextAreas();
+        this.showInputs();
     }
 
 
@@ -389,6 +389,7 @@ class CornflowerBlueDemo {
     }
 
     showInputs() {
+        var me = this;
         this.navigation.select('inputs');
 
         this.titlebox.html("Inputs");
@@ -406,6 +407,7 @@ class CornflowerBlueDemo {
                         maxlength: 100,
                         placeholder: "An input placeholder."
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -420,6 +422,7 @@ class CornflowerBlueDemo {
                         maxlength: 100,
                         placeholder: "An input placeholder."
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -432,6 +435,7 @@ class CornflowerBlueDemo {
                         counter: 'sky',
                         placeholder: "Enter your password."
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -444,6 +448,7 @@ class CornflowerBlueDemo {
                         mute: true,
                         placeholder: "Enter your password."
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -456,6 +461,7 @@ class CornflowerBlueDemo {
                         label: "Element Label",
                         placeholder: "Enter the text."
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -469,6 +475,7 @@ class CornflowerBlueDemo {
                         placeholder: "Enter the text.",
                         mute: true
                     }).container
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
     }

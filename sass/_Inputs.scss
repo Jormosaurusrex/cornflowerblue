@@ -14,9 +14,9 @@ textarea {
   background-color: var(--input-default-background-color);
   margin: 0;
   font-size: 105%;
-  border: 2px solid var(--input-default-border-color);
-  padding: 10px 10px 10px 20px;
-  border-radius: 1px;
+  border: .1em solid var(--input-default-border-color);
+  padding: .5em 1em .5em 1.5em;
+  border-radius: .1em;
   color: var(--input-default-text-color);
   text-shadow:var(--input-default-text-shadow);
   vertical-align: middle;
@@ -34,7 +34,8 @@ textarea {
   }
   &:focus {
     border-color: var(--input-focused-border-color);
-    box-shadow: inset 10px 0 0 var(--input-focused-border-color);
+    background-color: var(--input-focused-background-color);
+    box-shadow: inset .5em 0 0 var(--input-focused-border-color);
     &::placeholder {
       opacity: 0.3;
     }
@@ -53,7 +54,7 @@ textarea {
     }
     &:focus {
       border-bottom-color: var(--focus-color);
-      background-color: var(--input-focused-mute-background-color);
+      background-color: var(--input-focused-background-color);
       box-shadow: inset 0px -4px 0 0 var(--focus-color);
       &::placeholder {
         opacity: 0;

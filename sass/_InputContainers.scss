@@ -1,16 +1,17 @@
 div.input-container,
 div.textarea-container {
-  margin: 10px 30px 10px 30px;
+  margin: 1em 0 1em 0;
   position: relative;
   box-sizing: border-box;
+  max-width: var(--paragraph-measure);
   div.wrap {
     position: relative;
     &:after {
       position: absolute;
-      right: 2px;
+      right: .1em;
       top: 0;
-      bottom: 2px;
-      width: 45px;
+      bottom: 0;
+      width: 2em;
       margin: 0;
       background-color: var(--input-status-default-background-color);
       font-family: "cornflowerblue", serif;
@@ -40,7 +41,7 @@ div.textarea-container {
     text-align: right;
     position: absolute;
     right: 0;
-    top: 12px;
+    top: 1.3em;
     &.danger {
       color: var(--input-subline-warning-text-color);
     }
@@ -52,13 +53,12 @@ div.textarea-container {
     display: none;
     font-size: 90%;
     margin: 0;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: .5em 1em .5em 2em;
     &.shown {
       display: block;
     }
     li {
-      margin: 5px 0 5px 0;
+      margin: .5em 0 .5em 0;
       &.error {
         color: var(--input-messages-error-text-color);
       }
@@ -83,6 +83,9 @@ div.textarea-container {
         right: 0;
       }
     }
+    div.charcounter {
+      top: .3em;
+    }
   }
   &.required {
     label {
@@ -90,73 +93,7 @@ div.textarea-container {
         color: var(--label-required-marker-color);
         content: 'required';
         font-size: 75%;
-        margin-left: 5px;
-      }
-    }
-  }
-  &.error {
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
-      border-color: var(--error-color);
-      &:focus {
-        border-color: var(--error-color);
-        box-shadow: inset 10px 0 0 var(--error-color);
-      }
-    }
-    ul.messagebox {
-      background-image: var(--error-stripes);
-      border-left: 1px dashed var(--error-half);
-      border-right: 1px dashed var(--error-half);
-      border-bottom: 1px dashed var(--error-half);
-    }
-    div.wrap {
-      &:after {
-        display: flex;
-        background-color: var(--input-status-error-background-color);
-        color: var(--input-status-icon-color);
-        text-shadow: var(--input-status-error-icon-text-shadow);
-        content: '\39';
-      }
-    }
-    &.mute {
-      input[type="text"],
-      input[type="number"],
-      input[type="password"],
-      textarea {
-        border-color: var(--error-color);
-        &:focus {
-          border-color: var(--error-color);
-          box-shadow: inset 0px -4px 0 0 var(--error-color);
-        }
-      }
-    }
-  }
-  &.warning {
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
-      border-color: var(--warning-color);
-      &:focus {
-        border-color: var(--warning-color);
-        box-shadow: inset 0px -4px 0 0 var(--warning-color);
-      }
-    }
-    ul.messagebox {
-      background-image: var(--warning-stripes);
-      border-left: 1px dashed var(--warning-color-half);
-      border-right: 1px dashed var(--warning-color-half);
-      border-bottom: 1px dashed var(--warning-color-half);
-    }
-    div.wrap {
-      &:after {
-        display: flex;
-        background-color: var(--input-status-warning-background-color);
-        text-shadow: var(--input-status-warning-icon-text-shadow);
-        color: var(--input-status-warning-icon-color);
-        content: '\36';
+        margin-left: .5em;
       }
     }
   }
@@ -180,12 +117,81 @@ div.textarea-container {
       }
     }
   }
+  &.warning {
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    textarea {
+      border-color: var(--warning-color);
+      &:focus {
+        border-color: var(--warning-color);
+        box-shadow: inset 0 -.4em 0 0 var(--warning-color);
+      }
+    }
+    ul.messagebox {
+      background-image: var(--warning-stripes);
+      border-left: .1em dashed var(--warning-color-half);
+      border-right: .1em dashed var(--warning-color-half);
+      border-bottom: .1em dashed var(--warning-color-half);
+    }
+    div.wrap {
+      &:after {
+        display: flex;
+        background-color: var(--input-status-warning-background-color);
+        text-shadow: var(--input-status-warning-icon-text-shadow);
+        color: var(--input-status-warning-icon-color);
+        content: '\53';
+      }
+    }
+  }
+  &.error {
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    textarea {
+      border-color: var(--error-color);
+      &:focus {
+        border-color: var(--error-color);
+        box-shadow: inset .5em 0 0 var(--error-color);
+      }
+    }
+    ul.messagebox {
+      background-image: var(--error-stripes);
+      border-left: .1em dashed var(--error-color-half);
+      border-right: .1em dashed var(--error-color-half);
+      border-bottom: .1em dashed var(--error-color-half);
+    }
+    div.wrap {
+      &:after {
+        display: flex;
+        background-color: var(--input-status-error-background-color);
+        color: var(--input-status-icon-color);
+        text-shadow: var(--input-status-error-icon-text-shadow);
+        content: '\51';
+      }
+    }
+    &.mute {
+      input[type="text"],
+      input[type="number"],
+      input[type="password"],
+      textarea {
+        border-color: var(--error-color);
+        &:focus {
+          border-color: var(--error-color);
+          box-shadow: inset 0 -.4em 0 0 var(--error-color);
+        }
+      }
+    }
+  }
   &.disabled {
     label {
       text-shadow: none;
     }
   }
   &.active {
+    label {
+      color: var(--focus-color);
+    }
     div.wrap {
       &:after {
         display:none;
@@ -197,12 +203,12 @@ div.textarea-container {
   div.wrap {
     &:after {
       justify-content: flex-start;
-      padding-top: 8px;
+      padding-top: .5em;
     }
   }
   &.mute {
     div.charcounter {
-      top: 5px;
+      top: .3em;
     }
   }
 }

@@ -28,6 +28,7 @@
 
   // Half opacity colors
   --white-half: rgba(255, 255, 255, 0.5); // #fff
+  --grey-translucent: rgba(153, 153, 153, 0.1); // #999
   --blue-half: rgba(0, 84, 166, 0.5); // #0054a6
   --green-half: rgba(0, 94, 32, 0.5); // #005e20
   --red-half: rgba(145, 0, 0, 0.5); // #910000
@@ -106,6 +107,7 @@
   --caution-stripes: var(--yellow-stripes);
 
   --disabled-base-color: var(--light);
+  --disabled-base-color-light: var(--morelight);
   --disabled-highlight-color: var(--grey-medium);
 
 
@@ -265,7 +267,7 @@
   --input-disabled-placeholder-color: var(--disabled-highlight-color);
 
   --input-focused-border-color: var(--focus-color);
-  --input-focused-mute-background-color: var(--white-half);
+  --input-focused-background-color: var(--grey-translucent);
 
   --input-subline-text-color: var(--grey-medium);
   --input-subline-warning-text-color: var(--warning-color);
@@ -276,10 +278,10 @@
   --input-messages-error-text-color: var(--error-color);
 
   --input-status-default-background-color: var(--grey-dark);
-  --input-status-icon-color: var(--light);
+  --input-status-icon-color: var(--morelight);
   --input-status-icon-text-shadow: var(--text-shadow);
   --input-status-warning-background-color: var(--warning-color);
-  --input-status-warning-icon-color: var(--grey-darkest);
+  --input-status-warning-icon-color: var(--input-status-icon-color);
   --input-status-warning-icon-text-shadow: var(--input-status-icon-text-shadow);
   --input-status-error-background-color: var(--error-color);
   --input-status-error-icon-color: var(--input-status-icon-color);

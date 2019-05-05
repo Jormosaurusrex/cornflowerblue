@@ -189,6 +189,7 @@ class TextInput {
      */
     buildContainer() {
         this.container = $('<div />')
+            .data('self', this)
             .addClass('input-container')
             .addClass(this.classes.join(' '))
             .append(this.labelobj)

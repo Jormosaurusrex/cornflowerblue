@@ -21,7 +21,7 @@ button {
   cursor: pointer;
   color: var(--button-default-color);
   background-color: transparent;
-  border: 2px solid var(--button-default-color);
+  border: .1em solid var(--button-default-color);
   border-radius: var(--button-border-radius);
   span {
     z-index: 3;
@@ -159,9 +159,9 @@ button {
   }
   &.square,
   &.circle {
-    padding: 5px;
-    width: 35px;
-    height: 35px;
+    padding: .5em;
+    width: 2em;
+    height: 2em;
     font-size: 120%;
     line-height: 1;
     &:hover,
@@ -207,7 +207,7 @@ button {
       overflow: visible;
       z-index: 220;
       border-radius: var(--button-border-radius);
-      border: 2px solid var(--button-menu-background-color);
+      border: .1em solid var(--button-menu-background-color);
       background-color: var(--button-menu-background-color);
       color: var(--button-menu-item-text-color);
       text-shadow: var(--button-menu-item-text-shadow);
@@ -232,8 +232,8 @@ button {
         height: 0;
         position: absolute;
         left: 1.1em;
-        top: -10px;
-        border-width: 0 10px 10px 10px;
+        top: -1em;
+        border-width: 0 1em 1em 1em;
         border-style: solid;
         border-color: var(--button-menu-background-color) transparent;
       }
