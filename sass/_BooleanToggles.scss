@@ -201,8 +201,8 @@ input[type="radio"]{
       max-width: 2em;
       max-height: 2em;
       position: absolute;
-      left: .2em;
-      top: .2em;
+      left: .17em;
+      top: .17em;
       border: .7em solid var(--checkbox-toggle-chrome-color);
       background-color: var(--checkbox-toggle-chrome-color);
       box-shadow: var(--hover-box-shadow);
@@ -222,7 +222,7 @@ input[type="radio"]{
       &:after {
         border: .7em solid var(--checkbox-toggle-chrome-color);
         left: auto;
-        right: .2em;
+        right: .17em;
       }
     }
 
@@ -260,8 +260,8 @@ input[type="radio"] {
     height: 1.4em;
     max-width: 1.4em;
     max-height: 1.4em;
-    left: .2em;
-    top: .2em;
+    left: .17em;
+    top: .17em;
     border-radius: 50%;
   }
   &:checked,

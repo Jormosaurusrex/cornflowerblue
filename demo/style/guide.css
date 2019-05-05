@@ -56,7 +56,6 @@
   --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
-  --paragraph-measure: var(--standard-measure);
   --canvas-color-standard: var(--ultralight);
   --default-font-family: "Helvetica Neue", Arial, serif;
   --default-font-size: 13pt;
@@ -89,7 +88,9 @@
   --disabled-base-color: var(--light);
   --disabled-base-color-light: var(--morelight);
   --disabled-highlight-color: var(--grey-medium);
-  --paragraph-text-color: var(--grey-darkest);
+  --paragraph-text-color: var(--grey-dark);
+  --paragraph-measure: var(--standard-measure);
+  --paragraph-shadow: -0.02em 0 0.07em rgba(0, 0, 0, 0.3), 0 -0.02em 0.07em white;
   --link-link-color: var(--focus-color);
   --link-active-color: var(--focus-color);
   --link-hover-color: var(--focus-color);
@@ -198,13 +199,13 @@
   --form-border-color: transparent;
   --form-actions-background-color: var(--ultralight);
   --form-actions-border-color: var(--grey-medium);
-  --form-side-padding: 3em;
-  --form-elements-top-padding: 2em;
+  --form-side-padding: 0;
+  --form-elements-top-padding: .5em;
   --form-elements-bottom-padding: 2em;
   --form-actions-top-padding: 0;
   --form-actions-bottom-padding: 2em;
   --input-default-background-color: var(--ultralight);
-  --input-default-border-color: var(--standard-color);
+  --input-default-border-color: var(--grey-medium);
   --input-default-text-color: var(--grey-darker);
   --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);
@@ -312,7 +313,8 @@ p {
   margin: 1em 0 1em 0;
   line-height: 1.4;
   color: var(--paragraph-text-color);
-  width: var(--paragraph-measure); }
+  width: var(--paragraph-measure);
+  text-shadow: var(--paragraph-shadow); }
 
 label {
   display: block;
@@ -798,10 +800,10 @@ textarea {
   outline: none;
   position: relative;
   font-family: inherit;
+  font-size: 105%;
   width: 100%;
   background-color: var(--input-default-background-color);
   margin: 0;
-  font-size: 105%;
   border: 0.1em solid var(--input-default-border-color);
   padding: .5em 1em .5em 1.5em;
   border-radius: .1em;
@@ -894,7 +896,7 @@ div.select-container div.trigger {
   background-color: var(--input-default-background-color);
   margin: 0;
   font-size: 105%;
-  border: 2px solid var(--input-default-border-color);
+  border: 0.1em solid var(--input-default-border-color);
   padding: 1em 1em 1em 2em;
   border-radius: 1px;
   color: var(--input-default-text-color);
@@ -924,7 +926,7 @@ div.select-container ul.selectmenu {
   flex-direction: column;
   flex-wrap: nowrap;
   background-color: var(--selectmenu-menu-background-color);
-  border: 2px solid var(--input-default-border-color);
+  border: 0.1em solid var(--input-default-border-color);
   border-top: none;
   overflow: auto;
   max-height: 10em; }
@@ -982,14 +984,8 @@ button {
   background-color: transparent;
   border: 0.1em solid var(--button-default-color);
   border-radius: var(--button-border-radius); }
-  button span {
-    z-index: 3;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap; }
+  button span.icon {
+    margin: 0 .2em 0 .2em; }
   button:hover, button:focus, button:active {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
@@ -1161,6 +1157,12 @@ button {
     border: none;
     background-color: var(--morelight); }
     button.hexagon span {
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
       position: absolute;
       background: inherit;
       top: 0;
@@ -1398,8 +1400,8 @@ input[type="radio"] {
       max-width: 2em;
       max-height: 2em;
       position: absolute;
-      left: .2em;
-      top: .2em;
+      left: .17em;
+      top: .17em;
       border: 0.7em solid var(--checkbox-toggle-chrome-color);
       background-color: var(--checkbox-toggle-chrome-color);
       box-shadow: var(--hover-box-shadow);
@@ -1427,7 +1429,7 @@ input[type="radio"] {
       input[type="radio"].switch:checked:after {
         border: 0.7em solid var(--checkbox-toggle-chrome-color);
         left: auto;
-        right: .2em; }
+        right: .17em; }
     input[type="checkbox"].toggle:disabled, input[type="checkbox"].toggle:disabled:hover, input[type="checkbox"].switch:disabled, input[type="checkbox"].switch:disabled:hover,
     input[type="radio"].toggle:disabled,
     input[type="radio"].toggle:disabled:hover,
@@ -1469,8 +1471,8 @@ input[type="radio"] {
     height: 1.4em;
     max-width: 1.4em;
     max-height: 1.4em;
-    left: .2em;
-    top: .2em;
+    left: .17em;
+    top: .17em;
     border-radius: 50%; }
   input[type="radio"]:checked:after, input[type="radio"]:focus:after, input[type="radio"]:active:after, input[type="radio"]:hover:after {
     border-radius: 50%; }
@@ -1503,7 +1505,7 @@ form {
   form div.header {
     flex-grow: 1; }
     form div.header div.instructions {
-      margin: 10px 40px 10px 40px; }
+      margin: 1em 0 1em 0; }
   form div.elements {
     display: flex;
     flex-direction: column;
@@ -1645,8 +1647,8 @@ div.growlbox {
       padding: 5px 10px 5px 10px; }
 
 div.instructions {
-  margin: 10px 30px 10px 30px;
-  padding: 10px;
+  margin: 1em 0 1em 0;
+  padding: 1em;
   border: 0.1em dotted var(--instructions-border-color);
   background-color: var(--instructions-background-color);
   display: flex;
@@ -1660,14 +1662,14 @@ div.instructions {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: 60pt;
-    margin: 0 20px 0 10px;
-    width: 112px;
-    height: 112px;
-    min-width: 112px;
-    min-height: 112px;
-    max-width: 112px;
-    max-height: 112px;
+    font-size: 72pt;
+    margin: 0 .3em 0 0;
+    width: 1em;
+    height: 1em;
+    min-width: 1em;
+    min-height: 1em;
+    max-width: 1em;
+    max-height: 1em;
     border-radius: 50%;
     color: var(--instructions-icon-color);
     text-shadow: var(--instructions-icon-text-shadow); }
@@ -1677,11 +1679,11 @@ div.instructions {
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
-    padding: 1.2em 1.2em 1.2em 1.2em;
+    padding: .3em 1.2em 1.2em 1.2em;
     color: var(--instructions-text-color); }
 
 div.messagebox {
-  margin: 10px 30px 10px 30px;
+  margin: 1em 1.5em 1em 1.5em;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1691,7 +1693,7 @@ div.messagebox {
   div.messagebox div.box {
     --color-base: var(--resultsbox-success-color-base);
     --stripe-base: var(--resultsbox-success-stripes);
-    border: 2px solid var(--color-base);
+    border: 0.1em solid var(--color-base);
     background-image: var(--stripe-base);
     margin: var(--resultsbox-margin);
     padding: 0;
@@ -1703,7 +1705,7 @@ div.messagebox {
       font-size: 15pt;
       border: none;
       margin: 0;
-      padding: 5px;
+      padding: .5em;
       flex-grow: 0;
       background-color: var(--color-base);
       color: var(--resultsbox-header-text-color);
@@ -1721,20 +1723,20 @@ div.messagebox {
         align-items: center;
         justify-content: center;
         font-size: 60pt;
-        margin: 10px;
-        width: 112px;
-        height: 112px;
-        min-width: 112px;
-        min-height: 112px;
-        max-width: 112px;
-        max-height: 112px;
+        margin: 1em;
+        width: 6em;
+        height: 6em;
+        min-width: 6em;
+        min-height: 6em;
+        max-width: 6em;
+        max-height: 6em;
         border-radius: 50%;
         background-color: var(--color-base);
         color: var(--resultsbox-icon-color);
         text-shadow: var(--resultsbox-icon-text-shadow); }
       div.messagebox div.box div.lbox ul {
         flex-grow: 1;
-        padding-left: 5px; }
+        padding-left: .5em; }
         div.messagebox div.box div.lbox ul li {
           color: var(--resultsbox-default-text-color); }
     div.messagebox div.box.errors {
@@ -1880,11 +1882,11 @@ ul.tabbar {
     flex-direction: column;
     justify-content: center;
     font-size: 110%;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-    border-bottom: 4px solid transparent;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    border-bottom: .3em solid transparent;
     cursor: pointer;
     background-color: var(--tabbar-tab-background-color);
     color: var(--tabbar-tab-text-color);
@@ -1904,7 +1906,7 @@ ul.tabbar {
     justify-content: flex-start;
     border-radius: 0; }
     ul.tabbar.vertical li {
-      padding: 10px 15px 10px 15px;
+      padding: .5em 1em .5em 1em;
       margin: 0; }
 
 :root {
@@ -1932,21 +1934,21 @@ div.container {
   align-items: stretch; }
   div.container ul.tabbar {
     flex-grow: 0;
-    padding-top: 25px;
-    width: 200px;
+    padding-top: 2em;
+    width: 10em;
     min-width: 200px; }
   div.container div.displaybox {
     flex-grow: 1;
     background-color: var(--canvas-color-standard);
-    padding: 50px; }
+    padding: 2em; }
   div.container div.codebox {
     flex-grow: 0;
-    padding: 50px 10px 0 10px;
+    padding: 3em 1em 0 1em;
     background-color: var(--morelight);
-    width: 300px;
+    width: 25em;
     font-size: 80%; }
     div.container div.codebox div.config {
-      padding: 0 10px 0 10px;
+      padding: 0;
       white-space: pre; }
       div.container div.codebox div.config span.key {
         color: var(--grey-darkest);
@@ -1958,17 +1960,17 @@ div.container {
         color: var(--grey-medium); }
 
 .section {
-  margin: 20px 0 20px 0;
+  margin: 1.5em 0 1.5em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between; }
+  justify-content: flex-start; }
   .section.vert {
     flex-direction: column; }
   .section div.checkbox {
     margin: 1em 0.5em 1em 0.5em; }
   .section button {
-    margin: 10px; }
+    margin: .5em; }
     .section button.hexagon:nth-child(even) {
       left: 0;
       top: 0; }

@@ -9,7 +9,7 @@ div.select-container {
     background-color: var(--input-default-background-color);
     margin: 0;
     font-size: 105%;
-    border: 2px solid var(--input-default-border-color);
+    border: .1em solid var(--input-default-border-color);
     padding: 1em 1em 1em 2em;
     border-radius: 1px;
     color: var(--input-default-text-color);
@@ -30,7 +30,6 @@ div.select-container {
       text-transform: none;
       line-height: 1em;
       content: '\2e'; // arrow down
-      //font-size: 18pt;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -42,7 +41,7 @@ div.select-container {
     flex-direction: column;
     flex-wrap: nowrap;
     background-color: var(--selectmenu-menu-background-color);
-    border: 2px solid var(--input-default-border-color);
+    border: .1em solid var(--input-default-border-color);
     border-top: none;
     overflow: auto;
     max-height: 10em;

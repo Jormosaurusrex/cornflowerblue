@@ -67,7 +67,6 @@
   --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
-  --paragraph-measure: var(--standard-measure);
 
   --canvas-color-standard: var(--ultralight);
 
@@ -117,7 +116,9 @@
   --disabled-highlight-color: var(--grey-medium);
 
 
-  --paragraph-text-color: var(--grey-darkest);
+  --paragraph-text-color: var(--grey-dark);
+  --paragraph-measure: var(--standard-measure);
+  --paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
 
   // Links
   --link-link-color: var(--focus-color);
@@ -258,15 +259,15 @@
   --form-border-color: transparent;
   --form-actions-background-color: var(--ultralight);
   --form-actions-border-color: var(--grey-medium);
-  --form-side-padding: 3em;
-  --form-elements-top-padding: 2em;
+  --form-side-padding: 0;
+  --form-elements-top-padding: .5em;
   --form-elements-bottom-padding: 2em;
   --form-actions-top-padding: 0;
   --form-actions-bottom-padding: 2em;
 
   // Input
   --input-default-background-color: var(--ultralight);
-  --input-default-border-color: var(--standard-color);
+  --input-default-border-color: var(--grey-medium);//var(--grey-dark) --standard-color
   --input-default-text-color: var(--grey-darker);
   --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);

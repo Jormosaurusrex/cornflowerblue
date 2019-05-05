@@ -6,7 +6,7 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showButtons();
+        this.showHeaders();
     }
 
 
@@ -154,6 +154,30 @@ class CornflowerBlueDemo {
                         .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        icon: "globe"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        icon: "check"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        icon: "trashcan"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+        );
         this.demobox.append($('<h4 />').html("Mute"));
         this.demobox.append(
             $('<div />').addClass('section')
@@ -187,6 +211,33 @@ class CornflowerBlueDemo {
                         .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )
         );
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        mute: true,
+                        icon: "globe"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        mute: true,
+                        icon: "check"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        mute: true,
+                        icon: "trashcan"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+        );
         this.demobox.append($('<h4 />').html("Hot"));
         this.demobox.append(
             $('<div />').addClass('section')
@@ -216,6 +267,33 @@ class CornflowerBlueDemo {
                         text: "Disabled",
                         disabled: true,
                         hot: true
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        hot: true,
+                        icon: "globe"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        hot: true,
+                        icon: "check"
+                    }).button
+                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        hot: true,
+                        icon: "trashcan"
                     }).button
                         .click(function(e) { me.dumpConfig($(this).data('self')); })
                 )

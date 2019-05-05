@@ -62,6 +62,8 @@ p {
   line-height: 1.4;
   color: var(--paragraph-text-color);
   width: var(--paragraph-measure);
+  text-shadow: var(--paragraph-shadow);
+
 }
 
 label {
