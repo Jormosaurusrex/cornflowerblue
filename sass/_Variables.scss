@@ -2,8 +2,6 @@
 /*
   We want to use variables so that they can be re-themed
  */
-
-
 :root {
   // Raw colors
   --blue: rgb(0, 84, 166); // #0054a6
@@ -14,9 +12,12 @@
   --tan: #eadcbc;
   --pink: #ff00de;
   --lightblue: #a0e1fa;
+
   --white: #fff;
   --ultralight: #fdfdfd;
-  --morelight: #eee;
+  --bright: #eee;
+  --morelight: #ececec;
+  --sublight: #e5e5e5;
   --light: #ddd;
   --grey-light: #ccc;
   --grey-medium: #999;
@@ -28,7 +29,9 @@
 
   // Half opacity colors
   --white-half: rgba(255, 255, 255, 0.5); // #fff
+  --grey-half: rgba(153, 153, 153, 0.5); // #999
   --grey-translucent: rgba(153, 153, 153, 0.1); // #999
+  --black-half: rgba(0, 0, 0, 0.5); // #000
   --blue-half: rgba(0, 84, 166, 0.5); // #0054a6
   --green-half: rgba(0, 94, 32, 0.5); // #005e20
   --red-half: rgba(145, 0, 0, 0.5); // #910000
@@ -36,39 +39,42 @@
   --yellow-half: rgba(255, 221, 27, 0.5); // #ffdd1b
 
   // Stripes
-  --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(145, 0, 0, 0.05) 5px, rgba(145, 0, 0, 0.05) 10px);
-  --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255, 153, 0, 0.05) 5px, rgba(255, 153, 0, 0.05) 10px);
-  --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(51, 89, 100, 0.05) 5px, rgba(51, 89, 100, 0.05) 10px);
-  --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 94, 32, 0.05) 5px, rgba(0, 94, 32, 0.05) 10px);
-  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 84, 166, 0.05) 5px, rgba(0, 84, 166, 0.05) 10px);
+  --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(145, 0, 0, 0.05) .5em, rgba(145, 0, 0, 0.05) 1em);
+  --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(255, 153, 0, 0.05) .5em, rgba(255, 153, 0, 0.05) 1em);
+  --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(51, 89, 100, 0.05) .5em, rgba(51, 89, 100, 0.05) 1em);
+  --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 94, 32, 0.05) .5em, rgba(0, 94, 32, 0.05) 1em);
+  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 84, 166, 0.05) .5em, rgba(0, 84, 166, 0.05) 1em);
 
   // Shadows
-  --text-shadow: 0 1px 1px rgba(0,0,0,0.3);
-  --on-white-text-shadow: 0 1px 1px rgba(50,50,50,0.3);
-  --text-shadow-heavy: 0 1px 1px rgba(0,0,0,0.5);
-  --text-shadow-heavier: 0 1px 1px rgba(0,0,0,0.7);
+  --text-shadow: 0 .07em .07em rgba(0,0,0,0.3);
+  --on-white-text-shadow: 0 .07em .07em rgba(50,50,50,0.3);
+  --text-shadow-heavy: 0 .07em .07em rgba(0,0,0,0.5);
+  --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
 
-  --box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.5);
-  --hover-box-shadow: 0 2px 5px 0 rgba(50, 50, 50, 0.5);
-  --checkbox-checked-shadow: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --checkbox-checked-shadow-hover: 0 2px 5px 0 rgba(50, 50, 50, 0.5), inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
-  --panel-shadow-light: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
-  --interior-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.2);
-  --interior-shadow-inverse: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside: inset 0 3px 5px 0px rgba(0, 0, 0, 0.2), inset 0 -3px 5px 0px rgba(0, 0, 0, 0.2);
-  --hexagon-shadow: 0 0 5px rgba(0,0,0,0.6);
-  --hexagon-shadow-disabled: 0 0 5px rgba(0,0,0,0.2);
+  --box-shadow: .1em .1em .5em 0 rgba(50, 50, 50, 0.5);
+  --hover-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
+  --button-hover-box-shadow: 0 .1em 5px 0 rgba(50, 50, 50, 0.5), inset 0 -.3em 0 0 var(--button-hover-highlight-color);
+  --checkbox-checked-shadow: inset 0 .1em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --checkbox-checked-shadow-hover: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --panel-shadow: 0 .5em .5em 0 rgba(0, 0, 0, 0.5);
+  --panel-shadow-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
+  --interior-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
+  --interior-shadow-inverse: 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --interior-shadows-inside: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --hexagon-shadow: 0 0 .5em rgba(0,0,0,0.6);
+  --hexagon-shadow-disabled: 0 0 .5em rgba(0,0,0,0.2);
 
   --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
   --paragraph-measure: var(--standard-measure);
 
+  --canvas-color-standard: var(--ultralight);
+
   // Misc Values
   --default-font-family: "Helvetica Neue", Arial, serif;
   --default-font-size: 13pt;
-  --border-radius: 3px;
+  --border-radius: .2em;
 
   // Semantic colors
   --standard-color: var(--grey-dark);
@@ -172,6 +178,7 @@
   --button-default-color: var(--standard-color);
   --button-default-text-color: var(--button-default-color);
   --button-hover-text-color: var(--hot-text-color);
+  --button-hover-highlight-color: var(--white-half);
   --button-font-family: var(--default-font-family);
   --button-text-shadow: var(--text-shadow);
   --button-disabled-color: var(--disabled-base-color);
@@ -225,12 +232,13 @@
 
   // Instruction box keys
   --instructions-background-color: var(--morelight);
+  --instructions-border-color: var(--light);
   --instructions-text-color: var(--grey-darkest);
   --instructions-icon-text-shadow: none;
   --instructions-icon-color: var(--grey-medium);
 
   // Results box keys
-  --resultsbox-margin: 10px 30px 10px 30px;
+  --resultsbox-margin: 1em 2em 1em 2em;
   --resultsbox-icon-background-color: var(--grey-darkest);
   --resultsbox-icon-color: var(--light);
   --resultsbox-icon-tex-shadow: var(--text-shadow);
@@ -246,14 +254,15 @@
   --resultsbox-warning-stripes: var(--warning-stripes);
 
   // Form keys
-  --form-background-color: var(--light);
+  --form-background-color: transparent;
+  --form-border-color: transparent;
   --form-actions-background-color: var(--ultralight);
   --form-actions-border-color: var(--grey-medium);
-  --form-side-padding: 40px;
-  --form-elements-top-padding: 20px;
-  --form-elements-bottom-padding: 20px;
+  --form-side-padding: 3em;
+  --form-elements-top-padding: 2em;
+  --form-elements-bottom-padding: 2em;
   --form-actions-top-padding: 0;
-  --form-actions-bottom-padding: 20px;
+  --form-actions-bottom-padding: 2em;
 
   // Input
   --input-default-background-color: var(--ultralight);
@@ -303,7 +312,7 @@
   --tabbar-box-shadow: var(--panel-shadow-light);
   --tabbar-background-color: var(--ultralight);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
-  --tabbar-border-radius: 5px;
+  --tabbar-border-radius: .5em;
 
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
@@ -322,6 +331,3 @@
 
 
 }
-
-
-

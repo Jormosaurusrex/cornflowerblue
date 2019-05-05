@@ -55,7 +55,7 @@ textarea {
     &:focus {
       border-bottom-color: var(--focus-color);
       background-color: var(--input-focused-background-color);
-      box-shadow: inset 0px -4px 0 0 var(--focus-color);
+      box-shadow: inset 0px -.2em 0 0 var(--focus-color);
       &::placeholder {
         opacity: 0;
       }

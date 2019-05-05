@@ -2,6 +2,8 @@
 div.instructions {
   margin: 10px 30px 10px 30px;
   padding: 10px;
+  border: .1em dotted var(--instructions-border-color);
+
   background-color: var(--instructions-background-color);
   display: flex;
   flex-direction: row;
