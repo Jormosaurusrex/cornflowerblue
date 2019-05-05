@@ -37,7 +37,8 @@
   --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(51, 89, 100, 0.05) 0.5em, rgba(51, 89, 100, 0.05) 1em);
   --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(0, 94, 32, 0.05) 0.5em, rgba(0, 94, 32, 0.05) 1em);
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(0, 84, 166, 0.05) 0.5em, rgba(0, 84, 166, 0.05) 1em);
-  --text-shadow: 0 0.07em 0.07em rgba(0, 0, 0, 0.3);
+  --text-shadow: 0 -0.03em 0.03em rgba(0, 0, 0, 0.3), 0 0.03em 0.03em rgba(255, 255, 255, 0.3);
+  --text-shadow-old: 0 0.07em 0.07em rgba(0, 0, 0, 0.3);
   --on-white-text-shadow: 0 0.07em 0.07em rgba(50, 50, 50, 0.3);
   --text-shadow-heavy: 0 0.07em 0.07em rgba(0, 0, 0, 0.5);
   --text-shadow-heavier: 0 0.07em 0.07em rgba(0, 0, 0, 0.7);
@@ -90,7 +91,7 @@
   --disabled-highlight-color: var(--grey-medium);
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: var(--standard-measure);
-  --paragraph-shadow: -0.02em 0 0.07em rgba(0, 0, 0, 0.3), 0 -0.02em 0.07em white;
+  --paragraph-shadow: var(--text-shadow);
   --link-link-color: var(--focus-color);
   --link-active-color: var(--focus-color);
   --link-hover-color: var(--focus-color);
@@ -128,7 +129,7 @@
   --elements-headers-h6-background-color: transparent;
   --elements-headers-h6-border-color: var(--grey-medium);
   --label-color: var(--grey-dark);
-  --label-text-shadow: var(--on-white-text-shadow);
+  --label-text-shadow: var(--text-shadow);
   --label-required-marker-color: var(--required-color);
   --label-text-transform: none;
   --button-border-radius: var(--border-radius);
@@ -1079,7 +1080,8 @@ button {
     width: 2em;
     height: 2em;
     font-size: 120%;
-    line-height: 1; }
+    line-height: 1;
+    flex-direction: column; }
     button.square:hover, button.square:focus, button.square:active, button.circle:hover, button.circle:focus, button.circle:active {
       text-decoration: none; }
   button.circle {
@@ -1169,6 +1171,8 @@ button {
       left: 0;
       width: 42px;
       height: 24.2487px; }
+      button.hexagon span.icon {
+        margin: 0; }
     button.hexagon:before, button.hexagon:after {
       content: "";
       position: absolute;

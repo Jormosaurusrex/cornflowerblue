@@ -46,7 +46,8 @@
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 84, 166, 0.05) .5em, rgba(0, 84, 166, 0.05) 1em);
 
   // Shadows
-  --text-shadow: 0 .07em .07em rgba(0,0,0,0.3);
+  --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+  --text-shadow-old: 0 .07em .07em rgba(0,0,0,0.3);
   --on-white-text-shadow: 0 .07em .07em rgba(50,50,50,0.3);
   --text-shadow-heavy: 0 .07em .07em rgba(0,0,0,0.5);
   --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
@@ -118,7 +119,9 @@
 
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: var(--standard-measure);
-  --paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
+  --paragraph-shadow: var(--text-shadow);
+  //--paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
+  //--paragraph-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
 
   // Links
   --link-link-color: var(--focus-color);
@@ -169,7 +172,7 @@
 
   // Labels
   --label-color: var(--grey-dark);
-  --label-text-shadow: var(--on-white-text-shadow);
+  --label-text-shadow: var(--text-shadow);
   --label-required-marker-color: var(--required-color);
   --label-text-transform: none;
 
