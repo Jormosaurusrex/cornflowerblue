@@ -57,6 +57,9 @@ div.messagebox {
       }
       &.size-1 {
         align-items: center;
+        ul {
+          list-style-type: none;
+        }
         span.icon {
           font-size: 24pt;
           margin-right: .5em;

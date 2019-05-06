@@ -1781,6 +1781,8 @@ div.instructions {
     div.instructions.size-1 span.icon {
       font-size: 24pt;
       margin-right: .5em; }
+    div.instructions.size-1 ul {
+      list-style-type: none; }
   div.instructions.size-2 {
     align-items: center; }
     div.instructions.size-2 span.icon {
@@ -1846,6 +1848,8 @@ div.messagebox {
         color: var(--resultsbox-default-text-color); }
       div.messagebox div.box div.lbox.size-1 {
         align-items: center; }
+        div.messagebox div.box div.lbox.size-1 ul {
+          list-style-type: none; }
         div.messagebox div.box div.lbox.size-1 span.icon {
           font-size: 24pt;
           margin-right: .5em; }

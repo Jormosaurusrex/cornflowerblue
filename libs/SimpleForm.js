@@ -6,7 +6,17 @@ class SimpleForm {
         return {
             id : null, // Component id
             name: null, // Name attribute
-            target: null, // Target attribute
+
+            /*
+                Only one of 'handler' or 'url'.  If both are present, 'handler' will take precedence.
+                The 'handler' can be a function or url.  If a function, it will be passed self.
+                If a URL, it will be the target of an internal fetch request
+             */
+            handler: null, // Where to submit this form. Can be URL or function.
+                           // If a function, passed self, and assumes a callback function.
+            url: null, // URL to submit the form to.
+            target: null, // Target attribute.  Requires a URL.
+
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
             method: 'get', // Method for the form.  Also used in API calls.
@@ -21,13 +31,14 @@ class SimpleForm {
                             // of the form and need to be connected.
             elements: [], // An array of form elements. These are the objects, not the rendered dom.
             actions: [], // An array of action elements. This are buttons or keywords.
-            handler: null, // Where to submit this form. Can be URL or function.  If a function, passed self.
             handlercallback: null, // If present, the response from the handler will be passed to this
-                                // instead of the internal callback.
+                                // instead of the internal callback. Passed self and results
                                 // The internal callback expects JSON with success: true|false, and arrays of strings
                                 // for results, errors, and warnings
-            onvalid: null, // What do do when the form becomes valid (passed self)
-            oninvalid: null // What do do when the form becomes invalid (passed self)
+            onsuccess: null, // What to do if the handlercallback returns success (passed self and results)
+            onfailure: null, // What to do if the handlercallback returns failure (passed self and results)
+            onvalid: null, // What to do when the form becomes valid (passed self)
+            oninvalid: null // What to do when the form becomes invalid (passed self)
         };
     }
 
@@ -47,23 +58,87 @@ class SimpleForm {
      * @param e the event object, passed to handler
      */
     submit(e) {
+        const me = this;
         if (this.validate()) {
-            if ((this.handler) && (typeof this.handler === 'function')) {
+            if (this.handler) {
                 this.form.addClass('shaded');
-                let results = this.handler(this);
-                if ((this.handlercallback) && (typeof this.handler === 'function')) {
-                    this.handlercallback(results);
-                    this.container.removeClass('shaded');
-                } else {
-                    this.handleResults(results);
+
+                if (typeof this.handler === 'function') {
+                    this.handler(me, function(results) {
+                        if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
+                            me.handlercallback(me, results);
+                            me.container.removeClass('shaded');
+                        } else {
+                            me.handleResults(results);
+                        }
+                    });
+                } else { // its an API url
+                    this.doAjax(function(results) {
+                        console.log("doAjax callback");
+                        if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
+                            me.handlercallback(me, results);
+                            me.container.removeClass('shaded');
+                        } else {
+                            me.handleResults(results);
+                        }
+                    });
                 }
-            } else if ((this.handler) && (typeof this.handler === 'string')) {
+
+            } else if (this.url) {
                 this.form[0].submit();
             } else {
                 console.log(`No handler defined for form ${this.id} :: ${this.name}`);
             }
         }
     }
+
+    doAjax(callback) {
+        console.log("doAjax");
+        const me = this;
+        // XXX TODO POST AS JSON
+        //let body = new FormData(this.form[0]);
+        //application/x-www-form-urlencoded
+        //multipart/form-data
+
+        const body = new URLSearchParams(new FormData(this.form[0])).toString();
+
+        fetch(this.handler, {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            method: this.method,
+            body: body
+        })
+            .then(response => response.json()) // response -> json
+            .then(data => { // do the thing.
+                console.log(data);
+                if ((callback) && (typeof callback === 'function')) {
+                    callback(data);
+                }
+            })
+            .catch(err => {
+                console.error(`Error while executing ajax call.`);
+                console.error(err);
+            });
+    }
+
+
+    /**
+     * This is the default form results handler
+     * @param results the results object to be managed
+     */
+    handleResults(results) {
+        if (this.messagebox) { this.messagebox.remove(); }
+        this.messagebox = new MessageBox(results).container;
+        this.headerbox.append(this.messagebox);
+        this.container.removeClass('shaded');
+
+        if ((results.success) && ((this.onsuccess) && (typeof this.onsuccess === 'function'))) {
+            this.onsuccess(this, results);
+        } else if ((this.onfailure) && (typeof this.onfailure === 'function')) {
+            this.onfailure(this, results);
+        }
+    }
+
+    /* VALIDATION METHODS_______________________________________________________________ */
 
     /**
      * Validates the form. Runs all validators on registered elements.
@@ -99,17 +174,6 @@ class SimpleForm {
         if ((this.onvalid) && (typeof this.onvalid === 'function')) {
             this.onvalid(this);
         }
-    }
-
-    /**
-     * This is the default form results handler
-     * @param results the results object to be managed
-     */
-    handleResults(results) {
-        if (this.messagebox) { this.messagebox.remove(); }
-        this.messagebox = new MessageBox(results).container;
-        this.headerbox.append(this.messagebox);
-        this.container.removeClass('shaded');
     }
 
     /**
@@ -166,10 +230,9 @@ class SimpleForm {
      * Build the header for the form.
      */
     buildHeaderBox() {
+        this.headerbox = $('<div />').addClass('header');
         if ((this.header) || (this.instructions)) {
-            this.headerbox = $('<div />').addClass('header');
             if (this.header) { this.headerbox.append(this.header); }
-
             if (this.instructions) {
                 this.headerbox.append(new InstructionBox(this.instructions).container);
             }
@@ -318,12 +381,20 @@ class SimpleForm {
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
 
-    get onvalid() { return this.config.onvalid; }
-    set onvalid(onvalid) {
-        if (typeof onvalid !== 'function') {
-            console.error("Action provided for onvalid is not a function!");
+    get onfailure() { return this.config.onfailure; }
+    set onfailure(onfailure) {
+        if (typeof onfailure !== 'function') {
+            console.error("Action provided for onfailure is not a function!");
         }
-        this.config.onvalid = onvalid;
+        this.config.onfailure = onfailure;
+    }
+
+    get onsuccess() { return this.config.onsuccess; }
+    set onsuccess(onsuccess) {
+        if (typeof onsuccess !== 'function') {
+            console.error("Action provided for onsuccess is not a function!");
+        }
+        this.config.onsuccess = onsuccess;
     }
 
     get oninvalid() { return this.config.oninvalid; }
@@ -332,6 +403,14 @@ class SimpleForm {
             console.error("Action provided for oninvalid is not a function!");
         }
         this.config.oninvalid = oninvalid;
+    }
+
+    get onvalid() { return this.config.onvalid; }
+    set onvalid(onvalid) {
+        if (typeof onvalid !== 'function') {
+            console.error("Action provided for onvalid is not a function!");
+        }
+        this.config.onvalid = onvalid;
     }
 
     get shade() {
@@ -349,8 +428,10 @@ class SimpleForm {
     get submittors() { return this.config.submittors; }
     set submittors(submittors) { this.config.submittors = submittors; }
 
-
     get target() { return this.config.target; }
     set target(target) { this.config.target = target; }
+
+    get url() { return this.config.url; }
+    set url(url) { this.config.url = url; }
 
 }
