@@ -889,12 +889,13 @@ class CornflowerBlueDemo {
                 ]
             },
             elements: [
-                new EmailField({
+                new TextInput({
                     label: "Email",
                     autocomplete: 'off',
                     title: "Your email address",
                     required: true
                 }),
+                /*
                 new PasswordInput({
                     label: "Password",
                     forceconstraints: false,
@@ -905,9 +906,14 @@ class CornflowerBlueDemo {
                     label: "Remember Me",
                     labelside: 'right'
                 })
+                */
+
             ],
             handler: function() {
-                Growler.growl('Submit button clicked', "Clickify");
+                return {
+                    success: false,
+                    errors: ['Email and password do not match.']
+                }
             },
             actions: [
                 new ConstructiveButton({
@@ -915,7 +921,7 @@ class CornflowerBlueDemo {
                     icon: "lock-open",
                     hot: true,
                     submits: true,
-                    disabled: true  // No action needed
+                    disabled: true  // No action needed.
                 }),
                 new SimpleButton({ text: "Create Account", mute: true }),
                 new DestructiveButton({ text: "Cancel", mute: true }),

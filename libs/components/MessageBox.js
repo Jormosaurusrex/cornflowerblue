@@ -26,7 +26,6 @@ class MessageBox {
      */
     constructor(config) {
         this.config = Object.assign({}, MessageBox.DEFAULT_CONFIG, config);
-
         return this;
     }
 

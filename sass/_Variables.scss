@@ -245,13 +245,13 @@
   --instructions-icon-color: var(--grey-medium);
 
   // Results box keys
-  --resultsbox-margin: 1em 2em 1em 2em;
-  --resultsbox-icon-background-color: var(--grey-darkest);
-  --resultsbox-icon-color: var(--light);
+  --resultsbox-margin: 0;
+  --resultsbox-background-color: var(--ultralight);
+  --resultsbox-icon-color: var(--ultralight);
   --resultsbox-icon-tex-shadow: var(--text-shadow);
   --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-header-background-color: var(--grey-darkest);
-  --resultsbox-header-text-color: var(--light);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --resultsbox-header-text-color: var(--ultralight);
   --resultsbox-header-text-shadow: var(--text-shadow);
   --resultsbox-success-color-base: var(--success-color);
   --resultsbox-error-color-base: var(--error-color);

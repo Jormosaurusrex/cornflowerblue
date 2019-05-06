@@ -22,6 +22,10 @@ class SimpleForm {
             elements: [], // An array of form elements. These are the objects, not the rendered dom.
             actions: [], // An array of action elements. This are buttons or keywords.
             handler: null, // Where to submit this form. Can be URL or function.  If a function, passed self.
+            handlercallback: null, // If present, the response from the handler will be passed to this
+                                // instead of the internal callback.
+                                // The internal callback expects JSON with success: true|false, and arrays of strings
+                                // for results, errors, and warnings
             onvalid: null, // What do do when the form becomes valid (passed self)
             oninvalid: null // What do do when the form becomes invalid (passed self)
         };
@@ -45,17 +49,24 @@ class SimpleForm {
     submit(e) {
         if (this.validate()) {
             if ((this.handler) && (typeof this.handler === 'function')) {
-                this.handler(this);
+                this.form.addClass('shaded');
+                let results = this.handler(this);
+                if ((this.handlercallback) && (typeof this.handler === 'function')) {
+                    this.handlercallback(results);
+                    this.container.removeClass('shaded');
+                } else {
+                    this.defaultFormCallback(results);
+                }
             } else if ((this.handler) && (typeof this.handler === 'string')) {
                 this.form[0].submit();
             } else {
-                console.log(`No action or URL defined for form ${this.id} :: ${this.name}`);
+                console.log(`No handler defined for form ${this.id} :: ${this.name}`);
             }
         }
     }
 
     /**
-     * Validates the form. Runs all validators.
+     * Validates the form. Runs all validators on registered elements.
      * @return {boolean}
      */
     validate() {
@@ -88,6 +99,20 @@ class SimpleForm {
         }
     }
 
+    defaultFormCallback(results) {
+        this.messagebox = new MessageBox(results);
+        this.headerbox.append(this.messagebox.container);
+
+        this.container.removeClass('shaded');
+
+    }
+
+
+    handleResults(results) {
+        if (this.messagebox) { this.messagebox.remove(); }
+        this.messagebox = new MessageBox(results);
+        this.container.prepend(this.messagebox.container);
+    }
     /**
      * This runs when the all elements in the form are valid.
      * It will enable and heat all elements in this.submittors().
@@ -101,12 +126,6 @@ class SimpleForm {
         if ((this.oninvalid) && (typeof this.oninvalid === 'function')) {
             this.oninvalid(this);
         }
-    }
-
-    handleResults(results) {
-        if (this.messagebox) { this.messagebox.remove(); }
-        this.messagebox = new MessageBox(results).container;
-        this.container.prepend(this.messagebox);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -152,15 +171,15 @@ class SimpleForm {
             this.headerbox = $('<div />').addClass('header');
             if (this.header) { this.headerbox.append(this.header); }
 
-            this.messagebox = $('<div />').addClass('messagebox');
-            this.headerbox.append(this.messagebox);
-
             if (this.instructions) {
                 this.headerbox.append(new InstructionBox(this.instructions).container);
             }
         }
     }
 
+    /**
+     * Draw the Form's shade
+     */
     buildShade() {
         this.shade = $('<div />').addClass('shade');
 
@@ -171,14 +190,7 @@ class SimpleForm {
         if (this.spinnertext) {
             this.shade.append($('<div />').addClass('spinnertext').html(this.spinnertext));
         }
-
     }
-
-    get spinnericon() { return this.config.spinnericon; }
-    set spinnericon(spinnericon) { this.config.spinnericon = spinnericon; }
-
-    get spinnertext() { return this.config.spinnertext; }
-    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
     /**
      * Draw individual form elements
@@ -275,6 +287,14 @@ class SimpleForm {
         this.config.handler = handler;
     }
 
+    get handlercallback() { return this.config.handlercallback; }
+    set handlercallback(handlercallback) {
+        if (typeof handlercallback !== 'function') {
+            console.error("Action provided for handlercallback is not a function!");
+        }
+        this.config.handlercallback = handlercallback;
+    }
+
     get header() { return this.config.header; }
     set header(header) { this.config.header = header; }
 
@@ -321,6 +341,11 @@ class SimpleForm {
     }
     set shade(shade) { this._shade = shade; }
 
+    get spinnericon() { return this.config.spinnericon; }
+    set spinnericon(spinnericon) { this.config.spinnericon = spinnericon; }
+
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
     get submittors() { return this.config.submittors; }
     set submittors(submittors) { this.config.submittors = submittors; }

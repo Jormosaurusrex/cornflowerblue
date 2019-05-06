@@ -185,13 +185,13 @@
   --instructions-text-shadow: var(--text-shadow);
   --instructions-icon-text-shadow: none;
   --instructions-icon-color: var(--grey-medium);
-  --resultsbox-margin: 1em 2em 1em 2em;
-  --resultsbox-icon-background-color: var(--grey-darkest);
-  --resultsbox-icon-color: var(--light);
+  --resultsbox-margin: 0;
+  --resultsbox-background-color: var(--ultralight);
+  --resultsbox-icon-color: var(--ultralight);
   --resultsbox-icon-tex-shadow: var(--text-shadow);
   --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-header-background-color: var(--grey-darkest);
-  --resultsbox-header-text-color: var(--light);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --resultsbox-header-text-color: var(--ultralight);
   --resultsbox-header-text-shadow: var(--text-shadow);
   --resultsbox-success-color-base: var(--success-color);
   --resultsbox-error-color-base: var(--error-color);
@@ -1770,7 +1770,7 @@ div.instructions {
     text-shadow: var(--instructions-text-shadow); }
 
 div.messagebox {
-  margin: 1em 1.5em 1em 1.5em;
+  margin: 1em 0 1em 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1780,8 +1780,7 @@ div.messagebox {
   div.messagebox div.box {
     --color-base: var(--resultsbox-success-color-base);
     --stripe-base: var(--resultsbox-success-stripes);
-    border: 0.1em solid var(--color-base);
-    background-image: var(--stripe-base);
+    background-color: var(--resultsbox-background-color);
     margin: var(--resultsbox-margin);
     padding: 0;
     display: flex;
@@ -1794,38 +1793,37 @@ div.messagebox {
       margin: 0;
       padding: .5em;
       flex-grow: 0;
+      text-transform: none;
       background-color: var(--color-base);
       color: var(--resultsbox-header-text-color);
       text-shadow: var(--resultsbox-header-text-shadow); }
     div.messagebox div.box div.lbox {
+      border: 0.1em solid var(--color-base);
+      background-image: var(--stripe-base);
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: flex-start;
-      align-content: flex-start; }
+      align-content: flex-start;
+      margin: 0; }
       div.messagebox div.box div.lbox span.icon {
-        box-sizing: border-box;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        font-size: 60pt;
-        margin: 1em;
-        width: 6em;
-        height: 6em;
-        min-width: 6em;
-        min-height: 6em;
-        max-width: 6em;
-        max-height: 6em;
-        border-radius: 50%;
-        background-color: var(--color-base);
-        color: var(--resultsbox-icon-color);
+        font-size: 72pt;
+        margin: 0;
+        color: var(--color-base);
         text-shadow: var(--resultsbox-icon-text-shadow); }
       div.messagebox div.box div.lbox ul {
-        flex-grow: 1;
-        padding-left: .5em; }
-        div.messagebox div.box div.lbox ul li {
-          color: var(--resultsbox-default-text-color); }
+        flex-grow: 2;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin: 0;
+        padding: .3em 1.2em 1.2em 1.2em;
+        text-shadow: var(--resultsbox-text-shadow);
+        color: var(--resultsbox-default-text-color); }
     div.messagebox div.box.errors {
       --color-base: var(--resultsbox-error-color-base);
       --stripe-base: var(--resultsbox-error-stripes); }

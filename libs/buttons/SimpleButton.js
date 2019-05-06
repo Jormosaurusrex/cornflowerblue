@@ -19,7 +19,7 @@ class SimpleButton {
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
-            action: null // The click handler. passed (event, self) as arguments.
+            action: null // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
         };
     }
 
@@ -90,7 +90,7 @@ class SimpleButton {
             this.button.addClass('mute');
         }
 
-        if ((this.action) && (typeof this.action === 'function')) {
+        if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.click(function (e) {
                 if (!me.disabled) {
                     me.action(e, me);
@@ -187,9 +187,6 @@ class SimpleButton {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get submits() { return this.config.submits; }
-    set submits(submits) { this.config.submits = submits; }
-
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
 
@@ -198,6 +195,9 @@ class SimpleButton {
 
     get size() { return this.config.size; }
     set size(size) { this.config.size = size; }
+
+    get submits() { return this.config.submits; }
+    set submits(submits) { this.config.submits = submits; }
 
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }
