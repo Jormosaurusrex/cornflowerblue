@@ -72,8 +72,10 @@ class SimpleForm {
     validate() {
         let valid = true;
         for (let element of this.elements) {
-            let localValid = element.validate();
-            if (!localValid) { valid = false;}
+            if (element.touched) {
+                let localValid = element.validate();
+                if (!localValid) { valid = false; }
+            }
         }
         if (valid) {
             this.runValid();

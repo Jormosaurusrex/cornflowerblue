@@ -55,6 +55,7 @@ class TextInput {
             this.origval = this.config.value;
         }
 
+        this.touched = false; // set untouched on creation.
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -266,8 +267,10 @@ class TextInput {
                 // Reset this to keep readers from constantly beeping. It will re-validate later.
                 me.input.attr('aria-invalid', false);
                 me.updateCounter();
+                me.touched = true; // set self as touched.
             })
             .on('keyup', function(e) {
+
                 if ((me.value) && (me.value.length > 0) && (me.container)) {
                     me.container.addClass('filled');
                 } else {
@@ -304,7 +307,9 @@ class TextInput {
                 if (me.container) {
                     me.container.removeClass('active');
                 }
+
                 me.validate();
+
                 if (me.form) { me.form.validate(); }
 
                 if ((me.focusout) && (typeof me.focusout === 'function')) {
@@ -486,6 +491,9 @@ class TextInput {
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
+
+    get touched() { return this._touched; }
+    set touched(touched) { this._touched = touched; }
 
     get type() { return this.config.type; }
     set type(type) { this.config.type = type; }

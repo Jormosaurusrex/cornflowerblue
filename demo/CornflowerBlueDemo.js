@@ -6,7 +6,7 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showMessageBoxes();
+        this.showForms();
     }
 
     /**
