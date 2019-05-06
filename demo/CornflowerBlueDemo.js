@@ -6,10 +6,12 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showForms();
+        this.showMessageBoxes();
     }
 
-
+    /**
+     * Build the main interface.
+     */
     build() {
         const me = this;
 
@@ -30,6 +32,13 @@ class CornflowerBlueDemo {
                     id: 'headers',
                     action: function() {
                         me.showHeaders();
+                    }
+                },
+                {
+                    label: 'Message Boxes',
+                    id: 'messageboxes',
+                    action: function() {
+                        me.showMessageBoxes();
                     }
                 },
                 {
@@ -100,6 +109,66 @@ class CornflowerBlueDemo {
 
     }
 
+    /**
+     * Draw example messageboxes
+     */
+    showMessageBoxes() {
+        const me = this;
+        this.navigation.select('messageboxes');
+
+        this.titlebox.html("Message Boxes");
+
+        this.demobox.empty();
+        this.demobox.append($('<p />').html("The size of the icons changes based on how many lines of text are present."));
+
+        this.demobox.append($('<h4 />').html("Instructions"));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass("vert")
+                .append(
+                    new InstructionBox({
+                        instructions: [
+                            "Duis mollis, est non commodo luctus.",
+                            "Nisi erat porttitor ligula, eget.",
+                            "lacinia odio sem nec elit."
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+
+        this.demobox.append($('<h4 />').html("Form Response"));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass("vert")
+                .append(
+                    new MessageBox({
+                        results: [
+                            "The file was imported successfully!"
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new MessageBox({
+                        warnings: [
+                            "The file was imported successfully, but some of the data was duplicated.",
+                            "Duplicate entries have been removed."
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new MessageBox({
+                        errors: [
+                            "The file was not imported.",
+                            "The file's size was larger than can be accepted."
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+
+        );
+    }
 
     showIntro() {
 
@@ -109,11 +178,108 @@ class CornflowerBlueDemo {
 
     }
 
-    dumpConfig(o) {
-        this.codebox.empty();
-        this.codebox.append($('<h2 />').html(o.constructor.name));
+    showDialogs() {
+        this.navigation.select('dialogs');
 
-        this.codebox.append($('<div />').addClass('config').html(Utils.prettyPrintConfig(o)));
+        this.titlebox.html("Dialogs");
+
+        this.demobox.empty();
+
+    }
+
+    showGrowlers() {
+        this.navigation.select('growlers');
+
+        this.titlebox.html("Growlers");
+
+        this.demobox.empty();
+
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Top Left",
+                        action: function() {
+                            new Growler({
+                                position: 'top-left',
+                                icon: 'legend',
+                                title: 'Top Left Growler',
+                                text: 'A growler is here!'
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Top Center",
+                        action: function() {
+                            new Growler({
+                                position: 'top-center',
+                                icon: 'legend',
+                                text: 'A top-center growler with an icon and no title.'
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Top Right",
+                        action: function() {
+                            new Growler({
+                                position: 'top-right',
+                                icon: 'legend',
+                                title: 'Growler with an icon and no text.'
+                            });
+                        }
+                    }).button
+                )
+        );
+
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Left",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-left',
+                                icon: 'legend',
+                                title: 'Bottom Left Growler',
+                                text: 'This growler has duration:0, and will stay until dismissed.',
+                                duration: 0
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Center",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-center',
+                                icon: 'legend',
+                                title: 'Bottom Center Growler',
+                                text: 'This growler has duration:0, so will stay until dismissed.',
+                                duration: 0
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Right",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-right',
+                                icon: 'legend',
+                                title: 'Bottom Right Growler',
+                                text: 'Another growler over here!'
+                            });
+                        }
+                    }).button
+                )
+        );
+
     }
 
     showButtons() {
@@ -557,6 +723,9 @@ class CornflowerBlueDemo {
         );
     }
 
+    /**
+     * Show different kinds of text areas
+     */
     showTextAreas() {
         this.navigation.select('textareas');
 
@@ -601,6 +770,9 @@ class CornflowerBlueDemo {
 
     }
 
+    /**
+     * Display a page of example texts
+     */
     showHeaders() {
         this.navigation.select('headers');
 
@@ -633,7 +805,6 @@ class CornflowerBlueDemo {
 
 
     }
-
 
     /**
      * Display the page of toggles
@@ -872,6 +1043,9 @@ class CornflowerBlueDemo {
 
     }
 
+    /**
+     * Show the forms.
+     */
     showForms() {
         this.navigation.select('forms');
 
@@ -929,111 +1103,16 @@ class CornflowerBlueDemo {
 
     }
 
-    showDialogs() {
-        this.navigation.select('dialogs');
 
-        this.titlebox.html("Dialogs");
 
-        this.demobox.empty();
 
+
+    dumpConfig(o) {
+        this.codebox.empty();
+        this.codebox.append($('<h2 />').html(o.constructor.name));
+
+        this.codebox.append($('<div />').addClass('config').html(Utils.prettyPrintConfig(o)));
     }
-
-    showGrowlers() {
-        this.navigation.select('growlers');
-
-        this.titlebox.html("Growlers");
-
-        this.demobox.empty();
-
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Top Left",
-                        action: function() {
-                            new Growler({
-                                position: 'top-left',
-                                icon: 'legend',
-                                title: 'Top Left Growler',
-                                text: 'A growler is here!'
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Center",
-                        action: function() {
-                            new Growler({
-                                position: 'top-center',
-                                icon: 'legend',
-                                text: 'A top-center growler with an icon and no title.'
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Right",
-                        action: function() {
-                            new Growler({
-                                position: 'top-right',
-                                icon: 'legend',
-                                title: 'Growler with an icon and no text.'
-                            });
-                        }
-                    }).button
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Left",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-left',
-                                icon: 'legend',
-                                title: 'Bottom Left Growler',
-                                text: 'This growler has duration:0, and will stay until dismissed.',
-                                duration: 0
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Center",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-center',
-                                icon: 'legend',
-                                title: 'Bottom Center Growler',
-                                text: 'This growler has duration:0, so will stay until dismissed.',
-                                duration: 0
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Right",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-right',
-                                icon: 'legend',
-                                title: 'Bottom Right Growler',
-                                text: 'Another growler over here!'
-                            });
-                        }
-                    }).button
-                )
-        );
-
-    }
-
-
 
     /* UTILITY METHODS__________________________________________________________________ */
 

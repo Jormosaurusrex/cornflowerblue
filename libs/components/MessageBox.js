@@ -10,10 +10,10 @@ class MessageBox {
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings
             errorstitle: "Error",
-            successtitle: "Success",
+            successtitle: null,
             warningstitle: "Warning",
-            erroricon: 'no', // If present, will be displayed large next to texts
-            warningicon : 'triangle-down', // If present, will be displayed large next to texts
+            erroricon: 'warn-hex', // If present, will be displayed large next to texts
+            warningicon : 'warn-triangle', // If present, will be displayed large next to texts
             successicon: 'check', // If present, will be displayed large next to texts
             classes: [] //Extra css classes to apply
         };
@@ -35,6 +35,7 @@ class MessageBox {
     buildContainer() {
         this.container = $('<div />')
             .addClass('messagebox')
+            .data('self', this)
             .addClass(this.classes.join(' '));
 
         if ((this.errors) && (this.errors.length > 0)) {
@@ -95,6 +96,7 @@ class MessageBox {
         }
 
         $lbox.append($list);
+        $lbox.addClass(`size-${list.length}`);
 
         return $box.append($lbox);
     }

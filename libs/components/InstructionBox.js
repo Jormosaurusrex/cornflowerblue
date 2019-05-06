@@ -4,7 +4,7 @@ class InstructionBox {
 
     static get DEFAULT_CONFIG() {
         return {
-            icon : null, // If present, will be displayed large next to texts
+            icon : 'help-circle', // If present, will be displayed large next to texts
             id : null, // the id
             instructions: [], // An array of instruction texts
             classes: [] //Extra css classes to apply
@@ -27,6 +27,7 @@ class InstructionBox {
     buildContainer() {
         this.container = $('<div />')
             .addClass('instructions')
+            .data('self', this)
             .addClass(this.classes.join(' '));
         if (this.icon) {
             this.container.append(IconFactory.makeIcon(this.icon));
