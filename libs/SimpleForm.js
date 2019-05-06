@@ -12,6 +12,8 @@ class SimpleForm {
             method: 'get', // Method for the form.  Also used in API calls.
             header: null, // Stuff to put at the header. This is expected to be a jQuery element
             instructions: null, // Instructions configuration.  See InstructionBox.
+            spinnericon: 'circle-dashed', //
+            spinnertext: '...Please Wait...', //
             classes: [], // Extra css classes to apply,
             submittors: [], // Array of elements that can submit this form.
                             // SimpleButton objects that have submits=true inside of the actions[] array
@@ -139,7 +141,7 @@ class SimpleForm {
         this.buildActionBox();
 
         this.contentbox.append(this.headerbox).append(this.elementbox);
-        this.form.append(this.contentbox).append(this.actionbox);
+        this.form.append(this.shade).append(this.contentbox).append(this.actionbox);
     }
 
     /**
@@ -158,6 +160,25 @@ class SimpleForm {
             }
         }
     }
+
+    buildShade() {
+        this.shade = $('<div />').addClass('shade');
+
+        if (this.spinnericon) {
+            this.shade.append(IconFactory.makeIcon(this.spinnericon));
+        }
+
+        if (this.spinnertext) {
+            this.shade.append($('<div />').addClass('spinnertext').html(this.spinnertext));
+        }
+
+    }
+
+    get spinnericon() { return this.config.spinnericon; }
+    set spinnericon(spinnericon) { this.config.spinnericon = spinnericon; }
+
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
     /**
      * Draw individual form elements
@@ -293,6 +314,13 @@ class SimpleForm {
         }
         this.config.oninvalid = oninvalid;
     }
+
+    get shade() {
+        if (!this._shade) { this.buildShade(); }
+        return this._shade;
+    }
+    set shade(shade) { this._shade = shade; }
+
 
     get submittors() { return this.config.submittors; }
     set submittors(submittors) { this.config.submittors = submittors; }

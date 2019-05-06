@@ -207,7 +207,13 @@
   --form-elements-top-padding: .5em;
   --form-elements-bottom-padding: 2em;
   --form-actions-top-padding: 0;
-  --form-actions-bottom-padding: 2em;
+  --form-actions-bottom-padding: .5em;
+  --form-shade-background-color: var(--white-half);
+  --form-shade-border-color: var(--white-half);
+  --form-shade-icon-color: var(--blue);
+  --form-shade-icon-shadow: var(--text-shadow);
+  --form-shade-text-color: var(--blue);
+  --form-shade-text-shadow: var(--text-shadow);
   --input-default-background-color: var(--ultralight);
   --input-default-border-color: var(--grey-medium);
   --input-default-text-color: var(--grey-darker);
@@ -262,6 +268,26 @@
   --tabbar-hover-tab-text-color: var(--light);
   --tabbar-hover-tab-text-shadow: var(--text-shadow); }
 
+@keyframes localspin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+.shake {
+  animation: shake .7s; }
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px); }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px); } }
+@keyframes fadein {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 * {
   padding: 0;
   margin: 0;
@@ -1525,16 +1551,55 @@ div.radiogroup ul {
 
 form {
   margin: 0;
+  position: relative;
   border: 0.1em solid var(--form-border-color);
   background-color: var(--form-background-color);
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap; }
+  flex-wrap: nowrap;
+  padding: .5em; }
+  form div.shade {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2000;
+    background-color: var(--form-shade-background-color);
+    border: 0.1em solid var(--form-shade-border-color);
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center; }
+    form div.shade span.icon {
+      display: block;
+      color: var(--form-shade-icon-color);
+      font-size: 100pt;
+      border-radius: 50%;
+      text-shadow: var(--form-shade-icon-shadow);
+      margin-top: -1em;
+      animation: localspin 2s linear infinite; }
+    form div.shade div.spinnertext {
+      color: var(--form-shade-text-color);
+      font-size: 200%;
+      text-shadow: var(--form-shade-text-shadow);
+      margin-top: 2em; }
+  form.shaded {
+    overflow: hidden; }
+    form.shaded div.shade {
+      display: flex; }
+    form.shaded div.header,
+    form.shaded div.elements,
+    form.shaded div.actions {
+      filter: blur(3px); }
   form div.header {
+    z-index: 1;
     flex-grow: 1; }
     form div.header div.instructions {
       margin: 1em 0 1em 0; }
   form div.elements {
+    z-index: 1;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -1549,6 +1614,7 @@ form {
     form div.elements div.textarea-container {
       margin: 10px 0 10px 0; }
   form div.actions {
+    z-index: 1;
     flex-grow: 1;
     display: flex;
     flex-direction: row;
@@ -1685,7 +1751,6 @@ div.instructions {
   align-items: flex-start;
   align-content: flex-start; }
   div.instructions span.icon {
-    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     align-items: center;

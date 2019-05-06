@@ -269,7 +269,14 @@
   --form-elements-top-padding: .5em;
   --form-elements-bottom-padding: 2em;
   --form-actions-top-padding: 0;
-  --form-actions-bottom-padding: 2em;
+  --form-actions-bottom-padding: .5em;
+
+  --form-shade-background-color: var(--white-half);
+  --form-shade-border-color: var(--white-half);
+  --form-shade-icon-color: var(--blue);
+  --form-shade-icon-shadow: var(--text-shadow);
+  --form-shade-text-color: var(--blue);
+  --form-shade-text-shadow: var(--text-shadow);
 
   // Input
   --input-default-background-color: var(--ultralight);
