@@ -9,14 +9,19 @@ class SimpleForm {
             target: null, // Target attribute
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
-            urlaction: null, // Where to post this form to. If null, assumes to be an xhr action.
             method: 'get', // Method for the form.  Also used in API calls.
             header: null, // Stuff to put at the header. This is expected to be a jQuery element
             instructions: null, // Instructions configuration.  See InstructionBox.
             classes: [], // Extra css classes to apply,
+            submittors: [], // Array of elements that can submit this form.
+                            // SimpleButton objects that have submits=true inside of the actions[] array
+                            // are automatically added to this.  Only put elements here that are _outside_
+                            // of the form and need to be connected.
             elements: [], // An array of form elements. These are the objects, not the rendered dom.
             actions: [], // An array of action elements. This are buttons or keywords.
-            onsubmit: null, // action to execute on submit.
+            handler: null, // Where to submit this form. Can be URL or function.  If a function, passed self.
+            onvalid: null, // What do do when the form becomes valid (passed self)
+            oninvalid: null // What do do when the form becomes invalid (passed self)
         };
     }
 
@@ -33,13 +38,13 @@ class SimpleForm {
 
     /**
      * Submits the form.  Runs the validator first.
-     * @param e the event object, passed to an onsubmit handler
+     * @param e the event object, passed to handler
      */
     submit(e) {
         if (this.validate()) {
-            if ((this.onsubmit) && (typeof this.onsubmit === 'function')) {
-                this.onsubmit(e);
-            } else if (this.urlaction) {
+            if ((this.handler) && (typeof this.handler === 'function')) {
+                this.handler(this);
+            } else if ((this.handler) && (typeof this.handler === 'string')) {
                 this.form[0].submit();
             } else {
                 console.log(`No action or URL defined for form ${this.id} :: ${this.name}`);
@@ -57,7 +62,43 @@ class SimpleForm {
             let localValid = element.validate();
             if (!localValid) { valid = false;}
         }
+        if (valid) {
+            this.runValid();
+        } else {
+            this.runInvalid();
+        }
+
         return valid;
+    }
+
+    /**
+     * This runs when the all elements in the form are valid.
+     * It will enable and heat all elements in this.submittors().
+     * It then executes any supplied onvalid function, passing self.
+     */
+    runValid() {
+        for (let submittor of this.submittors) {
+            submittor.heat();
+            submittor.enable();
+        }
+        if ((this.onvalid) && (typeof this.onvalid === 'function')) {
+            this.onvalid(this);
+        }
+    }
+
+    /**
+     * This runs when the all elements in the form are valid.
+     * It will enable and heat all elements in this.submittors().
+     * It then executes any supplied onvalid function, passing self.
+     */
+    runInvalid() {
+        for (let submittor of this.submittors) {
+            submittor.cool();
+            submittor.disable();
+        }
+        if ((this.oninvalid) && (typeof this.oninvalid === 'function')) {
+            this.oninvalid(this);
+        }
     }
 
     handleResults(results) {
@@ -78,7 +119,6 @@ class SimpleForm {
             .attr('novalidate', true) // turn off browser validation 'cause we do it by hand
             .attr('name', this.name)
             .attr('method', this.method)
-            .attr('target', this.target)
             .attr('enctype', this.enctype)
             .attr('role', 'form')
             .attr('autocomplete', this.autocomplete)
@@ -89,6 +129,11 @@ class SimpleForm {
                 e.preventDefault();
                 me.submit();
             });
+
+        if ((this.handler) && (typeof this.handler !== 'function')) {
+            this.form.attr('target', this.target);
+        }
+
         this.buildHeaderBox();
         this.buildElementBox();
         this.buildActionBox();
@@ -120,6 +165,7 @@ class SimpleForm {
     buildElementBox() {
         this.elementbox = $('<div />').addClass('elements');
         for (let element of this.elements) {
+            element.form = this;
             this.elementbox.append(element.container);
         }
 
@@ -139,6 +185,10 @@ class SimpleForm {
         if ((this.actions) && (this.actions.length > 0)) {
             this.actionbox = $('<div />').addClass('actions');
             for (let action of this.actions) {
+                if ((action.cansubmit) && (action.submits)) {
+                    //if ((SimpleButton.prototype.isPrototypeOf(action)) && (action.submits)) {
+                    this.submittors.push(action);
+                }
                 this.actionbox.append(action.container);
             }
         }
@@ -196,6 +246,14 @@ class SimpleForm {
     }
     set form(form) { this._form = form; }
 
+    get handler() { return this.config.handler; }
+    set handler(handler) {
+        if (typeof handler !== 'function') {
+            console.error("Action provided for handler is not a function!");
+        }
+        this.config.handler = handler;
+    }
+
     get header() { return this.config.header; }
     set header(header) { this.config.header = header; }
 
@@ -220,18 +278,27 @@ class SimpleForm {
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
 
-    get onsubmit() { return this.config.onsubmit; }
-    set onsubmit(onsubmit) {
-        if (typeof onsubmit !== 'function') {
-            console.error("Action provided for onsubmit is not a function!");
+    get onvalid() { return this.config.onvalid; }
+    set onvalid(onvalid) {
+        if (typeof onvalid !== 'function') {
+            console.error("Action provided for onvalid is not a function!");
         }
-        this.config.onsubmit = onsubmit;
+        this.config.onvalid = onvalid;
     }
+
+    get oninvalid() { return this.config.oninvalid; }
+    set oninvalid(oninvalid) {
+        if (typeof oninvalid !== 'function') {
+            console.error("Action provided for oninvalid is not a function!");
+        }
+        this.config.oninvalid = oninvalid;
+    }
+
+    get submittors() { return this.config.submittors; }
+    set submittors(submittors) { this.config.submittors = submittors; }
+
 
     get target() { return this.config.target; }
     set target(target) { this.config.target = target; }
-
-    get urlaction() { return this.config.urlaction; }
-    set urlaction(urlaction) { this.config.urlaction = urlaction; }
 
 }

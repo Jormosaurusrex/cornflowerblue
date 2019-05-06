@@ -5,17 +5,21 @@ class SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
-            issubmit: false, // If true, force "type='submit'"
+            submits: false, // If true, force "type='submit'"
+            cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
+                            // This should be on an interface (e.g., SimpleButton implements Submittor)
+                            // but Javascript is poor with regards to that.
             text : 'Button Text', // The text for the button. This is also used as aria-label.
             shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a jQuery object
+            iconside: 'left', // The side the icon displays on
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
-            action: $.noop // The click handler. passed (event, self) as arguments.
+            action: null // The click handler. passed (event, self) as arguments.
         };
     }
 
@@ -53,21 +57,27 @@ class SimpleButton {
             this.button.addClass(this.shape);
         } else {
             this.button = $('<button />');
+            let $icon, $text;
             if (this.icon) {
-                this.button.append(IconFactory.makeIcon(this.icon));
+                $icon = IconFactory.makeIcon(this.icon);
+                this.button.append();
             }
             if (this.text) {
-                this.button.append(
-                    $('<div />').addClass('text').html(this.text)
-                )
+                $text = $('<div />').addClass('text').html(this.text);
             }
+            if ((this.iconside) && (this.iconside === 'right')) {
+                this.button.addClass('righticon').append($text).append($icon);
+            } else {
+                this.button.append($icon).append($text);
+            }
+
         }
 
         this.button
             .attr('aria-label', this.text)
             .attr('id', this.id)
             .attr('role', 'button')
-            .attr('type', (this.issubmit ? 'submit' : 'button'))
+            .attr('type', (this.submits ? 'submit' : 'button'))
             .data('self', this)
             .addClass(this.size)
             .addClass(this.classes.join(' '));
@@ -108,6 +118,21 @@ class SimpleButton {
         this.disabled = false;
     }
 
+    /**
+     * Turn the button hot
+     */
+    heat() {
+        this.button.addClass('hot');
+        this.hot = true;
+    }
+
+    /**
+     * Turnt the button cold
+     */
+    cool() {
+        this.button.removeClass('hot');
+        this.hot = false;
+    }
 
     /* UTILITY METHODS__________________________________________________________________ */
 
@@ -133,6 +158,14 @@ class SimpleButton {
     }
     set button(button) { this._button = button; }
 
+    /**
+     * Can this be used to submit a form?
+     * Javascript doesn't have great interfaces. This would be on the interface otherwise.
+     * Doesn't have a settor.
+     * @return {boolean}
+     */
+    get cansubmit() { return this.config.cansubmit; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -145,14 +178,17 @@ class SimpleButton {
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
 
+    get iconside() { return this.config.iconside; }
+    set iconside(iconside) { this.config.iconside = iconside; }
+
     get hot() { return this.config.hot; }
     set hot(hot) { this.config.hot = hot; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get issubmit() { return this.config.issubmit; }
-    set issubmit(issubmit) { this.config.issubmit = issubmit; }
+    get submits() { return this.config.submits; }
+    set submits(submits) { this.config.submits = submits; }
 
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }

@@ -6,6 +6,7 @@ class SelectMenu extends RadioGroup {
         return {
             id : null, // The button id
             name: null,
+            form: null, // A form element this is in
             label: null, // The text for the label.
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.

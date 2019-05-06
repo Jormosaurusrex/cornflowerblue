@@ -6,6 +6,7 @@ class TextInput {
         return {
             id : null, // Component id
             name: null, // Name attribute
+            form: null, // A form element this is in
             counter: null, // A value for a character counter. Null means 'no counter'
             // Possible values: null, 'remaining', 'limit', and 'sky'
             forceconstraints: null, // if true, force constraints defined in sub classes (text input doesn't havea any)
@@ -299,8 +300,9 @@ class TextInput {
                 if (me.container) {
                     me.container.removeClass('active');
                 }
-
                 me.validate();
+                if (me.form) { me.form.validate(); }
+
                 if ((me.focusout) && (typeof me.focusout === 'function')) {
                     me.focusout(e, me);
                 }
@@ -425,6 +427,9 @@ class TextInput {
         }
         this.config.focusout = focusout;
     }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
 
     get forceconstraints() { return this.config.forceconstraints; }
     set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }

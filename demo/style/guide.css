@@ -44,7 +44,6 @@
   --text-shadow-heavier: 0 0.07em 0.07em rgba(0, 0, 0, 0.7);
   --box-shadow: 0.1em 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
   --hover-box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.5);
-  --button-hover-box-shadow: 0 0.1em 5px 0 rgba(50, 50, 50, 0.5), inset 0 -0.3em 0 0 var(--button-hover-highlight-color);
   --checkbox-checked-shadow: inset 0 0.1em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --checkbox-checked-shadow-hover: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5), inset 0 0.3em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow: 0 0.5em 0.5em 0 rgba(0, 0, 0, 0.5);
@@ -137,6 +136,9 @@
   --button-default-text-color: var(--button-default-color);
   --button-hover-text-color: var(--hot-text-color);
   --button-hover-highlight-color: var(--white-half);
+  --button-hover-gradient: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+  --button-hover-box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
+  --button-circle-hover-box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
   --button-font-family: var(--default-font-family);
   --button-text-shadow: var(--text-shadow);
   --button-disabled-color: var(--disabled-base-color);
@@ -180,6 +182,7 @@
   --instructions-background-color: var(--morelight);
   --instructions-border-color: var(--light);
   --instructions-text-color: var(--grey-darkest);
+  --instructions-text-shadow: var(--text-shadow);
   --instructions-icon-text-shadow: none;
   --instructions-icon-color: var(--grey-medium);
   --resultsbox-margin: 1em 2em 1em 2em;
@@ -271,6 +274,13 @@ h1 {
   color: var(--elements-headers-h1-text-color);
   text-shadow: var(--elements-headers-h1-text-shadow);
   text-transform: var(--elements-headers-h1-text-transform); }
+  h1.inset {
+    background-color: var(--elements-headers-h1-text-color);
+    color: transparent;
+    text-shadow: 0 0.05em 0.05em rgba(255, 255, 255, 0.5);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text; }
 
 h2 {
   font-weight: normal;
@@ -983,15 +993,19 @@ button {
   cursor: pointer;
   color: var(--button-default-color);
   background-color: transparent;
-  border: 0.1em solid var(--button-default-color);
+  box-shadow: inset -0.1em -0.1em 0 0 var(--button-default-color), inset 0.1em -0.1em 0 0 var(--button-default-color), inset -0.1em 0.1em 0 0 var(--button-default-color), inset 0.1em 0.1em 0 0 var(--button-default-color);
+  border: none;
   border-radius: var(--button-border-radius); }
   button span.icon {
-    margin: 0 .2em 0 .2em; }
+    margin: 0 0 0 .2em; }
+  button.righticon span.icon {
+    margin: 0 .2em 0 0; }
   button:hover, button:focus, button:active {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
     background-color: var(--button-default-color);
     box-shadow: var(--button-hover-box-shadow);
+    background-image: var(--button-hover-gradient);
     outline: none;
     text-decoration: underline;
     filter: brightness(120%); }
@@ -1017,7 +1031,8 @@ button {
       box-shadow: var(--hexagon-shadow); }
   button.mute {
     background-color: transparent;
-    border-color: transparent; }
+    border-color: transparent;
+    box-shadow: none; }
     button.mute.constructive {
       color: var(--constructive-color);
       text-shadow: none; }
@@ -1027,13 +1042,14 @@ button {
     button.mute:hover, button.mute:active, button.mute:focus {
       color: var(--button-hover-text-color);
       text-shadow: var(--button-text-shadow);
-      background-color: var(--button-default-color); }
+      background-color: var(--button-default-color);
+      box-shadow: var(--button-hover-box-shadow); }
       button.mute:hover.constructive, button.mute:active.constructive, button.mute:focus.constructive {
         background-color: var(--constructive-color); }
       button.mute:hover.destructive, button.mute:active.destructive, button.mute:focus.destructive {
         background-color: var(--destructive-color); }
     button.mute:disabled {
-      color: var(--button-disabled-color);
+      color: var(--button-disabled-text-color);
       background-color: transparent;
       border-color: transparent;
       cursor: not-allowed;
@@ -1059,22 +1075,22 @@ button {
     button.hot.destructive {
       background-color: var(--destructive-color);
       border-color: var(--destructive-color); }
-  button:disabled {
-    color: var(--button-disabled-text-color);
-    background-color: var(--button-disabled-color);
-    border-color: var(--button-disabled-color);
-    cursor: not-allowed;
-    text-shadow: none;
-    box-shadow: none;
-    pointer-events: none; }
-    button:disabled:hover, button:disabled:focus, button:disabled:active {
+    button.hot:disabled {
       color: var(--button-disabled-text-color);
       background-color: var(--button-disabled-color);
       border-color: var(--button-disabled-color);
+      cursor: not-allowed;
       text-shadow: none;
-      box-shadow: none; }
-    button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {
-      box-shadow: none; }
+      box-shadow: none;
+      pointer-events: none; }
+      button.hot:disabled:hover, button.hot:disabled:focus, button.hot:disabled:active {
+        color: var(--button-disabled-text-color);
+        background-color: var(--button-disabled-color);
+        border-color: var(--button-disabled-color);
+        text-shadow: none;
+        box-shadow: none; }
+      button.hot:disabled.hexagon, button.hot:disabled.hexagon::before, button.hot:disabled.hexagon::after {
+        box-shadow: var(--hexagon-shadow); }
   button.square, button.circle {
     padding: .5em;
     width: 2em;
@@ -1085,7 +1101,14 @@ button {
     button.square:hover, button.square:focus, button.square:active, button.circle:hover, button.circle:focus, button.circle:active {
       text-decoration: none; }
   button.circle {
+    border: 0.1em solid var(--button-default-color);
+    box-shadow: none;
     border-radius: 50%; }
+    button.circle:hover, button.circle:focus, button.circle:active {
+      box-shadow: var(--button-circle-hover-box-shadow); }
+    button.circle:disabled {
+      box-shadow: none;
+      border: none; }
   button.micro {
     font-size: 60%; }
   button.small {
@@ -1195,6 +1218,7 @@ button {
       color: var(--button-hover-text-color);
       text-shadow: var(--button-text-shadow);
       background-color: var(--button-default-color);
+      background-image: none;
       box-shadow: var(--hover-box-shadow);
       outline: none;
       text-decoration: none; }
@@ -1466,17 +1490,17 @@ input[type="radio"] {
 
 input[type="radio"] {
   border-radius: 50%;
-  width: 2em;
-  height: 2em;
-  max-width: 2em;
-  max-height: 2em; }
+  width: 2.5em;
+  height: 2.5em;
+  max-width: 2.5em;
+  max-height: 2.5em; }
   input[type="radio"]:after {
-    width: 1.4em;
-    height: 1.4em;
-    max-width: 1.4em;
-    max-height: 1.4em;
-    left: .17em;
-    top: .17em;
+    width: 1.9em;
+    height: 1.9em;
+    max-width: 1.9em;
+    max-height: 1.9em;
+    left: .09em;
+    top: .09em;
     border-radius: 50%; }
   input[type="radio"]:checked:after, input[type="radio"]:focus:after, input[type="radio"]:active:after, input[type="radio"]:hover:after {
     border-radius: 50%; }
@@ -1500,7 +1524,7 @@ div.radiogroup ul {
       text-shadow: none; }
 
 form {
-  margin: 1em 0 1em 0;
+  margin: 0;
   border: 0.1em solid var(--form-border-color);
   background-color: var(--form-background-color);
   display: flex;
@@ -1684,7 +1708,8 @@ div.instructions {
     flex-wrap: nowrap;
     margin: 0;
     padding: .3em 1.2em 1.2em 1.2em;
-    color: var(--instructions-text-color); }
+    color: var(--instructions-text-color);
+    text-shadow: var(--instructions-text-shadow); }
 
 div.messagebox {
   margin: 1em 1.5em 1em 1.5em;

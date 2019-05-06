@@ -6,6 +6,7 @@ class BooleanToggle {
         return {
             id : null, // The button id
             name: null,
+            form: null, // A form element this is in
             label: null, // The text for the label.
             checked: false, // Initial state.
             classes: [], // Extra css classes to apply

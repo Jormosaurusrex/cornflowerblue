@@ -21,10 +21,17 @@ button {
   cursor: pointer;
   color: var(--button-default-color);
   background-color: transparent;
-  border: .1em solid var(--button-default-color);
+  //border: .1em solid var(--button-default-color);
+  box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
+  border: none;
   border-radius: var(--button-border-radius);
   span.icon {
-    margin: 0 .2em 0 .2em;
+    margin: 0 0 0 .2em;
+  }
+  &.righticon {
+    span.icon {
+      margin: 0 .2em 0 0;
+    }
   }
   &:hover,
   &:focus,
@@ -33,6 +40,7 @@ button {
     text-shadow: var(--button-text-shadow);
     background-color: var(--button-default-color);
     box-shadow: var(--button-hover-box-shadow);
+    background-image: var(--button-hover-gradient);
     outline: none;
     text-decoration: underline;
     filter: brightness(120%);
@@ -69,6 +77,7 @@ button {
   &.mute {
     background-color: transparent;
     border-color: transparent;
+    box-shadow: none;
     &.constructive {
       color: var(--constructive-color);
       text-shadow: none;
@@ -83,6 +92,7 @@ button {
       color: var(--button-hover-text-color);
       text-shadow: var(--button-text-shadow);
       background-color: var(--button-default-color);
+      box-shadow: var(--button-hover-box-shadow);
       &.constructive {
         background-color: var(--constructive-color);
       }
@@ -91,7 +101,7 @@ button {
       }
     }
     &:disabled { // special disabled for mute styles
-      color: var(--button-disabled-color);
+      color: var(--button-disabled-text-color);
       background-color: transparent;
       border-color: transparent;
       cursor: not-allowed;
@@ -127,28 +137,28 @@ button {
       background-color: var(--destructive-color);
       border-color: var(--destructive-color);
     }
-  }
-  &:disabled {
-    color: var(--button-disabled-text-color);
-    background-color: var(--button-disabled-color);
-    border-color: var(--button-disabled-color);
-    cursor: not-allowed;
-    text-shadow: none;
-    box-shadow: none;
-    pointer-events: none;
-    &:hover,
-    &:focus,
-    &:active {
+    &:disabled {
       color: var(--button-disabled-text-color);
       background-color: var(--button-disabled-color);
       border-color: var(--button-disabled-color);
+      cursor: not-allowed;
       text-shadow: none;
       box-shadow: none;
-    }
-    &.hexagon,
-    &.hexagon::before,
-    &.hexagon::after {
-      box-shadow: none;
+      pointer-events: none;
+      &:hover,
+      &:focus,
+      &:active {
+        color: var(--button-disabled-text-color);
+        background-color: var(--button-disabled-color);
+        border-color: var(--button-disabled-color);
+        text-shadow: none;
+        box-shadow: none;
+      }
+      &.hexagon,
+      &.hexagon::before,
+      &.hexagon::after {
+        box-shadow: var(--hexagon-shadow);
+      }
     }
   }
   &.square,
@@ -166,7 +176,18 @@ button {
     }
   }
   &.circle {
+    border: .1em solid var(--button-default-color);
+    box-shadow: none;
     border-radius: 50%;
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: var(--button-circle-hover-box-shadow);
+    }
+    &:disabled {
+      box-shadow: none;
+      border: none;
+    }
   }
   &.micro {
     font-size: 60%;
@@ -185,7 +206,6 @@ button {
   &.pill {
     border-radius: 1.5em;
   }
-
   &.menu {
     overflow: visible;
     ul {
@@ -302,6 +322,7 @@ button {
       color: var(--button-hover-text-color);
       text-shadow: var(--button-text-shadow);
       background-color: var(--button-default-color);
+      background-image: none;
       box-shadow: var(--hover-box-shadow);
       outline: none;
       text-decoration: none;

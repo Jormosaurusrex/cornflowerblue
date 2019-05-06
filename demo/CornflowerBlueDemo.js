@@ -6,7 +6,7 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showHeaders();
+        this.showForms();
     }
 
 
@@ -132,26 +132,26 @@ class CornflowerBlueDemo {
                     new SimpleButton({
                         text: "Normal"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
                         text: "Disabled",
                         disabled: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append(
@@ -161,21 +161,21 @@ class CornflowerBlueDemo {
                         text: "Normal",
                         icon: "globe"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive",
                         icon: "check"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive",
                         icon: "trashcan"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append($('<h4 />').html("Mute"));
@@ -186,21 +186,21 @@ class CornflowerBlueDemo {
                         text: "Normal",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -208,7 +208,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append(
@@ -219,7 +219,7 @@ class CornflowerBlueDemo {
                         mute: true,
                         icon: "globe"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
@@ -227,7 +227,7 @@ class CornflowerBlueDemo {
                         mute: true,
                         icon: "check"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
@@ -235,7 +235,7 @@ class CornflowerBlueDemo {
                         mute: true,
                         icon: "trashcan"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append($('<h4 />').html("Hot"));
@@ -246,21 +246,21 @@ class CornflowerBlueDemo {
                         text: "Normal",
                         hot: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         text: "Constructive",
                         hot: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         text: "Destructive",
                         hot: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -268,7 +268,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         hot: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append(
@@ -279,7 +279,7 @@ class CornflowerBlueDemo {
                         hot: true,
                         icon: "globe"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
@@ -287,7 +287,7 @@ class CornflowerBlueDemo {
                         hot: true,
                         icon: "check"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
@@ -295,7 +295,7 @@ class CornflowerBlueDemo {
                         hot: true,
                         icon: "trashcan"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append($('<h4 />').html("Shaped: Square"));
@@ -306,21 +306,21 @@ class CornflowerBlueDemo {
                         icon: "echx",
                         shape: "square"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         icon: "plus",
                         shape: "square"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         icon: "minus",
                         shape: "square"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -328,7 +328,7 @@ class CornflowerBlueDemo {
                         shape: "square",
                         disabled: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -336,7 +336,7 @@ class CornflowerBlueDemo {
                         shape: "square",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
@@ -344,7 +344,7 @@ class CornflowerBlueDemo {
                         shape: "square",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
@@ -352,7 +352,7 @@ class CornflowerBlueDemo {
                         shape: "square",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -361,7 +361,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append($('<h4 />').html("Shaped: Circle"));
@@ -372,21 +372,21 @@ class CornflowerBlueDemo {
                         icon: "echx",
                         shape: "circle"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         icon: "minus",
                         shape: "circle"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         icon: "plus",
                         shape: "circle"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -394,7 +394,7 @@ class CornflowerBlueDemo {
                         shape: "circle",
                         disabled: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -402,7 +402,7 @@ class CornflowerBlueDemo {
                         shape: "circle",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
@@ -410,7 +410,7 @@ class CornflowerBlueDemo {
                         shape: "circle",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
@@ -418,7 +418,7 @@ class CornflowerBlueDemo {
                         shape: "circle",
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -427,7 +427,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         mute: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
         this.demobox.append($('<h4 />').html("Shaped: Hexagon"));
@@ -438,21 +438,21 @@ class CornflowerBlueDemo {
                         icon: "echx",
                         shape: "hexagon"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new ConstructiveButton({
                         icon: "echx",
                         shape: "hexagon"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new DestructiveButton({
                         icon: "echx",
                         shape: "hexagon"
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new SimpleButton({
@@ -460,14 +460,14 @@ class CornflowerBlueDemo {
                         shape: "hexagon",
                         disabled: true
                     }).button
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
     }
 
     showInputs() {
-        var me = this;
+        const me = this;
         this.navigation.select('inputs');
 
         this.titlebox.html("Inputs");
@@ -480,12 +480,11 @@ class CornflowerBlueDemo {
                 .append(
                     new TextInput({
                         label: "Element Label",
-                        title: "Test Tooltip title text",
                         counter: 'remaining',
                         maxlength: 100,
                         placeholder: "An input placeholder."
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -500,7 +499,7 @@ class CornflowerBlueDemo {
                         maxlength: 100,
                         placeholder: "An input placeholder."
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -513,7 +512,7 @@ class CornflowerBlueDemo {
                         counter: 'sky',
                         placeholder: "Enter your password."
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -526,7 +525,7 @@ class CornflowerBlueDemo {
                         mute: true,
                         placeholder: "Enter your password."
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -539,7 +538,7 @@ class CornflowerBlueDemo {
                         label: "Element Label",
                         placeholder: "Enter the text."
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -553,7 +552,7 @@ class CornflowerBlueDemo {
                         placeholder: "Enter the text.",
                         mute: true
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
     }
@@ -610,9 +609,9 @@ class CornflowerBlueDemo {
         this.demobox.empty();
 
         this.demobox.append($('<h1 />').html("H1 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a href=\"adfasdfadfadfadf\">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target=\"_new\" href=\"http://www.does.not.exist\">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
         this.demobox.append($('<h2 />').html("H2 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a href=\"#asafdds\">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a target=\"_new\" href=\"https://en.wikipedia.org/\">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
         this.demobox.append($('<h3 />').html("H3 Standard"));
         this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
         this.demobox.append($('<h4 />').html("H4 Standard"));
@@ -640,7 +639,7 @@ class CornflowerBlueDemo {
      * Display the page of toggles
      */
     showToggles() {
-        var me = this;
+        const me = this;
         this.navigation.select('toggles');
 
         this.titlebox.html("Checkboxes and Toggles");
@@ -654,21 +653,21 @@ class CornflowerBlueDemo {
                     new BooleanToggle({
                         label: "Normal"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         checked: true,
                         label: "Checked"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
                         disabled: true,
                         label: "Disabled"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -676,7 +675,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         label: "Disabled"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -689,7 +688,7 @@ class CornflowerBlueDemo {
                         labelside: 'right',
                         label: "Normal"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -697,7 +696,7 @@ class CornflowerBlueDemo {
                         labelside: 'right',
                         label: "Toggled"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -705,7 +704,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         label: "Disabled"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -714,7 +713,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         label: "Disabled"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -727,7 +726,7 @@ class CornflowerBlueDemo {
                         label: "Normal",
                         style: "round"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -735,7 +734,7 @@ class CornflowerBlueDemo {
                         label: "Toggled",
                         style: "round"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -743,7 +742,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "round"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -752,7 +751,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "round"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -765,7 +764,7 @@ class CornflowerBlueDemo {
                         label: "Normal",
                         style: "check"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -773,7 +772,7 @@ class CornflowerBlueDemo {
                         label: "Toggled",
                         style: "check"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -781,7 +780,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "check"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -790,7 +789,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "check"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -803,7 +802,7 @@ class CornflowerBlueDemo {
                         label: "Normal",
                         style: "switch"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -811,7 +810,7 @@ class CornflowerBlueDemo {
                         label: "Toggled",
                         style: "switch"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -819,7 +818,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "switch"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -828,7 +827,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "switch"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -841,7 +840,7 @@ class CornflowerBlueDemo {
                         label: "Normal",
                         style: "toggle"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -849,7 +848,7 @@ class CornflowerBlueDemo {
                         label: "Toggled",
                         style: "toggle"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -857,7 +856,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "toggle"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
@@ -866,7 +865,7 @@ class CornflowerBlueDemo {
                         label: "Disabled",
                         style: "toggle"
                     }).container
-                        .click(function(e) { me.dumpConfig($(this).data('self')); })
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -883,40 +882,23 @@ class CornflowerBlueDemo {
         this.demobox.append($('<h4 />').html("Complex Form"));
 
         let f = new SimpleForm({
-            urlaction: './index.html',
             instructions: {
                 icon: 'help-circle',
                 instructions: [
-                    "Line one of instructions.",
-                    "Vestibulum id ligula porta felis euismod semper.",
-                    "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit."
+                    "Enter your username and password."
                 ]
             },
             elements: [
-                new RadioGroup({
-                    label: "Favorite Taylor Swift Song",
-                    name: "tswift",
-                    options: [
-                        { label: "Blank Space", value: "blank_space" },
-                        { label: "Shake it Off", value: "shake_off", checked: true },
-                        { label: "Out of the Woods", value: "out_of_woods" },
-                        { label: "...Ready For It?", value: "ready_for_t" },
-                    ]
-
-                }),
-                new TextArea({
-                    label: "Text Area",
-                    required: true
-                }),
                 new EmailField({
                     label: "Email",
                     autocomplete: 'off',
-                    counter: 'sky',
                     title: "Your email address",
                     required: true
                 }),
                 new PasswordInput({
                     label: "Password",
+                    forceconstraints: false,
+                    placeholder: "Enter your password.",
                     required: true
                 }),
                 new BooleanToggle({
@@ -924,18 +906,18 @@ class CornflowerBlueDemo {
                     labelside: 'right'
                 })
             ],
-            onsubmit: function() {
+            handler: function() {
                 Growler.growl('Submit button clicked', "Clickify");
             },
             actions: [
                 new ConstructiveButton({
                     text: "Login",
-                    icon: "check",
-                    action: function() {
-                        f.submit();
-                    }
+                    icon: "lock-open",
+                    hot: true,
+                    submits: true,
+                    disabled: true  // No action needed
                 }),
-                new SimpleButton({ text: "Something Else" }),
+                new SimpleButton({ text: "Create Account", mute: true }),
                 new DestructiveButton({ text: "Cancel", mute: true }),
             ]
         });

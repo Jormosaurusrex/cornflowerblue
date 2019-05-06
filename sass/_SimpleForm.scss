@@ -1,11 +1,10 @@
 form {
-  margin: 1em 0 1em 0;
+  margin: 0;
   border: .1em solid var(--form-border-color);
   background-color: var(--form-background-color);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  //box-shadow: 0 0 2em .2em rgba(150, 150, 150, 0.2);
   div.header {
     flex-grow: 1;
     div.instructions {
