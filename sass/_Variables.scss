@@ -203,7 +203,6 @@
   // Checkbox keys
   --checkbox-toggle-chrome-color: var(--light);
   --checkbox-toggle-chrome-hovermark-color: var(--focus-color);
-
   --checkbox-border-color: var(--grey-dark);
   --checkbox-focus-color: var(--focus-color);
   --checkbox-checked-border-color: var(--grey-dark);
@@ -263,13 +262,13 @@
   // Form keys
   --form-background-color: transparent;
   --form-border-color: transparent;
-  --form-actions-background-color: var(--ultralight);
-  --form-actions-border-color: var(--grey-medium);
   --form-side-padding: 0;
   --form-elements-top-padding: .5em;
-  --form-elements-bottom-padding: 2em;
+  --form-elements-bottom-padding: .5em;
   --form-actions-top-padding: 0;
   --form-actions-bottom-padding: .5em;
+  --form-actions-background-color: var(--ultralight);
+  --form-actions-border-color: var(--light);
 
   --form-shade-background-color: var(--white-half);
   --form-shade-border-color: var(--white-half);
@@ -284,6 +283,7 @@
   --input-default-text-color: var(--grey-darker);
   --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);
+
   --input-disabled-background-color: var(--disabled-base-color);
   --input-disabled-border-color: var(--disabled-highlight-color);
   --input-disabled-text-color: var(--disabled-highlight-color);
@@ -316,6 +316,7 @@
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
 
+  // Select menu inputs
   --selectmenu-menu-background-color: var(--ultralight);
   --selectmenu-menu-alternate-background-color: var(--morelight);
   --selectmenu-menu-item-hover-background-color: var(--focus-color);

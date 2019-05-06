@@ -201,13 +201,13 @@
   --resultsbox-warning-stripes: var(--warning-stripes);
   --form-background-color: transparent;
   --form-border-color: transparent;
-  --form-actions-background-color: var(--ultralight);
-  --form-actions-border-color: var(--grey-medium);
   --form-side-padding: 0;
   --form-elements-top-padding: .5em;
-  --form-elements-bottom-padding: 2em;
+  --form-elements-bottom-padding: .5em;
   --form-actions-top-padding: 0;
   --form-actions-bottom-padding: .5em;
+  --form-actions-background-color: var(--ultralight);
+  --form-actions-border-color: var(--light);
   --form-shade-background-color: var(--white-half);
   --form-shade-border-color: var(--white-half);
   --form-shade-icon-color: var(--blue);
@@ -1612,7 +1612,7 @@ form {
     padding-left: var(--form-side-padding); }
     form div.elements div.input-container,
     form div.elements div.textarea-container {
-      margin: 10px 0 10px 0; }
+      margin: 1em 0 1em 0; }
   form div.actions {
     z-index: 1;
     flex-grow: 1;
@@ -1765,9 +1765,18 @@ div.instructions {
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
-    padding: .3em 1.2em 1.2em 1.2em;
+    padding: 0 1.2em 0 1.2em;
     color: var(--instructions-text-color);
     text-shadow: var(--instructions-text-shadow); }
+  div.instructions.size-1 span.icon {
+    font-size: 24pt;
+    margin-right: .5em; }
+  div.instructions.size-2 span.icon {
+    font-size: 40pt;
+    margin-right: .5em; }
+  div.instructions.size-3 span.icon {
+    font-size: 60pt;
+    margin-right: .2em; }
 
 div.messagebox {
   margin: 1em 0 1em 0;

@@ -55,7 +55,7 @@ class SimpleForm {
                     this.handlercallback(results);
                     this.container.removeClass('shaded');
                 } else {
-                    this.defaultFormCallback(results);
+                    this.handleResults(results);
                 }
             } else if ((this.handler) && (typeof this.handler === 'string')) {
                 this.form[0].submit();
@@ -99,20 +99,17 @@ class SimpleForm {
         }
     }
 
-    defaultFormCallback(results) {
-        this.messagebox = new MessageBox(results);
-        this.headerbox.append(this.messagebox.container);
-
-        this.container.removeClass('shaded');
-
-    }
-
-
+    /**
+     * This is the default form results handler
+     * @param results the results object to be managed
+     */
     handleResults(results) {
         if (this.messagebox) { this.messagebox.remove(); }
-        this.messagebox = new MessageBox(results);
-        this.container.prepend(this.messagebox.container);
+        this.messagebox = new MessageBox(results).container;
+        this.headerbox.append(this.messagebox);
+        this.container.removeClass('shaded');
     }
+
     /**
      * This runs when the all elements in the form are valid.
      * It will enable and heat all elements in this.submittors().

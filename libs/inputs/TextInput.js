@@ -273,6 +273,10 @@ class TextInput {
                 } else {
                     me.container.removeClass('filled');
                 }
+                if ((me.form) && (me.required) // If this is the only thing required, tell the form.
+                    && (($(this).val().length === 0) || ($(this).val().length === 1))) { // Only these two lengths matter
+                    if (me.form) { me.form.validate(); }
+                }
                 if ((e.keyCode === 13) // Return key
                     && (me.onreturn) && (typeof me.onreturn === 'function')) {
                     e.preventDefault();
@@ -393,9 +397,6 @@ class TextInput {
         return this._container;
     }
     set container(container) { this._container = container; }
-
-    get countchars() { return this._countchars; }
-    set countchars(countchars) { this._countchars = countchars; }
 
     get counter() { return this.config.counter; }
     set counter(counter) { this.config.counter = counter; }

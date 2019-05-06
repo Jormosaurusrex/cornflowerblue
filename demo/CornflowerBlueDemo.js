@@ -889,13 +889,12 @@ class CornflowerBlueDemo {
                 ]
             },
             elements: [
-                new TextInput({
+                new EmailField({
                     label: "Email",
                     autocomplete: 'off',
                     title: "Your email address",
                     required: true
                 }),
-                /*
                 new PasswordInput({
                     label: "Password",
                     forceconstraints: false,
@@ -906,8 +905,6 @@ class CornflowerBlueDemo {
                     label: "Remember Me",
                     labelside: 'right'
                 })
-                */
-
             ],
             handler: function() {
                 return {

@@ -37,6 +37,8 @@ class InstructionBox {
                 $list.append($('<li>').html(text));
             }
             this.container.append($list);
+            // Apply specific style based on how many lines there are
+            this.container.addClass(`size-${this.instructions.length}`);
         }
     }
 
