@@ -23,7 +23,7 @@ div.textarea-container {
       font-variant: normal;
       text-transform: none;
       line-height: 1em;
-      content: '\36'; // checkmark
+      content: '\54'; // circle checkmark
       font-size: 20pt;
       color: var(--input-status-icon-color);
       text-shadow: var(--input-status-icon-text-shadow);
@@ -104,7 +104,7 @@ div.textarea-container {
         background-color: var(--input-status-dirty-background-color);
         text-shadow: var(--input-status-dirty-icon-text-shadow);
         color: var(--input-status-dirty-icon-color);
-        content: '\36';
+        content: '\54';
       }
     }
     &.active {

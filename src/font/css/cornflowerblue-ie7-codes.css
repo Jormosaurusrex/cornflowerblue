@@ -50,3 +50,5 @@
 .cfb-warn-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x51;&nbsp;'); }
 .cfb-warn-hex { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x52;&nbsp;'); }
 .cfb-warn-triangle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x53;&nbsp;'); }
+.cfb-check-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x54;&nbsp;'); }
+.cfb-echx-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x55;&nbsp;'); }

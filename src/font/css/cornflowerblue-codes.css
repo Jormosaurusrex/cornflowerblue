@@ -50,3 +50,5 @@
 .cfb-warn-circle:before { content: '\51'; } /* 'Q' */
 .cfb-warn-hex:before { content: '\52'; } /* 'R' */
 .cfb-warn-triangle:before { content: '\53'; } /* 'S' */
+.cfb-check-circle:before { content: '\54'; } /* 'T' */
+.cfb-echx-circle:before { content: '\55'; } /* 'U' */

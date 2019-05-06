@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?46233299');
-  src: url('../font/cornflowerblue.eot?46233299#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?46233299') format('woff2'),
-       url('../font/cornflowerblue.woff?46233299') format('woff'),
-       url('../font/cornflowerblue.ttf?46233299') format('truetype'),
-       url('../font/cornflowerblue.svg?46233299#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?38757410');
+  src: url('../font/cornflowerblue.eot?38757410#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?38757410') format('woff2'),
+       url('../font/cornflowerblue.woff?38757410') format('woff'),
+       url('../font/cornflowerblue.ttf?38757410') format('truetype'),
+       url('../font/cornflowerblue.svg?38757410#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?46233299#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?38757410#cornflowerblue') format('svg');
   }
 }
 */
@@ -106,3 +106,5 @@
 .cfb-warn-circle:before { content: '\51'; } /* 'Q' */
 .cfb-warn-hex:before { content: '\52'; } /* 'R' */
 .cfb-warn-triangle:before { content: '\53'; } /* 'S' */
+.cfb-check-circle:before { content: '\54'; } /* 'T' */
+.cfb-echx-circle:before { content: '\55'; } /* 'U' */

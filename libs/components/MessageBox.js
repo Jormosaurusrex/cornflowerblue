@@ -14,7 +14,7 @@ class MessageBox {
             warningstitle: "Warning",
             erroricon: 'warn-hex', // If present, will be displayed large next to texts
             warningicon : 'warn-triangle', // If present, will be displayed large next to texts
-            successicon: 'check', // If present, will be displayed large next to texts
+            successicon: 'check-circle', // If present, will be displayed large next to texts
             classes: [] //Extra css classes to apply
         };
     }
