@@ -56,12 +56,14 @@ div.messagebox {
         color: var(--resultsbox-default-text-color);
       }
       &.size-1 {
+        align-items: center;
         span.icon {
           font-size: 24pt;
           margin-right: .5em;
         }
       }
       &.size-2 {
+        align-items: center;
         span.icon {
           font-size: 40pt;
           margin-right: .5em;

@@ -9,9 +9,9 @@ class MessageBox {
             errors: null, // array of errors
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings
-            errorstitle: "Error",
+            errorstitle: null,
             successtitle: null,
-            warningstitle: "Warning",
+            warningstitle: null,
             erroricon: 'warn-hex', // If present, will be displayed large next to texts
             warningicon : 'warn-triangle', // If present, will be displayed large next to texts
             successicon: 'check-circle', // If present, will be displayed large next to texts

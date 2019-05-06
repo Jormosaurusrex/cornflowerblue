@@ -1776,12 +1776,16 @@ div.instructions {
     padding: 0 1.2em 0 1.2em;
     color: var(--instructions-text-color);
     text-shadow: var(--instructions-text-shadow); }
-  div.instructions.size-1 span.icon {
-    font-size: 24pt;
-    margin-right: .5em; }
-  div.instructions.size-2 span.icon {
-    font-size: 40pt;
-    margin-right: .5em; }
+  div.instructions.size-1 {
+    align-items: center; }
+    div.instructions.size-1 span.icon {
+      font-size: 24pt;
+      margin-right: .5em; }
+  div.instructions.size-2 {
+    align-items: center; }
+    div.instructions.size-2 span.icon {
+      font-size: 40pt;
+      margin-right: .5em; }
   div.instructions.size-3 span.icon {
     font-size: 50pt;
     margin-right: .2em; }
@@ -1840,12 +1844,16 @@ div.messagebox {
         padding: 0 1.2em 0 1.2em;
         text-shadow: var(--resultsbox-text-shadow);
         color: var(--resultsbox-default-text-color); }
-      div.messagebox div.box div.lbox.size-1 span.icon {
-        font-size: 24pt;
-        margin-right: .5em; }
-      div.messagebox div.box div.lbox.size-2 span.icon {
-        font-size: 40pt;
-        margin-right: .5em; }
+      div.messagebox div.box div.lbox.size-1 {
+        align-items: center; }
+        div.messagebox div.box div.lbox.size-1 span.icon {
+          font-size: 24pt;
+          margin-right: .5em; }
+      div.messagebox div.box div.lbox.size-2 {
+        align-items: center; }
+        div.messagebox div.box div.lbox.size-2 span.icon {
+          font-size: 40pt;
+          margin-right: .5em; }
       div.messagebox div.box div.lbox.size-3 span.icon {
         font-size: 50pt;
         margin-right: .2em; }
