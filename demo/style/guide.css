@@ -891,8 +891,7 @@ textarea {
     border-top: none;
     border-left: none;
     border-right: none;
-    padding: 10px;
-    padding-left: 0; }
+    padding: 1em 1em 1em 0; }
     input[type="text"].mute::placeholder,
     input[type="number"].mute::placeholder,
     input[type="password"].mute::placeholder,
@@ -924,12 +923,12 @@ textarea {
   textarea:focus {
     height: 8em; }
   textarea.mute {
-    padding: 10px 10px 10px 20px;
+    padding: 1em 1em 1em 2em;
     border-left: 2px solid var(--input-default-border-color);
     border-bottom: none; }
     textarea.mute:focus {
       border-left-color: var(--focus-color);
-      box-shadow: inset 10px 0 0 var(--focus-color); }
+      box-shadow: inset 1em 0 0 var(--focus-color); }
 
 div.select-container div.trigger {
   transition: all .2s;
@@ -1620,7 +1619,8 @@ form {
     padding-left: var(--form-side-padding); }
     form div.elements div.input-container,
     form div.elements div.textarea-container {
-      margin: 1em 0 1em 0; }
+      margin: 1em 0 1em 0;
+      min-width: var(--paragraph-measure); }
   form div.actions {
     z-index: 1;
     flex-grow: 1;
@@ -1992,24 +1992,23 @@ ul.tabbar {
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: stretch;
-  padding: 0;
   border-radius: var(--tabbar-border-radius);
   z-index: 2;
   background-color: var(--tabbar-background-color);
-  box-shadow: var(--tabbar-box-shadow); }
+  box-shadow: var(--tabbar-box-shadow);
+  overflow: hidden; }
   ul.tabbar li {
     display: flex;
     flex-direction: column;
     justify-content: center;
     font-size: 110%;
-    padding-left: 1.2em;
-    padding-right: 1.2em;
-    margin-left: 2em;
-    margin-right: 2em;
+    padding: 0 1em 0 1em;
+    margin: 0 1em 0 1em;
     border-bottom: .3em solid transparent;
     cursor: pointer;
+    white-space: nowrap;
     background-color: var(--tabbar-tab-background-color);
     color: var(--tabbar-tab-text-color);
     text-shadow: var(--tabbar-tab-text-shadow); }

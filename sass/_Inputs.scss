@@ -45,8 +45,7 @@ textarea {
     border-top: none;
     border-left: none;
     border-right: none;
-    padding: 10px;
-    padding-left: 0;
+    padding: 1em 1em 1em 0;
     &::placeholder {
       color: var(--label-color);
       text-shadow:var(--label-text-shadow);
@@ -74,12 +73,12 @@ textarea {
     height: 8em;
   }
   &.mute {
-    padding: 10px 10px 10px 20px;
+    padding: 1em 1em 1em 2em;
     border-left: 2px solid var(--input-default-border-color);
     border-bottom: none;
     &:focus {
       border-left-color: var(--focus-color);
-      box-shadow: inset 10px 0 0 var(--focus-color);
+      box-shadow: inset 1em 0 0 var(--focus-color);
     }
   }
 }
