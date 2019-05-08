@@ -193,7 +193,7 @@
 
   // Button menu elements
   --button-menu-box-shadow: var(--panel-shadow);
-  --button-menu-background-color: var(--light);
+  --button-menu-background-color: var(--ultralight);
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);
@@ -341,8 +341,7 @@
 
   --tabbar-hover-tab-background-color: var(--focus-color);
   --tabbar-hover-tab-highlight-color: var(--focus-color);
-  --tabbar-hover-tab-text-color: var(--light);
+  --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
-
 
 }
