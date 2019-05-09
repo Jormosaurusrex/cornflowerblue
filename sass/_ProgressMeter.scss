@@ -1,0 +1,55 @@
+div.progressmeter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 1em 0 1em 0;
+  div.pline {
+    height: .2em;
+    padding: 0;
+    background-color: var(--progressmeter-marker-unfilled-line-color);
+    margin-top: -1.1em;
+    z-index: 1;
+  }
+  div.threshholds {
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    //margin-bottom: -1em;
+
+    div.tbox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      div.name {
+        color: var(--progressmeter-step-name-color);
+        font-weight: bold;
+        margin: 0;
+      }
+      div.points {
+        color: var(--progressmeter-step-points-color);
+        font-size: 110%;
+        margin: 0 0 1em 0;
+      }
+      div.marker {
+        margin: 0;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: var(--progressmeter-marker-background-color);
+        border: .3em solid var(--progressmeter-marker-border-color);
+      }
+      &.current {
+        div.marker {
+          background-color: var(--progressmeter-marker-current-background-color);
+          border-color: var(--progressmeter-marker-current-border-color);
+        }
+      }
+    }
+
+  }
+
+
+}

@@ -88,15 +88,6 @@
   --disabled-base-color: var(--light);
   --disabled-base-color-light: var(--morelight);
   --disabled-highlight-color: var(--grey-medium);
-  --paragraph-text-color: var(--grey-dark);
-  --paragraph-measure: var(--standard-measure);
-  --paragraph-shadow: var(--text-shadow);
-  --link-link-color: var(--focus-color);
-  --link-active-color: var(--focus-color);
-  --link-hover-color: var(--focus-color);
-  --link-visited-color: var(--focus-color);
-  --link-color: var(--focus-color);
-  --link-text-shadow: var(--on-white-text-shadow);
   --elements-headers-h1-text-color: var(--grey-darkest);
   --elements-headers-h1-text-shadow: none;
   --elements-headers-h1-text-transform: none;
@@ -127,10 +118,6 @@
   --elements-headers-h6-text-transform: none;
   --elements-headers-h6-background-color: transparent;
   --elements-headers-h6-border-color: var(--grey-medium);
-  --label-color: var(--grey-dark);
-  --label-text-shadow: var(--text-shadow);
-  --label-required-marker-color: var(--required-color);
-  --label-text-transform: none;
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--standard-color);
   --button-default-text-color: var(--button-default-color);
@@ -159,17 +146,6 @@
   --checkbox-checkmark-checked-background-color: var(--checkbox-focus-color);
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
   --checkbox-check-text-shadow: var(--text-shadow-heavier);
-  --growler-core-color: var(--blue);
-  --growler-max-width: 300px;
-  --growler-box-shadow: var(--panel-shadow);
-  --growler-default-text-color: var(--grey-darkest);
-  --growler-default-background-color: var(--light);
-  --growler-default-border-color: var(--growler-core-color);
-  --growler-notitle-closebutton-color: var(--grey-medium);
-  --growler-title-text-color: var(--light);
-  --growler-title-closebutton-color: var(--growler-title-text-color);
-  --growler-title-background-color: var(--growler-core-color);
-  --growler-title-text-shadow: var(--text-shadow);
   --dialog-background-color: var(--ultralight);
   --dialog-box-shadow: var(--panel-shadow);
   --dialog-header-background-color: var(--grey-dark);
@@ -179,26 +155,6 @@
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
-  --instructions-background-color: var(--morelight);
-  --instructions-border-color: var(--light);
-  --instructions-text-color: var(--grey-darkest);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--grey-medium);
-  --resultsbox-margin: 0;
-  --resultsbox-background-color: var(--ultralight);
-  --resultsbox-icon-color: var(--ultralight);
-  --resultsbox-icon-tex-shadow: var(--text-shadow);
-  --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --resultsbox-header-text-color: var(--ultralight);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-success-color-base: var(--success-color);
-  --resultsbox-error-color-base: var(--error-color);
-  --resultsbox-warning-color-base: var(--warning-color);
-  --resultsbox-success-stripes: var(--success-stripes);
-  --resultsbox-error-stripes: var(--error-stripes);
-  --resultsbox-warning-stripes: var(--warning-stripes);
   --form-background-color: transparent;
   --form-border-color: transparent;
   --form-side-padding: 0;
@@ -214,6 +170,17 @@
   --form-shade-icon-shadow: var(--text-shadow);
   --form-shade-text-color: var(--blue);
   --form-shade-text-shadow: var(--text-shadow);
+  --growler-core-color: var(--blue);
+  --growler-max-width: 300px;
+  --growler-box-shadow: var(--panel-shadow);
+  --growler-default-text-color: var(--grey-darkest);
+  --growler-default-background-color: var(--light);
+  --growler-default-border-color: var(--growler-core-color);
+  --growler-notitle-closebutton-color: var(--grey-medium);
+  --growler-title-text-color: var(--light);
+  --growler-title-closebutton-color: var(--growler-title-text-color);
+  --growler-title-background-color: var(--growler-core-color);
+  --growler-title-text-shadow: var(--text-shadow);
   --input-default-background-color: var(--ultralight);
   --input-default-border-color: var(--grey-medium);
   --input-default-text-color: var(--grey-darker);
@@ -246,6 +213,46 @@
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --instructions-background-color: var(--morelight);
+  --instructions-border-color: var(--light);
+  --instructions-text-color: var(--grey-darkest);
+  --instructions-text-shadow: var(--text-shadow);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--grey-medium);
+  --label-color: var(--grey-dark);
+  --label-text-shadow: var(--text-shadow);
+  --label-required-marker-color: var(--required-color);
+  --label-text-transform: none;
+  --link-link-color: var(--focus-color);
+  --link-active-color: var(--focus-color);
+  --link-hover-color: var(--focus-color);
+  --link-visited-color: var(--focus-color);
+  --link-color: var(--focus-color);
+  --link-text-shadow: var(--on-white-text-shadow);
+  --paragraph-text-color: var(--grey-dark);
+  --paragraph-measure: var(--standard-measure);
+  --paragraph-shadow: var(--text-shadow);
+  --progressmeter-marker-unfilled-line-color: var(--grey-medium);
+  --progressmeter-marker-background-color: var(--grey-darkest);
+  --progressmeter-marker-border-color: var(--grey-medium);
+  --progressmeter-marker-current-background-color: var(--focus-color);
+  --progressmeter-marker-current-border-color: var(--grey-medium);
+  --progressmeter-step-name-color: var(--grey-darker);
+  --progressmeter-step-points-color: var(--grey-dark);
+  --resultsbox-margin: 0;
+  --resultsbox-background-color: var(--ultralight);
+  --resultsbox-icon-color: var(--ultralight);
+  --resultsbox-icon-tex-shadow: var(--text-shadow);
+  --resultsbox-default-text-color: var(--grey-darkest);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --resultsbox-header-text-color: var(--ultralight);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-success-color-base: var(--success-color);
+  --resultsbox-error-color-base: var(--error-color);
+  --resultsbox-warning-color-base: var(--warning-color);
+  --resultsbox-success-stripes: var(--success-stripes);
+  --resultsbox-error-stripes: var(--error-stripes);
+  --resultsbox-warning-stripes: var(--warning-stripes);
   --selectmenu-menu-background-color: var(--ultralight);
   --selectmenu-menu-alternate-background-color: var(--morelight);
   --selectmenu-menu-item-hover-background-color: var(--focus-color);
@@ -292,6 +299,15 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box; }
+
+textarea, input, button, select {
+  outline: none; }
+
+html,
+body {
+  height: 100%;
+  width: 100vw;
+  min-width: 100vw; }
 
 h1 {
   font-weight: normal;
@@ -1555,6 +1571,47 @@ div.radiogroup ul {
       display: inline-block;
       margin: 0;
       text-shadow: none; }
+
+div.progressmeter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 1em 0 1em 0; }
+  div.progressmeter div.pline {
+    height: .2em;
+    padding: 0;
+    background-color: var(--progressmeter-marker-unfilled-line-color);
+    margin-top: -1.1em;
+    z-index: 1; }
+  div.progressmeter div.threshholds {
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around; }
+    div.progressmeter div.threshholds div.tbox {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      div.progressmeter div.threshholds div.tbox div.name {
+        color: var(--progressmeter-step-name-color);
+        font-weight: bold;
+        margin: 0; }
+      div.progressmeter div.threshholds div.tbox div.points {
+        color: var(--progressmeter-step-points-color);
+        font-size: 110%;
+        margin: 0 0 1em 0; }
+      div.progressmeter div.threshholds div.tbox div.marker {
+        margin: 0;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: var(--progressmeter-marker-background-color);
+        border: 0.3em solid var(--progressmeter-marker-border-color); }
+      div.progressmeter div.threshholds div.tbox.current div.marker {
+        background-color: var(--progressmeter-marker-current-background-color);
+        border-color: var(--progressmeter-marker-current-border-color); }
 
 form {
   margin: 0;

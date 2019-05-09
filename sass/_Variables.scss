@@ -116,19 +116,6 @@
   --disabled-base-color-light: var(--morelight);
   --disabled-highlight-color: var(--grey-medium);
 
-  --paragraph-text-color: var(--grey-dark);
-  --paragraph-measure: var(--standard-measure);
-  --paragraph-shadow: var(--text-shadow);
-  //--paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
-  //--paragraph-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
-
-  // Links
-  --link-link-color: var(--focus-color);
-  --link-active-color: var(--focus-color);
-  --link-hover-color: var(--focus-color);
-  --link-visited-color: var(--focus-color);
-  --link-color: var(--focus-color);
-  --link-text-shadow: var(--on-white-text-shadow);
 
   // Headers
   --elements-headers-h1-text-color: var(--grey-darkest);
@@ -167,12 +154,6 @@
   --elements-headers-h6-background-color: transparent;
   --elements-headers-h6-border-color: var(--grey-medium);
 
-  // Labels
-  --label-color: var(--grey-dark);
-  --label-text-shadow: var(--text-shadow);
-  --label-required-marker-color: var(--required-color);
-  --label-text-transform: none;
-
   // Button keys
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--standard-color);
@@ -180,11 +161,8 @@
   --button-hover-text-color: var(--hot-text-color);
   --button-hover-highlight-color: var(--white-half);
   --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
-  //--button-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 -.3em 0 0 var(--white-half);
   --button-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
 
-
-  //--button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 -.1em 0 0 var(--button-hover-highlight-color), inset 0 -.1em 0 0 var(--button-hover-highlight-color);
   --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
   --button-font-family: var(--default-font-family);
   --button-text-shadow: var(--text-shadow);
@@ -211,19 +189,6 @@
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
   --checkbox-check-text-shadow: var(--text-shadow-heavier);
 
-  // Growler keys
-  --growler-core-color: var(--blue);
-  --growler-max-width: 300px;
-  --growler-box-shadow: var(--panel-shadow);
-  --growler-default-text-color: var(--grey-darkest);
-  --growler-default-background-color: var(--light);
-  --growler-default-border-color: var(--growler-core-color);
-  --growler-notitle-closebutton-color: var(--grey-medium);
-  --growler-title-text-color: var(--light);
-  --growler-title-closebutton-color: var(--growler-title-text-color);
-  --growler-title-background-color: var(--growler-core-color);
-  --growler-title-text-shadow: var(--text-shadow);
-
   // Dialog keys
   --dialog-background-color: var(--ultralight);
   --dialog-box-shadow: var(--panel-shadow);
@@ -234,30 +199,6 @@
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
-
-  // Instruction box keys
-  --instructions-background-color: var(--morelight);
-  --instructions-border-color: var(--light);
-  --instructions-text-color: var(--grey-darkest);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--grey-medium);
-
-  // Results box keys
-  --resultsbox-margin: 0;
-  --resultsbox-background-color: var(--ultralight);
-  --resultsbox-icon-color: var(--ultralight);
-  --resultsbox-icon-tex-shadow: var(--text-shadow);
-  --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --resultsbox-header-text-color: var(--ultralight);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-success-color-base: var(--success-color);
-  --resultsbox-error-color-base: var(--error-color);
-  --resultsbox-warning-color-base: var(--warning-color);
-  --resultsbox-success-stripes: var(--success-stripes);
-  --resultsbox-error-stripes: var(--error-stripes);
-  --resultsbox-warning-stripes: var(--warning-stripes);
 
   // Form keys
   --form-background-color: transparent;
@@ -276,6 +217,19 @@
   --form-shade-icon-shadow: var(--text-shadow);
   --form-shade-text-color: var(--blue);
   --form-shade-text-shadow: var(--text-shadow);
+
+  // Growler keys
+  --growler-core-color: var(--blue);
+  --growler-max-width: 300px;
+  --growler-box-shadow: var(--panel-shadow);
+  --growler-default-text-color: var(--grey-darkest);
+  --growler-default-background-color: var(--light);
+  --growler-default-border-color: var(--growler-core-color);
+  --growler-notitle-closebutton-color: var(--grey-medium);
+  --growler-title-text-color: var(--light);
+  --growler-title-closebutton-color: var(--growler-title-text-color);
+  --growler-title-background-color: var(--growler-core-color);
+  --growler-title-text-shadow: var(--text-shadow);
 
   // Input
   --input-default-background-color: var(--ultralight);
@@ -315,6 +269,61 @@
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+
+  // Instruction box keys
+  --instructions-background-color: var(--morelight);
+  --instructions-border-color: var(--light);
+  --instructions-text-color: var(--grey-darkest);
+  --instructions-text-shadow: var(--text-shadow);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--grey-medium);
+
+  // Labels
+  --label-color: var(--grey-dark);
+  --label-text-shadow: var(--text-shadow);
+  --label-required-marker-color: var(--required-color);
+  --label-text-transform: none;
+
+  // Links
+  --link-link-color: var(--focus-color);
+  --link-active-color: var(--focus-color);
+  --link-hover-color: var(--focus-color);
+  --link-visited-color: var(--focus-color);
+  --link-color: var(--focus-color);
+  --link-text-shadow: var(--on-white-text-shadow);
+
+  // Paragraph
+  --paragraph-text-color: var(--grey-dark);
+  --paragraph-measure: var(--standard-measure);
+  --paragraph-shadow: var(--text-shadow);
+  //--paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
+  //--paragraph-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+
+  // Progressmeter
+  --progressmeter-marker-unfilled-line-color: var(--grey-medium);
+  --progressmeter-marker-background-color: var(--grey-darkest);
+  --progressmeter-marker-border-color: var(--grey-medium);
+  --progressmeter-marker-current-background-color: var(--focus-color);
+  --progressmeter-marker-current-border-color: var(--grey-medium);
+  --progressmeter-step-name-color: var(--grey-darker);
+  --progressmeter-step-points-color: var(--grey-dark);
+
+  // Results box keys
+  --resultsbox-margin: 0;
+  --resultsbox-background-color: var(--ultralight);
+  --resultsbox-icon-color: var(--ultralight);
+  --resultsbox-icon-tex-shadow: var(--text-shadow);
+  --resultsbox-default-text-color: var(--grey-darkest);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --resultsbox-header-text-color: var(--ultralight);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-success-color-base: var(--success-color);
+  --resultsbox-error-color-base: var(--error-color);
+  --resultsbox-warning-color-base: var(--warning-color);
+  --resultsbox-success-stripes: var(--success-stripes);
+  --resultsbox-error-stripes: var(--error-stripes);
+  --resultsbox-warning-stripes: var(--warning-stripes);
+
 
   // Select menu inputs
   --selectmenu-menu-background-color: var(--ultralight);
