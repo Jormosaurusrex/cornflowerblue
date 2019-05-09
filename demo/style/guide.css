@@ -1052,9 +1052,9 @@ button {
   border: none;
   border-radius: var(--button-border-radius); }
   button span.icon {
-    margin: 0 0 0 .2em; }
-  button.righticon span.icon {
     margin: 0 .2em 0 0; }
+  button.righticon span.icon {
+    margin: 0 0 0 .2em; }
   button:hover, button:focus, button:active {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
@@ -1153,6 +1153,8 @@ button {
     font-size: 120%;
     line-height: 1;
     flex-direction: column; }
+    button.square span.icon, button.circle span.icon {
+      margin: 0; }
     button.square:hover, button.square:focus, button.square:active, button.circle:hover, button.circle:focus, button.circle:active {
       text-decoration: none; }
   button.circle {
@@ -2095,15 +2097,10 @@ ul.tabbar {
 
 body {
   background-color: var(--grey-darkest);
-  min-height: 100vw;
-  width: 100vw;
-  min-width: 100vw;
   font-family: var(--default-font-family);
   font-size: var(--default-font-size); }
 
 div.container {
-  height: 100%;
-  min-height: 100%;
   margin-left: auto;
   margin-right: auto;
   min-width: 50%;
