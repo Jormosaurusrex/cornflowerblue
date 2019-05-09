@@ -1,4 +1,6 @@
 div.select-container {
+  position: relative;
+
   div.trigger {
     transition: all .2s;
     box-sizing: border-box;
@@ -45,6 +47,11 @@ div.select-container {
     border-top: none;
     overflow: auto;
     max-height: 10em;
+    z-index: 201;
+    margin: 0;
+    padding: 0;
+
+
     li {
       display: flex;
       flex-direction: row;
