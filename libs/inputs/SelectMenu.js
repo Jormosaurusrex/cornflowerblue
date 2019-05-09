@@ -158,9 +158,6 @@ class SelectMenu extends RadioGroup {
                     me.onchange(e, me);
                 }
             })
-            .click(function(e){
-                console.log('adfadfaf')
-            })
             .attr('role', 'radio');
 
         let $opLabel = $('<label />')
