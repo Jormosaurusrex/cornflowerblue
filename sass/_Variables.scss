@@ -117,43 +117,6 @@
   --disabled-highlight-color: var(--grey-medium);
 
 
-  // Headers
-  --elements-headers-h1-text-color: var(--grey-darkest);
-  --elements-headers-h1-text-shadow: none;
-  --elements-headers-h1-text-transform: none;
-  --elements-headers-h1-background-color: transparent;
-  --elements-headers-h1-border-color: var(--grey-darkest);
-
-  --elements-headers-h2-text-color: var(--grey-darker);
-  --elements-headers-h2-text-shadow: none;
-  --elements-headers-h2-text-transform: none;
-  --elements-headers-h2-background-color: transparent;
-  --elements-headers-h2-border-color: var(--grey-medium);
-
-  --elements-headers-h3-text-color: var(--grey-darker);
-  --elements-headers-h3-text-shadow: none;
-  --elements-headers-h3-text-transform: uppercase;
-  --elements-headers-h3-background-color: transparent;
-  --elements-headers-h3-border-color: var(--grey-light);
-
-  --elements-headers-h4-text-color: var(--grey-dark);
-  --elements-headers-h4-text-shadow: none;
-  --elements-headers-h4-text-transform: uppercase;
-  --elements-headers-h4-background-color: transparent;
-  --elements-headers-h4-border-color: var(--grey-light);
-
-  --elements-headers-h5-text-color: var(--grey-dark);
-  --elements-headers-h5-text-shadow: none;
-  --elements-headers-h5-text-transform: none;
-  --elements-headers-h5-background-color: transparent;
-  --elements-headers-h5-border-color: var(--grey-dark);
-
-  --elements-headers-h6-text-color: var(--grey-medium);
-  --elements-headers-h6-text-shadow: none;
-  --elements-headers-h6-text-transform: none;
-  --elements-headers-h6-background-color: transparent;
-  --elements-headers-h6-border-color: var(--grey-medium);
-
   // Button keys
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--standard-color);
@@ -230,6 +193,43 @@
   --growler-title-closebutton-color: var(--growler-title-text-color);
   --growler-title-background-color: var(--growler-core-color);
   --growler-title-text-shadow: var(--text-shadow);
+
+  // Headers
+  --headers-h1-text-color: var(--grey-darkest);
+  --headers-h1-text-shadow: none;
+  --headers-h1-text-transform: none;
+  --headers-h1-background-color: transparent;
+  --headers-h1-border-color: var(--grey-darkest);
+
+  --headers-h2-text-color: var(--grey-darker);
+  --headers-h2-text-shadow: none;
+  --headers-h2-text-transform: none;
+  --headers-h2-background-color: transparent;
+  --headers-h2-border-color: var(--grey-medium);
+
+  --headers-h3-text-color: var(--grey-darker);
+  --headers-h3-text-shadow: none;
+  --headers-h3-text-transform: uppercase;
+  --headers-h3-background-color: transparent;
+  --headers-h3-border-color: var(--grey-light);
+
+  --headers-h4-text-color: var(--grey-dark);
+  --headers-h4-text-shadow: none;
+  --headers-h4-text-transform: uppercase;
+  --headers-h4-background-color: transparent;
+  --headers-h4-border-color: var(--grey-light);
+
+  --headers-h5-text-color: var(--grey-dark);
+  --headers-h5-text-shadow: none;
+  --headers-h5-text-transform: none;
+  --headers-h5-background-color: transparent;
+  --headers-h5-border-color: var(--grey-dark);
+
+  --headers-h6-text-color: var(--grey-medium);
+  --headers-h6-text-shadow: none;
+  --headers-h6-text-transform: none;
+  --headers-h6-background-color: transparent;
+  --headers-h6-border-color: var(--grey-medium);
 
   // Input
   --input-default-background-color: var(--ultralight);

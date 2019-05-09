@@ -18,11 +18,11 @@ h1 {
   font-weight: normal;
   font-size: 2em;
   margin: .5em 0 1em 0;
-  color: var(--elements-headers-h1-text-color);
-  text-shadow: var(--elements-headers-h1-text-shadow);
-  text-transform: var(--elements-headers-h1-text-transform);
+  color: var(--headers-h1-text-color);
+  text-shadow: var(--headers-h1-text-shadow);
+  text-transform: var(--headers-h1-text-transform);
   &.inset {
-    background-color: var(--elements-headers-h1-text-color);
+    background-color: var(--headers-h1-text-color);
     color: transparent;
     text-shadow: 0 .05em .05em rgba(255,255,255,0.5);
     -webkit-background-clip: text;
@@ -34,43 +34,43 @@ h2 {
   font-weight: normal;
   font-size: 1.5em;
   margin: .5em 0 1em 0;
-  text-transform: var(--elements-headers-h2-text-transform);
-  color: var(--elements-headers-h2-text-color);
-  border-bottom: 2px solid var(--elements-headers-h2-border-color);
+  text-transform: var(--headers-h2-text-transform);
+  color: var(--headers-h2-text-color);
+  border-bottom: 2px solid var(--headers-h2-border-color);
 }
 
 h3 {
   font-weight: normal;
   font-size: 1.2em;
   margin: .5em 0 1em 0;
-  text-transform: var(--elements-headers-h3-text-transform);
-  color: var(--elements-headers-h3-text-color);
-  border-bottom:2px solid var(--elements-headers-h3-border-color);
+  text-transform: var(--headers-h3-text-transform);
+  color: var(--headers-h3-text-color);
+  border-bottom:2px solid var(--headers-h3-border-color);
 }
 
 h4 {
   font-weight: normal;
   font-size: 1em;
   margin: .5em 0 1em 0;
-  text-transform: var(--elements-headers-h4-text-transform);
-  color: var(--elements-headers-h4-text-color);
-  border-bottom:2px solid var(--elements-headers-h4-border-color);
+  text-transform: var(--headers-h4-text-transform);
+  color: var(--headers-h4-text-color);
+  border-bottom:2px solid var(--headers-h4-border-color);
 }
 
 h5 {
   font-weight: normal;
   font-size: 1em;
   margin: .5em 0 1em 0;
-  text-transform: var(--elements-headers-h5-text-transform);
-  color: var(--elements-headers-h5-text-color);
+  text-transform: var(--headers-h5-text-transform);
+  color: var(--headers-h5-text-color);
 }
 
 h6 {
   font-weight: normal;
   font-size: 1em;
   margin: .5em 0 1em 0;
-  text-transform: var(--elements-headers-h6-text-transform);
-  color: var(--elements-headers-h6-text-color);
+  text-transform: var(--headers-h6-text-transform);
+  color: var(--headers-h6-text-color);
 }
 
 p {
