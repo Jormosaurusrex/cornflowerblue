@@ -48,6 +48,7 @@
   --checkbox-checked-shadow-hover: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5), inset 0 0.3em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow: 0 0.5em 0.5em 0 rgba(0, 0, 0, 0.5);
   --panel-shadow-light: 0 0.5em 0.5em 0 rgba(0, 0, 0, 0.2);
+  --panel-shadow-light-inverse: 0 -0.5em 0.5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadow: 0 0.3em 0.5em -0.3em rgba(0, 0, 0, 0.2);
   --interior-shadow-inverse: 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 0.3em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
@@ -984,11 +985,14 @@ div.select-container {
     background-color: var(--selectmenu-menu-background-color);
     border: 0.1em solid var(--input-default-border-color);
     border-top: none;
+    padding: 0;
     overflow: auto;
     max-height: 10em;
     z-index: 201;
+    position: absolute;
     margin: 0;
-    padding: 0; }
+    box-shadow: var(--panel-shadow-light);
+    width: 100%; }
     div.select-container ul.selectmenu li {
       display: flex;
       flex-direction: row;
@@ -1015,6 +1019,9 @@ div.select-container {
         div.select-container ul.selectmenu li:hover label {
           color: var(--selectmenu-menu-item-hover-text-color);
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
+    div.select-container ul.selectmenu.vert {
+      bottom: 3.1em;
+      box-shadow: var(--panel-shadow-light-inverse); }
     div.select-container ul.selectmenu.open {
       display: flex; }
 
@@ -1666,7 +1673,6 @@ form {
     flex-wrap: nowrap;
     flex-grow: 2;
     box-sizing: border-box;
-    overflow: auto;
     padding-top: var(--form-elements-top-padding);
     padding-right: var(--form-side-padding);
     padding-bottom: var(--form-elements-bottom-padding);

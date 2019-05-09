@@ -45,13 +45,14 @@ div.select-container {
     background-color: var(--selectmenu-menu-background-color);
     border: .1em solid var(--input-default-border-color);
     border-top: none;
+    padding: 0;
     overflow: auto;
     max-height: 10em;
     z-index: 201;
+    position: absolute;
     margin: 0;
-    padding: 0;
-
-
+    box-shadow: var(--panel-shadow-light);
+    width: 100%;
     li {
       display: flex;
       flex-direction: row;
@@ -84,7 +85,10 @@ div.select-container {
         }
       }
     }
-
+    &.vert {
+      bottom: 3.1em;
+      box-shadow: var(--panel-shadow-light-inverse);
+    }
     &.open {
       display: flex;
     }
