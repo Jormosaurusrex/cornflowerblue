@@ -118,22 +118,19 @@
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
   --checkbox-check-text-shadow: var(--text-shadow-heavier);
   --dialog-background-color: var(--ultralight);
+  --dialog-border-radius: var(--border-radius);
   --dialog-box-shadow: var(--panel-shadow);
   --dialog-header-background-color: var(--grey-dark);
-  --dialog-header-text-color: var(--light);
+  --dialog-header-text-color: var(--ultralight);
   --dialog-header-text-shadow: var(--text-shadow);
   --dialog-header-border-color: var(--grey-darkest);
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
+  --dialog-window-mask-opacity: .75;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
   --form-background-color: transparent;
   --form-border-color: transparent;
-  --form-side-padding: 0;
-  --form-elements-top-padding: .5em;
-  --form-elements-bottom-padding: .5em;
-  --form-actions-top-padding: 0;
-  --form-actions-bottom-padding: .5em;
-  --form-actions-background-color: var(--ultralight);
+  --form-actions-background-color: var(--morelight);
   --form-actions-border-color: var(--light);
   --form-shade-background-color: var(--white-half);
   --form-shade-border-color: var(--white-half);
@@ -303,6 +300,10 @@
 
 textarea, input, button, select {
   outline: none; }
+
+html,
+body {
+  height: 100%; }
 
 h1 {
   font-weight: normal;
@@ -1629,7 +1630,7 @@ form {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  padding: .5em; }
+  padding: 0; }
   form div.shade {
     display: none;
     position: absolute;
@@ -1666,19 +1667,17 @@ form {
     form.shaded div.actions {
       filter: blur(3px); }
   form div.header {
-    flex-grow: 1; }
+    flex-grow: 1;
+    padding: .5em 1.5em .5em 1.5em; }
     form div.header div.instructions {
       margin: 1em 0 1em 0; }
   form div.elements {
+    padding: .5em 1.5em .5em 1.5em;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     flex-grow: 2;
-    box-sizing: border-box;
-    padding-top: var(--form-elements-top-padding);
-    padding-right: var(--form-side-padding);
-    padding-bottom: var(--form-elements-bottom-padding);
-    padding-left: var(--form-side-padding); }
+    box-sizing: border-box; }
     form div.elements div.input-container,
     form div.elements div.textarea-container {
       margin: 1em 0 1em 0;
@@ -1692,11 +1691,8 @@ form {
     justify-content: space-between;
     box-sizing: border-box;
     background-color: var(--form-actions-background-color);
-    padding-top: var(--form-actions-top-padding);
-    padding-right: var(--form-side-padding);
-    padding-bottom: var(--form-actions-bottom-padding);
-    padding-left: var(--form-side-padding);
-    border-top: 2px solid var(--form-actions-border-color); }
+    border-top: 0.1em solid var(--form-actions-border-color);
+    padding: .5em 1.5em .5em 1.5em; }
     form div.actions button {
       margin-right: 10px; }
     form div.actions button:first-child {
@@ -1949,9 +1945,9 @@ div.window-container {
     text-align: left;
     max-width: 50%;
     max-height: 90%;
-    margin: 40px auto;
+    margin: 2em auto;
     position: relative;
-    border-radius: 3px;
+    border-radius: var(--dialog-border-radius);
     overflow: hidden;
     box-shadow: var(--dialog-box-shadow);
     flex-grow: 0;
@@ -1962,30 +1958,48 @@ div.window-container {
     justify-content: flex-start;
     align-items: stretch;
     align-content: flex-start;
-    transition: all 0.5s;
-    animation-duration: .2s;
-    animation-name: dialogEntry; }
+    transition: all 0.2s;
+    animation-duration: .1s;
+    animation-name: panelFadeIn; }
     div.window-container div.dialog h2 {
       background-color: var(--dialog-header-background-color);
       color: var(--dialog-header-text-color);
       text-shadow: var(--dialog-header-text-shadow);
       margin: 0;
       font-weight: normal;
-      font-size: 16pt;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      font-size: 100%;
+      padding: .5em 1em .5em 1.5em;
       position: relative;
       width: 100%;
-      border-bottom: 1px solid var(--dialog-header-border-color);
+      border-bottom: 0.1em solid var(--dialog-header-border-color);
       box-shadow: var(--dialog-header-box-shadow);
-      z-index: 20; }
+      z-index: 20;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center; }
       div.window-container div.dialog h2 span {
-        padding-left: 10px;
-        padding-right: 10px; }
+        font-size: 150%; }
+      div.window-container div.dialog h2 button.closebutton {
+        opacity: 0.5;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        width: auto;
+        background: none;
+        border: none;
+        color: var(--dialog-header-text-color);
+        text-shadow: var(--dialog-header-text-shadow); }
+        div.window-container div.dialog h2 button.closebutton span:before {
+          margin: 0; }
+        div.window-container div.dialog h2 button.closebutton:hover {
+          opacity: 1;
+          background: none; }
     div.window-container div.dialog div.content {
       margin: 0;
       overflow: auto; }
-    div.window-container div.dialog button.closebutton {
+    div.window-container div.dialog button.closebutton2 {
       position: absolute;
       right: 0;
       top: 0;
@@ -1997,34 +2011,40 @@ div.window-container {
       border: none;
       color: var(--dialog-header-text-color);
       text-shadow: var(--dialog-header-text-shadow); }
-      div.window-container div.dialog button.closebutton:hover {
+      div.window-container div.dialog button.closebutton2:hover {
         opacity: 1;
         background: none; }
     div.window-container div.dialog.isform div.content {
       margin: 0;
-      overflow: auto; }
+      padding: 0; }
       div.window-container div.dialog.isform div.content form {
         position: relative;
         margin: 0;
-        border: 0; }
+        border: 0;
+        padding: 0; }
         div.window-container div.dialog.isform div.content form div.contentbox {
           position: relative;
           flex-grow: 1;
           overflow: auto;
-          height: 400px;
-          z-index: 10; }
+          max-height: 30%;
+          z-index: 10;
+          padding: .5em 1.5em .5em 1.5em; }
+          div.window-container div.dialog.isform div.content form div.contentbox div.header,
+          div.window-container div.dialog.isform div.content form div.contentbox div.elements {
+            padding: 0; }
         div.window-container div.dialog.isform div.content form div.actions {
-          box-shadow: var(--dialog-actions-box-shadow);
+          padding: .5em 1.5em .5em 1.5em;
           position: relative;
           flex-grow: 0;
+          flex-shrink: 0;
           z-index: 50;
-          height: 100px;
-          min-height: 100px;
-          max-height: 100px; }
+          height: 5em;
+          min-height: 5em;
+          max-height: 5em; }
 
 div.window-mask {
   background-color: var(--dialog-window-mask-color);
-  opacity: .75;
+  opacity: var(--dialog-window-mask-opacity);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -2036,14 +2056,16 @@ div.window-mask {
 
 @keyframes dialogEntry {
   0% {
+    transform: scale(4);
     opacity: 0; }
   100% {
-    opacity: 1; } }
+    opacity: 1;
+    transform: scale(1); } }
 @keyframes windowMaskEntry {
   0% {
     opacity: 0; }
   100% {
-    opacity: .6; } }
+    opacity: var(--dialog-window-mask-opacity); } }
 @keyframes panelFadeIn {
   0% {
     opacity: 0; }
@@ -2093,7 +2115,8 @@ ul.tabbar {
 
 :root {
   --tabbar-background-color: var(--light);
-  --tabbar-box-shadow: none; }
+  --tabbar-box-shadow: none;
+  --dialog-window-mask-opacity: .25; }
 
 body {
   background-color: var(--grey-darkest);
@@ -2105,6 +2128,7 @@ div.container {
   margin-right: auto;
   min-width: 50%;
   max-width: 75%;
+  min-height: 100%;
   background-color: var(--grey-dark);
   display: flex;
   flex-direction: row;
@@ -2151,5 +2175,16 @@ div.container {
     .section button.hexagon:nth-child(even) {
       left: 0;
       top: 0; }
+
+body.modalopen div.container {
+  filter: blur(3px); }
+
+@-webkit-keyframes blurify {
+  0% {
+    filter: blur(1px); }
+  50% {
+    filter: blur(2px); }
+  100% {
+    filter: blur(3px); } }
 
 /*# sourceMappingURL=guide.css.map */

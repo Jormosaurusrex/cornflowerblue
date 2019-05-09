@@ -12,6 +12,8 @@ class SimpleButton {
             text : 'Button Text', // The text for the button. This is also used as aria-label.
             shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
+            form: null, // A form element this is in
+            dialogonly: false, // Set to true to only show element if in a dialog (useful for cancel buttons)
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a jQuery object
@@ -174,6 +176,9 @@ class SimpleButton {
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

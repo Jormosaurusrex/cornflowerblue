@@ -2,6 +2,80 @@
 
 class CornflowerBlueDemo {
 
+    static get SIMPLE_LOGIN_FORM() {
+        return {
+            instructions: {
+                icon: 'help-circle',
+                instructions: [
+                    "Enter your username and password."
+                ]
+            },
+            elements: [
+                new EmailField({
+                    label: "Email",
+                    autocomplete: 'off',
+                    title: "Your email address",
+                    required: true
+                }),
+                new PasswordInput({
+                    label: "Password",
+                    forceconstraints: false,
+                    placeholder: "Enter your password.",
+                    required: true
+                }),
+                new BooleanToggle({
+                    label: "Remember Me",
+                    labelside: 'right'
+                })
+            ],
+            handler: function(self, callback) {
+                console.log("hanlder top");
+                let results = {
+                    success: false,
+                    errors: ['Email and password do not match.']
+                };
+                callback(results);
+            },
+            actions: [
+                new ConstructiveButton({
+                    text: "Login",
+                    icon: "lock-open",
+                    hot: true,
+                    submits: true,
+                    disabled: true  // No action needed.
+                }),
+                new SimpleButton({
+                    text: "Create Account",
+                    mute: true,
+                    action: function(e, btn) {
+                        new Growler({
+                            position: 'top-left',
+                            icon: 'warn-triangle',
+                            title: 'Clicked',
+                            text: 'Create Account Button Clicked'
+                        });
+                    }
+                }),
+                new DestructiveButton({
+                    text: "Cancel",
+                    mute: true,
+                    action: function(e, btn) {
+                        if ((btn.form) && (btn.form.dialog)) {
+                            btn.form.dialog.close();
+                        } else {
+                            new Growler({
+                                position: 'top-left',
+                                icon: 'warn-triangle',
+                                title: 'Cancel',
+                                text: 'Button clicked in non-dialog mode'
+                            });
+                        }
+                    }
+                })
+            ]
+        };
+    }
+
     constructor() {
         this.body = $('body');
 
@@ -179,12 +253,36 @@ class CornflowerBlueDemo {
     }
 
     showDialogs() {
+        const me = this;
+
         this.navigation.select('dialogs');
 
         this.titlebox.html("Dialogs");
 
         this.demobox.empty();
 
+
+        me.dialog = new DialogWindow({
+            title: "Login",
+            form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+            //content: new MapSelectionMenu(this).container
+        }).open();
+
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Login Form"
+                    }).button
+                        .click(function() {
+                            me.dialog = new DialogWindow({
+                                title: "Login",
+                                form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+                                //content: new MapSelectionMenu(this).container
+                            }).open();
+                        })
+                )
+        );
     }
 
     showGrowlers() {
@@ -1055,49 +1153,7 @@ class CornflowerBlueDemo {
 
         this.demobox.append($('<h4 />').html("Complex Form"));
 
-        let f = new SimpleForm({
-            instructions: {
-                icon: 'help-circle',
-                instructions: [
-                    "Enter your username and password."
-                ]
-            },
-            elements: [
-                new EmailField({
-                    label: "Email",
-                    autocomplete: 'off',
-                    title: "Your email address",
-                    required: true
-                }),
-                new PasswordInput({
-                    label: "Password",
-                    forceconstraints: false,
-                    placeholder: "Enter your password.",
-                    required: true
-                }),
-                new BooleanToggle({
-                    label: "Remember Me",
-                    labelside: 'right'
-                })
-            ],
-            handler: function() {
-                return {
-                    success: false,
-                    errors: ['Email and password do not match.']
-                }
-            },
-            actions: [
-                new ConstructiveButton({
-                    text: "Login",
-                    icon: "lock-open",
-                    hot: true,
-                    submits: true,
-                    disabled: true  // No action needed.
-                }),
-                new SimpleButton({ text: "Create Account", mute: true }),
-                new DestructiveButton({ text: "Cancel", mute: true }),
-            ]
-        });
+        let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
 
         this.demobox.append(f.container);
 
@@ -1138,6 +1194,9 @@ class CornflowerBlueDemo {
 
     get demobox() { return this._demobox; }
     set demobox(demobox) { this._demobox = demobox; }
+
+    get dialog() { return this._dialog; }
+    set dialog(dialog) { this._dialog = dialog; }
 
     get displaybox() { return this._displaybox; }
     set displaybox(displaybox) { this._displaybox = displaybox; }

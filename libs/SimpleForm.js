@@ -17,6 +17,7 @@ class SimpleForm {
             url: null, // URL to submit the form to.
             target: null, // Target attribute.  Requires a URL.
 
+            dialog: null, // A SimpleDialog window that this form may be included in.
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
             method: 'get', // Method for the form.  Also used in API calls.
@@ -74,7 +75,6 @@ class SimpleForm {
                     });
                 } else { // its an API url
                     this.doAjax(function(results) {
-                        console.log("doAjax callback");
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
                             me.container.removeClass('shaded');
@@ -92,9 +92,11 @@ class SimpleForm {
         }
     }
 
+    /**
+     * Execute an ajax call
+     * @param callback the callback to fire when done
+     */
     doAjax(callback) {
-        console.log("doAjax");
-        const me = this;
         // XXX TODO POST AS JSON
         //let body = new FormData(this.form[0]);
         //application/x-www-form-urlencoded
@@ -109,7 +111,6 @@ class SimpleForm {
         })
             .then(response => response.json()) // response -> json
             .then(data => { // do the thing.
-                console.log(data);
                 if ((callback) && (typeof callback === 'function')) {
                     callback(data);
                 }
@@ -119,7 +120,6 @@ class SimpleForm {
                 console.error(err);
             });
     }
-
 
     /**
      * This is the default form results handler
@@ -150,6 +150,8 @@ class SimpleForm {
             if (element.touched) {
                 let localValid = element.validate();
                 if (!localValid) { valid = false; }
+            } else if ((element.required) && (element.value === '')) {
+                valid = false; // empty required fields
             }
         }
         if (valid) {
@@ -206,7 +208,6 @@ class SimpleForm {
             .attr('enctype', this.enctype)
             .attr('role', 'form')
             .attr('autocomplete', this.autocomplete)
-            .attr('action', this.urlaction)
             .addClass('cornflowerblue')
             .addClass(this.classes.join(' '))
             .on('submit', function(e) {
@@ -224,6 +225,8 @@ class SimpleForm {
 
         this.contentbox.append(this.headerbox).append(this.elementbox);
         this.form.append(this.shade).append(this.contentbox).append(this.actionbox);
+
+        this.validate();
     }
 
     /**
@@ -284,6 +287,7 @@ class SimpleForm {
                     //if ((SimpleButton.prototype.isPrototypeOf(action)) && (action.submits)) {
                     this.submittors.push(action);
                 }
+                action.form = this;
                 this.actionbox.append(action.container);
             }
         }
@@ -322,6 +326,9 @@ class SimpleForm {
         return this._contentbox;
     }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get dialog() { return this.config.dialog; }
+    set dialog(dialog) { this.config.dialog = dialog; }
 
     get elementbox() {
         if (!this._elementbox) { this.buildElementBox(); }

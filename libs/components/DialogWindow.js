@@ -40,7 +40,6 @@ class DialogWindow {
             .attr('id', this.id);
 
         if ((this.title) || (this.header)) {
-
             if (this.header) {
                 this.window.append(this.header);
             } else {
@@ -59,16 +58,20 @@ class DialogWindow {
                         me.close();
                     }
                 });
-                this.window.append(this.closebutton.button);
+                this.title.append(this.closebutton.button);
             }
         }
 
         if (this.form) { // it's a SimpleForm
+
+            this.form.dialog = this;
+
             this.window.addClass('isform');
             this.contentbox = $('<div />')
                 .addClass('content')
                 .append(this.form.form);
             this.window.append(this.contentbox);
+
         } else if (this.content) { // It's a jQuery object
             this.contentbox = $('<div />')
                 .addClass('content')

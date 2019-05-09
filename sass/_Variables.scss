@@ -155,24 +155,21 @@
 
   // Dialog keys
   --dialog-background-color: var(--ultralight);
+  --dialog-border-radius: var(--border-radius);
   --dialog-box-shadow: var(--panel-shadow);
   --dialog-header-background-color: var(--grey-dark);
-  --dialog-header-text-color: var(--light);
+  --dialog-header-text-color: var(--ultralight);
   --dialog-header-text-shadow: var(--text-shadow);
   --dialog-header-border-color: var(--grey-darkest);
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
+  --dialog-window-mask-opacity: .75;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
 
   // Form keys
   --form-background-color: transparent;
   --form-border-color: transparent;
-  --form-side-padding: 0;
-  --form-elements-top-padding: .5em;
-  --form-elements-bottom-padding: .5em;
-  --form-actions-top-padding: 0;
-  --form-actions-bottom-padding: .5em;
-  --form-actions-background-color: var(--ultralight);
+  --form-actions-background-color: var(--morelight);
   --form-actions-border-color: var(--light);
 
   --form-shade-background-color: var(--white-half);

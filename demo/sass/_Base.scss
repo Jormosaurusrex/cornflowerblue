@@ -1,11 +1,11 @@
 :root {
   --tabbar-background-color: var(--light);
   --tabbar-box-shadow: none;
+  --dialog-window-mask-opacity: .25;
 }
 
 body {
   background-color: var(--grey-darkest);
-
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
 }
@@ -15,6 +15,7 @@ div.container {
   margin-right: auto;
   min-width: 50%;
   max-width: 75%;
+  min-height: 100%; // only set min-height
   background-color: var(--grey-dark);
   display: flex;
   flex-direction: row;
@@ -77,4 +78,17 @@ div.container {
       top: 0;
     }
   }
+}
+
+body.modalopen {
+  div.container {
+    //animation: blurify .1s;
+    filter: blur(3px);
+  }
+}
+
+@-webkit-keyframes blurify {
+  0% { filter: blur(1px); }
+  50% { filter: blur(2px); }
+  100% { filter: blur(3px); }
 }
