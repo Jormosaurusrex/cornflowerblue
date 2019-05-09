@@ -8,6 +8,7 @@ class SelectMenu extends RadioGroup {
             name: null,
             form: null, // A form element this is in
             label: null, // The text for the label.
+
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
@@ -24,6 +25,9 @@ class SelectMenu extends RadioGroup {
     constructor(config) {
         config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
 
+        if (!config.id) { // need to generate an id for label stuff
+            config.id = "select-" + Utils.getUniqueKey(5);
+        }
         super(config);
 
     }
@@ -38,13 +42,13 @@ class SelectMenu extends RadioGroup {
      */
     buildContainer() {
         this.container = $('<div />')
+            .data('self', this)
             .addClass('input-container')
             .addClass('select-container')
-            .data('self', this)
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
-            .append(this.triggerbox)
-            .append(this.optionlist)
+            .append(this.triggerbox.append(this.optionlist)  )
+
             .append(this.messagebox);
 
         if (this.required) { this.container.addClass('required'); }
@@ -56,13 +60,20 @@ class SelectMenu extends RadioGroup {
         if ((this.config.value) && (this.config.value.length > 0)) {
             this.container.addClass('filled');
         }
+        if (this.disabled) {
+            this.disable();
+        }
     }
 
+    /**
+     * Build the option list.
+     */
     buildOptions() {
         const me = this;
 
         this.optionlist = $('<ul />')
             .addClass('selectmenu')
+            .attr('tabindex', 0)
             .attr('role', 'radiogroup');
 
         for (let opt of this.options) {
@@ -71,33 +82,42 @@ class SelectMenu extends RadioGroup {
                 this.origval = opt.value;
                 this.triggerbox.html(opt.label);
             }
-
             this.optionlist.append($o);
         }
     }
 
+    /**
+     * Builds the trigger box for the select.
+     */
     buildTriggerBox() {
         const me = this;
         this.triggerbox = $('<div />')
             .addClass('trigger')
+            .attr('tabindex', 0)
             .click(function(e) {
-                me.toggleMenu(e, me);
+                e.preventDefault();
+                if (me.disabled) {
+                    e.stopPropagation();
+                    return;
+                }
+                me.toggle(e, me);
             });
     }
 
     /**
      * Toggle visibility of the menu.
      */
-    toggleMenu(e, self) {
+    toggle(e, self) {
+
         e.preventDefault();
 
-        this.optionlist.toggleClass('open');
+        this.optionlist.css('display', 'flex');
 
         e.stopPropagation();
 
         $(document).one('click', function closeMenu (e){
             if (self.optionlist.has(e.target).length === 0) {
-                self.optionlist.removeClass('open');
+                this.optionlist.css('display', 'none');
             } else {
                 $(document).one('click', closeMenu);
             }
@@ -105,10 +125,22 @@ class SelectMenu extends RadioGroup {
 
     }
 
+    /**
+     * Build an option line.
+     * @param def the definition
+     * @return {jQuery}
+     */
     buildOption(def) {
         const me = this;
 
         const lId = this.id + '-' + Utils.getUniqueKey(5);
+
+        let $li = $('<li />')
+            .attr('tabindex', 0)
+            .click(function() {
+                me.optionlist.find('li').removeClass('selected');
+                $(this).addClass('selected');
+            });
 
         let $op = $('<input />')
             .data('self', this)
@@ -118,42 +150,27 @@ class SelectMenu extends RadioGroup {
             .attr('tabindex', 0) // always 0
             .attr('value', def.value)
             .attr('aria-label', def.label)
-            .attr('role', 'radio')
-            .addClass(this.classes.join(' '))
             .change(function(e) {
-                $(this).prop('aria-checked', $(this).prop('checked'));
+                me.toggle(e, me);
+                me.triggerbox.html(def.label);
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }
-            }).click(function(e) {
-                me.optionlist.addClass('open');
-                e.preventDefault();
+            })
+            .attr('role', 'radio');
 
-                me.triggerbox.html(def.label);
-
-                me.optionlist.find('input[type=radio]')
-                    .removeAttr('checked')
-                    .removeAttr('aria-checked');
-
-                $(this).prop('checked', true)
-                    .prop('aria-checked', true)
-                    .attr('checked', 'checked')
-                    .attr('aria-checked', 'checked');
-
-                me.toggleMenu(e, me);
-
-            });
         let $opLabel = $('<label />')
             .attr('for', lId)
             .html(def.label);
 
         if (def.checked) {
             this.origval = def.value;
+            $li.addClass('selected');
             $op.attr('aria-checked', 'checked')
                 .attr('checked', 'checked')
         }
 
-        return $('<li />').append($op).append($opLabel);
+        return $li.append($op).append($opLabel);
     }
 
     /**
@@ -173,18 +190,20 @@ class SelectMenu extends RadioGroup {
      * Enable the element
      */
     disable() {
-        this.input.prop('disabled', true);
+        this.optionlist.find('input:radio').attr('disabled',true);
+        this.triggerbox.prop('disabled', true);
         this.disabled = true;
-        if (this.container) { this.container.addClass('disabled'); }
+        if (this.triggerbox) { this.container.addClass('disabled'); }
     }
 
     /**
      * Disable the element
      */
     enable() {
-        this.input.removeAttr('disabled');
+        this.optionlist.find('input:radio').removeAttr('disabled');
+        this.triggerbox.removeAttr('disabled');
         this.disabled = false;
-        if (this.container) { this.container.removeClass('disabled'); }
+        if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

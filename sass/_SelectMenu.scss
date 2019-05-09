@@ -1,6 +1,28 @@
 div.select-container {
   position: relative;
-
+  &.disabled {
+    label {
+      text-shadow: none;
+    }
+    div.trigger {
+      border-color: var(--input-disabled-border-color);
+      background-color: var(--input-disabled-background-color);
+      color: var(--input-disabled-text-color);
+      cursor: not-allowed;
+      text-shadow:none;
+      &:focus {
+        border-color: var(--input-disabled-border-color);
+        background-color: var(--input-disabled-background-color);
+        color: var(--input-disabled-text-color);
+        &:before {
+          color: var(--input-disabled-text-color);
+        }
+        ul.selectmenu {
+          display: none;
+        }
+      }
+    }
+  }
   div.trigger {
     transition: all .2s;
     box-sizing: border-box;
@@ -8,19 +30,19 @@ div.select-container {
     position: relative;
     font-family: inherit;
     width: 100%;
-    background-color: var(--input-default-background-color);
     margin: 0;
     font-size: 105%;
+    background-color: var(--input-default-background-color);
     border: .1em solid var(--input-default-border-color);
-    padding: 1em 1em 1em 2em;
-    border-radius: 1px;
+    padding: .5em 1em .5em 1.5em;
+    border-radius: .1em;
     color: var(--input-default-text-color);
     text-shadow:var(--input-default-text-shadow);
     vertical-align: middle;
     &:before {
       position: absolute;
-      left: .5em;
-      top: 1.2em;
+      right: .5em;
+      top: .7em;
       margin: 0;
       font-family: "cornflowerblue", serif;
       font-style: normal;
@@ -35,6 +57,18 @@ div.select-container {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      color: var(--input-default-border-color);
+    }
+    &:focus {
+      border-color: var(--input-focused-border-color);
+      background-color: var(--input-focused-background-color);
+      //box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+      &:before {
+        color: var(--input-focused-border-color);
+      }
+      ul.selectmenu {
+        display: flex;
+      }
     }
   }
   ul.selectmenu {
@@ -50,6 +84,8 @@ div.select-container {
     max-height: 10em;
     z-index: 201;
     position: absolute;
+    left: 0;
+    top: 2.6em;
     margin: 0;
     box-shadow: var(--panel-shadow-light);
     width: 100%;
@@ -67,11 +103,19 @@ div.select-container {
       }
       label {
         display: inline-block;
-        padding: 1em 1em 1em 2em;
+        padding: 1em 1em 1em 1.5em;
         margin: 0;
         text-shadow: none;
         width: 100%;
         min-width: 100%;
+      }
+      input[type='radio']+label {
+        &:focus {
+          box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+        }
+      }
+      &.selected {
+        box-shadow: inset .5em 0 0 var(--input-focused-border-color);
       }
       &:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color);
@@ -89,9 +133,9 @@ div.select-container {
       bottom: 3.1em;
       box-shadow: var(--panel-shadow-light-inverse);
     }
-    &.open {
-      display: flex;
-    }
+    &.open2 {
+           display: flex;
+         }
   }
 }
 
