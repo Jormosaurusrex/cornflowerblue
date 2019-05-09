@@ -47,8 +47,8 @@ class SelectMenu extends RadioGroup {
             .addClass('select-container')
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
-            .append(this.triggerbox.append(this.optionlist)  )
-
+            .append(this.triggerbox)
+            .append(this.optionlist)
             .append(this.messagebox);
 
         if (this.required) { this.container.addClass('required'); }
@@ -108,16 +108,15 @@ class SelectMenu extends RadioGroup {
      * Toggle visibility of the menu.
      */
     toggle(e, self) {
-
         e.preventDefault();
 
-        this.optionlist.css('display', 'flex');
+        this.optionlist.toggleClass('open');
 
         e.stopPropagation();
 
-        $(document).one('click', function closeMenu (e){
+        $(document).one('click', function closeMenu(e) {
             if (self.optionlist.has(e.target).length === 0) {
-                this.optionlist.css('display', 'none');
+                self.optionlist.removeClass('open');
             } else {
                 $(document).one('click', closeMenu);
             }
@@ -137,9 +136,10 @@ class SelectMenu extends RadioGroup {
 
         let $li = $('<li />')
             .attr('tabindex', 0)
-            .click(function() {
+            .click(function(e) {
                 me.optionlist.find('li').removeClass('selected');
                 $(this).addClass('selected');
+
             });
 
         let $op = $('<input />')
@@ -151,11 +151,15 @@ class SelectMenu extends RadioGroup {
             .attr('value', def.value)
             .attr('aria-label', def.label)
             .change(function(e) {
-                me.toggle(e, me);
                 me.triggerbox.html(def.label);
+                me.toggle(e, me);
+
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }
+            })
+            .click(function(e){
+                console.log('adfadfaf')
             })
             .attr('role', 'radio');
 

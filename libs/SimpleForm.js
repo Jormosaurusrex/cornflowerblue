@@ -60,6 +60,8 @@ class SimpleForm {
      */
     submit(e) {
         const me = this;
+        const body = new URLSearchParams(new FormData(this.form[0])).toString();
+        console.log(body);
         if (this.validate()) {
             if (this.handler) {
                 this.form.addClass('shaded');

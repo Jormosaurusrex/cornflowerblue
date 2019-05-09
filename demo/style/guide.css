@@ -997,8 +997,6 @@ div.select-container {
       background-color: var(--input-focused-background-color); }
       div.select-container div.trigger:focus:before {
         color: var(--input-focused-border-color); }
-      div.select-container div.trigger:focus ul.selectmenu {
-        display: flex; }
   div.select-container ul.selectmenu {
     list-style-type: none;
     display: none;
@@ -1012,8 +1010,6 @@ div.select-container {
     max-height: 10em;
     z-index: 201;
     position: absolute;
-    left: 0;
-    top: 2.6em;
     margin: 0;
     box-shadow: var(--panel-shadow-light);
     width: 100%; }
@@ -1050,7 +1046,7 @@ div.select-container {
     div.select-container ul.selectmenu.vert {
       bottom: 3.1em;
       box-shadow: var(--panel-shadow-light-inverse); }
-    div.select-container ul.selectmenu.open2 {
+    div.select-container ul.selectmenu.open {
       display: flex; }
 
 button {
@@ -1207,7 +1203,8 @@ button {
     width: 100%;
     height: 100%; }
   button.pill {
-    border-radius: 1.5em; }
+    border-radius: 1.5em;
+    margin: 0; }
   button.menu {
     overflow: visible; }
     button.menu ul {
@@ -1722,13 +1719,13 @@ form {
     border-top: 0.1em solid var(--form-actions-border-color);
     padding: .5em 1.5em .5em 1.5em; }
     form div.actions button {
-      margin-right: 10px; }
+      margin-right: 1em; }
     form div.actions button:first-child {
       margin-left: 0; }
     form div.actions button:last-child:not(:only-of-type) {
       align-self: flex-end;
       margin-left: auto;
-      margin-right: 10px; }
+      margin-right: 1em; }
 
 div.growlbox {
   z-index: 50000;

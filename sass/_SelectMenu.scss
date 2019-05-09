@@ -66,9 +66,6 @@ div.select-container {
       &:before {
         color: var(--input-focused-border-color);
       }
-      ul.selectmenu {
-        display: flex;
-      }
     }
   }
   ul.selectmenu {
@@ -84,8 +81,6 @@ div.select-container {
     max-height: 10em;
     z-index: 201;
     position: absolute;
-    left: 0;
-    top: 2.6em;
     margin: 0;
     box-shadow: var(--panel-shadow-light);
     width: 100%;
@@ -133,9 +128,9 @@ div.select-container {
       bottom: 3.1em;
       box-shadow: var(--panel-shadow-light-inverse);
     }
-    &.open2 {
-           display: flex;
-         }
+    &.open {
+      display: flex;
+    }
   }
 }
 
