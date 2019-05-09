@@ -21,12 +21,14 @@ button {
   cursor: pointer;
   color: var(--button-default-color);
   background-color: transparent;
-  //border: .1em solid var(--button-default-color);
   box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
   border: none;
   border-radius: var(--button-border-radius);
   span.icon {
     margin: 0 .2em 0 0;
+    &:before {
+      margin: 0; // Generates padding issues otherwise
+    }
   }
   &.righticon {
     span.icon {

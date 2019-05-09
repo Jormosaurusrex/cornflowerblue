@@ -1054,6 +1054,8 @@ button {
   border-radius: var(--button-border-radius); }
   button span.icon {
     margin: 0 .2em 0 0; }
+    button span.icon:before {
+      margin: 0; }
   button.righticon span.icon {
     margin: 0 0 0 .2em; }
   button:hover, button:focus, button:active {
@@ -2089,7 +2091,6 @@ ul.tabbar {
     font-size: 110%;
     padding: 0 1em 0 1em;
     margin: 0 1em 0 1em;
-    border-bottom: .3em solid transparent;
     cursor: pointer;
     white-space: nowrap;
     background-color: var(--tabbar-tab-background-color);
@@ -2097,7 +2098,7 @@ ul.tabbar {
     text-shadow: var(--tabbar-tab-text-shadow); }
     ul.tabbar li.selected {
       background-color: var(--tabbar-selected-tab-background-color);
-      border-color: var(--tabbar-selected-tab-highlight-color);
+      box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
       color: var(--tabbar-selected-tab-text-color);
       text-shadow: var(--tabbar-selected-tab-text-shadow); }
     ul.tabbar li:hover, ul.tabbar li:active, ul.tabbar li:focus {
