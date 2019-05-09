@@ -5,17 +5,16 @@
 
 body {
   background-color: var(--grey-darkest);
-  //height: 100vw;
-  min-height: 100vw;
-  width: 100vw;
-  min-width: 100vw;
+
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
 }
 
 div.container {
-  height: 100%;
-  min-height: 100%;
+  //height: 100vw;
+  //height: 100%;
+  //min-height: 100%;
+  //min-height: 100vw;
   margin-left: auto;
   margin-right: auto;
   min-width: 50%;
@@ -24,7 +23,6 @@ div.container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-
   ul.tabbar {
     flex-grow: 0;
     padding-top: 2em;
