@@ -74,11 +74,11 @@ textarea {
   }
   &.mute {
     padding: 1em 1em 1em 2em;
-    border-left: 2px solid var(--input-default-border-color);
+    border-left: .1em solid var(--input-default-border-color);
     border-bottom: none;
     &:focus {
       border-left-color: var(--focus-color);
-      box-shadow: inset 1em 0 0 var(--focus-color);
+      box-shadow: inset .5em 0 0 var(--focus-color);
     }
   }
 }
