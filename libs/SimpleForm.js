@@ -60,6 +60,7 @@ class SimpleForm {
      */
     submit(e) {
         const me = this;
+
         if (this.validate()) {
             if (this.handler) {
                 this.form.addClass('shaded');

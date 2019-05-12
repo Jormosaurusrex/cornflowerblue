@@ -29,7 +29,7 @@ class RadioGroup {
         }
 
         if (!this.id) { // need to generate an id for label stuff
-            this.id = "radiogroup-" + Utils.getUniqueKey();
+            this.id = "radiogroup-" + Utils.getUniqueKey(5);
         }
         if (!this.name) { this.name = this.id; }
 

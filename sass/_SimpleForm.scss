@@ -65,7 +65,6 @@ form {
     div.input-container,
     div.textarea-container {
       margin: 1em 0 1em 0;
-      min-width: var(--paragraph-measure);
     }
   }
   div.actions {
@@ -81,7 +80,7 @@ form {
     padding: .5em 1.5em .5em 1.5em;
 
     button {
-      margin-right: 10px;
+      margin-right: 1em;
     }
     button:first-child {
       margin-left: 0;
@@ -89,7 +88,7 @@ form {
     button:last-child:not(:only-of-type) {
       align-self: flex-end;
       margin-left: auto;
-      margin-right: 10px;
+      margin-right: 1em;
     }
   }
 }

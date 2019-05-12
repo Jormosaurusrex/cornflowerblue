@@ -48,6 +48,8 @@ class TabBar {
 
             let $tab = $('<li />')
                 .html(tabdef.label)
+                .attr('aria-label', tabdef.label)
+                .attr('tabindex', 0)
                 .click(function(e) {
                     e.preventDefault();
                     me.select($tab);
