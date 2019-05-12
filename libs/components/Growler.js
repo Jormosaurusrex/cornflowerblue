@@ -13,7 +13,9 @@ class Growler {
                         // gets placed in the text area.
             position: 'bottom-right', // Position for the growler. Valid values:
             // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
-            classes: [] //Extra css classes to apply
+            classes: [], //Extra css classes to apply,
+            onclose: null // A function to run to when the growler closes. Passed the self.
+
         };
     }
 
@@ -23,6 +25,33 @@ class Growler {
         return new Growler({
             text: text,
             title: title
+        })
+    }
+
+    static error(text) {
+        return new Growler({
+            text: text,
+            title: 'Error',
+            icon: 'warn-hex',
+            classes: ['error']
+        })
+    }
+
+    static warn(text) {
+        return new Growler({
+            text: text,
+            title: 'Warning',
+            icon: 'warn-triangle',
+            classes: ['warn']
+        })
+    }
+
+    static caution(text) {
+        return new Growler({
+            text: text,
+            title: 'Caution',
+            icon: 'warn-circle',
+            classes: ['caution']
         })
     }
 
@@ -46,7 +75,7 @@ class Growler {
      */
     constructor(config) {
         this.config = Object.assign({}, Growler.DEFAULT_CONFIG, config);
-        let mygb = '#' + Growler.GROWLBOX_ID + this.position;
+        let mygb = `#${Growler.GROWLBOX_ID}${this.position}`;
         if ($(mygb).length > 0) {
             this.growlbox = $(mygb);
         } else {
@@ -57,17 +86,16 @@ class Growler {
 
     /**
      * Close the growler
-     * @param callback optional callback
      */
-    close(callback) {
+    close() {
         const me = this;
         if (this.timer) { clearTimeout(this.timer); }
         this.growler.animate({opacity: 0}, 200, 'linear', function() {
             setTimeout(function() {
                 me.growler.remove()
             }, 201);
-            if ((callback) && (typeof callback === 'function')) {
-                callback();
+            if ((me.onclose) && (typeof me.onclose === 'function')) {
+                me.onclose(me);
             }
         });
     }
@@ -78,6 +106,9 @@ class Growler {
     quickClose() {
         if (this.timer) { clearTimeout(this.timer); }
         this.growler.remove();
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
     }
 
     /**
@@ -118,7 +149,7 @@ class Growler {
             let $tbox = $('<div />').addClass('title');
 
             if ((this.icon) && (!this.text)) {
-                $tbox.append(IconFactory.makeIcon(this.icon));
+                $tbox.append(IconFactory.makeIcon(this.icon).addClass('i'));
             }
 
             $tbox.append($('<div />').addClass('t').html(this.title))
@@ -129,7 +160,7 @@ class Growler {
         if (this.text) {
             let $payload = $('<div />').addClass('payload');
             if (this.icon) {
-                $payload.append(IconFactory.makeIcon(this.icon));
+                $payload.append(IconFactory.makeIcon(this.icon).addClass('i'));
             }
             $payload.append(
                 $('<div />')
@@ -184,6 +215,14 @@ class Growler {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get onclose() { return this.config.onclose; }
+    set onclose(onclose) {
+        if (typeof onclose !== 'function') {
+            console.error("Action provided for onclose is not a function!");
+        }
+        this.config.onclose = onclose;
+    }
 
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }

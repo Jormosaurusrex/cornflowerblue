@@ -138,17 +138,18 @@
   --form-shade-icon-shadow: var(--text-shadow);
   --form-shade-text-color: var(--blue);
   --form-shade-text-shadow: var(--text-shadow);
+  --growlbox-max-width: 22em;
   --growler-core-color: var(--blue);
-  --growler-max-width: 300px;
+  --growler-max-width: 20em;
+  --growler-border-radius: var(--border-radius);
   --growler-box-shadow: var(--panel-shadow);
-  --growler-default-text-color: var(--grey-darkest);
-  --growler-default-background-color: var(--light);
+  --growler-text-color: var(--grey-darkest);
+  --growler-text-shadow: var(--text-shadow);
+  --growler-default-background-color: var(--ultralight);
   --growler-default-border-color: var(--growler-core-color);
-  --growler-notitle-closebutton-color: var(--grey-medium);
-  --growler-title-text-color: var(--light);
-  --growler-title-closebutton-color: var(--growler-title-text-color);
-  --growler-title-background-color: var(--growler-core-color);
-  --growler-title-text-shadow: var(--text-shadow);
+  --growler-header-text-color: var(--ultralight);
+  --growler-header-text-shadow: var(--text-shadow);
+  --growler-header-background-color: var(--growler-core-color);
   --headers-h1-text-color: var(--grey-darkest);
   --headers-h1-text-shadow: none;
   --headers-h1-text-transform: none;
@@ -1732,51 +1733,46 @@ div.growlbox {
   position: fixed;
   display: flex;
   flex-direction: column;
-  max-width: var(--growler-max-width); }
+  max-width: var(--growlbox-max-width); }
   div.growlbox.top-left {
-    top: 10px;
-    left: 10px; }
+    top: 1em;
+    left: 1em; }
   div.growlbox.top-right {
-    top: 10px;
-    right: 10px; }
+    top: 1em;
+    right: 1em; }
   div.growlbox.bottom-left {
-    bottom: 10px;
-    left: 10px; }
+    bottom: 1em;
+    left: 1em; }
   div.growlbox.bottom-right {
-    bottom: 10px;
-    right: 10px; }
+    bottom: 1em;
+    right: 1em; }
   div.growlbox.top-center {
-    top: 10px;
-    right: 10px;
-    left: 10px;
+    top: 1em;
+    right: 1em;
+    left: 1em;
     margin-left: auto;
     margin-right: auto; }
     div.growlbox.top-center .growler {
       margin-left: auto;
       margin-right: auto; }
   div.growlbox.bottom-center {
-    bottom: 10px;
-    right: 10px;
-    left: 10px;
+    bottom: 1em;
+    right: 1em;
+    left: 1em;
     margin-left: auto;
     margin-right: auto; }
-    div.growlbox.bottom-center .growler {
-      margin-left: auto;
-      margin-right: auto; }
 
 .growler {
   opacity: 0;
   position: relative;
-  box-sizing: border-box;
-  border-radius: 3px;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
+  border-radius: var(--growler-border-radius);
   transition: all 0.4s ease-in-out;
-  border: 2px solid var(--growler-default-border-color);
+  border: 0.1em solid var(--growler-default-border-color);
   box-shadow: var(--growler-box-shadow);
   color: var(--growler-default-text-color);
   background-color: var(--growler-default-background-color);
-  margin-bottom: 20px;
+  margin: 0 auto 1em auto;
+  padding: 0;
   width: var(--growler-max-width);
   max-width: var(--growler-max-width);
   display: flex;
@@ -1784,51 +1780,81 @@ div.growlbox {
   flex-wrap: nowrap;
   align-items: stretch; }
   .growler button.closebutton {
+    opacity: 0.5;
+    box-shadow: none;
     margin: 0;
-    opacity: 0.6;
-    color: var(--growler-notitle-closebutton-color);
+    padding: 0;
+    height: auto;
+    width: auto;
+    background: none;
+    border: none;
+    color: var(--growler-text-color);
+    text-shadow: var(--growler-text-shadow);
     border-color: transparent;
-    background-color: transparent; }
+    background-color: transparent;
+    font-size: 100%; }
     .growler button.closebutton:active, .growler button.closebutton:focus, .growler button.closebutton:hover {
       opacity: 1;
       outline: none;
       box-shadow: none;
       text-shadow: none; }
   .growler div.title {
-    font-size: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: var(--growler-title-background-color);
-    color: var(--growler-title-text-color);
+    background-color: var(--growler-core-color);
+    color: var(--growler-header-text-color);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center; }
-    .growler div.title div.icon {
-      text-shadow: var(--growler-title-text-shadow); }
+    align-items: baseline; }
+    .growler div.title span.i {
+      text-shadow: var(--growler-header-text-shadow); }
     .growler div.title div.t {
-      text-shadow: var(--growler-title-text-shadow);
-      padding: 5px 10px 5px 10px; }
+      text-shadow: var(--growler-header-text-shadow);
+      padding: .5em 1em .5em 1em; }
     .growler div.title button.closebutton {
-      color: var(--light);
-      margin-right: 0;
+      color: var(--growler-header-text-color);
+      margin-right: .5em;
       margin-left: auto;
       position: relative;
       left: auto;
       top: auto; }
       .growler div.title button.closebutton:hover {
-        text-shadow: var(--growler-title-text-shadow); }
+        text-shadow: var(--growler-header-text-shadow); }
   .growler div.payload {
-    padding: 10px;
+    padding: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: flex-start; }
-    .growler div.payload div.icon {
-      font-size: 30pt; }
+    align-items: flex-start;
+    color: var(--growler-text-color);
+    text-shadow: var(--growler-text-shadow); }
+    .growler div.payload span.i {
+      font-size: 30pt;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      color: var(--growler-text-color);
+      text-shadow: var(--growler-text-shadow); }
     .growler div.payload div.text {
-      font-size: 90%;
-      padding: 5px 10px 5px 10px; }
+      font-size: 110%;
+      padding: 0 1em .5em 1em; }
+  .growler.error {
+    --growler-core-color: var(--error-color);
+    border-color: var(--error-color); }
+    .growler.error div.payload {
+      background-image: var(--error-stripes); }
+  .growler.warn {
+    --growler-core-color: var(--warning-color);
+    border-color: var(--warning-color); }
+    .growler.warn div.payload {
+      background-image: var(--warning-stripes); }
+  .growler.caution {
+    --growler-header-text-color: var(--growler-text-color);
+    --growler-core-color: var(--caution-color);
+    border-color: var(--caution-color); }
+    .growler.caution div.payload {
+      background-image: var(--caution-stripes); }
 
 div.instructions {
   margin: 1em 0 1em 0;

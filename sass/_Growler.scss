@@ -4,27 +4,27 @@ div.growlbox {
   position: fixed;
   display: flex;
   flex-direction: column;
-  max-width: var(--growler-max-width);
+  max-width: var(--growlbox-max-width);
   &.top-left {
-    top: 10px;
-    left: 10px;
+    top: 1em;
+    left: 1em;
   }
   &.top-right {
-    top: 10px;
-    right: 10px;
+    top: 1em;
+    right: 1em;
   }
   &.bottom-left {
-    bottom: 10px;
-    left: 10px;
+    bottom: 1em;
+    left: 1em;
   }
   &.bottom-right {
-    bottom: 10px;
-    right: 10px;
+    bottom: 1em;
+    right: 1em;
   }
   &.top-center {
-    top: 10px;
-    right: 10px;
-    left: 10px;
+    top: 1em;
+    right: 1em;
+    left: 1em;
     margin-left: auto;
     margin-right: auto;
     .growler {
@@ -33,31 +33,25 @@ div.growlbox {
     }
   }
   &.bottom-center {
-    bottom: 10px;
-    right: 10px;
-    left: 10px;
+    bottom: 1em;
+    right: 1em;
+    left: 1em;
     margin-left: auto;
     margin-right: auto;
-    .growler {
-      margin-left: auto;
-      margin-right: auto;
-    }
   }
 }
 
 .growler {
   opacity: 0;
   position: relative;
-  box-sizing: border-box;
-  border-radius: 3px;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
+  border-radius: var(--growler-border-radius);
   transition: all 0.4s ease-in-out;
-  border: 2px solid var(--growler-default-border-color);
+  border: .1em solid var(--growler-default-border-color);
   box-shadow: var(--growler-box-shadow);
   color: var(--growler-default-text-color);
   background-color: var(--growler-default-background-color);
-  margin-bottom: 20px;
+  margin: 0 auto 1em auto;
+  padding: 0;
   width: var(--growler-max-width);
   max-width: var(--growler-max-width);
   display: flex;
@@ -65,11 +59,19 @@ div.growlbox {
   flex-wrap: nowrap;
   align-items: stretch;
   button.closebutton {
-    margin:0;
-    opacity: 0.6;
-    color: var(--growler-notitle-closebutton-color);
+    opacity: 0.5;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    width: auto;
+    background: none;
+    border: none;
+    color: var(--growler-text-color);
+    text-shadow: var(--growler-text-shadow);
     border-color: transparent;
     background-color: transparent;
+    font-size: 100%;
     &:active,
     &:focus,
     &:hover {
@@ -80,46 +82,77 @@ div.growlbox {
     }
   }
   div.title {
-    font-size: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: var(--growler-title-background-color);
-    color: var(--growler-title-text-color);
+    background-color: var(--growler-core-color);
+    color: var(--growler-header-text-color);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    div.icon {
-      text-shadow: var(--growler-title-text-shadow);
+    align-items: baseline;
+    span.i {
+      text-shadow: var(--growler-header-text-shadow);
     }
     div.t {
-      text-shadow: var(--growler-title-text-shadow);
-      padding: 5px 10px 5px 10px;
+      text-shadow: var(--growler-header-text-shadow);
+      padding: .5em 1em .5em 1em;
     }
     button.closebutton {
-      color: var(--light);
-      margin-right: 0;
+      color: var(--growler-header-text-color);
+      margin-right: .5em;
       margin-left: auto;
       position: relative;
       left: auto;
       top: auto;
       &:hover {
-        text-shadow: var(--growler-title-text-shadow);
+        text-shadow: var(--growler-header-text-shadow);
       }
     }
   }
   div.payload {
-    padding: 10px;
+    padding: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: flex-start;
-    div.icon {
+    color: var(--growler-text-color);
+    text-shadow: var(--growler-text-shadow);
+    span.i {
       font-size: 30pt;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      color: var(--growler-text-color);
+      text-shadow: var(--growler-text-shadow);
     }
     div.text {
-      font-size: 90%;
-      padding: 5px 10px 5px 10px;
+      font-size: 110%;
+      padding: 0 1em .5em 1em;
     }
+  }
+  &.error {
+    --growler-core-color: var(--error-color);
+    border-color: var(--error-color);
+    div.payload {
+      background-image: var(--error-stripes);
+    }
+  }
+  &.warn {
+    --growler-core-color: var(--warning-color);
+    border-color: var(--warning-color);
+    div.payload {
+      background-image: var(--warning-stripes);
+    }
+  }
+  &.caution {
+    --growler-header-text-color: var(--growler-text-color);
+    --growler-core-color: var(--caution-color);
+    border-color: var(--caution-color);
+    div.payload {
+      background-image: var(--caution-stripes);
+    }
+  }
+  &.closing {
+
   }
 }

@@ -80,7 +80,7 @@ class CornflowerBlueDemo {
         this.body = $('body');
 
         this.build();
-        this.showForms();
+        this.showGrowlers();
     }
 
     /**
@@ -286,6 +286,8 @@ class CornflowerBlueDemo {
     }
 
     showGrowlers() {
+        const me = this;
+
         this.navigation.select('growlers');
 
         this.titlebox.html("Growlers");
@@ -300,10 +302,12 @@ class CornflowerBlueDemo {
                         action: function() {
                             new Growler({
                                 position: 'top-left',
-                                icon: 'legend',
+                                icon: 'globe',
                                 title: 'Top Left Growler',
-                                text: 'A growler is here!'
+                                text: 'A growler is here!',
+                                onclose: function(g) { me.dumpConfig(g);}
                             });
+
                         }
                     }).button
                 )
@@ -313,8 +317,9 @@ class CornflowerBlueDemo {
                         action: function() {
                             new Growler({
                                 position: 'top-center',
-                                icon: 'legend',
-                                text: 'A top-center growler with an icon and no title.'
+                                icon: 'chat',
+                                text: 'A top-center growler with an icon and no title.',
+                                onclose: function(g) { me.dumpConfig(g);}
                             });
                         }
                     }).button
@@ -325,8 +330,9 @@ class CornflowerBlueDemo {
                         action: function() {
                             new Growler({
                                 position: 'top-right',
-                                icon: 'legend',
-                                title: 'Growler with an icon and no text.'
+                                icon: 'star',
+                                title: 'Growler with an icon and no text.',
+                                onclose: function(g) { me.dumpConfig(g);}
                             });
                         }
                     }).button
@@ -341,10 +347,11 @@ class CornflowerBlueDemo {
                         action: function() {
                             new Growler({
                                 position: 'bottom-left',
-                                icon: 'legend',
+                                icon: 'circle-disc-chopped',
                                 title: 'Bottom Left Growler',
                                 text: 'This growler has duration:0, and will stay until dismissed.',
-                                duration: 0
+                                duration: 0,
+                                onclose: function(g) { me.dumpConfig(g);}
                             });
                         }
                     }).button
@@ -355,10 +362,11 @@ class CornflowerBlueDemo {
                         action: function() {
                             new Growler({
                                 position: 'bottom-center',
-                                icon: 'legend',
+                                icon: 'heart',
                                 title: 'Bottom Center Growler',
                                 text: 'This growler has duration:0, so will stay until dismissed.',
-                                duration: 0
+                                duration: 0,
+                                onclose: function(g) { me.dumpConfig(g);}
                             });
                         }
                     }).button
@@ -369,14 +377,46 @@ class CornflowerBlueDemo {
                         action: function() {
                             new Growler({
                                 position: 'bottom-right',
-                                icon: 'legend',
+                                icon: 'star',
                                 title: 'Bottom Right Growler',
-                                text: 'Another growler over here!'
+                                text: 'Another growler over here!',
+                                onclose: function(g) { me.dumpConfig(g);}
                             });
                         }
                     }).button
                 )
         );
+
+        this.demobox.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Error",
+                        action: function() {
+                            Growler.error('This is an error message!');
+                            //me.dumpConfig(g);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Warn",
+                        action: function() {
+                            Growler.warn('This is a warning message!');
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Caution",
+                        action: function() {
+                            Growler.caution('This is a caution message!');
+                        }
+                    }).button
+                )
+        );
+
+
 
     }
 
@@ -1160,11 +1200,9 @@ class CornflowerBlueDemo {
     }
 
 
-
-
-
     dumpConfig(o) {
         this.codebox.empty();
+
         this.codebox.append($('<h2 />').html(o.constructor.name));
 
         this.codebox.append($('<div />').addClass('config').html(Utils.prettyPrintConfig(o)));

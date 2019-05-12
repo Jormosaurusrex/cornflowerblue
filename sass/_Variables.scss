@@ -180,17 +180,18 @@
   --form-shade-text-shadow: var(--text-shadow);
 
   // Growler keys
+  --growlbox-max-width: 22em;
   --growler-core-color: var(--blue);
-  --growler-max-width: 300px;
+  --growler-max-width: 20em;
+  --growler-border-radius: var(--border-radius);
   --growler-box-shadow: var(--panel-shadow);
-  --growler-default-text-color: var(--grey-darkest);
-  --growler-default-background-color: var(--light);
+  --growler-text-color: var(--grey-darkest);
+  --growler-text-shadow: var(--text-shadow);
+  --growler-default-background-color: var(--ultralight);
   --growler-default-border-color: var(--growler-core-color);
-  --growler-notitle-closebutton-color: var(--grey-medium);
-  --growler-title-text-color: var(--light);
-  --growler-title-closebutton-color: var(--growler-title-text-color);
-  --growler-title-background-color: var(--growler-core-color);
-  --growler-title-text-shadow: var(--text-shadow);
+  --growler-header-text-color: var(--ultralight);
+  --growler-header-text-shadow: var(--text-shadow);
+  --growler-header-background-color: var(--growler-core-color);
 
   // Headers
   --headers-h1-text-color: var(--grey-darkest);
