@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.showGrowlers();
+        this.showSelects();
     }
 
     /**
@@ -133,6 +133,14 @@ class CornflowerBlueDemo {
                         me.showInputs();
                     }
                 },
+                {
+                    label: 'Select',
+                    id: 'selects',
+                    action: function() {
+                        me.showSelects();
+                    }
+                },
+
                 {
                     label: 'Text Areas',
                     id: 'textareas',
@@ -193,8 +201,6 @@ class CornflowerBlueDemo {
         this.demobox.empty();
 
     }
-
-
 
     showDialogs() {
         const me = this;
@@ -319,6 +325,57 @@ class CornflowerBlueDemo {
                 )
         );
     }
+
+    showSelects() {
+        const me = this;
+        this.navigation.select('selects');
+
+        this.titlebox.html("Selects");
+
+        this.demobox.empty();
+
+        this.demobox.append($('<h4 />').html("Standard"));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new SelectMenu({
+                        label: "Select Year",
+                        name: "year",
+                        options: [
+                            { label: "2019", checked: true, value: "2019" },
+                            { label: "2018", value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" },
+                            { label: "2015", value: "2015" },
+                            { label: "2014", value: "2014" },
+                            { label: "2013", value: "2013" },
+                            { label: "2012", value: "2012" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Radio Group"));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new RadioGroup({
+                        label: "Select Year",
+                        name: "year",
+                        options: [
+                            { label: "2019", value: "2019" },
+                            { label: "2018", checked: true, value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+    }
+
 
     /**
      * Play with Growlers

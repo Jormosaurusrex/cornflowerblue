@@ -8,7 +8,6 @@ class SelectMenu extends RadioGroup {
             name: null,
             form: null, // A form element this is in
             label: null, // The text for the label.
-
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
