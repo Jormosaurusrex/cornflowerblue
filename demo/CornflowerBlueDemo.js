@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.showSelects();
+        this.showToggles();
     }
 
     /**
@@ -972,6 +972,7 @@ class CornflowerBlueDemo {
      * Show different kinds of text areas
      */
     showTextAreas() {
+        const me = this;
         this.navigation.select('textareas');
 
         this.titlebox.html("Text Areas");
@@ -987,6 +988,7 @@ class CornflowerBlueDemo {
                         label: "Element Label",
                         placeholder: "An input placeholder."
                     }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -998,6 +1000,7 @@ class CornflowerBlueDemo {
                         disabled: true,
                         placeholder: "An input placeholder."
                     }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -1010,6 +1013,7 @@ class CornflowerBlueDemo {
                         mute: true,
                         placeholder: "An input placeholder."
                     }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
@@ -1062,9 +1066,14 @@ class CornflowerBlueDemo {
 
         this.demobox.empty();
 
-        this.demobox.append($('<h4 />').html("Normal/Default"));
+        this.demobox.append($('<p />').html("The BooleanToggle class is an implementation of <input type='checkbox' />."));
+
+
+        this.demobox.append($('<h4 />').html("Default"));
+        this.demobox.append($('<p />').html("Labels can be on either side. The default is right-sided, because the affordances end up in line."));
+
         this.demobox.append(
-            $('<div />').addClass('section')
+            $('<div />').addClass('section').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal"
@@ -1095,13 +1104,11 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Normal/Default, Right Sided"));
-
         this.demobox.append(
-            $('<div />').addClass('section')
+            $('<div />').addClass('section').addClass("centered")
                 .append(
                     new BooleanToggle({
-                        labelside: 'right',
+                        labelside: 'left',
                         label: "Normal"
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
@@ -1109,14 +1116,14 @@ class CornflowerBlueDemo {
                 .append(
                     new BooleanToggle({
                         checked: true,
-                        labelside: 'right',
+                        labelside: 'left',
                         label: "Toggled"
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new BooleanToggle({
-                        labelside: 'right',
+                        labelside: 'left',
                         disabled: true,
                         label: "Disabled"
                     }).container
@@ -1124,7 +1131,7 @@ class CornflowerBlueDemo {
                 )
                 .append(
                     new BooleanToggle({
-                        labelside: 'right',
+                        labelside: 'left',
                         checked: true,
                         disabled: true,
                         label: "Disabled"
@@ -1133,10 +1140,47 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Round Style"));
+        this.demobox.append($('<h4 />').html("Styled"));
+        this.demobox.append($('<p />').html("Styles can be applied to the toggles. Values for the 'style' attribute include square, circle, switch, and toggle."));
 
         this.demobox.append(
-            $('<div />').addClass('section')
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append(
+            $('<div />').addClass('section').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
@@ -1171,48 +1215,8 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Check Style"));
-
         this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "check"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "check"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "check"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "check"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append($('<h4 />').html("Switch Style"));
-
-        this.demobox.append(
-            $('<div />').addClass('section')
+            $('<div />').addClass('section').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
@@ -1247,10 +1251,8 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Toggle Style"));
-
         this.demobox.append(
-            $('<div />').addClass('section')
+            $('<div />').addClass('section').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
