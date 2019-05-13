@@ -45,7 +45,7 @@ div.growlbox {
   opacity: 0;
   position: relative;
   border-radius: var(--growler-border-radius);
-  transition: all 0.4s ease-in-out;
+  transition: all .5s ease-in-out;
   border: .1em solid var(--growler-default-border-color);
   box-shadow: var(--growler-box-shadow);
   color: var(--growler-default-text-color);
@@ -152,7 +152,16 @@ div.growlbox {
       background-image: var(--caution-stripes);
     }
   }
-  &.closing {
-
+  &.success {
+    --growler-core-color: var(--success-color);
+    border-color: var(--success-color);
+    div.payload {
+      background-image: var(--success-stripes);
+    }
+  }
+  &.showing {
+    animation: fadein .5s;
+    opacity: 1;
   }
 }
+

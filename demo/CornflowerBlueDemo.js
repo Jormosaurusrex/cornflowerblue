@@ -29,7 +29,6 @@ class CornflowerBlueDemo {
                 })
             ],
             handler: function(self, callback) {
-                console.log("hanlder top");
                 let results = {
                     success: false,
                     errors: ['Email and password do not match.']
@@ -47,7 +46,7 @@ class CornflowerBlueDemo {
                 new SimpleButton({
                     text: "Create Account",
                     mute: true,
-                    action: function(e, btn) {
+                    action: function() {
                         new Growler({
                             position: 'top-left',
                             icon: 'warn-triangle',
@@ -76,10 +75,14 @@ class CornflowerBlueDemo {
         };
     }
 
+    /**
+     * Builds the demo page.
+     */
     constructor() {
         this.body = $('body');
 
         this.build();
+
         this.showGrowlers();
     }
 
@@ -183,67 +186,6 @@ class CornflowerBlueDemo {
 
     }
 
-    /**
-     * Draw example messageboxes
-     */
-    showMessageBoxes() {
-        const me = this;
-        this.navigation.select('messageboxes');
-
-        this.titlebox.html("Message Boxes");
-
-        this.demobox.empty();
-        this.demobox.append($('<p />').html("The size of the icons changes based on how many lines of text are present."));
-
-        this.demobox.append($('<h4 />').html("Instructions"));
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("vert")
-                .append(
-                    new InstructionBox({
-                        instructions: [
-                            "Duis mollis, est non commodo luctus.",
-                            "Nisi erat porttitor ligula, eget.",
-                            "lacinia odio sem nec elit."
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-
-        this.demobox.append($('<h4 />').html("Form Response"));
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("vert")
-                .append(
-                    new MessageBox({
-                        results: [
-                            "The file was imported successfully!"
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new MessageBox({
-                        warnings: [
-                            "The file was imported successfully, but some of the data was duplicated.",
-                            "Duplicate entries have been removed."
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new MessageBox({
-                        errors: [
-                            "The file was not imported.",
-                            "The file's size was larger than can be accepted."
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-
-        );
-    }
-
     showIntro() {
 
         this.titlebox.html("Buttons");
@@ -251,6 +193,8 @@ class CornflowerBlueDemo {
         this.demobox.empty();
 
     }
+
+
 
     showDialogs() {
         const me = this;
@@ -283,491 +227,6 @@ class CornflowerBlueDemo {
                         })
                 )
         );
-    }
-
-    showGrowlers() {
-        const me = this;
-
-        this.navigation.select('growlers');
-
-        this.titlebox.html("Growlers");
-
-        this.demobox.empty();
-
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Top Left",
-                        action: function() {
-                            new Growler({
-                                position: 'top-left',
-                                icon: 'globe',
-                                title: 'Top Left Growler',
-                                text: 'A growler is here!',
-                                onclose: function(g) { me.dumpConfig(g);}
-                            });
-
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Center",
-                        action: function() {
-                            new Growler({
-                                position: 'top-center',
-                                icon: 'chat',
-                                text: 'A top-center growler with an icon and no title.',
-                                onclose: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Right",
-                        action: function() {
-                            new Growler({
-                                position: 'top-right',
-                                icon: 'star',
-                                title: 'Growler with an icon and no text.',
-                                onclose: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Left",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-left',
-                                icon: 'circle-disc-chopped',
-                                title: 'Bottom Left Growler',
-                                text: 'This growler has duration:0, and will stay until dismissed.',
-                                duration: 0,
-                                onclose: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Center",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-center',
-                                icon: 'heart',
-                                title: 'Bottom Center Growler',
-                                text: 'This growler has duration:0, so will stay until dismissed.',
-                                duration: 0,
-                                onclose: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Right",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-right',
-                                icon: 'star',
-                                title: 'Bottom Right Growler',
-                                text: 'Another growler over here!',
-                                onclose: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Error",
-                        action: function() {
-                            Growler.error('This is an error message!');
-                            //me.dumpConfig(g);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Warn",
-                        action: function() {
-                            Growler.warn('This is a warning message!');
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Caution",
-                        action: function() {
-                            Growler.caution('This is a caution message!');
-                        }
-                    }).button
-                )
-        );
-
-
-
-    }
-
-    showButtons() {
-        const me = this;
-
-        this.navigation.select('buttons');
-
-        this.titlebox.html("Buttons");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<h4 />').html("Standard"));
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Normal"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        text: "Constructive"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        text: "Destructive"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Disabled",
-                        disabled: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Normal",
-                        icon: "globe"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        text: "Constructive",
-                        icon: "check"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        text: "Destructive",
-                        icon: "trashcan"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append($('<h4 />').html("Mute"));
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Normal",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        text: "Constructive",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        text: "Destructive",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Disabled",
-                        disabled: true,
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Normal",
-                        mute: true,
-                        icon: "globe"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        text: "Constructive",
-                        mute: true,
-                        icon: "check"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        text: "Destructive",
-                        mute: true,
-                        icon: "trashcan"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append($('<h4 />').html("Hot"));
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Normal",
-                        hot: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        text: "Constructive",
-                        hot: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        text: "Destructive",
-                        hot: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Disabled",
-                        disabled: true,
-                        hot: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Normal",
-                        hot: true,
-                        icon: "globe"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        text: "Constructive",
-                        hot: true,
-                        icon: "check"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        text: "Destructive",
-                        hot: true,
-                        icon: "trashcan"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append($('<h4 />').html("Shaped: Square"));
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        icon: "echx",
-                        shape: "square"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        icon: "plus",
-                        shape: "square"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        icon: "minus",
-                        shape: "square"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "legend",
-                        shape: "square",
-                        disabled: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "popout",
-                        shape: "square",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        icon: "minimize",
-                        shape: "square",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        icon: "map",
-                        shape: "square",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "echx",
-                        shape: "square",
-                        disabled: true,
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append($('<h4 />').html("Shaped: Circle"));
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        icon: "echx",
-                        shape: "circle"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        icon: "minus",
-                        shape: "circle"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        icon: "plus",
-                        shape: "circle"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "map",
-                        shape: "circle",
-                        disabled: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "minimize",
-                        shape: "circle",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        icon: "legend",
-                        shape: "circle",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        icon: "popout",
-                        shape: "circle",
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "echx",
-                        shape: "circle",
-                        disabled: true,
-                        mute: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        this.demobox.append($('<h4 />').html("Shaped: Hexagon"));
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        icon: "echx",
-                        shape: "hexagon"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ConstructiveButton({
-                        icon: "echx",
-                        shape: "hexagon"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new DestructiveButton({
-                        icon: "echx",
-                        shape: "hexagon"
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleButton({
-                        icon: "echx",
-                        shape: "hexagon",
-                        disabled: true
-                    }).button
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
     }
 
     showInputs() {
@@ -858,6 +317,597 @@ class CornflowerBlueDemo {
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
+        );
+    }
+
+    /**
+     * Play with Growlers
+     */
+    showGrowlers() {
+        const me = this;
+
+        this.navigation.select('growlers');
+
+        this.titlebox.html("Growlers");
+
+        this.demobox.empty();
+
+        this.demobox.append($('<h4 />').html("Positions"));
+
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Top Left",
+                        action: function() {
+                            new Growler({
+                                position: 'top-left',
+                                icon: 'globe',
+                                title: 'Top Left Growler',
+                                text: 'A growler is here!',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Top Center",
+                        action: function() {
+                            new Growler({
+                                position: 'top-center',
+                                icon: 'chat',
+                                text: 'A top-center growler with an icon and no title.',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Top Right",
+                        action: function() {
+                            new Growler({
+                                position: 'top-right',
+                                icon: 'star',
+                                title: 'Growler with an icon and no text.',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+        );
+
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Left",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-left',
+                                icon: 'circle-disc-chopped',
+                                title: 'Bottom Left Growler',
+                                text: 'This growler has duration:0, and will stay until dismissed.',
+                                duration: 0,
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Center",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-center',
+                                icon: 'heart',
+                                title: 'Bottom Center Growler',
+                                text: 'This growler has duration:0, so will stay until dismissed.',
+                                duration: 0,
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Right",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-right',
+                                icon: 'star',
+                                title: 'Bottom Right Growler',
+                                text: 'Another growler over here!',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Special Types"));
+        this.demobox.append($('<p />').html("Growlers can be invoked with shorthand static methods."));
+
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Quick Growl",
+                        action: function() {
+                            Growler.growl('This is a growl message!', 'Growler.growl');
+                            me.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Success",
+                        action: function() {
+                            Growler.success('This is a success message!');
+                            me.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Error",
+                        action: function() {
+                            Growler.error('This is an error message!');
+                            me.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Warn",
+                        action: function() {
+                            Growler.warn('This is a warning message!');
+                            me.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Caution",
+                        action: function() {
+                            Growler.caution('This is a caution message!');
+                            me.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
+
+                        }
+                    }).button
+                )
+        );
+
+
+
+    }
+
+    /**
+     * Buttons
+     */
+    showButtons() {
+        const me = this;
+
+        this.navigation.select('buttons');
+
+        this.titlebox.html("Buttons");
+
+        this.demobox.empty();
+
+        this.demobox.append($('<h4 />').html("Normal"));
+        this.demobox.append($('<p />').html("Icons can be placed on either side."));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        icon: "globe"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        icon: "check"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Mute"));
+        this.demobox.append($('<p />').html("Mute buttons don't have borders in the resting state."));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        disabled: true,
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        mute: true,
+                        icon: "globe"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        mute: true,
+                        icon: "check"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        mute: true,
+                        icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Hot"));
+        this.demobox.append($('<p />').html("Hot buttons are dramatic. The heat() method will turn on hot phase, and cool() will turn that off."));
+
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        hot: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        hot: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        hot: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        disabled: true,
+                        hot: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        hot: true,
+                        icon: "globe"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        hot: true,
+                        icon: "check"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        hot: true,
+                        icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Shaped: Square"));
+        this.demobox.append($('<p />').html("Shaped buttons only have icons.  They can also be hot or mute."));
+
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        icon: "echx",
+                        shape: "square"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        icon: "plus",
+                        shape: "square"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        icon: "minus",
+                        shape: "square"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "legend",
+                        shape: "square",
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "popout",
+                        shape: "square",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        icon: "minimize",
+                        shape: "square",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        icon: "map",
+                        shape: "square",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "echx",
+                        shape: "square",
+                        disabled: true,
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Shaped: Circle"));
+        this.demobox.append($('<p />').html("Shaped buttons only have icons.  They can also be hot or mute."));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        icon: "echx",
+                        shape: "circle"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        icon: "minus",
+                        shape: "circle"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        icon: "plus",
+                        shape: "circle"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "map",
+                        shape: "circle",
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "minimize",
+                        shape: "circle",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        icon: "legend",
+                        shape: "circle",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        icon: "popout",
+                        shape: "circle",
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "echx",
+                        shape: "circle",
+                        disabled: true,
+                        mute: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        this.demobox.append($('<h4 />').html("Shaped: Hexagon"));
+        this.demobox.append($('<p />').html("Shaped buttons only have icons.  Hexagon buttons don't have other states. These aren't recommended for use day-to-day use."));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        icon: "echx",
+                        shape: "hexagon"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        icon: "echx",
+                        shape: "hexagon"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        icon: "echx",
+                        shape: "hexagon"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        icon: "echx",
+                        shape: "hexagon",
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+    }
+
+    /**
+     * Draw example messageboxes
+     */
+    showMessageBoxes() {
+        const me = this;
+        this.navigation.select('messageboxes');
+
+        this.titlebox.html("Message Boxes");
+
+        this.demobox.empty();
+        this.demobox.append($('<p />').html("The size of the icons changes based on how many lines of text are present."));
+
+        this.demobox.append($('<h4 />').html("Instructions"));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass("vert")
+                .append(
+                    new InstructionBox({
+                        instructions: [
+                            "Duis mollis, est non commodo luctus.",
+                            "Nisi erat porttitor ligula, eget.",
+                            "lacinia odio sem nec elit."
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+
+        this.demobox.append($('<h4 />').html("Form Response"));
+        this.demobox.append(
+            $('<div />').addClass('section').addClass("vert")
+                .append(
+                    new MessageBox({
+                        results: [
+                            "The file was imported successfully!"
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new MessageBox({
+                        warnings: [
+                            "The file was imported successfully, but some of the data was duplicated.",
+                            "Duplicate entries have been removed."
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new MessageBox({
+                        errors: [
+                            "The file was not imported.",
+                            "The file's size was larger than can be accepted."
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+
         );
     }
 
@@ -1191,7 +1241,7 @@ class CornflowerBlueDemo {
 
         this.demobox.empty();
 
-        this.demobox.append($('<h4 />').html("Complex Form"));
+        this.demobox.append($('<h4 />').html("Simple Form"));
 
         let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
 
@@ -1199,16 +1249,28 @@ class CornflowerBlueDemo {
 
     }
 
+    /* UTILITY METHODS__________________________________________________________________ */
 
+    /**
+     * Dumps an object's config.
+     * @param o the object to dump.
+     */
     dumpConfig(o) {
-        this.codebox.empty();
-
-        this.codebox.append($('<h2 />').html(o.constructor.name));
-
-        this.codebox.append($('<div />').addClass('config').html(Utils.prettyPrintConfig(o)));
+        this.writeConfig(o.constructor.name, Utils.prettyPrintConfig(o));
     }
 
-    /* UTILITY METHODS__________________________________________________________________ */
+    /**
+     * Writes a config into the config box
+     * @param title the title of the section
+     * @param config the config string to write.
+     */
+    writeConfig(title, config) {
+        this.codebox.empty();
+
+        this.codebox.append($('<h2 />').html(title));
+
+        this.codebox.append($('<div />').addClass('config').html(config));
+    }
 
     /**
      * Dump this object as a string.
@@ -1217,7 +1279,6 @@ class CornflowerBlueDemo {
     toString () {
         return Utils.getConfig(this);
     }
-
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

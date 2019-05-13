@@ -7,14 +7,15 @@ class Growler {
             id : null, // The id
             title: null, // The growler title
             text : null, // The growler text payload
-            duration: 4000, // Length of time in milliseconds to display. If 0, stays open.
+            duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
             icon: null, // An optional icon. Position of this depends on whether there is text or a title.
                         // If a title is given but no text, it will be in the titlebar. Else it
                         // gets placed in the text area.
             position: 'bottom-right', // Position for the growler. Valid values:
             // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
             classes: [], //Extra css classes to apply,
-            onclose: null // A function to run to when the growler closes. Passed the self.
+            onclose: null, // A function to run to when the growler closes. Passed the self.
+            onopen: null // A function to run to when the growler opens. Passed the self.
 
         };
     }
@@ -55,6 +56,15 @@ class Growler {
         })
     }
 
+    static success(text) {
+        return new Growler({
+            text: text,
+            title: 'Success',
+            icon: 'check-circle',
+            classes: ['success']
+        })
+    }
+
     /**
      * Builds a growlbox and inserts it into the dom.
      * @param position the position to create it at.
@@ -90,14 +100,14 @@ class Growler {
     close() {
         const me = this;
         if (this.timer) { clearTimeout(this.timer); }
-        this.growler.animate({opacity: 0}, 200, 'linear', function() {
-            setTimeout(function() {
-                me.growler.remove()
-            }, 201);
-            if ((me.onclose) && (typeof me.onclose === 'function')) {
-                me.onclose(me);
-            }
-        });
+        me.growler.removeClass('showing');
+
+        setTimeout(function() {
+            me.growler.remove()
+        }, 2501);
+        if ((me.onclose) && (typeof me.onclose === 'function')) {
+            me.onclose(me);
+        }
     }
 
     /**
@@ -113,14 +123,12 @@ class Growler {
 
     /**
      * Show the growler
-     * @param callback optional callback to execute when done
      */
-    show(callback) {
-        this.growler.animate({opacity: 1}, 200, 'linear', function() {
-            if ((callback) && (typeof callback === 'function')) {
-                callback();
-            }
-        });
+    show() {
+        this.growler.addClass('showing');
+        if ((this.onopen) && (typeof this.onopen === 'function')) {
+            this.onopen(this);
+        }
     }
 
     /**
@@ -151,7 +159,6 @@ class Growler {
             if ((this.icon) && (!this.text)) {
                 $tbox.append(IconFactory.makeIcon(this.icon).addClass('i'));
             }
-
             $tbox.append($('<div />').addClass('t').html(this.title))
                 .append(this.closebutton.button);
 
@@ -169,7 +176,6 @@ class Growler {
             );
             if (!this.title) {
                 $payload.append(this.closebutton.button);
-
             }
             this.growler.append($payload);
         }
@@ -222,6 +228,14 @@ class Growler {
             console.error("Action provided for onclose is not a function!");
         }
         this.config.onclose = onclose;
+    }
+
+    get onopen() { return this.config.onopen; }
+    set onopen(onopen) {
+        if (typeof onopen !== 'function') {
+            console.error("Action provided for onopen is not a function!");
+        }
+        this.config.onopen = onopen;
     }
 
     get position() { return this.config.position; }
