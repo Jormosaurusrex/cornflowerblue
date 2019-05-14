@@ -28,7 +28,7 @@
 .cfb-chevron-left:before { content: '\3b'; } /* ';' */
 .cfb-chevron-right:before { content: '\3c'; } /* '&lt;' */
 .cfb-chevron-up:before { content: '\3d'; } /* '=' */
-.cfb-circle-dashed:before { content: '\3e'; } /* '&gt;' */
+.cfb-spinner-circle:before { content: '\3e'; } /* '&gt;' */
 .cfb-circle-disc-chopped:before { content: '\3f'; } /* '?' */
 .cfb-circle:before { content: '\40'; } /* '@' */
 .cfb-disc-chopped:before { content: '\41'; } /* 'A' */
@@ -52,3 +52,5 @@
 .cfb-warn-triangle:before { content: '\53'; } /* 'S' */
 .cfb-check-circle:before { content: '\54'; } /* 'T' */
 .cfb-echx-circle:before { content: '\55'; } /* 'U' */
+.cfb-eye-slash:before { content: '\56'; } /* 'V' */
+.cfb-eye:before { content: '\57'; } /* 'W' */

@@ -39,7 +39,7 @@
 .cfb-chevron-left { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x3b;&nbsp;'); }
 .cfb-chevron-right { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x3c;&nbsp;'); }
 .cfb-chevron-up { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x3d;&nbsp;'); }
-.cfb-circle-dashed { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x3e;&nbsp;'); }
+.cfb-spinner-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x3e;&nbsp;'); }
 .cfb-circle-disc-chopped { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x3f;&nbsp;'); }
 .cfb-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x40;&nbsp;'); }
 .cfb-disc-chopped { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x41;&nbsp;'); }
@@ -63,3 +63,5 @@
 .cfb-warn-triangle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x53;&nbsp;'); }
 .cfb-check-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x54;&nbsp;'); }
 .cfb-echx-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x55;&nbsp;'); }
+.cfb-eye-slash { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x56;&nbsp;'); }
+.cfb-eye { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x57;&nbsp;'); }

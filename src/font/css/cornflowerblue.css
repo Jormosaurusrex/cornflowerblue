@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?38757410');
-  src: url('../font/cornflowerblue.eot?38757410#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?38757410') format('woff2'),
-       url('../font/cornflowerblue.woff?38757410') format('woff'),
-       url('../font/cornflowerblue.ttf?38757410') format('truetype'),
-       url('../font/cornflowerblue.svg?38757410#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?93227441');
+  src: url('../font/cornflowerblue.eot?93227441#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?93227441') format('woff2'),
+       url('../font/cornflowerblue.woff?93227441') format('woff'),
+       url('../font/cornflowerblue.ttf?93227441') format('truetype'),
+       url('../font/cornflowerblue.svg?93227441#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?38757410#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?93227441#cornflowerblue') format('svg');
   }
 }
 */
@@ -84,7 +84,7 @@
 .cfb-chevron-left:before { content: '\3b'; } /* ';' */
 .cfb-chevron-right:before { content: '\3c'; } /* '&lt;' */
 .cfb-chevron-up:before { content: '\3d'; } /* '=' */
-.cfb-circle-dashed:before { content: '\3e'; } /* '&gt;' */
+.cfb-spinner-circle:before { content: '\3e'; } /* '&gt;' */
 .cfb-circle-disc-chopped:before { content: '\3f'; } /* '?' */
 .cfb-circle:before { content: '\40'; } /* '@' */
 .cfb-disc-chopped:before { content: '\41'; } /* 'A' */
@@ -108,3 +108,5 @@
 .cfb-warn-triangle:before { content: '\53'; } /* 'S' */
 .cfb-check-circle:before { content: '\54'; } /* 'T' */
 .cfb-echx-circle:before { content: '\55'; } /* 'U' */
+.cfb-eye-slash:before { content: '\56'; } /* 'V' */
+.cfb-eye:before { content: '\57'; } /* 'W' */
