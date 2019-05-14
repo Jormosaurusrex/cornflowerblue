@@ -298,7 +298,6 @@ class SimpleForm {
                 this.actionbox.append(action.container);
             }
         }
-        console.log(this.actionbox);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

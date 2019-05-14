@@ -115,7 +115,7 @@ class DialogWindow {
      */
     close() {
         const me = this;
-        console.log("close");
+        // XXX TODO Change this to css animations
         this.container.animate({ opacity: 0 }, 200, function() {
             me.container.remove();
             me.mask.animate({ opacity: 0 }, 100, function() {

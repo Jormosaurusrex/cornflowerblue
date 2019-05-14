@@ -4,19 +4,12 @@ class Utils {
 
 
     static getCookie(name) {
-        let end,
-            begin = document.cookie.indexOf(`; ${name}=`);
-        if (begin === -1) {
-            begin = document.cookie.indexOf(`${name}=`);
-            if (begin !== 0) return null;
-        } else {
-            begin += 2;
-            end = document.cookie.indexOf(";", begin);
-            if (end === -1) {
-                end = document.cookie.length;
-            }
-        }
-        return decodeURI(document.cookie.substring(begin + `${name}=`.length, end));
+        console.log(document.cookie);
+        return ('; ' + document.cookie)
+            .split('; ' + name + '=')
+            .pop()
+            .split(';')
+            .shift();
     }
 
 
