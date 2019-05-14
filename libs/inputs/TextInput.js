@@ -20,7 +20,7 @@ class TextInput {
             autocomplete: 'off', // Enable browser autocomplete. Default is off.
             arialabel: null, // The aria-label value. If null, follows: label > title > null
             maxlength: null, // Value for maxlength.
-            value: null, // Value to use (pre-population).  Used during construction and then discarded.
+            value: '', // Value to use (pre-population).  Used during construction and then discarded.
             disabled: false, // If true, disable the field.
             classes: [], // Extra css classes to apply
             onreturn: null, // action to execute on hitting the return key. Passed (event, self).
@@ -53,6 +53,8 @@ class TextInput {
 
         if (this.config.value) { // store the supplied value if any
             this.origval = this.config.value;
+        } else {
+            this.origval = '';
         }
 
         this.touched = false; // set untouched on creation.
@@ -86,10 +88,10 @@ class TextInput {
         } else {
             this.clearMessages();
             this.input.attr('aria-invalid', false);
-            if (this.isDirty()) {
-                this.container.addClass('dirty');
+            if (this.isDirty()) { // This has to be valid
+                this.container.addClass('valid');
             } else {
-                this.container.removeClass('dirty');
+                this.container.removeClass('valid');
             }
         }
         return (this.errors.length < 1);

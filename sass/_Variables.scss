@@ -54,8 +54,6 @@
 
   --box-shadow: .1em .1em .5em 0 rgba(50, 50, 50, 0.5);
   --hover-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
-  --checkbox-checked-shadow: inset 0 .1em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --checkbox-checked-shadow-hover: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
   --panel-shadow-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow-light-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.2);
@@ -143,16 +141,21 @@
   --button-menu-item-hover-text-shadow: var(--text-shadow);
 
   // Checkbox keys
+  --checkbox-focus-color: var(--focus-color);
+  --checkbox-border-color: var(--input-default-border-color);
+  --checkbox-background-color: var(--input-default-background-color);
+  --checkbox-checked-border-color: var(--input-default-border-color);
+  --checkbox-checked-background-color: var(--input-default-border-color);
   --checkbox-toggle-chrome-color: var(--light);
   --checkbox-toggle-chrome-hovermark-color: var(--focus-color);
-  --checkbox-border-color: var(--grey-dark);
-  --checkbox-focus-color: var(--focus-color);
-  --checkbox-checked-border-color: var(--grey-dark);
-  --checkbox-checkmark-color: var(--light);
+  --checkbox-toggle-background-color: var(--grey-medium);
   --checkbox-checkmark-checked-background-color: var(--checkbox-focus-color);
   --checkbox-checkmark-checked-border-color: var(--checkbox-checked-border-color);
-  --checkbox-check-text-shadow: var(--text-shadow-heavier);
-
+  --checkbox-checkmark-text-color: var(--ultralight);
+  --checkbox-checkmark-text-shadow: var(--text-shadow);
+  --checkbox-checked-shadow: inset 0 .1em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --checkbox-checked-shadow-hover: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  
   // Dialog keys
   --dialog-background-color: var(--ultralight);
   --dialog-border-radius: var(--border-radius);
@@ -262,9 +265,9 @@
   --input-status-error-background-color: var(--error-color);
   --input-status-error-icon-color: var(--input-status-icon-color);
   --input-status-error-icon-text-shadow: var(--input-status-icon-text-shadow);
-  --input-status-dirty-background-color: var(--standard-color);
-  --input-status-dirty-icon-color: var(--input-status-icon-color);
-  --input-status-dirty-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-valid-background-color: transparent;
+  --input-status-valid-icon-color: var(--success-color-half);
+  --input-status-valid-icon-text-shadow: none;
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);

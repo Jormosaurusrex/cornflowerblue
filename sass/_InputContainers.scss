@@ -2,7 +2,6 @@ div.input-container,
 div.textarea-container {
   margin: 1em 0 1em 0;
   position: relative;
-  box-sizing: border-box;
   div.wrap {
     position: relative;
     &:after {
@@ -96,13 +95,13 @@ div.textarea-container {
       }
     }
   }
-  &.dirty {
+  &.valid {
     div.wrap {
       &:after {
         display: flex;
-        background-color: var(--input-status-dirty-background-color);
-        text-shadow: var(--input-status-dirty-icon-text-shadow);
-        color: var(--input-status-dirty-icon-color);
+        background-color: var(--input-status-valid-background-color);
+        text-shadow: var(--input-status-valid-icon-text-shadow);
+        color: var(--input-status-valid-icon-color);
         content: '\54';
       }
     }

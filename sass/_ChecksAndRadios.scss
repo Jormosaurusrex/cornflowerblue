@@ -30,7 +30,7 @@ input[type="radio"]{
   transition: all .2s;
   box-sizing: border-box;
   -webkit-appearance: none;
-  background-color: transparent;
+  background-color: var(--checkbox-background-color);
   border: .2em solid var(--checkbox-border-color);
   border-radius: var(--border-radius);
   display: inline-block;
@@ -76,20 +76,19 @@ input[type="radio"]{
     position: absolute;
     top: -.2em;
     left: -.3em;
-    color: var(--checkbox-checkmark-color);
-    text-shadow: var(--checkbox-check-text-shadow);
+    color: var(--checkbox-checkmark-text-color);
+    text-shadow: var(--checkbox-checkmark-text-shadow);
   }
   &:checked {
     border-color: var(--checkbox-border-color);
     box-shadow: var(--checkbox-checked-shadow);
-    background-color: var(--checkbox-focus-color);
+    background-color: var(--checkbox-checked-background-color);
     &:before,
     &:focus {
       opacity: 1;
       display: inline-block;
     }
   }
-
   &:focus,
   &:active,
   &:hover {
@@ -97,6 +96,8 @@ input[type="radio"]{
     border-color: var(--checkbox-focus-color);
     background-color: var(--checkbox-focus-color);
     box-shadow: var(--hover-box-shadow);
+  }
+  &:hover {
     &:before {
       display: inline-block;
       opacity: 0.2;
@@ -195,7 +196,7 @@ input[type="radio"]{
     max-width: 6em;
     height: 2.8em;
     max-height: 2.8em;
-    background-color: var(--grey-medium);
+    background-color: var(--checkbox-toggle-background-color);
     box-shadow: var(--checkbox-checked-shadow);
     &:hover,
     &:focus,

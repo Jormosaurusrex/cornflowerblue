@@ -14,7 +14,6 @@ class CornflowerBlueDemo {
                 new EmailField({
                     label: "Email",
                     autocomplete: 'off',
-                    title: "Your email address",
                     required: true
                 }),
                 new PasswordInput({
@@ -25,6 +24,7 @@ class CornflowerBlueDemo {
                 }),
                 new BooleanToggle({
                     label: "Remember Me",
+                    style: "toggle",
                     labelside: 'right'
                 })
             ],
@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.showToggles();
+        this.showDialogs();
     }
 
     /**
@@ -248,10 +248,9 @@ class CornflowerBlueDemo {
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
-                        label: "Element Label",
-                        counter: 'remaining',
-                        maxlength: 100,
-                        placeholder: "An input placeholder."
+                        label: "Name",
+                        maxlength: 50,
+                        placeholder: "Your full name",
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
@@ -262,11 +261,10 @@ class CornflowerBlueDemo {
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
-                        label: "Element Label",
+                        label: "Name",
                         mute: true,
-                        counter: 'limit',
-                        maxlength: 100,
-                        placeholder: "An input placeholder."
+                        maxlength: 50,
+                        placeholder: "Your full name"
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )

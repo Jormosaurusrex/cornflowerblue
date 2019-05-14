@@ -45,7 +45,7 @@ textarea {
     border-top: none;
     border-left: none;
     border-right: none;
-    padding: 1em 1em 1em 0;
+    padding: .5em 1em .5em 1.5em;
     &::placeholder {
       color: var(--label-color);
       text-shadow:var(--label-text-shadow);
