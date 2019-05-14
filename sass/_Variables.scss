@@ -30,6 +30,7 @@
   // Half opacity colors
   --white-half: rgba(255, 255, 255, 0.5); // #fff
   --grey-half: rgba(153, 153, 153, 0.5); // #999
+  --grey-quarter: rgba(153, 153, 153, 0.25); // #999
   --grey-translucent: rgba(153, 153, 153, 0.1); // #999
   --black-half: rgba(0, 0, 0, 0.5); // #000
   --blue-half: rgba(0, 84, 166, 0.5); // #0054a6
@@ -177,8 +178,8 @@
 
   --form-shade-background-color: var(--white-half);
   --form-shade-border-color: var(--white-half);
-  --form-shade-icon-color: var(--blue);
-  --form-shade-icon-shadow: var(--text-shadow);
+  --form-shade-spinner-color: var(--blue);
+  --form-shade-spinner-downcolor: var(--light);
   --form-shade-text-color: var(--blue);
   --form-shade-text-shadow: var(--text-shadow);
 

@@ -25,6 +25,7 @@
   --black: #000;
   --white-half: rgba(255, 255, 255, 0.5);
   --grey-half: rgba(153, 153, 153, 0.5);
+  --grey-quarter: rgba(153, 153, 153, 0.25);
   --grey-translucent: rgba(153, 153, 153, 0.1);
   --black-half: rgba(0, 0, 0, 0.5);
   --blue-half: rgba(0, 84, 166, 0.5);
@@ -137,8 +138,8 @@
   --form-actions-border-color: var(--light);
   --form-shade-background-color: var(--white-half);
   --form-shade-border-color: var(--white-half);
-  --form-shade-icon-color: var(--blue);
-  --form-shade-icon-shadow: var(--text-shadow);
+  --form-shade-spinner-color: var(--blue);
+  --form-shade-spinner-downcolor: var(--light);
   --form-shade-text-color: var(--blue);
   --form-shade-text-shadow: var(--text-shadow);
   --growlbox-max-width: 22em;
@@ -1827,6 +1828,50 @@ form {
       margin-left: auto;
       margin-right: 1em; }
 
+div.spinner.spin {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+  position: relative;
+  margin: 1em 0 1em 0;
+  border: 0.75em solid var(--form-shade-spinner-downcolor);
+  border-top-color: var(--form-shade-spinner-color);
+  animation: spinner-spin 1.1s infinite linear; }
+
+div.spinner.bounce {
+  width: 4em;
+  height: 4em;
+  position: relative;
+  margin: -2em 0 4em 0; }
+  div.spinner.bounce:before, div.spinner.bounce:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--form-shade-spinner-color);
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: spinner-bounce 2.0s infinite ease-in-out; }
+  div.spinner.bounce:after {
+    animation-delay: -1.0s; }
+
+@keyframes spinner-bounce {
+  0%, 100% {
+    transform: scale(0);
+    -webkit-transform: scale(0); }
+  50% {
+    transform: scale(1);
+    -webkit-transform: scale(1); } }
+@keyframes spinner-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 div.growlbox {
   z-index: 50000;
   position: fixed;

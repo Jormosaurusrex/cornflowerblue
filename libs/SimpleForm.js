@@ -23,7 +23,7 @@ class SimpleForm {
             method: 'get', // Method for the form.  Also used in API calls.
             header: null, // Stuff to put at the header. This is expected to be a jQuery element
             instructions: null, // Instructions configuration.  See InstructionBox.
-            spinnericon: 'spinner-circle', //
+            spinnerstyle: 'spin', //
             spinnertext: '...Please Wait...', //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
             classes: [], // Extra css classes to apply,
@@ -232,7 +232,7 @@ class SimpleForm {
         this.form.append(this.shade).append(this.contentbox).append(this.actionbox);
 
         this.validate();
-
+        
     }
 
     /**
@@ -257,8 +257,8 @@ class SimpleForm {
     buildShade() {
         this.shade = $('<div />').addClass('shade');
 
-        if (this.spinnericon) {
-            this.shade.append(IconFactory.makeIcon(this.spinnericon));
+        if (this.spinnerstyle) {
+            this.shade.append($('<div />').addClass('spinner').addClass(this.spinnerstyle));
         }
 
         if (this.spinnertext) {
@@ -437,8 +437,8 @@ class SimpleForm {
     }
     set shade(shade) { this._shade = shade; }
 
-    get spinnericon() { return this.config.spinnericon; }
-    set spinnericon(spinnericon) { this.config.spinnericon = spinnericon; }
+    get spinnerstyle() { return this.config.spinnerstyle; }
+    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
 
     get spinnertext() { return this.config.spinnertext; }
     set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
