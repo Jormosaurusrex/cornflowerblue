@@ -1312,7 +1312,7 @@ button {
         width: 0;
         height: 0;
         position: absolute;
-        left: 1.15em;
+        left: .7em;
         top: -.8em;
         border-width: 0 .7em .7em .7em;
         border-style: solid;

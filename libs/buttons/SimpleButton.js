@@ -65,7 +65,7 @@ class SimpleButton {
                 this.button.append();
             }
             if (this.text) {
-                $text = $('<div />').addClass('text').html(this.text);
+                $text = $('<span />').addClass('text').html(this.text);
             }
             if ((this.iconside) && (this.iconside === 'right')) {
                 this.button.addClass('righticon').append($text).append($icon);

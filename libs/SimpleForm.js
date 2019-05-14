@@ -287,8 +287,6 @@ class SimpleForm {
      * Draw the actions on the form, if any.
      */
     buildActionBox() {
-        console.log("buildActionBox");
-        console.log(this.actions);
         if ((this.actions) && (this.actions.length > 0)) {
             this.actionbox = $('<div />').addClass('actions');
             for (let action of this.actions) {
@@ -297,7 +295,6 @@ class SimpleForm {
                     this.submittors.push(action);
                 }
                 action.form = this;
-                console.log(action.button);
                 this.actionbox.append(action.container);
             }
         }
