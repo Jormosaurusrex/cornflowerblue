@@ -15,6 +15,7 @@ class TextInput {
             placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
                                // To insure a blank placeholder, set the value to ""
             title: null,
+            help: null, // Help text.
             required: false, // Is this a required field or not
             hidden: false, // Whether or not to be hidden
             autocomplete: 'off', // Enable browser autocomplete. Default is off.
@@ -342,6 +343,13 @@ class TextInput {
             .click(function() {
                 $('#' + $(this).attr('for')).focus();
             });
+
+        if (this.help) {
+            this.helpicon = new HelpButton({
+                help: this.help
+            });
+            this.labelobj.append(this.helpicon.button);
+        }
     }
 
     /**
@@ -383,12 +391,6 @@ class TextInput {
 
     get autocomplete() { return this.config.autocomplete; }
     set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }
-
-    get input() {
-        if (!this._input) { this.buildInput(); }
-        return this._input;
-    }
-    set input(input) { this._input = input; }
 
     get charactercounter() {
         if (!this._charactercounter) { this.buildCharacterCounter(); }
@@ -445,8 +447,20 @@ class TextInput {
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
 
+    get help() { return this.config.help; }
+    set help(help) { this.config.help = help; }
+
+    get helpicon() { return this._helpicon; }
+    set helpicon(helpicon) { this._helpicon = helpicon; }
+
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get input() {
+        if (!this._input) { this.buildInput(); }
+        return this._input;
+    }
+    set input(input) { this._input = input; }
 
     get label() { return this.config.label; }
     set label(label) { this.config.label = label; }

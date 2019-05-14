@@ -75,15 +75,6 @@ class ButtonMenu extends SimpleButton {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() { return this._container; }
-    set container(container) { this._container = container; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
 

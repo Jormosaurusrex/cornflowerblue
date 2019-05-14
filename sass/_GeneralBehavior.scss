@@ -89,6 +89,19 @@ label {
   color: var(--label-color);
   text-shadow:var(--label-text-shadow);
   text-transform: var(--label-text-transform);
+  button.help {
+    color: var(--label-color);
+    text-shadow:var(--label-text-shadow);
+    font-size: 100%;
+    &:hover,
+    &:focus,
+    &:active {
+      color: var(--label-color);
+      text-shadow:var(--label-text-shadow);
+    }
+
+  }
+
 }
 a {
   color: var(--link-color);

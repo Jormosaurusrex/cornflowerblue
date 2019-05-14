@@ -2,12 +2,8 @@ button {
   transition: all .2s;
   box-sizing: border-box;
   position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
+  display: inline-block;
   text-align: center;
-  align-items: center;
   vertical-align: middle;
   text-decoration: none;
   white-space: nowrap;
@@ -211,6 +207,66 @@ button {
   &.pill {
     border-radius: 1.5em;
     margin: 0;
+  }
+  &.naked {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    background-image: none;
+    height: auto;
+    width: auto;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: transparent;
+      background-image: none;
+      color: var(--button-default-colors);
+    }
+  }
+  &.help {
+    overflow: visible;
+    --tooltip-border-radius: var(--border-radius);
+    --tooltip-background-color: var(--grey-darkest);
+    --tooltip-text-color: var(--ultralight);
+    --tooltip-text-shadow: var(--text-shadow);
+    --tooltip-box-shadow: var(--panel-shadow);
+    span.text {
+      display: none;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      list-style-type: none;
+      margin: 0;
+      padding: .5em;
+      position: absolute;
+      left: -1em;
+      top: -2.5em;
+      min-width: 120%;
+      overflow: visible;
+      z-index: 220;
+      border-radius: var(--tooltip-border-radius);
+      background-color: var(--tooltip-background-color);
+      color: var(--tooltip-text-color);
+      text-shadow: var(--tooltip-text-shadow);
+      box-shadow: var(--panel-shadow-light);
+      &:before {
+        content: "";
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 1em;
+        bottom: -.5em;
+        border-width: .5em .5em 0 .5em;
+        border-style: solid;
+        border-color: var(--tooltip-background-color) transparent;
+      }
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      span.text {
+        display: flex;
+      }
+    }
   }
   &.menu {
     overflow: visible;

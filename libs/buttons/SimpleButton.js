@@ -9,7 +9,7 @@ class SimpleButton {
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
-            text : 'Button Text', // The text for the button. This is also used as aria-label.
+            text : null, // The text for the button. This is also used as aria-label.
             shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
@@ -170,9 +170,6 @@ class SimpleButton {
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
-
-    get container() { return this.button; }
-    set container(container) { this.button = container; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }

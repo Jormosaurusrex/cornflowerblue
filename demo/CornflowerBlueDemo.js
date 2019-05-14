@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.showDialogs();
+        this.showInputs();
     }
 
     /**
@@ -251,6 +251,7 @@ class CornflowerBlueDemo {
                         label: "Name",
                         maxlength: 50,
                         placeholder: "Your full name",
+                        help: "Use your full name, in whatever manner befits your culture."
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
