@@ -1775,15 +1775,15 @@ form {
       display: block;
       color: var(--form-shade-icon-color);
       font-size: 100pt;
-      border-radius: 50%;
       text-shadow: var(--form-shade-icon-shadow);
       margin-top: -1em;
       animation: localspin 2s linear infinite; }
+      form div.shade span.icon:before {
+        line-height: normal; }
     form div.shade div.spinnertext {
       color: var(--form-shade-text-color);
       font-size: 200%;
-      text-shadow: var(--form-shade-text-shadow);
-      margin-top: 2em; }
+      text-shadow: var(--form-shade-text-shadow); }
   form.shaded {
     overflow: hidden; }
     form.shaded div.shade {

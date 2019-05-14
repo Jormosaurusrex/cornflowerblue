@@ -23,7 +23,7 @@ class SimpleForm {
             method: 'get', // Method for the form.  Also used in API calls.
             header: null, // Stuff to put at the header. This is expected to be a jQuery element
             instructions: null, // Instructions configuration.  See InstructionBox.
-            spinnericon: 'circle-dashed', //
+            spinnericon: 'spinner-circle', //
             spinnertext: '...Please Wait...', //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
             classes: [], // Extra css classes to apply,
@@ -232,6 +232,7 @@ class SimpleForm {
         this.form.append(this.shade).append(this.contentbox).append(this.actionbox);
 
         this.validate();
+
     }
 
     /**
