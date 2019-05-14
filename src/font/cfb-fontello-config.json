@@ -776,6 +776,20 @@
       "search": [
         "spinner-circle"
       ]
+    },
+    {
+      "uid": "73a33ffa56c933865c46a24e126e7c1e",
+      "css": "disc-check",
+      "code": 88,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M500 80C268 80 80 268 80 500S268 920 500 920 920 732 920 500 732 80 500 80ZM424.8 732L210 517.2 268.6 458.6 424.8 614.8 727.4 312 786 370.6 424.8 732Z",
+        "width": 1000
+      },
+      "search": [
+        "disc-check"
+      ]
     }
   ]
 }
