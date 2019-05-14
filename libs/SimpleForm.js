@@ -232,7 +232,7 @@ class SimpleForm {
         this.form.append(this.shade).append(this.contentbox).append(this.actionbox);
 
         this.validate();
-        
+
     }
 
     /**
