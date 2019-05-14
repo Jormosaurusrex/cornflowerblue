@@ -201,12 +201,6 @@ class Growler {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get growlbox() { return this._growlbox; }
-    set growlbox(growlbox) { this._growlbox = growlbox; }
-
-    get growler() { return this._growler; }
-    set growler(growler) { this._growler = growler; }
-
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -215,6 +209,12 @@ class Growler {
 
     get duration() { return this.config.duration; }
     set duration(duration) { this.config.duration = duration; }
+
+    get growlbox() { return this._growlbox; }
+    set growlbox(growlbox) { this._growlbox = growlbox; }
+
+    get growler() { return this._growler; }
+    set growler(growler) { this._growler = growler; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

@@ -25,6 +25,7 @@ class SimpleForm {
             instructions: null, // Instructions configuration.  See InstructionBox.
             spinnericon: 'circle-dashed', //
             spinnertext: '...Please Wait...', //
+            results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
             classes: [], // Extra css classes to apply,
             submittors: [], // Array of elements that can submit this form.
                             // SimpleButton objects that have submits=true inside of the actions[] array
@@ -125,17 +126,20 @@ class SimpleForm {
     /**
      * This is the default form results handler
      * @param results the results object to be managed
+     * @param noexecution Don't execute onsuccess or onfailure.
      */
-    handleResults(results) {
+    handleResults(results, noexecution) {
         if (this.messagebox) { this.messagebox.remove(); }
         this.messagebox = new MessageBox(results).container;
         this.headerbox.append(this.messagebox);
         this.container.removeClass('shaded');
 
-        if ((results.success) && ((this.onsuccess) && (typeof this.onsuccess === 'function'))) {
-            this.onsuccess(this, results);
-        } else if ((this.onfailure) && (typeof this.onfailure === 'function')) {
-            this.onfailure(this, results);
+        if (!noexecution) {
+            if ((results.success) && ((this.onsuccess) && (typeof this.onsuccess === 'function'))) {
+                this.onsuccess(this, results);
+            } else if ((this.onfailure) && (typeof this.onfailure === 'function')) {
+                this.onfailure(this, results);
+            }
         }
     }
 
@@ -241,6 +245,9 @@ class SimpleForm {
                 this.headerbox.append(new InstructionBox(this.instructions).container);
             }
         }
+        if (this.results) {
+            this.handleResults(this.results, true);
+        }
     }
 
     /**
@@ -267,7 +274,6 @@ class SimpleForm {
             element.form = this;
             this.elementbox.append(element.container);
         }
-
     }
 
     /**
@@ -281,6 +287,8 @@ class SimpleForm {
      * Draw the actions on the form, if any.
      */
     buildActionBox() {
+        console.log("buildActionBox");
+        console.log(this.actions);
         if ((this.actions) && (this.actions.length > 0)) {
             this.actionbox = $('<div />').addClass('actions');
             for (let action of this.actions) {
@@ -289,9 +297,11 @@ class SimpleForm {
                     this.submittors.push(action);
                 }
                 action.form = this;
+                console.log(action.button);
                 this.actionbox.append(action.container);
             }
         }
+        console.log(this.actionbox);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -420,6 +430,9 @@ class SimpleForm {
         }
         this.config.onvalid = onvalid;
     }
+
+    get results() { return this.config.results; }
+    set results(results) { this.config.results = results; }
 
     get shade() {
         if (!this._shade) { this.buildShade(); }

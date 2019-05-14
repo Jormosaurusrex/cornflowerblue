@@ -171,6 +171,9 @@ class SimpleButton {
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
+    get container() { return this.button; }
+    set container(container) { this.button = container; }
+
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
 
