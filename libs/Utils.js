@@ -2,16 +2,18 @@
 
 class Utils {
 
-
+    /**
+     * Get the value of a specific cookie.
+     * @param name the name of the cookie
+     * @return {string} the value of the cookie
+     */
     static getCookie(name) {
-        console.log(document.cookie);
         return ('; ' + document.cookie)
             .split('; ' + name + '=')
             .pop()
             .split(';')
             .shift();
     }
-
 
     /**
      * Parses all URL parameters into a dictionary.  Returns the dictionary.
