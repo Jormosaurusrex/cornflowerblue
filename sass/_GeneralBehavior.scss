@@ -93,15 +93,14 @@ label {
     color: var(--label-color);
     text-shadow:var(--label-text-shadow);
     font-size: 100%;
+    margin: 0 .5em 0 .5em;
     &:hover,
     &:focus,
     &:active {
       color: var(--label-color);
       text-shadow:var(--label-text-shadow);
     }
-
   }
-
 }
 a {
   color: var(--link-color);

@@ -393,7 +393,8 @@ label {
   label button.help {
     color: var(--label-color);
     text-shadow: var(--label-text-shadow);
-    font-size: 100%; }
+    font-size: 100%;
+    margin: 0 .5em 0 .5em; }
     label button.help:hover, label button.help:focus, label button.help:active {
       color: var(--label-color);
       text-shadow: var(--label-text-shadow); }
@@ -2396,11 +2397,9 @@ div.container {
     flex-direction: column; }
   .section div.checkbox {
     margin: 1em 0.5em 1em 0.5em; }
-  .section button {
-    margin: .5em; }
-    .section button.hexagon:nth-child(even) {
-      left: 0;
-      top: 0; }
+  .section button.hexagon:nth-child(even) {
+    left: 0;
+    top: 0; }
 
 body.modalopen div.container {
   filter: blur(3px); }

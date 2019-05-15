@@ -67,9 +67,11 @@ class HelpButton extends SimpleButton {
      * @returns {jQuery} jQuery representation
      */
     buildTooltip() {
+        const me = this;
         this.tooltip = $('<div />')
             .addClass('tooltip')
             .attr('id', this.id);
+
         if (this.tipicon) {
             this.tooltip.append(IconFactory.makeIcon(this.tipicon));
         }
@@ -93,6 +95,9 @@ class HelpButton extends SimpleButton {
 
     get helptext() { return this._helptext; }
     set helptext(helptext) { this._helptext = helptext; }
+
+    get helptimer() { return this._helptimer; }
+    set helptimer(helptimer) { this._helptimer = helptimer; }
 
     get tipicon() { return this.config.tipicon; }
     set tipicon(tipicon) { this.config.tipicon = tipicon; }

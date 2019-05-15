@@ -249,6 +249,7 @@ class TextInput {
      */
     buildInput() {
         const me = this;
+
         this.input = $('<input />')
             .data('self', this)
             .attr('type', this.type)
@@ -352,7 +353,10 @@ class TextInput {
      * @returns {jQuery} jQuery representation of the input
      */
     buildLabel() {
+        const me = this;
+
         if (!this.label) { return null; }
+        
         this.labelobj = $('<label />')
             .attr('for', this.id)
             .html(this.label)
@@ -361,10 +365,13 @@ class TextInput {
             });
 
         if (this.help) {
-            this.helpicon = new HelpButton({
-                help: this.help
-            });
-            this.labelobj.append(this.helpicon.button);
+            this.helpicon = new HelpButton({ help: this.help });
+            this.labelobj
+                .append(this.helpicon.button)
+                .hover(
+                    function() { me.helpicon.openTip(); },
+                    function() { me.helpicon.closeTip(); }
+                );
         }
     }
 
