@@ -1,6 +1,6 @@
 div.input-container,
 div.textarea-container {
-  margin: 1em 0 1em 0;
+  margin: .5em 0 .5em 0;
   position: relative;
   div.wrap {
     position: relative;
@@ -31,15 +31,19 @@ div.textarea-container {
       align-items: center;
     }
   }
+  div.charcounter,
+  div.visibilityswitch {
+    position: absolute;
+    right: 0;
+    top: 1.3em;
+  }
   div.charcounter {
     color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
     font-style: oblique;
     text-align: right;
-    position: absolute;
-    right: 0;
-    top: 1.3em;
+
     &.danger {
       color: var(--input-subline-warning-text-color);
     }

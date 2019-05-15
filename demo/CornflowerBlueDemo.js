@@ -83,16 +83,13 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.showInputs();
+        //this.showInputs();
     }
 
-    /**
-     * Build the main interface.
-     */
     build() {
         const me = this;
 
-        this.container = $('<div />').addClass('container');
+        this.container = $('#container');
 
         this.navigation = new TabBar({
             vertical: true,
@@ -101,28 +98,28 @@ class CornflowerBlueDemo {
                     label: 'Intro',
                     id: 'intro',
                     action: function() {
-                        me.showIntro();
+                        me.switchTab('t-intro');
                     }
                 },
                 {
                     label: 'Headers',
                     id: 'headers',
                     action: function() {
-                        me.showHeaders();
+                        me.switchTab('t-headers');
                     }
                 },
                 {
                     label: 'Message Boxes',
                     id: 'messageboxes',
                     action: function() {
-                        me.showMessageBoxes();
+                        me.switchTab('t-messageboxes');
                     }
                 },
                 {
                     label: 'Buttons',
                     id: 'buttons',
                     action: function() {
-                        me.showButtons();
+                        me.switchTab('t-buttons');
                     }
                 },
                 {
@@ -130,14 +127,14 @@ class CornflowerBlueDemo {
                     id: 'inputs',
                     selected: true,
                     action: function() {
-                        me.showInputs();
+                        me.switchTab('t-inputs');
                     }
                 },
                 {
                     label: 'Select',
                     id: 'selects',
                     action: function() {
-                        me.showSelects();
+                        me.switchTab('t-selects');
                     }
                 },
 
@@ -145,106 +142,78 @@ class CornflowerBlueDemo {
                     label: 'Text Areas',
                     id: 'textareas',
                     action: function() {
-                        me.showTextAreas();
+                        me.switchTab('t-textareas');
                     }
                 },
                 {
                     label: 'Toggles',
                     id: 'toggles',
                     action: function() {
-                        me.showToggles();
+                        me.switchTab('t-toggles');
                     }
                 },
                 {
                     label: 'Forms',
                     id: 'forms',
                     action: function() {
-                        me.showForms();
+                        me.switchTab('t-forms');
                     }
                 },
                 {
                     label: 'Dialogs',
                     id: 'dialogs',
                     action: function() {
-                        me.showDialogs();
+                        me.switchTab('t-dialogs');
+                        me.dialog = new DialogWindow({
+                            title: "Login",
+                            form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+                            //content: new MapSelectionMenu(this).container
+                        }).open();
+
                     }
                 },
                 {
                     label: 'Growlers',
                     id: 'growlers',
                     action: function() {
-                        me.showGrowlers();
+                        me.switchTab('t-growlers');
                     }
                 }
             ]
         });
 
-        this.titlebox = $('<h2 />').addClass('titlebox');
-        this.demobox = $('<div />').addClass('demobox');
-        this.displaybox = $('<div />').addClass('displaybox').append(this.titlebox).append(this.demobox);
-
-        this.codebox = $('<div />').addClass('codebox');
-
+        this.codebox = $('#codebox');
         this.container
-            .append(this.navigation.container)
-            .append(this.displaybox)
-            .append(this.codebox);
+            .prepend(this.navigation.container);
 
-        this.body.append(this.container);
+        this.grindInputs();
+        this.grindPasswordInputs();
+        this.grindTextAreas();
+        this.grindSelects();
+        this.grindRadioGroups();
+        this.grindDialogs();
+        this.grindCheckboxes();
+        this.grindStyledCheckboxes();
+        this.grindGrowlers();
+        this.grindSpecialGrowlers();
+        this.grindButtons();
+        this.grindMessageBoxes();
+        this.grindForms();
 
+        this.switchTab('t-inputs');
     }
 
-    showIntro() {
+    switchTab(tab) {
+        $('.tabcontent').css('display', 'none');
 
-        this.titlebox.html("Buttons");
-
-        this.demobox.empty();
-
+        $('#' + tab).css('display', 'block');
     }
 
-    showDialogs() {
+
+    grindInputs() {
         const me = this;
-
-        this.navigation.select('dialogs');
-
-        this.titlebox.html("Dialogs");
-
-        this.demobox.empty();
-
-
-        me.dialog = new DialogWindow({
-            title: "Login",
-            form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
-            //content: new MapSelectionMenu(this).container
-        }).open();
-
-        this.demobox.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Login Form"
-                    }).button
-                        .click(function() {
-                            me.dialog = new DialogWindow({
-                                title: "Login",
-                                form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
-                                //content: new MapSelectionMenu(this).container
-                            }).open();
-                        })
-                )
-        );
-    }
-
-    showInputs() {
-        const me = this;
-        this.navigation.select('inputs');
-
-        this.titlebox.html("Inputs");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<h4 />').html("Standard"));
-        this.demobox.append(
+        const $target = $('#inputs-standard');
+        $target.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
@@ -257,8 +226,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Mute"));
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
@@ -271,34 +239,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Password"));
-        this.demobox.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new PasswordInput({
-                        label: "Password",
-                        counter: 'sky',
-                        placeholder: "Enter your password."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append($('<h4 />').html("Mute Password"));
-        this.demobox.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new PasswordInput({
-                        label: "Password",
-                        mute: true,
-                        placeholder: "Enter your password."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append($('<h4 />').html("Disabled"));
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
@@ -309,9 +250,7 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-
-        this.demobox.append($('<h4 />').html("Mute Disabled"));
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
@@ -324,17 +263,76 @@ class CornflowerBlueDemo {
                 )
         );
     }
-
-    showSelects() {
+    grindPasswordInputs() {
         const me = this;
-        this.navigation.select('selects');
+        const $target = $('#inputs-password');
 
-        this.titlebox.html("Selects");
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new PasswordInput({
+                        label: "Password",
+                        placeholder: "Enter your password."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
 
-        this.demobox.empty();
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new PasswordInput({
+                        label: "Password",
+                        mute: true,
+                        placeholder: "Enter your password."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+    }
+    grindTextAreas() {
+        const me = this;
+        const $target = $('#inputs-textarea');
 
-        this.demobox.append($('<h4 />').html("Standard"));
-        this.demobox.append(
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new TextArea({
+                        label: "Element Label",
+                        placeholder: "An input placeholder."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new TextArea({
+                        label: "Element Label",
+                        disabled: true,
+                        placeholder: "An input placeholder."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new TextArea({
+                        label: "Element Label",
+                        mute: true,
+                        placeholder: "An input placeholder."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+    }
+    grindSelects() {
+        const me = this;
+        const $target = $('#inputs-selects');
+        $target.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new SelectMenu({
@@ -354,9 +352,11 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-
-        this.demobox.append($('<h4 />').html("Radio Group"));
-        this.demobox.append(
+    }
+    grindRadioGroups() {
+        const me = this;
+        const $target = $('#inputs-radiogroups');
+        $target.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new RadioGroup({
@@ -372,25 +372,252 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
+    }
+    grindDialogs() {
+        const me = this;
+        const $target = $('#inputs-dialogs');
+        $target.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Login Form"
+                    }).button
+                        .click(function() {
+                            me.dialog = new DialogWindow({
+                                title: "Login",
+                                form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+                            }).open();
+                        })
+                )
+        );
+    }
+    grindCheckboxes() {
+        const me = this;
+        const $target = $('#inputs-checkboxes');
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Checked"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        labelside: 'left',
+                        label: "Normal"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        labelside: 'left',
+                        label: "Toggled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        labelside: 'left',
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        labelside: 'left',
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+    }
+    grindStyledCheckboxes() {
+        const me = this;
+        const $target = $('#inputs-checkboxes-styled');
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
 
     }
-
-
-    /**
-     * Play with Growlers
-     */
-    showGrowlers() {
+    grindGrowlers() {
         const me = this;
+        const $target = $('#growlers-positions');
 
-        this.navigation.select('growlers');
-
-        this.titlebox.html("Growlers");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<h4 />').html("Positions"));
-
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -435,7 +662,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -482,11 +709,12 @@ class CornflowerBlueDemo {
                     }).button
                 )
         );
+    }
+    grindSpecialGrowlers() {
+        const me = this;
+        const $target = $('#growlers-special');
 
-        this.demobox.append($('<h4 />').html("Special Types"));
-        this.demobox.append($('<p />').html("Growlers can be invoked with shorthand static methods."));
-
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -535,26 +763,17 @@ class CornflowerBlueDemo {
                     }).button
                 )
         );
-
-
-
     }
-
-    /**
-     * Buttons
-     */
-    showButtons() {
+    grindButtons() {
         const me = this;
+        const $target = $('#buttons-normal');
+        const $mutes = $('#buttons-mute');
+        const $hots = $('#buttons-hot');
+        const $squares = $('#buttons-shaped-square');
+        const $circles = $('#buttons-shaped-circle');
+        const $hexes = $('#buttons-shaped-hex');
 
-        this.navigation.select('buttons');
-
-        this.titlebox.html("Buttons");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<h4 />').html("Normal"));
-        this.demobox.append($('<p />').html("Icons can be placed on either side."));
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -582,7 +801,7 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -607,9 +826,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Mute"));
-        this.demobox.append($('<p />').html("Mute buttons don't have borders in the resting state."));
-        this.demobox.append(
+        $mutes.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -641,7 +858,7 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-        this.demobox.append(
+        $mutes.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -669,10 +886,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Hot"));
-        this.demobox.append($('<p />').html("Hot buttons are dramatic. The heat() method will turn on hot phase, and cool() will turn that off."));
-
-        this.demobox.append(
+        $hots.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -704,7 +918,7 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-        this.demobox.append(
+        $hots.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -732,10 +946,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Shaped: Square"));
-        this.demobox.append($('<p />').html("Shaped buttons only have icons.  They can also be hot or mute."));
-
-        this.demobox.append(
+        $squares.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -801,9 +1012,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        this.demobox.append($('<h4 />').html("Shaped: Circle"));
-        this.demobox.append($('<p />').html("Shaped buttons only have icons.  They can also be hot or mute."));
-        this.demobox.append(
+        $circles.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -868,10 +1077,7 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-
-        this.demobox.append($('<h4 />').html("Shaped: Hexagon"));
-        this.demobox.append($('<p />').html("Shaped buttons only have icons.  Hexagon buttons don't have other states. These aren't recommended for use day-to-day use."));
-        this.demobox.append(
+        $hexes.append(
             $('<div />').addClass('section').addClass('centered')
                 .append(
                     new SimpleButton({
@@ -905,21 +1111,12 @@ class CornflowerBlueDemo {
         );
 
     }
-
-    /**
-     * Draw example messageboxes
-     */
-    showMessageBoxes() {
+    grindMessageBoxes() {
         const me = this;
-        this.navigation.select('messageboxes');
+        const $target = $('#boxes-instructions');
+        const $responses = $('#boxes-responses');
 
-        this.titlebox.html("Message Boxes");
-
-        this.demobox.empty();
-        this.demobox.append($('<p />').html("The size of the icons changes based on how many lines of text are present."));
-
-        this.demobox.append($('<h4 />').html("Instructions"));
-        this.demobox.append(
+        $target.append(
             $('<div />').addClass('section').addClass("vert")
                 .append(
                     new InstructionBox({
@@ -933,9 +1130,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-
-        this.demobox.append($('<h4 />').html("Form Response"));
-        this.demobox.append(
+        $responses.append(
             $('<div />').addClass('section').addClass("vert")
                 .append(
                     new MessageBox({
@@ -966,346 +1161,49 @@ class CornflowerBlueDemo {
 
         );
     }
-
-    /**
-     * Show different kinds of text areas
-     */
-    showTextAreas() {
-        const me = this;
-        this.navigation.select('textareas');
-
-        this.titlebox.html("Text Areas");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<h4 />').html("Standard"));
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Element Label",
-                        placeholder: "An input placeholder."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Element Label",
-                        disabled: true,
-                        placeholder: "An input placeholder."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append($('<h4 />').html("Mute"));
-        this.demobox.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Element Label",
-                        mute: true,
-                        placeholder: "An input placeholder."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
+    grindForms() {
+        const $target = $('#forms-standard');
+        let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
+        $target.append(f.container);
     }
 
     /**
      * Display a page of example texts
      */
-    showHeaders() {
-        this.navigation.select('headers');
+    grindHeaders() {
+        const $target = $('#headers-all');
 
-        this.titlebox.html("Headers");
 
-        this.demobox.empty();
-
-        this.demobox.append($('<h1 />').html("H1 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target=\"_new\" href=\"http://www.does.not.exist\">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h2 />').html("H2 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a target=\"_new\" href=\"https://en.wikipedia.org/\">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h3 />').html("H3 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h4 />').html("H4 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h5 />').html("H5 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h6 />').html("H6 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h3 />').html("H3 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h4 />').html("H4 Standard"));
-        this.demobox.append($('<h5 />').html("H5 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h4 />').html("H4 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        this.demobox.append($('<h5 />').html("H5 Standard"));
-        this.demobox.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h1 />').html("H1 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target=\"_new\" href=\"http://www.does.not.exist\">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h2 />').html("H2 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a target=\"_new\" href=\"https://en.wikipedia.org/\">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h3 />').html("H3 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h4 />').html("H4 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h5 />').html("H5 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h6 />').html("H6 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h3 />').html("H3 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h4 />').html("H4 Standard"));
+        $target.append($('<h5 />').html("H5 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h4 />').html("H4 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
+        $target.append($('<h5 />').html("H5 Standard"));
+        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
 
 
     }
 
-    /**
-     * Display the page of toggles
-     */
-    showToggles() {
-        const me = this;
-        this.navigation.select('toggles');
-
-        this.titlebox.html("Checkboxes and Toggles");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<p />').html("The BooleanToggle class is an implementation of <input type='checkbox' />."));
-
-
-        this.demobox.append($('<h4 />').html("Default"));
-        this.demobox.append($('<p />').html("Labels can be on either side. The default is right-sided, because the affordances end up in line."));
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Checked"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        label: "Normal"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        labelside: 'left',
-                        label: "Toggled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append($('<h4 />').html("Styled"));
-        this.demobox.append($('<p />').html("Styles can be applied to the toggles. Values for the 'style' attribute include square, circle, switch, and toggle."));
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        this.demobox.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-
-    }
 
     /**
      * Show the forms.
      */
-    showForms() {
-        this.navigation.select('forms');
-
-        this.titlebox.html("Forms");
-
-        this.demobox.empty();
-
-        this.demobox.append($('<h4 />').html("Simple Form"));
-
-        let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
-
-        this.demobox.append(f.container);
-
-    }
 
     /* UTILITY METHODS__________________________________________________________________ */
 

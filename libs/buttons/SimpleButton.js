@@ -14,6 +14,7 @@ class SimpleButton {
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             dialogonly: false, // Set to true to only show element if in a dialog (useful for cancel buttons)
+            hidden: false, // Start hidden or not.
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a jQuery object
@@ -40,20 +41,25 @@ class SimpleButton {
      */
     buildButton() {
         const me = this;
+
+        if (this.text) {
+            this.textobj = $('<span />').addClass('text').html(this.text);
+        }
+
         if (this.shape) {
             if (this.shape === 'hexagon') {
                 this.button = $('<button />');
                 if (this.icon) {
                     this.button.append($('<span />').append(IconFactory.makeIcon(this.icon, this.text)));
                 } else if (this.text) {
-                    this.button.append($('<span />').html(this.text));
+                    this.button.append(this.textobj);
                 }
             } else {
                 this.button = $('<button />');
                 if (this.icon) {
                     this.button.append(IconFactory.makeIcon(this.icon, this.text));
                 } else if (this.text) {
-                    this.button.html(this.text)
+                    this.button.html(this.textobj);
                 }
             }
             this.button.addClass(this.shape);
@@ -62,15 +68,11 @@ class SimpleButton {
             let $icon, $text;
             if (this.icon) {
                 $icon = IconFactory.makeIcon(this.icon);
-                this.button.append();
-            }
-            if (this.text) {
-                $text = $('<span />').addClass('text').html(this.text);
             }
             if ((this.iconside) && (this.iconside === 'right')) {
-                this.button.addClass('righticon').append($text).append($icon);
+                this.button.addClass('righticon').append(this.textobj).append($icon);
             } else {
-                this.button.append($icon).append($text);
+                this.button.append($icon).append(this.textobj);
             }
 
         }
@@ -85,6 +87,8 @@ class SimpleButton {
             .addClass(this.classes.join(' '));
 
         if (this.disabled) { this.disable(); }
+
+        if (this.hidden) { this.hide(); }
 
         if (this.hot) { // hot takes precidence over mute
             this.button.addClass('hot');
@@ -118,6 +122,22 @@ class SimpleButton {
     enable() {
         this.button.removeAttr('disabled');
         this.disabled = false;
+    }
+
+    /**
+     * Enable the button
+     */
+    show() {
+        this.button.removeClass('hidden');
+        this.hidden = false;
+    }
+
+    /**
+     * Disable the button
+     */
+    hide() {
+        this.button.addClass('hidden');
+        this.hidden = true;
     }
 
     /**
@@ -186,6 +206,9 @@ class SimpleButton {
     get iconside() { return this.config.iconside; }
     set iconside(iconside) { this.config.iconside = iconside; }
 
+    get hidden() { return this.config.hidden; }
+    set hidden(hidden) { this.config.hidden = hidden; }
+
     get hot() { return this.config.hot; }
     set hot(hot) { this.config.hot = hot; }
 
@@ -205,6 +228,12 @@ class SimpleButton {
     set submits(submits) { this.config.submits = submits; }
 
     get text() { return this.config.text; }
-    set text(text) { this.config.text = text; }
+    set text(text) {
+        if (this.textobj) { this.textobj.html(text); }
+        this.config.text = text;
+    }
+
+    get textobj() { return this._textobj; }
+    set textobj(textobj) { this._textobj = textobj; }
 
 }

@@ -10,7 +10,7 @@ body {
   font-size: var(--default-font-size);
 }
 
-div.container {
+div#container {
   margin-left: auto;
   margin-right: auto;
   min-width: 50%;
@@ -31,7 +31,7 @@ div.container {
     background-color: var(--canvas-color-standard);
     padding: 2em;
   }
-  div.codebox {
+  div#codebox {
     flex-grow: 0;
     padding: 3em 1em 0 1em;
     background-color: var(--morelight);

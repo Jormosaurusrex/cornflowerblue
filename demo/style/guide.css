@@ -682,7 +682,7 @@ a {
 /* 'X' */
 div.input-container,
 div.textarea-container {
-  margin: 1em 0 1em 0;
+  margin: .5em 0 .5em 0;
   position: relative; }
   div.input-container div.wrap,
   div.textarea-container div.wrap {
@@ -714,15 +714,19 @@ div.textarea-container {
       justify-content: center;
       align-items: center; }
   div.input-container div.charcounter,
+  div.input-container div.visibilityswitch,
+  div.textarea-container div.charcounter,
+  div.textarea-container div.visibilityswitch {
+    position: absolute;
+    right: 0;
+    top: 1.3em; }
+  div.input-container div.charcounter,
   div.textarea-container div.charcounter {
     color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
     font-style: oblique;
-    text-align: right;
-    position: absolute;
-    right: 0;
-    top: 1.3em; }
+    text-align: right; }
     div.input-container div.charcounter.danger,
     div.textarea-container div.charcounter.danger {
       color: var(--input-subline-warning-text-color); }
@@ -1237,6 +1241,8 @@ button {
   button.pill {
     border-radius: 1.5em;
     margin: 0; }
+  button.hidden {
+    display: none; }
   button.naked {
     margin: 0;
     padding: 0;
@@ -2222,21 +2228,6 @@ div.window-container {
     div.window-container div.dialog div.content {
       margin: 0;
       overflow: auto; }
-    div.window-container div.dialog button.closebutton2 {
-      position: absolute;
-      right: 0;
-      top: 0;
-      opacity: 0.5;
-      z-index: 1046;
-      box-shadow: none;
-      margin: 0;
-      background: none;
-      border: none;
-      color: var(--dialog-header-text-color);
-      text-shadow: var(--dialog-header-text-shadow); }
-      div.window-container div.dialog button.closebutton2:hover {
-        opacity: 1;
-        background: none; }
     div.window-container div.dialog.isform div.content {
       margin: 0;
       padding: 0; }
@@ -2345,7 +2336,7 @@ body {
   font-family: var(--default-font-family);
   font-size: var(--default-font-size); }
 
-div.container {
+div#container {
   margin-left: auto;
   margin-right: auto;
   min-width: 50%;
@@ -2355,16 +2346,16 @@ div.container {
   display: flex;
   flex-direction: row;
   align-items: stretch; }
-  div.container ul.tabbar {
+  div#container ul.tabbar {
     flex-grow: 0;
     padding-top: 2em;
     width: 10em;
     min-width: 200px; }
-  div.container div.displaybox {
+  div#container div.displaybox {
     flex-grow: 1;
     background-color: var(--canvas-color-standard);
     padding: 2em; }
-  div.container div.codebox {
+  div#container div#codebox {
     flex-grow: 0;
     padding: 3em 1em 0 1em;
     background-color: var(--morelight);
@@ -2372,17 +2363,17 @@ div.container {
     max-width: 25em;
     min-width: 25em;
     font-size: 80%; }
-    div.container div.codebox div.config {
+    div#container div#codebox div.config {
       padding: .5em;
       overflow: auto;
       white-space: pre; }
-      div.container div.codebox div.config span.key {
+      div#container div#codebox div.config span.key {
         color: var(--grey-darkest);
         font-weight: bold; }
-      div.container div.codebox div.config span.value {
+      div#container div#codebox div.config span.value {
         color: var(--blue); }
-      div.container div.codebox div.config span.default span.value,
-      div.container div.codebox div.config span.default span.key {
+      div#container div#codebox div.config span.default span.value,
+      div#container div#codebox div.config span.default span.key {
         color: var(--grey-medium); }
 
 .section {

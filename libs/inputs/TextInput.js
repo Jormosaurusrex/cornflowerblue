@@ -356,7 +356,7 @@ class TextInput {
         const me = this;
 
         if (!this.label) { return null; }
-        
+
         this.labelobj = $('<label />')
             .attr('for', this.id)
             .html(this.label)

@@ -208,6 +208,9 @@ button {
     border-radius: 1.5em;
     margin: 0;
   }
+  &.hidden {
+    display: none;
+  }
   &.naked {
     margin: 0;
     padding: 0;

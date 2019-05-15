@@ -81,23 +81,6 @@ div.window-container {
       margin: 0;
       overflow: auto;
     }
-    button.closebutton2 {
-      position: absolute;
-      right: 0;
-      top: 0;
-      opacity: 0.5;
-      z-index: 1046;
-      box-shadow: none;
-      margin: 0;
-      background: none;
-      border: none;
-      color: var(--dialog-header-text-color);
-      text-shadow: var(--dialog-header-text-shadow);
-      &:hover {
-        opacity: 1;
-        background: none;
-      }
-    }
     &.isform {
       div.content {
         margin: 0;
