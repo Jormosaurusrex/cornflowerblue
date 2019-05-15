@@ -303,6 +303,13 @@
     opacity: 1; }
   100% {
     opacity: 0; } }
+@keyframes fadein-delay-half {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 * {
   padding: 0;
   margin: 0;
@@ -379,7 +386,7 @@ label {
   position: relative;
   margin-top: 1em;
   margin-bottom: .5em;
-  font-size: 13pt;
+  font-size: 100%;
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
   text-transform: var(--label-text-transform); }
@@ -1247,17 +1254,19 @@ button {
     --tooltip-text-color: var(--ultralight);
     --tooltip-text-shadow: var(--text-shadow);
     --tooltip-box-shadow: var(--panel-shadow); }
-    button.help span.text {
+    button.help div.tooltip {
       display: none;
-      flex-direction: column;
+      flex-direction: row;
       flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      align-content: flex-start;
       list-style-type: none;
       margin: 0;
       padding: .5em;
       position: absolute;
       left: -1em;
-      top: -2.5em;
-      min-width: 120%;
+      top: 0;
       overflow: visible;
       z-index: 220;
       border-radius: var(--tooltip-border-radius);
@@ -1265,7 +1274,7 @@ button {
       color: var(--tooltip-text-color);
       text-shadow: var(--tooltip-text-shadow);
       box-shadow: var(--panel-shadow-light); }
-      button.help span.text:before {
+      button.help div.tooltip:before {
         content: "";
         width: 0;
         height: 0;
@@ -1275,8 +1284,18 @@ button {
         border-width: .5em .5em 0 .5em;
         border-style: solid;
         border-color: var(--tooltip-background-color) transparent; }
-    button.help:hover span.text, button.help:focus span.text, button.help:active span.text {
-      display: flex; }
+      button.help div.tooltip span.icon {
+        font-size: 120%;
+        margin-right: .5em; }
+      button.help div.tooltip div.helptext {
+        max-width: 33em;
+        min-width: 20em;
+        white-space: normal;
+        line-height: 1.2;
+        text-align: left; }
+    button.help.open div.tooltip {
+      display: flex;
+      animation: fadein-delay-half .2s; }
   button.menu {
     overflow: visible; }
     button.menu ul {

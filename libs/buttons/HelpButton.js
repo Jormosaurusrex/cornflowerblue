@@ -6,6 +6,7 @@ class HelpButton extends SimpleButton {
         return {
             action: function(e, self) { self.toggleHelp(e, self); },
             icon: 'help-circle',
+            tipicon: 'help-circle',
             help: null // help text to display
         };
     }
@@ -30,15 +31,15 @@ class HelpButton extends SimpleButton {
      */
     toggleHelp(e, self) {
 
-        if (!this.helpobj) { this.buildHelp(); }
+        if (!this.tooltip) { this.buildTooltip(); }
 
-        this.button.toggleClass('open');
+        this.openTip();
 
         e.stopPropagation();
 
         $(document).one('click', function closeHelp (e){
             if (self.button.has(e.target).length === 0) {
-                self.button.removeClass('open');
+                self.closeTip();
             } else {
                 $(document).one('click', closeHelp);
             }
@@ -46,25 +47,57 @@ class HelpButton extends SimpleButton {
 
     }
 
+    openTip() {
+
+        const me = this;
+
+        this.button.addClass('open');
+
+        setTimeout(function() {
+            me.tooltip.css('top', `calc(0px - ${me.tooltip.css('height')} - .5em)`);
+        },1);
+    }
+
+    closeTip() {
+        this.button.removeClass('open');
+    }
+
     /**
      * Builds the help.
      * @returns {jQuery} jQuery representation
      */
-    buildHelp() {
-        this.helpobj = $('<span />')
-            .addClass('text')
-            .attr('id', this.id)
-            .html(this.help);
-        this.button.append(this.helpobj);
+    buildTooltip() {
+        this.tooltip = $('<div />')
+            .addClass('tooltip')
+            .attr('id', this.id);
+        if (this.tipicon) {
+            this.tooltip.append(IconFactory.makeIcon(this.tipicon));
+        }
+        this.helptext = $('<div />').addClass('helptext').html(this.help);
 
+        this.tooltip.append(this.helptext);
+        this.button.append(this.tooltip);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get button() {
+        if (!this._button) { this.buildButton(); }
+        if (!this.tooltip) { this.buildTooltip(); }
+        return this._button;
+    }
+    set button(button) { this._button = button; }
+
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
-    get helpobj() { return this._helpobj; }
-    set helpobj(helpobj) { this._helpobj = helpobj; }
+    get helptext() { return this._helptext; }
+    set helptext(helptext) { this._helptext = helptext; }
+
+    get tipicon() { return this.config.tipicon; }
+    set tipicon(tipicon) { this.config.tipicon = tipicon; }
+
+    get tooltip() { return this._tooltip; }
+    set tooltip(tooltip) { this._tooltip = tooltip; }
 
 }

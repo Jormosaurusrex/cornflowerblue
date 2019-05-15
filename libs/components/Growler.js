@@ -244,8 +244,8 @@ class Growler {
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }
 
-    get timer() { return this.config.timer; }
-    set timer(timer) { this.config.timer = timer; }
+    get timer() { return this._timer; }
+    set timer(timer) { this._timer = timer; }
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }

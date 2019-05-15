@@ -70,7 +70,6 @@ class ButtonMenu extends SimpleButton {
             this.menu.append($menuitem);
         }
         this.button.append(this.menu);
-
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

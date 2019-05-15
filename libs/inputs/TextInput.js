@@ -16,6 +16,7 @@ class TextInput {
                                // To insure a blank placeholder, set the value to ""
             title: null,
             help: null, // Help text.
+            helpwaittime: 5000, // How long to wait before automatically showing help tooltip
             required: false, // Is this a required field or not
             hidden: false, // Whether or not to be hidden
             autocomplete: 'off', // Enable browser autocomplete. Default is off.
@@ -274,6 +275,11 @@ class TextInput {
             })
             .on('keyup', function(e) {
 
+                if (me.helptimer) {
+                    clearTimeout(me.helptimer);
+                    me.helpicon.closeTip();
+                }
+
                 if ((me.value) && (me.value.length > 0) && (me.container)) {
                     me.container.addClass('filled');
                 } else {
@@ -299,11 +305,21 @@ class TextInput {
                 if (me.container) {
                     me.container.addClass('active');
                 }
+                if (me.help) {
+                    me.helptimer = setTimeout(function() {
+                        me.helpicon.openTip();
+                    }, me.helpwaittime);
+                }
                 if ((me.focusin) && (typeof me.focusin === 'function')) {
                     me.focusin(e, me);
                 }
             })
             .focusout(function(e) {
+                if (me.helptimer) {
+                    clearTimeout(me.helptimer);
+                    me.helpicon.closeTip();
+                }
+
                 if ((me.mute) && (me.label)) {
                     $(this).attr('placeholder', me.label);
                 }
@@ -413,6 +429,9 @@ class TextInput {
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
 
+    get helptimer() { return this._helptimer; }
+    set helptimer(helptimer) { this._helptimer = helptimer; }
+
     get messagebox() {
         if (!this._messagebox) { this.buildmessagebox(); }
         return this._messagebox;
@@ -452,6 +471,9 @@ class TextInput {
 
     get helpicon() { return this._helpicon; }
     set helpicon(helpicon) { this._helpicon = helpicon; }
+
+    get helpwaittime() { return this.config.helpwaittime; }
+    set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }

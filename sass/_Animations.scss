@@ -22,3 +22,9 @@
   0% { opacity:1; }
   100% { opacity:0; }
 }
+
+@keyframes fadein-delay-half {
+  0% { opacity:0; }
+  50% { opacity: 0; }
+  100% { opacity:1; }
+}

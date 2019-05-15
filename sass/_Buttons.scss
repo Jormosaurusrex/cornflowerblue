@@ -230,17 +230,19 @@ button {
     --tooltip-text-color: var(--ultralight);
     --tooltip-text-shadow: var(--text-shadow);
     --tooltip-box-shadow: var(--panel-shadow);
-    span.text {
+    div.tooltip {
       display: none;
-      flex-direction: column;
+      flex-direction: row;
       flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      align-content: flex-start;
       list-style-type: none;
       margin: 0;
       padding: .5em;
       position: absolute;
       left: -1em;
-      top: -2.5em;
-      min-width: 120%;
+      top: 0;
       overflow: visible;
       z-index: 220;
       border-radius: var(--tooltip-border-radius);
@@ -259,12 +261,22 @@ button {
         border-style: solid;
         border-color: var(--tooltip-background-color) transparent;
       }
+      span.icon {
+        font-size: 120%;
+        margin-right: .5em;
+      }
+      div.helptext {
+        max-width: 33em;
+        min-width: 20em;
+        white-space: normal;
+        line-height: 1.2;
+        text-align: left;
+      }
     }
-    &:hover,
-    &:focus,
-    &:active {
-      span.text {
+    &.open {
+      div.tooltip {
         display: flex;
+        animation: fadein-delay-half .2s;
       }
     }
   }
