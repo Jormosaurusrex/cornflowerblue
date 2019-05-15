@@ -31,11 +31,13 @@ div.textarea-container {
       align-items: center;
     }
   }
-  div.charcounter,
-  div.visibilityswitch {
+  div.topcontrol {
     position: absolute;
     right: 0;
     top: 1.3em;
+    --button-default-color: var(--input-subline-text-color);
+    --button-hover-text-color: var(--input-subline-text-color);
+    --button-text-shadow: none;
   }
   div.charcounter {
     color: var(--input-subline-text-color);
@@ -85,7 +87,7 @@ div.textarea-container {
         right: 0;
       }
     }
-    div.charcounter {
+    div.topcontrol {
       top: .3em;
     }
   }

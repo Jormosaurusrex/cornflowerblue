@@ -392,6 +392,7 @@ class TextInput {
         if (this.counter) {
             this.charactercounter = $('<div />')
                 .addClass('charcounter')
+                .addClass('topcontrol')
                 .addClass(this.counter);
             if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
 
