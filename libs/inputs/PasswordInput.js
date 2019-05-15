@@ -67,7 +67,6 @@ class PasswordInput extends TextInput {
                     me.setVisibility(false);
                 }
             });
-
             this.showpwbutton = new SimpleButton({
                 classes: ['naked'],
                 text: "Show Password",
@@ -80,6 +79,7 @@ class PasswordInput extends TextInput {
 
             this.visibilityswitcher = $('<div />')
                 .addClass('visibilityswitch')
+                .addClass('topcontrol')
                 .append(this.hidepwbutton.button)
                 .append(this.showpwbutton.button);
 
@@ -89,7 +89,7 @@ class PasswordInput extends TextInput {
     }
 
     setVisibility(visible) {
-        
+
         if (visible) {
             this.mode = false;
             this.input.attr('type', 'text');
@@ -101,6 +101,7 @@ class PasswordInput extends TextInput {
             this.hidepwbutton.hide();
             this.showpwbutton.show();
         }
+        this.input.focus();
     }
 
     /**

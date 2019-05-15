@@ -713,13 +713,14 @@ div.textarea-container {
       flex-direction: column;
       justify-content: center;
       align-items: center; }
-  div.input-container div.charcounter,
-  div.input-container div.visibilityswitch,
-  div.textarea-container div.charcounter,
-  div.textarea-container div.visibilityswitch {
+  div.input-container div.topcontrol,
+  div.textarea-container div.topcontrol {
     position: absolute;
     right: 0;
-    top: 1.3em; }
+    top: 1.3em;
+    --button-default-color: var(--input-subline-text-color);
+    --button-hover-text-color: var(--input-subline-text-color);
+    --button-text-shadow: none; }
   div.input-container div.charcounter,
   div.textarea-container div.charcounter {
     color: var(--input-subline-text-color);
@@ -762,8 +763,8 @@ div.textarea-container {
   div.input-container.mute div.wrap:after,
   div.textarea-container.mute div.wrap:after {
     right: 0; }
-  div.input-container.mute div.charcounter,
-  div.textarea-container.mute div.charcounter {
+  div.input-container.mute div.topcontrol,
+  div.textarea-container.mute div.topcontrol {
     top: .3em; }
   div.input-container.required label:after,
   div.textarea-container.required label:after {
