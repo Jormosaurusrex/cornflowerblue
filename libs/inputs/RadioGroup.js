@@ -98,6 +98,9 @@ class RadioGroup {
         this.labelobj = $('<label />')
             .attr('for', this.id)
             .html(this.label);
+        if (this.form) {
+            this.labelobj.attr('form', this.form.id);
+        }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -126,6 +129,9 @@ class RadioGroup {
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }

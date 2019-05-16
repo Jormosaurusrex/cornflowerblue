@@ -179,17 +179,6 @@ class SelectMenu extends RadioGroup {
         return $li.append($op).append($opLabel);
     }
 
-    /**
-     * Builds the label.
-     * @returns {jQuery} jQuery representation of the label
-     */
-    buildLabel() {
-        if (!this.label) { return null; }
-        this.labelobj = $('<label />')
-            .attr('for', this.id)
-            .html(this.label);
-    }
-
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**

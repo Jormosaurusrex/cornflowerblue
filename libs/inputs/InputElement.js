@@ -387,6 +387,10 @@ class InputElement {
                 $('#' + $(this).attr('for')).focus();
             });
 
+        if (this.form) {
+            this.labelobj.attr('form', this.form.id);
+        }
+
         if (this.help) {
             this.helpicon = new HelpButton({ help: this.help });
             this.labelobj
