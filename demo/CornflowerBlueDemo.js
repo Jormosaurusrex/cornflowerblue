@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('textareas');
+        this.switchTab('inputs');
     }
 
 

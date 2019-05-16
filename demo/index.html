@@ -18,6 +18,7 @@
         <script type="text/javascript" src="../libs/components/InstructionBox.js"></script>
         <script type="text/javascript" src="../libs/components/MessageBox.js"></script>
         <script type="text/javascript" src="../libs/components/TabBar.js"></script>
+        <script type="text/javascript" src="../libs/inputs/InputElement.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
         <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
@@ -116,7 +117,7 @@
                 <div class="tabcontent" id="t-textareas">
                     <h2 class="titlebox">Text Areas</h2>
                     <code class="invoker">new TextArea({options});</code>
-                    <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements.</p>
+                    <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
                     <div class="demobox" id="textareas-standard">
                         <h4>Standard</h4>
                         <p>The standard TextArea is configured with <code>counter: sky</code>.</p>
@@ -132,8 +133,7 @@
                 </div>
                 <div class="tabcontent" id="t-inputs">
                     <h2 class="titlebox">Inputs</h2>
-                    <p>A <dfn>Text Input</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a TextArea element).</p>
-
+                    <p>A <dfn>Text Input</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a TextArea element). TextInputs extend InputElement.</p>
                     <div class="demobox" id="inputs-standard">
                         <h4>Standard</h4>
                         <code class="invoker">new TextInput({options});</code>
@@ -157,6 +157,11 @@
                     <div class="demobox" id="inputs-disabled">
                         <h4>Disabled</h4>
                         <p>An entire element can be set to be disabled with <code>disabled: true</code>.</p>
+                    </div>
+                    <div class="demobox" id="inputs-hidden">
+                        <h4>Hidden</h4>
+                        <code class="invoker">new HiddenInput({options});</code>
+                        <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-selects">
