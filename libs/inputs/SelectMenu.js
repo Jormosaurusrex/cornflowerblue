@@ -31,8 +31,14 @@ class SelectMenu extends RadioGroup {
 
     }
 
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
+    /**
+     * Returns the raw element, without any container
+     * @return {*} the element.
+     */
+    get naked() { return this.triggerbox; }
 
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
      * Builds and returns a container object for all parts.

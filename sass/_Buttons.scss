@@ -183,6 +183,9 @@ button {
     border: .1em solid var(--button-default-color);
     box-shadow: none;
     border-radius: 50%;
+    &.mute {
+      border: none;
+    }
     &:hover,
     &:focus,
     &:active {
@@ -231,11 +234,6 @@ button {
   }
   &.help {
     overflow: visible;
-    --tooltip-border-radius: var(--border-radius);
-    --tooltip-background-color: var(--grey-darkest);
-    --tooltip-text-color: var(--ultralight);
-    --tooltip-text-shadow: var(--text-shadow);
-    --tooltip-box-shadow: var(--panel-shadow);
     div.tooltip {
       display: none;
       flex-direction: row;

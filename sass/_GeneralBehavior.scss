@@ -144,14 +144,25 @@ pre {
   font-family: "Courier New", Courier, monospace;
 }
 
-aside {
-
+blockquote {
+  display: block;
+  padding: 1em;
+  margin: 1em auto .5em auto;
+  width: 70%;
+  max-width: 70%;
+  min-width: 70%;
+  font-style: oblique;
+  border-bottom: .1em solid var(--blockquote-border-color);
+  border-top: .1em solid var(--blockquote-border-color);
+  background-color: var(--blockquote-background-color);
+  color: var(--blockquote-text-color);
+  text-shadow: var(--blockquote-text-shadow);
+  p {
+    margin: .5em;
+  }
 }
+
 aside {
-  --aside-text-color: var(--blue);
-  --aside-text-shadow: var(--text-shadow);
-  --aside-background-color: var(--canvas-color-callout-lightweight);
-  --aside-border-color: var(--blue);
   display: block;
   float: right;
   padding: 1em;

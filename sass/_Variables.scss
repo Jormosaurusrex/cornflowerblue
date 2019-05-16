@@ -80,7 +80,8 @@
   --interior-shadow-inverse: 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --hexagon-shadow: 0 0 .5em rgba(0,0,0,0.6);
-  --hexagon-shadow-disabled: 0 0 .5em rgba(0,0,0,0.2);
+  --hexagon-shadow-disabled: none;
+  //--hexagon-shadow-disabled: 0 0 .5em rgba(0,0,0,0.2);
 
   --standard-measure: 33em;
   --wide-measure: 40em;
@@ -156,6 +157,18 @@
   --disabled-color-half: var(--grey-half);
   --disabled-color-quarter: var(--grey-quarter);
   --disabled-color-translucent: var(--grey-translucent);
+
+  // Aside
+  --aside-text-color: var(--blue);
+  --aside-text-shadow: var(--text-shadow);
+  --aside-background-color: var(--canvas-color-callout-lightweight);
+  --aside-border-color: var(--blue);
+
+  // Blockquote
+  --blockquote-text-color: var(--blue);
+  --blockquote-text-shadow: var(--text-shadow);
+  --blockquote-background-color: var(--canvas-color-callout-lightweight);
+  --blockquote-border-color: var(--blue);
 
   // Button keys
   --button-border-radius: var(--border-radius);
@@ -406,4 +419,10 @@
   --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
 
+  // Tooltip
+  --tooltip-border-radius: var(--border-radius);
+  --tooltip-background-color: var(--grey-darkest);
+  --tooltip-text-color: var(--ultralight);
+  --tooltip-text-shadow: var(--text-shadow);
+  --tooltip-box-shadow: var(--panel-shadow);
 }

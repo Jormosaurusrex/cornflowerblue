@@ -195,6 +195,13 @@ class InputElement {
         return null;
     }
 
+    /**
+     * Returns the raw element, without any container
+     * @return {*} the element.
+     */
+    get naked() { return this.input; }
+
+
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**

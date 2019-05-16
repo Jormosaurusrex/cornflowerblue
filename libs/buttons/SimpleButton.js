@@ -13,7 +13,6 @@ class SimpleButton {
             shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
-            dialogonly: false, // Set to true to only show element if in a dialog (useful for cancel buttons)
             hidden: false, // Start hidden or not.
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button

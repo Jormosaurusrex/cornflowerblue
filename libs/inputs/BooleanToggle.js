@@ -38,6 +38,12 @@ class BooleanToggle {
         return this;
     }
 
+    /**
+     * Returns the raw element, without any container
+     * @return {*} the element.
+     */
+    get naked() { return this.toggle; }
+
     /* STATE METHODS____________________________________________________________________ */
 
     /**
@@ -86,7 +92,6 @@ class BooleanToggle {
      */
     build() {
         const me = this;
-
         this.toggle = $('<input />')
             .data('self', this)
             .attr('type', "checkbox")

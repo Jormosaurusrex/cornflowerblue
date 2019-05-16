@@ -69,7 +69,7 @@
   --interior-shadow-inverse: 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 0.3em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --hexagon-shadow: 0 0 0.5em rgba(0, 0, 0, 0.6);
-  --hexagon-shadow-disabled: 0 0 0.5em rgba(0, 0, 0, 0.2);
+  --hexagon-shadow-disabled: none;
   --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
@@ -128,6 +128,14 @@
   --disabled-color-half: var(--grey-half);
   --disabled-color-quarter: var(--grey-quarter);
   --disabled-color-translucent: var(--grey-translucent);
+  --aside-text-color: var(--blue);
+  --aside-text-shadow: var(--text-shadow);
+  --aside-background-color: var(--canvas-color-callout-lightweight);
+  --aside-border-color: var(--blue);
+  --blockquote-text-color: var(--blue);
+  --blockquote-text-shadow: var(--text-shadow);
+  --blockquote-background-color: var(--canvas-color-callout-lightweight);
+  --blockquote-border-color: var(--blue);
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--standard-color);
   --button-default-text-color: var(--button-default-color);
@@ -323,7 +331,12 @@
   --tabbar-hover-tab-background-color: var(--focus-color);
   --tabbar-hover-tab-highlight-color: var(--focus-color);
   --tabbar-hover-tab-text-color: var(--ultralight);
-  --tabbar-hover-tab-text-shadow: var(--text-shadow); }
+  --tabbar-hover-tab-text-shadow: var(--text-shadow);
+  --tooltip-border-radius: var(--border-radius);
+  --tooltip-background-color: var(--grey-darkest);
+  --tooltip-text-color: var(--ultralight);
+  --tooltip-text-shadow: var(--text-shadow);
+  --tooltip-box-shadow: var(--panel-shadow); }
 
 @keyframes localspin {
   0% {
@@ -479,11 +492,23 @@ strong {
 pre {
   font-family: "Courier New", Courier, monospace; }
 
+blockquote {
+  display: block;
+  padding: 1em;
+  margin: 1em auto .5em auto;
+  width: 70%;
+  max-width: 70%;
+  min-width: 70%;
+  font-style: oblique;
+  border-bottom: 0.1em solid var(--blockquote-border-color);
+  border-top: 0.1em solid var(--blockquote-border-color);
+  background-color: var(--blockquote-background-color);
+  color: var(--blockquote-text-color);
+  text-shadow: var(--blockquote-text-shadow); }
+  blockquote p {
+    margin: .5em; }
+
 aside {
-  --aside-text-color: var(--blue);
-  --aside-text-shadow: var(--text-shadow);
-  --aside-background-color: var(--canvas-color-callout-lightweight);
-  --aside-border-color: var(--blue);
   display: block;
   float: right;
   padding: 1em;
@@ -1332,6 +1357,8 @@ button {
     border: 0.1em solid var(--button-default-color);
     box-shadow: none;
     border-radius: 50%; }
+    button.circle.mute {
+      border: none; }
     button.circle:hover, button.circle:focus, button.circle:active {
       box-shadow: var(--button-circle-hover-box-shadow); }
     button.circle:disabled {
@@ -1364,12 +1391,7 @@ button {
       background-image: none;
       color: var(--button-default-colors); }
   button.help {
-    overflow: visible;
-    --tooltip-border-radius: var(--border-radius);
-    --tooltip-background-color: var(--grey-darkest);
-    --tooltip-text-color: var(--ultralight);
-    --tooltip-text-shadow: var(--text-shadow);
-    --tooltip-box-shadow: var(--panel-shadow); }
+    overflow: visible; }
     button.help div.tooltip {
       display: none;
       flex-direction: row;
@@ -2442,7 +2464,8 @@ ul.tabbar {
 body {
   background-color: var(--grey-darkest);
   font-family: var(--default-font-family);
-  font-size: var(--default-font-size); }
+  font-size: var(--default-font-size);
+  background-image: url("../image/dark_parchment.png"); }
 
 div#container {
   margin-left: auto;
@@ -2455,10 +2478,12 @@ div#container {
   flex-direction: row;
   align-items: stretch; }
   div#container ul.tabbar {
+    --tabbar-tab-background-color: transparent;
     flex-grow: 0;
     padding-top: 2em;
     width: 10em;
-    min-width: 200px; }
+    min-width: 200px;
+    background-image: url("../image/light_grunge.png"); }
   div#container div.displaybox {
     flex-grow: 1;
     background-color: var(--canvas-color-primary);

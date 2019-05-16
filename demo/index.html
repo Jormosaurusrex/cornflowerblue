@@ -56,6 +56,10 @@
                         </aside>
                         <p>Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
                         <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
+                        <blockquote>
+                            <p>This is a blockquote.  Text does not flow around it.</p>
+                        </blockquote>
+                        <p>Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</p>
                         <h3>H3 Standard</h3>
                         <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
                         <h4>H4 Standard</h4>
@@ -79,19 +83,27 @@
 
                 <div class="tabcontent" id="t-messageboxes">
                     <h2 class="titlebox">Message Boxes</h2>
-                    <p>The size of the icons changes based on how many lines of text are present.</p>
+                    <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
                     <div class="demobox" id="boxes-instructions">
                         <h4>Standard</h4>
+                        <code class="invoker">new InstructionBox({options});</code>
+                        <p>An InstructionBox is used to display instructions or other information to a user that may be useful or required for filling out a form.  A <code>SimpleForm</code> will take instructions as a parameter, so they don't often need to be inserted manually.</p>
                     </div>
                     <div class="demobox" id="boxes-responses">
                         <h4>Form Response</h4>
+                        <p>When submitted, forms can succeed or fail. In doing so, they can return messages (results, errors, and warnings).  Warnings alone do not prevent a form's success. These messages are returned and displayed automagically when using a <code>SimpleForm</code>, so these shouldn't be invoked alone.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-buttons">
                     <h2 class="titlebox">Buttons</h2>
+                    <code class="invoker">new SimpleButton({options});</code>
+
+                    <p>The basic button class is <code>SimpleButton</code>. They can be set for <code>mute</code> and <code>hot</code> in construction; this will change the button's default state. Any button can be made hot. </p>
+                    <p>Buttons can take an <code>icon</code> parameter. Icons can be placed on either side with <code>iconside</code> (default is left).</p>
+                    <p>Buttons can also be invoked with <code>ConstructiveButton()</code> (used for actions that move the user forward, such as save events) and <code>DestructiveButton()</code>, which is used for destructive actions, such as "cancel".</p>
                     <div class="demobox" id="buttons-normal">
                         <h4>Normal</h4>
-                        <p>Icons can be placed on either side.</p>
+                        <p>Normal buttons have borders and a transparent background in the resting state.</p>
                     </div>
                     <div class="demobox" id="buttons-mute">
                         <h4>Mute</h4>
@@ -99,19 +111,19 @@
                     </div>
                     <div class="demobox" id="buttons-hot">
                         <h4>Hot</h4>
-                        <p>Hot buttons are dramatic. The heat() method will turn on hot phase, and cool() will turn that off.</p>
+                        <p>Hot buttons are dramatic. The <code>heat()</code> method will turn on hot phase, and <code>cool()</code> will turn that off.</p>
                     </div>
                     <div class="demobox" id="buttons-shaped-square">
                         <h4>Shaped: Square</h4>
-                        <p>Shaped buttons only have icons.  They can also be hot or mute.</p>
+                        <p>Square shaped buttons only have icons.  They can also be hot or mute.</p>
                     </div>
                     <div class="demobox" id="buttons-shaped-circle">
                         <h4>Shaped: Circle</h4>
-                        <p>Shaped buttons only have icons.  They can also be hot or mute.</p>
+                        <p>Circle shaped buttons only have icons.  They can also be hot or mute.</p>
                     </div>
                     <div class="demobox" id="buttons-shaped-hex">
                         <h4>Shaped: Hexagon</h4>
-                        <p>Shaped buttons only have icons.  Hexagon buttons don't have other states. These aren't recommended for use day-to-day use.</p>
+                        <p>Hexagon buttons only have icons. Due to the way hexagon buttons are constructed, they cannot be <code>mute</code> and do not have borders. These are not recommended for use day-to-day use.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-textareas">
@@ -133,10 +145,10 @@
                 </div>
                 <div class="tabcontent" id="t-inputs">
                     <h2 class="titlebox">Inputs</h2>
+                    <code class="invoker">new TextInput({options});</code>
                     <p>A <dfn>Text Input</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a TextArea element). TextInputs extend InputElement.</p>
                     <div class="demobox" id="inputs-standard">
                         <h4>Standard</h4>
-                        <code class="invoker">new TextInput({options});</code>
                         <p>TextInputs all inherit many behaviors straight out of the box, not the least of which are data validators. They can be essential with <code>required: true</code> and support three kinds of character <code>counter</code>: sky, remaining, limit.</p>
                     </div>
                     <div class="demobox" id="inputs-mute">

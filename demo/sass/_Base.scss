@@ -7,6 +7,7 @@ body {
   background-color: var(--grey-darkest);
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
+  background-image: url('../image/dark_parchment.png');
 }
 
 div#container {
@@ -20,10 +21,12 @@ div#container {
   flex-direction: row;
   align-items: stretch;
   ul.tabbar {
+    --tabbar-tab-background-color: transparent;
     flex-grow: 0;
     padding-top: 2em;
     width: 10em;
     min-width: 200px;
+    background-image: url('../image/light_grunge.png');
   }
   div.displaybox {
     flex-grow: 1;
