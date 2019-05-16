@@ -41,7 +41,7 @@ textarea {
     }
   }
   &.mute {
-    background-color: transparent;
+    background-color: var(--input-mute-background-color);
     border-top: none;
     border-left: none;
     border-right: none;

@@ -11,7 +11,7 @@ class CornflowerBlueDemo {
                 ]
             },
             elements: [
-                new EmailField({
+                new EmailInput({
                     label: "Email",
                     autocomplete: 'off',
                     required: true
@@ -83,7 +83,14 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        //this.showInputs();
+        this.switchTab('textareas');
+    }
+
+
+    switchTab(tab) {
+        $('.tabcontent').css('display', 'none');
+        $(`#t-${tab}`).css('display', 'block');
+        this.navigation.select(tab);
     }
 
     build() {
@@ -98,28 +105,28 @@ class CornflowerBlueDemo {
                     label: 'Intro',
                     id: 'intro',
                     action: function() {
-                        me.switchTab('t-intro');
+                        me.switchTab('intro');
                     }
                 },
                 {
                     label: 'Headers',
                     id: 'headers',
                     action: function() {
-                        me.switchTab('t-headers');
+                        me.switchTab('headers');
                     }
                 },
                 {
                     label: 'Message Boxes',
                     id: 'messageboxes',
                     action: function() {
-                        me.switchTab('t-messageboxes');
+                        me.switchTab('messageboxes');
                     }
                 },
                 {
                     label: 'Buttons',
                     id: 'buttons',
                     action: function() {
-                        me.switchTab('t-buttons');
+                        me.switchTab('buttons');
                     }
                 },
                 {
@@ -127,14 +134,14 @@ class CornflowerBlueDemo {
                     id: 'inputs',
                     selected: true,
                     action: function() {
-                        me.switchTab('t-inputs');
+                        me.switchTab('inputs');
                     }
                 },
                 {
                     label: 'Select',
                     id: 'selects',
                     action: function() {
-                        me.switchTab('t-selects');
+                        me.switchTab('selects');
                     }
                 },
 
@@ -142,28 +149,28 @@ class CornflowerBlueDemo {
                     label: 'Text Areas',
                     id: 'textareas',
                     action: function() {
-                        me.switchTab('t-textareas');
+                        me.switchTab('textareas');
                     }
                 },
                 {
                     label: 'Toggles',
                     id: 'toggles',
                     action: function() {
-                        me.switchTab('t-toggles');
+                        me.switchTab('toggles');
                     }
                 },
                 {
                     label: 'Forms',
                     id: 'forms',
                     action: function() {
-                        me.switchTab('t-forms');
+                        me.switchTab('forms');
                     }
                 },
                 {
                     label: 'Dialogs',
                     id: 'dialogs',
                     action: function() {
-                        me.switchTab('t-dialogs');
+                        me.switchTab('dialogs');
                         me.dialog = new DialogWindow({
                             title: "Login",
                             form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
@@ -176,7 +183,7 @@ class CornflowerBlueDemo {
                     label: 'Growlers',
                     id: 'growlers',
                     action: function() {
-                        me.switchTab('t-growlers');
+                        me.switchTab('growlers');
                     }
                 }
             ]
@@ -187,7 +194,6 @@ class CornflowerBlueDemo {
             .prepend(this.navigation.container);
 
         this.grindInputs();
-        this.grindPasswordInputs();
         this.grindTextAreas();
         this.grindSelects();
         this.grindRadioGroups();
@@ -195,79 +201,51 @@ class CornflowerBlueDemo {
         this.grindCheckboxes();
         this.grindStyledCheckboxes();
         this.grindGrowlers();
-        this.grindSpecialGrowlers();
         this.grindButtons();
         this.grindMessageBoxes();
         this.grindForms();
 
-        this.switchTab('t-inputs');
     }
-
-    switchTab(tab) {
-        $('.tabcontent').css('display', 'none');
-
-        $('#' + tab).css('display', 'block');
-    }
-
 
     grindInputs() {
         const me = this;
-        const $target = $('#inputs-standard');
-        $target.append(
+        const $standard = $('#inputs-standard');
+        const $mute = $('#inputs-mute');
+        const $password = $('#inputs-password');
+        const $email = $('#inputs-email');
+        const $disabled = $('#inputs-disabled');
+
+        $standard.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
                         label: "Name",
                         maxlength: 50,
+                        required: true,
+                        counter: 'remaining',
                         placeholder: "Your full name",
-                        help: "Use your full name, in whatever manner befits your culture. Use your full name, in whatever manner befits your culture. Use your full name, in whatever manner befits your culture."
+                        help: "Use your full name, in whatever manner befits your culture."
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
-        $target.append(
+        $mute.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new TextInput({
                         label: "Name",
-                        mute: true,
                         maxlength: 50,
-                        placeholder: "Your full name"
+                        counter: 'remaining',
+                        mute: true,
+                        placeholder: "Your full name",
+                        help: "Use your full name, in whatever manner befits your culture."
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
-        $target.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new TextInput({
-                        disabled: true,
-                        label: "Element Label",
-                        placeholder: "Enter the text."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        $target.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new TextInput({
-                        disabled: true,
-                        label: "Element Label",
-                        placeholder: "Enter the text.",
-                        mute: true
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-    }
-    grindPasswordInputs() {
-        const me = this;
-        const $target = $('#inputs-password');
-
-        $target.append(
+        $password.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new PasswordInput({
@@ -276,10 +254,6 @@ class CornflowerBlueDemo {
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
-        );
-
-        $target.append(
-            $('<div />').addClass('section').addClass('vert')
                 .append(
                     new PasswordInput({
                         label: "Password",
@@ -289,480 +263,40 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
-    }
-    grindTextAreas() {
-        const me = this;
-        const $target = $('#inputs-textarea');
 
-        $target.append(
+        $email.append(
+
             $('<div />').addClass('section').addClass('vert')
                 .append(
-                    new TextArea({
-                        label: "Element Label",
-                        placeholder: "An input placeholder."
+                    new EmailInput({
+                        label: "Email Address"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new EmailInput({
+                        label: "Email Address",
+                        forceconstraints: false,
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
-        $target.append(
+        $disabled.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
-                    new TextArea({
-                        label: "Element Label",
+                    new TextInput({
+                        label: "Name",
+                        maxlength: 50,
+                        counter: 'remaining',
                         disabled: true,
-                        placeholder: "An input placeholder."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        $target.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Element Label",
-                        mute: true,
-                        placeholder: "An input placeholder."
+                        placeholder: "Your full name",
+                        help: "Use your full name, in whatever manner befits your culture."
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
-    }
-    grindSelects() {
-        const me = this;
-        const $target = $('#inputs-selects');
-        $target.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new SelectMenu({
-                        label: "Select Year",
-                        name: "year",
-                        options: [
-                            { label: "2019", checked: true, value: "2019" },
-                            { label: "2018", value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" },
-                            { label: "2015", value: "2015" },
-                            { label: "2014", value: "2014" },
-                            { label: "2013", value: "2013" },
-                            { label: "2012", value: "2012" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-    }
-    grindRadioGroups() {
-        const me = this;
-        const $target = $('#inputs-radiogroups');
-        $target.append(
-            $('<div />').addClass('section').addClass('vert')
-                .append(
-                    new RadioGroup({
-                        label: "Select Year",
-                        name: "year",
-                        options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", checked: true, value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-    }
-    grindDialogs() {
-        const me = this;
-        const $target = $('#inputs-dialogs');
-        $target.append(
-            $('<div />').addClass('section')
-                .append(
-                    new SimpleButton({
-                        text: "Login Form"
-                    }).button
-                        .click(function() {
-                            me.dialog = new DialogWindow({
-                                title: "Login",
-                                form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
-                            }).open();
-                        })
-                )
-        );
-    }
-    grindCheckboxes() {
-        const me = this;
-        const $target = $('#inputs-checkboxes');
-
-        $target.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Checked"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        label: "Normal"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        labelside: 'left',
-                        label: "Toggled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-    }
-    grindStyledCheckboxes() {
-        const me = this;
-        const $target = $('#inputs-checkboxes-styled');
-
-        $target.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('section').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-
-    }
-    grindGrowlers() {
-        const me = this;
-        const $target = $('#growlers-positions');
-
-        $target.append(
-            $('<div />').addClass('section').addClass('centered')
-                .append(
-                    new SimpleButton({
-                        text: "Top Left",
-                        action: function() {
-                            new Growler({
-                                position: 'top-left',
-                                icon: 'globe',
-                                title: 'Top Left Growler',
-                                text: 'A growler is here!',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Center",
-                        action: function() {
-                            new Growler({
-                                position: 'top-center',
-                                icon: 'chat',
-                                text: 'A top-center growler with an icon and no title.',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Right",
-                        action: function() {
-                            new Growler({
-                                position: 'top-right',
-                                icon: 'star',
-                                title: 'Growler with an icon and no text.',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('section').addClass('centered')
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Left",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-left',
-                                icon: 'circle-disc-chopped',
-                                title: 'Bottom Left Growler',
-                                text: 'This growler has duration:0, and will stay until dismissed.',
-                                duration: 0,
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Center",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-center',
-                                icon: 'heart',
-                                title: 'Bottom Center Growler',
-                                text: 'This growler has duration:0, so will stay until dismissed.',
-                                duration: 0,
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Right",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-right',
-                                icon: 'star',
-                                title: 'Bottom Right Growler',
-                                text: 'Another growler over here!',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-        );
-    }
-    grindSpecialGrowlers() {
-        const me = this;
-        const $target = $('#growlers-special');
-
-        $target.append(
-            $('<div />').addClass('section').addClass('centered')
-                .append(
-                    new SimpleButton({
-                        text: "Quick Growl",
-                        action: function() {
-                            Growler.growl('This is a growl message!', 'Growler.growl');
-                            me.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Success",
-                        action: function() {
-                            Growler.success('This is a success message!');
-                            me.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Error",
-                        action: function() {
-                            Growler.error('This is an error message!');
-                            me.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Warn",
-                        action: function() {
-                            Growler.warn('This is a warning message!');
-                            me.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Caution",
-                        action: function() {
-                            Growler.caution('This is a caution message!');
-                            me.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
-
-                        }
-                    }).button
-                )
-        );
     }
     grindButtons() {
         const me = this;
@@ -1111,6 +645,481 @@ class CornflowerBlueDemo {
         );
 
     }
+    grindGrowlers() {
+        const me = this;
+        const $positions = $('#growlers-positions');
+        const $special = $('#growlers-special');
+
+        $positions.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Top Left",
+                        action: function() {
+                            new Growler({
+                                position: 'top-left',
+                                icon: 'globe',
+                                title: 'Top Left Growler',
+                                text: 'A growler is here!',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Top Center",
+                        action: function() {
+                            new Growler({
+                                position: 'top-center',
+                                icon: 'chat',
+                                text: 'A top-center growler with an icon and no title.',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Top Right",
+                        action: function() {
+                            new Growler({
+                                position: 'top-right',
+                                icon: 'star',
+                                title: 'Growler with an icon and no text.',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+        ).append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Left",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-left',
+                                title: 'Bottom Left Growler',
+                                text: 'This growler has duration:0, and will stay until dismissed.',
+                                duration: 0,
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Center",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-center',
+                                icon: 'heart',
+                                title: 'Bottom Center Growler',
+                                text: 'This growler has duration:0, so will stay until dismissed.',
+                                duration: 0,
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Bottom Right",
+                        action: function() {
+                            new Growler({
+                                position: 'bottom-right',
+                                title: 'Bottom Right Growler',
+                                text: 'Another growler over here!',
+                                onopen: function(g) { me.dumpConfig(g);}
+                            });
+                        }
+                    }).button
+                )
+        );
+        $special.append(
+            $('<div />').addClass('section').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Quick Growl",
+                        action: function() {
+                            Growler.growl('This is a growl message!', 'Growler.growl');
+                            me.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Success",
+                        action: function() {
+                            Growler.success('This is a success message!');
+                            me.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Error",
+                        action: function() {
+                            Growler.error('This is an error message!');
+                            me.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Warn",
+                        action: function() {
+                            Growler.warn('This is a warning message!');
+                            me.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
+                        }
+                    }).button
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Caution",
+                        action: function() {
+                            Growler.caution('This is a caution message!');
+                            me.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
+
+                        }
+                    }).button
+                )
+        );
+    }
+    grindCheckboxes() {
+        const me = this;
+        const $target = $('#inputs-checkboxes');
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Checked"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        labelside: 'left',
+                        label: "Normal"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        labelside: 'left',
+                        label: "Toggled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        labelside: 'left',
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        labelside: 'left',
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+    }
+
+
+    grindTextAreas() {
+        const me = this;
+        const $target = $('#textareas-standard');
+        const $mute = $('#textareas-mute');
+        const $disabled = $('#textareas-disabled');
+
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new TextArea({
+                        label: "Post Content",
+                        maxlength: 2000,
+                        placeholder: "Write your post here!"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $mute.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new TextArea({
+                        label: "Post Content",
+                        mute: true,
+                        maxlength: 2000,
+                        placeholder: "Write your post here!"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $disabled.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new TextArea({
+                        label: "Post Content",
+                        maxlength: 2000,
+                        disabled: true,
+                        placeholder: "Write your post here!"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+    }
+    grindSelects() {
+        const me = this;
+        const $target = $('#inputs-selects');
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new SelectMenu({
+                        label: "Select Year",
+                        name: "year",
+                        options: [
+                            { label: "2019", checked: true, value: "2019" },
+                            { label: "2018", value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" },
+                            { label: "2015", value: "2015" },
+                            { label: "2014", value: "2014" },
+                            { label: "2013", value: "2013" },
+                            { label: "2012", value: "2012" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+    }
+    grindRadioGroups() {
+        const me = this;
+        const $target = $('#inputs-radiogroups');
+        $target.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new RadioGroup({
+                        label: "Select Year",
+                        name: "year",
+                        options: [
+                            { label: "2019", value: "2019" },
+                            { label: "2018", checked: true, value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+    }
+    grindDialogs() {
+        const me = this;
+        const $target = $('#inputs-dialogs');
+        $target.append(
+            $('<div />').addClass('section')
+                .append(
+                    new SimpleButton({
+                        text: "Login Form"
+                    }).button
+                        .click(function() {
+                            me.dialog = new DialogWindow({
+                                title: "Login",
+                                form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+                            }).open();
+                        })
+                )
+        );
+    }
+    grindStyledCheckboxes() {
+        const me = this;
+        const $target = $('#inputs-checkboxes-styled');
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "square"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "round"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "switch"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $target.append(
+            $('<div />').addClass('section').addClass("centered")
+                .append(
+                    new BooleanToggle({
+                        label: "Normal",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        label: "Toggled",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        disabled: true,
+                        label: "Disabled",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new BooleanToggle({
+                        checked: true,
+                        disabled: true,
+                        label: "Disabled",
+                        style: "toggle"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+
+    }
+
     grindMessageBoxes() {
         const me = this;
         const $target = $('#boxes-instructions');
@@ -1166,40 +1175,6 @@ class CornflowerBlueDemo {
         let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
         $target.append(f.container);
     }
-
-    /**
-     * Display a page of example texts
-     */
-    grindHeaders() {
-        const $target = $('#headers-all');
-
-
-        $target.append($('<h1 />').html("H1 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target=\"_new\" href=\"http://www.does.not.exist\">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h2 />').html("H2 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a target=\"_new\" href=\"https://en.wikipedia.org/\">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h3 />').html("H3 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h4 />').html("H4 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h5 />').html("H5 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h6 />').html("H6 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h3 />').html("H3 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h4 />').html("H4 Standard"));
-        $target.append($('<h5 />').html("H5 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h4 />').html("H4 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-        $target.append($('<h5 />').html("H5 Standard"));
-        $target.append($('<p />').html("Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper."));
-
-
-    }
-
 
     /**
      * Show the forms.

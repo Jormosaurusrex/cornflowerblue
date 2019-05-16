@@ -166,6 +166,9 @@ button {
     height: 2em;
     font-size: 120%;
     line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     span.icon {
       margin: 0;

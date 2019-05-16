@@ -13,14 +13,14 @@
   --pink: #ff00de;
   --lightblue: #a0e1fa;
 
-  --white: #fff;
+  --white: rgb(225, 255, 255); // #fff;
   --ultralight: #fdfdfd;
   --bright: #eee;
   --morelight: #f3f3f3;
   --sublight: #e5e5e5;
   --light: #ddd;
   --grey-light: #ccc;
-  --grey-medium: #999;
+  --grey-medium: rgb(153, 153, 153); // #999;
   --grey-dark: #666;
   --grey-meddark: #555;
   --grey-darker: #444;
@@ -29,15 +29,29 @@
 
   // Half opacity colors
   --white-half: rgba(255, 255, 255, 0.5); // #fff
+  --white-quarter: rgba(255, 255, 255, 0.25); // #fff
+  --white-translucent: rgba(255, 255, 255, 0.1); // #fff
   --grey-half: rgba(153, 153, 153, 0.5); // #999
   --grey-quarter: rgba(153, 153, 153, 0.25); // #999
   --grey-translucent: rgba(153, 153, 153, 0.1); // #999
   --black-half: rgba(0, 0, 0, 0.5); // #000
+  --black-quarter: rgba(0, 0, 0, 0.25); // #000
+  --black-translucent: rgba(0, 0, 0, 0.1); // #000
   --blue-half: rgba(0, 84, 166, 0.5); // #0054a6
+  --blue-quarter: rgba(0, 84, 166, 0.25); // #0054a6
+  --blue-translucent: rgba(0, 84, 166, 0.1); // #0054a6
   --green-half: rgba(0, 94, 32, 0.5); // #005e20
+  --green-quarter: rgba(0, 94, 32, 0.25); // #005e20
+  --green-translucent: rgba(0, 94, 32, 0.1); // #005e20
   --red-half: rgba(145, 0, 0, 0.5); // #910000
+  --red-quarter: rgba(145, 0, 0, 0.25); // #910000
+  --red-translucent: rgba(145, 0, 0, 0.1); // #910000
   --orange-half: rgba(255, 153, 0, 0.5); // #ff9900
+  --orange-quarter: rgba(255, 153, 0, 0.25); // #ff9900
+  --orange-translucent: rgba(255, 153, 0, 0.1); // #ff9900
   --yellow-half: rgba(255, 221, 27, 0.5); // #ffdd1b
+  --yellow-quarter: rgba(255, 221, 27, 0.25); // #ffdd1b
+  --yellow-translucent: rgba(255, 221, 27, 0.1); // #ffdd1b
 
   // Stripes
   --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(145, 0, 0, 0.05) .5em, rgba(145, 0, 0, 0.05) 1em);
@@ -45,10 +59,14 @@
   --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(51, 89, 100, 0.05) .5em, rgba(51, 89, 100, 0.05) 1em);
   --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 94, 32, 0.05) .5em, rgba(0, 94, 32, 0.05) 1em);
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 84, 166, 0.05) .5em, rgba(0, 84, 166, 0.05) 1em);
+  --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(153, 153, 153, 0.05) .5em, rgba(153, 153, 153, 0.05) 1em);
+
+  --fontstack-serif: "Times New Roman", Times, serif;
+  --fontstack-sansserif: "Helvetica Neue", Arial, serif;
+  --fontstack-monospace: "Lucida Console", Monaco, monospace;
 
   // Shadows
   --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
-  --text-shadow-old: 0 .07em .07em rgba(0,0,0,0.3);
   --on-white-text-shadow: 0 .07em .07em rgba(50,50,50,0.3);
   --text-shadow-heavy: 0 .07em .07em rgba(0,0,0,0.5);
   --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
@@ -64,58 +82,80 @@
   --hexagon-shadow: 0 0 .5em rgba(0,0,0,0.6);
   --hexagon-shadow-disabled: 0 0 .5em rgba(0,0,0,0.2);
 
-
   --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
 
-  --canvas-color-standard: var(--ultralight);
+  --body-background-color: var(--grey-darkest);
+  --canvas-color-primary: var(--ultralight);
+  --canvas-color-secondary: var(--morelight);
+  --canvas-color-tertiary: var(--light);
+  --canvas-color-callout-lightweight: var(--blue-translucent);
 
   // Misc Values
-  --default-font-family: "Helvetica Neue", Arial, serif;
+  --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
   --border-radius: .2em;
 
   // Semantic colors
+  //--standard-color: var(--blue);
   --standard-color: var(--grey-dark);
   --placeholder-color: var(--grey-medium);
 
   --focus-color: var(--green);
   --focus-color-half: var(--green-half);
+  --focus-color-quarter: var(--green-quarter);
+  --focus-color-translucent: var(--green-translucent);
 
   --constructive-color: var(--green);
   --constructive-color-half: var(--green-half);
+  --constructive-color-quarter: var(--green-quarter);
+  --constructive-color-translucent: var(--green-translucent);
 
   --destructive-color: var(--red);
   --destructive-color-helf: var(--red-half);
+  --destructive-color-quarter: var(--red-quarter);
+  --destructive-color-translucent: var(--red-translucent);
 
   --hot-text-color: var(--ultralight);
   --required-color: var(--red);
 
   --accept-color: var(--green);
   --accept-color-half: var(--green-half);
+  --accept-color-quarter: var(--green-quarter);
+  --accept-color-translucent: var(--green-translucent);
   --accept-stripes: var(--green-stripes);
 
   --success-color: var(--green);
   --success-color-half: var(--green-half);
+  --success-color-quarter: var(--green-quarter);
+  --success-color-translucent: var(--green-translucent);
   --success-stripes: var(--green-stripes);
 
   --error-color: var(--red);
   --error-color-half: var(--red-half);
+  --error-color-quarter: var(--red-quarter);
+  --error-color-translucent: var(--red-translucent);
   --error-stripes: var(--red-stripes);
 
   --warning-color: var(--orange);
   --warning-color-half: var(--orange-half);
+  --warning-color-quarter: var(--orange-quarter);
+  --warning-color-translucent: var(--orange-translucent);
   --warning-stripes: var(--orange-stripes);
 
   --caution-color: var(--yellow);
   --caution-color-half: var(--yellow-half);
+  --caution-color-quarter: var(--yellow-quarter);
+  --caution-color-translucent: var(--yellow-translucent);
   --caution-stripes: var(--yellow-stripes);
 
   --disabled-base-color: var(--light);
   --disabled-base-color-light: var(--morelight);
   --disabled-highlight-color: var(--grey-medium);
-
+  --disabled-color-half: var(--grey-half);
+  --disabled-color-quarter: var(--grey-quarter);
+  --disabled-color-translucent: var(--grey-translucent);
 
   // Button keys
   --button-border-radius: var(--border-radius);
@@ -157,6 +197,12 @@
   --checkbox-checked-shadow: inset 0 .1em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --checkbox-checked-shadow-hover: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
 
+  // Code
+  --code-background-color: var(--canvas-color-callout-lightweight);
+  --code-text-color: var(--paragraph-text-color);
+  --code-text-shadow: var(--text-shadow);
+  --code-font-family: var(--fontstack-monospace);
+
   // Dialog keys
   --dialog-background-color: var(--ultralight);
   --dialog-border-radius: var(--border-radius);
@@ -167,7 +213,7 @@
   --dialog-header-border-color: var(--grey-darkest);
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
-  --dialog-window-mask-opacity: .75;
+  --dialog-window-mask-opacity: .25;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
 
   // Form keys
@@ -235,8 +281,8 @@
   --headers-h6-border-color: var(--grey-medium);
 
   // Input
-  --input-default-background-color: var(--ultralight);
-  --input-default-border-color: var(--grey-medium);//var(--grey-dark) --standard-color
+  --input-default-background-color: var(--grey-translucent);
+  --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
   --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);
@@ -247,7 +293,10 @@
   --input-disabled-placeholder-color: var(--disabled-highlight-color);
 
   --input-focused-border-color: var(--focus-color);
-  --input-focused-background-color: var(--grey-translucent);
+  --input-focused-background-color: var(--focus-color-translucent);
+
+  --input-mute-background-color: var(--grey-translucent);
+  --input-mute-focus-background-color: var(--grey-quarter);
 
   --input-subline-text-color: var(--grey-medium);
   --input-subline-warning-text-color: var(--warning-color);
@@ -299,6 +348,8 @@
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: var(--standard-measure);
   --paragraph-shadow: var(--text-shadow);
+  --paragraph-font-family: var(--fontstack-sansserif);
+
   //--paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
   //--paragraph-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
 

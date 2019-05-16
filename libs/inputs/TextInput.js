@@ -234,6 +234,8 @@ class TextInput {
 
         if (this.required) { this.container.addClass('required'); }
         if (this.mute) { this.container.addClass('mute'); }
+        if (this.disabled) { this.container.addClass('disabled'); }
+
         if (this.hidden) {
             this.container.css('display', 'none');
             this.container.attr('aria-hidden', true);

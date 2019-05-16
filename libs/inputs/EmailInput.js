@@ -1,6 +1,6 @@
 "use strict";
 
-class EmailField extends TextInput {
+class EmailInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
@@ -23,7 +23,7 @@ class EmailField extends TextInput {
      * @param config a dictionary object
      */
     constructor(config) {
-        config = Object.assign({}, EmailField.DEFAULT_CONFIG, config);
+        config = Object.assign({}, EmailInput.DEFAULT_CONFIG, config);
         super(config);
     }
 
@@ -44,7 +44,7 @@ class EmailField extends TextInput {
      */
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
-            if (!EmailField.isValidEmail(this.value)) {
+            if (!EmailInput.isValidEmail(this.value)) {
                 this.errors.push("Invalid email address.");
             }
         }

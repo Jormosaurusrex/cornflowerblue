@@ -20,7 +20,7 @@
         <script type="text/javascript" src="../libs/components/TabBar.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
-        <script type="text/javascript" src="../libs/inputs/EmailField.js"></script>
+        <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
         <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
@@ -32,7 +32,7 @@
         <script type="text/javascript">
             if (!window.console) { console={}; console.log = function(){}; }
             $(document).ready( function() {
-                const cfbg = new CornflowerBlueDemo();
+                const demo = new CornflowerBlueDemo();
             });
         </script>
     </head>
@@ -50,7 +50,11 @@
                         <h1>H1 Standard</h1>
                         <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target="_new" href="http://www.does.not.exist">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
                         <h2>H2 Standard</h2>
-                        <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
+                        <aside>
+                            This is an <em>aside</em>. Text flows around it.
+                        </aside>
+                        <p>Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
+                        <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
                         <h3>H3 Standard</h3>
                         <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
                         <h4>H4 Standard</h4>
@@ -111,17 +115,48 @@
                 </div>
                 <div class="tabcontent" id="t-textareas">
                     <h2 class="titlebox">Text Areas</h2>
-                    <div class="demobox" id="inputs-textarea">
+                    <code class="invoker">new TextArea({options});</code>
+                    <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements.</p>
+                    <div class="demobox" id="textareas-standard">
                         <h4>Standard</h4>
+                        <p>The standard TextArea is configured with <code>counter: sky</code>.</p>
+                    </div>
+                    <div class="demobox" id="textareas-mute">
+                        <h4>Mute</h4>
+                        <p>TextAreas can be made <code>mute</code>, though the displayed border changes.</p>
+                    </div>
+                    <div class="demobox" id="textareas-disabled">
+                        <h4>Disabled</h4>
+                        <p>Disabled TextArea elements behave like disable TextInputs in nearly all respects.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-inputs">
                     <h2 class="titlebox">Inputs</h2>
+                    <p>A <dfn>Text Input</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a TextArea element).</p>
+
                     <div class="demobox" id="inputs-standard">
                         <h4>Standard</h4>
+                        <code class="invoker">new TextInput({options});</code>
+                        <p>TextInputs all inherit many behaviors straight out of the box, not the least of which are data validators. They can be essential with <code>required: true</code> and support three kinds of character <code>counter</code>: sky, remaining, limit.</p>
+                    </div>
+                    <div class="demobox" id="inputs-mute">
+                        <h4>Mute</h4>
+                        <p>Setting an input to with <code>mute: true</code> will change its display. The label changes position and top controls disappear (such as character counters) disappear until the element obtains focus.</p>
                     </div>
                     <div class="demobox" id="inputs-password">
                         <h4>Password</h4>
+                        <code class="invoker">new PasswordInput({options});</code>
+                        <p>The password visibility switch won't appear on mute versions of this input until it has focus.</p>
+                    </div>
+                    <div class="demobox" id="inputs-email">
+                        <h4>Email</h4>
+                        <code class="invoker">new EmailInput({options});</code>
+
+                        <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: true</code>.</p>
+                    </div>
+                    <div class="demobox" id="inputs-disabled">
+                        <h4>Disabled</h4>
+                        <p>An entire element can be set to be disabled with <code>disabled: true</code>.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-selects">
@@ -135,7 +170,10 @@
                 </div>
                 <div class="tabcontent" id="t-toggles">
                     <h2 class="titlebox">Checkboxes and Toggles</h2>
-                    <p>The BooleanToggle class is an implementation of &lt;input type='checkbox' /&gt;.</p>
+                    <code class="invoker">new BooleanToggle({options});</code>
+
+                    <p>A <dfn>BooleanToggle</dfn> is a switch that can be in one of two states (checked/unchecked, on/off, true/false). It is an implementation of <code>&lt;input type='checkbox' /&gt;</code>.</p>
+                    <p>BooleanToggles can take several display styles.  Some are better suited for specific purposes than others.  For instance, if the <em>state</em> of the value it controls is important, a toggle style might be a better choice than a simple checkbox.</p>
                     <div class="demobox" id="inputs-checkboxes">
                         <h4>Default</h4>
                         <p>Labels can be on either side. The default is right-sided, because the affordances end up in line.</p>
@@ -143,7 +181,7 @@
 
                     <div class="demobox" id="inputs-checkboxes-styled">
                         <h4>Styled</h4>
-                        <p>Styles can be applied to the toggles. Values for the 'style' attribute include square, circle, switch, and toggle.</p>
+                        <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-forms">
@@ -161,12 +199,23 @@
                 </div>
                 <div class="tabcontent" id="t-growlers">
                     <h2 class="titlebox">Growlers</h2>
+
+                    <code class="invoker">new Growler({options});</code>
+
+                    <p>A <dfn>Growler</dfn> is a short-lived, auto-dismissable notifications that presents a simple payloads.</p>
+                    <p>They can be targeted to open in any one of six positions. They can be configured to show title or text payload individually.  Supplied icons will be included in the title if no payload is provided.</p>
+                    <p>It is possible to set them to require manual dismissal by setting the <code>duration</code> to 0 or -1.</p>
                     <div class="demobox" id="growlers-positions">
                         <h4>Positions</h4>
                     </div>
                     <div class="demobox" id="growlers-special">
                         <h4>Special Types</h4>
-                        <p>Growlers can be invoked with shorthand static methods.</p>
+                        <p>Growlers can be invoked with shorthand static methods. These growlers are lightweight and pre-configured.</p>
+                        <code class="block">
+                            Growler.growl('This is a growl message!', 'Growler.growl');
+                            Growler.success('This is a success message!');
+                            Growler.error('This is an error message!');
+                        </code>
                     </div>
                 </div>
 

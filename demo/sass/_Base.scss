@@ -1,7 +1,6 @@
 :root {
-  --tabbar-background-color: var(--light);
+  --tabbar-background-color: var(--canvas-color-tertiary);
   --tabbar-box-shadow: none;
-  --dialog-window-mask-opacity: .25;
 }
 
 body {
@@ -28,13 +27,20 @@ div#container {
   }
   div.displaybox {
     flex-grow: 1;
-    background-color: var(--canvas-color-standard);
+    background-color: var(--canvas-color-primary);
     padding: 2em;
+
+    code.invoker {
+      display: block;
+      float: right;
+      padding: 1em;
+      margin: 0 0 .5em .5em;
+    }
   }
   div#codebox {
     flex-grow: 0;
     padding: 3em 1em 0 1em;
-    background-color: var(--morelight);
+    background-color: var(--canvas-color-secondary);
     width: 25em;
     max-width: 25em;
     min-width: 25em;
@@ -43,6 +49,7 @@ div#container {
       padding: .5em;
       overflow: auto;
       white-space: pre;
+      font-family: "Courier New", Courier, monospace;
       span.key {
         color: var(--grey-darkest);
         font-weight: bold;
@@ -61,7 +68,7 @@ div#container {
 }
 
 .section {
-  margin: 1.5em 0 1.5em 0;
+  margin: 0 0 1em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

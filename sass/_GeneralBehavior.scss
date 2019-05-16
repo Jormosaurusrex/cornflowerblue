@@ -33,7 +33,6 @@ h2 {
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
-  border-bottom: 2px solid var(--headers-h2-border-color);
 }
 
 h3 {
@@ -42,7 +41,6 @@ h3 {
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h3-text-transform);
   color: var(--headers-h3-text-color);
-  border-bottom:2px solid var(--headers-h3-border-color);
 }
 
 h4 {
@@ -51,7 +49,6 @@ h4 {
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h4-text-transform);
   color: var(--headers-h4-text-color);
-  border-bottom:2px solid var(--headers-h4-border-color);
 }
 
 h5 {
@@ -76,7 +73,14 @@ p {
   color: var(--paragraph-text-color);
   width: var(--paragraph-measure);
   text-shadow: var(--paragraph-shadow);
-
+  font-family: var(--paragraph-font-family);
+  &:first-letter2 {
+    font-size: 3.2rem;
+    line-height: .7;
+    float: left;
+    padding-right: 8px;
+    padding-top: 4px;
+  }
 }
 
 label {
@@ -87,7 +91,7 @@ label {
   margin-bottom: .5em;
   font-size: 100%;
   color: var(--label-color);
-  text-shadow:var(--label-text-shadow);
+  text-shadow: var(--label-text-shadow);
   text-transform: var(--label-text-transform);
   button.help {
     color: var(--label-color);
@@ -120,3 +124,60 @@ a {
     text-decoration: none;
   }
 }
+
+
+dfn {
+  font-style: oblique;
+}
+
+cite {
+  font-style: oblique;
+}
+em {
+  font-style: oblique;
+}
+strong {
+  font-weight: bold;
+}
+
+pre {
+  font-family: "Courier New", Courier, monospace;
+}
+
+aside {
+
+}
+aside {
+  --aside-text-color: var(--blue);
+  --aside-text-shadow: var(--text-shadow);
+  --aside-background-color: var(--canvas-color-callout-lightweight);
+  --aside-border-color: var(--blue);
+  display: block;
+  float: right;
+  padding: 1em;
+  margin: 0 0 .5em .5em;
+  width: 40%;
+  font-style: oblique;
+  border-left: .1em solid var(--aside-border-color);
+  background-color: var(--aside-background-color);
+  color: var(--aside-text-color);
+  text-shadow: var(--aside-text-shadow);
+  p {
+    margin: .5em;
+  }
+}
+
+code {
+  font-family: var(--code-font-family);
+  background-color: var(--code-background-color);
+  color: var(--code-text-color);
+  text-shadow: var(--code-text-shadow);
+  &.block {
+    display: block;
+    font-size: 90%;
+    padding: 1.5em;
+    overflow: auto;
+  }
+}
+
+

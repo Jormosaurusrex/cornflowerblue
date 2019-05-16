@@ -132,12 +132,12 @@ class Utils {
         for (let k of keys) {
             let line = "";
             if ((k === 'id') || (k === 'name')) {
-                line = `\t <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`;
+                line = `    <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`;
             } else if (typeof obj[k] === 'function') {
-                line = `\t <span class="key">${k}</span> : function(e, self) { ... }`;
+                line = `    <span class="key">${k}</span> : function(e, self) { ... }`;
             } else if (Array.isArray(obj[k])) {
                 //line = `\t <span class="key">${k}</span> : [<span class="value">${obj[k]}</span>]`;
-                line = `\t <span class="key">${k}</span> : [`;
+                line = `    <span class="key">${k}</span> : [`;
                 if ((obj[k] !== null) && (obj[k].length > 0)) {
                     let elements = [];
                     for (let c of obj[k]) {
@@ -152,9 +152,9 @@ class Utils {
                 line += `]`;
 
             } else if (typeof obj[k] === 'string') {
-                line = `\t <span class="key">${k}</span> : "<span class="value">${obj[k]}</span>"`;
+                line = `    <span class="key">${k}</span> : "<span class="value">${obj[k]}</span>"`;
             } else {
-                line = `\t <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`;
+                line = `    <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`;
             }
             if ((Array.isArray(obj[k])) && (Utils.arrayEquals(obj[k], obj.constructor.DEFAULT_CONFIG[k]))) {
                 line = `<span class="default">${line}</span>`

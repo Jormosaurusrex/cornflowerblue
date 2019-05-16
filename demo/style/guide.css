@@ -10,36 +10,53 @@
   --tan: #eadcbc;
   --pink: #ff00de;
   --lightblue: #a0e1fa;
-  --white: #fff;
+  --white: #e1ffff;
   --ultralight: #fdfdfd;
   --bright: #eee;
   --morelight: #f3f3f3;
   --sublight: #e5e5e5;
   --light: #ddd;
   --grey-light: #ccc;
-  --grey-medium: #999;
+  --grey-medium: #999999;
   --grey-dark: #666;
   --grey-meddark: #555;
   --grey-darker: #444;
   --grey-darkest: #222;
   --black: #000;
   --white-half: rgba(255, 255, 255, 0.5);
+  --white-quarter: rgba(255, 255, 255, 0.25);
+  --white-translucent: rgba(255, 255, 255, 0.1);
   --grey-half: rgba(153, 153, 153, 0.5);
   --grey-quarter: rgba(153, 153, 153, 0.25);
   --grey-translucent: rgba(153, 153, 153, 0.1);
   --black-half: rgba(0, 0, 0, 0.5);
+  --black-quarter: rgba(0, 0, 0, 0.25);
+  --black-translucent: rgba(0, 0, 0, 0.1);
   --blue-half: rgba(0, 84, 166, 0.5);
+  --blue-quarter: rgba(0, 84, 166, 0.25);
+  --blue-translucent: rgba(0, 84, 166, 0.1);
   --green-half: rgba(0, 94, 32, 0.5);
+  --green-quarter: rgba(0, 94, 32, 0.25);
+  --green-translucent: rgba(0, 94, 32, 0.1);
   --red-half: rgba(145, 0, 0, 0.5);
+  --red-quarter: rgba(145, 0, 0, 0.25);
+  --red-translucent: rgba(145, 0, 0, 0.1);
   --orange-half: rgba(255, 153, 0, 0.5);
+  --orange-quarter: rgba(255, 153, 0, 0.25);
+  --orange-translucent: rgba(255, 153, 0, 0.1);
   --yellow-half: rgba(255, 221, 27, 0.5);
+  --yellow-quarter: rgba(255, 221, 27, 0.25);
+  --yellow-translucent: rgba(255, 221, 27, 0.1);
   --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(145, 0, 0, 0.05) 0.5em, rgba(145, 0, 0, 0.05) 1em);
   --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(255, 153, 0, 0.1) 0.5em, rgba(255, 153, 0, 0.1) 1em);
   --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(51, 89, 100, 0.05) 0.5em, rgba(51, 89, 100, 0.05) 1em);
   --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(0, 94, 32, 0.05) 0.5em, rgba(0, 94, 32, 0.05) 1em);
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(0, 84, 166, 0.05) 0.5em, rgba(0, 84, 166, 0.05) 1em);
+  --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(153, 153, 153, 0.05) 0.5em, rgba(153, 153, 153, 0.05) 1em);
+  --fontstack-serif: "Times New Roman", Times, serif;
+  --fontstack-sansserif: "Helvetica Neue", Arial, serif;
+  --fontstack-monospace: "Lucida Console", Monaco, monospace;
   --text-shadow: 0 -0.03em 0.03em rgba(0, 0, 0, 0.3), 0 0.03em 0.03em rgba(255, 255, 255, 0.3);
-  --text-shadow-old: 0 0.07em 0.07em rgba(0, 0, 0, 0.3);
   --on-white-text-shadow: 0 0.07em 0.07em rgba(50, 50, 50, 0.3);
   --text-shadow-heavy: 0 0.07em 0.07em rgba(0, 0, 0, 0.5);
   --text-shadow-heavier: 0 0.07em 0.07em rgba(0, 0, 0, 0.7);
@@ -56,38 +73,61 @@
   --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
-  --canvas-color-standard: var(--ultralight);
-  --default-font-family: "Helvetica Neue", Arial, serif;
+  --body-background-color: var(--grey-darkest);
+  --canvas-color-primary: var(--ultralight);
+  --canvas-color-secondary: var(--morelight);
+  --canvas-color-tertiary: var(--light);
+  --canvas-color-callout-lightweight: var(--blue-translucent);
+  --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
   --border-radius: .2em;
   --standard-color: var(--grey-dark);
   --placeholder-color: var(--grey-medium);
   --focus-color: var(--green);
   --focus-color-half: var(--green-half);
+  --focus-color-quarter: var(--green-quarter);
+  --focus-color-translucent: var(--green-translucent);
   --constructive-color: var(--green);
   --constructive-color-half: var(--green-half);
+  --constructive-color-quarter: var(--green-quarter);
+  --constructive-color-translucent: var(--green-translucent);
   --destructive-color: var(--red);
   --destructive-color-helf: var(--red-half);
+  --destructive-color-quarter: var(--red-quarter);
+  --destructive-color-translucent: var(--red-translucent);
   --hot-text-color: var(--ultralight);
   --required-color: var(--red);
   --accept-color: var(--green);
   --accept-color-half: var(--green-half);
+  --accept-color-quarter: var(--green-quarter);
+  --accept-color-translucent: var(--green-translucent);
   --accept-stripes: var(--green-stripes);
   --success-color: var(--green);
   --success-color-half: var(--green-half);
+  --success-color-quarter: var(--green-quarter);
+  --success-color-translucent: var(--green-translucent);
   --success-stripes: var(--green-stripes);
   --error-color: var(--red);
   --error-color-half: var(--red-half);
+  --error-color-quarter: var(--red-quarter);
+  --error-color-translucent: var(--red-translucent);
   --error-stripes: var(--red-stripes);
   --warning-color: var(--orange);
   --warning-color-half: var(--orange-half);
+  --warning-color-quarter: var(--orange-quarter);
+  --warning-color-translucent: var(--orange-translucent);
   --warning-stripes: var(--orange-stripes);
   --caution-color: var(--yellow);
   --caution-color-half: var(--yellow-half);
+  --caution-color-quarter: var(--yellow-quarter);
+  --caution-color-translucent: var(--yellow-translucent);
   --caution-stripes: var(--yellow-stripes);
   --disabled-base-color: var(--light);
   --disabled-base-color-light: var(--morelight);
   --disabled-highlight-color: var(--grey-medium);
+  --disabled-color-half: var(--grey-half);
+  --disabled-color-quarter: var(--grey-quarter);
+  --disabled-color-translucent: var(--grey-translucent);
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--standard-color);
   --button-default-text-color: var(--button-default-color);
@@ -121,6 +161,10 @@
   --checkbox-checkmark-text-shadow: var(--text-shadow);
   --checkbox-checked-shadow: inset 0 0.1em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
   --checkbox-checked-shadow-hover: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5), inset 0 0.3em 0.5em 0 rgba(0, 0, 0, 0.2), inset 0 -0.3em 0.5em 0 rgba(0, 0, 0, 0.2);
+  --code-background-color: var(--canvas-color-callout-lightweight);
+  --code-text-color: var(--paragraph-text-color);
+  --code-text-shadow: var(--text-shadow);
+  --code-font-family: var(--fontstack-monospace);
   --dialog-background-color: var(--ultralight);
   --dialog-border-radius: var(--border-radius);
   --dialog-box-shadow: var(--panel-shadow);
@@ -130,7 +174,7 @@
   --dialog-header-border-color: var(--grey-darkest);
   --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
-  --dialog-window-mask-opacity: .75;
+  --dialog-window-mask-opacity: .25;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
   --form-background-color: transparent;
   --form-border-color: transparent;
@@ -184,8 +228,8 @@
   --headers-h6-text-transform: none;
   --headers-h6-background-color: transparent;
   --headers-h6-border-color: var(--grey-medium);
-  --input-default-background-color: var(--ultralight);
-  --input-default-border-color: var(--grey-medium);
+  --input-default-background-color: var(--grey-translucent);
+  --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
   --input-default-text-shadow: none;
   --input-default-placeholder-color: var(--placeholder-color);
@@ -194,7 +238,9 @@
   --input-disabled-text-color: var(--disabled-highlight-color);
   --input-disabled-placeholder-color: var(--disabled-highlight-color);
   --input-focused-border-color: var(--focus-color);
-  --input-focused-background-color: var(--grey-translucent);
+  --input-focused-background-color: var(--focus-color-translucent);
+  --input-mute-background-color: var(--grey-translucent);
+  --input-mute-focus-background-color: var(--grey-quarter);
   --input-subline-text-color: var(--grey-medium);
   --input-subline-warning-text-color: var(--warning-color);
   --input-subline-error-text-color: var(--error-color);
@@ -235,6 +281,7 @@
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: var(--standard-measure);
   --paragraph-shadow: var(--text-shadow);
+  --paragraph-font-family: var(--fontstack-sansserif);
   --progressmeter-marker-unfilled-line-color: var(--grey-medium);
   --progressmeter-marker-background-color: var(--grey-darkest);
   --progressmeter-marker-border-color: var(--grey-medium);
@@ -340,24 +387,21 @@ h2 {
   font-size: 1.5em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
-  color: var(--headers-h2-text-color);
-  border-bottom: 2px solid var(--headers-h2-border-color); }
+  color: var(--headers-h2-text-color); }
 
 h3 {
   font-weight: normal;
   font-size: 1.2em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h3-text-transform);
-  color: var(--headers-h3-text-color);
-  border-bottom: 2px solid var(--headers-h3-border-color); }
+  color: var(--headers-h3-text-color); }
 
 h4 {
   font-weight: normal;
   font-size: 1em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h4-text-transform);
-  color: var(--headers-h4-text-color);
-  border-bottom: 2px solid var(--headers-h4-border-color); }
+  color: var(--headers-h4-text-color); }
 
 h5 {
   font-weight: normal;
@@ -378,7 +422,14 @@ p {
   line-height: 1.4;
   color: var(--paragraph-text-color);
   width: var(--paragraph-measure);
-  text-shadow: var(--paragraph-shadow); }
+  text-shadow: var(--paragraph-shadow);
+  font-family: var(--paragraph-font-family); }
+  p:first-letter2 {
+    font-size: 3.2rem;
+    line-height: .7;
+    float: left;
+    padding-right: 8px;
+    padding-top: 4px; }
 
 label {
   display: block;
@@ -412,6 +463,50 @@ a {
   a:visited {
     filter: brightness(80%);
     text-decoration: none; }
+
+dfn {
+  font-style: oblique; }
+
+cite {
+  font-style: oblique; }
+
+em {
+  font-style: oblique; }
+
+strong {
+  font-weight: bold; }
+
+pre {
+  font-family: "Courier New", Courier, monospace; }
+
+aside {
+  --aside-text-color: var(--blue);
+  --aside-text-shadow: var(--text-shadow);
+  --aside-background-color: var(--canvas-color-callout-lightweight);
+  --aside-border-color: var(--blue);
+  display: block;
+  float: right;
+  padding: 1em;
+  margin: 0 0 .5em .5em;
+  width: 40%;
+  font-style: oblique;
+  border-left: 0.1em solid var(--aside-border-color);
+  background-color: var(--aside-background-color);
+  color: var(--aside-text-color);
+  text-shadow: var(--aside-text-shadow); }
+  aside p {
+    margin: .5em; }
+
+code {
+  font-family: var(--code-font-family);
+  background-color: var(--code-background-color);
+  color: var(--code-text-color);
+  text-shadow: var(--code-text-shadow); }
+  code.block {
+    display: block;
+    font-size: 90%;
+    padding: 1.5em;
+    overflow: auto; }
 
 @font-face {
   font-family: 'cornflowerblue';
@@ -760,11 +855,16 @@ div.textarea-container {
   div.textarea-container.mute.active label,
   div.textarea-container.mute.filled label {
     visibility: visible; }
+  div.input-container.mute.active div.topcontrol, div.input-container.mute.filled div.topcontrol,
+  div.textarea-container.mute.active div.topcontrol,
+  div.textarea-container.mute.filled div.topcontrol {
+    display: block; }
   div.input-container.mute div.wrap:after,
   div.textarea-container.mute div.wrap:after {
     right: 0; }
   div.input-container.mute div.topcontrol,
   div.textarea-container.mute div.topcontrol {
+    display: none;
     top: .3em; }
   div.input-container.required label:after,
   div.textarea-container.required label:after {
@@ -802,7 +902,8 @@ div.textarea-container {
     div.textarea-container.warning input[type="password"]:focus,
     div.textarea-container.warning textarea:focus {
       border-color: var(--warning-color);
-      box-shadow: inset 0 -0.4em 0 0 var(--warning-color); }
+      box-shadow: inset 0 -0.4em 0 0 var(--warning-color);
+      background-color: var(--warning-color-translucent); }
   div.input-container.warning ul.messagebox,
   div.textarea-container.warning ul.messagebox {
     background-image: var(--warning-stripes);
@@ -834,7 +935,8 @@ div.textarea-container {
     div.textarea-container.error input[type="password"]:focus,
     div.textarea-container.error textarea:focus {
       border-color: var(--error-color);
-      box-shadow: inset 0.5em 0 0 var(--error-color); }
+      box-shadow: inset 0.5em 0 0 var(--error-color);
+      background-color: var(--error-color-translucent); }
   div.input-container.error ul.messagebox,
   div.textarea-container.error ul.messagebox {
     background-image: var(--error-stripes);
@@ -867,9 +969,12 @@ div.textarea-container {
     div.textarea-container.error.mute textarea:focus {
       border-color: var(--error-color);
       box-shadow: inset 0 -0.4em 0 0 var(--error-color); }
-  div.input-container.disabled label,
-  div.textarea-container.disabled label {
-    text-shadow: none; }
+  div.input-container.disabled,
+  div.textarea-container.disabled {
+    background-image: var(--grey-stripes); }
+    div.input-container.disabled label,
+    div.textarea-container.disabled label {
+      text-shadow: none; }
   div.input-container.active label,
   div.textarea-container.active label {
     color: var(--focus-color); }
@@ -937,7 +1042,7 @@ textarea {
   input[type="number"].mute,
   input[type="password"].mute,
   textarea.mute {
-    background-color: transparent;
+    background-color: var(--input-mute-background-color);
     border-top: none;
     border-left: none;
     border-right: none;
@@ -1215,6 +1320,9 @@ button {
     height: 2em;
     font-size: 120%;
     line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column; }
     button.square span.icon, button.circle span.icon {
       margin: 0; }
@@ -2328,9 +2436,8 @@ ul.tabbar {
       margin: 0; }
 
 :root {
-  --tabbar-background-color: var(--light);
-  --tabbar-box-shadow: none;
-  --dialog-window-mask-opacity: .25; }
+  --tabbar-background-color: var(--canvas-color-tertiary);
+  --tabbar-box-shadow: none; }
 
 body {
   background-color: var(--grey-darkest);
@@ -2354,12 +2461,17 @@ div#container {
     min-width: 200px; }
   div#container div.displaybox {
     flex-grow: 1;
-    background-color: var(--canvas-color-standard);
+    background-color: var(--canvas-color-primary);
     padding: 2em; }
+    div#container div.displaybox code.invoker {
+      display: block;
+      float: right;
+      padding: 1em;
+      margin: 0 0 .5em .5em; }
   div#container div#codebox {
     flex-grow: 0;
     padding: 3em 1em 0 1em;
-    background-color: var(--morelight);
+    background-color: var(--canvas-color-secondary);
     width: 25em;
     max-width: 25em;
     min-width: 25em;
@@ -2367,7 +2479,8 @@ div#container {
     div#container div#codebox div.config {
       padding: .5em;
       overflow: auto;
-      white-space: pre; }
+      white-space: pre;
+      font-family: "Courier New", Courier, monospace; }
       div#container div#codebox div.config span.key {
         color: var(--grey-darkest);
         font-weight: bold; }
@@ -2378,7 +2491,7 @@ div#container {
         color: var(--grey-medium); }
 
 .section {
-  margin: 1.5em 0 1.5em 0;
+  margin: 0 0 1em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
