@@ -1256,8 +1256,12 @@ button {
     margin: 0 .2em 0 0; }
     button span.icon:before {
       margin: 0; }
+    button span.icon.secondicon {
+      margin: 0 0 0 .2em; }
   button.righticon span.icon {
     margin: 0 0 0 .2em; }
+    button.righticon span.icon.secondicon {
+      margin: 0 .2em 0 0; }
   button:hover, button:focus, button:active {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
@@ -1454,7 +1458,7 @@ button {
       margin: 0;
       padding: 0;
       position: absolute;
-      left: 0;
+      right: 0;
       top: 2.5em;
       min-width: 120%;
       overflow: visible;
@@ -1480,7 +1484,7 @@ button {
         width: 0;
         height: 0;
         position: absolute;
-        left: .7em;
+        right: .7em;
         top: -.8em;
         border-width: 0 .7em .7em .7em;
         border-style: solid;

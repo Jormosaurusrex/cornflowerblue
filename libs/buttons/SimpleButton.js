@@ -18,6 +18,9 @@ class SimpleButton {
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a jQuery object
             iconside: 'left', // The side the icon displays on
+            secondicon : null, // if present, this icon will be placed on the opposite side of the
+                                // defined 'iconside'.  If this is the only icon defined, it will
+                                // still be placed.  This is ignored in shaped buttons.
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
@@ -64,14 +67,24 @@ class SimpleButton {
             this.button.addClass(this.shape);
         } else {
             this.button = $('<button />');
-            let $icon, $text;
+            let $icon, $secondicon;
             if (this.icon) {
                 $icon = IconFactory.makeIcon(this.icon);
             }
+            if (this.secondicon) {
+                $secondicon = IconFactory.makeIcon(this.secondicon).addClass('secondicon');
+            }
+
             if ((this.iconside) && (this.iconside === 'right')) {
-                this.button.addClass('righticon').append(this.textobj).append($icon);
+                this.button.addClass('righticon')
+                    .append($secondicon)
+                    .append(this.textobj)
+                    .append($icon);
+
             } else {
-                this.button.append($icon).append(this.textobj);
+                this.button.append($icon)
+                    .append(this.textobj)
+                    .append($secondicon);
             }
 
         }
@@ -216,6 +229,9 @@ class SimpleButton {
 
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
+
+    get secondicon() { return this.config.secondicon; }
+    set secondicon(secondicon) { this.config.secondicon = secondicon; }
 
     get shape() { return this.config.shape; }
     set shape(shape) { this.config.shape = shape; }
