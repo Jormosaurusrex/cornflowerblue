@@ -4,8 +4,8 @@ class SelectMenu extends RadioGroup {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The button id
-            name: null,
+            id : null, // The id
+            name: null, // The name attribute
             form: null, // A form element this is in
             label: null, // The text for the label.
             classes: [], // Extra css classes to apply
@@ -188,7 +188,8 @@ class SelectMenu extends RadioGroup {
         this.optionlist.find('input:radio').attr('disabled',true);
         this.triggerbox.prop('disabled', true);
         this.disabled = true;
-        if (this.triggerbox) { this.container.addClass('disabled'); }
+        if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
+        if (this.container) { this.container.addClass('disabled'); }
     }
 
     /**
@@ -199,6 +200,7 @@ class SelectMenu extends RadioGroup {
         this.triggerbox.removeAttr('disabled');
         this.disabled = false;
         if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
+        if (this.container) { this.container.removeClass('disabled'); }
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

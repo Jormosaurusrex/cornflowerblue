@@ -236,6 +236,8 @@
   --headers-h6-text-transform: none;
   --headers-h6-background-color: transparent;
   --headers-h6-border-color: var(--grey-medium);
+  --hr-background-color: transparent;
+  --hr-border-color: var(--grey-medium);
   --input-default-background-color: var(--grey-translucent);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
@@ -507,6 +509,14 @@ blockquote {
   text-shadow: var(--blockquote-text-shadow); }
   blockquote p {
     margin: .5em; }
+
+hr {
+  margin: 1em 2.5em 1em 2.5em;
+  background-color: var(--hr-background-color);
+  border-top: 0.2em double var(--hr-border-color);
+  border-bottom: none;
+  border-left: none;
+  border-right: none; }
 
 aside {
   display: block;
@@ -2392,7 +2402,7 @@ div.window-mask {
   opacity: var(--dialog-window-mask-opacity);
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;

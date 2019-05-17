@@ -162,6 +162,15 @@ blockquote {
   }
 }
 
+hr {
+  margin: 1em 2.5em 1em 2.5em;
+  background-color: var(--hr-background-color);
+  border-top: .2em double var(--hr-border-color);
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+
 aside {
   display: block;
   float: right;
