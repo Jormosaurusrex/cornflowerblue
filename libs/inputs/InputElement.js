@@ -62,6 +62,8 @@ class InputElement {
         this.touched = false; // set untouched on creation.
     }
 
+    get inputmode() { return "text"; }
+
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
@@ -280,6 +282,7 @@ class InputElement {
             .attr('id', this.id)
             .attr('name', this.name)
             .attr('title', this.title)
+            .attr('inputmode', this.inputmode)
             .attr('autocomplete', this.autocomplete)
             .attr('placeholder', this.calculatePlaceholder())
             .attr('aria-label', this.arialabel)
