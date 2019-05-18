@@ -5,7 +5,7 @@ class ButtonMenu extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             action: function(e, self) { self.toggleMenu(e, self); },
-            icon: 'triangle-down',
+            secondicon: 'triangle-down', // this is passed up as a secondicon
             items: [] // list of menuitems
             // {
             //    label: "Menu Text", // text
