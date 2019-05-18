@@ -1,19 +1,12 @@
 "use strict";
 
-class SelectMenu extends RadioGroup {
+class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            name: null, // The name attribute
-            form: null, // A form element this is in
-            label: null, // The text for the label.
-            classes: [], // Extra css classes to apply
-            disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
-            onchange: null, // The change handler. Passed (event, self).
-            validator: null // A function to run to test validity. Passed the self; returns true or false.
+            onchange: null // The change handler. Passed (event, self).
         };
     }
 
@@ -38,6 +31,33 @@ class SelectMenu extends RadioGroup {
     get naked() { return this.triggerbox; }
 
 
+    /**
+     * Toggle visibility of the menu.
+     */
+    toggle(e, self) {
+        e.preventDefault();
+
+        this.optionlist.toggleClass('open');
+
+        e.stopPropagation();
+
+        $(document).one('click', function closeMenu(e) {
+            if (self.optionlist.has(e.target).length === 0) {
+                self.optionlist.removeClass('open');
+            } else {
+                $(document).one('click', closeMenu);
+            }
+        });
+
+    }
+
+    open() {
+        this.optionlist.addClass('open');
+    }
+    close() {
+        this.optionlist.removeClass('open');
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -52,22 +72,11 @@ class SelectMenu extends RadioGroup {
             .addClass('select-container')
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
-            .append(this.triggerbox)
+            .append($('<div />').addClass('wrap').append(this.triggerbox))
             .append(this.optionlist)
             .append(this.messagebox);
 
-        if (this.required) { this.container.addClass('required'); }
-        if (this.mute) { this.container.addClass('mute'); }
-        if (this.hidden) {
-            this.container.css('display', 'none');
-            this.container.attr('aria-hidden', true);
-        }
-        if ((this.config.value) && (this.config.value.length > 0)) {
-            this.container.addClass('filled');
-        }
-        if (this.disabled) {
-            this.disable();
-        }
+        this.postContainerScrub();
     }
 
     /**
@@ -99,34 +108,19 @@ class SelectMenu extends RadioGroup {
         this.triggerbox = $('<div />')
             .addClass('trigger')
             .attr('tabindex', 0)
+            .focusin(function() {
+                me.optionlist.addClass('open');
+                me.optionlist.find('li:first-child').focus();
+            })
             .click(function(e) {
                 e.preventDefault();
                 if (me.disabled) {
                     e.stopPropagation();
                     return;
                 }
-                me.toggle(e, me);
+                //me.toggle(e, me);
+                me.open();
             });
-    }
-
-    /**
-     * Toggle visibility of the menu.
-     */
-    toggle(e, self) {
-        e.preventDefault();
-
-        this.optionlist.toggleClass('open');
-
-        e.stopPropagation();
-
-        $(document).one('click', function closeMenu(e) {
-            if (self.optionlist.has(e.target).length === 0) {
-                self.optionlist.removeClass('open');
-            } else {
-                $(document).one('click', closeMenu);
-            }
-        });
-
     }
 
     /**
@@ -139,14 +133,6 @@ class SelectMenu extends RadioGroup {
 
         const lId = this.id + '-' + Utils.getUniqueKey(5);
 
-        let $li = $('<li />')
-            .attr('tabindex', 0)
-            .click(function(e) {
-                me.optionlist.find('li').removeClass('selected');
-                $(this).addClass('selected');
-
-            });
-
         let $op = $('<input />')
             .data('self', this)
             .attr('id', lId)
@@ -157,8 +143,7 @@ class SelectMenu extends RadioGroup {
             .attr('aria-label', def.label)
             .change(function(e) {
                 me.triggerbox.html(def.label);
-                me.toggle(e, me);
-
+                me.close();
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }
@@ -168,6 +153,27 @@ class SelectMenu extends RadioGroup {
         let $opLabel = $('<label />')
             .attr('for', lId)
             .html(def.label);
+
+        let $li = $('<li />')
+            .attr('tabindex', 0)
+            .on('keydown', function(e) {
+                if (e.keyCode === 38) { // up arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).prev().focus();
+                } else if (e.keyCode === 40) { // down arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).next().focus();
+                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
+                    $op.trigger('click');
+                }
+            })
+            .click(function(e) {
+                me.optionlist.find('li').removeClass('selected');
+                $(this).addClass('selected');
+
+            });
 
         if (def.checked) {
             this.origval = def.value;
@@ -205,11 +211,14 @@ class SelectMenu extends RadioGroup {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get mute() { return this.config.mute; }
-    set mute(mute) { this.config.mute = mute; }
+    get optionlist() {
+        if (!this._optionlist) { this.buildOptions(); }
+        return this._optionlist;
+    }
+    set optionlist(optionlist) { this._optionlist = optionlist; }
 
-    get required() { return this.config.required; }
-    set required(required) { this.config.required = required; }
+    get options() { return this.config.options; }
+    set options(options) { this.config.options = options; }
 
     get triggerbox() {
         if (!this._triggerbox) { this.buildTriggerBox(); }

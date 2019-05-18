@@ -258,6 +258,7 @@ class InputElement {
         if ((this.config.value) && (this.config.value.length > 0)) {
             this.container.addClass('filled');
         }
+        this.validate();
     }
 
     /**

@@ -1156,7 +1156,7 @@ div.select-container {
     vertical-align: middle; }
     div.select-container div.trigger:before {
       position: absolute;
-      right: .5em;
+      right: 2.5em;
       top: .7em;
       margin: 0;
       font-family: "cornflowerblue", serif;
@@ -1218,10 +1218,10 @@ div.select-container {
         box-shadow: inset 0.5em 0 0 var(--input-focused-border-color); }
       div.select-container ul.selectmenu li:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color); }
-      div.select-container ul.selectmenu li:hover {
+      div.select-container ul.selectmenu li:hover, div.select-container ul.selectmenu li:focus {
         background-color: var(--selectmenu-menu-item-hover-background-color);
         color: var(--selectmenu-menu-item-hover-text-color); }
-        div.select-container ul.selectmenu li:hover label {
+        div.select-container ul.selectmenu li:hover label, div.select-container ul.selectmenu li:focus label {
           color: var(--selectmenu-menu-item-hover-text-color);
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
     div.select-container ul.selectmenu.vert {

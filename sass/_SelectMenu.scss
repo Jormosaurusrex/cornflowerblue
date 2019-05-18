@@ -41,7 +41,7 @@ div.select-container {
     vertical-align: middle;
     &:before {
       position: absolute;
-      right: .5em;
+      right: 2.5em;
       top: .7em;
       margin: 0;
       font-family: "cornflowerblue", serif;
@@ -115,7 +115,8 @@ div.select-container {
       &:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color);
       }
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: var(--selectmenu-menu-item-hover-background-color);
         color: var(--selectmenu-menu-item-hover-text-color);
         label {

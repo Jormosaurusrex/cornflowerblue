@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('headers');
+        this.switchTab('selects');
     }
 
 
@@ -914,8 +914,9 @@ class CornflowerBlueDemo {
             $('<div />').addClass('section').addClass('vert')
                 .append(
                     new SelectMenu({
-                        label: "Select Year",
+                        label: "Year",
                         name: "year",
+                        errors: ['Foo bar baz grahasdfasd'],
                         options: [
                             { label: "2019", checked: true, value: "2019" },
                             { label: "2018", value: "2018" },
