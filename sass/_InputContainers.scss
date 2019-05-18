@@ -4,6 +4,32 @@ div.textarea-container {
   position: relative;
   div.wrap {
     position: relative;
+    div.inputcontrol {
+      position: absolute;
+      right: 1em;
+      top: 0;
+      bottom: 0;
+      &.stepbuttons {
+        display: flex;
+        opacity: .25;
+        top: .2em;
+        bottom: .2em;
+        right: 3.5em;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        &:hover {
+          opacity: 1;
+        }
+        button {
+          span.icon {
+            margin: 0;
+          }
+        }
+      }
+    }
     &:after {
       position: absolute;
       right: 0;
@@ -205,6 +231,9 @@ div.textarea-container {
     div.wrap {
       &:after {
         display:none;
+      }
+      div.stepbuttons {
+        opacity: 1;
       }
     }
   }

@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('selects');
+        this.switchTab('inputs');
     }
 
 
@@ -213,8 +213,8 @@ class CornflowerBlueDemo {
         const $mute = $('#inputs-mute');
         const $password = $('#inputs-password');
         const $email = $('#inputs-email');
+        const $number = $('#inputs-number');
         const $disabled = $('#inputs-disabled');
-
         $standard.append(
             $('<div />').addClass('section').addClass('vert')
                 .append(
@@ -227,6 +227,20 @@ class CornflowerBlueDemo {
                         help: "Use your full name, in whatever manner befits your culture."
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        $number.append(
+            $('<div />').addClass('section').addClass('vert')
+                .append(
+                    new NumberInput({
+                        label: "Zip Code",
+                        maxlength: 5,
+                        minnumber: 0,
+                        maxnumber: 20,
+                        help: "We only want the first five digits."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+
                 )
         );
 

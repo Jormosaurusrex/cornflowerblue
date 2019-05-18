@@ -23,34 +23,9 @@ class PasswordInput extends TextInput {
         super(config);
     }
 
+    get topcontrol() { return this.visibilityswitcher; }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Builds and returns a container object for all parts.
-     * This gets over-ridden in elements that have additional structures, like a character counter
-     * @returns {jQuery} jQuery representation of the label and the input together.
-     */
-    buildContainer() {
-        this.container = $('<div />')
-            .data('self', this)
-            .addClass('input-container')
-            .addClass(this.classes.join(' '))
-            .append(this.labelobj)
-            .append($('<div />').addClass('wrap').append(this.input))
-            .append(this.visibilityswitcher)
-            .append(this.messagebox);
-        if (this.required) { this.container.addClass('required'); }
-        if (this.mute) { this.container.addClass('mute'); }
-        if (this.hidden) {
-            this.container.css('display', 'none');
-            this.container.attr('aria-hidden', true);
-        }
-        if ((this.config.value) && (this.config.value.length > 0)) {
-            this.container.addClass('filled');
-        }
-    }
-
-    /* CORE METHODS_____________________________________________________________________ */
 
     /**
      * Draws the visibility switcher.
@@ -88,8 +63,13 @@ class PasswordInput extends TextInput {
         }
     }
 
-    setVisibility(visible) {
+    /* CORE METHODS_____________________________________________________________________ */
 
+    /**
+     * Set the visibility of the user's password.
+     * @param visible if true, make the password visible.
+     */
+    setVisibility(visible) {
         if (visible) {
             this.mode = false;
             this.input.attr('type', 'text');

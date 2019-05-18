@@ -22,6 +22,7 @@
         <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
         <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
+        <script type="text/javascript" src="../libs/inputs/NumberInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
         <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
@@ -168,6 +169,12 @@
                         <code class="invoker">new EmailInput({options});</code>
 
                         <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: true</code>.</p>
+                    </div>
+                    <div class="demobox" id="inputs-number">
+                        <h4>Number</h4>
+                        <code class="invoker">new NumberInput({options});</code>
+                        <p>The input accepts non-numeric values but treats all of them as errors. It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
+                        <p>The input accepts non-numeric values but treats all of them as errors.
                     </div>
                     <div class="demobox" id="inputs-disabled">
                         <h4>Disabled</h4>

@@ -30,7 +30,7 @@ class BooleanToggle {
         }
 
         if (!this.id) { // need to generate an id for label stuff
-            this.id = "input-" + Utils.getUniqueKey();
+            this.id = "check-" + Utils.getUniqueKey();
         }
         if (!this.name) { this.name = this.id; }
         this.origval = this.checked;

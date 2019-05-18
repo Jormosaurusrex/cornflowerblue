@@ -9,12 +9,13 @@ class InputElement {
             form: null, // A form element this is in
             counter: null, // A value for a character counter. Null means 'no counter'
             // Possible values: null, 'remaining', 'limit', and 'sky'
-            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have aany)
+            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
             type: 'text', // Type of input, defaults to "text"
             label : null, // Input label. If null, does not show up.
             placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
                                // To insure a blank placeholder, set the value to ""
             title: null,
+            pattern: null,
             help: null, // Help text.
             helpwaittime: 5000, // How long to wait before automatically showing help tooltip
             required: false, // Is this a required field or not
@@ -27,7 +28,8 @@ class InputElement {
             classes: [], // Extra css classes to apply
             onreturn: null, // action to execute on hitting the return key. Passed (event, self).
             ontab: null, // action to execute on hitting the tab key. Passed (event, self).
-            keyup: null, // action to execute on key up. Passed (event, self).
+            onkeyup: null, // action to execute on key up. Passed (event, self).
+            onkeydown: null, // action to execute on key down. Passed (event, self).
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
             validator: null // A function to run to test validity. Passed the self.
@@ -62,22 +64,52 @@ class InputElement {
         this.touched = false; // set untouched on creation.
     }
 
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Return the input mode. This is used by mobile devices to select the correct keyboard.
+     * This is nearly always overridden.
+     * (Valid values are text, none, tel, url, email, numeric, decimal, search
+     * @return {string}
+     */
     get inputmode() { return "text"; }
+
+    /**
+     * Returns a topcontrol, if any.  This is usually a character counter, and is overridden.
+     * @return {null}, or the character counter.
+     */
+    get topcontrol() { return this.charactercounter; }
+
+
+    /**
+     * Return an extra input control, if any. This is things like stepper buttons for numbers.
+     * @return {null}, or the input control.
+     */
+    get inputcontrol() { return null; }
+
+    /**
+     * Returns the raw element, without any container
+     * @return {*} the element.
+     */
+    get naked() { return this.input; }
+
 
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
      * Runs validation.  Shows errors, if any. Returns true or false, depending.
+     * @param onload If true, this validation fires on the loading. This is important to
+     * know because some invalidations aren't actually errors until the form is submitted.
      * @return {boolean}
      */
-    validate() {
+    validate(onload) {
         this.errors = [];
         this.warnings = [];
-        if ((this.required) && ((!this.value) || (this.value.length === 0))) {
+        if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
             this.errors.push('This field is required.');
         }
         if ((this.localValidator) && (typeof this.localValidator === 'function')) {
-            this.localValidator();
+            this.localValidator(onload);
         }
         if ((this.validator) && (typeof this.validator === 'function')) {
             this.validator(this);
@@ -103,8 +135,10 @@ class InputElement {
 
     /**
      * Local datatype validator, intended for overriding
+     * @param onload If true, this validation fires on the loading. This is important to
+     * know because some invalidations aren't actually errors until the form is submitted.
      */
-    localValidator() { }
+    localValidator(onload) { }
 
     /**
      * Show messages and warnings
@@ -197,13 +231,6 @@ class InputElement {
         return null;
     }
 
-    /**
-     * Returns the raw element, without any container
-     * @return {*} the element.
-     */
-    get naked() { return this.input; }
-
-
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
@@ -237,8 +264,12 @@ class InputElement {
             .addClass('input-container')
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
-            .append($('<div />').addClass('wrap').append(this.input))
-            .append(this.charactercounter)
+            .append($('<div />')
+                .addClass('wrap')
+                .append(this.input)
+                .append(this.inputcontrol)
+            )
+            .append(this.topcontrol)
             .append(this.messagebox);
 
         this.postContainerScrub();
@@ -249,7 +280,10 @@ class InputElement {
      * Apply various things to the container and its children.
      */
     postContainerScrub() {
-        if (this.required) { this.container.addClass('required'); }
+        if (this.required) {
+            this.container.addClass('required');
+            this.input.attr('required', 'required');
+        }
         if (this.mute) { this.container.addClass('mute'); }
         if (this.disabled) { this.container.addClass('disabled'); }
 
@@ -260,7 +294,7 @@ class InputElement {
         if ((this.config.value) && (this.config.value.length > 0)) {
             this.container.addClass('filled');
         }
-        this.validate();
+        this.validate(true);
     }
 
     /**
@@ -290,19 +324,22 @@ class InputElement {
             .attr('aria-invalid', false)
             .attr('role', 'textbox')
             .attr('tabindex', 0) // always 0
+            .attr('pattern', this.pattern)
             .attr('maxlength', this.maxlength)
             .attr('hidden', this.hidden)
             .attr('aria-hidden', this.hidden)
             .attr('disabled', this.disabled)
             .addClass(this.classes.join(' '))
-            .on('keydown', function() {
+            .on('keydown', function(e) {
                 // Reset this to keep readers from constantly beeping. It will re-validate later.
                 me.input.attr('aria-invalid', false);
                 me.updateCounter();
                 me.touched = true; // set self as touched.
+                if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
+                    me.onkeydown(e, me);
+                }
             })
             .on('keyup', function(e) {
-
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
                     me.helpicon.closeTip();
@@ -313,6 +350,7 @@ class InputElement {
                 } else {
                     me.container.removeClass('filled');
                 }
+
                 if ((me.form) && (me.required) // If this is the only thing required, tell the form.
                     && (($(this).val().length === 0) || ($(this).val().length === 1))) { // Only these two lengths matter
                     if (me.form) { me.form.validate(); }
@@ -322,8 +360,8 @@ class InputElement {
                     e.preventDefault();
                     e.stopPropagation();
                     me.onreturn(e, me);
-                } else if ((me.keyup) && (typeof me.keyup === 'function')) {
-                    me.keyup(e, me);
+                } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
+                    me.onkeyup(e, me);
                 }
             })
             .focusin(function(e) {
@@ -541,6 +579,22 @@ class InputElement {
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
 
+    get onkeydown() { return this.config.onkeydown; }
+    set onkeydown(onkeydown) {
+        if (typeof onkeydown !== 'function') {
+            console.error("Action provided for onkeydown is not a function!");
+        }
+        this.config.onkeydown = onkeydown;
+    }
+
+    get onkeyup() { return this.config.onkeyup; }
+    set onkeyup(onkeyup) {
+        if (typeof onkeyup !== 'function') {
+            console.error("Action provided for onkeyup is not a function!");
+        }
+        this.config.onkeyup = onkeyup;
+    }
+
     get onreturn() { return this.config.onreturn; }
     set onreturn(onreturn) {
         if (typeof onreturn !== 'function') {
@@ -559,6 +613,9 @@ class InputElement {
 
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
+
+    get pattern() { return this.config.pattern; }
+    set pattern(pattern) { this.config.pattern = pattern; }
 
     get placeholder() { return this.config.placeholder; }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }

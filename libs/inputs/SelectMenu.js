@@ -30,34 +30,6 @@ class SelectMenu extends InputElement {
      */
     get naked() { return this.triggerbox; }
 
-
-    /**
-     * Toggle visibility of the menu.
-     */
-    toggle(e, self) {
-        e.preventDefault();
-
-        this.optionlist.toggleClass('open');
-
-        e.stopPropagation();
-
-        $(document).one('click', function closeMenu(e) {
-            if (self.optionlist.has(e.target).length === 0) {
-                self.optionlist.removeClass('open');
-            } else {
-                $(document).one('click', closeMenu);
-            }
-        });
-
-    }
-
-    open() {
-        this.optionlist.addClass('open');
-    }
-    close() {
-        this.optionlist.removeClass('open');
-    }
-
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -186,6 +158,40 @@ class SelectMenu extends InputElement {
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Toggle visibility of the menu.
+     */
+    toggle(e, self) {
+        e.preventDefault();
+
+        this.optionlist.toggleClass('open');
+
+        e.stopPropagation();
+
+        $(document).one('click', function closeMenu(e) {
+            if (self.optionlist.has(e.target).length === 0) {
+                self.optionlist.removeClass('open');
+            } else {
+                $(document).one('click', closeMenu);
+            }
+        });
+
+    }
+
+    /**
+     * Opens the option list.
+     */
+    open() {
+        this.optionlist.addClass('open');
+    }
+
+    /**
+     * Closes the option list.
+     */
+    close() {
+        this.optionlist.removeClass('open');
+    }
 
     /**
      * Enable the element
