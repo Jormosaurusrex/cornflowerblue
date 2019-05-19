@@ -48,7 +48,11 @@ class RadioGroup {
         if (this.hidden) { this.container.css('display', 'none'); }
     }
 
-
+    /**
+     * Builds an option
+     * @param def the definition of the option
+     * @return {void | * | jQuery}
+     */
     buildOption(def) {
         const me = this;
         const lId = this.id + '-' + Utils.getUniqueKey();
@@ -81,6 +85,9 @@ class RadioGroup {
         return $('<li />').append($op).append($opLabel);
     }
 
+    /**
+     * Build all the options.
+     */
     buildOptions() {
         this.optionlist = $('<ul />')
             .attr('role', 'radiogroup');

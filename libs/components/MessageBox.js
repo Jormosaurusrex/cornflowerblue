@@ -19,7 +19,6 @@ class MessageBox {
         };
     }
 
-
     /**
      * Define the element
      * @param config a dictionary object

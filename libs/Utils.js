@@ -82,7 +82,6 @@ class Utils {
                 }
             }
         }
-
         return dict;
     }
 
@@ -136,7 +135,6 @@ class Utils {
             } else if (typeof obj[k] === 'function') {
                 line = `    <span class="key">${k}</span> : function(e, self) { ... }`;
             } else if (Array.isArray(obj[k])) {
-                //line = `\t <span class="key">${k}</span> : [<span class="value">${obj[k]}</span>]`;
                 line = `    <span class="key">${k}</span> : [`;
                 if ((obj[k] !== null) && (obj[k].length > 0)) {
                     let elements = [];
@@ -150,7 +148,6 @@ class Utils {
                     line += elements.join(", ");
                 }
                 line += `]`;
-
             } else if (typeof obj[k] === 'string') {
                 line = `    <span class="key">${k}</span> : "<span class="value">${obj[k]}</span>"`;
             } else {

@@ -23,6 +23,8 @@ class PasswordInput extends TextInput {
         super(config);
     }
 
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
     get topcontrol() { return this.visibilityswitcher; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */

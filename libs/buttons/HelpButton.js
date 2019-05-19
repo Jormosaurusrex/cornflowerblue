@@ -47,6 +47,9 @@ class HelpButton extends SimpleButton {
 
     }
 
+    /**
+     * Opens the help tooltip
+     */
     openTip() {
 
         const me = this;
@@ -58,6 +61,9 @@ class HelpButton extends SimpleButton {
         },1);
     }
 
+    /**
+     * Closes the help tooltip.
+     */
     closeTip() {
         this.button.removeClass('open');
     }

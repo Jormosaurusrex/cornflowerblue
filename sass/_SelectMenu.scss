@@ -103,14 +103,35 @@ div.select-container {
         text-shadow: none;
         width: 100%;
         min-width: 100%;
+        &:after {
+          display: none;
+        }
       }
       input[type='radio']+label {
         &:focus {
-          box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+          //box-shadow: inset .5em 0 0 var(--input-focused-border-color);
         }
       }
       &.selected {
         box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+        label {
+          &:before {
+            font-family: "cornflowerblue", serif;
+            font-style: normal;
+            font-weight: normal;
+            speak: none;
+            text-decoration: inherit;
+            text-align: center;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1em;
+            content: '\34'; // right arrow
+            color: var(--input-focused-border-color);
+            text-shadow: var(--input-status-icon-text-shadow);
+            margin-right: .5em;
+            margin-left: -1em;
+          }
+        }
       }
       &:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color);
@@ -122,6 +143,13 @@ div.select-container {
         label {
           color: var(--selectmenu-menu-item-hover-text-color);
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
+        }
+        &.selected {
+          label {
+            &:before {
+              color: var(--selectmenu-menu-item-hover-text-color);
+            }
+          }
         }
       }
     }

@@ -74,13 +74,6 @@ p {
   width: var(--paragraph-measure);
   text-shadow: var(--paragraph-shadow);
   font-family: var(--paragraph-font-family);
-  &:first-letter2 {
-    font-size: 3.2rem;
-    line-height: .7;
-    float: left;
-    padding-right: 8px;
-    padding-top: 4px;
-  }
 }
 
 label {

@@ -25,7 +25,7 @@ class ProgressMeter {
 
         return this;
     }
-
+    
     /**
      * Calculates the current threshold tier.
      */

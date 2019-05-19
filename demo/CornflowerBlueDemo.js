@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('inputs');
+        this.switchTab('selects');
     }
 
 
@@ -234,7 +234,6 @@ class CornflowerBlueDemo {
                 .append(
                     new NumberInput({
                         label: "Zip Code",
-                        maxlength: 5,
                         minnumber: 0,
                         maxnumber: 20,
                         help: "We only want the first five digits."
@@ -930,7 +929,24 @@ class CornflowerBlueDemo {
                     new SelectMenu({
                         label: "Year",
                         name: "year",
-                        errors: ['Foo bar baz grahasdfasd'],
+                        required: true,
+                        options: [
+                            { label: "2019", value: "2019" },
+                            { label: "2018", value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" },
+                            { label: "2015", value: "2015" },
+                            { label: "2014", value: "2014" },
+                            { label: "2013", value: "2013" },
+                            { label: "2012", value: "2012" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SelectMenu({
+                        label: "Year",
+                        name: "year",
                         options: [
                             { label: "2019", checked: true, value: "2019" },
                             { label: "2018", value: "2018" },

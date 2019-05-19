@@ -6,9 +6,9 @@ class NumberInput extends TextInput {
         return {
             type: 'text',
             pattern:'[0-9.%+-]$',
-            minnumber: null,  // we save these out for use in the validator.
+            minnumber: null,
             maxnumber: null,
-            wholenumbers: false, // require whole numbers
+            wholenumbers: false, // Require whole numbers
             steppers: true,
             step: null
         };
@@ -20,20 +20,39 @@ class NumberInput extends TextInput {
      */
     constructor(config) {
         config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);
+
+        /*
+         * Number inputs have a startlingly complicated set of configuration
+         */
+        if (config.step) {
+            if (isNaN(config.step)) {
+                console.error(`step is defined as ${config.step} but is not a number. Deleting.`);
+                delete config.step;
+            } else if (Number(config.step) <= 0) {
+                console.error(`step cannot be a negative number. Deleting.`);
+                delete config.step;
+            } else {
+                config.step = Number(config.step);
+            }
+        }
         if (config.maxnumber) {
             if (isNaN(config.maxnumber)) {
-                console.error(`maxnumber is defined as ${config.maxnumber} but is not a number.`);
+                console.error(`maxnumber is defined as ${config.maxnumber} but is not a number. Deleting.`);
+                delete config.maxnumber;
             } else {
                 config.maxnumber = Number(config.maxnumber);
             }
         }
         if (config.minnumber) {
             if (isNaN(config.minnumber)) {
-                console.error(`minnumber is defined as ${config.minnumber} but is not a number.`);
+                console.error(`minnumber is defined as ${config.minnumber} but is not a number. Deleting.`);
+                delete config.maxnumber;
             } else {
                 config.minnumber = Number(config.minnumber);
             }
         }
+
+        // Have to take over any keydowns in order to overload the arrow keys.
         if (config.onkeydown) {
             config.origkeydown = config.onkeydown;
         }
@@ -81,13 +100,16 @@ class NumberInput extends TextInput {
         if (this.value) {
             if (isNaN(this.value)) {
                 this.errors.push("This is not a number.");
-            } else if ((this.minnumber) && (this.value < this.minnumber)) {
+                return;
+            }
+            let v = Number(this.value);
+            if ((this.minnumber !== 'undefined') && (v < this.minnumber)) {
                 this.errors.push(`The minimum value for this field is '${this.minnumber}'.`);
-            } else if ((this.maxnumber) && (this.value > this.maxnumber)) {
+            } else if ((this.maxnumber !== 'undefined') && (v > this.maxnumber)) {
                 this.errors.push(`The maximum value for this field is '${this.maxnumber}'.`);
-            } else if ((this.step) && (this.value % this.step !== 0)) {
+            } else if ((this.step) && (v % this.step !== 0)) {
                 this.errors.push(`Values must be divisible by ${this.step}.`);
-            } else if ((this.wholenumbers) && (Number(this.value) % 1 > 0)) {
+            } else if ((this.wholenumbers) && (v % 1 > 0)) {
                 this.errors.push("Values must be whole numbers.");
             }
         }
@@ -101,11 +123,11 @@ class NumberInput extends TextInput {
     calculatePlaceholder() {
         if (this.placeholder) { return this.placeholder; }
         let text = "Enter a number";
-        if ((this.minnumber) && (this.maxnumber)) {
+        if ((this.minnumber !== 'undefined') && (this.maxnumber !== 'undefined')) {
             text = `Enter a number between ${this.minnumber} and ${this.maxnumber}`;
-        } else if (this.minnumber) {
+        } else if (this.minnumber !== 'undefined') {
             text = `Enter a number larger than ${this.minnumber}`;
-        } else if (this.maxnumber) {
+        } else if (this.maxnumber !== 'undefined') {
             text = `Enter a number smaller than ${this.maxnumber}`;
         }
         if (this.step) {
@@ -116,7 +138,7 @@ class NumberInput extends TextInput {
     }
 
     /**
-     * Increment the numbrer
+     * Increment the number
      * @param step the amount to increment by.
      */
     increment(step) {
@@ -127,7 +149,7 @@ class NumberInput extends TextInput {
         if (!val) { val = 0; }
         if (!isNaN(val)) {
             val += step;
-            if ((this.maxnumber) && (val > this.maxnumber)) {
+            if ((this.maxnumber !== 'undefined') && (val > this.maxnumber)) {
                 val = this.maxnumber;
             }
             this.value = val;
@@ -146,7 +168,7 @@ class NumberInput extends TextInput {
         if (!val) { val = 0; }
         if (!isNaN(val)) {
             val -= step;
-            if ((this.minnumber) && (val < this.minnumber)) {
+            if ((this.minnumber !== 'undefined') && (val < this.minnumber)) {
                 val = this.minnumber;
             }
             this.value = val;
@@ -168,7 +190,6 @@ class NumberInput extends TextInput {
                     e.preventDefault();
                     e.stopPropagation();
                     me.increment(me.step);
-                    console.log("foo");
                 }
             });
             this.downbtn = new SimpleButton({

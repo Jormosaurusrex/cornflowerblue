@@ -4,6 +4,7 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
+            unselectedtext: "(Select)",
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
             onchange: null // The change handler. Passed (event, self).
@@ -23,12 +24,6 @@ class SelectMenu extends InputElement {
         super(config);
 
     }
-
-    /**
-     * Returns the raw element, without any container
-     * @return {*} the element.
-     */
-    get naked() { return this.triggerbox; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
@@ -62,13 +57,24 @@ class SelectMenu extends InputElement {
             .attr('tabindex', 0)
             .attr('role', 'radiogroup');
 
+        let foundcheck = false;
         for (let opt of this.options) {
             let $o = this.buildOption(opt);
             if (opt.checked) {
-                this.origval = opt.value;
-                this.triggerbox.html(opt.label);
+                foundcheck = true;
             }
             this.optionlist.append($o);
+        }
+
+        if (this.unselectedtext) {
+            let unselconfig = {
+                label: this.unselectedtext,
+                value: null,
+                checked: !foundcheck,
+                unselectoption: true
+            };
+            let $o = this.buildOption(unselconfig);
+            this.optionlist.prepend($o);
         }
     }
 
@@ -90,7 +96,6 @@ class SelectMenu extends InputElement {
                     e.stopPropagation();
                     return;
                 }
-                //me.toggle(e, me);
                 me.open();
             });
     }
@@ -149,6 +154,7 @@ class SelectMenu extends InputElement {
 
         if (def.checked) {
             this.origval = def.value;
+            this.triggerbox.html(def.label);
             $li.addClass('selected');
             $op.attr('aria-checked', 'checked')
                 .attr('checked', 'checked')
@@ -164,14 +170,13 @@ class SelectMenu extends InputElement {
      */
     toggle(e, self) {
         e.preventDefault();
+        e.stopPropagation();
 
         this.optionlist.toggleClass('open');
 
-        e.stopPropagation();
-
         $(document).one('click', function closeMenu(e) {
-            if (self.optionlist.has(e.target).length === 0) {
-                self.optionlist.removeClass('open');
+            if (self.container.has(e.target).length === 0) {
+                self.close();
             } else {
                 $(document).one('click', closeMenu);
             }
@@ -184,6 +189,14 @@ class SelectMenu extends InputElement {
      */
     open() {
         this.optionlist.addClass('open');
+        const me = this;
+        $(document).one('click', function closeMenu(e) {
+            if (me.container.has(e.target).length === 0) {
+                me.close();
+            } else {
+                $(document).one('click', closeMenu);
+            }
+        });
     }
 
     /**
@@ -231,6 +244,9 @@ class SelectMenu extends InputElement {
         return this._triggerbox;
     }
     set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
+
+    get unselectedtext() { return this.config.unselectedtext; }
+    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
 
 }
 

@@ -27,7 +27,6 @@ class TabBar {
         return this;
     }
 
-
     /**
      * Builds the DOM.
      * @returns {jQuery} jQuery representation
@@ -71,6 +70,10 @@ class TabBar {
         }
     }
 
+    /**
+     * Marks a specific tab as selected
+     * @param tab the tab to select
+     */
     select(tab) {
         if (typeof tab === 'string') {
             tab = this.container.find(`[data-tabid='${tab}']`);

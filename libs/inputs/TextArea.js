@@ -15,6 +15,8 @@ class TextArea extends InputElement {
         super(config);
     }
 
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
     buildContainer() {
         this.container = $('<div />')
             .addClass('textarea-container')

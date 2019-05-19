@@ -28,6 +28,8 @@ class EmailInput extends TextInput {
         super(config);
     }
 
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
     get inputmode() { return "email"; }
 
     /* CORE METHODS_____________________________________________________________________ */

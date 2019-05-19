@@ -439,12 +439,6 @@ p {
   width: var(--paragraph-measure);
   text-shadow: var(--paragraph-shadow);
   font-family: var(--paragraph-font-family); }
-  p:first-letter2 {
-    font-size: 3.2rem;
-    line-height: .7;
-    float: left;
-    padding-right: 8px;
-    padding-top: 4px; }
 
 label {
   display: block;
@@ -1239,10 +1233,25 @@ div.select-container {
         text-shadow: none;
         width: 100%;
         min-width: 100%; }
-      div.select-container ul.selectmenu li input[type='radio'] + label:focus {
-        box-shadow: inset 0.5em 0 0 var(--input-focused-border-color); }
+        div.select-container ul.selectmenu li label:after {
+          display: none; }
       div.select-container ul.selectmenu li.selected {
         box-shadow: inset 0.5em 0 0 var(--input-focused-border-color); }
+        div.select-container ul.selectmenu li.selected label:before {
+          font-family: "cornflowerblue", serif;
+          font-style: normal;
+          font-weight: normal;
+          speak: none;
+          text-decoration: inherit;
+          text-align: center;
+          font-variant: normal;
+          text-transform: none;
+          line-height: 1em;
+          content: '\34';
+          color: var(--input-focused-border-color);
+          text-shadow: var(--input-status-icon-text-shadow);
+          margin-right: .5em;
+          margin-left: -1em; }
       div.select-container ul.selectmenu li:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color); }
       div.select-container ul.selectmenu li:hover, div.select-container ul.selectmenu li:focus {
@@ -1251,6 +1260,8 @@ div.select-container {
         div.select-container ul.selectmenu li:hover label, div.select-container ul.selectmenu li:focus label {
           color: var(--selectmenu-menu-item-hover-text-color);
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
+        div.select-container ul.selectmenu li:hover.selected label:before, div.select-container ul.selectmenu li:focus.selected label:before {
+          color: var(--selectmenu-menu-item-hover-text-color); }
     div.select-container ul.selectmenu.vert {
       bottom: 3.1em;
       box-shadow: var(--panel-shadow-light-inverse); }
