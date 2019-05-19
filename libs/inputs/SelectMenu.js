@@ -25,6 +25,25 @@ class SelectMenu extends InputElement {
 
     }
 
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Return the selected radio input.
+     * @return {jQuery|HTMLElement}
+     */
+    get selected() {
+        return $(`input[name=${this.name}]:checked`);
+    }
+
+    /**
+     * Gets the value of the selected element.
+     * @return {null|*}
+     */
+    get value() {
+        if (this.selected) { return this.selected.val(); }
+        return null;
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -69,7 +88,7 @@ class SelectMenu extends InputElement {
         if (this.unselectedtext) {
             let unselconfig = {
                 label: this.unselectedtext,
-                value: null,
+                value: '',
                 checked: !foundcheck,
                 unselectoption: true
             };
@@ -121,6 +140,11 @@ class SelectMenu extends InputElement {
             .change(function(e) {
                 me.triggerbox.html(def.label);
                 me.close();
+
+                me.validate();
+
+                if (me.form) { me.form.validate(); }
+
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }

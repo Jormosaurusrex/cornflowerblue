@@ -80,7 +80,6 @@ class InputElement {
      */
     get topcontrol() { return this.charactercounter; }
 
-
     /**
      * Return an extra input control, if any. This is things like stepper buttons for numbers.
      * @return {null}, or the input control.

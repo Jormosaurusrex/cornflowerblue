@@ -43,11 +43,11 @@
             <div class="displaybox">
 
                 <div class="tabcontent" id="t-intro">
-                    <h2 class="titlebox">Intro</h2>
+                    <h1>Intro</h1>
                 </div>
 
                 <div class="tabcontent" id="t-headers">
-                    <h2 class="titlebox">Headers</h2>
+                    <h1>Headers</h1>
                     <div class="demobox" id="headers-all">
                         <h1>H1 Standard</h1>
                         <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target="_new" href="http://www.does.not.exist">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
@@ -82,150 +82,150 @@
                         <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
                         <h5>H5 Standard</h5>
                         <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
-                    </div>                        
+                    </div>
                 </div>
 
                 <div class="tabcontent" id="t-messageboxes">
-                    <h2 class="titlebox">Message Boxes</h2>
+                    <h1>Message Boxes</h1>
                     <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
                     <div class="demobox" id="boxes-instructions">
-                        <h4>Standard</h4>
+                        <h3>Standard</h3>
                         <code class="invoker">new InstructionBox({options});</code>
                         <p>An InstructionBox is used to display instructions or other information to a user that may be useful or required for filling out a form.  A <code>SimpleForm</code> will take instructions as a parameter, so they don't often need to be inserted manually.</p>
                     </div>
                     <div class="demobox" id="boxes-responses">
-                        <h4>Form Response</h4>
+                        <h3>Form Response</h3>
                         <p>When submitted, forms can succeed or fail. In doing so, they can return messages (results, errors, and warnings).  Warnings alone do not prevent a form's success. These messages are returned and displayed automagically when using a <code>SimpleForm</code>, so these shouldn't be invoked alone.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-buttons">
-                    <h2 class="titlebox">Buttons</h2>
+                    <h1>Buttons</h1>
                     <code class="invoker">new SimpleButton({options});</code>
 
                     <p>The basic button class is <code>SimpleButton</code>. They can be set for <code>mute</code> and <code>hot</code> in construction; this will change the button's default state. Any button can be made hot. </p>
                     <p>Buttons can take an <code>icon</code> parameter. Icons can be placed on either side with <code>iconside</code> (default is left).</p>
                     <p>Buttons can also be invoked with <code>ConstructiveButton()</code> (used for actions that move the user forward, such as save events) and <code>DestructiveButton()</code>, which is used for destructive actions, such as "cancel".</p>
                     <div class="demobox" id="buttons-normal">
-                        <h4>Normal</h4>
+                        <h3>Normal</h3>
                         <p>Normal buttons have borders and a transparent background in the resting state.</p>
                     </div>
                     <div class="demobox" id="buttons-mute">
-                        <h4>Mute</h4>
+                        <h3>Mute</h3>
                         <p>Mute buttons don't have borders in the resting state.</p>
                     </div>
                     <div class="demobox" id="buttons-hot">
-                        <h4>Hot</h4>
+                        <h3>Hot</h3>
                         <p>Hot buttons are dramatic. The <code>heat()</code> method will turn on hot phase, and <code>cool()</code> will turn that off.</p>
                     </div>
                     <div class="demobox" id="buttons-shaped-square">
-                        <h4>Shaped: Square</h4>
+                        <h3>Shaped: Square</h3>
                         <p>Square shaped buttons only have icons.  They can also be hot or mute.</p>
                     </div>
                     <div class="demobox" id="buttons-shaped-circle">
-                        <h4>Shaped: Circle</h4>
+                        <h3>Shaped: Circle</h3>
                         <p>Circle shaped buttons only have icons.  They can also be hot or mute.</p>
                     </div>
                     <div class="demobox" id="buttons-shaped-hex">
-                        <h4>Shaped: Hexagon</h4>
+                        <h3>Shaped: Hexagon</h3>
                         <p>Hexagon buttons only have icons. Due to the way hexagon buttons are constructed, they cannot be <code>mute</code> and do not have borders. These are not recommended for use day-to-day use.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-textareas">
-                    <h2 class="titlebox">Text Areas</h2>
+                    <h1>Text Areas</h1>
                     <code class="invoker">new TextArea({options});</code>
                     <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
                     <div class="demobox" id="textareas-standard">
-                        <h4>Standard</h4>
+                        <h3>Standard</h3>
                         <p>The standard TextArea is configured with <code>counter: sky</code>.</p>
                     </div>
                     <div class="demobox" id="textareas-mute">
-                        <h4>Mute</h4>
+                        <h3>Mute</h3>
                         <p>TextAreas can be made <code>mute</code>, though the displayed border changes.</p>
                     </div>
                     <div class="demobox" id="textareas-disabled">
-                        <h4>Disabled</h4>
+                        <h3>Disabled</h3>
                         <p>Disabled TextArea elements behave like disable TextInputs in nearly all respects.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-inputs">
-                    <h2 class="titlebox">Inputs</h2>
+                    <h1>Inputs</h1>
                     <code class="invoker">new TextInput({options});</code>
                     <p>A <dfn>Text Input</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a TextArea element). TextInputs extend InputElement.</p>
                     <div class="demobox" id="inputs-standard">
-                        <h4>Standard</h4>
+                        <h3>Standard</h3>
                         <p>TextInputs all inherit many behaviors straight out of the box, not the least of which are data validators. They can be essential with <code>required: true</code> and support three kinds of character <code>counter</code>: sky, remaining, limit.</p>
                     </div>
                     <div class="demobox" id="inputs-mute">
-                        <h4>Mute</h4>
+                        <h3>Mute</h3>
                         <p>Setting an input to with <code>mute: true</code> will change its display. The label changes position and top controls disappear (such as character counters) disappear until the element obtains focus.</p>
                     </div>
                     <div class="demobox" id="inputs-password">
-                        <h4>Password</h4>
+                        <h3>Password</h3>
                         <code class="invoker">new PasswordInput({options});</code>
                         <p>The password visibility switch won't appear on mute versions of this input until it has focus.</p>
                     </div>
                     <div class="demobox" id="inputs-email">
-                        <h4>Email</h4>
+                        <h3>Email</h3>
                         <code class="invoker">new EmailInput({options});</code>
 
                         <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
                     </div>
                     <div class="demobox" id="inputs-number">
-                        <h4>Number</h4>
+                        <h3>Number</h3>
                         <code class="invoker">new NumberInput({options});</code>
                         <p>The input accepts non-numeric values but treats all of them as errors. It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
                         <p>The input accepts non-numeric values but treats all of them as errors.
                     </div>
                     <div class="demobox" id="inputs-disabled">
-                        <h4>Disabled</h4>
+                        <h3>Disabled</h3>
                         <p>An entire element can be set to be disabled with <code>disabled: true</code>.</p>
                     </div>
                     <div class="demobox" id="inputs-hidden">
-                        <h4>Hidden</h4>
+                        <h3>Hidden</h3>
                         <code class="invoker">new HiddenInput({options});</code>
                         <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-selects">
-                    <h2 class="titlebox">Selects</h2>
+                    <h1>Selects</h1>
                     <div class="demobox" id="inputs-selects">
-                        <h4>Standard</h4>
+                        <h3>Standard</h3>
                     </div>
                     <div class="demobox" id="inputs-radiogroups">
-                        <h4>Radio Groups</h4>
+                        <h3>Radio Groups</h3>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-toggles">
-                    <h2 class="titlebox">Checkboxes and Toggles</h2>
+                    <h1>Checkboxes and Toggles</h1>
                     <code class="invoker">new BooleanToggle({options});</code>
 
                     <p>A <dfn>BooleanToggle</dfn> is a switch that can be in one of two states (checked/unchecked, on/off, true/false). It is an implementation of <code>&lt;input type='checkbox' /&gt;</code>.</p>
                     <p>BooleanToggles can take several display styles.  Some are better suited for specific purposes than others.  For instance, if the <em>state</em> of the value it controls is important, a toggle style might be a better choice than a simple checkbox.</p>
                     <div class="demobox" id="inputs-checkboxes">
-                        <h4>Default</h4>
+                        <h3>Default</h3>
                         <p>Labels can be on either side. The default is right-sided, because the affordances end up in line.</p>
                     </div>
 
                     <div class="demobox" id="inputs-checkboxes-styled">
-                        <h4>Styled</h4>
+                        <h3>Styled</h3>
                         <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-forms">
-                    <h2 class="titlebox">Forms</h2>
+                    <h1>Forms</h1>
                     <div class="demobox" id="forms-standard">
-                        <h4>Standard</h4>
+                        <h3>Standard</h3>
                     </div>
                 </div>
 
                 <div class="tabcontent" id="t-dialogs">
-                    <h2 class="titlebox">Dialogs</h2>
+                    <h1>Dialogs</h1>
                     <div class="demobox" id="inputs-dialogs">
-                        <h4>Standard</h4>
+                        <h3>Standard</h3>
                     </div>
                 </div>
                 <div class="tabcontent" id="t-growlers">
-                    <h2 class="titlebox">Growlers</h2>
+                    <h1>Growlers</h1>
 
                     <code class="invoker">new Growler({options});</code>
 
@@ -233,10 +233,10 @@
                     <p>They can be targeted to open in any one of six positions. They can be configured to show title or text payload individually.  Supplied icons will be included in the title if no payload is provided.</p>
                     <p>It is possible to set them to require manual dismissal by setting the <code>duration</code> to 0 or -1.</p>
                     <div class="demobox" id="growlers-positions">
-                        <h4>Positions</h4>
+                        <h3>Positions</h3>
                     </div>
                     <div class="demobox" id="growlers-special">
-                        <h4>Special Types</h4>
+                        <h3>Special Types</h3>
                         <p>Growlers can be invoked with shorthand static methods. These growlers are lightweight and pre-configured.</p>
                         <code class="block">
                             Growler.growl('This is a growl message!', 'Growler.growl');

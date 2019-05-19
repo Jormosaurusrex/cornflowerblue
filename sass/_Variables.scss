@@ -67,6 +67,7 @@
 
   // Shadows
   --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+  --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
   --on-white-text-shadow: 0 .07em .07em rgba(50,50,50,0.3);
   --text-shadow-heavy: 0 .07em .07em rgba(0,0,0,0.5);
   --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
@@ -257,11 +258,11 @@
   --growler-header-background-color: var(--growler-core-color);
 
   // Headers
-  --headers-h1-text-color: var(--grey-darkest);
+  --headers-h1-text-color: var(--grey-dark);
   --headers-h1-text-shadow: none;
-  --headers-h1-text-transform: none;
+  --headers-h1-text-transform: uppercase;
   --headers-h1-background-color: transparent;
-  --headers-h1-border-color: var(--grey-darkest);
+  --headers-h1-border-color: var(--grey-medium);
 
   --headers-h2-text-color: var(--grey-darker);
   --headers-h2-text-shadow: none;

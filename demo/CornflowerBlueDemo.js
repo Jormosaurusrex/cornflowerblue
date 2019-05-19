@@ -83,7 +83,7 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('selects');
+        this.switchTab('inputs');
     }
 
 
