@@ -426,14 +426,16 @@ h2 {
   font-size: 1.5em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
-  color: var(--headers-h2-text-color); }
+  color: var(--headers-h2-text-color);
+  text-shadow: var(--headers-h2-text-shadow); }
 
 h3 {
   font-weight: normal;
   font-size: 1.2em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h3-text-transform);
-  color: var(--headers-h3-text-color); }
+  color: var(--headers-h3-text-color);
+  text-shadow: var(--headers-h3-text-shadow); }
 
 h4 {
   font-weight: normal;
@@ -456,6 +458,34 @@ h6 {
   text-transform: var(--headers-h6-text-transform);
   color: var(--headers-h6-text-color); }
 
+h1.fancy,
+h2.fancy,
+h3.fancy,
+h4.fancy {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center; }
+  h1.fancy:before, h1.fancy:after,
+  h2.fancy:before,
+  h2.fancy:after,
+  h3.fancy:before,
+  h3.fancy:after,
+  h4.fancy:before,
+  h4.fancy:after {
+    content: '';
+    height: .2em;
+    border-top: .05em solid;
+    border-bottom: .05em solid;
+    flex: 1 0 2em;
+    margin: 0 0 0 .5em; }
+  h1.fancy:before,
+  h2.fancy:before,
+  h3.fancy:before,
+  h4.fancy:before {
+    margin: 0 .5em 0 0; }
+
 p {
   margin: 1em 0 1em 0;
   line-height: 1.4;
@@ -463,6 +493,20 @@ p {
   width: var(--paragraph-measure);
   text-shadow: var(--paragraph-shadow);
   font-family: var(--paragraph-font-family); }
+
+a {
+  color: var(--link-color);
+  text-shadow: var(--link-text-shadow); }
+  a:link {
+    text-decoration: underline; }
+  a:hover {
+    filter: brightness(120%);
+    text-decoration: underline double; }
+  a:active {
+    filter: brightness(120%); }
+  a:visited {
+    filter: brightness(80%);
+    text-decoration: none; }
 
 label {
   display: block;
@@ -483,26 +527,8 @@ label {
       color: var(--label-color);
       text-shadow: var(--label-text-shadow); }
 
-a {
-  color: var(--link-color);
-  text-shadow: var(--link-text-shadow); }
-  a:link {
-    text-decoration: underline; }
-  a:hover {
-    filter: brightness(120%);
-    text-decoration: underline double; }
-  a:active {
-    filter: brightness(120%); }
-  a:visited {
-    filter: brightness(80%);
-    text-decoration: none; }
-
-dfn {
-  font-style: oblique; }
-
-cite {
-  font-style: oblique; }
-
+dfn,
+cite,
 em {
   font-style: oblique; }
 
@@ -510,7 +536,7 @@ strong {
   font-weight: bold; }
 
 pre {
-  font-family: "Courier New", Courier, monospace; }
+  font-family: var(--fontstack-monospace); }
 
 blockquote {
   display: block;
@@ -2541,7 +2567,7 @@ body {
   background-color: var(--grey-darkest);
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
-  background-image: url("../image/dark_parchment.png"); }
+  background-image: url("../image/med_blue_parchment.png"); }
 
 div#container {
   margin-left: auto;

@@ -26,7 +26,6 @@ body {
   }
 }
 
-
 // Headers
 h1 {
   font-size: 3.5em;
@@ -63,6 +62,7 @@ h2 {
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
+  text-shadow: var(--headers-h2-text-shadow);
 }
 
 h3 {
@@ -71,8 +71,8 @@ h3 {
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h3-text-transform);
   color: var(--headers-h3-text-color);
+  text-shadow: var(--headers-h3-text-shadow);
 }
-
 h4 {
   font-weight: normal;
   font-size: 1em;
@@ -88,7 +88,6 @@ h5 {
   text-transform: var(--headers-h5-text-transform);
   color: var(--headers-h5-text-color);
 }
-
 h6 {
   font-weight: normal;
   font-size: 1em;
@@ -96,7 +95,32 @@ h6 {
   text-transform: var(--headers-h6-text-transform);
   color: var(--headers-h6-text-color);
 }
+h1,
+h2,
+h3,
+h4 {
+  &.fancy {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    &:before,
+    &:after {
+      content: '';
+      height: .2em;
+      border-top: .05em solid;
+      border-bottom: .05em solid;
+      flex: 1 0 2em;
+      margin: 0 0 0 .5em;
+    }
+    &:before {
+      margin: 0 .5em 0 0;
+    }
+  }
+}
 
+// Text Elements
 p {
   margin: 1em 0 1em 0;
   line-height: 1.4;
@@ -104,6 +128,25 @@ p {
   width: var(--paragraph-measure);
   text-shadow: var(--paragraph-shadow);
   font-family: var(--paragraph-font-family);
+}
+
+a {
+  color: var(--link-color);
+  text-shadow: var(--link-text-shadow);
+  &:link {
+    text-decoration: underline;
+  }
+  &:hover {
+    filter: brightness(120%);
+    text-decoration: underline double;
+  }
+  &:active {
+    filter: brightness(120%);
+  }
+  &:visited {
+    filter: brightness(80%);
+    text-decoration: none;
+  }
 }
 
 label {
@@ -129,42 +172,17 @@ label {
     }
   }
 }
-a {
-  color: var(--link-color);
-  text-shadow: var(--link-text-shadow);
-  &:link {
-    text-decoration: underline;
-  }
-  &:hover {
-    filter: brightness(120%);
-    text-decoration: underline double;
-  }
-  &:active {
-    filter: brightness(120%);
-  }
-  &:visited {
-    filter: brightness(80%);
-    text-decoration: none;
-  }
-}
 
-
-dfn {
-  font-style: oblique;
-}
-
-cite {
-  font-style: oblique;
-}
+dfn,
+cite,
 em {
   font-style: oblique;
 }
 strong {
   font-weight: bold;
 }
-
 pre {
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--fontstack-monospace);
 }
 
 blockquote {
