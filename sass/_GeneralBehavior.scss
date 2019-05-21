@@ -149,6 +149,11 @@ a {
   }
 }
 
+ul,
+ol {
+  margin-left: 1em;
+}
+
 label {
   display: block;
   font-weight: normal;
@@ -183,6 +188,15 @@ strong {
 }
 pre {
   font-family: var(--fontstack-monospace);
+}
+
+sup {
+  vertical-align: super;
+  font-size: 80%;
+  line-height: 1;
+  color: var(--sup-text-color);
+  text-shadow: var(--sup-text-shadow);
+  background-color: transparent;
 }
 
 blockquote {
@@ -225,6 +239,25 @@ aside {
   text-shadow: var(--aside-text-shadow);
   p {
     margin: .5em;
+  }
+}
+
+
+figure {
+  background-color: var(--figure-background-color);
+  color: var(--figure-text-color);
+  text-shadow: var(--figure-text-shadow);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  float: right;
+  padding: 1em;
+  margin: 0 0 1em 1em;
+  img {
+    margin: 0;
+  }
+  figcaption {
+    margin-top: 1em;
   }
 }
 

@@ -281,12 +281,46 @@ button {
         white-space: normal;
         line-height: 1.2;
         text-align: left;
+        a {
+          color: var(--hot-text-color);
+        }
+        button.closebutton {
+          opacity: 0.5;
+          box-shadow: none;
+          display: none;
+          color: var(--hot-text-color);
+          &:hover,
+          &:focus,
+          &:active {
+            color: var(--hot-text-color);
+          }
+          span {
+            &:before{
+              margin: 0;
+            }
+          }
+          &:hover {
+            opacity: 1;
+            background: none;
+          }
+        }
+      }
+      button.closebutton {
+        display: none;
       }
     }
-    &.open {
+    &.open,
+    &.stayopen {
       div.tooltip {
         display: flex;
         animation: fadein-delay-half .2s;
+      }
+    }
+    &.stayopen {
+      div.tooltip {
+        button.closebutton {
+          display: inline-block;
+        }
       }
     }
   }
@@ -423,6 +457,22 @@ button {
     &:disabled:hover {
       background-color: var(--button-disabled-color);
       box-shadow: var(--hexagon-shadow-disabled);
+    }
+  }
+  &.aslink {
+    color: var(--link-color);
+    text-shadow: var(--link-text-shadow);
+    text-decoration: underline;
+    &:hover {
+      filter: brightness(120%);
+      text-decoration: underline double;
+    }
+    &:active {
+      filter: brightness(120%);
+    }
+    &:visited {
+      filter: brightness(80%);
+      text-decoration: none;
     }
   }
 }

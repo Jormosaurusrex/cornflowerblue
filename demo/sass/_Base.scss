@@ -15,7 +15,7 @@ div#container {
   margin-right: auto;
   min-width: 50%;
   max-width: 75%;
-  min-height: 100%; // only set min-height
+  min-height: 100vh; // only set min-height
   background-color: var(--grey-dark);
   display: flex;
   flex-direction: row;
@@ -70,7 +70,7 @@ div#container {
   }
 }
 
-.section {
+div.example {
   margin: 0 0 1em 0;
   display: flex;
   flex-direction: row;
@@ -92,6 +92,18 @@ div#container {
     }
   }
 }
+
+div.wiki {
+
+  span.colorswatch {
+    border: 1px dotted #222;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    margin-bottom: -.1em;
+  }
+}
+
 
 body.modalopen {
   div.container {

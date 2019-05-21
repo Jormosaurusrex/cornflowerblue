@@ -83,12 +83,12 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('inputs');
+        this.switchTab('example');
     }
 
 
     switchTab(tab) {
-        $('.tabcontent').css('display', 'none');
+        $('section').css('display', 'none');
         $(`#t-${tab}`).css('display', 'block');
         this.navigation.select(tab);
     }
@@ -106,6 +106,13 @@ class CornflowerBlueDemo {
                     id: 'intro',
                     action: function() {
                         me.switchTab('intro');
+                    }
+                },
+                {
+                    label: 'Example',
+                    id: 'example',
+                    action: function() {
+                        me.switchTab('example');
                     }
                 },
                 {
@@ -205,7 +212,28 @@ class CornflowerBlueDemo {
         this.grindMessageBoxes();
         this.grindForms();
 
+        this.handleWikiCitations();
     }
+
+    handleWikiCitations() {
+        // <sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup>
+        // <li id="cite_note-3"><span class="reference-text"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i>, Nicholas Eastaugh, Valentine Walsh, Tracey Chaplin, Ruth Siddall, 2004, Routledge, <a target="_new" href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a target="_new" href="https://en.wikipedia.org/wiki/Special:BookSources/9781136373855" title="Special:BookSources/9781136373855">9781136373855</a></span></li>
+        let citations = $('sup.reference');
+        for (let cite of citations) {
+            let target = $(cite).find('a').attr('href');
+            let content = $(target).html();
+            let text = $(cite).find('a').html();
+            let b = new HelpButton({
+                text: text,
+                icon: null,
+                classes: ['aslink'],
+                help: content
+            });
+            $(cite).empty().append(b.button);
+        }
+
+    }
+
 
     grindInputs() {
         const me = this;
@@ -216,7 +244,7 @@ class CornflowerBlueDemo {
         const $number = $('#inputs-number');
         const $disabled = $('#inputs-disabled');
         $standard.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new TextInput({
                         label: "Name",
@@ -230,7 +258,7 @@ class CornflowerBlueDemo {
                 )
         );
         $number.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new NumberInput({
                         label: "Zip Code",
@@ -244,7 +272,7 @@ class CornflowerBlueDemo {
         );
 
         $mute.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new TextInput({
                         label: "Name",
@@ -259,7 +287,7 @@ class CornflowerBlueDemo {
         );
 
         $password.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new PasswordInput({
                         label: "Password",
@@ -279,7 +307,7 @@ class CornflowerBlueDemo {
 
         $email.append(
 
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new EmailInput({
                         label: "Email Address"
@@ -296,7 +324,7 @@ class CornflowerBlueDemo {
         );
 
         $disabled.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new TextInput({
                         label: "Name",
@@ -321,7 +349,7 @@ class CornflowerBlueDemo {
         const $hexes = $('#buttons-shaped-hex');
 
         $target.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Normal"
@@ -349,7 +377,7 @@ class CornflowerBlueDemo {
                 )
         );
         $target.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Normal",
@@ -374,7 +402,7 @@ class CornflowerBlueDemo {
         );
 
         $mutes.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Normal",
@@ -406,7 +434,7 @@ class CornflowerBlueDemo {
                 )
         );
         $mutes.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Normal",
@@ -434,7 +462,7 @@ class CornflowerBlueDemo {
         );
 
         $hots.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Normal",
@@ -466,7 +494,7 @@ class CornflowerBlueDemo {
                 )
         );
         $hots.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Normal",
@@ -494,7 +522,7 @@ class CornflowerBlueDemo {
         );
 
         $squares.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         icon: "echx",
@@ -560,7 +588,7 @@ class CornflowerBlueDemo {
         );
 
         $circles.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         icon: "echx",
@@ -625,7 +653,7 @@ class CornflowerBlueDemo {
                 )
         );
         $hexes.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         icon: "echx",
@@ -664,7 +692,7 @@ class CornflowerBlueDemo {
         const $special = $('#growlers-special');
 
         $positions.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Top Left",
@@ -707,7 +735,7 @@ class CornflowerBlueDemo {
                     }).button
                 )
         ).append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Bottom Left",
@@ -752,7 +780,7 @@ class CornflowerBlueDemo {
                 )
         );
         $special.append(
-            $('<div />').addClass('section').addClass('centered')
+            $('<div />').addClass('example').addClass('centered')
                 .append(
                     new SimpleButton({
                         text: "Quick Growl",
@@ -806,7 +834,7 @@ class CornflowerBlueDemo {
         const $target = $('#inputs-checkboxes');
 
         $target.append(
-            $('<div />').addClass('section').addClass("centered")
+            $('<div />').addClass('example').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal"
@@ -838,7 +866,7 @@ class CornflowerBlueDemo {
         );
 
         $target.append(
-            $('<div />').addClass('section').addClass("centered")
+            $('<div />').addClass('example').addClass("centered")
                 .append(
                     new BooleanToggle({
                         labelside: 'left',
@@ -882,7 +910,7 @@ class CornflowerBlueDemo {
         const $disabled = $('#textareas-disabled');
 
         $target.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new TextArea({
                         label: "Post Content",
@@ -894,7 +922,7 @@ class CornflowerBlueDemo {
         );
 
         $mute.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new TextArea({
                         label: "Post Content",
@@ -907,7 +935,7 @@ class CornflowerBlueDemo {
         );
 
         $disabled.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new TextArea({
                         label: "Post Content",
@@ -924,7 +952,7 @@ class CornflowerBlueDemo {
         const me = this;
         const $target = $('#inputs-selects');
         $target.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new SelectMenu({
                         label: "Year",
@@ -966,7 +994,7 @@ class CornflowerBlueDemo {
         const me = this;
         const $target = $('#inputs-radiogroups');
         $target.append(
-            $('<div />').addClass('section').addClass('vert')
+            $('<div />').addClass('example').addClass('vert')
                 .append(
                     new RadioGroup({
                         label: "Select Year",
@@ -986,7 +1014,7 @@ class CornflowerBlueDemo {
         const me = this;
         const $target = $('#inputs-dialogs');
         $target.append(
-            $('<div />').addClass('section')
+            $('<div />').addClass('example')
                 .append(
                     new SimpleButton({
                         text: "Login Form"
@@ -1005,7 +1033,7 @@ class CornflowerBlueDemo {
         const $target = $('#inputs-checkboxes-styled');
 
         $target.append(
-            $('<div />').addClass('section').addClass("centered")
+            $('<div />').addClass('example').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
@@ -1041,7 +1069,7 @@ class CornflowerBlueDemo {
         );
 
         $target.append(
-            $('<div />').addClass('section').addClass("centered")
+            $('<div />').addClass('example').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
@@ -1077,7 +1105,7 @@ class CornflowerBlueDemo {
         );
 
         $target.append(
-            $('<div />').addClass('section').addClass("centered")
+            $('<div />').addClass('example').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
@@ -1113,7 +1141,7 @@ class CornflowerBlueDemo {
         );
 
         $target.append(
-            $('<div />').addClass('section').addClass("centered")
+            $('<div />').addClass('example').addClass("centered")
                 .append(
                     new BooleanToggle({
                         label: "Normal",
@@ -1157,7 +1185,7 @@ class CornflowerBlueDemo {
         const $responses = $('#boxes-responses');
 
         $target.append(
-            $('<div />').addClass('section').addClass("vert")
+            $('<div />').addClass('example').addClass("vert")
                 .append(
                     new InstructionBox({
                         instructions: [
@@ -1171,7 +1199,7 @@ class CornflowerBlueDemo {
         );
 
         $responses.append(
-            $('<div />').addClass('section').addClass("vert")
+            $('<div />').addClass('example').addClass("vert")
                 .append(
                     new MessageBox({
                         results: [

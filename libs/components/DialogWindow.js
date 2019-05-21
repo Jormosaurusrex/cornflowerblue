@@ -52,7 +52,7 @@ class DialogWindow {
                     icon: 'echx',
                     text: "Close",
                     shape: "square",
-                    classes: ["closebutton"],
+                    classes: ["naked", "closebutton"],
                     action: function(e) {
                         e.preventDefault();
                         me.close();

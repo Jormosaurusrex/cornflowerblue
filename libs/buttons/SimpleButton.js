@@ -24,7 +24,9 @@ class SimpleButton {
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
-            action: null // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
+            action: null, // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
+            hoverin: null, // The on hover handler.  Passed (event, self) as arguments.
+            hoverout: null // The off hover handler.  Passed (event, self) as arguments.
         };
     }
 
@@ -36,6 +38,15 @@ class SimpleButton {
         this.config = Object.assign({}, SimpleButton.DEFAULT_CONFIG, config);
         return this;
     }
+
+
+    /**
+     * Can this be used to submit a form?
+     * Javascript doesn't have great interfaces. This would be on the interface otherwise.
+     * Doesn't have a settor.
+     * @return {boolean}
+     */
+    get cansubmit() { return this.config.cansubmit; }
 
     /**
      * Builds the button's DOM.
@@ -96,7 +107,17 @@ class SimpleButton {
             .attr('type', (this.submits ? 'submit' : 'button'))
             .data('self', this)
             .addClass(this.size)
-            .addClass(this.classes.join(' '));
+            .addClass(this.classes.join(' '))
+            .on('mouseover', function(e) {
+                if ((me.hoverin) && (typeof me.hoverin === 'function')) {
+                    me.hoverin(e, me);
+                }
+            })
+            .on('mouseout', function(e) {
+            if ((me.hoverout) && (typeof me.hoverout === 'function')) {
+                me.hoverout(e, me);
+            }
+        });
 
         if (this.disabled) { this.disable(); }
 
@@ -192,14 +213,6 @@ class SimpleButton {
     }
     set button(button) { this._button = button; }
 
-    /**
-     * Can this be used to submit a form?
-     * Javascript doesn't have great interfaces. This would be on the interface otherwise.
-     * Doesn't have a settor.
-     * @return {boolean}
-     */
-    get cansubmit() { return this.config.cansubmit; }
-
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -223,6 +236,22 @@ class SimpleButton {
 
     get hot() { return this.config.hot; }
     set hot(hot) { this.config.hot = hot; }
+
+    get hoverin() { return this.config.hoverin; }
+    set hoverin(hoverin) {
+        if (typeof hoverin !== 'function') {
+            console.error("Value provided to hoverin is not a function!");
+        }
+        this.config.hoverin = hoverin;
+    }
+
+    get hoverout() { return this.config.hoverout; }
+    set hoverout(hoverout) {
+        if (typeof hoverout !== 'function') {
+            console.error("Value provided to hoverout is not a function!");
+        }
+        this.config.hoverout = hoverout;
+    }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }

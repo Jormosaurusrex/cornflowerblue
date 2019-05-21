@@ -4,14 +4,15 @@
  */
 :root {
   // Raw colors
-  --blue: rgb(0, 84, 166); // #0054a6
+  --cornflowerblue: rgb(100, 149, 237); // #6495ED
+  --darkblue: rgb(0, 84, 166); // #0054a6
+  --blue: var(--cornflowerblue); // #6495ED
   --red: rgb(145, 0, 0); // #910000
   --orange: rgb(255, 153, 0); // #ff9900
   --yellow: rgb(255, 221, 27); // #ffdd1b
   --green: rgb(0, 94, 32); // #005e20
-  --tan: #eadcbc;
-  --pink: #ff00de;
-  --lightblue: #a0e1fa;
+  --tan: rgb(234, 220, 188); // #eadcbc
+  --purple: rgb(153, 0, 134); // #990086
 
   --white: rgb(225, 255, 255); // #fff;
   --ultralight: #fdfdfd;
@@ -37,9 +38,12 @@
   --black-half: rgba(0, 0, 0, 0.5); // #000
   --black-quarter: rgba(0, 0, 0, 0.25); // #000
   --black-translucent: rgba(0, 0, 0, 0.1); // #000
-  --blue-half: rgba(0, 84, 166, 0.5); // #0054a6
-  --blue-quarter: rgba(0, 84, 166, 0.25); // #0054a6
-  --blue-translucent: rgba(0, 84, 166, 0.1); // #0054a6
+  --blue-half: rgba(100, 149, 237, 0.5); // #6495ED
+  --blue-quarter: rgba(100, 149, 237, 0.25); // #6495ED
+  --blue-translucent: rgba(100, 149, 237, 0.1); // #6495ED
+  --darkblue-half: rgba(0, 84, 166, 0.5); // #0054a6
+  --darkblue-quarter: rgba(0, 84, 166, 0.25); // #0054a6
+  --darkblue-translucent: rgba(0, 84, 166, 0.1); // #0054a6
   --green-half: rgba(0, 94, 32, 0.5); // #005e20
   --green-quarter: rgba(0, 94, 32, 0.25); // #005e20
   --green-translucent: rgba(0, 94, 32, 0.1); // #005e20
@@ -68,7 +72,7 @@
   // Shadows
   --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
   --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
-  --on-white-text-shadow: 0 .07em .07em rgba(50,50,50,0.3);
+  --on-white-text-shadow: 0 .03em .03em rgba(50,50,50,0.3);
   --text-shadow-heavy: 0 .07em .07em rgba(0,0,0,0.5);
   --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
 
@@ -230,6 +234,11 @@
   --dialog-window-mask-opacity: .25;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
 
+  // Figure
+  --figure-text-color: var(--grey-dark);
+  --figure-text-shadow: var(--text-shadow);
+  --figure-background-color: var(--canvas-color-secondary);
+
   // Form keys
   --form-background-color: transparent;
   --form-border-color: transparent;
@@ -364,7 +373,8 @@
 
   // Paragraph
   --paragraph-text-color: var(--grey-dark);
-  --paragraph-measure: var(--standard-measure);
+  //--paragraph-measure: var(--standard-measure);
+  --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
   --paragraph-font-family: var(--fontstack-sansserif);
 
@@ -379,6 +389,10 @@
   --progressmeter-marker-current-border-color: var(--grey-medium);
   --progressmeter-step-name-color: var(--grey-darker);
   --progressmeter-step-points-color: var(--grey-dark);
+
+  // Sup
+  --sup-text-color: var(--paragraph-text-color);
+  --sup-text-shadow: var(--paragraph-text-shadow);
 
   // Results box keys
   --resultsbox-margin: 0;

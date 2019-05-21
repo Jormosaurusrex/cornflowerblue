@@ -2,14 +2,15 @@
   We want to use variables so that they can be re-themed
  */
 :root {
-  --blue: #0054a6;
+  --cornflowerblue: cornflowerblue;
+  --darkblue: #0054a6;
+  --blue: var(--cornflowerblue);
   --red: #910000;
   --orange: #ff9900;
   --yellow: #ffdd1b;
   --green: #005e20;
   --tan: #eadcbc;
-  --pink: #ff00de;
-  --lightblue: #a0e1fa;
+  --purple: #990086;
   --white: #e1ffff;
   --ultralight: #fdfdfd;
   --bright: #eee;
@@ -32,9 +33,12 @@
   --black-half: rgba(0, 0, 0, 0.5);
   --black-quarter: rgba(0, 0, 0, 0.25);
   --black-translucent: rgba(0, 0, 0, 0.1);
-  --blue-half: rgba(0, 84, 166, 0.5);
-  --blue-quarter: rgba(0, 84, 166, 0.25);
-  --blue-translucent: rgba(0, 84, 166, 0.1);
+  --blue-half: rgba(100, 149, 237, 0.5);
+  --blue-quarter: rgba(100, 149, 237, 0.25);
+  --blue-translucent: rgba(100, 149, 237, 0.1);
+  --darkblue-half: rgba(0, 84, 166, 0.5);
+  --darkblue-quarter: rgba(0, 84, 166, 0.25);
+  --darkblue-translucent: rgba(0, 84, 166, 0.1);
   --green-half: rgba(0, 94, 32, 0.5);
   --green-quarter: rgba(0, 94, 32, 0.25);
   --green-translucent: rgba(0, 94, 32, 0.1);
@@ -58,7 +62,7 @@
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
   --text-shadow: 0 -0.03em 0.03em rgba(0, 0, 0, 0.3), 0 0.03em 0.03em rgba(255, 255, 255, 0.3);
   --text-shadow-singular: 0 -0.03em 0.03em rgba(0, 0, 0, 0.3);
-  --on-white-text-shadow: 0 0.07em 0.07em rgba(50, 50, 50, 0.3);
+  --on-white-text-shadow: 0 0.03em 0.03em rgba(50, 50, 50, 0.3);
   --text-shadow-heavy: 0 0.07em 0.07em rgba(0, 0, 0, 0.5);
   --text-shadow-heavier: 0 0.07em 0.07em rgba(0, 0, 0, 0.7);
   --box-shadow: 0.1em 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
@@ -185,6 +189,9 @@
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
+  --figure-text-color: var(--grey-dark);
+  --figure-text-shadow: var(--text-shadow);
+  --figure-background-color: var(--canvas-color-secondary);
   --form-background-color: transparent;
   --form-border-color: transparent;
   --form-actions-background-color: var(--morelight);
@@ -290,7 +297,7 @@
   --link-color: var(--focus-color);
   --link-text-shadow: var(--on-white-text-shadow);
   --paragraph-text-color: var(--grey-dark);
-  --paragraph-measure: var(--standard-measure);
+  --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
   --paragraph-font-family: var(--fontstack-sansserif);
   --progressmeter-marker-unfilled-line-color: var(--grey-medium);
@@ -300,6 +307,8 @@
   --progressmeter-marker-current-border-color: var(--grey-medium);
   --progressmeter-step-name-color: var(--grey-darker);
   --progressmeter-step-points-color: var(--grey-dark);
+  --sup-text-color: var(--paragraph-text-color);
+  --sup-text-shadow: var(--paragraph-text-shadow);
   --resultsbox-margin: 0;
   --resultsbox-background-color: var(--ultralight);
   --resultsbox-icon-color: var(--ultralight);
@@ -508,6 +517,10 @@ a {
     filter: brightness(80%);
     text-decoration: none; }
 
+ul,
+ol {
+  margin-left: 1em; }
+
 label {
   display: block;
   font-weight: normal;
@@ -537,6 +550,14 @@ strong {
 
 pre {
   font-family: var(--fontstack-monospace); }
+
+sup {
+  vertical-align: super;
+  font-size: 80%;
+  line-height: 1;
+  color: var(--sup-text-color);
+  text-shadow: var(--sup-text-shadow);
+  background-color: transparent; }
 
 blockquote {
   display: block;
@@ -575,6 +596,21 @@ aside {
   text-shadow: var(--aside-text-shadow); }
   aside p {
     margin: .5em; }
+
+figure {
+  background-color: var(--figure-background-color);
+  color: var(--figure-text-color);
+  text-shadow: var(--figure-text-shadow);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  float: right;
+  padding: 1em;
+  margin: 0 0 1em 1em; }
+  figure img {
+    margin: 0; }
+  figure figcaption {
+    margin-top: 1em; }
 
 code {
   font-family: var(--code-font-family);
@@ -1533,9 +1569,27 @@ button {
         white-space: normal;
         line-height: 1.2;
         text-align: left; }
-    button.help.open div.tooltip {
+        button.help div.tooltip div.helptext a {
+          color: var(--hot-text-color); }
+        button.help div.tooltip div.helptext button.closebutton {
+          opacity: 0.5;
+          box-shadow: none;
+          display: none;
+          color: var(--hot-text-color); }
+          button.help div.tooltip div.helptext button.closebutton:hover, button.help div.tooltip div.helptext button.closebutton:focus, button.help div.tooltip div.helptext button.closebutton:active {
+            color: var(--hot-text-color); }
+          button.help div.tooltip div.helptext button.closebutton span:before {
+            margin: 0; }
+          button.help div.tooltip div.helptext button.closebutton:hover {
+            opacity: 1;
+            background: none; }
+      button.help div.tooltip button.closebutton {
+        display: none; }
+    button.help.open div.tooltip, button.help.stayopen div.tooltip {
       display: flex;
       animation: fadein-delay-half .2s; }
+    button.help.stayopen div.tooltip button.closebutton {
+      display: inline-block; }
   button.menu {
     overflow: visible; }
     button.menu ul {
@@ -1644,6 +1698,18 @@ button {
     button.hexagon:disabled, button.hexagon:disabled:before, button.hexagon:disabled:after, button.hexagon:disabled:hover {
       background-color: var(--button-disabled-color);
       box-shadow: var(--hexagon-shadow-disabled); }
+  button.aslink {
+    color: var(--link-color);
+    text-shadow: var(--link-text-shadow);
+    text-decoration: underline; }
+    button.aslink:hover {
+      filter: brightness(120%);
+      text-decoration: underline double; }
+    button.aslink:active {
+      filter: brightness(120%); }
+    button.aslink:visited {
+      filter: brightness(80%);
+      text-decoration: none; }
 
 div.checkbox {
   display: flex;
@@ -2445,12 +2511,6 @@ div.window-container {
       div.window-container div.dialog h2 button.closebutton {
         opacity: 0.5;
         box-shadow: none;
-        margin: 0;
-        padding: 0;
-        height: auto;
-        width: auto;
-        background: none;
-        border: none;
         color: var(--dialog-header-text-color);
         text-shadow: var(--dialog-header-text-shadow); }
         div.window-container div.dialog h2 button.closebutton span:before {
@@ -2574,7 +2634,7 @@ div#container {
   margin-right: auto;
   min-width: 50%;
   max-width: 75%;
-  min-height: 100%;
+  min-height: 100vh;
   background-color: var(--grey-dark);
   display: flex;
   flex-direction: row;
@@ -2617,21 +2677,28 @@ div#container {
       div#container div#codebox div.config span.default span.key {
         color: var(--grey-medium); }
 
-.section {
+div.example {
   margin: 0 0 1em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start; }
-  .section.centered {
+  div.example.centered {
     justify-content: space-between; }
-  .section.vert {
+  div.example.vert {
     flex-direction: column; }
-  .section div.checkbox {
+  div.example div.checkbox {
     margin: 1em 0.5em 1em 0.5em; }
-  .section button.hexagon:nth-child(even) {
+  div.example button.hexagon:nth-child(even) {
     left: 0;
     top: 0; }
+
+div.wiki span.colorswatch {
+  border: 1px dotted #222;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  margin-bottom: -.1em; }
 
 body.modalopen div.container {
   filter: blur(3px); }
