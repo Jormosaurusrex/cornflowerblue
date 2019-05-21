@@ -157,8 +157,16 @@ class SelectMenu extends InputElement {
 
         let $li = $('<li />')
             .attr('tabindex', 0)
+            .attr('id', `li-${lId}`)
             .on('keydown', function(e) {
-                if (e.keyCode === 38) { // up arrow
+                if (e.keyCode === 9) { // tab.
+                    // This closes the menu if tab focuses out of the last element.
+                    if (me.optionlist.find('li:last-child').attr('id') === $(this).attr('id')) {
+                        me.close();
+                    }
+                } else if (e.keyCode === 27) { // Escape
+                    me.close();
+                } else if (e.keyCode === 38) { // up arrow
                     e.preventDefault();
                     e.stopPropagation();
                     $(this).prev().focus();

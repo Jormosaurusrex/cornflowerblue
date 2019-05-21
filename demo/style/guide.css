@@ -404,6 +404,9 @@ body.noisy:after {
   z-index: 999999;
   pointer-events: none; }
 
+:focus {
+  outline: 0.1em solid var(--focus-color); }
+
 h1 {
   font-size: 3.5em;
   font-weight: 500;
@@ -517,9 +520,16 @@ a {
     filter: brightness(80%);
     text-decoration: none; }
 
-ul,
-ol {
-  margin-left: 1em; }
+ol,
+ul {
+  display: block;
+  list-style-type: decimal;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 1.5em; }
+
+ul {
+  list-style-type: disc; }
 
 label {
   display: block;
@@ -2588,7 +2598,8 @@ ul.tabbar {
   z-index: 2;
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);
-  overflow: hidden; }
+  overflow: hidden;
+  padding: 0; }
   ul.tabbar li {
     display: flex;
     flex-direction: column;

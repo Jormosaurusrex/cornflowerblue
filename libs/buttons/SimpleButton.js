@@ -39,6 +39,7 @@ class SimpleButton {
         return this;
     }
 
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     /**
      * Can this be used to submit a form?
@@ -47,6 +48,8 @@ class SimpleButton {
      * @return {boolean}
      */
     get cansubmit() { return this.config.cansubmit; }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
      * Builds the button's DOM.

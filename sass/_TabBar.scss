@@ -9,6 +9,7 @@ ul.tabbar {
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);
   overflow: hidden;
+  padding: 0;
   li {
     display: flex;
     flex-direction: column;

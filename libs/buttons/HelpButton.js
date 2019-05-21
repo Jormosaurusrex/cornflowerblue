@@ -47,6 +47,9 @@ class HelpButton extends SimpleButton {
 
     }
 
+    /**
+     * Force the tooltip to stay open.
+     */
     stayopen() {
         this.button.addClass('stayopen');
         this.open();
@@ -98,7 +101,7 @@ class HelpButton extends SimpleButton {
                 me.close();
             }
         });
-        
+
         this.tooltip.append(this.helptext).append(this.closebutton.button);
         this.button.append(this.tooltip);
     }
