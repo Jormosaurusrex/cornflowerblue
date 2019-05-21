@@ -18,6 +18,7 @@ div.window-container {
     text-align: left;
     max-width: 50%;
     max-height: 90%;
+    min-width: 25em;
     margin: 2em auto;
     position: relative;
     border-radius: var(--dialog-border-radius);
