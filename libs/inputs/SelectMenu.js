@@ -46,6 +46,63 @@ class SelectMenu extends InputElement {
         return ''; // Return empty string for no value.
     }
 
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Opens the option list.
+     */
+    open() {
+        const me = this;
+
+        this.optionlist.addClass('open');
+
+        if (this.selected) {
+            let $t = this.optionlist.find('li.selected');
+            console.log(`h: ${$t.height()}`);
+            this.optionlist.scrollTop($t.offset().top - $t.height());
+            $t.focus();
+        } else {
+            this.optionlist.find('li:first-child').focus();
+        }
+
+        $(document).one('click', function closeMenu(e) {
+            if (me.container.has(e.target).length === 0) {
+                me.close();
+            } else {
+                $(document).one('click', closeMenu);
+            }
+        });
+    }
+
+    /**
+     * Closes the option list.
+     */
+    close() {
+        this.optionlist.removeClass('open');
+    }
+
+    /**
+     * Enable the element
+     */
+    disable() {
+        this.optionlist.find('input:radio').attr('disabled',true);
+        this.triggerbox.prop('disabled', true);
+        this.disabled = true;
+        if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
+        if (this.container) { this.container.addClass('disabled'); }
+    }
+
+    /**
+     * Disable the element
+     */
+    enable() {
+        this.optionlist.find('input:radio').removeAttr('disabled');
+        this.triggerbox.removeAttr('disabled');
+        this.disabled = false;
+        if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
+        if (this.container) { this.container.removeClass('disabled'); }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -77,11 +134,8 @@ class SelectMenu extends InputElement {
             .addClass('trigger')
             .attr('tabindex', 0)
             .focusin(function() {
-                me.optionlist.addClass('open');
-                me.optionlist.find('li:first-child').focus();
-            })
-            .click(function(e) {
-                e.preventDefault();
+                // Only need the focus handler because a click fires focus _then_ click
+                // And focus happens in more ways than click (tab in, etc.)
                 if (me.disabled) {
                     e.stopPropagation();
                     return;
@@ -184,7 +238,6 @@ class SelectMenu extends InputElement {
             .click(function(e) {
                 me.optionlist.find('li').removeClass('selected');
                 $(this).addClass('selected');
-
             });
 
         if (def.checked) {
@@ -196,71 +249,6 @@ class SelectMenu extends InputElement {
         }
 
         return $li.append($op).append($opLabel);
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Toggle visibility of the menu.
-     */
-    toggle(e, self) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        this.optionlist.toggleClass('open');
-
-        $(document).one('click', function closeMenu(e) {
-            if (self.container.has(e.target).length === 0) {
-                self.close();
-            } else {
-                $(document).one('click', closeMenu);
-            }
-        });
-
-    }
-
-    /**
-     * Opens the option list.
-     */
-    open() {
-        this.optionlist.addClass('open');
-        const me = this;
-        $(document).one('click', function closeMenu(e) {
-            if (me.container.has(e.target).length === 0) {
-                me.close();
-            } else {
-                $(document).one('click', closeMenu);
-            }
-        });
-    }
-
-    /**
-     * Closes the option list.
-     */
-    close() {
-        this.optionlist.removeClass('open');
-    }
-
-    /**
-     * Enable the element
-     */
-    disable() {
-        this.optionlist.find('input:radio').attr('disabled',true);
-        this.triggerbox.prop('disabled', true);
-        this.disabled = true;
-        if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
-        if (this.container) { this.container.addClass('disabled'); }
-    }
-
-    /**
-     * Disable the element
-     */
-    enable() {
-        this.optionlist.find('input:radio').removeAttr('disabled');
-        this.triggerbox.removeAttr('disabled');
-        this.disabled = false;
-        if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
-        if (this.container) { this.container.removeClass('disabled'); }
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

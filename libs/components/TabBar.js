@@ -52,7 +52,6 @@ class TabBar {
                 .click(function(e) {
                     e.preventDefault();
                     me.select($tab);
-
                     if ((tabdef.action) && (typeof tabdef.action === 'function')) {
                         tabdef.action(e);
                     }
