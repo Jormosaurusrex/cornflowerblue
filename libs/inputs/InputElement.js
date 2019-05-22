@@ -96,6 +96,14 @@ class InputElement {
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
+     * Has the field been changed or not?
+     * @return {boolean} true or false, depending.
+     */
+    isDirty() {
+        return (this.origval !== this.value);
+    }
+
+    /**
      * Runs validation.  Shows errors, if any. Returns true or false, depending.
      * @param onload If true, this validation fires on the loading. This is important to
      * know because some invalidations aren't actually errors until the form is submitted.
@@ -182,14 +190,6 @@ class InputElement {
      */
     addWarning(warning) {
         this.messagebox.append($('<li />').addClass('warning').html(warning));
-    }
-
-    /**
-     * Has the field been changed or not?
-     * @return {boolean} true or false, depending.
-     */
-    isDirty() {
-        return (this.origval !== this.value);
     }
 
     /**

@@ -32,7 +32,9 @@ class SelectMenu extends InputElement {
      * @return {jQuery|HTMLElement}
      */
     get selected() {
-        return $(`input[name=${this.name}]:checked`);
+        let sel = $(`input[name=${this.name}]:checked`);
+        if (sel.length > 0) { return sel; }
+        return null;
     }
 
     /**
@@ -41,7 +43,7 @@ class SelectMenu extends InputElement {
      */
     get value() {
         if (this.selected) { return this.selected.val(); }
-        return null;
+        return ''; // Return empty string for no value.
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -63,6 +65,29 @@ class SelectMenu extends InputElement {
             .append(this.messagebox);
 
         this.postContainerScrub();
+    }
+
+
+    /**
+     * Builds the trigger box for the select.
+     */
+    buildTriggerBox() {
+        const me = this;
+        this.triggerbox = $('<div />')
+            .addClass('trigger')
+            .attr('tabindex', 0)
+            .focusin(function() {
+                me.optionlist.addClass('open');
+                me.optionlist.find('li:first-child').focus();
+            })
+            .click(function(e) {
+                e.preventDefault();
+                if (me.disabled) {
+                    e.stopPropagation();
+                    return;
+                }
+                me.open();
+            });
     }
 
     /**
@@ -95,28 +120,6 @@ class SelectMenu extends InputElement {
             let $o = this.buildOption(unselconfig);
             this.optionlist.prepend($o);
         }
-    }
-
-    /**
-     * Builds the trigger box for the select.
-     */
-    buildTriggerBox() {
-        const me = this;
-        this.triggerbox = $('<div />')
-            .addClass('trigger')
-            .attr('tabindex', 0)
-            .focusin(function() {
-                me.optionlist.addClass('open');
-                me.optionlist.find('li:first-child').focus();
-            })
-            .click(function(e) {
-                e.preventDefault();
-                if (me.disabled) {
-                    e.stopPropagation();
-                    return;
-                }
-                me.open();
-            });
     }
 
     /**

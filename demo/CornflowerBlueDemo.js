@@ -83,14 +83,22 @@ class CornflowerBlueDemo {
 
         this.build();
 
-        this.switchTab('selects');
+        if (window.location.hash.substr(1)) {
+            this.switchTab(window.location.hash.substr(1));
+        } else {
+            this.switchTab('buttons');
+        }
     }
-
 
     switchTab(tab) {
         $('section').css('display', 'none');
         $(`#t-${tab}`).css('display', 'block');
         this.navigation.select(tab);
+        if(history.pushState) {
+            history.pushState(null, null, `#${tab}`);
+        } else {
+            location.hash = `#${tab}`;
+        }
     }
 
     build() {
@@ -200,9 +208,9 @@ class CornflowerBlueDemo {
         this.container
             .prepend(this.navigation.container);
 
+        this.grindSelects();
         this.grindInputs();
         this.grindTextAreas();
-        this.grindSelects();
         this.grindRadioGroups();
         this.grindDialogs();
         this.grindCheckboxes();
@@ -213,11 +221,10 @@ class CornflowerBlueDemo {
         this.grindForms();
 
         this.handleWikiCitations();
+
     }
 
     handleWikiCitations() {
-        // <sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup>
-        // <li id="cite_note-3"><span class="reference-text"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i>, Nicholas Eastaugh, Valentine Walsh, Tracey Chaplin, Ruth Siddall, 2004, Routledge, <a target="_new" href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a target="_new" href="https://en.wikipedia.org/wiki/Special:BookSources/9781136373855" title="Special:BookSources/9781136373855">9781136373855</a></span></li>
         let citations = $('sup.reference');
         for (let cite of citations) {
             let target = $(cite).find('a').attr('href');
@@ -226,14 +233,13 @@ class CornflowerBlueDemo {
             let b = new HelpButton({
                 text: text,
                 icon: null,
-                classes: ['aslink'],
+                classes: ['link'],
                 help: content
             });
             $(cite).empty().append(b.button);
         }
 
     }
-
 
     grindInputs() {
         const me = this;
@@ -343,6 +349,8 @@ class CornflowerBlueDemo {
         const me = this;
         const $target = $('#buttons-normal');
         const $mutes = $('#buttons-mute');
+        const $links = $('#buttons-link');
+        const $nakeds = $('#buttons-naked');
         const $hots = $('#buttons-hot');
         const $squares = $('#buttons-shaped-square');
         const $circles = $('#buttons-shaped-circle');
@@ -433,6 +441,7 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
+
         $mutes.append(
             $('<div />').addClass('example').addClass('centered')
                 .append(
@@ -456,6 +465,146 @@ class CornflowerBlueDemo {
                         text: "Destructive",
                         mute: true,
                         icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $links.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        link: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        link: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        link: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        link: true,
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $links.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        link: true,
+                        icon: "globe"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        link: true,
+                        icon: "check"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        link: true,
+                        icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        link: true,
+                        icon: "globe",
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $nakeds.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        naked: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        naked: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        naked: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        naked: true,
+                        disabled: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $nakeds.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        naked: true,
+                        icon: "globe"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        naked: true,
+                        icon: "check"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        naked: true,
+                        icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        naked: true,
+                        icon: "globe",
+                        disabled: true
                     }).button
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
@@ -901,8 +1050,6 @@ class CornflowerBlueDemo {
                 )
         );
     }
-
-
     grindTextAreas() {
         const me = this;
         const $target = $('#textareas-standard');
@@ -988,6 +1135,7 @@ class CornflowerBlueDemo {
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
+
         );
     }
     grindRadioGroups() {

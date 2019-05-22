@@ -24,6 +24,8 @@ class SimpleButton {
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
+            link: false, //if true, make the button behave like a normal link.
+            naked: false, //if true, remove all styoles from the button.
             action: null, // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
             hoverin: null, // The on hover handler.  Passed (event, self) as arguments.
             hoverout: null // The off hover handler.  Passed (event, self) as arguments.
@@ -130,6 +132,10 @@ class SimpleButton {
             this.button.addClass('hot');
         } else if (this.mute) {
             this.button.addClass('mute');
+        } else if (this.link) {
+            this.button.addClass('link');
+        } else if (this.naked) {
+            this.button.addClass('naked');
         }
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
@@ -259,8 +265,14 @@ class SimpleButton {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
+    get link() { return this.config.link; }
+    set link(link) { this.config.link = link; }
+
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
+
+    get naked() { return this.config.naked; }
+    set naked(naked) { this.config.naked = naked; }
 
     get secondicon() { return this.config.secondicon; }
     set secondicon(secondicon) { this.config.secondicon = secondicon; }
