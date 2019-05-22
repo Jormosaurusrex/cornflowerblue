@@ -1601,7 +1601,7 @@ button {
       position: absolute;
       right: 0;
       top: 2.5em;
-      min-width: 120%;
+      min-width: 50%;
       overflow: visible;
       z-index: 220;
       border-radius: var(--button-border-radius);
