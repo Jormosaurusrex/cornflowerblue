@@ -124,7 +124,6 @@ class SelectMenu extends InputElement {
         this.postContainerScrub();
     }
 
-
     /**
      * Builds the trigger box for the select.
      */

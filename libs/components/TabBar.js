@@ -36,6 +36,7 @@ class TabBar {
 
         this.container = $('<ul />')
             .data('self', me)
+            .attr('role', 'tablist')
             .addClass(this.classes.join(' '))
             .addClass('tabbar');
 
@@ -44,10 +45,11 @@ class TabBar {
         }
 
         for (let tabdef of this.tabs) {
-
             let $tab = $('<li />')
                 .html(tabdef.label)
                 .attr('aria-label', tabdef.label)
+                .attr('role', 'tab')
+                .attr('id', tabdef.id)
                 .attr('tabindex', 0)
                 .click(function(e) {
                     e.preventDefault();

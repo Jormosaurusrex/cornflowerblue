@@ -388,6 +388,9 @@
   box-sizing: border-box;
   outline: none; }
 
+html {
+  scroll-behavior: smooth; }
+
 html,
 body {
   height: 100%; }
@@ -403,9 +406,6 @@ body.noisy:after {
   bottom: 0;
   z-index: 999999;
   pointer-events: none; }
-
-:focus {
-  outline: 0.1em solid var(--focus-color); }
 
 h1 {
   font-size: 3.5em;

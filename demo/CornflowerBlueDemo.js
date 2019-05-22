@@ -83,6 +83,8 @@ class CornflowerBlueDemo {
 
         this.build();
 
+        this.body.addClass('noisy');
+
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
         } else {
@@ -99,6 +101,12 @@ class CornflowerBlueDemo {
         } else {
             location.hash = `#${tab}`;
         }
+        if ((tab === 'example') || (tab === 'intro')) {
+            this.codebox.css('display', 'none');
+        } else {
+            this.codebox.css('display', 'block');
+        }
+
     }
 
     build() {
@@ -234,6 +242,7 @@ class CornflowerBlueDemo {
                 text: text,
                 icon: null,
                 classes: ['link'],
+                tipicon: 'legend',
                 help: content
             });
             $(cite).empty().append(b.button);
@@ -1348,10 +1357,26 @@ class CornflowerBlueDemo {
             $('<div />').addClass('example').addClass("vert")
                 .append(
                     new InstructionBox({
+                        instructions: [ "Enter your username and password." ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new InstructionBox({
                         instructions: [
-                            "Duis mollis, est non commodo luctus.",
-                            "Nisi erat porttitor ligula, eget.",
-                            "lacinia odio sem nec elit."
+                            "Things have never been so swell",
+                            "And I have never failed to fail"
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new InstructionBox({
+                        instructions: [
+                            "Angel left wing, right wing, broken wing",
+                            "Lack of iron and/or sleeping",
+                            "Protector of the kennel, Ecto-plasma, Ecto-Skeletal, Obituary birthday",
+                            "Your scent is still here in my place of recovery"
                         ]
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })

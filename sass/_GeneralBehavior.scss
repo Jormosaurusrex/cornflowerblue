@@ -5,6 +5,10 @@
   outline: none;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;
@@ -24,10 +28,6 @@ body {
       pointer-events: none;
     }
   }
-}
-
-:focus {
-  outline: .1em solid var(--focus-color);
 }
 
 // Headers
