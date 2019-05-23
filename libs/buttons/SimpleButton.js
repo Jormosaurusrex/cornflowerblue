@@ -10,7 +10,7 @@ class SimpleButton {
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
             text : null, // The text for the button. This is also used as aria-label.
-            shape : null, // (null|square|circle|hexagon) :: Make the button one of these shapes. Otherwise, makes a rectangle
+            shape : null, // (null|square|circle|hexagon|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             hidden: false, // Start hidden or not.
@@ -25,7 +25,7 @@ class SimpleButton {
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
             link: false, //if true, make the button behave like a normal link.
-            naked: false, //if true, remove all styoles from the button.
+            naked: false, //if true, remove all styles from the button.
             action: null, // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
             hoverin: null, // The on hover handler.  Passed (event, self) as arguments.
             hoverout: null // The off hover handler.  Passed (event, self) as arguments.
@@ -143,7 +143,7 @@ class SimpleButton {
                 if (!me.disabled) {
                     me.action(e, me);
                 }
-                this.blur();
+                $(this).blur();
             });
         }
     }
@@ -169,7 +169,7 @@ class SimpleButton {
     }
 
     /**
-     * Enable the button
+     * Show the button
      */
     show() {
         this.button.removeClass('hidden');
@@ -178,7 +178,7 @@ class SimpleButton {
     }
 
     /**
-     * Disable the button
+     * Hide the button
      */
     hide() {
         this.button.addClass('hidden');
