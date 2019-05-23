@@ -100,7 +100,7 @@ class Utils {
         let vlines = [];
         for (let k of keys) {
             if (typeof obj[k] === 'function') {
-                vlines.push(`\t ${k} : function(e, self) { ... }`);
+                vlines.push(`\t ${k} : function(...) { ... }`);
             } else if (Array.isArray(obj[k])) {
                 vlines.push(`\t ${k} : [${obj[k]}]`);
             } else if (typeof obj[k] === 'string') {
@@ -133,7 +133,7 @@ class Utils {
             if ((k === 'id') || (k === 'name')) {
                 line = `    <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`;
             } else if (typeof obj[k] === 'function') {
-                line = `    <span class="key">${k}</span> : function(e, self) { ... }`;
+                line = `    <span class="key">${k}</span> : function(...) { ... }`;
             } else if (Array.isArray(obj[k])) {
                 line = `    <span class="key">${k}</span> : [`;
                 if ((obj[k] !== null) && (obj[k].length > 0)) {
