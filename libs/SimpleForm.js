@@ -175,8 +175,7 @@ class SimpleForm {
      */
     runValid() {
         for (let submittor of this.submittors) {
-            submittor.heat();
-            submittor.enable();
+            submittor.enable().heat();
         }
         if ((this.onvalid) && (typeof this.onvalid === 'function')) {
             this.onvalid(this);
@@ -190,8 +189,7 @@ class SimpleForm {
      */
     runInvalid() {
         for (let submittor of this.submittors) {
-            submittor.cool();
-            submittor.disable();
+            submittor.disable().cool();
         }
         if ((this.oninvalid) && (typeof this.oninvalid === 'function')) {
             this.oninvalid(this);

@@ -28,6 +28,46 @@ class DialogWindow {
     }
 
     /**
+     * Opens the dialog window
+     */
+    open() {
+        const me = this;
+        this.mask = $('<div />')
+            .addClass('window-mask')
+            .click(function(e) {
+                e.preventDefault();
+                if (me.clickoutsidetoclose) {
+                    me.close();
+                }
+            });
+        this.container.append(me.window);
+
+        $('body')
+            .append(this.mask)
+            .append(this.container)
+            .addClass('modalopen');
+        return this;
+    }
+
+    /**
+     * Closes the dialog window
+     */
+    close() {
+        const me = this;
+        // XXX TODO Change this to css animations
+        this.container.animate({ opacity: 0 }, 50, function() {
+            me.container.remove();
+            me.mask.animate({ opacity: 0 }, 50, function() {
+                me.mask.remove();
+                $(document).bind("keyup.DialogWindow"); // get rid of our keyup
+            });
+        });
+        $('body').removeClass('modalopen');
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
      * Constructs the DialogWindow's DOM elements
      */
     build() {
@@ -60,6 +100,8 @@ class DialogWindow {
                 });
                 this.title.append(this.closebutton.button);
             }
+        } else if (this.showclose) {
+            console.error("Dialog defines 'showclose' but no title is defined.")
         }
 
         if (this.form) { // it's a SimpleForm
@@ -71,7 +113,6 @@ class DialogWindow {
                 .addClass('content')
                 .append(this.form.form);
             this.window.append(this.contentbox);
-
         } else if (this.content) { // It's a jQuery object
             this.contentbox = $('<div />')
                 .addClass('content')
@@ -86,44 +127,6 @@ class DialogWindow {
                 }
             });
         }
-    }
-
-    /**
-     * Opens the dialog window
-     */
-    open() {
-        const me = this;
-        this.mask = $('<div />')
-            .addClass('window-mask')
-            .click(function(e) {
-                e.preventDefault();
-                if (me.clickoutsidetoclose) {
-                    me.close();
-                }
-            });
-        this.container.append(me.window);
-
-        $('body')
-            .append(this.mask)
-            .append(this.container)
-            .addClass('modalopen');
-        return this;
-    }
-
-    /**
-     * Closes the dialog window
-     */
-    close() {
-        const me = this;
-        // XXX TODO Change this to css animations
-        this.container.animate({ opacity: 0 }, 200, function() {
-            me.container.remove();
-            me.mask.animate({ opacity: 0 }, 100, function() {
-                me.mask.remove();
-                $(document).bind("keyup.DialogWindow"); // get rid of our keyup
-            });
-        });
-        $('body').removeClass('modalopen');
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

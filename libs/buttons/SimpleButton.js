@@ -156,6 +156,7 @@ class SimpleButton {
     disable() {
         this.button.prop('disabled', true);
         this.disabled = true;
+        return this;
     }
 
     /**
@@ -164,6 +165,7 @@ class SimpleButton {
     enable() {
         this.button.removeAttr('disabled');
         this.disabled = false;
+        return this;
     }
 
     /**
@@ -172,6 +174,7 @@ class SimpleButton {
     show() {
         this.button.removeClass('hidden');
         this.hidden = false;
+        return this;
     }
 
     /**
@@ -180,6 +183,7 @@ class SimpleButton {
     hide() {
         this.button.addClass('hidden');
         this.hidden = true;
+        return this;
     }
 
     /**
@@ -188,6 +192,7 @@ class SimpleButton {
     heat() {
         this.button.addClass('hot');
         this.hot = true;
+        return this;
     }
 
     /**
@@ -196,6 +201,7 @@ class SimpleButton {
     cool() {
         this.button.removeClass('hot');
         this.hot = false;
+        return this;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

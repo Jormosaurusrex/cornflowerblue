@@ -54,6 +54,62 @@ class CornflowerBlueDemo {
                             text: 'Create Account Button Clicked'
                         });
                     }
+                })
+            ]
+        };
+    }
+    static get DIALOG_LOGIN_FORM() {
+        return {
+            instructions: {
+                icon: 'help-circle',
+                instructions: [
+                    "Enter your username and password."
+                ]
+            },
+            elements: [
+                new EmailInput({
+                    label: "Email",
+                    autocomplete: 'off',
+                    required: true
+                }),
+                new PasswordInput({
+                    label: "Password",
+                    forceconstraints: false,
+                    placeholder: "Enter your password.",
+                    required: true
+                }),
+                new BooleanToggle({
+                    label: "Remember Me",
+                    style: "toggle",
+                    labelside: 'right'
+                })
+            ],
+            handler: function(self, callback) {
+                let results = {
+                    success: false,
+                    errors: ['Email and password do not match.']
+                };
+                callback(results);
+            },
+            actions: [
+                new ConstructiveButton({
+                    text: "Login",
+                    icon: "lock-open",
+                    hot: true,
+                    submits: true,
+                    disabled: true  // No action needed.
+                }),
+                new SimpleButton({
+                    text: "Create Account",
+                    mute: true,
+                    action: function() {
+                        new Growler({
+                            position: 'top-left',
+                            icon: 'warn-triangle',
+                            title: 'Clicked',
+                            text: 'Create Account Button Clicked'
+                        });
+                    }
                 }),
                 new DestructiveButton({
                     text: "Cancel",
@@ -101,7 +157,7 @@ class CornflowerBlueDemo {
         } else {
             location.hash = `#${tab}`;
         }
-        if ((tab === 'example') || (tab === 'intro')) {
+        if ((tab === 'cfb') || (tab === 'intro')) {
             this.codebox.css('display', 'none');
         } else {
             this.codebox.css('display', 'block');
@@ -125,10 +181,10 @@ class CornflowerBlueDemo {
                     }
                 },
                 {
-                    label: 'Example',
-                    id: 'example',
+                    label: 'cornflowerblue',
+                    id: 'cfb',
                     action: function() {
-                        me.switchTab('example');
+                        me.switchTab('cfb');
                     }
                 },
                 {
@@ -196,7 +252,7 @@ class CornflowerBlueDemo {
                         me.switchTab('dialogs');
                         me.dialog = new DialogWindow({
                             title: "Login",
-                            form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+                            form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
                             //content: new MapSelectionMenu(this).container
                         }).open();
 
@@ -1182,6 +1238,7 @@ class CornflowerBlueDemo {
     grindDialogs() {
         const me = this;
         const $target = $('#inputs-dialogs');
+
         $target.append(
             $('<div />').addClass('example')
                 .append(
@@ -1191,7 +1248,18 @@ class CornflowerBlueDemo {
                         .click(function() {
                             me.dialog = new DialogWindow({
                                 title: "Login",
-                                form: new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM)
+                                form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
+                            }).open();
+                        })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Kubla Khan"
+                    }).button
+                        .click(function() {
+                            me.dialog = new DialogWindow({
+                                title: "Kubla Khan",
+                                content: $('#khan').clone().css('padding', '1.5em')
                             }).open();
                         })
                 )
