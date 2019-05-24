@@ -252,6 +252,16 @@ class Utils {
     }
 
     /**
+     * Add commas to a number in the right place
+     * @param num the number to change
+     * @return {string} the number, with commas.
+     */
+    static readableNumber(num) {
+        if (!num) return null;
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    /**
      * Format a number as money.
      * @param value the value to display.
      * @param decPlaces the decimal places (default '2')

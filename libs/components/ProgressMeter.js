@@ -63,7 +63,7 @@ class ProgressMeter {
         let $tpoint = $('<div />').addClass('tbox')
             .addClass(`tier-${point.level}`)
             .append($('<div />').addClass('name').html(point.name))
-            .append($('<div />').addClass('points').html(point.threshold))
+            .append($('<div />').addClass('points').html(Utils.readableNumber(point.threshold)))
             .append($('<div />').addClass('marker'));
 
         if (Number(this.current) === Number(point.level)) {
