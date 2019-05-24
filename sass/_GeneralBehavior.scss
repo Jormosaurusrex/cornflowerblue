@@ -63,16 +63,27 @@ h1 {
 h2 {
   font-weight: normal;
   font-size: 1.5em;
-  margin: .5em 0 1em 0;
+  margin: .5em 0 .5em 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
   text-shadow: var(--headers-h2-text-shadow);
+  letter-spacing: -.05em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  text-align: left;
+  &:after {
+    content: '';
+    border-top: .05em solid var(--headers-h2-border-color);
+    flex: 1 0 2em;
+    margin: 0 0 0 .1em;
+  }
 }
 
 h3 {
   font-weight: normal;
   font-size: 1.2em;
-  margin: .5em 0 1em 0;
+  margin: .5em 0 .5em 0;
   text-transform: var(--headers-h3-text-transform);
   color: var(--headers-h3-text-color);
   text-shadow: var(--headers-h3-text-shadow);
@@ -264,6 +275,7 @@ figure {
   flex-direction: column;
   flex-wrap: nowrap;
   float: right;
+  clear: right;
   padding: 1em;
   margin: 0 0 1em 1em;
   img {

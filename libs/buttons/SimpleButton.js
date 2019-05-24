@@ -145,6 +145,10 @@ class SimpleButton {
                 }
                 $(this).blur();
             });
+        } else if (!this.submits) {
+            this.button.click(function (e) {
+                $(this).blur();
+            });
         }
     }
 
