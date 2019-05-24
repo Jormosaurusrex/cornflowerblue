@@ -275,13 +275,13 @@
 
   --headers-h2-text-color: var(--grey-darker);
   --headers-h2-text-shadow: none;
-  --headers-h2-text-transform: none;
+  --headers-h2-text-transform: uppercase;
   --headers-h2-background-color: transparent;
   --headers-h2-border-color: var(--grey-medium);
 
   --headers-h3-text-color: var(--grey-darker);
   --headers-h3-text-shadow: none;
-  --headers-h3-text-transform: uppercase;
+  --headers-h3-text-transform: none;
   --headers-h3-background-color: transparent;
   --headers-h3-border-color: var(--grey-light);
 

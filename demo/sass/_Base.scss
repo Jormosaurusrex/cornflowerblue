@@ -96,11 +96,41 @@ div.example {
 div.wiki {
 
   span.colorswatch {
-    border: 1px dotted #222;
+    border: 1px dotted var(--grey-darkest);
     width: 1em;
     height: 1em;
     display: inline-block;
     margin-bottom: -.1em;
+  }
+
+
+  table.infobox {
+    float: right;
+    clear: right;
+    border-color: transparent;
+    background-color: var(--canvas-color-secondary);
+    padding:1.5em;
+    font-size: 80%;
+    margin: 0 0 1em 1em;
+    tr {
+      display: flex;
+      flex-direction:column;
+      th[scope=row] {
+        text-align: left;
+        font-weight: normal;
+        font-size:90%;
+        text-transform: uppercase;
+        color: var(--grey-meddark);
+        border-bottom: 1px solid var(--grey-meddark);
+        margin-top: 1.2em;
+      }
+    }
+  }
+  div.reflist {
+    font-size: 80%;
+    padding: .5em;
+    column-width: 30em;
+    background-color: var(--canvas-color-secondary);
   }
 }
 
