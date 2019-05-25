@@ -1,4 +1,8 @@
-div.radiogroup {
+fieldset.radiogroup {
+  border: none;
+  background-color: transparent;
+  margin: .5em 0 .5em 0;
+  position: relative;
   ul {
     list-style-type: none;
     li {

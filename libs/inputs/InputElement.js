@@ -41,6 +41,10 @@ class InputElement {
      * @param config a dictionary object
      */
     constructor(config) {
+
+        if (config.type === 'range') {
+            console.log(`type: ${config.type}`);
+        }
         this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
 
         if (!this.arialabel) { // munch aria label.
@@ -60,6 +64,7 @@ class InputElement {
         } else {
             this.origval = '';
         }
+
 
         this.touched = false; // set untouched on creation.
     }
@@ -341,7 +346,7 @@ class InputElement {
             .on('keyup', function(e) {
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
-                    me.helpicon.closeTip();
+                    me.helpicon.close();
                 }
 
                 if ((me.value) && (me.value.length > 0) && (me.container)) {
@@ -372,7 +377,7 @@ class InputElement {
                 }
                 if (me.help) {
                     me.helptimer = setTimeout(function() {
-                        me.helpicon.openTip();
+                        me.helpicon.open();
                     }, me.helpwaittime);
                 }
                 if ((me.focusin) && (typeof me.focusin === 'function')) {
@@ -382,7 +387,7 @@ class InputElement {
             .focusout(function(e) {
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
-                    me.helpicon.closeTip();
+                    me.helpicon.close();
                 }
 
                 if ((me.mute) && (me.label)) {
@@ -437,8 +442,8 @@ class InputElement {
             this.labelobj
                 .append(this.helpicon.button)
                 .hover(
-                    function() { me.helpicon.openTip(); },
-                    function() { me.helpicon.closeTip(); }
+                    function() { me.helpicon.open(); },
+                    function() { me.helpicon.close(); }
                 );
         }
     }

@@ -164,7 +164,7 @@
   --disabled-color-translucent: var(--grey-translucent);
 
   // Aside
-  --aside-text-color: var(--blue);
+  --aside-text-color: var(--paragraph-text-color);
   --aside-text-shadow: var(--text-shadow);
   --aside-background-color: var(--canvas-color-callout-lightweight);
   --aside-border-color: var(--blue);
@@ -177,7 +177,7 @@
 
   // Button keys
   --button-border-radius: var(--border-radius);
-  --button-default-color: var(--standard-color);
+  --button-default-color: var(--darkblue);
   --button-default-text-color: var(--button-default-color);
   --button-hover-text-color: var(--hot-text-color);
   --button-hover-highlight-color: var(--white-half);
@@ -266,14 +266,14 @@
   --growler-header-text-shadow: var(--text-shadow);
   --growler-header-background-color: var(--growler-core-color);
 
-  // Headers
-  --headers-h1-text-color: var(--grey-dark);
+  // Headers //--grey-meddark
+  --headers-h1-text-color: var(--grey-meddark);
   --headers-h1-text-shadow: none;
   --headers-h1-text-transform: uppercase;
   --headers-h1-background-color: transparent;
   --headers-h1-border-color: var(--grey-medium);
 
-  --headers-h2-text-color: var(--grey-darker);
+  --headers-h2-text-color: var(--grey-meddark);
   --headers-h2-text-shadow: none;
   --headers-h2-text-transform: uppercase;
   --headers-h2-background-color: transparent;
@@ -281,25 +281,25 @@
 
   --headers-h3-text-color: var(--grey-darker);
   --headers-h3-text-shadow: none;
-  --headers-h3-text-transform: none;
+  --headers-h3-text-transform: uppercase;
   --headers-h3-background-color: transparent;
-  --headers-h3-border-color: var(--grey-light);
+  --headers-h3-border-color: var(--grey-medium);
 
-  --headers-h4-text-color: var(--grey-dark);
+  --headers-h4-text-color: var(--grey-darker);
   --headers-h4-text-shadow: none;
   --headers-h4-text-transform: uppercase;
   --headers-h4-background-color: transparent;
-  --headers-h4-border-color: var(--grey-light);
+  --headers-h4-border-color: var(--grey-medium);
 
-  --headers-h5-text-color: var(--grey-dark);
+  --headers-h5-text-color: var(--grey-darkest);
   --headers-h5-text-shadow: none;
-  --headers-h5-text-transform: none;
+  --headers-h5-text-transform: uppercase;
   --headers-h5-background-color: transparent;
-  --headers-h5-border-color: var(--grey-dark);
+  --headers-h5-border-color: var(--grey-medium);
 
-  --headers-h6-text-color: var(--grey-medium);
+  --headers-h6-text-color: var(--grey-darkest);
   --headers-h6-text-shadow: none;
-  --headers-h6-text-transform: none;
+  --headers-h6-text-transform: uppercase;
   --headers-h6-background-color: transparent;
   --headers-h6-border-color: var(--grey-medium);
 

@@ -59,11 +59,10 @@ h1 {
     background-clip: text;
   }
 }
-
 h2 {
-  font-weight: normal;
+  font-weight: 400;
   font-size: 1.5em;
-  margin: .5em 0 .5em 0;
+  margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
   text-shadow: var(--headers-h2-text-shadow);
@@ -79,33 +78,31 @@ h2 {
     margin: 0 0 0 .1em;
   }
 }
-
 h3 {
-  font-weight: normal;
-  font-size: 1.2em;
-  margin: .5em 0 .5em 0;
+  font-weight: 400;
+  font-size: 1.3em;
+  margin: .5em 0 1em 0;
   text-transform: var(--headers-h3-text-transform);
   color: var(--headers-h3-text-color);
   text-shadow: var(--headers-h3-text-shadow);
 }
 h4 {
-  font-weight: normal;
-  font-size: 1em;
+  font-weight: 400;
+  font-size: 1.2em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h4-text-transform);
   color: var(--headers-h4-text-color);
 }
-
 h5 {
-  font-weight: normal;
-  font-size: 1em;
+  font-weight: 200;
+  font-size: 1.1em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h5-text-transform);
   color: var(--headers-h5-text-color);
 }
 h6 {
-  font-weight: normal;
-  font-size: 1em;
+  font-weight: 100;
+  font-size: 1.1em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h6-text-transform);
   color: var(--headers-h6-text-color);
@@ -113,7 +110,9 @@ h6 {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   &.fancy {
     display: flex;
     width: 100%;
@@ -178,7 +177,8 @@ ul {
 }
 
 
-label {
+label,
+legend {
   display: block;
   font-weight: normal;
   position: relative;

@@ -39,7 +39,7 @@ class RadioGroup {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
-        this.container = $('<div />')
+        this.container = $('<fieldset />')
             .addClass('radiogroup')
             .data('self', this)
             .addClass(this.classes.join(' '))
@@ -102,7 +102,7 @@ class RadioGroup {
      */
     buildLabel() {
         if (!this.label) { return null; }
-        this.labelobj = $('<label />')
+        this.labelobj = $('<legend />')
             .attr('for', this.id)
             .html(this.label);
         if (this.form) {

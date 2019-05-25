@@ -21,8 +21,8 @@
         <script type="text/javascript" src="../libs/inputs/InputElement.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
-        <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/NumberInput.js"></script>
+        <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
         <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
@@ -44,16 +44,20 @@
 
 
                 <section id="t-intro" aria-labelledby="intro">
-                    <h1>Intro</h1>
+                    <h1>Introduction</h1>
+
+
 
                     <h2>My $deity Why</h2>
                     <p>I am constantly writing a lot of small, self-contained websites, many of which require design and form elements. These projects usually don't need gigantic toolkits, so I would end up writing, re-writing, cutting-and-pasting, and re-using elements from earlier projects.  I'm lazy, so I started collecting them.</p>
                     <p>Of course, once you start down this dark path, forever will it dominate your destiny. Consume you, it will. It's <em>fun</em> for me; I like exploring the weird edges and thinking about what I think are the "best" behaviors for things.</p>
                     <p>Why package it up? I want to release some of my <em>other</em> code. If <code>cornflowerblue</code> is a dependency for those projects, it should be solid and reusable.</p>
 
+
+
                 </section>
 
-                <section id="t-cfb" aria-labelledby="cfb">
+                <section id="t-wiki" aria-labelledby="wiki">
                     <h1>Cornflower Blue</h1>
                     <div class="wiki">
                         <figure>
@@ -112,25 +116,43 @@
                     </div>
                 </section>
 
-                <section id="t-headers" aria-labelledby="headers">
-                    <h1>Headers</h1>
+                <section id="t-text" aria-labelledby="text">
+                    <h1>Text</h1>
 
+                    <p>This is a text style and inheritence playground.  An application of the aesthetic to a <a class="internal" data-tab-target="wiki">wikipedia page</a> is available.</p>
 
-                    <div class="demobox" id="headers-all">
-                        <h1>H1 Standard</h1>
-                        <h1 class="inset">H1 Inset</h1>
-                        <h1 class="fancy">H1 Fancy</h1>
-                        <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target="_new" href="http://www.does.not.exist">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
-                        <h2>H2 Standard</h2>
-                        <h2 class="fancy">H2 Fancy</h2>
+                    <div class="demobox" id="headings-all">
+
+                        <h2>Headings</h2>
+                        <p>Headings use the same font stack as the body but with differing weights (and adornments, in the case of h1 and h2).  Headings have <code>text-transform: uppercase</code> to differentiate them from  following text.</p>
+                        <h1>Standard h1</h1>
+                        <h2>Standard h2</h2>
+                        <h3>Standard h3</h3>
+                        <h4>Standard h4</h4>
+                        <h5>Standard h5</h5>
+                        <h6>Standard h6</h6>
+
+                        <h2>Fancy Headings</h2>
+                        <code class="invoker">&lt;h1 class="fancy"&gt;Fancy&lt;h1&gt;</code>
+                        <p>All Headings (h1 through h6) can be given the <code>fancy</code> class.  Fancy Headings are centered and have two lines on either side.  They are not intended for constant use.</p>
+                        <h1 class="fancy">Fancy h1</h1>
+                        <h2 class="fancy">Fancy h2</h2>
+                        <h3 class="fancy">Fancy h3</h3>
+                        <h4 class="fancy">Fancy h4</h4>
+                        <h5 class="fancy">Fancy h5</h5>
+                        <h6 class="fancy">Fancy h6</h6>
+
+                        <h2>Text Elements</h2>
+
                         <aside>
                             This is an <em>aside</em>. Text flows around it.
                         </aside>
-                        <p>Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
-                        <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
+                        <p>Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target="_new" href="http://www.does.not.exist">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
                         <blockquote>
                             <p>This is a blockquote.  Text does not flow around it.</p>
                         </blockquote>
+                        <p>Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
+                        <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
                         <p>Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</p>
                     </div>
                 </section>
@@ -167,7 +189,7 @@
                     </div>
                     <div class="demobox" id="buttons-link">
                         <h3>Link</h3>
-                        <p>Buttons with <code>aslink: true</code> take the behaviors of <code>&lt;a&gt;</code> tags.  This is useful when the functionality of a button needs to be styled as a link.</p>
+                        <p>Buttons with <code>link: true</code> take the behaviors of <code>&lt;a&gt;</code> tags.  This is useful when the functionality of a button needs to be styled as a link.</p>
                     </div>
                     <div class="demobox" id="buttons-hot">
                         <h3>Hot</h3>

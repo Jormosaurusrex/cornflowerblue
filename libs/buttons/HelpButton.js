@@ -32,11 +32,9 @@ class HelpButton extends SimpleButton {
      * Toggle visibility of the help.
      */
     toggleHelp(e, self) {
-
         if (!this.tooltip) { this.buildTooltip(); }
         this.open();
         e.stopPropagation();
-
         $(document).one('click', function closeHelp (e){
             if (self.button.has(e.target).length === 0) {
                 self.close();
@@ -85,7 +83,7 @@ class HelpButton extends SimpleButton {
             .attr('id', this.id);
 
         if (this.tipicon) {
-            this.tooltip.append(IconFactory.makeIcon(this.tipicon));
+            this.tooltip.append(IconFactory.makeIcon(this.tipicon).addClass('tipicon'));
         }
 
         this.helptext = $('<div />').addClass('helptext').html(this.help);

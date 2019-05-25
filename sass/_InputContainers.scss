@@ -10,6 +10,7 @@ div.textarea-container {
       top: 0;
       bottom: 0;
       &.stepbuttons {
+        --button-default-color: var(--standard-color);
         display: flex;
         opacity: .25;
         top: .2em;

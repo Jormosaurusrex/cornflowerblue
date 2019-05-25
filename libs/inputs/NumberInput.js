@@ -70,7 +70,9 @@ class NumberInput extends TextInput {
                 self.origkeydown(e, self);
             }
         };
-
+        if (config.type === 'range') {
+            console.log(`type: ${config.type}`);
+        }
         super(config);
     }
 
