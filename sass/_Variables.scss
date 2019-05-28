@@ -12,7 +12,7 @@
   --yellow: rgb(255, 221, 27); // #ffdd1b
   --green: rgb(0, 94, 32); // #005e20
   --tan: rgb(234, 220, 188); // #eadcbc
-  --purple: rgb(153, 0, 134); // #990086
+  --purple: rgb(86, 59, 103); // #563b67
 
   --white: rgb(225, 255, 255); // #fff;
   --ultralight: #fdfdfd;
@@ -56,13 +56,19 @@
   --yellow-half: rgba(255, 221, 27, 0.5); // #ffdd1b
   --yellow-quarter: rgba(255, 221, 27, 0.25); // #ffdd1b
   --yellow-translucent: rgba(255, 221, 27, 0.1); // #ffdd1b
+  --purple-half: rgba(86, 59, 103, 0.5); // #563b67
+  --purple-quarter: rgba(86, 59, 103, 0.25); // #563b67
+  --purple-translucent: rgba(86, 59, 103, 0.1); // #563b67
+
+
 
   // Stripes
   --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(145, 0, 0, 0.05) .5em, rgba(145, 0, 0, 0.05) 1em);
   --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(255, 153, 0, 0.1) .5em, rgba(255, 153, 0, 0.1) 1em);
   --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(51, 89, 100, 0.05) .5em, rgba(51, 89, 100, 0.05) 1em);
   --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 94, 32, 0.05) .5em, rgba(0, 94, 32, 0.05) 1em);
-  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 84, 166, 0.05) .5em, rgba(0, 84, 166, 0.05) 1em);
+  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(100, 149, 237, 0.05) .5em, rgba(100, 149, 237, 0.05) 1em);
+  --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(86, 59, 103, 0.05) .5em, rgba(86, 59, 103, 0.05) 1em);
   --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(153, 153, 153, 0.05) .5em, rgba(153, 153, 153, 0.05) 1em);
 
   --fontstack-serif: "Times New Roman", Times, serif;

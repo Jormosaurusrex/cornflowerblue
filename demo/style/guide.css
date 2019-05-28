@@ -10,7 +10,7 @@
   --yellow: #ffdd1b;
   --green: #005e20;
   --tan: #eadcbc;
-  --purple: #990086;
+  --purple: #563b67;
   --white: #e1ffff;
   --ultralight: #fdfdfd;
   --bright: #eee;
@@ -51,11 +51,15 @@
   --yellow-half: rgba(255, 221, 27, 0.5);
   --yellow-quarter: rgba(255, 221, 27, 0.25);
   --yellow-translucent: rgba(255, 221, 27, 0.1);
+  --purple-half: rgba(86, 59, 103, 0.5);
+  --purple-quarter: rgba(86, 59, 103, 0.25);
+  --purple-translucent: rgba(86, 59, 103, 0.1);
   --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(145, 0, 0, 0.05) 0.5em, rgba(145, 0, 0, 0.05) 1em);
   --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(255, 153, 0, 0.1) 0.5em, rgba(255, 153, 0, 0.1) 1em);
   --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(51, 89, 100, 0.05) 0.5em, rgba(51, 89, 100, 0.05) 1em);
   --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(0, 94, 32, 0.05) 0.5em, rgba(0, 94, 32, 0.05) 1em);
-  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(0, 84, 166, 0.05) 0.5em, rgba(0, 84, 166, 0.05) 1em);
+  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(100, 149, 237, 0.05) 0.5em, rgba(100, 149, 237, 0.05) 1em);
+  --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(86, 59, 103, 0.05) 0.5em, rgba(86, 59, 103, 0.05) 1em);
   --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(153, 153, 153, 0.05) 0.5em, rgba(153, 153, 153, 0.05) 1em);
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
@@ -2716,7 +2720,8 @@ div#container {
   div#container div.displaybox {
     flex-grow: 1;
     background-color: var(--canvas-color-primary);
-    padding: 2em; }
+    padding: 2em;
+    scroll-snap-type: y mandatory; }
     div#container div.displaybox code.invoker {
       display: block;
       float: right;

@@ -32,6 +32,7 @@ div#container {
     flex-grow: 1;
     background-color: var(--canvas-color-primary);
     padding: 2em;
+    scroll-snap-type: y mandatory;
 
     code.invoker {
       display: block;
