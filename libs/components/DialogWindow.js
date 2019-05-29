@@ -73,7 +73,9 @@ class DialogWindow {
      */
     build() {
         const me = this;
-        this.container = $('<div />').addClass('window-container');
+        this.container = $('<div />')
+            .addClass(this.classes.join(' '))
+            .addClass('window-container');
 
         this.window = $('<div />')
             .addClass('dialog')

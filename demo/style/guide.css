@@ -2579,15 +2579,9 @@ div.window-container {
       div.window-container div.dialog h2 span {
         font-size: 150%; }
       div.window-container div.dialog h2 button.closebutton {
-        opacity: 0.5;
-        box-shadow: none;
+        position: relative;
         color: var(--dialog-header-text-color);
         text-shadow: var(--dialog-header-text-shadow); }
-        div.window-container div.dialog h2 button.closebutton span:before {
-          margin: 0; }
-        div.window-container div.dialog h2 button.closebutton:hover {
-          opacity: 1;
-          background: none; }
     div.window-container div.dialog div.content {
       margin: 0;
       overflow: auto; }

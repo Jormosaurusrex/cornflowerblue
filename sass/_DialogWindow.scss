@@ -56,21 +56,10 @@ div.window-container {
         font-size: 150%;
       }
       button.closebutton {
-        opacity: 0.5;
-        box-shadow: none;
+        position: relative;
         color: var(--dialog-header-text-color);
         text-shadow: var(--dialog-header-text-shadow);
-        span {
-          &:before{
-            margin: 0;
-          }
-        }
-        &:hover {
-          opacity: 1;
-          background: none;
-        }
       }
-
     }
     div.content {
       margin: 0;
