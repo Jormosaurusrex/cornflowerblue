@@ -257,7 +257,7 @@ class Utils {
      * @return {string} the number, with commas.
      */
     static readableNumber(num) {
-        if (!num) return null;
+        if ((num === null) || (typeof num === 'undefined')) { return null; }
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 

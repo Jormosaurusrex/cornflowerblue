@@ -34,6 +34,7 @@ class DialogWindow {
         const me = this;
         this.mask = $('<div />')
             .addClass('window-mask')
+            .addClass(this.classes.join(' '))
             .click(function(e) {
                 e.preventDefault();
                 if (me.clickoutsidetoclose) {
