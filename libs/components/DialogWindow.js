@@ -86,7 +86,7 @@ class DialogWindow {
             if (this.header) {
                 this.window.append(this.header);
             } else {
-                this.title = $('<h2 />').append( $('<span />').html(this.title) );
+                this.title = $('<h2 />').append( $('<span />').addClass('t').html(this.title) );
                 this.window.append(this.title);
             }
 

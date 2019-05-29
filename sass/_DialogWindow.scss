@@ -41,7 +41,7 @@ div.window-container {
       text-shadow: var(--dialog-header-text-shadow);
       margin: 0;
       font-weight: normal;
-      font-size: 100%;
+      font-size: 150%;
       padding: .5em 1em .5em 1.5em;
       position: relative;
       width: 100%;
@@ -52,8 +52,11 @@ div.window-container {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      span {
-        font-size: 150%;
+
+      &:after {
+        display: none;
+      }
+      span.t {
       }
       button.closebutton {
         position: relative;

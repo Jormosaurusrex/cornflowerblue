@@ -1632,7 +1632,6 @@ button {
     --button-default-color: var(--hot-text-color);
     opacity: 0.5;
     box-shadow: none;
-    display: none;
     margin-right: .5em; }
     button.closebutton:hover, button.closebutton:focus, button.closebutton:active {
       color: var(--hot-text-color); }
@@ -2565,7 +2564,7 @@ div.window-container {
       text-shadow: var(--dialog-header-text-shadow);
       margin: 0;
       font-weight: normal;
-      font-size: 100%;
+      font-size: 150%;
       padding: .5em 1em .5em 1.5em;
       position: relative;
       width: 100%;
@@ -2576,8 +2575,8 @@ div.window-container {
       flex-direction: row;
       justify-content: space-between;
       align-items: center; }
-      div.window-container div.dialog h2 span {
-        font-size: 150%; }
+      div.window-container div.dialog h2:after {
+        display: none; }
       div.window-container div.dialog h2 button.closebutton {
         position: relative;
         color: var(--dialog-header-text-color);
