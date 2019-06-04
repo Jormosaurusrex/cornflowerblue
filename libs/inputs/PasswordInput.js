@@ -39,6 +39,7 @@ class PasswordInput extends TextInput {
                 classes: ['naked'],
                 text: "Hide Password",
                 hidden: true,
+                notab: true,
                 icon: 'eye-slash',
                 action: function() {
                     me.setVisibility(false);
@@ -48,6 +49,7 @@ class PasswordInput extends TextInput {
                 classes: ['naked'],
                 text: "Show Password",
                 hidden: true,
+                notab: true,
                 icon: 'eye',
                 action: function() {
                     me.setVisibility(true);
@@ -86,19 +88,6 @@ class PasswordInput extends TextInput {
         this.input.focus();
     }
 
-    /**
-     * Calculate the placeholder
-     * @return {string|*}
-     */
-    calculatePlaceholder() {
-        if (this.placeholder) { return this.placeholder; }
-        if (this.forceconstraints) {
-            return `Must be at least ${this.minlength} characters.`;
-        } else if (this.suggestedlength) {
-            return `Should be at least ${this.suggestedlength} characters.`;
-        }
-    }
-    
     /**
      * Runs local validation
      * @return {boolean}

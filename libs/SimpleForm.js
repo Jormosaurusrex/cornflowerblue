@@ -40,7 +40,8 @@ class SimpleForm {
             onsuccess: null, // What to do if the handlercallback returns success (passed self and results)
             onfailure: null, // What to do if the handlercallback returns failure (passed self and results)
             onvalid: null, // What to do when the form becomes valid (passed self)
-            oninvalid: null // What to do when the form becomes invalid (passed self)
+            oninvalid: null, // What to do when the form becomes invalid (passed self),
+            validator: null // validator function, passed self
         };
     }
 
@@ -50,6 +51,9 @@ class SimpleForm {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleForm.DEFAULT_CONFIG, config);
+        if (!this.id) { // need to generate an id for label stuff
+            this.id = `form-${Utils.getUniqueKey(5)}`;
+        }
         return this;
     }
 
@@ -151,6 +155,7 @@ class SimpleForm {
      */
     validate() {
         let valid = true;
+
         for (let element of this.elements) {
             if (element.touched) {
                 let localValid = element.validate();
@@ -159,6 +164,11 @@ class SimpleForm {
                 valid = false; // empty required fields
             }
         }
+
+        if ((valid) && ((this.validator) && (typeof this.validator === 'function'))) {
+            valid = this.validator(this);
+        }
+
         if (valid) {
             this.runValid();
         } else {
@@ -238,7 +248,7 @@ class SimpleForm {
      */
     buildHeaderBox() {
         this.headerbox = $('<div />').addClass('header');
-        if ((this.header) || (this.instructions)) {
+        if ((this.header) || ((this.instructions) && (this.instructions.instructions) && (this.instructions.instructions.length > 0))) {
             if (this.header) { this.headerbox.append(this.header); }
             if (this.instructions) {
                 this.headerbox.append(new InstructionBox(this.instructions).container);
@@ -271,6 +281,13 @@ class SimpleForm {
         this.elementbox = $('<div />').addClass('elements');
         for (let element of this.elements) {
             element.form = this;
+
+            if ((!element.id) && (element.name)) {
+                element.id = `${this.id}-${element.name}`;
+            } else if (!element.id) {
+                element.id = `${this.id}-e-${Utils.getUniqueKey(5)}`;
+            }
+            this.addElement(element);
             this.elementbox.append(element.container);
         }
     }
@@ -297,6 +314,17 @@ class SimpleForm {
                 this.actionbox.append(action.container);
             }
         }
+    }
+
+
+    /* ELEMENT MAP METHODS______________________________________________________________ */
+
+    getElement(element) {
+        return this.elementmap[element];
+    }
+
+    addElement(element) {
+        this.elementmap[element.id] = element;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -341,6 +369,12 @@ class SimpleForm {
         return this._elementbox;
     }
     set elementbox(elementbox) { this._elementbox = elementbox; }
+
+    get elementmap() {
+        if (!this._elementmap) { this._elementmap = {}; }
+        return this._elementmap;
+    }
+    set elementmap(elementmap) { this._elementmap = elementmap; }
 
     get elements() { return this.config.elements; }
     set elements(elements) { this.config.elements = elements; }
@@ -449,5 +483,14 @@ class SimpleForm {
 
     get url() { return this.config.url; }
     set url(url) { this.config.url = url; }
+
+    get validator() { return this.config.validator; }
+    set validator(validator) {
+        if (typeof validator !== 'function') {
+            console.error("Action provided for validator is not a function!");
+        }
+        this.config.validator = validator;
+    }
+
 
 }

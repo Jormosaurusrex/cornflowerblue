@@ -56,7 +56,10 @@ class InputElement {
         }
 
         if (!this.id) { // need to generate an id for label stuff
-            this.id = "e-" + Utils.getUniqueKey(5);
+            this.id = `e-${Utils.getUniqueKey(5)}`;
+        }
+        if (!this.name) {
+            this.name = this.id;
         }
 
         if (this.config.value) { // store the supplied value if any

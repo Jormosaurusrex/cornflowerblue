@@ -21,6 +21,7 @@ class SimpleButton {
             secondicon : null, // if present, this icon will be placed on the opposite side of the
                                 // defined 'iconside'.  If this is the only icon defined, it will
                                 // still be placed.  This is ignored in shaped buttons.
+            notab: false, // if true, don't be tabindexed.
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             hot: false, //if true, make the button hot.
@@ -124,6 +125,7 @@ class SimpleButton {
             }
         });
 
+        if (this.notab) { this.button.attr('tabindex', '-1'); }
         if (this.disabled) { this.disable(); }
 
         if (this.hidden) { this.hide(); }
@@ -283,6 +285,9 @@ class SimpleButton {
 
     get naked() { return this.config.naked; }
     set naked(naked) { this.config.naked = naked; }
+
+    get notab() { return this.config.notab; }
+    set notab(notab) { this.config.notab = notab; }
 
     get secondicon() { return this.config.secondicon; }
     set secondicon(secondicon) { this.config.secondicon = secondicon; }

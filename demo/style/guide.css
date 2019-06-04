@@ -2147,9 +2147,7 @@ form {
   position: relative;
   border: 0.1em solid var(--form-border-color);
   background-color: var(--form-background-color);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  display: block;
   padding: 0; }
   form div.shade {
     display: none;

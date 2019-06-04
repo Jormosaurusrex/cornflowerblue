@@ -3,9 +3,7 @@ form {
   position: relative;
   border: .1em solid var(--form-border-color);
   background-color: var(--form-background-color);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  display: block;
   padding: 0;
   div.shade {
     display: none;

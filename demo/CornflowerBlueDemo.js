@@ -264,6 +264,13 @@ class CornflowerBlueDemo {
                     action: function() {
                         me.switchTab('growlers');
                     }
+                },
+                {
+                    label: 'Password Changer',
+                    id: 'pwchanger',
+                    action: function() {
+                        me.switchTab('pwchanger');
+                    }
                 }
             ]
         });
@@ -272,6 +279,7 @@ class CornflowerBlueDemo {
         this.container
             .prepend(this.navigation.container);
 
+        /*
         this.grindInputs();
         this.grindSelects();
         this.grindTextAreas();
@@ -283,6 +291,10 @@ class CornflowerBlueDemo {
         this.grindButtons();
         this.grindMessageBoxes();
         this.grindForms();
+
+         */
+
+        this.grindPWChange();
         this.handleInternalLinks();
         this.handleWikiCitations();
 
@@ -1944,6 +1956,14 @@ class CornflowerBlueDemo {
 
         );
     }
+
+    grindPWChange() {
+        const $target = $('#pwchanger-default');
+        $target.append(new PasswordChangeForm({
+
+        }).container);
+    }
+
     grindForms() {
         const $target = $('#forms-standard');
         let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
