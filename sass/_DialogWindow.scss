@@ -1,3 +1,8 @@
+body.modalopen {
+  height: 100vh;
+  overflow-y: hidden;
+  padding-right: 15px; /* Avoid width reflow */
+}
 div.window-container {
   width: 100vw;
   height: 100vh;
