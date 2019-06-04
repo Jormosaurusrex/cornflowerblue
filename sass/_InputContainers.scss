@@ -84,6 +84,7 @@ div.textarea-container {
     font-size: 90%;
     margin: 0;
     padding: .5em 1em .5em 2em;
+    background-color: var(--input-messages-background-color);
     &.shown {
       display: block;
     }

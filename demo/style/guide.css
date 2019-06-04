@@ -266,6 +266,7 @@
   --input-subline-text-color: var(--grey-medium);
   --input-subline-warning-text-color: var(--warning-color);
   --input-subline-error-text-color: var(--error-color);
+  --input-messages-background-color: transparent;
   --input-messages-text-color: var(--grey-darkest);
   --input-messages-warning-text-color: var(--grey-darkest);
   --input-messages-error-text-color: var(--error-color);
@@ -1012,7 +1013,8 @@ div.textarea-container {
     display: none;
     font-size: 90%;
     margin: 0;
-    padding: .5em 1em .5em 2em; }
+    padding: .5em 1em .5em 2em;
+    background-color: var(--input-messages-background-color); }
     div.input-container ul.messagebox.shown,
     div.textarea-container ul.messagebox.shown {
       display: block; }
