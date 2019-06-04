@@ -253,7 +253,6 @@ class CornflowerBlueDemo {
                         me.dialog = new DialogWindow({
                             title: "Login",
                             form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
-                            //content: new MapSelectionMenu(this).container
                         }).open();
 
                     }
@@ -279,7 +278,6 @@ class CornflowerBlueDemo {
         this.container
             .prepend(this.navigation.container);
 
-        /*
         this.grindInputs();
         this.grindSelects();
         this.grindTextAreas();
@@ -291,8 +289,6 @@ class CornflowerBlueDemo {
         this.grindButtons();
         this.grindMessageBoxes();
         this.grindForms();
-
-         */
 
         this.grindPWChange();
         this.handleInternalLinks();

@@ -1623,6 +1623,8 @@ button {
           color: var(--hot-text-color); }
       button.help div.tooltip button.closebutton {
         display: none; }
+    button.help span.icon {
+      margin: 0; }
     button.help.open div.tooltip, button.help.stayopen div.tooltip {
       display: flex;
       animation: fadein-delay-half .2s; }

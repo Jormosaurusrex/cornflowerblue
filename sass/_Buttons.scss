@@ -319,6 +319,9 @@ button {
         display: none;
       }
     }
+    span.icon {
+      margin: 0;
+    }
     &.open,
     &.stayopen {
       div.tooltip {
