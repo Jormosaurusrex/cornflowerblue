@@ -1632,8 +1632,19 @@ class CornflowerBlueDemo {
     }
     grindSelects() {
         const me = this;
-        const $target = $('#inputs-selects');
-        $target.append(
+        const $standard = $('#selects-standard');
+        const $state = $('#selects-state');
+        $state.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    new StateMenu({
+
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $standard.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
                     new SelectMenu({

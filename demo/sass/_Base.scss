@@ -77,6 +77,7 @@ div.example {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  clear: both;
   &.centered {
     justify-content: space-between;
   }

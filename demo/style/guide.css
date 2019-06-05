@@ -2755,7 +2755,8 @@ div.example {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start; }
+  justify-content: flex-start;
+  clear: both; }
   div.example.centered {
     justify-content: space-between; }
   div.example.vert {

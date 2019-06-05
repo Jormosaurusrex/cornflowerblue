@@ -8,6 +8,7 @@
 
         <script type="text/javascript" src="libs/jquery-min.js"></script>
         <script type="text/javascript" src="../libs/factory/IconFactory.js"></script>
+        <script type="text/javascript" src="../libs/factory/StateProvince.js"></script>
         <script type="text/javascript" src="../libs/buttons/SimpleButton.js"></script>
         <script type="text/javascript" src="../libs/buttons/ConstructiveButton.js"></script>
         <script type="text/javascript" src="../libs/buttons/DestructiveButton.js"></script>
@@ -28,6 +29,7 @@
         <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
         <script type="text/javascript" src="../libs/inputs/SelectMenu.js"></script>
+        <script type="text/javascript" src="../libs/inputs/StateMenu.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextArea.js"></script>
         <script type="text/javascript" src="../libs/SimpleForm.js"></script>
         <script type="text/javascript" src="../libs/Utils.js"></script>
@@ -272,11 +274,19 @@
                 </section>
                 <section id="t-selects" aria-labelledby="selects">
                     <h1>Selects</h1>
-                    <div class="demobox" id="inputs-selects">
+
+                    <div class="demobox" id="selects-standard">
                         <h3>Standard</h3>
+                        <code class="invoker">new SelectMenu({options});</code>
                     </div>
                     <div class="demobox" id="inputs-radiogroups">
                         <h3>Radio Groups</h3>
+                        <code class="invoker">new RadioGroup({options});</code>
+
+                    </div>
+                    <div class="demobox" id="selects-state">
+                        <h3>State Menus</h3>
+                        <code class="invoker">new StateMenu({options});</code>
                     </div>
                 </section>
                 <section id="t-toggles" aria-labelledby="toggles">
