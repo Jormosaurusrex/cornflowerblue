@@ -58,7 +58,6 @@ class SelectMenu extends InputElement {
 
         if (this.selected) {
             let $t = this.optionlist.find('li.selected');
-            console.log(`h: ${$t.height()}`);
             this.optionlist.scrollTop($t.offset().top - $t.height());
             $t.focus();
         } else {
