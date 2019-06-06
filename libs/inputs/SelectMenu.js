@@ -22,7 +22,6 @@ class SelectMenu extends InputElement {
             config.id = "select-" + Utils.getUniqueKey(5);
         }
         super(config);
-
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -54,14 +53,29 @@ class SelectMenu extends InputElement {
     open() {
         const me = this;
 
+        let vertpos;
+
         this.optionlist.addClass('open');
 
-        if (this.selected) {
-            let $t = this.optionlist.find('li.selected');
-            this.optionlist.scrollTop($t.offset().top - $t.height());
-            $t.focus();
+        if (this.container) {
+            vertpos = this.container.position().top;
         } else {
-            this.optionlist.find('li:first-child').focus();
+            vertpos = this.optionlist.position().top;
+        }
+
+        let bodyheight = $('body').height();
+        let menuheight = this.optionlist.height();
+
+        if ((vertpos + menuheight) > bodyheight) {
+            this.optionlist.addClass('vert');
+        } else {
+            this.optionlist.removeClass('vert');
+        }
+
+        if (this.selected) {
+            this.scrollto(this.optionlist.find('li.selected'));
+        } else {
+            this.scrollto(this.optionlist.find('li:first-child'));
         }
 
         $(document).one('click', function closeMenu(e) {
@@ -214,23 +228,24 @@ class SelectMenu extends InputElement {
             .attr('tabindex', 0)
             .attr('id', `li-${lId}`)
             .on('keydown', function(e) {
-                if (e.keyCode === 9) { // tab.
-                    // This closes the menu if tab focuses out of the last element.
-                    if (me.optionlist.find('li:last-child').attr('id') === $(this).attr('id')) {
-                        me.close();
-                    }
+                if (e.keyCode === 9) { // Tab
+                    me.close();
                 } else if (e.keyCode === 27) { // Escape
                     me.close();
-                } else if (e.keyCode === 38) { // up arrow
+                } else if (e.keyCode === 38) { // Up arrow
                     e.preventDefault();
                     e.stopPropagation();
                     $(this).prev().focus();
-                } else if (e.keyCode === 40) { // down arrow
+                } else if (e.keyCode === 40) { // Down arrow
                     e.preventDefault();
                     e.stopPropagation();
                     $(this).next().focus();
                 } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
                     $op.trigger('click');
+                } else if (e.keyCode === 8) { // Backspace
+                    me.rmSearchKey();
+                } else { // Anything else
+                    me.runKeySearch(e.key);
                 }
             })
             .click(function(e) {
@@ -249,6 +264,59 @@ class SelectMenu extends InputElement {
         return $li.append($op).append($opLabel);
     }
 
+    /**
+     * Delete a search key from the stack
+     */
+    rmSearchKey() {
+        if (this.searchkeys.length < 1) return;
+        this.searchkeys.pop();
+        if (this.searchkeys.length > 0) {
+            this.findByString(this.searchkeys.join(''));
+        }
+    }
+
+    /**
+     * Search the options from keyboard input
+     * @param key the key to add to the stack
+     */
+    runKeySearch(key) {
+        this.searchkeys.push(key);
+        if (this.searchkeys.length > 0) {
+            this.findByString(this.searchkeys.join(''));
+        }
+    }
+
+    /**
+     * Search the list of options and scroll to it
+     * @param string the string to search
+     */
+    findByString(string) {
+        let $target;
+        for (let li of this.optionlist.children('li')) {
+            let label = $(li).find('label')[0];
+            if ($(label).html().toUpperCase().startsWith(string.toUpperCase())) {
+                $target = $(li);
+                break;
+            }
+        }
+        this.scrollto($target);
+    }
+
+    /**
+     * Scroll to a specific element in the list
+     * @param $element the element to scroll to
+     */
+    scrollto($element) {
+        if (!$element) return;
+        if ((this.scrolleditem) && ($element.attr('id') === this.scrolleditem.attr('id'))) {
+            return; // this is us, don't reflow.
+        }
+        this.optionlist.scrollTop($element.offset().top - $element.height());
+        $element.focus();
+        this.scrolleditem = $element;
+    }
+
+
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get optionlist() {
@@ -259,6 +327,15 @@ class SelectMenu extends InputElement {
 
     get options() { return this.config.options; }
     set options(options) { this.config.options = options; }
+
+    get searchkeys() {
+        if (!this._searchkeys) { this._searchkeys = []; }
+        return this._searchkeys;
+    }
+    set searchkeys(searchkeys) { return this._searchkeys; }
+
+    get scrolleditem() { return this._scrolleditem; }
+    set scrolleditem(scrolleditem) { this._scrolleditem = scrolleditem; }
 
     get triggerbox() {
         if (!this._triggerbox) { this.buildTriggerBox(); }

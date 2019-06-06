@@ -42,6 +42,7 @@ class PasswordInput extends TextInput {
                 notab: true,
                 icon: 'eye-slash',
                 action: function() {
+                    console.log('clicked');
                     me.setVisibility(false);
                 }
             });
@@ -52,6 +53,7 @@ class PasswordInput extends TextInput {
                 notab: true,
                 icon: 'eye',
                 action: function() {
+                    console.log('clicked');
                     me.setVisibility(true);
                 }
             });

@@ -556,6 +556,7 @@ ul {
 
 label,
 legend {
+  transition: all .2s;
   display: block;
   font-weight: normal;
   position: relative;
@@ -938,6 +939,7 @@ div.textarea-container {
     position: relative; }
     div.input-container div.wrap div.inputcontrol,
     div.textarea-container div.wrap div.inputcontrol {
+      transition: all .2s;
       position: absolute;
       right: 1em;
       top: 0;
@@ -963,7 +965,10 @@ div.textarea-container {
           margin: 0; }
     div.input-container div.wrap:after,
     div.textarea-container div.wrap:after {
+      opacity: 0;
+      display: flex;
       position: absolute;
+      transition: all .2s;
       right: 0;
       top: 0;
       bottom: 0;
@@ -983,7 +988,6 @@ div.textarea-container {
       font-size: 20pt;
       color: var(--input-status-icon-color);
       text-shadow: var(--input-status-icon-text-shadow);
-      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center; }
@@ -992,6 +996,8 @@ div.textarea-container {
     position: absolute;
     right: 0;
     top: 1.3em;
+    z-index: 10;
+    transition: all .2s;
     --button-default-color: var(--input-subline-text-color);
     --button-hover-text-color: var(--input-subline-text-color);
     --button-text-shadow: none; }
@@ -1010,6 +1016,7 @@ div.textarea-container {
       color: var(--input-subline-error-text-color); }
   div.input-container ul.messagebox,
   div.textarea-container ul.messagebox {
+    transition: all .2s;
     display: none;
     font-size: 90%;
     margin: 0;
@@ -1029,23 +1036,23 @@ div.textarea-container {
         color: var(--input-messages-warning-text-color); }
   div.input-container.mute label,
   div.textarea-container.mute label {
-    visibility: hidden;
+    opacity: 0;
     margin-top: 0; }
+  div.input-container.mute div.topcontrol,
+  div.textarea-container.mute div.topcontrol {
+    opacity: .5;
+    top: .3em; }
   div.input-container.mute.active label, div.input-container.mute.filled label,
   div.textarea-container.mute.active label,
   div.textarea-container.mute.filled label {
-    visibility: visible; }
+    opacity: 1; }
   div.input-container.mute.active div.topcontrol, div.input-container.mute.filled div.topcontrol,
   div.textarea-container.mute.active div.topcontrol,
   div.textarea-container.mute.filled div.topcontrol {
-    display: block; }
+    opacity: 1; }
   div.input-container.mute div.wrap:after,
   div.textarea-container.mute div.wrap:after {
     right: 0; }
-  div.input-container.mute div.topcontrol,
-  div.textarea-container.mute div.topcontrol {
-    display: none;
-    top: .3em; }
   div.input-container.required label:after,
   div.textarea-container.required label:after {
     color: var(--label-required-marker-color);
@@ -1054,7 +1061,7 @@ div.textarea-container {
     margin-left: .5em; }
   div.input-container.valid div.wrap:after,
   div.textarea-container.valid div.wrap:after {
-    display: flex;
+    opacity: 1;
     background-color: var(--input-status-valid-background-color);
     text-shadow: var(--input-status-valid-icon-text-shadow);
     color: var(--input-status-valid-icon-color);
@@ -1092,7 +1099,7 @@ div.textarea-container {
     border-bottom: 0.1em dashed var(--warning-color-half); }
   div.input-container.warning div.wrap:after,
   div.textarea-container.warning div.wrap:after {
-    display: flex;
+    opacity: 1;
     background-color: var(--input-status-warning-background-color);
     text-shadow: var(--input-status-warning-icon-text-shadow);
     color: var(--input-status-warning-icon-color);
@@ -1125,7 +1132,7 @@ div.textarea-container {
     border-bottom: 0.1em dashed var(--error-color-half); }
   div.input-container.error div.wrap:after,
   div.textarea-container.error div.wrap:after {
-    display: flex;
+    opacity: 1;
     background-color: var(--input-status-error-background-color);
     color: var(--input-status-icon-color);
     text-shadow: var(--input-status-error-icon-text-shadow);
@@ -1160,10 +1167,14 @@ div.textarea-container {
     color: var(--focus-color); }
   div.input-container.active div.wrap:after,
   div.textarea-container.active div.wrap:after {
-    display: none; }
+    opacity: 0; }
   div.input-container.active div.wrap div.stepbuttons,
   div.textarea-container.active div.wrap div.stepbuttons {
     opacity: 1; }
+  div.input-container.active div.wrap div.topcontrol,
+  div.textarea-container.active div.wrap div.topcontrol {
+    opacity: 1;
+    top: .3em; }
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
@@ -1333,13 +1344,12 @@ div.select-container {
     flex-wrap: nowrap;
     background-color: var(--selectmenu-menu-background-color);
     border: 0.1em solid var(--input-default-border-color);
-    border-top: none;
     padding: 0;
     overflow: auto;
     max-height: 10em;
     z-index: 201;
     position: absolute;
-    margin: 0;
+    margin: -.1em 0 0 0;
     box-shadow: var(--panel-shadow-light);
     width: 100%; }
     div.select-container ul.selectmenu li {
@@ -1390,13 +1400,14 @@ div.select-container {
         div.select-container ul.selectmenu li:hover.selected label:before, div.select-container ul.selectmenu li:focus.selected label:before {
           color: var(--selectmenu-menu-item-hover-text-color); }
     div.select-container ul.selectmenu.vert {
-      bottom: 3.1em;
+      bottom: 2.4em;
       box-shadow: var(--panel-shadow-light-inverse); }
     div.select-container ul.selectmenu.open {
       display: flex; }
 
 button {
-  transition: all .2s;
+  transition-property: width, height, background, background-color, color, margin, padding, font-size, text-decoration;
+  transition-delay: .2s;
   box-sizing: border-box;
   position: relative;
   display: inline-block;

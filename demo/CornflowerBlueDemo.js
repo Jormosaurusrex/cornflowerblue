@@ -162,7 +162,6 @@ class CornflowerBlueDemo {
         } else {
             this.codebox.css('display', 'block');
         }
-
     }
 
     build() {
@@ -401,13 +400,13 @@ class CornflowerBlueDemo {
             $('<div />').addClass('example').addClass('vert')
                 .append(
                     new EmailInput({
-                        label: "Email Address"
+                        label: "Email Address (valid required)"
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
                     new EmailInput({
-                        label: "Email Address",
+                        label: "Email Address (invalid allowed)",
                         forceconstraints: false,
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
@@ -1638,7 +1637,7 @@ class CornflowerBlueDemo {
             $('<div />').addClass('example').addClass('vert')
                 .append(
                     new StateMenu({
-
+                        value: 'WV'
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )

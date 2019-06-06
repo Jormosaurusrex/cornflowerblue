@@ -392,7 +392,6 @@ class InputElement {
                     clearTimeout(me.helptimer);
                     me.helpicon.close();
                 }
-
                 if ((me.mute) && (me.label)) {
                     $(this).attr('placeholder', me.label);
                 }

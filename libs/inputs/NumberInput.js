@@ -188,6 +188,7 @@ class NumberInput extends TextInput {
             this.upbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-up',
+                notab: true,
                 action: function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -197,6 +198,7 @@ class NumberInput extends TextInput {
             this.downbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-down',
+                notab: true,
                 action: function(e) {
                     e.preventDefault();
                     e.stopPropagation();

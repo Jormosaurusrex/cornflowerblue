@@ -5,6 +5,7 @@ div.textarea-container {
   div.wrap {
     position: relative;
     div.inputcontrol {
+      transition: all .2s;
       position: absolute;
       right: 1em;
       top: 0;
@@ -32,7 +33,10 @@ div.textarea-container {
       }
     }
     &:after {
+      opacity: 0;
+      display: flex;
       position: absolute;
+      transition: all .2s;
       right: 0;
       top: 0;
       bottom: 0;
@@ -52,7 +56,6 @@ div.textarea-container {
       font-size: 20pt;
       color: var(--input-status-icon-color);
       text-shadow: var(--input-status-icon-text-shadow);
-      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -62,6 +65,8 @@ div.textarea-container {
     position: absolute;
     right: 0;
     top: 1.3em;
+    z-index: 10;
+    transition: all .2s;
     --button-default-color: var(--input-subline-text-color);
     --button-hover-text-color: var(--input-subline-text-color);
     --button-text-shadow: none;
@@ -80,6 +85,7 @@ div.textarea-container {
     }
   }
   ul.messagebox {
+    transition: all .2s;
     display: none;
     font-size: 90%;
     margin: 0;
@@ -100,16 +106,21 @@ div.textarea-container {
   }
   &.mute {
     label {
-      visibility: hidden;
+      opacity: 0;
       margin-top: 0;
+    }
+    div.topcontrol {
+      opacity: .5;
+      top: .3em;
     }
     &.active,
     &.filled {
       label {
-        visibility: visible;
+        opacity: 1;
       }
       div.topcontrol {
-        display: block;
+        opacity: 1;
+
       }
     }
     div.wrap {
@@ -117,10 +128,7 @@ div.textarea-container {
         right: 0;
       }
     }
-    div.topcontrol {
-      display: none;
-      top: .3em;
-    }
+
   }
   &.required {
     label {
@@ -135,7 +143,7 @@ div.textarea-container {
   &.valid {
     div.wrap {
       &:after {
-        display: flex;
+        opacity: 1;
         background-color: var(--input-status-valid-background-color);
         text-shadow: var(--input-status-valid-icon-text-shadow);
         color: var(--input-status-valid-icon-color);
@@ -172,7 +180,7 @@ div.textarea-container {
     }
     div.wrap {
       &:after {
-        display: flex;
+        opacity: 1;
         background-color: var(--input-status-warning-background-color);
         text-shadow: var(--input-status-warning-icon-text-shadow);
         color: var(--input-status-warning-icon-color);
@@ -200,7 +208,7 @@ div.textarea-container {
     }
     div.wrap {
       &:after {
-        display: flex;
+        opacity: 1;
         background-color: var(--input-status-error-background-color);
         color: var(--input-status-icon-color);
         text-shadow: var(--input-status-error-icon-text-shadow);
@@ -232,10 +240,14 @@ div.textarea-container {
     }
     div.wrap {
       &:after {
-        display:none;
+        opacity: 0;
       }
       div.stepbuttons {
         opacity: 1;
+      }
+      div.topcontrol {
+        opacity: 1;
+        top: .3em;
       }
     }
   }
