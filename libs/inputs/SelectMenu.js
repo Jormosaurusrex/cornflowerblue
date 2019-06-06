@@ -58,9 +58,9 @@ class SelectMenu extends InputElement {
         this.optionlist.addClass('open');
 
         if (this.container) {
-            vertpos = this.container.position().top;
+            vertpos = (this.container.offset().top - $(window).scrollTop());
         } else {
-            vertpos = this.optionlist.position().top;
+            vertpos = (this.optionlist.offset().top - $(window).scrollTop());
         }
 
         let bodyheight = $('body').height();
@@ -68,8 +68,10 @@ class SelectMenu extends InputElement {
 
         if ((vertpos + menuheight) > bodyheight) {
             this.optionlist.addClass('vert');
+            if (this.container) { this.container.addClass('vert'); }
         } else {
             this.optionlist.removeClass('vert');
+            if (this.container) { this.container.removeClass('vert'); }
         }
 
         if (this.selected) {
