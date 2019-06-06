@@ -1002,17 +1002,23 @@ div.textarea-container {
     --button-hover-text-color: var(--input-subline-text-color);
     --button-text-shadow: none; }
   div.input-container div.charcounter,
-  div.textarea-container div.charcounter {
+  div.input-container div.searchdisplay,
+  div.textarea-container div.charcounter,
+  div.textarea-container div.searchdisplay {
     color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
     font-style: oblique;
     text-align: right; }
     div.input-container div.charcounter.danger,
-    div.textarea-container div.charcounter.danger {
+    div.input-container div.searchdisplay.danger,
+    div.textarea-container div.charcounter.danger,
+    div.textarea-container div.searchdisplay.danger {
       color: var(--input-subline-warning-text-color); }
     div.input-container div.charcounter.outofbounds,
-    div.textarea-container div.charcounter.outofbounds {
+    div.input-container div.searchdisplay.outofbounds,
+    div.textarea-container div.charcounter.outofbounds,
+    div.textarea-container div.searchdisplay.outofbounds {
       color: var(--input-subline-error-text-color); }
   div.input-container ul.messagebox,
   div.textarea-container ul.messagebox {
@@ -1337,6 +1343,18 @@ div.select-container {
       background-color: var(--input-focused-background-color); }
       div.select-container div.trigger:focus:before {
         color: var(--input-focused-border-color); }
+  div.select-container div.searchdisplay {
+    transition: all .2s;
+    opacity: 1;
+    right: 0;
+    top: -1.3em; }
+    div.select-container div.searchdisplay:after {
+      font-family: "cornflowerblue", serif;
+      content: '\48'; }
+    div.select-container div.searchdisplay.hidden {
+      opacity: 0; }
+  div.select-container.vert div.searchdisplay {
+    top: 3em; }
   div.select-container ul.selectmenu {
     list-style-type: none;
     display: none;
@@ -1406,8 +1424,6 @@ div.select-container {
       display: flex; }
 
 button {
-  transition-property: width, height, background, background-color, color, margin, padding, font-size, text-decoration;
-  transition-delay: .2s;
   box-sizing: border-box;
   position: relative;
   display: inline-block;

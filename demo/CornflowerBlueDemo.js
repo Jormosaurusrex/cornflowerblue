@@ -1626,6 +1626,16 @@ class CornflowerBlueDemo {
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
+                .append(
+                    new TextArea({
+                        label: "Post Content",
+                        maxlength: 2000,
+                        disabled: true,
+                        mute: true,
+                        placeholder: "Write your post here!"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
         );
 
     }

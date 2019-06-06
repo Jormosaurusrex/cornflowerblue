@@ -5,6 +5,7 @@ class SelectMenu extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             unselectedtext: "(Select)",
+            searchtext: true,
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
             onchange: null // The change handler. Passed (event, self).
@@ -44,6 +45,8 @@ class SelectMenu extends InputElement {
         if (this.selected) { return this.selected.val(); }
         return ''; // Return empty string for no value.
     }
+
+    get topcontrol() { return this.searchdisplay; }
 
     /* CONTROL METHODS__________________________________________________________________ */
 
@@ -134,6 +137,7 @@ class SelectMenu extends InputElement {
             .append(this.labelobj)
             .append($('<div />').addClass('wrap').append(this.triggerbox))
             .append(this.optionlist)
+            .append(this.topcontrol)
             .append(this.messagebox);
 
         this.postContainerScrub();
@@ -267,6 +271,33 @@ class SelectMenu extends InputElement {
     }
 
     /**
+     * Draws the search text display.
+     */
+    buildSearchDisplay() {
+        if (this.searchtext) {
+            this.searchdisplay = $('<div />')
+                .addClass('searchdisplay')
+                .addClass('topcontrol');
+            this.updateSearch();
+        }
+    }
+
+    /**
+     * Updates the counter
+     */
+    updateSearch() {
+        if (this.searchkeys.length < 1) {
+            this.searchdisplay.addClass('hidden');
+            this.searchdisplay.html('');
+            return;
+        }
+        this.searchdisplay.removeClass('hidden');
+        this.searchdisplay.html(this.searchkeys.join(''));
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
      * Delete a search key from the stack
      */
     rmSearchKey() {
@@ -275,6 +306,7 @@ class SelectMenu extends InputElement {
         if (this.searchkeys.length > 0) {
             this.findByString(this.searchkeys.join(''));
         }
+        this.updateSearch();
     }
 
     /**
@@ -286,6 +318,7 @@ class SelectMenu extends InputElement {
         if (this.searchkeys.length > 0) {
             this.findByString(this.searchkeys.join(''));
         }
+        this.updateSearch();
     }
 
     /**
@@ -330,11 +363,20 @@ class SelectMenu extends InputElement {
     get options() { return this.config.options; }
     set options(options) { this.config.options = options; }
 
+    get searchdisplay() {
+        if (!this._searchdisplay) { this.buildSearchDisplay(); }
+        return this._searchdisplay;
+    }
+    set searchdisplay(searchdisplay) { this._searchdisplay = searchdisplay; }
+
     get searchkeys() {
         if (!this._searchkeys) { this._searchkeys = []; }
         return this._searchkeys;
     }
     set searchkeys(searchkeys) { return this._searchkeys; }
+
+    get searchtext() { return this.config.searchtext; }
+    set searchtext(searchtext) { this.config.searchtext = searchtext; }
 
     get scrolleditem() { return this._scrolleditem; }
     set scrolleditem(scrolleditem) { this._scrolleditem = scrolleditem; }

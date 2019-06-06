@@ -208,11 +208,11 @@ class InputElement {
 
         let ctext = "";
         if (this.counter === 'limit') {
-            ctext = `${this.value.length} of ${this.maxlength} characters entered.`;
+            ctext = `${this.value.length} of ${this.maxlength} characters entered`;
         } else if (this.counter === 'sky') {
-            ctext = `${this.value.length} characters entered.`;
+            ctext = `${this.value.length} characters entered`;
         } else { // remaining
-            ctext = `${(this.maxlength - this.value.length)} characters remaining.`;
+            ctext = `${(this.maxlength - this.value.length)} characters remaining`;
         }
 
         this.charactercounter.html(ctext);
@@ -463,15 +463,15 @@ class InputElement {
      * Draws a text counter in the field
      */
     buildCharacterCounter() {
-        const me = this;
         if (this.counter) {
             this.charactercounter = $('<div />')
                 .addClass('charcounter')
                 .addClass('topcontrol')
                 .addClass(this.counter);
+
             if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
 
-            me.updateCounter();
+            this.updateCounter();
         }
     }
 

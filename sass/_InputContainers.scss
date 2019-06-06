@@ -71,7 +71,8 @@ div.textarea-container {
     --button-hover-text-color: var(--input-subline-text-color);
     --button-text-shadow: none;
   }
-  div.charcounter {
+  div.charcounter,
+  div.searchdisplay {
     color: var(--input-subline-text-color);
     display: block;
     font-size: 85%;
@@ -251,6 +252,9 @@ div.textarea-container {
       }
     }
   }
+}
+div.select-container {
+
 }
 div.textarea-container {
   div.wrap {
