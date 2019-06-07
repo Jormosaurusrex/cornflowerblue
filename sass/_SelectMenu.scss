@@ -73,12 +73,17 @@ div.select-container {
     opacity: 1;
     right: 0;
     top: -1.3em;
+    padding: 0 .1em 0 0;
     &:after {
       font-family: "cornflowerblue", serif;
-      content: '\48'; // circle checkmark
+      content: '\48'; // magnify
+      font-style: normal;
     }
     &.hidden {
       opacity: 0;
+      &:after {
+        opacity: 0;
+      }
     }
   }
   &.vert {

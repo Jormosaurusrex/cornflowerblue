@@ -1347,12 +1347,16 @@ div.select-container {
     transition: all .2s;
     opacity: 1;
     right: 0;
-    top: -1.3em; }
+    top: -1.3em;
+    padding: 0 .1em 0 0; }
     div.select-container div.searchdisplay:after {
       font-family: "cornflowerblue", serif;
-      content: '\48'; }
+      content: '\48';
+      font-style: normal; }
     div.select-container div.searchdisplay.hidden {
       opacity: 0; }
+      div.select-container div.searchdisplay.hidden:after {
+        opacity: 0; }
   div.select-container.vert div.searchdisplay {
     top: 3em; }
   div.select-container ul.selectmenu {

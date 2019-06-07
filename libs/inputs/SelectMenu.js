@@ -286,7 +286,7 @@ class SelectMenu extends InputElement {
      * Updates the counter
      */
     updateSearch() {
-        if (this.searchkeys.length < 1) {
+        if (this.searchkeys.length === 0) {
             this.searchdisplay.addClass('hidden');
             this.searchdisplay.html('');
             return;
@@ -301,7 +301,7 @@ class SelectMenu extends InputElement {
      * Delete a search key from the stack
      */
     rmSearchKey() {
-        if (this.searchkeys.length < 1) return;
+        if (this.searchkeys.length === 0) return;
         this.searchkeys.pop();
         if (this.searchkeys.length > 0) {
             this.findByString(this.searchkeys.join(''));
