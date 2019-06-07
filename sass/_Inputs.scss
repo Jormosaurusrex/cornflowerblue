@@ -15,8 +15,8 @@ textarea {
   background-color: var(--input-default-background-color);
   margin: 0;
   border: .1em solid var(--input-default-border-color);
-  padding: .5em 1em .5em 1.5em;
-  border-radius: .1em;
+  padding: var(--input-default-padding);
+  border-radius: var(--input-border-radius);
   color: var(--input-default-text-color);
   text-shadow:var(--input-default-text-shadow);
   vertical-align: middle;

@@ -83,6 +83,9 @@ div.example {
   }
   &.vert {
     flex-direction: column;
+    button {
+      align-self: flex-start;
+    }
   }
   div.checkbox {
     margin: 1em .5em 1em .5em

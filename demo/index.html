@@ -56,7 +56,8 @@
                     <p>Of course, once you start down this dark path, forever will it dominate your destiny. Consume you, it will. It's <em>fun</em> for me; I like exploring the weird edges and thinking about what I think are the "best" behaviors for things.</p>
                     <p>Why package it up? I want to release some of my <em>other</em> code. If <code>cornflowerblue</code> is a dependency for those projects, it should be solid and reusable.</p>
 
-
+                    <h3>Why "cornflower blue"</h3>
+                    <p>I hate explaining jokes.</p>
 
                 </section>
 
@@ -243,6 +244,11 @@
                         <p>If given a <code>help</code> parameter (accepts a string), a help button will be included with the <code>label</code>.  It behaves as a tooltip on hover, can be locked open on click, and will automatically appear after a short period of the element retains focus but has no activity.</p>
                         <p><code>TextInput</code> supports three kinds of character counters, enabled with <code>counter: <i>type</i></code>, were <i>type</i> can be one of 'sky', 'remaining', or 'limit'. This changes the way the counter is worded.</p>
                     </div>
+                    <div class="demobox" id="inputs-inactive">
+                        <h3>Inactive</h3>
+                        <p>Inputs can be switched to an "inactive" mode, which displays their labels and values but without allowing for interaction or alteration (though they can still be updated programmatically).  This serves a different purpose than <code>disabled</code>.</p>
+                        <p>The inactive status can be defined in its construction (with <code>inactive: true</code>) or toggled programmatically (with <code>.deactivate()</code>, <code>.activate()</code>, and <code>.toggleActivation()</code>).</p>
+                    </div>
                     <div class="demobox" id="inputs-mute">
                         <h3>Mute</h3>
                         <p>Setting an input to with <code>mute: true</code> will change its display style. The label changes position and top controls disappear (such as character counters) fade until the element obtains focus.</p>
@@ -284,6 +290,10 @@
                         <p>Options for the <code>SelectMenu</code> list are provided with the <code>options:</code> parameter.  This is an array of option definitions, which look like <code>{ label: "Label to show", value: "v" }</code>. Include <code>checked: true</code> to automatically select that option.</p>
                         <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element.</p>
                         <p>By default, a small search indicator will appear if the user begins typing while the input has focus. Set <code>searchtext</code> searchtext to <i>false</i> to disable this.  The display will switch between top and bottom, depending on which direction the menu opens.</p>
+                    </div>
+                    <div class="demobox" id="selects-inactive">
+                        <h3>Inactive</h3>
+                        <p>Select elements can also be made inactive, like other inputs.</p>
                     </div>
                     <div class="demobox" id="selects-state">
                         <h3>State Menus</h3>

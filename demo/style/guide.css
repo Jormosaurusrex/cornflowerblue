@@ -250,6 +250,8 @@
   --headers-h6-border-color: var(--grey-medium);
   --hr-background-color: transparent;
   --hr-border-color: var(--grey-medium);
+  --input-default-padding: .5em 1em .5em 1.5em;
+  --input-border-radius: .1em;
   --input-default-background-color: var(--grey-translucent);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
@@ -291,7 +293,7 @@
   --instructions-text-shadow: var(--text-shadow);
   --instructions-icon-text-shadow: none;
   --instructions-icon-color: var(--grey-medium);
-  --label-color: var(--grey-dark);
+  --label-color: var(--darkblue);
   --label-text-shadow: var(--text-shadow);
   --label-required-marker-color: var(--required-color);
   --label-text-transform: none;
@@ -336,7 +338,7 @@
   --tabbar-box-shadow: var(--panel-shadow-light);
   --tabbar-background-color: var(--ultralight);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
-  --tabbar-border-radius: .5em;
+  --tabbar-border-radius: var(--border-radius);
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
   --tabbar-tab-background-color: var(--light);
@@ -1040,6 +1042,20 @@ div.textarea-container {
       div.input-container ul.messagebox li.warning,
       div.textarea-container ul.messagebox li.warning {
         color: var(--input-messages-warning-text-color); }
+  div.input-container div.inactivebox,
+  div.textarea-container div.inactivebox {
+    --input-inactivebox-background-color: transparent;
+    --input-inactivebox-text-color: var(--grey-dark);
+    --input-inactivebox-text-shadow: var(--text-shadow);
+    background-color: var(--input-inactivebox-background-color);
+    border: 0.1em solid var(--input-inactivebox-background-color);
+    border-radius: var(--input-border-radius);
+    padding: var(--input-default-padding);
+    vertical-align: middle;
+    color: var(--input-inactivebox-text-color);
+    font-size: 105%;
+    width: 100%;
+    display: none; }
   div.input-container.mute label,
   div.textarea-container.mute label {
     opacity: 0;
@@ -1181,6 +1197,22 @@ div.textarea-container {
   div.textarea-container.active div.wrap div.topcontrol {
     opacity: 1;
     top: .3em; }
+  div.input-container.inactive label button.help, div.input-container.inactive label:after,
+  div.textarea-container.inactive label button.help,
+  div.textarea-container.inactive label:after {
+    display: none; }
+  div.input-container.inactive div.wrap,
+  div.input-container.inactive div.topcontrol,
+  div.input-container.inactive ul.messagebox,
+  div.input-container.inactive ul.selectmenu,
+  div.textarea-container.inactive div.wrap,
+  div.textarea-container.inactive div.topcontrol,
+  div.textarea-container.inactive ul.messagebox,
+  div.textarea-container.inactive ul.selectmenu {
+    display: none; }
+  div.input-container.inactive div.inactivebox,
+  div.textarea-container.inactive div.inactivebox {
+    display: block; }
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
@@ -1205,8 +1237,8 @@ textarea {
   background-color: var(--input-default-background-color);
   margin: 0;
   border: 0.1em solid var(--input-default-border-color);
-  padding: .5em 1em .5em 1.5em;
-  border-radius: .1em;
+  padding: var(--input-default-padding);
+  border-radius: var(--input-border-radius);
   color: var(--input-default-text-color);
   text-shadow: var(--input-default-text-shadow);
   vertical-align: middle; }
@@ -2792,6 +2824,8 @@ div.example {
     justify-content: space-between; }
   div.example.vert {
     flex-direction: column; }
+    div.example.vert button {
+      align-self: flex-start; }
   div.example div.checkbox {
     margin: 1em 0.5em 1em 0.5em; }
   div.example button.hexagon:nth-child(even) {

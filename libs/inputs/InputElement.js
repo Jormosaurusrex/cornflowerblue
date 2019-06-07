@@ -16,6 +16,10 @@ class InputElement {
                                // To insure a blank placeholder, set the value to ""
             title: null,
             pattern: null,
+
+            inactive: false, // Start life in "inactive" mode.
+            unsettext: "(Not Set)", // what to display in inactive mode if the value is empty
+
             help: null, // Help text.
             helpwaittime: 5000, // How long to wait before automatically showing help tooltip
             required: false, // Is this a required field or not
@@ -258,6 +262,38 @@ class InputElement {
         if (this.container) { this.container.removeClass('disabled'); }
     }
 
+    /**
+     * Switch to 'inactive' mode.
+     */
+    deactivate() {
+        this.container.addClass('inactive');
+        this.inactive = true;
+    }
+
+    /**
+     * Switch from 'inactive' mode to 'active' mode.
+     */
+    activate() {
+        this.container.removeClass('inactive');
+        this.inactive = false;
+    }
+
+    toggleActivation() {
+        if (this.container.hasClass('inactive')) {
+            this.activate();
+            return;
+        }
+        this.deactivate();
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get inactivetext() {
+        if (this.value) { return this.value; }
+        if (this.config.value) { return this.config.value; }
+        return this.unsettext;
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -276,6 +312,7 @@ class InputElement {
                 .append(this.input)
                 .append(this.inputcontrol)
             )
+            .append(this.inactivebox)
             .append(this.topcontrol)
             .append(this.messagebox);
 
@@ -301,7 +338,20 @@ class InputElement {
         if ((this.config.value) && (this.config.value.length > 0)) {
             this.container.addClass('filled');
         }
+        if (this.inactive) {
+            this.deactivate()
+        }
         this.validate(true);
+    }
+
+    /**
+     * Build the message box.
+     */
+    buildInactiveBox() {
+        const me = this;
+        this.inactivebox = $('<div />')
+            .addClass('inactivebox')
+            .html(this.inactivetext);
     }
 
     /**
@@ -371,7 +421,7 @@ class InputElement {
                     me.onkeyup(e, me);
                 }
             })
-            .focusin(function(e) {
+            .on('focusin', function(e) {
                 if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
                     $(this).attr('placeholder', me.placeholder);
                 }
@@ -387,7 +437,7 @@ class InputElement {
                     me.focusin(e, me);
                 }
             })
-            .focusout(function(e) {
+            .on('focusout', function(e) {
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
                     me.helpicon.close();
@@ -401,6 +451,7 @@ class InputElement {
 
                 me.validate();
 
+                me.inactivebox.html(me.inactivetext);
                 if (me.form) { me.form.validate(); }
 
                 if ((me.focusout) && (typeof me.focusout === 'function')) {
@@ -451,9 +502,9 @@ class InputElement {
     }
 
     /**
-     * Build the error box.
+     * Build the message box.
      */
-    buildmessagebox() {
+    buildMessagebox() {
         this.messagebox = $('<ul />')
             .attr('id', `msg-${this.id}`)
             .addClass('messagebox');
@@ -516,7 +567,7 @@ class InputElement {
     set helptimer(helptimer) { this._helptimer = helptimer; }
 
     get messagebox() {
-        if (!this._messagebox) { this.buildmessagebox(); }
+        if (!this._messagebox) { this.buildMessagebox(); }
         return this._messagebox;
     }
     set messagebox(messagebox) { this._messagebox = messagebox; }
@@ -560,6 +611,15 @@ class InputElement {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get inactive() { return this.config.inactive; }
+    set inactive(inactive) { this.config.inactive = inactive; }
+
+    get inactivebox() {
+        if (!this._inactivebox) { this.buildInactiveBox(); }
+        return this._inactivebox;
+    }
+    set inactivebox(inactivebox) { this._inactivebox = inactivebox; }
 
     get input() {
         if (!this._input) { this.buildInput(); }
@@ -638,6 +698,9 @@ class InputElement {
     get type() { return this.config.type; }
     set type(type) { this.config.type = type; }
 
+    get unsettext() { return this.config.unsettext; }
+    set unsettext(unsettext) { this.config.unsettext = unsettext; }
+
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 
@@ -645,6 +708,7 @@ class InputElement {
     set value(value) {
         this.config.value = value;
         this.input.val(value);
+        this.inactivebox.val(value);
     }
 
     get warnings() { return this._warnings; }

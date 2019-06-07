@@ -328,6 +328,7 @@ class CornflowerBlueDemo {
     grindInputs() {
         const me = this;
         const $standard = $('#inputs-standard');
+        const $inactive = $('#inputs-inactive');
         const $mute = $('#inputs-mute');
         const $password = $('#inputs-password');
         const $email = $('#inputs-email');
@@ -347,6 +348,40 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
+
+        let inactiveTest = new TextInput({
+            label: "Name",
+            maxlength: 50,
+            required: true,
+            inactive: true,
+            counter: 'remaining',
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        });
+
+        let toggleButton = new SimpleButton({
+           text: "Enable Element",
+           action: function(e, self) {
+               inactiveTest.toggleActivation();
+               if (inactiveTest.inactive) {
+                   self.text = "Enable Element";
+               } else {
+                   self.text = "Disable Element";
+               }
+           }
+        });
+
+        $inactive.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    inactiveTest.container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    toggleButton.button
+                )
+        );
+
         $number.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
@@ -1643,6 +1678,49 @@ class CornflowerBlueDemo {
         const me = this;
         const $standard = $('#selects-standard');
         const $state = $('#selects-state');
+        const $inactive = $('#selects-inactive');
+
+
+        let inactiveTest = new SelectMenu({
+            label: "Year",
+            name: "year",
+            required: true,
+            inactive: true,
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" },
+                { label: "2015", value: "2015" },
+                { label: "2014", value: "2014" },
+                { label: "2013", value: "2013" },
+                { label: "2012", value: "2012" }
+            ]
+        });
+
+        let toggleButton = new SimpleButton({
+            text: "Enable Element",
+            action: function(e, self) {
+                inactiveTest.toggleActivation();
+                if (inactiveTest.inactive) {
+                    self.text = "Enable Element";
+                } else {
+                    self.text = "Disable Element";
+                }
+            }
+        });
+
+        $inactive.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    inactiveTest.container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    toggleButton.button
+                )
+        );
+
         $state.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(

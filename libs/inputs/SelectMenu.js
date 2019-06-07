@@ -137,6 +137,7 @@ class SelectMenu extends InputElement {
             .append(this.labelobj)
             .append($('<div />').addClass('wrap').append(this.triggerbox))
             .append(this.optionlist)
+            .append(this.inactivebox)
             .append(this.topcontrol)
             .append(this.messagebox);
 
@@ -214,6 +215,13 @@ class SelectMenu extends InputElement {
             .attr('aria-label', def.label)
             .change(function(e) {
                 me.triggerbox.html(def.label);
+
+                if (def.label === me.unselectedtext) {
+                    me.inactivebox.html(me.unsettext);
+                } else {
+                    me.inactivebox.html(def.label);
+                }
+
                 me.close();
 
                 me.validate();

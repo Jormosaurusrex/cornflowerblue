@@ -105,6 +105,20 @@ div.textarea-container {
       }
     }
   }
+  div.inactivebox {
+    --input-inactivebox-background-color: transparent;
+    --input-inactivebox-text-color: var(--grey-dark);
+    --input-inactivebox-text-shadow: var(--text-shadow);
+    background-color: var(--input-inactivebox-background-color);
+    border: .1em solid var(--input-inactivebox-background-color);
+    border-radius: var(--input-border-radius);
+    padding: var(--input-default-padding);
+    vertical-align: middle;
+    color: var(--input-inactivebox-text-color);
+    font-size: 105%;
+    width: 100%;
+    display: none;
+  }
   &.mute {
     label {
       opacity: 0;
@@ -252,9 +266,23 @@ div.textarea-container {
       }
     }
   }
-}
-div.select-container {
-
+  &.inactive {
+    label {
+      button.help,
+      &:after {
+        display: none;
+      }
+    }
+    div.wrap,
+    div.topcontrol,
+    ul.messagebox,
+    ul.selectmenu {
+      display: none;
+    }
+    div.inactivebox {
+      display: block;
+    }
+  }
 }
 div.textarea-container {
   div.wrap {

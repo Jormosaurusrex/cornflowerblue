@@ -148,7 +148,7 @@ class SimpleButton {
                 $(this).blur();
             });
         } else if (!this.submits) {
-            this.button.click(function (e) {
+            this.button.click(function () {
                 $(this).blur();
             });
         }

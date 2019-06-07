@@ -314,6 +314,9 @@
   --hr-border-color: var(--grey-medium);
 
   // Input
+  --input-default-padding: .5em 1em .5em 1.5em;
+  --input-border-radius: .1em;
+
   --input-default-background-color: var(--grey-translucent);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
@@ -365,7 +368,7 @@
   --instructions-icon-color: var(--grey-medium);
 
   // Labels
-  --label-color: var(--grey-dark);
+  --label-color: var(--darkblue);
   --label-text-shadow: var(--text-shadow);
   --label-required-marker-color: var(--required-color);
   --label-text-transform: none;
@@ -428,7 +431,7 @@
   --tabbar-box-shadow: var(--panel-shadow-light);
   --tabbar-background-color: var(--ultralight);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
-  --tabbar-border-radius: .5em;
+  --tabbar-border-radius: var(--border-radius);
 
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
