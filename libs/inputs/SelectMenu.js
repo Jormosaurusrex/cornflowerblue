@@ -48,6 +48,13 @@ class SelectMenu extends InputElement {
 
     get topcontrol() { return this.searchdisplay; }
 
+    get inactivetext() {
+        if (this.selectedoption) { return this.selectedoption.label; }
+        if (this.value) { return this.value; }
+        if (this.config.value) { return this.config.value; }
+        return this.unsettext;
+    }
+
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
@@ -177,11 +184,10 @@ class SelectMenu extends InputElement {
             .attr('tabindex', 0)
             .attr('role', 'radiogroup');
 
-        let foundcheck = false;
         for (let opt of this.options) {
             let $o = this.buildOption(opt);
             if (opt.checked) {
-                foundcheck = true;
+                this.selectedoption = opt;
             }
             this.optionlist.append($o);
         }
@@ -190,7 +196,7 @@ class SelectMenu extends InputElement {
             let unselconfig = {
                 label: this.unselectedtext,
                 value: '',
-                checked: !foundcheck,
+                checked: !this.selectedoption,
                 unselectoption: true
             };
             let $o = this.buildOption(unselconfig);
@@ -218,7 +224,7 @@ class SelectMenu extends InputElement {
             .attr('aria-label', def.label)
             .change(function(e) {
                 me.triggerbox.html(def.label);
-
+                me.selectedoption = def;
                 if (def.label === me.unselectedtext) {
                     me.inactivebox.html(me.unsettext);
                 } else {
@@ -388,6 +394,9 @@ class SelectMenu extends InputElement {
 
     get searchtext() { return this.config.searchtext; }
     set searchtext(searchtext) { this.config.searchtext = searchtext; }
+
+    get selectedoption() { return this._selectedoption; }
+    set selectedoption(selectedoption) { this._selectedoption = selectedoption; }
 
     get scrolleditem() { return this._scrolleditem; }
     set scrolleditem(scrolleditem) { this._scrolleditem = scrolleditem; }

@@ -22,7 +22,12 @@ class SimpleForm {
             autocomplete: 'off', // Autocomplete value
             method: 'get', // Method for the form.  Also used in API calls.
             header: null, // Stuff to put at the header. This is expected to be a jQuery element
+
+            inactive: false, // Start life in "inactive" mode. This will set all form elements to "inactive" and hide any controls.  This also shows the "inactive" instructions, if any.
+
             instructions: null, // Instructions configuration.  See InstructionBox.
+            inactiveinstructions: null, // Inactive Instructions array.  Shown when the form is set to inactive.
+
             spinnerstyle: 'spin', //
             spinnertext: '...Please Wait...', //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
@@ -57,6 +62,48 @@ class SimpleForm {
         return this;
     }
 
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Switch to 'inactive' mode.
+     */
+    deactivate() {
+        this.form.addClass('inactive');
+        this.inactive = true;
+        for (let e of this.elements) {
+            e.deactivate();
+        }
+        if ((this.inactiveinstructions) && (this.instructionbox)) {
+            this.instructionbox.setInstructions(this.inactiveinstructions.instructions);
+        }
+    }
+
+    /**
+     * Switch from 'inactive' mode to 'active' mode.
+     */
+    activate() {
+        this.form.removeClass('inactive');
+        this.inactive = false;
+        for (let e of this.elements) {
+            e.activate();
+        }
+        if ((this.instructions) && (this.instructionbox)) {
+            this.instructionbox.setInstructions(this.instructions.instructions);
+        }
+
+    }
+
+    /**
+     * Toggle between active states
+     */
+    toggleActivation() {
+        if (this.form.hasClass('inactive')) {
+            this.activate();
+            return;
+        }
+        this.deactivate();
+    }
+
     /* ACTION METHODS___________________________________________________________________ */
 
     /**
@@ -65,6 +112,8 @@ class SimpleForm {
      */
     submit(e) {
         const me = this;
+
+        if (this.inactive) { return; }
 
         if (this.validate()) {
             if (this.handler) {
@@ -241,6 +290,10 @@ class SimpleForm {
 
         this.validate();
 
+        if (this.inactive) {
+            this.deactivate();
+        }
+
     }
 
     /**
@@ -251,12 +304,26 @@ class SimpleForm {
         if ((this.header) || ((this.instructions) && (this.instructions.instructions) && (this.instructions.instructions.length > 0))) {
             if (this.header) { this.headerbox.append(this.header); }
             if (this.instructions) {
-                this.headerbox.append(new InstructionBox(this.instructions).container);
+                this.headerbox.append(this.instructionbox.container);
             }
         }
         if (this.results) {
             this.handleResults(this.results, true);
         }
+    }
+
+    /**
+     * Build the instruction box for the form.
+     */
+    buildInstructionBox() {
+        if ((!this.instructions) || (this.instructions.length === 0)) {
+            return;
+        }
+        let ins = this.instructions;
+        if ((this.inactive) && (this.inactiveinstructions) && (this.inactiveinstructions.length > 0)) {
+            ins = this.inactiveinstructions;
+        }
+        this.instructionbox = new InstructionBox(ins);
     }
 
     /**
@@ -415,6 +482,18 @@ class SimpleForm {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get inactive() { return this.config.inactive; }
+    set inactive(inactive) { this.config.inactive = inactive; }
+
+    get inactiveinstructions() { return this.config.inactiveinstructions; }
+    set inactiveinstructions(inactiveinstructions) { this.config.inactiveinstructions = inactiveinstructions; }
+
+    get instructionbox() {
+        if (!this._instructionbox) { this.buildInstructionBox(); }
+        return this._instructionbox;
+    }
+    set instructionbox(instructionbox) { this._instructionbox = instructionbox; }
 
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }

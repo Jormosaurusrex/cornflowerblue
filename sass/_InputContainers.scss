@@ -268,6 +268,7 @@ div.textarea-container {
   }
   &.inactive {
     label {
+      opacity: 1;
       button.help,
       &:after {
         display: none;

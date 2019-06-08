@@ -1197,10 +1197,13 @@ div.textarea-container {
   div.textarea-container.active div.wrap div.topcontrol {
     opacity: 1;
     top: .3em; }
-  div.input-container.inactive label button.help, div.input-container.inactive label:after,
-  div.textarea-container.inactive label button.help,
-  div.textarea-container.inactive label:after {
-    display: none; }
+  div.input-container.inactive label,
+  div.textarea-container.inactive label {
+    opacity: 1; }
+    div.input-container.inactive label button.help, div.input-container.inactive label:after,
+    div.textarea-container.inactive label button.help,
+    div.textarea-container.inactive label:after {
+      display: none; }
   div.input-container.inactive div.wrap,
   div.input-container.inactive div.topcontrol,
   div.input-container.inactive ul.messagebox,
@@ -2293,6 +2296,8 @@ form {
       align-self: flex-end;
       margin-left: auto;
       margin-right: 1em; }
+  form.inactive div.actions {
+    display: none; }
 
 div.spinner.spin {
   border-radius: 50%;

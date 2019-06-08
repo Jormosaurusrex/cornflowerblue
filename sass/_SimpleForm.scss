@@ -90,6 +90,11 @@ form {
       margin-right: 1em;
     }
   }
+  &.inactive {
+    div.actions {
+      display: none;
+    }
+  }
 }
 
 div.spinner.spin {

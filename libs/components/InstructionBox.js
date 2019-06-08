@@ -21,6 +21,8 @@ class InstructionBox {
         return this;
     }
 
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
     /**
      * Build the actual DOM container.
      */
@@ -33,15 +35,34 @@ class InstructionBox {
             this.container.append(IconFactory.makeIcon(this.icon));
         }
         if ((this.instructions) && (this.instructions.length > 0)) {
-            let $list = $('<ul />');
-            for (let text of this.instructions) {
-                $list.append($('<li>').html(text));
-            }
-            this.container.append($list);
+            this.setInstructions(this.instructions);
+            this.container.append(this.list);
             // Apply specific style based on how many lines there are
-            this.container.addClass(`size-${this.instructions.length}`);
         }
     }
+
+    /**
+     * Build the list object.  This is the dumbest method I've ever written.
+     */
+    buildList() {
+        this.list = $('<ul />');
+    }
+
+    /**
+     * Build in the instructions.  This method can also be used to re-write them in a new list, as with forms being activated and deactivated
+     * @param instructions an array of strings.
+     */
+    setInstructions(instructions) {
+        this.container.removeClass('size-1').removeClass('size-2').removeClass('size-3');
+        this.list.empty();
+        for (let text of instructions) {
+            this.list.append($('<li>').html(text));
+        }
+        if ((instructions.length > 0) && (instructions.length < 4)) {
+            this.container.addClass(`size-${instructions.length}`);
+        }
+    }
+
 
     /* UTILITY METHODS__________________________________________________________________ */
 
@@ -71,7 +92,10 @@ class InstructionBox {
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }
 
-    get list() { return this._list; }
+    get list() {
+        if (!this._list) { this.buildList(); }
+        return this._list;
+    }
     set list(list) { this._list = list;  }
 
     get title() { return this.config.title; }
