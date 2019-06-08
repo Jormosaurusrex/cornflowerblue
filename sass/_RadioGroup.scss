@@ -1,8 +1,12 @@
-fieldset.radiogroup {
-  border: none;
-  background-color: transparent;
-  margin: .5em 0 .5em 0;
-  position: relative;
+input[type="radio"] {
+  border-radius: 50%;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  max-width: var(--radio-size);
+  max-height: var(--radio-size);
+}
+
+div.radiogroup-container {
   ul {
     list-style-type: none;
     li {
@@ -12,7 +16,7 @@ fieldset.radiogroup {
       justify-content: flex-start;
       align-items: center;
       align-content: center;
-      margin: .5em 0 1em 0;
+      margin: .5em 0 .5em 0;
       input[type="radio"] {
         display: inline-block;
         margin: 0 1em 0 0;
@@ -21,7 +25,38 @@ fieldset.radiogroup {
         display: inline-block;
         margin: 0;
         text-shadow: none;
+        &.required {
+          &:after {
+            display: none;
+          }
+        }
       }
     }
+  }
+  &.required {
+    ul {
+      li {
+        label {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  &.inactive {
+    ul {
+      display: none;
+    }
+  }
+  &.disabled {
+    ul {
+      li {
+        label {
+          color: var(--disabled-highlight-color);
+        }
+      }
+    }
+
   }
 }

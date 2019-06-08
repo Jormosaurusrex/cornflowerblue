@@ -27,8 +27,8 @@
         <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
         <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
-        <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
         <script type="text/javascript" src="../libs/inputs/SelectMenu.js"></script>
+        <script type="text/javascript" src="../libs/inputs/RadioGroup.js"></script>
         <script type="text/javascript" src="../libs/inputs/StateMenu.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextArea.js"></script>
         <script type="text/javascript" src="../libs/SimpleForm.js"></script>
@@ -307,13 +307,28 @@
                         <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
                         <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
                     </div>
-                    <div class="demobox" id="inputs-radiogroups">
-                        <h3>Radio Groups</h3>
-                        <code class="invoker">new RadioGroup({options});</code>
-                        <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
-                        <p>If you have 5 more options, consider using a <code>SelectMenu</code>.  If you only have two options, consider whether a <code>BooleanToggle</code> is a better solution.</p>
+                </section>
+
+                <section id="t-radiobuttons" aria-labelledby="radiobuttons">
+                    <h1>Radio Buttons</h1>
+                    <code class="invoker">new RadioGroup({options});</code>
+                    <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
+                    <p>If you have 5 more options, consider using a <code>SelectMenu</code>.  If you only have two options, consider whether a <code>BooleanToggle</code> is a better solution.</p>
+
+                    <div class="demobox" id="radiogroups-standard">
+                        <h3>Standard</h3>
+
+                    </div>
+                    <div class="demobox" id="radiogroups-inactive">
+                        <h3>Inactive</h3>
+
+                    </div>
+                    <div class="demobox" id="radiogroups-disabled">
+                        <h3>Disabled</h3>
+
                     </div>
                 </section>
+
                 <section id="t-toggles" aria-labelledby="toggles">
                     <h1>Checkboxes and Toggles</h1>
                     <code class="invoker">new BooleanToggle({options});</code>

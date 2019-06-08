@@ -1,6 +1,6 @@
 "use strict";
 
-class RadioGroup {
+class RadioGroup extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
         return {
@@ -8,6 +8,9 @@ class RadioGroup {
             name: null,
             form: null, // A form element this is in
             label: null, // The text for the label.
+            inactive: false, // Start life in "inactive" mode.
+            required: false, // Is this a required field or not
+            unsettext: "(Not Set)", // what to display in inactive mode if the value is empty
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
@@ -22,30 +25,103 @@ class RadioGroup {
      * @param config a dictionary object
      */
     constructor(config) {
-        this.config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
+        config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
 
-        if ((!this.arialabel) && (this.label)) { // munch aria label.
-            this.arialabel = this.label;
+        if (!config.id) { // need to generate an id for label stuff
+            config.id = "radiogroup-" + Utils.getUniqueKey(5);
         }
+        if (!config.name) { config.name = config.id; }
 
-        if (!this.id) { // need to generate an id for label stuff
-            this.id = "radiogroup-" + Utils.getUniqueKey(5);
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get input() { return this.optionlist; }
+
+    get inactivetext() {
+        if (this.selectedoption) { return this.selectedoption.label; }
+        if (this.value) { return this.value; }
+        if (this.config.value) { return this.config.value; }
+        return this.unsettext;
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Enable the element
+     */
+    disable() {
+        this.optionlist.find('input:radio').attr('disabled',true);
+        this.disabled = true;
+        if (this.container) { this.container.addClass('disabled'); }
+    }
+
+    /**
+     * Disable the element
+     */
+    enable() {
+        this.optionlist.find('input:radio').removeAttr('disabled');
+        this.disabled = false;
+        if (this.container) { this.container.removeClass('disabled'); }
+    }
+
+    /**
+     * Switch to 'inactive' mode.
+     */
+    deactivate() {
+        this.container.addClass('inactive');
+        this.inactive = true;
+    }
+
+    /**
+     * Switch from 'inactive' mode to 'active' mode.
+     */
+    activate() {
+        this.container.removeClass('inactive');
+        this.inactive = false;
+    }
+
+    toggleActivation() {
+        if (this.container.hasClass('inactive')) {
+            this.activate();
+            return;
         }
-        if (!this.name) { this.name = this.id; }
-
-        return this;
+        this.deactivate();
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
-        this.container = $('<fieldset />')
-            .addClass('radiogroup')
+        this.container = $('<div />')
             .data('self', this)
+            .addClass('input-container')
+            .addClass('radiogroup-container')
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
-            .append(this.optionlist);
+            .append(this.optionlist)
+            .append(this.inactivebox);
+
+        this.postContainerScrub();
+
+    }
+
+    postContainerScrub() {
         if (this.hidden) { this.container.css('display', 'none'); }
+        if (this.disabled) { this.disable(); }
+
+        if (this.required) {
+            this.container.addClass('required');
+            this.optionlist.attr('required', 'required');
+        }
+
+        if (this.hidden) {
+            this.container.css('display', 'none');
+            this.container.attr('aria-hidden', true);
+        }
+
+        if (this.inactive) { this.deactivate(); }
+        if (this.disabled) { this.disable(); }
     }
 
     /**
@@ -54,8 +130,9 @@ class RadioGroup {
      * @return {void | * | jQuery}
      */
     buildOption(def) {
+
         const me = this;
-        const lId = this.id + '-' + Utils.getUniqueKey();
+        const lId = this.id + '-' + Utils.getUniqueKey(5);
         let $op = $('<input />')
             .data('self', this)
             .attr('id', lId)
@@ -70,6 +147,18 @@ class RadioGroup {
             .addClass(this.classes.join(' '))
             .change(function(e) {
                 $(this).prop('aria-checked', $(this).prop('checked'));
+
+                me.selectedoption = def;
+                if (def.label === me.unselectedtext) {
+                    me.inactivebox.html(me.unsettext);
+                } else {
+                    me.inactivebox.html(def.label);
+                }
+
+                me.validate();
+
+                if (me.form) { me.form.validate(); }
+
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(e, me);
                 }
@@ -88,85 +177,35 @@ class RadioGroup {
     /**
      * Build all the options.
      */
-    buildOptions() {
+    buildOptions2() {
         this.optionlist = $('<ul />')
-            .attr('role', 'radiogroup');
+            .attr('role', 'radiogroup')
+            .attr('id', this.id)
+            .attr('tabindex', 0);
         for (let opt of this.options) {
             this.optionlist.append(this.buildOption(opt));
         }
     }
 
     /**
-     * Builds the input's DOM.
-     * @returns {jQuery} jQuery representation of the input
+     * Build the option list.
      */
-    buildLabel() {
-        if (!this.label) { return null; }
-        this.labelobj = $('<legend />')
-            .attr('for', this.id)
-            .html(this.label);
-        if (this.form) {
-            this.labelobj.attr('form', this.form.id);
+    buildOptions() {
+        const me = this;
+        this.optionlist = $('<ul />')
+            .attr('tabindex', 0)
+            .attr('role', 'radiogroup');
+        for (let opt of this.options) {
+            let $o = this.buildOption(opt);
+            if (opt.checked) {
+                this.selectedoption = opt;
+            }
+            this.optionlist.append($o);
         }
     }
 
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get arialabel() { return this.config.arialabel; }
-    set arialabel(arialabel) { this.config.arialabel = arialabel; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get disabled() { return this.config.disabled; }
-    set disabled(disabled) { this.config.disabled = disabled; }
-
-    get form() { return this.config.form; }
-    set form(form) { this.config.form = form; }
-
-    get hidden() { return this.config.hidden; }
-    set hidden(hidden) { this.config.hidden = hidden; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get label() { return this.config.label; }
-    set label(label) { this.config.label = label; }
-
-    get labelobj() {
-        if (!this._labelobj) { this.buildLabel(); }
-        return this._labelobj;
-    }
-    set labelobj(labelobj) { this._labelobj = labelobj; }
-
-    get optionlist() {
-        if (!this._optionlist) { this.buildOptions(); }
-        return this._optionlist;
-    }
-    set optionlist(optionlist) { this._optionlist = optionlist; }
-
-    get options() { return this.config.options; }
-    set options(options) { this.config.options = options; }
-
-    get name() { return this.config.name; }
-    set name(name) { this.config.name = name; }
 
     get onchange() { return this.config.onchange; }
     set onchange(onchange) {
@@ -175,11 +214,5 @@ class RadioGroup {
         }
         this.config.onchange = onchange;
     }
-
-    get origval() { return this.config.origval; }
-    set origval(origval) { this.config.origval = origval; }
-
-    get validator() { return this.config.validator; }
-    set validator(validator) { this.config.validator = validator; }
 
 }

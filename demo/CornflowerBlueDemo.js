@@ -216,18 +216,24 @@ class CornflowerBlueDemo {
                     }
                 },
                 {
+                    label: 'Text Areas',
+                    id: 'textareas',
+                    action: function() {
+                        me.switchTab('textareas');
+                    }
+                },
+                {
                     label: 'Select',
                     id: 'selects',
                     action: function() {
                         me.switchTab('selects');
                     }
                 },
-
                 {
-                    label: 'Text Areas',
-                    id: 'textareas',
+                    label: 'Radio Buttons',
+                    id: 'radiobuttons',
                     action: function() {
-                        me.switchTab('textareas');
+                        me.switchTab('radiobuttons');
                     }
                 },
                 {
@@ -325,6 +331,7 @@ class CornflowerBlueDemo {
         }
 
     }
+
     grindInputs() {
         const me = this;
         const $standard = $('#inputs-standard');
@@ -1817,13 +1824,17 @@ class CornflowerBlueDemo {
     }
     grindRadioGroups() {
         const me = this;
-        const $target = $('#inputs-radiogroups');
-        $target.append(
+        const $standard = $('#radiogroups-standard');
+        const $inactive = $('#radiogroups-inactive');
+        const $disabled = $('#radiogroups-disabled');
+        $standard.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
                     new RadioGroup({
-                        label: "Select Year",
+                        label: "Year",
                         name: "year",
+                        required: true,
+                        help: "Select the year you wish to recieve data for.",
                         options: [
                             { label: "2019", value: "2019" },
                             { label: "2018", checked: true, value: "2018" },
@@ -1834,6 +1845,63 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
+
+        $disabled.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    new RadioGroup({
+                        label: "Year",
+                        name: "year",
+                        disabled: true,
+                        required: true,
+                        help: "Select the year you wish to recieve data for.",
+                        options: [
+                            { label: "2019", value: "2019" },
+                            { label: "2018", checked: true, value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        let inactiveTest = new RadioGroup({
+            label: "Year",
+            name: "year",
+            required: true,
+            inactive: true,
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", checked: true, value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" }
+            ]
+        });
+
+        let toggleButton = new SimpleButton({
+            text: "Enable Element",
+            action: function(e, self) {
+                inactiveTest.toggleActivation();
+                if (inactiveTest.inactive) {
+                    self.text = "Enable Element";
+                } else {
+                    self.text = "Disable Element";
+                }
+            }
+        });
+
+        $inactive.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    inactiveTest.container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    toggleButton.button
+                )
+        );
+
     }
     grindDialogs() {
         const me = this;

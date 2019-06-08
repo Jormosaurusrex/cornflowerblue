@@ -181,6 +181,7 @@ class SelectMenu extends InputElement {
 
         this.optionlist = $('<ul />')
             .addClass('selectmenu')
+            .attr('id', this.id)
             .attr('tabindex', 0)
             .attr('role', 'radiogroup');
 

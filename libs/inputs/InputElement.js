@@ -345,7 +345,7 @@ class InputElement {
     }
 
     /**
-     * Build the message box.
+     * Build the inactive text box.
      */
     buildInactiveBox() {
         const me = this;
