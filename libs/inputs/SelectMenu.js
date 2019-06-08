@@ -161,6 +161,9 @@ class SelectMenu extends InputElement {
                 }
                 me.open();
             });
+        if (this.mute) {
+            this.triggerbox.addClass('mute');
+        }
     }
 
     /**

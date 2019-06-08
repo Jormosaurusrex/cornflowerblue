@@ -143,7 +143,7 @@ class InputElement {
         } else {
             this.clearMessages();
             this.input.attr('aria-invalid', false);
-            if (this.isDirty()) { // This has to be valid
+            if ((this.isDirty()) && (!onload)) { // This has to be valid
                 this.container.addClass('valid');
             } else {
                 this.container.removeClass('valid');

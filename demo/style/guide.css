@@ -1375,6 +1375,12 @@ div.select-container {
       background-color: var(--input-focused-background-color); }
       div.select-container div.trigger:focus:before {
         color: var(--input-focused-border-color); }
+    div.select-container div.trigger.mute {
+      background-color: var(--input-mute-background-color);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      padding: .5em 1em .5em 1.5em; }
   div.select-container div.searchdisplay {
     transition: all .2s;
     opacity: 1;
