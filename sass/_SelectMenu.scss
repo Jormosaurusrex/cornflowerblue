@@ -191,5 +191,10 @@ div.select-container {
       display: flex;
     }
   }
+  &.mute {
+    label {
+      opacity: 1;
+    }
+  }
 }
 

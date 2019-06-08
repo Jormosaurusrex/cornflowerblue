@@ -1464,6 +1464,8 @@ div.select-container {
       box-shadow: var(--panel-shadow-light-inverse); }
     div.select-container ul.selectmenu.open {
       display: flex; }
+  div.select-container.mute label {
+    opacity: 1; }
 
 button {
   box-sizing: border-box;
