@@ -136,10 +136,13 @@ class CornflowerBlueDemo {
      */
     constructor() {
         this.body = $('body');
-
         this.build();
 
         this.body.addClass('noisy');
+
+        //this.body.click(function(e) {
+        //    console.log(e.target);
+        //});
 
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
@@ -367,13 +370,14 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-           text: "Enable Element",
+           text: "Activate Element",
            action: function(e, self) {
+               console.log('click');
                inactiveTest.toggleActivation();
                if (inactiveTest.inactive) {
-                   self.text = "Enable Element";
+                   self.text = "Activate Element";
                } else {
-                   self.text = "Disable Element";
+                   self.text = "Deactivate Element";
                }
            }
         });
@@ -1643,6 +1647,7 @@ class CornflowerBlueDemo {
         const $target = $('#textareas-standard');
         const $mute = $('#textareas-mute');
         const $disabled = $('#textareas-disabled');
+        const $inactive = $('#textareas-inactive');
 
         $target.append(
             $('<div />').addClass('example').addClass('vert')
@@ -1692,6 +1697,36 @@ class CornflowerBlueDemo {
                 )
         );
 
+        let inactiveTest = new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
+            inactive: true,
+            placeholder: "Write your post here!"
+        });
+
+        let toggleButton = new SimpleButton({
+            text: "Activate Element",
+            action: function(e, self) {
+                inactiveTest.toggleActivation();
+                if (inactiveTest.inactive) {
+                    self.text = "Activate Element";
+                } else {
+                    self.text = "Deactivate Element";
+                }
+            }
+        });
+
+        $inactive.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    inactiveTest.container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    toggleButton.button
+                )
+        );
+
     }
     grindSelects() {
         const me = this;
@@ -1704,7 +1739,7 @@ class CornflowerBlueDemo {
 
         let inactiveTest = new SelectMenu({
             label: "Year",
-            name: "year",
+            name: "year-inactive",
             required: true,
             inactive: true,
             options: [
@@ -1720,13 +1755,13 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-            text: "Enable Element",
+            text: "Activate Element",
             action: function(e, self) {
                 inactiveTest.toggleActivation();
                 if (inactiveTest.inactive) {
-                    self.text = "Enable Element";
+                    self.text = "Activate Element";
                 } else {
-                    self.text = "Disable Element";
+                    self.text = "Deactivate Element";
                 }
             }
         });
@@ -1757,7 +1792,7 @@ class CornflowerBlueDemo {
                 .append(
                     new SelectMenu({
                         label: "Year",
-                        name: "year",
+                        name: "year-select",
                         required: true,
                         options: [
                             { label: "2019", value: "2019" },
@@ -1808,7 +1843,7 @@ class CornflowerBlueDemo {
                 .append(
                     new SelectMenu({
                         label: "Year",
-                        name: "year",
+                        name: "year-select-mute",
                         mute: true,
                         options: [
                             { label: "2019", value: "2019" },
@@ -1838,7 +1873,7 @@ class CornflowerBlueDemo {
                 .append(
                     new SelectMenu({
                         label: "Year",
-                        name: "year",
+                        name: "year-select-disabled",
                         disabled: true,
                         options: [
                             { label: "2019", value: "2019" },
@@ -1877,7 +1912,7 @@ class CornflowerBlueDemo {
                 .append(
                     new RadioGroup({
                         label: "Year",
-                        name: "year",
+                        name: "year-radio-disabled",
                         disabled: true,
                         required: true,
                         help: "Select the year you wish to recieve data for.",
@@ -1902,7 +1937,7 @@ class CornflowerBlueDemo {
                         help: "Stop looking for Tony; he's not in the list.",
                         options: [
                             { label: "Natasha", value: "Natasha" },
-                            { label: "Steve", checked: true, value: "Steve" },
+                            { label: "Steve", value: "Steve", checked: true },
                             { label: "Thor", value: "Thor" },
                             { label: "Clint", value: "Clint" },
                             { label: "Bruce", value: "Bruce" }
@@ -1912,11 +1947,9 @@ class CornflowerBlueDemo {
                 )
         );
 
-
-
         let inactiveTest = new RadioGroup({
             label: "Year",
-            name: "year",
+            name: "year-radio-inactive",
             required: true,
             inactive: true,
             options: [
@@ -1928,13 +1961,13 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-            text: "Enable Element",
+            text: "Activate Element",
             action: function(e, self) {
                 inactiveTest.toggleActivation();
                 if (inactiveTest.inactive) {
-                    self.text = "Enable Element";
+                    self.text = "Activate Element";
                 } else {
-                    self.text = "Disable Element";
+                    self.text = "Deactivate Element";
                 }
             }
         });
@@ -1949,6 +1982,7 @@ class CornflowerBlueDemo {
                     toggleButton.button
                 )
         );
+
 
     }
     grindDialogs() {

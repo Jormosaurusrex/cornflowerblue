@@ -145,11 +145,6 @@ class SimpleButton {
                 if (!me.disabled) {
                     me.action(e, me);
                 }
-                $(this).blur();
-            });
-        } else if (!this.submits) {
-            this.button.click(function () {
-                $(this).blur();
             });
         }
     }

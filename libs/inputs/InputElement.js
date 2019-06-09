@@ -348,7 +348,6 @@ class InputElement {
      * Build the inactive text box.
      */
     buildInactiveBox() {
-        const me = this;
         this.inactivebox = $('<div />')
             .addClass('inactivebox')
             .html(this.inactivetext);
@@ -438,20 +437,23 @@ class InputElement {
                 }
             })
             .on('focusout', function(e) {
+
+                me.inactivebox.html(me.inactivetext);
+
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
                     me.helpicon.close();
                 }
+
                 if ((me.mute) && (me.label)) {
                     $(this).attr('placeholder', me.label);
                 }
+
                 if (me.container) {
                     me.container.removeClass('active');
                 }
-
                 me.validate();
 
-                me.inactivebox.html(me.inactivetext);
                 if (me.form) { me.form.validate(); }
 
                 if ((me.focusout) && (typeof me.focusout === 'function')) {

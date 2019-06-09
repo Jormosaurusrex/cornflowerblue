@@ -1236,6 +1236,8 @@ div.textarea-container div.wrap:after {
   padding-top: .5em; }
 div.textarea-container.mute div.charcounter {
   top: .3em; }
+div.textarea-container div.inactivebox {
+  min-height: 4em; }
 
 [hidden] {
   display: none; }
