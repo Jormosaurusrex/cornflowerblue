@@ -338,7 +338,7 @@ class CornflowerBlueDemo {
     grindInputs() {
         const me = this;
         const $standard = $('#inputs-standard');
-        const $inactive = $('#inputs-inactive');
+        const $passive = $('#inputs-passive');
         const $mute = $('#inputs-mute');
         const $password = $('#inputs-password');
         const $email = $('#inputs-email');
@@ -359,11 +359,11 @@ class CornflowerBlueDemo {
                 )
         );
 
-        let inactiveTest = new TextInput({
+        let passiveTest = new TextInput({
             label: "Name",
             maxlength: 50,
             required: true,
-            inactive: true,
+            passive: true,
             counter: 'remaining',
             placeholder: "Your full name",
             help: "Use your full name, in whatever manner befits your culture."
@@ -373,19 +373,19 @@ class CornflowerBlueDemo {
            text: "Activate Element",
            action: function(e, self) {
                console.log('click');
-               inactiveTest.toggleActivation();
-               if (inactiveTest.inactive) {
+               passiveTest.toggleActivation();
+               if (passiveTest.passive) {
                    self.text = "Activate Element";
                } else {
-                   self.text = "Deactivate Element";
+                   self.text = "Pacify Element";
                }
            }
         });
 
-        $inactive.append(
+        $passive.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
-                    inactiveTest.container
+                    passiveTest.container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
@@ -1647,7 +1647,7 @@ class CornflowerBlueDemo {
         const $target = $('#textareas-standard');
         const $mute = $('#textareas-mute');
         const $disabled = $('#textareas-disabled');
-        const $inactive = $('#textareas-inactive');
+        const $passive = $('#textareas-passive');
 
         $target.append(
             $('<div />').addClass('example').addClass('vert')
@@ -1697,29 +1697,29 @@ class CornflowerBlueDemo {
                 )
         );
 
-        let inactiveTest = new TextArea({
+        let passiveTest = new TextArea({
             label: "Post Content",
             maxlength: 2000,
-            inactive: true,
+            passive: true,
             placeholder: "Write your post here!"
         });
 
         let toggleButton = new SimpleButton({
             text: "Activate Element",
             action: function(e, self) {
-                inactiveTest.toggleActivation();
-                if (inactiveTest.inactive) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
                     self.text = "Activate Element";
                 } else {
-                    self.text = "Deactivate Element";
+                    self.text = "Pacify Element";
                 }
             }
         });
 
-        $inactive.append(
+        $passive.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
-                    inactiveTest.container
+                    passiveTest.container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
@@ -1733,15 +1733,15 @@ class CornflowerBlueDemo {
         const $standard = $('#selects-standard');
         const $mute = $('#selects-mute');
         const $state = $('#selects-state');
-        const $inactive = $('#selects-inactive');
+        const $passive = $('#selects-passive');
         const $disabled = $('#selects-disabled');
 
 
-        let inactiveTest = new SelectMenu({
+        let passiveTest = new SelectMenu({
             label: "Year",
-            name: "year-inactive",
+            name: "year-passive",
             required: true,
-            inactive: true,
+            passive: true,
             options: [
                 { label: "2019", value: "2019" },
                 { label: "2018", value: "2018" },
@@ -1757,19 +1757,19 @@ class CornflowerBlueDemo {
         let toggleButton = new SimpleButton({
             text: "Activate Element",
             action: function(e, self) {
-                inactiveTest.toggleActivation();
-                if (inactiveTest.inactive) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
                     self.text = "Activate Element";
                 } else {
-                    self.text = "Deactivate Element";
+                    self.text = "Pacify Element";
                 }
             }
         });
 
-        $inactive.append(
+        $passive.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
-                    inactiveTest.container
+                    passiveTest.container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
@@ -1904,7 +1904,7 @@ class CornflowerBlueDemo {
     grindRadioGroups() {
         const me = this;
         const $standard = $('#radiogroups-standard');
-        const $inactive = $('#radiogroups-inactive');
+        const $passive = $('#radiogroups-passive');
         const $disabled = $('#radiogroups-disabled');
 
         $disabled.append(
@@ -1947,11 +1947,11 @@ class CornflowerBlueDemo {
                 )
         );
 
-        let inactiveTest = new RadioGroup({
+        let passiveTest = new RadioGroup({
             label: "Year",
-            name: "year-radio-inactive",
+            name: "year-radio-passive",
             required: true,
-            inactive: true,
+            passive: true,
             options: [
                 { label: "2019", value: "2019" },
                 { label: "2018", checked: true, value: "2018" },
@@ -1963,19 +1963,19 @@ class CornflowerBlueDemo {
         let toggleButton = new SimpleButton({
             text: "Activate Element",
             action: function(e, self) {
-                inactiveTest.toggleActivation();
-                if (inactiveTest.inactive) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
                     self.text = "Activate Element";
                 } else {
-                    self.text = "Deactivate Element";
+                    self.text = "Pacify Element";
                 }
             }
         });
 
-        $inactive.append(
+        $passive.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
-                    inactiveTest.container
+                    passiveTest.container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(

@@ -49,7 +49,7 @@ class InstructionBox {
     }
 
     /**
-     * Build in the instructions.  This method can also be used to re-write them in a new list, as with forms being activated and deactivated
+     * Build in the instructions.  This method can also be used to re-write them in a new list, as with forms being activated and pacifyd
      * @param instructions an array of strings.
      */
     setInstructions(instructions) {

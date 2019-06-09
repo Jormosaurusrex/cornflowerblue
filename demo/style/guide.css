@@ -296,6 +296,9 @@
   --input-status-active-background-color: var(--focus-color);
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-passivebox-background-color: transparent;
+  --input-passivebox-text-color: var(--grey-dark);
+  --input-passivebox-text-shadow: var(--text-shadow);
   --instructions-background-color: var(--morelight);
   --instructions-border-color: var(--light);
   --instructions-text-color: var(--grey-darkest);
@@ -1056,17 +1059,14 @@ div.textarea-container {
       div.input-container ul.messagebox li.warning,
       div.textarea-container ul.messagebox li.warning {
         color: var(--input-messages-warning-text-color); }
-  div.input-container div.inactivebox,
-  div.textarea-container div.inactivebox {
-    --input-inactivebox-background-color: transparent;
-    --input-inactivebox-text-color: var(--grey-dark);
-    --input-inactivebox-text-shadow: var(--text-shadow);
-    background-color: var(--input-inactivebox-background-color);
-    border: 0.1em solid var(--input-inactivebox-background-color);
+  div.input-container div.passivebox,
+  div.textarea-container div.passivebox {
+    background-color: var(--input-passivebox-background-color);
+    border: 0.1em solid var(--input-passivebox-background-color);
     border-radius: var(--input-border-radius);
     padding: var(--input-default-padding);
     vertical-align: middle;
-    color: var(--input-inactivebox-text-color);
+    color: var(--input-passivebox-text-color);
     font-size: 105%;
     width: 100%;
     display: none; }
@@ -1211,24 +1211,24 @@ div.textarea-container {
   div.textarea-container.active div.wrap div.topcontrol {
     opacity: 1;
     top: .3em; }
-  div.input-container.inactive label,
-  div.textarea-container.inactive label {
+  div.input-container.passive label,
+  div.textarea-container.passive label {
     opacity: 1; }
-    div.input-container.inactive label button.help, div.input-container.inactive label:after,
-    div.textarea-container.inactive label button.help,
-    div.textarea-container.inactive label:after {
+    div.input-container.passive label button.help, div.input-container.passive label:after,
+    div.textarea-container.passive label button.help,
+    div.textarea-container.passive label:after {
       display: none; }
-  div.input-container.inactive div.wrap,
-  div.input-container.inactive div.topcontrol,
-  div.input-container.inactive ul.messagebox,
-  div.input-container.inactive ul.selectmenu,
-  div.textarea-container.inactive div.wrap,
-  div.textarea-container.inactive div.topcontrol,
-  div.textarea-container.inactive ul.messagebox,
-  div.textarea-container.inactive ul.selectmenu {
+  div.input-container.passive div.wrap,
+  div.input-container.passive div.topcontrol,
+  div.input-container.passive ul.messagebox,
+  div.input-container.passive ul.selectmenu,
+  div.textarea-container.passive div.wrap,
+  div.textarea-container.passive div.topcontrol,
+  div.textarea-container.passive ul.messagebox,
+  div.textarea-container.passive ul.selectmenu {
     display: none; }
-  div.input-container.inactive div.inactivebox,
-  div.textarea-container.inactive div.inactivebox {
+  div.input-container.passive div.passivebox,
+  div.textarea-container.passive div.passivebox {
     display: block; }
 
 div.textarea-container div.wrap:after {
@@ -1236,7 +1236,7 @@ div.textarea-container div.wrap:after {
   padding-top: .5em; }
 div.textarea-container.mute div.charcounter {
   top: .3em; }
-div.textarea-container div.inactivebox {
+div.textarea-container div.passivebox {
   min-height: 4em; }
 
 [hidden] {
@@ -2362,7 +2362,7 @@ div.radiogroup-container ul.radiogroup {
         display: none; }
 div.radiogroup-container.required ul.radiogroup li.radio label:after {
   display: none; }
-div.radiogroup-container.inactive ul.radiogroup {
+div.radiogroup-container.passive ul.radiogroup {
   display: none; }
 div.radiogroup-container.disabled ul.radiogroup li.radio label {
   color: var(--disabled-highlight-color);
@@ -2485,7 +2485,7 @@ form {
       align-self: flex-end;
       margin-left: auto;
       margin-right: 1em; }
-  form.inactive div.actions {
+  form.passive div.actions {
     display: none; }
 
 div.spinner.spin {

@@ -68,6 +68,9 @@ class BooleanToggle {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
+    /**
+     * Build the container
+     */
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)

@@ -22,6 +22,12 @@ class Growler {
 
     static get GROWLBOX_ID() { return 'gbox-'; }
 
+    /**
+     * Quick access to a generic growler, with an optional title.
+     * @param text the text to display
+     * @param title (optional) a title
+     * @return {Growler}
+     */
     static growl(text, title) {
         return new Growler({
             text: text,
@@ -29,6 +35,11 @@ class Growler {
         })
     }
 
+    /**
+     * Quick access to a error growler
+     * @param text the text to display
+     * @return {Growler}
+     */
     static error(text) {
         return new Growler({
             text: text,
@@ -38,6 +49,11 @@ class Growler {
         })
     }
 
+    /**
+     * Quick access to a warn growler
+     * @param text the text to display
+     * @return {Growler}
+     */
     static warn(text) {
         return new Growler({
             text: text,
@@ -47,6 +63,11 @@ class Growler {
         })
     }
 
+    /**
+     * Quick access to a caution growler
+     * @param text the text to display
+     * @return {Growler}
+     */
     static caution(text) {
         return new Growler({
             text: text,
@@ -56,6 +77,11 @@ class Growler {
         })
     }
 
+    /**
+     * Quick access to a success growler
+     * @param text the text to display
+     * @return {Growler}
+     */
     static success(text) {
         return new Growler({
             text: text,

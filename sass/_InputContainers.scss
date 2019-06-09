@@ -105,16 +105,13 @@ div.textarea-container {
       }
     }
   }
-  div.inactivebox {
-    --input-inactivebox-background-color: transparent;
-    --input-inactivebox-text-color: var(--grey-dark);
-    --input-inactivebox-text-shadow: var(--text-shadow);
-    background-color: var(--input-inactivebox-background-color);
-    border: .1em solid var(--input-inactivebox-background-color);
+  div.passivebox {
+    background-color: var(--input-passivebox-background-color);
+    border: .1em solid var(--input-passivebox-background-color);
     border-radius: var(--input-border-radius);
     padding: var(--input-default-padding);
     vertical-align: middle;
-    color: var(--input-inactivebox-text-color);
+    color: var(--input-passivebox-text-color);
     font-size: 105%;
     width: 100%;
     display: none;
@@ -266,7 +263,7 @@ div.textarea-container {
       }
     }
   }
-  &.inactive {
+  &.passive {
     label {
       opacity: 1;
       button.help,
@@ -280,7 +277,7 @@ div.textarea-container {
     ul.selectmenu {
       display: none;
     }
-    div.inactivebox {
+    div.passivebox {
       display: block;
     }
   }
@@ -297,7 +294,7 @@ div.textarea-container {
       top: .3em;
     }
   }
-  div.inactivebox {
+  div.passivebox {
     min-height: 4em;
   }
 }

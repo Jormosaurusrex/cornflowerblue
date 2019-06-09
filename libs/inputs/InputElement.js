@@ -17,8 +17,8 @@ class InputElement {
             title: null,
             pattern: null,
 
-            inactive: false, // Start life in "inactive" mode.
-            unsettext: "(Not Set)", // what to display in inactive mode if the value is empty
+            passive: false, // Start life in "passive" mode.
+            unsettext: "(Not Set)", // what to display in passive mode if the value is empty
 
             help: null, // Help text.
             helpwaittime: 5000, // How long to wait before automatically showing help tooltip
@@ -263,32 +263,35 @@ class InputElement {
     }
 
     /**
-     * Switch to 'inactive' mode.
+     * Switch to 'passive' mode.
      */
-    deactivate() {
-        this.container.addClass('inactive');
-        this.inactive = true;
+    pacify() {
+        this.container.addClass('passive');
+        this.passive = true;
     }
 
     /**
-     * Switch from 'inactive' mode to 'active' mode.
+     * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
-        this.container.removeClass('inactive');
-        this.inactive = false;
+        this.container.removeClass('passive');
+        this.passive = false;
     }
 
+    /**
+     * Toggle the passive/active modes
+     */
     toggleActivation() {
-        if (this.container.hasClass('inactive')) {
+        if (this.container.hasClass('passive')) {
             this.activate();
             return;
         }
-        this.deactivate();
+        this.pacify();
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
-    get inactivetext() {
+    get passivetext() {
         if (this.value) { return this.value; }
         if (this.config.value) { return this.config.value; }
         return this.unsettext;
@@ -312,7 +315,7 @@ class InputElement {
                 .append(this.input)
                 .append(this.inputcontrol)
             )
-            .append(this.inactivebox)
+            .append(this.passivebox)
             .append(this.topcontrol)
             .append(this.messagebox);
 
@@ -338,19 +341,19 @@ class InputElement {
         if ((this.config.value) && (this.config.value.length > 0)) {
             this.container.addClass('filled');
         }
-        if (this.inactive) {
-            this.deactivate()
+        if (this.passive) {
+            this.pacify()
         }
         this.validate(true);
     }
 
     /**
-     * Build the inactive text box.
+     * Build the passive text box.
      */
     buildInactiveBox() {
-        this.inactivebox = $('<div />')
-            .addClass('inactivebox')
-            .html(this.inactivetext);
+        this.passivebox = $('<div />')
+            .addClass('passivebox')
+            .html(this.passivetext);
     }
 
     /**
@@ -438,7 +441,7 @@ class InputElement {
             })
             .on('focusout', function(e) {
 
-                me.inactivebox.html(me.inactivetext);
+                me.passivebox.html(me.passivetext);
 
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
@@ -614,14 +617,14 @@ class InputElement {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get inactive() { return this.config.inactive; }
-    set inactive(inactive) { this.config.inactive = inactive; }
+    get passive() { return this.config.passive; }
+    set passive(passive) { this.config.passive = passive; }
 
-    get inactivebox() {
-        if (!this._inactivebox) { this.buildInactiveBox(); }
-        return this._inactivebox;
+    get passivebox() {
+        if (!this._passivebox) { this.buildInactiveBox(); }
+        return this._passivebox;
     }
-    set inactivebox(inactivebox) { this._inactivebox = inactivebox; }
+    set passivebox(passivebox) { this._passivebox = passivebox; }
 
     get input() {
         if (!this._input) { this.buildInput(); }
@@ -710,7 +713,7 @@ class InputElement {
     set value(value) {
         this.config.value = value;
         this.input.val(value);
-        this.inactivebox.val(value);
+        this.passivebox.val(value);
     }
 
     get warnings() { return this._warnings; }

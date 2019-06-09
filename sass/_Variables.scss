@@ -374,6 +374,10 @@
   --input-status-active-icon-color: var(--input-status-icon-color);
   --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
 
+  --input-passivebox-background-color: transparent;
+  --input-passivebox-text-color: var(--grey-dark);
+  --input-passivebox-text-shadow: var(--text-shadow);
+
   // Instruction box keys
   --instructions-background-color: var(--morelight);
   --instructions-border-color: var(--light);

@@ -37,10 +37,6 @@ class SelectMenu extends InputElement {
         return null;
     }
 
-    /**
-     * Gets the value of the selected element.
-     * @return {null|*}
-     */
     get value() {
         if (this.selected) { return this.selected.val(); }
         return ''; // Return empty string for no value.
@@ -48,7 +44,7 @@ class SelectMenu extends InputElement {
 
     get topcontrol() { return this.searchdisplay; }
 
-    get inactivetext() {
+    get passivetext() {
         if (this.selectedoption) { return this.selectedoption.label; }
         if (this.value) { return this.value; }
         if (this.config.value) { return this.config.value; }
@@ -106,9 +102,6 @@ class SelectMenu extends InputElement {
         this.optionlist.removeClass('open');
     }
 
-    /**
-     * Enable the element
-     */
     disable() {
         this.optionlist.find('input:radio').attr('disabled',true);
         this.triggerbox.prop('disabled', true);
@@ -117,9 +110,6 @@ class SelectMenu extends InputElement {
         if (this.container) { this.container.addClass('disabled'); }
     }
 
-    /**
-     * Disable the element
-     */
     enable() {
         this.optionlist.find('input:radio').removeAttr('disabled');
         this.triggerbox.removeAttr('disabled');
@@ -130,11 +120,6 @@ class SelectMenu extends InputElement {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    /**
-     * Builds and returns a container object for all parts.
-     * This gets over-ridden in elements that have additional structures, like a character counter
-     * @returns {jQuery} jQuery representation of the label and the input together.
-     */
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)
@@ -144,7 +129,7 @@ class SelectMenu extends InputElement {
             .append(this.labelobj)
             .append($('<div />').addClass('wrap').append(this.triggerbox))
             .append(this.optionlist)
-            .append(this.inactivebox)
+            .append(this.passivebox)
             .append(this.topcontrol)
             .append(this.messagebox);
 
@@ -173,9 +158,6 @@ class SelectMenu extends InputElement {
         }
     }
 
-    /**
-     * Build the option list.
-     */
     buildOptions() {
         const me = this;
 
@@ -205,11 +187,6 @@ class SelectMenu extends InputElement {
         }
     }
 
-    /**
-     * Build an option line.
-     * @param def the definition
-     * @return {jQuery}
-     */
     buildOption(def) {
         const me = this;
 
@@ -228,9 +205,9 @@ class SelectMenu extends InputElement {
                 me.triggerbox.html(def.label);
                 me.selectedoption = def;
                 if (def.label === me.unselectedtext) {
-                    me.inactivebox.html(me.unsettext);
+                    me.passivebox.html(me.unsettext);
                 } else {
-                    me.inactivebox.html(def.label);
+                    me.passivebox.html(def.label);
                 }
 
                 me.close();

@@ -8,9 +8,9 @@ class RadioGroup extends SelectMenu {
             name: null,
             form: null, // A form element this is in
             label: null, // The text for the label.
-            inactive: false, // Start life in "inactive" mode.
+            passive: false, // Start life in "passive" mode.
             required: false, // Is this a required field or not
-            unsettext: "(Not Set)", // what to display in inactive mode if the value is empty
+            unsettext: "(Not Set)", // what to display in passive mode if the value is empty
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
@@ -39,7 +39,7 @@ class RadioGroup extends SelectMenu {
 
     get input() { return this.optionlist; }
 
-    get inactivetext() {
+    get passivetext() {
         if (this.selectedoption) { return this.selectedoption.label; }
         if (this.value) { return this.value; }
         if (this.config.value) { return this.config.value; }
@@ -48,46 +48,16 @@ class RadioGroup extends SelectMenu {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
-    /**
-     * Enable the element
-     */
     disable() {
         this.optionlist.find('input:radio').attr('disabled',true);
         this.disabled = true;
         if (this.container) { this.container.addClass('disabled'); }
     }
 
-    /**
-     * Disable the element
-     */
     enable() {
         this.optionlist.find('input:radio').removeAttr('disabled');
         this.disabled = false;
         if (this.container) { this.container.removeClass('disabled'); }
-    }
-
-    /**
-     * Switch to 'inactive' mode.
-     */
-    deactivate() {
-        this.container.addClass('inactive');
-        this.inactive = true;
-    }
-
-    /**
-     * Switch from 'inactive' mode to 'active' mode.
-     */
-    activate() {
-        this.container.removeClass('inactive');
-        this.inactive = false;
-    }
-
-    toggleActivation() {
-        if (this.container.hasClass('inactive')) {
-            this.activate();
-            return;
-        }
-        this.deactivate();
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -100,7 +70,7 @@ class RadioGroup extends SelectMenu {
             .addClass(this.classes.join(' '))
             .append(this.labelobj)
             .append(this.optionlist)
-            .append(this.inactivebox);
+            .append(this.passivebox);
 
         this.postContainerScrub();
 
@@ -119,15 +89,10 @@ class RadioGroup extends SelectMenu {
             this.container.attr('aria-hidden', true);
         }
 
-        if (this.inactive) { this.deactivate(); }
+        if (this.passive) { this.pacify(); }
         if (this.disabled) { this.disable(); }
     }
 
-    /**
-     * Builds an option
-     * @param def the definition of the option
-     * @return {void | * | jQuery}
-     */
     buildOption(def) {
 
         const me = this;
@@ -149,9 +114,9 @@ class RadioGroup extends SelectMenu {
 
                 me.selectedoption = def;
                 if (def.label === me.unselectedtext) {
-                    me.inactivebox.html(me.unsettext);
+                    me.passivebox.html(me.unsettext);
                 } else {
-                    me.inactivebox.html(def.label);
+                    me.passivebox.html(def.label);
                 }
 
                 me.validate();
@@ -176,9 +141,6 @@ class RadioGroup extends SelectMenu {
         return $('<li />').addClass('radio').append($op).append($opLabel);
     }
 
-    /**
-     * Build the option list.
-     */
     buildOptions() {
         const me = this;
         this.optionlist = $('<ul />')

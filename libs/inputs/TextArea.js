@@ -24,7 +24,7 @@ class TextArea extends InputElement {
             .append(this.labelobj)
             .append(this.charactercounter)
             .append($('<div />').addClass('wrap').append(this.input))
-            .append(this.inactivebox)
+            .append(this.passivebox)
             .append(this.messagebox);
 
         this.postContainerScrub();

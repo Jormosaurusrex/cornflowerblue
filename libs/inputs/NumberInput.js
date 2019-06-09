@@ -78,26 +78,12 @@ class NumberInput extends TextInput {
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
-    /**
-     * Return inputmode
-     * @override
-     * @return {string}
-     */
     get inputmode() { return "numeric"; }
 
-    /**
-     * Get the inputcontrol.  This returns stepbuttons.
-     * @return {*}
-     */
     get inputcontrol() { return this.stepbuttons; }
 
     /* CORE METHODS_____________________________________________________________________ */
 
-    /**
-     * The localized validator.  This one is for datatype dependent rules
-     * @param onload If true, this validation fires on the loading. This is important to know because some invalidations aren't actually errors until the form is submitted.
-     * @override
-     */
     localValidator(onload) {
         if (this.value) {
             if (isNaN(this.value)) {
@@ -117,11 +103,6 @@ class NumberInput extends TextInput {
         }
     }
 
-    /**
-     * Calculate the placeholder
-     * @override
-     * @return {string|*}
-     */
     calculatePlaceholder() {
         if (this.placeholder) { return this.placeholder; }
         let text = "Enter a number";

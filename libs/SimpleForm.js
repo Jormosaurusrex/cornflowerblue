@@ -23,10 +23,10 @@ class SimpleForm {
             method: 'get', // Method for the form.  Also used in API calls.
             header: null, // Stuff to put at the header. This is expected to be a jQuery element
 
-            inactive: false, // Start life in "inactive" mode. This will set all form elements to "inactive" and hide any controls.  This also shows the "inactive" instructions, if any.
+            passive: false, // Start life in "passive" mode. This will set all form elements to "passive" and hide any controls.  This also shows the "passive" instructions, if any.
 
             instructions: null, // Instructions configuration.  See InstructionBox.
-            inactiveinstructions: null, // Inactive Instructions array.  Shown when the form is set to inactive.
+            passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
             spinnerstyle: 'spin', //
             spinnertext: '...Please Wait...', //
@@ -65,25 +65,25 @@ class SimpleForm {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
-     * Switch to 'inactive' mode.
+     * Switch to 'passive' mode.
      */
-    deactivate() {
-        this.form.addClass('inactive');
-        this.inactive = true;
+    pacify() {
+        this.form.addClass('passive');
+        this.passive = true;
         for (let e of this.elements) {
-            e.deactivate();
+            e.pacify();
         }
-        if ((this.inactiveinstructions) && (this.instructionbox)) {
-            this.instructionbox.setInstructions(this.inactiveinstructions.instructions);
+        if ((this.passiveinstructions) && (this.instructionbox)) {
+            this.instructionbox.setInstructions(this.passiveinstructions.instructions);
         }
     }
 
     /**
-     * Switch from 'inactive' mode to 'active' mode.
+     * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
-        this.form.removeClass('inactive');
-        this.inactive = false;
+        this.form.removeClass('passive');
+        this.passive = false;
         for (let e of this.elements) {
             e.activate();
         }
@@ -97,11 +97,11 @@ class SimpleForm {
      * Toggle between active states
      */
     toggleActivation() {
-        if (this.form.hasClass('inactive')) {
+        if (this.form.hasClass('passive')) {
             this.activate();
             return;
         }
-        this.deactivate();
+        this.pacify();
     }
 
     /* ACTION METHODS___________________________________________________________________ */
@@ -113,7 +113,7 @@ class SimpleForm {
     submit(e) {
         const me = this;
 
-        if (this.inactive) { return; }
+        if (this.passive) { return; }
 
         if (this.validate()) {
             if (this.handler) {
@@ -290,8 +290,8 @@ class SimpleForm {
 
         this.validate();
 
-        if (this.inactive) {
-            this.deactivate();
+        if (this.passive) {
+            this.pacify();
         }
 
     }
@@ -320,8 +320,8 @@ class SimpleForm {
             return;
         }
         let ins = this.instructions;
-        if ((this.inactive) && (this.inactiveinstructions) && (this.inactiveinstructions.length > 0)) {
-            ins = this.inactiveinstructions;
+        if ((this.passive) && (this.passiveinstructions) && (this.passiveinstructions.length > 0)) {
+            ins = this.passiveinstructions;
         }
         this.instructionbox = new InstructionBox(ins);
     }
@@ -483,11 +483,11 @@ class SimpleForm {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get inactive() { return this.config.inactive; }
-    set inactive(inactive) { this.config.inactive = inactive; }
+    get passive() { return this.config.passive; }
+    set passive(passive) { this.config.passive = passive; }
 
-    get inactiveinstructions() { return this.config.inactiveinstructions; }
-    set inactiveinstructions(inactiveinstructions) { this.config.inactiveinstructions = inactiveinstructions; }
+    get passiveinstructions() { return this.config.passiveinstructions; }
+    set passiveinstructions(passiveinstructions) { this.config.passiveinstructions = passiveinstructions; }
 
     get instructionbox() {
         if (!this._instructionbox) { this.buildInstructionBox(); }

@@ -90,10 +90,6 @@ class PasswordInput extends TextInput {
         this.input.focus();
     }
 
-    /**
-     * Runs local validation
-     * @return {boolean}
-     */
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (this.value.length < this.minlength) {

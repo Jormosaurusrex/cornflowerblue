@@ -34,19 +34,11 @@ class EmailInput extends TextInput {
 
     /* CORE METHODS_____________________________________________________________________ */
 
-    /**
-     * Calculate the placeholder
-     * @return {string|*}
-     */
     calculatePlaceholder() {
         if (this.placeholder) { return this.placeholder; }
         return 'person@myemailaccount.net';
     }
 
-    /**
-     * Runs local validation
-     * @return {boolean}
-     */
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!EmailInput.isValid(this.value)) {
