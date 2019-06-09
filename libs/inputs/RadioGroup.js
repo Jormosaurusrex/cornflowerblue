@@ -108,7 +108,6 @@ class RadioGroup extends SelectMenu {
 
     postContainerScrub() {
         if (this.hidden) { this.container.css('display', 'none'); }
-        if (this.disabled) { this.disable(); }
 
         if (this.required) {
             this.container.addClass('required');
@@ -141,8 +140,6 @@ class RadioGroup extends SelectMenu {
             .attr('tabindex', 0) // always 0
             .attr('value', def.value)
             .attr('aria-label', def.label)
-            .attr('aria-checked', def.checked)
-            .attr('checked', def.checked)
             .attr('role', 'radio')
             .addClass(this.classes.join(' '))
             .change(function(e) {
@@ -163,15 +160,18 @@ class RadioGroup extends SelectMenu {
                     me.onchange(e, me);
                 }
             });
+
         let $opLabel = $('<label />')
             .attr('for', lId)
             .html(def.label);
 
         if (def.checked) {
             this.origval = def.value;
+            $op.attr('aria-checked', 'checked')
+                .attr('checked', 'checked')
         }
 
-        return $('<li />').append($op).append($opLabel);
+        return $('<li />').addClass('radio').append($op).append($opLabel);
     }
 
     /**
@@ -180,7 +180,8 @@ class RadioGroup extends SelectMenu {
     buildOptions() {
         const me = this;
         this.optionlist = $('<ul />')
-            .attr('tabindex', 0)
+            .addClass('radiogroup')
+            .attr('tabindex', -1)
             .attr('role', 'radiogroup');
         for (let opt of this.options) {
             let $o = this.buildOption(opt);

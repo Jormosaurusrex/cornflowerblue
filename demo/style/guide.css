@@ -325,7 +325,9 @@
   --progressmeter-step-points-color: var(--grey-dark);
   --sup-text-color: var(--paragraph-text-color);
   --sup-text-shadow: var(--paragraph-text-shadow);
-  --radio-size: var(--checkbox-size);
+  --radio-size: 2.2em;
+  --radio-toggle-size: 1.25em;
+  --radio-toggle-offset: 0.3em;
   --radio-element-label-color: var(--grey-darker);
   --radio-element-label-text-shadow: var(--text-shadow);
   --resultsbox-margin: 0;
@@ -2112,9 +2114,6 @@ input[type="radio"] {
       border-radius: 50%; }
 
 input[type=checkbox]:disabled,
-input[type=radio]:disabled,
-input[type=radio] + label:disabled,
-input[type=radio]:checked + label:disabled,
 input[type=checkbox] + label:disabled,
 input[type=checkbox]:checked + label:disabled {
   color: var(--disabled-highlight-color) !important;
@@ -2126,12 +2125,6 @@ input[type=checkbox]:checked + label:disabled {
   outline: none;
   text-decoration: none; }
   input[type=checkbox]:disabled:before, input[type=checkbox]:disabled:after,
-  input[type=radio]:disabled:before,
-  input[type=radio]:disabled:after,
-  input[type=radio] + label:disabled:before,
-  input[type=radio] + label:disabled:after,
-  input[type=radio]:checked + label:disabled:before,
-  input[type=radio]:checked + label:disabled:after,
   input[type=checkbox] + label:disabled:before,
   input[type=checkbox] + label:disabled:after,
   input[type=checkbox]:checked + label:disabled:before,
@@ -2139,33 +2132,16 @@ input[type=checkbox]:checked + label:disabled {
     box-shadow: none !important;
     text-shadow: none !important; }
   input[type=checkbox]:disabled:checked:before,
-  input[type=radio]:disabled:checked:before,
-  input[type=radio] + label:disabled:checked:before,
-  input[type=radio]:checked + label:disabled:checked:before,
   input[type=checkbox] + label:disabled:checked:before,
   input[type=checkbox]:checked + label:disabled:checked:before {
-    color: var(--disabled-highlight-color) !important;
-    box-shadow: none;
-    text-shadow: none; }
+    display: none; }
   input[type=checkbox]:disabled:checked:after,
-  input[type=radio]:disabled:checked:after,
-  input[type=radio] + label:disabled:checked:after,
-  input[type=radio]:checked + label:disabled:checked:after,
   input[type=checkbox] + label:disabled:checked:after,
   input[type=checkbox]:checked + label:disabled:checked:after {
     background-color: var(--disabled-highlight-color);
     border-color: var(--disabled-highlight-color);
     box-shadow: none; }
   input[type=checkbox]:disabled:hover, input[type=checkbox]:disabled:focus, input[type=checkbox]:disabled:active,
-  input[type=radio]:disabled:hover,
-  input[type=radio]:disabled:focus,
-  input[type=radio]:disabled:active,
-  input[type=radio] + label:disabled:hover,
-  input[type=radio] + label:disabled:focus,
-  input[type=radio] + label:disabled:active,
-  input[type=radio]:checked + label:disabled:hover,
-  input[type=radio]:checked + label:disabled:focus,
-  input[type=radio]:checked + label:disabled:active,
   input[type=checkbox] + label:disabled:hover,
   input[type=checkbox] + label:disabled:focus,
   input[type=checkbox] + label:disabled:active,
@@ -2179,24 +2155,6 @@ input[type=checkbox]:checked + label:disabled {
     outline: none;
     text-decoration: none; }
     input[type=checkbox]:disabled:hover:before, input[type=checkbox]:disabled:hover:after, input[type=checkbox]:disabled:focus:before, input[type=checkbox]:disabled:focus:after, input[type=checkbox]:disabled:active:before, input[type=checkbox]:disabled:active:after,
-    input[type=radio]:disabled:hover:before,
-    input[type=radio]:disabled:hover:after,
-    input[type=radio]:disabled:focus:before,
-    input[type=radio]:disabled:focus:after,
-    input[type=radio]:disabled:active:before,
-    input[type=radio]:disabled:active:after,
-    input[type=radio] + label:disabled:hover:before,
-    input[type=radio] + label:disabled:hover:after,
-    input[type=radio] + label:disabled:focus:before,
-    input[type=radio] + label:disabled:focus:after,
-    input[type=radio] + label:disabled:active:before,
-    input[type=radio] + label:disabled:active:after,
-    input[type=radio]:checked + label:disabled:hover:before,
-    input[type=radio]:checked + label:disabled:hover:after,
-    input[type=radio]:checked + label:disabled:focus:before,
-    input[type=radio]:checked + label:disabled:focus:after,
-    input[type=radio]:checked + label:disabled:active:before,
-    input[type=radio]:checked + label:disabled:active:after,
     input[type=checkbox] + label:disabled:hover:before,
     input[type=checkbox] + label:disabled:hover:after,
     input[type=checkbox] + label:disabled:focus:before,
@@ -2212,52 +2170,22 @@ input[type=checkbox]:checked + label:disabled {
       box-shadow: none !important;
       text-shadow: none !important; }
     input[type=checkbox]:disabled:hover:before, input[type=checkbox]:disabled:focus:before, input[type=checkbox]:disabled:active:before,
-    input[type=radio]:disabled:hover:before,
-    input[type=radio]:disabled:focus:before,
-    input[type=radio]:disabled:active:before,
-    input[type=radio] + label:disabled:hover:before,
-    input[type=radio] + label:disabled:focus:before,
-    input[type=radio] + label:disabled:active:before,
-    input[type=radio]:checked + label:disabled:hover:before,
-    input[type=radio]:checked + label:disabled:focus:before,
-    input[type=radio]:checked + label:disabled:active:before,
     input[type=checkbox] + label:disabled:hover:before,
     input[type=checkbox] + label:disabled:focus:before,
     input[type=checkbox] + label:disabled:active:before,
     input[type=checkbox]:checked + label:disabled:hover:before,
     input[type=checkbox]:checked + label:disabled:focus:before,
     input[type=checkbox]:checked + label:disabled:active:before {
-      opacity: 0; }
+      display: none; }
     input[type=checkbox]:disabled:hover:checked:before, input[type=checkbox]:disabled:focus:checked:before, input[type=checkbox]:disabled:active:checked:before,
-    input[type=radio]:disabled:hover:checked:before,
-    input[type=radio]:disabled:focus:checked:before,
-    input[type=radio]:disabled:active:checked:before,
-    input[type=radio] + label:disabled:hover:checked:before,
-    input[type=radio] + label:disabled:focus:checked:before,
-    input[type=radio] + label:disabled:active:checked:before,
-    input[type=radio]:checked + label:disabled:hover:checked:before,
-    input[type=radio]:checked + label:disabled:focus:checked:before,
-    input[type=radio]:checked + label:disabled:active:checked:before,
     input[type=checkbox] + label:disabled:hover:checked:before,
     input[type=checkbox] + label:disabled:focus:checked:before,
     input[type=checkbox] + label:disabled:active:checked:before,
     input[type=checkbox]:checked + label:disabled:hover:checked:before,
     input[type=checkbox]:checked + label:disabled:focus:checked:before,
     input[type=checkbox]:checked + label:disabled:active:checked:before {
-      opacity: 1;
-      color: var(--disabled-highlight-color) !important;
-      box-shadow: none;
-      text-shadow: none; }
+      display: none; }
     input[type=checkbox]:disabled:hover:checked:after, input[type=checkbox]:disabled:focus:checked:after, input[type=checkbox]:disabled:active:checked:after,
-    input[type=radio]:disabled:hover:checked:after,
-    input[type=radio]:disabled:focus:checked:after,
-    input[type=radio]:disabled:active:checked:after,
-    input[type=radio] + label:disabled:hover:checked:after,
-    input[type=radio] + label:disabled:focus:checked:after,
-    input[type=radio] + label:disabled:active:checked:after,
-    input[type=radio]:checked + label:disabled:hover:checked:after,
-    input[type=radio]:checked + label:disabled:focus:checked:after,
-    input[type=radio]:checked + label:disabled:active:checked:after,
     input[type=checkbox] + label:disabled:hover:checked:after,
     input[type=checkbox] + label:disabled:focus:checked:after,
     input[type=checkbox] + label:disabled:active:checked:after,
@@ -2268,30 +2196,6 @@ input[type=checkbox]:checked + label:disabled {
       background-color: var(--disabled-highlight-color);
       border-color: var(--disabled-highlight-color);
       box-shadow: none; }
-  input[type=checkbox]:disabled.toggle:after, input[type=checkbox]:disabled.toggle:checked:after, input[type=checkbox]:disabled.switch:after, input[type=checkbox]:disabled.switch:checked:after,
-  input[type=radio]:disabled.toggle:after,
-  input[type=radio]:disabled.toggle:checked:after,
-  input[type=radio]:disabled.switch:after,
-  input[type=radio]:disabled.switch:checked:after,
-  input[type=radio] + label:disabled.toggle:after,
-  input[type=radio] + label:disabled.toggle:checked:after,
-  input[type=radio] + label:disabled.switch:after,
-  input[type=radio] + label:disabled.switch:checked:after,
-  input[type=radio]:checked + label:disabled.toggle:after,
-  input[type=radio]:checked + label:disabled.toggle:checked:after,
-  input[type=radio]:checked + label:disabled.switch:after,
-  input[type=radio]:checked + label:disabled.switch:checked:after,
-  input[type=checkbox] + label:disabled.toggle:after,
-  input[type=checkbox] + label:disabled.toggle:checked:after,
-  input[type=checkbox] + label:disabled.switch:after,
-  input[type=checkbox] + label:disabled.switch:checked:after,
-  input[type=checkbox]:checked + label:disabled.toggle:after,
-  input[type=checkbox]:checked + label:disabled.toggle:checked:after,
-  input[type=checkbox]:checked + label:disabled.switch:after,
-  input[type=checkbox]:checked + label:disabled.switch:checked:after {
-    background-color: var(--disabled-highlight-color);
-    border-color: var(--disabled-highlight-color);
-    box-shadow: none; }
 
 input[type="radio"] {
   border-radius: 50%;
@@ -2299,10 +2203,142 @@ input[type="radio"] {
   height: var(--radio-size);
   max-width: var(--radio-size);
   max-height: var(--radio-size); }
+  input[type="radio"]:before, input[type="radio"]:checked:before {
+    display: none; }
+  input[type="radio"]:after {
+    width: var(--radio-toggle-size);
+    height: var(--radio-toggle-size);
+    max-width: var(--radio-toggle-size);
+    max-height: var(--radio-toggle-size);
+    left: var(--radio-toggle-offset);
+    top: var(--radio-toggle-offset);
+    border: 0.2em solid var(--checkbox-toggle-chrome-color); }
+  input[type="radio"]:checked:after, input[type="radio"]:focus:after, input[type="radio"]:active:after, input[type="radio"]:hover:after {
+    border-radius: 50%; }
+  input[type="radio"]:hover {
+    border-color: var(--checkbox-focus-color);
+    background-color: var(--checkbox-focus-color);
+    box-shadow: var(--hover-box-shadow); }
+    input[type="radio"]:hover:before {
+      display: none; }
+    input[type="radio"]:hover:after {
+      display: block;
+      background-color: transparent;
+      border: 0.2em dotted var(--checkbox-toggle-chrome-color); }
+    input[type="radio"]:hover:checked {
+      border-color: var(--checkbox-border-color);
+      box-shadow: var(--checkbox-checked-shadow);
+      background-color: var(--checkbox-focus-color); }
+      input[type="radio"]:hover:checked:before {
+        display: none; }
+      input[type="radio"]:hover:checked:after {
+        background-color: var(--checkbox-toggle-chrome-hovermark-color);
+        border: 0.4em solid var(--checkbox-toggle-chrome-color); }
+  input[type="radio"]:checked:after {
+    display: block; }
 
-div.radiogroup-container ul {
+input[type=radio]:disabled,
+input[type=radio] + label:disabled,
+input[type=radio]:checked + label:disabled {
+  color: var(--disabled-highlight-color) !important;
+  background-color: var(--disabled-base-color) !important;
+  border-color: var(--disabled-highlight-color) !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  pointer-events: none;
+  outline: none;
+  text-decoration: none; }
+  input[type=radio]:disabled:before, input[type=radio]:disabled:after,
+  input[type=radio] + label:disabled:before,
+  input[type=radio] + label:disabled:after,
+  input[type=radio]:checked + label:disabled:before,
+  input[type=radio]:checked + label:disabled:after {
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  input[type=radio]:disabled:checked:before,
+  input[type=radio] + label:disabled:checked:before,
+  input[type=radio]:checked + label:disabled:checked:before {
+    display: none; }
+  input[type=radio]:disabled:checked:after,
+  input[type=radio] + label:disabled:checked:after,
+  input[type=radio]:checked + label:disabled:checked:after {
+    background-color: var(--disabled-highlight-color);
+    border-color: var(--disabled-highlight-color);
+    box-shadow: none; }
+  input[type=radio]:disabled:hover, input[type=radio]:disabled:focus, input[type=radio]:disabled:active,
+  input[type=radio] + label:disabled:hover,
+  input[type=radio] + label:disabled:focus,
+  input[type=radio] + label:disabled:active,
+  input[type=radio]:checked + label:disabled:hover,
+  input[type=radio]:checked + label:disabled:focus,
+  input[type=radio]:checked + label:disabled:active {
+    color: var(--disabled-highlight-color) !important;
+    background-color: var(--disabled-base-color) !important;
+    border-color: var(--disabled-highlight-color) !important;
+    box-shadow: none;
+    outline: none;
+    text-decoration: none; }
+    input[type=radio]:disabled:hover:before, input[type=radio]:disabled:hover:after, input[type=radio]:disabled:focus:before, input[type=radio]:disabled:focus:after, input[type=radio]:disabled:active:before, input[type=radio]:disabled:active:after,
+    input[type=radio] + label:disabled:hover:before,
+    input[type=radio] + label:disabled:hover:after,
+    input[type=radio] + label:disabled:focus:before,
+    input[type=radio] + label:disabled:focus:after,
+    input[type=radio] + label:disabled:active:before,
+    input[type=radio] + label:disabled:active:after,
+    input[type=radio]:checked + label:disabled:hover:before,
+    input[type=radio]:checked + label:disabled:hover:after,
+    input[type=radio]:checked + label:disabled:focus:before,
+    input[type=radio]:checked + label:disabled:focus:after,
+    input[type=radio]:checked + label:disabled:active:before,
+    input[type=radio]:checked + label:disabled:active:after {
+      box-shadow: none !important;
+      text-shadow: none !important; }
+    input[type=radio]:disabled:hover:before, input[type=radio]:disabled:focus:before, input[type=radio]:disabled:active:before,
+    input[type=radio] + label:disabled:hover:before,
+    input[type=radio] + label:disabled:focus:before,
+    input[type=radio] + label:disabled:active:before,
+    input[type=radio]:checked + label:disabled:hover:before,
+    input[type=radio]:checked + label:disabled:focus:before,
+    input[type=radio]:checked + label:disabled:active:before {
+      opacity: 0; }
+    input[type=radio]:disabled:hover:checked:before, input[type=radio]:disabled:focus:checked:before, input[type=radio]:disabled:active:checked:before,
+    input[type=radio] + label:disabled:hover:checked:before,
+    input[type=radio] + label:disabled:focus:checked:before,
+    input[type=radio] + label:disabled:active:checked:before,
+    input[type=radio]:checked + label:disabled:hover:checked:before,
+    input[type=radio]:checked + label:disabled:focus:checked:before,
+    input[type=radio]:checked + label:disabled:active:checked:before {
+      opacity: 1;
+      color: var(--disabled-highlight-color) !important;
+      box-shadow: none;
+      text-shadow: none; }
+    input[type=radio]:disabled:hover:checked:after, input[type=radio]:disabled:focus:checked:after, input[type=radio]:disabled:active:checked:after,
+    input[type=radio] + label:disabled:hover:checked:after,
+    input[type=radio] + label:disabled:focus:checked:after,
+    input[type=radio] + label:disabled:active:checked:after,
+    input[type=radio]:checked + label:disabled:hover:checked:after,
+    input[type=radio]:checked + label:disabled:focus:checked:after,
+    input[type=radio]:checked + label:disabled:active:checked:after {
+      opacity: 1;
+      background-color: var(--disabled-highlight-color);
+      border-color: var(--disabled-highlight-color);
+      box-shadow: none; }
+  input[type=radio]:disabled.toggle:after, input[type=radio]:disabled.toggle:checked:after, input[type=radio]:disabled.switch:after, input[type=radio]:disabled.switch:checked:after,
+  input[type=radio] + label:disabled.toggle:after,
+  input[type=radio] + label:disabled.toggle:checked:after,
+  input[type=radio] + label:disabled.switch:after,
+  input[type=radio] + label:disabled.switch:checked:after,
+  input[type=radio]:checked + label:disabled.toggle:after,
+  input[type=radio]:checked + label:disabled.toggle:checked:after,
+  input[type=radio]:checked + label:disabled.switch:after,
+  input[type=radio]:checked + label:disabled.switch:checked:after {
+    background-color: var(--disabled-highlight-color);
+    border-color: var(--disabled-highlight-color);
+    box-shadow: none; }
+
+div.radiogroup-container ul.radiogroup {
   list-style-type: none; }
-  div.radiogroup-container ul li {
+  div.radiogroup-container ul.radiogroup li.radio {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -2310,23 +2346,23 @@ div.radiogroup-container ul {
     align-items: center;
     align-content: center;
     margin: .5em 0 .5em 0; }
-    div.radiogroup-container ul li input[type="radio"] {
+    div.radiogroup-container ul.radiogroup li.radio input[type="radio"] {
       display: inline-block;
       margin: 0 1em 0 0; }
-    div.radiogroup-container ul li label {
+    div.radiogroup-container ul.radiogroup li.radio label {
       display: inline-block;
       margin: 0;
       text-shadow: var(--radio-element-label-text-shadow);
       color: var(--radio-element-label-color); }
-      div.radiogroup-container ul li label:hover {
+      div.radiogroup-container ul.radiogroup li.radio label:hover {
         text-decoration: underline double; }
-      div.radiogroup-container ul li label.required:after {
+      div.radiogroup-container ul.radiogroup li.radio label.required:after {
         display: none; }
-div.radiogroup-container.required ul li label:after {
+div.radiogroup-container.required ul.radiogroup li.radio label:after {
   display: none; }
-div.radiogroup-container.inactive ul {
+div.radiogroup-container.inactive ul.radiogroup {
   display: none; }
-div.radiogroup-container.disabled ul li label {
+div.radiogroup-container.disabled ul.radiogroup li.radio label {
   color: var(--disabled-highlight-color);
   text-decoration: none; }
 

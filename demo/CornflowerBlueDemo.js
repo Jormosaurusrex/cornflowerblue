@@ -1871,6 +1871,27 @@ class CornflowerBlueDemo {
         const $standard = $('#radiogroups-standard');
         const $inactive = $('#radiogroups-inactive');
         const $disabled = $('#radiogroups-disabled');
+
+        $disabled.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    new RadioGroup({
+                        label: "Year",
+                        name: "year",
+                        disabled: true,
+                        required: true,
+                        help: "Select the year you wish to recieve data for.",
+                        options: [
+                            { label: "2019", value: "2019" },
+                            { label: "2018", value: "2018", checked: true },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
         $standard.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
@@ -1891,25 +1912,7 @@ class CornflowerBlueDemo {
                 )
         );
 
-        $disabled.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new RadioGroup({
-                        label: "Year",
-                        name: "year",
-                        disabled: true,
-                        required: true,
-                        help: "Select the year you wish to recieve data for.",
-                        options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", checked: true, value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+
 
         let inactiveTest = new RadioGroup({
             label: "Year",

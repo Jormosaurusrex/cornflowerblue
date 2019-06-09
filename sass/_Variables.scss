@@ -419,8 +419,10 @@
   --sup-text-color: var(--paragraph-text-color);
   --sup-text-shadow: var(--paragraph-text-shadow);
 
-  --radio-size: var(--checkbox-size);
-  //--radio-size: 2em;
+  // Radios inherit a lot from --checkbox-
+  --radio-size: 2.2em;
+  --radio-toggle-size: 1.25em;
+  --radio-toggle-offset: 0.3em;
   --radio-element-label-color: var(--grey-darker);
   --radio-element-label-text-shadow: var(--text-shadow);
 

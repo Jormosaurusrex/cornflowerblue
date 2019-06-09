@@ -222,6 +222,7 @@ class SelectMenu extends InputElement {
             .attr('name', this.name)
             .attr('tabindex', 0) // always 0
             .attr('value', def.value)
+            .attr('aria-labelledby', lId)
             .attr('aria-label', def.label)
             .change(function(e) {
                 me.triggerbox.html(def.label);
