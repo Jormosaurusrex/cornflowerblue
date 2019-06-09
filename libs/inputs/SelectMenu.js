@@ -159,7 +159,7 @@ class SelectMenu extends InputElement {
         this.triggerbox = $('<div />')
             .addClass('trigger')
             .attr('tabindex', 0)
-            .focusin(function() {
+            .focusin(function(e) {
                 // Only need the focus handler because a click fires focus _then_ click
                 // And focus happens in more ways than click (tab in, etc.)
                 if (me.disabled) {

@@ -300,6 +300,10 @@
                         <p><dfn>SelectMenu</dfn> elements can also be made <i>mute</i>, like other inputs.</p>
                         <p>Note that the label is always in the "focused" position, as <dfn>SelectMenu</dfn> elements always have a value, even if that value is "unset".</p>
                     </div>
+                    <div class="demobox" id="selects-disabled">
+                        <h3>Disabled</h3>
+                        <p><dfn>SelectMenu</dfn> elements can also be made disabled, like other inputs.</p>
+                    </div>
                     <div class="demobox" id="selects-state">
                         <h3>State Menus</h3>
                         <code class="invoker">new StateMenu({options});</code>
@@ -317,16 +321,19 @@
 
                     <div class="demobox" id="radiogroups-standard">
                         <h3>Standard</h3>
-
+                        <p>The standard mode of a <code>RadioGroup</code> inherits most of the behaviors of other inputs, including the help system.  While they can be marked <code>required</code> (valid only if they start out without a selected entry), there aren't many other errors that this kind of enumeration can create.</p>
+                        <p>There really can't be a <i>mute</i> variant of a <code>RadioGroup</code>.</p>
                     </div>
                     <div class="demobox" id="radiogroups-inactive">
                         <h3>Inactive</h3>
-
+                        <p>As with other inputs, a <code>RadioGroup</code> can be made <i>inactive</i>.</p>
+                        <p>The inactive status can be defined in its construction (with <code>inactive: true</code>) or toggled programmatically (with <code>.deactivate()</code>, <code>.activate()</code>, and <code>.toggleActivation()</code>).</p>
                     </div>
                     <div class="demobox" id="radiogroups-disabled">
                         <h3>Disabled</h3>
-
+                        <p><dfn>RadioGroup</dfn> elements can also be made disabled, like other inputs.</p>
                     </div>
+
                 </section>
 
                 <section id="t-toggles" aria-labelledby="toggles">

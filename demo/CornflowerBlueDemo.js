@@ -468,6 +468,18 @@ class CornflowerBlueDemo {
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
+                .append(
+                    new TextInput({
+                        label: "Name",
+                        maxlength: 50,
+                        counter: 'remaining',
+                        disabled: true,
+                        mute: true,
+                        placeholder: "Your full name",
+                        help: "Use your full name, in whatever manner befits your culture."
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
         );
 
     }
@@ -1687,6 +1699,7 @@ class CornflowerBlueDemo {
         const $mute = $('#selects-mute');
         const $state = $('#selects-state');
         const $inactive = $('#selects-inactive');
+        const $disabled = $('#selects-disabled');
 
 
         let inactiveTest = new SelectMenu({
@@ -1761,29 +1774,29 @@ class CornflowerBlueDemo {
                 )
                 .append(
                     new SelectMenu({
-                        label: "Year",
-                        name: "year",
+                        label: "Favorite Album",
+                        name: "favorite_album",
                         options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" },
-                            { label: "2015", value: "2015" },
-                            { label: "2014", value: "2014" },
-                            { label: "2013", value: "2013" },
-                            { label: "2012", value: "2012" },
-                            { label: "2011", value: "2011" },
-                            { label: "2010", value: "2010" },
-                            { label: "2009", value: "2009" },
-                            { label: "2008", value: "2008", checked: true },
-                            { label: "2007", value: "2007" },
-                            { label: "2006", value: "2006" },
-                            { label: "2005", value: "2005" },
-                            { label: "2004", value: "2004" },
-                            { label: "2003", value: "2003" },
-                            { label: "2002", value: "2002" },
-                            { label: "2001", value: "2001" },
-                            { label: "2000", value: "2000" }
+                            { label: "Sgt. Pepper's Lonely Hearts Club Band", value: "Sgt. Pepper's Lonely Hearts Club Band" },
+                            { label: "The Nylon Curtain", value: "The Nylon Curtain" },
+                            { label: "Reign in Blood", value: "Reign in Blood" },
+                            { label: "Back in Black", value: "Back in Black" },
+                            { label: "Nevermind", value: "Nevermind" },
+                            { label: "Master of Reality", value: "Master of Reality" },
+                            { label: "Doolittle", value: "Doolittle" },
+                            { label: "Blizzard of Ozz", value: "Blizzard of Ozz" },
+                            { label: "Purple Rain", value: "Purple Rain" },
+                            { label: "1989", value: "1989" },
+                            { label: "Crystal Visions", value: "Crystal Visions" },
+                            { label: "Led Zeppelin IV", value: "Led Zeppelin IV", checked: true },
+                            { label: "Congregation", value: "Congregation" },
+                            { label: "Pet Sounds", value: "Pet Sounds" },
+                            { label: "...And Justice for All", value: "...And Justice for All" },
+                            { label: "Welcome to Sky Valley", value: "Welcome to Sky Valley" },
+                            { label: "Live Through This", value: "Live Through This" },
+                            { label: "Nothing's Shocking", value: "Nothing's Shocking" },
+                            { label: "Thriller", value: "Thriller" },
+                            { label: "Appetite for Destruction", value: "Appetite for Destruction" }
                         ]
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
@@ -1820,6 +1833,37 @@ class CornflowerBlueDemo {
                 )
         );
 
+        $disabled.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    new SelectMenu({
+                        label: "Year",
+                        name: "year",
+                        disabled: true,
+                        options: [
+                            { label: "2019", value: "2019" },
+                            { label: "2018", value: "2018" },
+                            { label: "2017", value: "2017" },
+                            { label: "2016", value: "2016" },
+                            { label: "2015", value: "2015" },
+                            { label: "2014", value: "2014" },
+                            { label: "2013", value: "2013" },
+                            { label: "2012", value: "2012" }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new StateMenu({
+                        value: 'WV',
+                        label: 'State',
+                        disabled: true,
+                        mute: true
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
 
     }
     grindRadioGroups() {
@@ -1831,15 +1875,16 @@ class CornflowerBlueDemo {
             $('<div />').addClass('example').addClass('vert')
                 .append(
                     new RadioGroup({
-                        label: "Year",
-                        name: "year",
+                        label: "Best Avenger",
+                        name: "avenger",
                         required: true,
-                        help: "Select the year you wish to recieve data for.",
+                        help: "Stop looking for Tony; he's not in the list.",
                         options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", checked: true, value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" }
+                            { label: "Natasha", value: "Natasha" },
+                            { label: "Steve", checked: true, value: "Steve" },
+                            { label: "Thor", value: "Thor" },
+                            { label: "Clint", value: "Clint" },
+                            { label: "Bruce", value: "Bruce" }
                         ]
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })

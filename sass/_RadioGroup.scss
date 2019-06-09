@@ -24,7 +24,11 @@ div.radiogroup-container {
       label {
         display: inline-block;
         margin: 0;
-        text-shadow: none;
+        text-shadow: var(--radio-element-label-text-shadow);
+        color: var(--radio-element-label-color);
+        &:hover {
+          text-decoration: underline double;
+        }
         &.required {
           &:after {
             display: none;
@@ -54,6 +58,7 @@ div.radiogroup-container {
       li {
         label {
           color: var(--disabled-highlight-color);
+          text-decoration: none;
         }
       }
     }

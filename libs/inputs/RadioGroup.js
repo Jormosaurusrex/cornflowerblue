@@ -175,19 +175,6 @@ class RadioGroup extends SelectMenu {
     }
 
     /**
-     * Build all the options.
-     */
-    buildOptions2() {
-        this.optionlist = $('<ul />')
-            .attr('role', 'radiogroup')
-            .attr('id', this.id)
-            .attr('tabindex', 0);
-        for (let opt of this.options) {
-            this.optionlist.append(this.buildOption(opt));
-        }
-    }
-
-    /**
      * Build the option list.
      */
     buildOptions() {

@@ -62,7 +62,6 @@ div.select-container {
     &:focus {
       border-color: var(--input-focused-border-color);
       background-color: var(--input-focused-background-color);
-      //box-shadow: inset .5em 0 0 var(--input-focused-border-color);
       &:before {
         color: var(--input-focused-border-color);
       }
@@ -194,6 +193,18 @@ div.select-container {
   &.mute {
     label {
       opacity: 1;
+    }
+  }
+  &.disabled {
+    div.trigger {
+      &:before {
+        opacity: .5;
+      }
+    }
+    &.mute {
+      div.trigger {
+        background-color: var(--input-mute-disabled-background-color);
+      }
     }
   }
 }

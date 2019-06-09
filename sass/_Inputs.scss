@@ -60,6 +60,7 @@ textarea {
       }
     }
     &:disabled {
+      background-color: var(--input-mute-disabled-background-color);
       &::placeholder {
         color: var(--input-disabled-placeholder-color);
         text-shadow: none;

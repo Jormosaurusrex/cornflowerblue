@@ -21,8 +21,8 @@
   --sublight: #e5e5e5;
   --light: #ddd;
   --grey-light: #ccc;
-  --grey-medium: rgb(153, 153, 153); // #999;
-  --grey-dark: #666;
+  --grey-medium: rgb(153, 153, 153); // #999
+  --grey-dark: rgb(102, 102, 102); // #666
   --grey-meddark: #555;
   --grey-darker: #444;
   --grey-darkest: #222;
@@ -70,6 +70,8 @@
   --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(100, 149, 237, 0.05) .5em, rgba(100, 149, 237, 0.05) 1em);
   --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(86, 59, 103, 0.05) .5em, rgba(86, 59, 103, 0.05) 1em);
   --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(153, 153, 153, 0.05) .5em, rgba(153, 153, 153, 0.05) 1em);
+  --dark-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(102, 102, 102, 0.05) .5em, rgba(102, 102, 102, 0.05) 1em);
+
 
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
@@ -206,6 +208,14 @@
   --button-menu-item-hover-text-shadow: var(--text-shadow);
 
   // Checkbox keys
+  --checkbox-size: 2.4em;
+  --checkbox-toggle-size: 1.6em;
+  --checkbox-toggle-offset: 0.2em;
+  --checkbox-switch-width: 6em;
+  --checkbox-switch-height: 2.8em;
+  --checkbox-switch-toggle-size: 2em;
+  --checkbox-switch-offset: .2em;
+
   --checkbox-checked-border-color: var(--input-default-border-color);
   --checkbox-checked-background-color: var(--checkbox-focus-color);
   --checkbox-checked-checkmark-border-color: var(--checkbox-checked-border-color);
@@ -223,7 +233,6 @@
   --checkbox-checked-shadow: inset 0 .1em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --checkbox-checked-shadow-hover: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
 
-  --radiobutton-radio-size: var(--checkbox-size);
 
 
   // Code
@@ -337,6 +346,7 @@
   --input-focused-background-color: var(--focus-color-translucent);
 
   --input-mute-background-color: var(--grey-translucent);
+  --input-mute-disabled-background-color: var(--light);
   --input-mute-focus-background-color: var(--grey-quarter);
 
   --input-subline-text-color: var(--grey-medium);
@@ -408,6 +418,11 @@
   // Sup
   --sup-text-color: var(--paragraph-text-color);
   --sup-text-shadow: var(--paragraph-text-shadow);
+
+  --radio-size: var(--checkbox-size);
+  //--radio-size: 2em;
+  --radio-element-label-color: var(--grey-darker);
+  --radio-element-label-text-shadow: var(--text-shadow);
 
   // Results box keys
   --resultsbox-margin: 0;
