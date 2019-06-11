@@ -384,6 +384,7 @@ class CornflowerBlueDemo {
         const $mute = $('#inputs-mute');
         const $password = $('#inputs-password');
         const $email = $('#inputs-email');
+        const $uri = $('#inputs-uri');
         const $number = $('#inputs-number');
         const $disabled = $('#inputs-disabled');
         $standard.append(
@@ -484,7 +485,6 @@ class CornflowerBlueDemo {
         );
 
         $email.append(
-
             $('<div />').addClass('example').addClass('vert')
                 .append(
                     new EmailInput({
@@ -495,6 +495,23 @@ class CornflowerBlueDemo {
                 .append(
                     new EmailInput({
                         label: "Email Address (invalid allowed)",
+                        forceconstraints: false,
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $uri.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    new URIInput({
+                        label: "Web Page (valid required)"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new URIInput({
+                        label: "Web Page (invalid allowed)",
                         forceconstraints: false,
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })

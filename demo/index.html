@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
         <script type="text/javascript" src="../libs/inputs/NumberInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/EmailInput.js"></script>
+        <script type="text/javascript" src="../libs/inputs/URIInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/HiddenField.js"></script>
         <script type="text/javascript" src="../libs/inputs/PasswordInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/SelectMenu.js"></script>
@@ -262,16 +263,21 @@
                         <code class="invoker">new PasswordInput({options});</code>
                         <p>The <dfn>PasswordInput</dfn> element is for redacted content.  By default, these elements include a password visibility toggle. It can be turned off by setting <code>visibilityswitch</code> to false. Set <code>startvisible</code> to true to have it begin with the password unredacted.</p>
                     </div>
-                    <div class="demobox" id="inputs-email">
-                        <h3>Email</h3>
-                        <code class="invoker">new EmailInput({options});</code>
-                        <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
-                    </div>
                     <div class="demobox" id="inputs-number">
                         <h3>Number</h3>
                         <code class="invoker">new NumberInput({options});</code>
                         <p>The input accepts non-numeric values but treats all of them as errors. It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
                         <p>The input accepts non-numeric values but treats all of them as errors.</p>
+                    </div>
+                    <div class="demobox" id="inputs-email">
+                        <h3>Email</h3>
+                        <code class="invoker">new EmailInput({options});</code>
+                        <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
+                    </div>
+                    <div class="demobox" id="inputs-uri">
+                        <h3>URI</h3>
+                        <code class="invoker">new URIInput({options});</code>
+                        <p>The URI input has a validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
                     </div>
                     <div class="demobox" id="inputs-disabled">
                         <h3>Disabled</h3>
