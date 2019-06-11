@@ -58,6 +58,48 @@ class CornflowerBlueDemo {
             ]
         };
     }
+
+    static get CREATE_ACCOUNT_FORM() {
+        return {
+            instructions: {
+                icon: 'help-circle',
+                instructions: [
+                    "We only need an email address and password.",
+                    "Don't worry about confirming it; you can reset it with your email."
+                ]
+            },
+            elements: [
+                new EmailInput({
+                    label: "Email",
+                    autocomplete: 'off',
+                    required: true
+                }),
+                new PasswordInput({
+                    label: "Password",
+                    forceconstraints: false,
+                    placeholder: "Enter a password.",
+                    required: true
+                })
+            ],
+            handler: function(self, callback) {
+                let results = {
+                    success: true,
+                    errors: ['Your account was created successfully!']
+                };
+                callback(results);
+            },
+            actions: [
+                new ConstructiveButton({
+                    text: "Create Account",
+                    icon: "user-circle",
+                    hot: true,
+                    submits: true,
+                    disabled: true  // No action needed.
+                })
+            ]
+        };
+    }
+
     static get DIALOG_LOGIN_FORM() {
         return {
             instructions: {
@@ -370,14 +412,14 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-           text: "Activate Element",
+           text: ".activate()",
            action: function(e, self) {
                console.log('click');
                passiveTest.toggleActivation();
                if (passiveTest.passive) {
-                   self.text = "Activate Element";
+                   self.text = ".activate()";
                } else {
-                   self.text = "Pacify Element";
+                   self.text = ".pacify()";
                }
            }
         });
@@ -1705,13 +1747,13 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-            text: "Activate Element",
+            text: ".activate()",
             action: function(e, self) {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
-                    self.text = "Activate Element";
+                    self.text = ".activate()";
                 } else {
-                    self.text = "Pacify Element";
+                    self.text = ".pacify()";
                 }
             }
         });
@@ -1755,13 +1797,13 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-            text: "Activate Element",
+            text: ".activate()",
             action: function(e, self) {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
-                    self.text = "Activate Element";
+                    self.text = ".activate()";
                 } else {
-                    self.text = "Pacify Element";
+                    self.text = ".pacify()";
                 }
             }
         });
@@ -1961,13 +2003,13 @@ class CornflowerBlueDemo {
         });
 
         let toggleButton = new SimpleButton({
-            text: "Activate Element",
+            text: ".activate()",
             action: function(e, self) {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
-                    self.text = "Activate Element";
+                    self.text = ".activate()";
                 } else {
-                    self.text = "Pacify Element";
+                    self.text = ".pacify()";
                 }
             }
         });
@@ -2241,9 +2283,82 @@ class CornflowerBlueDemo {
     }
 
     grindForms() {
-        const $target = $('#forms-standard');
+        const $standard = $('#forms-standard');
+        const $profile = $('#forms-passive');
         let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
-        $target.append(f.container);
+        $standard.append(f.container);
+
+        let p = new SimpleForm({
+            passive: true,
+            instructions: {
+                icon: 'help-circle',
+                instructions: [
+                    "Make changes to your profile below."
+                ],
+            },
+            passiveinstructions: {
+                instructions: [
+                    "Review your profile information below.",
+                    "Make changes if you need to!"
+                ]
+            },
+            elements: [
+                new TextInput({
+                    label: "Name",
+                    autocomplete: 'off',
+                    placeholder: "Miyamoto Musashi",
+                    help: "Enter your name in whatever manner befits your culture."
+                }),
+                new TextInput({
+                    label: "Nickname",
+                    autocomplete: 'off',
+                    placeholder: "Musashi",
+                    help: "What should we call you? This is your short name."
+                }),
+                new EmailInput({
+                    label: "Email",
+                    autocomplete: 'off',
+                    required: true
+                })
+            ],
+            handler: function(self, callback) {
+                let results = {
+                    success: true,
+                    results: ['Your account has been updated successfully!']
+                };
+                self.pacify();
+                callback(results);
+            },
+            passiveactions: [
+                new SimpleButton({
+                    text: "Make Changes",
+                    icon: "pencil",
+                    action: function(e, self) {
+                        e.preventDefault();
+                        self.form.activate();
+                    }
+                })
+            ],
+            actions: [
+                new ConstructiveButton({
+                    text: "Save Changes",
+                    icon: "check-circle",
+                    hot: true,
+                    submits: true,
+                    disabled: true  // No action needed.
+                }),
+                new DestructiveButton({
+                    text: "Cancel Changes",
+                    icon: "echx-circle",
+                    mute: true,
+                    action: function(e, self) {
+                        e.preventDefault();
+                        self.form.pacify();
+                    }
+                })
+            ]
+        });
+        $profile.append(p.container);
     }
 
     /**

@@ -43,6 +43,7 @@ form {
     }
     div.header,
     div.elements,
+    div.passiveactions,
     div.actions {
       filter: blur(3px);
     }
@@ -66,7 +67,8 @@ form {
       margin: 1em 0 1em 0;
     }
   }
-  div.actions {
+  div.actions,
+  div.passiveactions {
     flex-grow: 1;
     display: flex;
     flex-direction: row;
@@ -90,9 +92,15 @@ form {
       margin-right: 1em;
     }
   }
+  div.passiveactions {
+    display: none;
+  }
   &.passive {
     div.actions {
       display: none;
+    }
+    div.passiveactions {
+      display: flex;
     }
   }
 }

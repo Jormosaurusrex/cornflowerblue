@@ -38,6 +38,7 @@ class SimpleForm {
                             // of the form and need to be connected.
             elements: [], // An array of form elements. These are the objects, not the rendered dom.
             actions: [], // An array of action elements. This are buttons or keywords.
+            passiveactions: [], // An array of action elements that appear only when the form is in passive mode. This are buttons or keywords.
             handlercallback: null, // If present, the response from the handler will be passed to this
                                 // instead of the internal callback. Passed self and results
                                 // The internal callback expects JSON with success: true|false, and arrays of strings
@@ -281,12 +282,13 @@ class SimpleForm {
             this.form.attr('target', this.target);
         }
 
-        this.buildHeaderBox();
-        this.buildElementBox();
-        this.buildActionBox();
+        this.contentbox.append(this.headerbox)
+            .append(this.elementbox);
 
-        this.contentbox.append(this.headerbox).append(this.elementbox);
-        this.form.append(this.shade).append(this.contentbox).append(this.actionbox);
+        this.form.append(this.shade)
+            .append(this.contentbox)
+            .append(this.actionbox)
+            .append(this.passiveactionbox);
 
         this.validate();
 
@@ -374,11 +376,26 @@ class SimpleForm {
             this.actionbox = $('<div />').addClass('actions');
             for (let action of this.actions) {
                 if ((action.cansubmit) && (action.submits)) {
-                    //if ((SimpleButton.prototype.isPrototypeOf(action)) && (action.submits)) {
                     this.submittors.push(action);
                 }
                 action.form = this;
                 this.actionbox.append(action.container);
+            }
+        }
+    }
+
+    /**
+     * Draw the passive actions on the form, if any.
+     */
+    buildPassiveActionBox() {
+        if ((this.passiveactions) && (this.passiveactions.length > 0)) {
+            this.passiveactionbox = $('<div />').addClass('passiveactions');
+            for (let action of this.passiveactions) {
+                if ((action.cansubmit) && (action.submits)) {
+                    this.submittors.push(action);
+                }
+                action.form = this;
+                this.passiveactionbox.append(action.container);
             }
         }
     }
@@ -485,6 +502,15 @@ class SimpleForm {
 
     get passive() { return this.config.passive; }
     set passive(passive) { this.config.passive = passive; }
+
+    get passiveactionbox() {
+        if (!this._passiveactionbox) { this.buildPassiveActionBox(); }
+        return this._passiveactionbox;
+    }
+    set passiveactionbox(passiveactionbox) { this._passiveactionbox = passiveactionbox; }
+
+    get passiveactions() { return this.config.passiveactions; }
+    set passiveactions(passiveactions) { this.config.passiveactions = passiveactions; }
 
     get passiveinstructions() { return this.config.passiveinstructions; }
     set passiveinstructions(passiveinstructions) { this.config.passiveinstructions = passiveinstructions; }

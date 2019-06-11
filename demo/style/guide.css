@@ -1061,6 +1061,7 @@ div.textarea-container {
         color: var(--input-messages-warning-text-color); }
   div.input-container div.passivebox,
   div.textarea-container div.passivebox {
+    transition: all .2s;
     background-color: var(--input-passivebox-background-color);
     border: 0.1em solid var(--input-passivebox-background-color);
     border-radius: var(--input-border-radius);
@@ -1069,6 +1070,7 @@ div.textarea-container {
     color: var(--input-passivebox-text-color);
     font-size: 105%;
     width: 100%;
+    opacity: 0;
     display: none; }
   div.input-container.mute label,
   div.textarea-container.mute label {
@@ -1229,7 +1231,8 @@ div.textarea-container {
     display: none; }
   div.input-container.passive div.passivebox,
   div.textarea-container.passive div.passivebox {
-    display: block; }
+    display: block;
+    opacity: 1; }
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
@@ -2449,6 +2452,7 @@ form {
       display: flex; }
     form.shaded div.header,
     form.shaded div.elements,
+    form.shaded div.passiveactions,
     form.shaded div.actions {
       filter: blur(3px); }
   form div.header {
@@ -2466,7 +2470,8 @@ form {
     form div.elements div.input-container,
     form div.elements div.textarea-container {
       margin: 1em 0 1em 0; }
-  form div.actions {
+  form div.actions,
+  form div.passiveactions {
     flex-grow: 1;
     display: flex;
     flex-direction: row;
@@ -2477,16 +2482,23 @@ form {
     background-color: var(--form-actions-background-color);
     border-top: 0.1em solid var(--form-actions-border-color);
     padding: .5em 1.5em .5em 1.5em; }
-    form div.actions button {
+    form div.actions button,
+    form div.passiveactions button {
       margin-right: 1em; }
-    form div.actions button:first-child {
+    form div.actions button:first-child,
+    form div.passiveactions button:first-child {
       margin-left: 0; }
-    form div.actions button:last-child:not(:only-of-type) {
+    form div.actions button:last-child:not(:only-of-type),
+    form div.passiveactions button:last-child:not(:only-of-type) {
       align-self: flex-end;
       margin-left: auto;
       margin-right: 1em; }
+  form div.passiveactions {
+    display: none; }
   form.passive div.actions {
     display: none; }
+  form.passive div.passiveactions {
+    display: flex; }
 
 div.spinner.spin {
   border-radius: 50%;
