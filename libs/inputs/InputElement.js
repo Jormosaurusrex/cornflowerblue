@@ -238,7 +238,6 @@ class InputElement {
      * @return {null|*}
      */
     calculatePlaceholder() {
-        if (this.placeholder) { return this.placeholder; }
         return null;
     }
 
@@ -377,7 +376,7 @@ class InputElement {
             .attr('title', this.title)
             .attr('inputmode', this.inputmode)
             .attr('autocomplete', this.autocomplete)
-            .attr('placeholder', this.calculatePlaceholder())
+            .attr('placeholder', this.placeholder)
             .attr('aria-label', this.arialabel)
             .attr('aria-describedby', `msg-${this.id}`)
             .attr('aria-invalid', false)
@@ -688,7 +687,10 @@ class InputElement {
     get pattern() { return this.config.pattern; }
     set pattern(pattern) { this.config.pattern = pattern; }
 
-    get placeholder() { return this.config.placeholder; }
+    get placeholder() {
+        if (this.config.placeholder) return this.config.placeholder;
+        return this.calculatePlaceholder();
+    }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
 
     get required() { return this.config.required; }

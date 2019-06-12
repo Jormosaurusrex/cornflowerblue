@@ -104,7 +104,6 @@ class NumberInput extends TextInput {
     }
 
     calculatePlaceholder() {
-        if (this.placeholder) { return this.placeholder; }
         let text = "Enter a number";
         if ((this.minnumber !== 'undefined') && (this.maxnumber !== 'undefined')) {
             text = `Enter a number between ${this.minnumber} and ${this.maxnumber}`;

@@ -35,7 +35,6 @@ class EmailInput extends TextInput {
     /* CORE METHODS_____________________________________________________________________ */
 
     calculatePlaceholder() {
-        if (this.placeholder) { return this.placeholder; }
         return 'person@myemailaccount.net';
     }
 

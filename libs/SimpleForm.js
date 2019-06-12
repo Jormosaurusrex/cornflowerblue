@@ -350,7 +350,9 @@ class SimpleForm {
         this.elementbox = $('<div />').addClass('elements');
         for (let element of this.elements) {
             element.form = this;
-
+            if (element.type === 'file') {
+                this.form.attr('enctype', 'multipart/form-data');
+            }
             if ((!element.id) && (element.name)) {
                 element.id = `${this.id}-${element.name}`;
             } else if (!element.id) {

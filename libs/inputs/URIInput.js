@@ -50,7 +50,6 @@ class URIInput extends TextInput {
     /* CORE METHODS_____________________________________________________________________ */
 
     calculatePlaceholder() {
-        if (this.placeholder) { return this.placeholder; }
         return 'https://somewhere.cornflower.blue/';
     }
 

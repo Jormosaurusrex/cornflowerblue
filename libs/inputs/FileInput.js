@@ -4,11 +4,18 @@ class FileInput extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            placeholder: "Click to upload file",
-            accept: '*', // the default accept mime-type
+            type: "file",
+            accept: 'image/png,image/gif,image/jpg,image/jpeg', // the default accept mime-type
             multiple: false, // Should the file uploader accept multiple files?
             onchange: null // The change handler. Passed (event, self).
         };
+    }
+
+    static get DEFAULT_STRINGS() {
+        return {
+            multiple_file_placeholder: 'Select files (multiple accepted)',
+            single_file_placeholder: 'Select file'
+        }
     }
 
     /**
@@ -41,6 +48,11 @@ class FileInput extends InputElement {
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
+
+    calculatePlaceholder() {
+        if (this.multiple) { return FileInput.DEFAULT_STRINGS.multiple_file_placeholder; }
+        return FileInput.DEFAULT_STRINGS.single_file_placeholder;
+    }
 
     disable() {
         this.triggerbox.prop('disabled', true);
@@ -104,7 +116,7 @@ class FileInput extends InputElement {
         const me = this;
 
         this.fileinput = $('<input />')
-            .attr('type', 'file')
+            .attr('type', this.type)
             .data('self', this)
             .attr('name', this.name)
             .attr('id', this.id)
