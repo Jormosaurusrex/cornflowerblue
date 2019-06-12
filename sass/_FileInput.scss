@@ -1,0 +1,144 @@
+input[type="file"] {
+  width: 0.001em;
+  height: 0.001em;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+div.file-container {
+  div.wrap {
+    &:after {
+      color: var(--button-default-color);
+      padding: .6em 1em .6em 1em;
+      font-family: var(--button-font-family);
+      font-weight: normal;
+      font-size: 100%;
+      line-height: 1;
+      touch-action: manipulation;
+      cursor: pointer;
+      background-color: transparent;
+      box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
+      border: none;
+      border-radius: 0;
+
+      opacity: 0;
+      display: flex;
+      position: absolute;
+      transition: all .2s;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      //width: 2em;
+      margin: 0;
+      font-style: normal;
+      speak: none;
+      text-decoration: inherit;
+      text-align: center;
+      font-variant: normal;
+      text-transform: none;
+      content: 'Upload Files';
+      white-space: nowrap;
+      text-shadow: var(--input-status-icon-text-shadow);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &:hover {
+
+    }
+  }
+  div.trigger {
+    transition: all .2s;
+    box-sizing: border-box;
+    outline: none;
+    position: relative;
+    font-family: inherit;
+    width: 100%;
+    margin: 0;
+    font-size: 105%;
+    background-color: var(--input-default-background-color);
+    border: .1em solid var(--input-default-border-color);
+    padding: .5em 1em .5em 1.5em;
+    border-radius: .1em;
+    color: var(--input-default-placeholder-color);
+    font-weight: normal;
+    text-shadow: none;
+    vertical-align: middle;
+    &.files {
+      color: var(--input-default-text-color);
+      text-shadow:var(--input-default-text-shadow);
+    }
+    &:before {
+      position: absolute;
+      right: 3.5em;
+      top: .7em;
+      margin: 0;
+      font-family: "cornflowerblue", serif;
+      font-style: normal;
+      font-weight: normal;
+      speak: none;
+      text-decoration: inherit;
+      text-align: center;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1em;
+      content: '\2e'; // arrow down
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--input-default-border-color);
+    }
+    &:focus {
+      border-color: var(--input-focused-border-color);
+      background-color: var(--input-focused-background-color);
+      box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+      &::placeholder {
+        opacity: 0.3;
+      }
+    }
+    &.mute {
+      background-color: var(--input-mute-background-color);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      padding: .5em 1em .5em 1.5em;
+      &:focus {
+        border-bottom-color: var(--focus-color);
+        background-color: var(--input-focused-background-color);
+        box-shadow: inset 0px -.2em 0 0 var(--focus-color);
+        &::placeholder {
+          opacity: 0;
+        }
+      }
+    }
+  }
+  &.mute {
+    label {
+      opacity: 1;
+    }
+  }
+  &.disabled {
+    label {
+      text-shadow: none;
+    }
+    div.trigger {
+      border-color: var(--input-disabled-border-color);
+      background-color: var(--input-disabled-background-color);
+      color: var(--input-disabled-text-color);
+      cursor: not-allowed;
+      text-shadow:none;
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: var(--input-disabled-border-color);
+        background-color: var(--input-disabled-background-color);
+        color: var(--input-disabled-text-color);
+        box-shadow: none;
+        &:before {
+          color: var(--input-disabled-text-color);
+        }
+      }
+    }
+  }
+}

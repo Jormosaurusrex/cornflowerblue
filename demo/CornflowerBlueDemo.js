@@ -386,7 +386,38 @@ class CornflowerBlueDemo {
         const $email = $('#inputs-email');
         const $uri = $('#inputs-uri');
         const $number = $('#inputs-number');
+        const $file = $('#inputs-file');
         const $disabled = $('#inputs-disabled');
+
+        $file.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(new FileInput({
+                        label: "File to Upload"
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+
+                )
+        ).append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(new FileInput({
+                        label: "Portfolio Images",
+                        mute: true,
+                        multiple: true
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+
+                )
+        ).append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(new FileInput({
+                        label: "Your Resume",
+                        disabled: true,
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+
+                )
+        );
+
         $standard.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
@@ -449,7 +480,6 @@ class CornflowerBlueDemo {
 
                 )
         );
-
         $mute.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
