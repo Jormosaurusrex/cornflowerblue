@@ -25,7 +25,9 @@ class URIInput extends TextInput {
      * @param uri The uri to check
      * @returns {boolean} true or false, depending
      */
-    static isValid = (uri) => new RegExp(/\w+:(\/?\/?)[^\s]+/).test(uri);
+    static isValid(uri) {
+        return new RegExp(/\w+:(\/?\/?)[^\s]+/).test(uri);
+    }
 
 
     /**
