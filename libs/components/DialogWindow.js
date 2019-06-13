@@ -23,6 +23,11 @@ class DialogWindow {
      */
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
+
+        if (!config.id) {
+            config.id = "dialog-" + Utils.getUniqueKey(5);
+        }
+
         this.build();
         return this;
     }
@@ -83,6 +88,7 @@ class DialogWindow {
             .attr('id', this.id);
 
         if ((this.title) || (this.header)) {
+
             if (this.header) {
                 this.window.append(this.header);
             } else {
@@ -111,15 +117,20 @@ class DialogWindow {
 
             this.form.dialog = this;
 
-            this.window.addClass('isform');
             this.contentbox = $('<div />')
                 .addClass('content')
                 .append(this.form.form);
-            this.window.append(this.contentbox);
+
+            this.window
+                .addClass('isform')
+                .append(this.contentbox);
+
         } else if (this.content) { // It's a jQuery object
+
             this.contentbox = $('<div />')
                 .addClass('content')
                 .append(this.content);
+
             this.window.append(this.contentbox);
         }
 

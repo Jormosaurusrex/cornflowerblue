@@ -23,7 +23,7 @@ class TabBar {
      */
     constructor(config) {
         this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
-        this.build();
+        this.tabmap = {};
         return this;
     }
 
@@ -31,7 +31,7 @@ class TabBar {
      * Builds the DOM.
      * @returns {jQuery} jQuery representation
      */
-    build() {
+    buildContainer() {
         const me = this;
 
         this.container = $('<ul />')
@@ -45,29 +45,26 @@ class TabBar {
         }
 
         for (let tabdef of this.tabs) {
-            let $tab = $('<li />')
+            this.tabmap[tabdef.id] = $('<li />')
                 .html(tabdef.label)
                 .attr('aria-label', tabdef.label)
                 .attr('role', 'tab')
                 .attr('id', tabdef.id)
+                .attr('data-tabid', tabdef.id)
                 .attr('tabindex', 0)
                 .click(function(e) {
                     e.preventDefault();
-                    me.select($tab);
+                    me.select(tabdef.id);
                     if ((tabdef.action) && (typeof tabdef.action === 'function')) {
                         tabdef.action(e);
+                    } else {
+                        me.switchTab(tabdef.id);
                     }
                 });
 
-            if (tabdef.id) {
-                $tab.attr('data-tabid', tabdef.id);
-            }
+            this.container.append(this.tabmap[tabdef.id]);
 
-            if (tabdef.selected) {
-                this.select($tab);
-            }
-
-            this.container.append($tab);
+            if (tabdef.selected) { this.select(tabdef.id); }
         }
     }
 
@@ -100,7 +97,10 @@ class TabBar {
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
-    get container() { return this._container; }
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
     set container(container) { this._container = container; }
 
     get id() { return this.config.id; }
@@ -108,6 +108,9 @@ class TabBar {
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }
+
+    get tabmap() { return this._tabmap; }
+    set tabmap(tabmap) { this._tabmap = tabmap; }
 
     get tabs() { return this.config.tabs; }
     set tabs(tabs) { this.config.tabs = tabs; }
