@@ -181,11 +181,6 @@ class CornflowerBlueDemo {
         this.build();
 
         this.body.addClass('noisy');
-
-        //this.body.click(function(e) {
-        //    console.log(e.target);
-        //});
-
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
         } else {
@@ -320,6 +315,13 @@ class CornflowerBlueDemo {
                     action: function() {
                         me.switchTab('pwchanger');
                     }
+                },
+                {
+                    label: 'Progress Meters',
+                    id: 'progressmeter',
+                    action: function() {
+                        me.switchTab('progressmeter');
+                    }
                 }
             ]
         });
@@ -339,6 +341,8 @@ class CornflowerBlueDemo {
         this.grindButtons();
         this.grindMessageBoxes();
         this.grindForms();
+
+        this.grindProgressMeters();
 
         this.grindPWChange();
         this.handleInternalLinks();
@@ -374,6 +378,49 @@ class CornflowerBlueDemo {
             });
             $(cite).empty().append(b.button);
         }
+
+    }
+
+
+    grindPWChange() {
+        const $target = $('#pwchanger-default');
+        $target.append(new PasswordChangeForm({
+
+        }).container);
+    }
+
+
+    grindProgressMeters() {
+        const $simple = $('#progressmeter-simple');
+        const $variable = $('#progressmeter-variable');
+
+
+        $simple.append(new SimpleProgressMeter({
+            label: "Overall Progress",
+            value: 25
+        }).container
+            .click(function() { me.dumpConfig($(this).data('self')); })
+        );
+
+        $simple.append(new SimpleProgressMeter({
+            label: "Rank 3 Progress",
+            previousrank: "Bronze",
+            nextrank: "Silver",
+            minvalue: 200,
+            maxvalue: 600,
+            value: 335
+        }).container
+            .click(function() { me.dumpConfig($(this).data('self')); })
+        );
+
+        $simple.append(new SimpleProgressMeter({
+                label: "Overall Progress",
+                classes: ['pillcap'],
+                value: 89
+            }).container
+                .click(function() { me.dumpConfig($(this).data('self')); })
+        );
+
 
     }
 
@@ -2254,7 +2301,6 @@ class CornflowerBlueDemo {
 
 
     }
-
     grindMessageBoxes() {
         const me = this;
         const $target = $('#boxes-instructions');
@@ -2321,14 +2367,6 @@ class CornflowerBlueDemo {
 
         );
     }
-
-    grindPWChange() {
-        const $target = $('#pwchanger-default');
-        $target.append(new PasswordChangeForm({
-
-        }).container);
-    }
-
     grindForms() {
         const $standard = $('#forms-standard');
         const $profile = $('#forms-passive');

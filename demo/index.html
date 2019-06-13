@@ -14,12 +14,6 @@
         <script type="text/javascript" src="../libs/buttons/DestructiveButton.js"></script>
         <script type="text/javascript" src="../libs/buttons/ButtonMenu.js"></script>
         <script type="text/javascript" src="../libs/buttons/HelpButton.js"></script>
-        <script type="text/javascript" src="../libs/components/DialogWindow.js"></script>
-        <script type="text/javascript" src="../libs/components/Growler.js"></script>
-        <script type="text/javascript" src="../libs/components/InstructionBox.js"></script>
-        <script type="text/javascript" src="../libs/components/MessageBox.js"></script>
-        <script type="text/javascript" src="../libs/components/PasswordChangeForm.js"></script>
-        <script type="text/javascript" src="../libs/components/TabBar.js"></script>
         <script type="text/javascript" src="../libs/inputs/InputElement.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextInput.js"></script>
         <script type="text/javascript" src="../libs/inputs/BooleanToggle.js"></script>
@@ -33,6 +27,13 @@
         <script type="text/javascript" src="../libs/inputs/StateMenu.js"></script>
         <script type="text/javascript" src="../libs/inputs/TextArea.js"></script>
         <script type="text/javascript" src="../libs/inputs/FileInput.js"></script>
+        <script type="text/javascript" src="../libs/components/DialogWindow.js"></script>
+        <script type="text/javascript" src="../libs/components/Growler.js"></script>
+        <script type="text/javascript" src="../libs/components/InstructionBox.js"></script>
+        <script type="text/javascript" src="../libs/components/MessageBox.js"></script>
+        <script type="text/javascript" src="../libs/components/PasswordChangeForm.js"></script>
+        <script type="text/javascript" src="../libs/components/TabBar.js"></script>
+        <script type="text/javascript" src="../libs/components/SimpleProgressMeter.js"></script>
         <script type="text/javascript" src="../libs/SimpleForm.js"></script>
         <script type="text/javascript" src="../libs/Utils.js"></script>
         <script type="text/javascript" src="CornflowerBlueDemo.js"></script>
@@ -482,12 +483,24 @@ And drunk the milk of Paradise.</pre>
                 </section>
                 <section id="t-pwchanger" aria-labeledby="pwchanger">
                     <h1>Password Changer</h1>
-                    <code class="invoker">new PasswordChangeForm({options});</code>
 
-                    <div class="demobox" id="pwchanger-default">
-                        <h3>Standard</h3>
+                    <div class="demobox" id="pwchanger-simple">
+                        <h3>Simple</h3>
+                        <code class="invoker">new PasswordChangeForm({options});</code>
+
                     </div>
 
+
+                </section>
+                <section id="t-progressmeter" aria-labeledby="progressmeter">
+                    <h1>Progress Meters</h1>
+                    <code class="invoker">new SimpleProgressMeter({options});</code>
+                    <p>The <code>SimpleProgressMeter</code> component is designed to display one point of data along a single axis. By default it, it assumes a scale between 0 and 100.</p>
+                    <p>If given <code>previousrank</code> or <code>nextrank</code> parameters, it will grow taller and display them inside of the bar, a long with the scale values (which can be disabled with <code>showcaps: false</code>).</p>
+                    <p>Adding the <code>pillcap</code> class makes the endpoint circular, but this looks weird if the bar is taller.</p>
+                    <div class="demobox" id="progressmeter-simple">
+                        <h3>Simple</h3>
+                    </div>
 
                 </section>
 

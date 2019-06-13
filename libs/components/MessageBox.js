@@ -28,6 +28,8 @@ class MessageBox {
         return this;
     }
 
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
     /**
      * Build the full messagebox container
      */

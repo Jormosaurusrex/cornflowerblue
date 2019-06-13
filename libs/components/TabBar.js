@@ -27,6 +27,26 @@ class TabBar {
         return this;
     }
 
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Marks a specific tab as selected
+     * @param tab the tab to select
+     */
+    select(tab) {
+        if (typeof tab === 'string') {
+            tab = this.container.find(`[data-tabid='${tab}']`);
+        }
+        if (!tab) {
+            console.warn(`Tab does not exist: ${tab}`);
+            return;
+        }
+        if (this.selected) { this.selected.removeClass('selected'); }
+        this.selected = tab.addClass('selected');
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
     /**
      * Builds the DOM.
      * @returns {jQuery} jQuery representation
@@ -66,22 +86,6 @@ class TabBar {
 
             if (tabdef.selected) { this.select(tabdef.id); }
         }
-    }
-
-    /**
-     * Marks a specific tab as selected
-     * @param tab the tab to select
-     */
-    select(tab) {
-        if (typeof tab === 'string') {
-            tab = this.container.find(`[data-tabid='${tab}']`);
-        }
-        if (!tab) {
-            console.warn(`Tab does not exist: ${tab}`);
-            return;
-        }
-        if (this.selected) { this.selected.removeClass('selected'); }
-        this.selected = tab.addClass('selected');
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

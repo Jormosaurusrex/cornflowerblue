@@ -1,0 +1,98 @@
+div.progressbar-container {
+  --progressmeter-simpleprogress-background-color: var(--ultralight);
+  --progressmeter-simpleprogress-background-image: var(--blue-stripes);
+  --progressmeter-simpleprogress-border-color: var(--grey-light);
+  --progressmeter-simpleprogress-marker-color: var(--blue);
+  --progressmeter-simpleprogress-progress-background-color: var(--blue-half);
+  --progressmeter-simpleprogress-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
+  --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
+  --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
+  --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
+
+
+  margin: .5em 0 .5em 0;
+  position: relative;
+
+  div.simpleprogress {
+    position: relative;
+    margin: 1em 0 1em 0;
+    padding: 0;
+    background-color: var(--progressmeter-simpleprogress-background-color);
+    background-image: var(--progressmeter-simpleprogress-background-image);
+    height: 2em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: .1em solid var(--progressmeter-simpleprogress-border-color);
+    overflow: hidden;
+    div.progress {
+      margin: 0;
+      background-color: var(--progressmeter-simpleprogress-progress-background-color);
+      background-image: var(--progressmeter-simpleprogress-progress-background-image);
+      border-right: .2em solid var(--progressmeter-simpleprogress-marker-color);
+      box-shadow: var(--progressmeter-simpleprogress-progress-box-shadow);
+      height: 100%;
+      width: 0;
+      transition: width 1s ease-in-out;
+      border-top-right-radius: .2em;
+      border-bottom-right-radius: .2em;
+    }
+    div.decals {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      div.previous,
+      div.next {
+        display: flex;
+        flex-direction: column;
+        padding: .5em;
+        div.name,
+        div.value {
+          color: var(--progressmeter-simpleprogress-decal-text-color);
+          text-shadow: var(--progressmeter-simpleprogress-decal-text-shadow);
+        }
+        div.name {
+          text-transform: uppercase;
+          font-weight: lighter;
+        }
+        div.value {
+          font-style: italic;
+        }
+      }
+      div.next {
+        text-align: right;
+      }
+    }
+    &.withdecals {
+      height: 5em;
+      div.decals {
+        div.previous {
+          align-self: flex-start;
+        }
+        div.next {
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+  &.pillcap {
+    div.simpleprogress {
+      div.progress {
+        border-top-right-radius: 1.5em;
+        border-bottom-right-radius: 1.5em;
+      }
+    }
+  }
+}
+
+
+
+

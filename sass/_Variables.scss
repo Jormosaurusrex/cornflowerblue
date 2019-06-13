@@ -78,10 +78,11 @@
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
 
   // Shadows
-  --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+  --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
+  --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+  --text-shadow: var(--text-shadow-light);
   --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
   --on-white-text-shadow: 0 .03em .03em rgba(50,50,50,0.3);
-  --text-shadow-heavy: 0 .07em .07em rgba(0,0,0,0.5);
   --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
 
   --box-shadow: .1em .1em .5em 0 rgba(50, 50, 50, 0.5);
