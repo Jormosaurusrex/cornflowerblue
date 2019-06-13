@@ -14,9 +14,9 @@ div.progressmeter {
   --progressmeter-relation-tooltip-text-color: var(--ultralight);
 
   --progressmeter-main-background-color: var(--ultralight);
-  --progressmeter-main-current-background-color: var(--blue);
+  --progressmeter-main-current-background-color: var(--grey-light);
   --progressmeter-main-current-border-color: var(--grey-dark);
-  --progressmeter-main-aspirant-background-color: var(--green);
+  --progressmeter-main-aspirant-background-color: transparent;
 
 
   width: 100%;
@@ -56,7 +56,7 @@ div.progressmeter {
     padding-right: 1em;
     background-color: var(--progressmeter-relation-base-background-color);
     width: 100%;
-    height: 1em;
+    height: .5em;
     div.mline {
       border-right: .1em solid var(--progressmeter-relation-marker-color);
       background-color: var(--progressmeter-relation-background-color);
@@ -64,7 +64,7 @@ div.progressmeter {
       left: 0;
       top: 0;
       bottom: 0;
-      height: 1em;
+      height: .5em;
       overflow: visible;
       div.details {
         display: none;
@@ -74,6 +74,8 @@ div.progressmeter {
         background-color: var(--progressmeter-relation-tooltip-background-color);
         cursor: hand;
         padding: .5em;
+        white-space: nowrap;
+        font-size: 80%;
         span.t-name {
           font-weight: bold;
           color: var(--progressmeter-relation-tooltip-text-color);
@@ -90,14 +92,14 @@ div.progressmeter {
       }
       &:hover {
         div.details {
-          //display: block;
+          display: block;
         }
       }
     }
   }
   div.mainlayer {
     background-color: var(--progressmeter-main-background-color);
-    height: 5em;
+    height: 3em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

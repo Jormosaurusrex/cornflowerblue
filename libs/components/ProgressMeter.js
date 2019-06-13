@@ -118,7 +118,7 @@ class ProgressMeter {
                 .addClass('mline')
                 .addClass(`tier-${(point.level - 1)}`)
                 .css('z-index', zindex)
-                .css('width', `${point.width}%`)
+                .css('width', `calc(${point.width}% - 20px)`)
                 .append(
                     $('<div />').addClass('details')
                         .append($('<span />').addClass('t-name').html(previoustier.name))
@@ -139,6 +139,7 @@ class ProgressMeter {
         } else {
             currentwidth = 100;
         }
+        currentwidth = 40;
 
         this.mainlayer = $('<div />').addClass('mainlayer')
             .addClass(`tier-${this.current}`);
