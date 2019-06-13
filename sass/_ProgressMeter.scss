@@ -1,25 +1,37 @@
 div.progressmeter {
+  --progressmeter-marker-unfilled-line-color: var(--grey-medium);
+  --progressmeter-marker-background-color: var(--grey-darkest);
+  --progressmeter-marker-border-color: var(--grey-medium);
+  --progressmeter-marker-current-background-color: var(--focus-color);
+  --progressmeter-marker-current-border-color: var(--grey-medium);
+  --progressmeter-step-name-color: var(--grey-darker);
+  --progressmeter-step-points-color: var(--grey-dark);
+
+  --progressmeter-relation-marker-color: var(--grey-darkest);
+  --progressmeter-relation-base-background-color: var(--grey-medium);
+  --progressmeter-relation-background-color: var(--blue);
+  --progressmeter-relation-tooltip-background-color: var(--grey-darkest);
+  --progressmeter-relation-tooltip-text-color: var(--ultralight);
+
+  --progressmeter-main-background-color: var(--ultralight);
+  --progressmeter-main-current-background-color: var(--blue);
+  --progressmeter-main-current-border-color: var(--grey-dark);
+  --progressmeter-main-aspirant-background-color: var(--green);
+
+
   width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   margin: 1em 0 1em 0;
-  div.pline {
-    height: .2em;
-    padding: 0;
-    background-color: var(--progressmeter-marker-unfilled-line-color);
-    margin-top: -1.1em;
-    z-index: 1;
-  }
-  div.threshholds {
+
+  div.descriptorlayer {
     z-index: 2;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
-    //margin-bottom: -1em;
-
-    div.tbox {
+    div.descriptor {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -34,22 +46,79 @@ div.progressmeter {
         margin: 0 0 1em 0;
       }
       div.marker {
-        margin: 0;
-        width: 2em;
-        height: 2em;
-        border-radius: 50%;
-        background-color: var(--progressmeter-marker-background-color);
-        border: .3em solid var(--progressmeter-marker-border-color);
-      }
-      &.current {
-        div.marker {
-          background-color: var(--progressmeter-marker-current-background-color);
-          border-color: var(--progressmeter-marker-current-border-color);
-        }
+        display: none;
       }
     }
 
   }
+  div.relationlayer {
+    position: relative;
+    padding-right: 1em;
+    background-color: var(--progressmeter-relation-base-background-color);
+    width: 100%;
+    height: 1em;
+    div.mline {
+      border-right: .1em solid var(--progressmeter-relation-marker-color);
+      background-color: var(--progressmeter-relation-background-color);
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: 1em;
+      overflow: visible;
+      div.details {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 1em;
+        background-color: var(--progressmeter-relation-tooltip-background-color);
+        cursor: hand;
+        padding: .5em;
+        span.t-name {
+          font-weight: bold;
+          color: var(--progressmeter-relation-tooltip-text-color);
+          &:after {
+            display: inline-block;
+            content: '|';
+            margin: 0 1em 0 1em;
+          }
+        }
+        span.t-points {
+          font-style: italic;
+          color: var(--progressmeter-relation-tooltip-text-color);
+        }
+      }
+      &:hover {
+        div.details {
+          //display: block;
+        }
+      }
+    }
+  }
+  div.mainlayer {
+    background-color: var(--progressmeter-main-background-color);
+    height: 5em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    border-top: .5em solid var(--progressmeter-main-current-border-color);
+    div.current {
+      margin: 0;
+      background-color: var(--progressmeter-main-current-background-color);
+      border-right: .1em solid var(--progressmeter-main-current-border-color);
+      width: 30%;
+      height: 100%;
+    }
+    div.aspirant {
+      margin: 0;
+      height: 100%;
+      flex-grow: 1;
+      background-color: var(--progressmeter-main-aspirant-background-color);
+    }
+  }
+
 
 
 }
