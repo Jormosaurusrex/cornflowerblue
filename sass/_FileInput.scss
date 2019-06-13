@@ -9,43 +9,7 @@ input[type="file"] {
 div.file-container {
   div.wrap {
     &:after {
-      color: var(--button-default-color);
-      padding: .6em 1em .6em 1em;
-      font-family: var(--button-font-family);
-      font-weight: normal;
-      font-size: 100%;
-      line-height: 1;
-      touch-action: manipulation;
-      cursor: pointer;
-      background-color: transparent;
-      box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
-      border: none;
-      border-radius: 0;
-
-      opacity: 0;
-      display: flex;
-      position: absolute;
-      transition: all .2s;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      //width: 2em;
-      margin: 0;
-      font-style: normal;
-      speak: none;
-      text-decoration: inherit;
-      text-align: center;
-      font-variant: normal;
-      text-transform: none;
-      content: 'Upload Files';
-      white-space: nowrap;
-      text-shadow: var(--input-status-icon-text-shadow);
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    &:hover {
-
+      display: none;
     }
   }
   div.trigger {
@@ -65,6 +29,7 @@ div.file-container {
     font-weight: normal;
     text-shadow: none;
     vertical-align: middle;
+    cursor: pointer;
     &.files {
       color: var(--input-default-text-color);
       text-shadow:var(--input-default-text-shadow);
@@ -83,7 +48,7 @@ div.file-container {
       font-variant: normal;
       text-transform: none;
       line-height: 1em;
-      content: '\2e'; // arrow down
+      content: '\59'; // up arrow circle
       flex-direction: column;
       justify-content: center;
       align-items: center;

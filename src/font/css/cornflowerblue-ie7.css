@@ -66,3 +66,6 @@
 .cfb-eye-slash { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x56;&nbsp;'); }
 .cfb-eye { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x57;&nbsp;'); }
 .cfb-disc-check { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x58;&nbsp;'); }
+.cfb-arrow-up-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x59;&nbsp;'); }
+.cfb-arrow-down-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x5a;&nbsp;'); }
+.cfb-pencil-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x5b;&nbsp;'); }
