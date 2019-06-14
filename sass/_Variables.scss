@@ -23,9 +23,9 @@
   --grey-light: #ccc;
   --grey-medium: rgb(153, 153, 153); // #999
   --grey-dark: rgb(102, 102, 102); // #666
-  --grey-meddark: #555;
-  --grey-darker: #444;
-  --grey-darkest: #222;
+  --grey-meddark: rgb(85, 85, 85); // #555
+  --grey-darker: rgb(68, 68, 68); // #444
+  --grey-darkest: rgb(34, 34, 34); // #222;
   --black: #000;
 
   // Half opacity colors
@@ -71,6 +71,7 @@
   --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(86, 59, 103, 0.05) .5em, rgba(86, 59, 103, 0.05) 1em);
   --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(153, 153, 153, 0.05) .5em, rgba(153, 153, 153, 0.05) 1em);
   --dark-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(102, 102, 102, 0.05) .5em, rgba(102, 102, 102, 0.05) 1em);
+  --darker-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(68, 68, 68, 0.05) .5em, rgba(68, 68, 68, 0.05) 1em);
 
 
   --fontstack-serif: "Times New Roman", Times, serif;
@@ -412,6 +413,21 @@
   //--paragraph-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
 
   // Progressmeter
+  --progressmeter-simpleprogress-background-color: var(--ultralight);
+  --progressmeter-simpleprogress-background-image: var(--darker-grey-stripes);
+  --progressmeter-simpleprogress-border-color: var(--grey-light);
+  --progressmeter-simpleprogress-marker-color: var(--blue);
+  --progressmeter-simpleprogress-progress-background-color: var(--blue-half);
+  --progressmeter-simpleprogress-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
+  --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
+  --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
+  --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
+
+  --progressmeter-radial-background-color: transparent;
+  --progressmeter-radial-stroke-color: var(--darkblue);
+  --progressmeter-radial-gutter-color: var(--blue-quarter);
+  --progressmeter-radial-decal-text-color: var(--grey-dark);
+  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
 
 
   // Sup

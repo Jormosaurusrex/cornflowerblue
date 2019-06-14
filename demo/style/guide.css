@@ -20,9 +20,9 @@
   --grey-light: #ccc;
   --grey-medium: #999999;
   --grey-dark: #666666;
-  --grey-meddark: #555;
-  --grey-darker: #444;
-  --grey-darkest: #222;
+  --grey-meddark: #555555;
+  --grey-darker: #444444;
+  --grey-darkest: #222222;
   --black: #000;
   --white-half: rgba(255, 255, 255, 0.5);
   --white-quarter: rgba(255, 255, 255, 0.25);
@@ -62,6 +62,7 @@
   --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(86, 59, 103, 0.05) 0.5em, rgba(86, 59, 103, 0.05) 1em);
   --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(153, 153, 153, 0.05) 0.5em, rgba(153, 153, 153, 0.05) 1em);
   --dark-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(102, 102, 102, 0.05) 0.5em, rgba(102, 102, 102, 0.05) 1em);
+  --darker-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent 0.5em, rgba(68, 68, 68, 0.05) 0.5em, rgba(68, 68, 68, 0.05) 1em);
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
@@ -320,6 +321,20 @@
   --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
   --paragraph-font-family: var(--fontstack-sansserif);
+  --progressmeter-simpleprogress-background-color: var(--ultralight);
+  --progressmeter-simpleprogress-background-image: var(--darker-grey-stripes);
+  --progressmeter-simpleprogress-border-color: var(--grey-light);
+  --progressmeter-simpleprogress-marker-color: var(--blue);
+  --progressmeter-simpleprogress-progress-background-color: var(--blue-half);
+  --progressmeter-simpleprogress-progress-box-shadow: 0.2em 0 0.5em -0.1em rgba(0, 0, 0, 0.2);
+  --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
+  --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
+  --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
+  --progressmeter-radial-background-color: transparent;
+  --progressmeter-radial-stroke-color: var(--darkblue);
+  --progressmeter-radial-gutter-color: var(--blue-quarter);
+  --progressmeter-radial-decal-text-color: var(--grey-dark);
+  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
   --sup-text-color: var(--paragraph-text-color);
   --sup-text-shadow: var(--paragraph-text-shadow);
   --radio-size: 2.2em;
@@ -3020,22 +3035,34 @@ ul.tabbar {
       margin: 0; }
 
 div.progressbar-container {
-  --progressmeter-simpleprogress-background-color: var(--ultralight);
-  --progressmeter-simpleprogress-background-image: var(--blue-stripes);
-  --progressmeter-simpleprogress-border-color: var(--grey-light);
-  --progressmeter-simpleprogress-marker-color: var(--blue);
-  --progressmeter-simpleprogress-progress-background-color: var(--blue-half);
-  --progressmeter-simpleprogress-progress-box-shadow: 0.2em 0 0.5em -0.1em rgba(0, 0, 0, 0.2);
-  --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
-  --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
-  --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
-  --progressmeter-radial-background-color: transparent;
-  --progressmeter-radial-stroke-color: var(--darkblue);
-  --progressmeter-radial-gutter-color: var(--blue-quarter);
-  --progressmeter-radial-decal-text-color: var(--grey-dark);
-  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
   margin: .5em 0 .5em 0;
   position: relative; }
+  div.progressbar-container .decals {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; }
+    div.progressbar-container .decals div.current,
+    div.progressbar-container .decals div.next {
+      display: flex;
+      flex-direction: column;
+      padding: .5em;
+      margin: 0 1em 0 1em; }
+      div.progressbar-container .decals div.current div.name,
+      div.progressbar-container .decals div.current div.value,
+      div.progressbar-container .decals div.next div.name,
+      div.progressbar-container .decals div.next div.value {
+        color: var(--progressmeter-simpleprogress-decal-text-color);
+        text-shadow: var(--progressmeter-simpleprogress-decal-text-shadow); }
+      div.progressbar-container .decals div.current div.name,
+      div.progressbar-container .decals div.next div.name {
+        text-transform: uppercase;
+        font-weight: lighter; }
+      div.progressbar-container .decals div.current div.value,
+      div.progressbar-container .decals div.next div.value {
+        font-style: italic; }
+    div.progressbar-container .decals div.next {
+      text-align: right; }
   div.progressbar-container div.circlewrap {
     position: relative; }
     div.progressbar-container div.circlewrap svg.progressgutter {
@@ -3113,42 +3140,25 @@ div.progressbar-container {
       transition: width 1s ease-in-out;
       border-top-right-radius: .2em;
       border-bottom-right-radius: .2em; }
-    div.progressbar-container div.simpleprogress div.decals {
+    div.progressbar-container div.simpleprogress div.decals.interior-offset, div.progressbar-container div.simpleprogress div.decals.interior-center, div.progressbar-container div.simpleprogress div.decals.interior-top, div.progressbar-container div.simpleprogress div.decals.interior-bottom {
       position: absolute;
       left: 0;
       top: 0;
       right: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center; }
-      div.progressbar-container div.simpleprogress div.decals div.previous,
-      div.progressbar-container div.simpleprogress div.decals div.next {
-        display: flex;
-        flex-direction: column;
-        padding: .5em;
-        margin: 0 1em 0 1em; }
-        div.progressbar-container div.simpleprogress div.decals div.previous div.name,
-        div.progressbar-container div.simpleprogress div.decals div.previous div.value,
-        div.progressbar-container div.simpleprogress div.decals div.next div.name,
-        div.progressbar-container div.simpleprogress div.decals div.next div.value {
-          color: var(--progressmeter-simpleprogress-decal-text-color);
-          text-shadow: var(--progressmeter-simpleprogress-decal-text-shadow); }
-        div.progressbar-container div.simpleprogress div.decals div.previous div.name,
-        div.progressbar-container div.simpleprogress div.decals div.next div.name {
-          text-transform: uppercase;
-          font-weight: lighter; }
-        div.progressbar-container div.simpleprogress div.decals div.previous div.value,
-        div.progressbar-container div.simpleprogress div.decals div.next div.value {
-          font-style: italic; }
-      div.progressbar-container div.simpleprogress div.decals div.next {
-        text-align: right; }
+      bottom: 0; }
+    div.progressbar-container div.simpleprogress.exteriordecal {
+      margin: 1em 0 0 0; }
     div.progressbar-container div.simpleprogress.withdecals {
       height: 5em; }
-      div.progressbar-container div.simpleprogress.withdecals div.decals div.previous {
+      div.progressbar-container div.simpleprogress.withdecals div.decals.interior-offset div.current {
         align-self: flex-start; }
-      div.progressbar-container div.simpleprogress.withdecals div.decals div.next {
+      div.progressbar-container div.simpleprogress.withdecals div.decals.interior-offset div.next {
+        align-self: flex-end; }
+      div.progressbar-container div.simpleprogress.withdecals div.decals.interior-top div.current,
+      div.progressbar-container div.simpleprogress.withdecals div.decals.interior-top div.next {
+        align-self: flex-start; }
+      div.progressbar-container div.simpleprogress.withdecals div.decals.interior-bottom div.current,
+      div.progressbar-container div.simpleprogress.withdecals div.decals.interior-bottom div.next {
         align-self: flex-end; }
     div.progressbar-container div.simpleprogress.interiorroundcap div.progress {
       border-top-right-radius: 1.5em;

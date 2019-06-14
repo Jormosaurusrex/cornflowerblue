@@ -13,9 +13,15 @@ class SimpleProgressMeter {
                         // * roundcap : both sides of the progress bar will be round capped.
                         // * interiorroundcap : the progress bar's right side will be round capped.
 
-            previousrank: null, // A string, if present, will be displayed inside (along with minvalue)
+            currentrank: null, // A string, if present, will be displayed inside (along with minvalue)
             nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
-            showcaps: true, // if true, show the min and max values.  True by default if previousrank or nextrank is set.
+            showcaps: true, // if true, show the min and max values.  True by default if currentrank or nextrank is set.
+            decalposition: 'interior-offset', // Where should the decals appear?
+                        // * 'interior-offset' : decals are drawn inside of the bar, staggared
+                        // * 'interior-center' : decals are drawn inside of the bar, centered
+                        // * 'interior-top' : decals are drawn inside of the bar, top-aligned
+                        // * 'interior-bottom' : decals are drawn inside of the bar, bottom-aligned
+                        // * 'exterior' : decals are drawn outside of and below the bar
 
             /*
                 The meter can have a variable scale, but the width of its progressbar is absolute within
@@ -72,8 +78,9 @@ class SimpleProgressMeter {
         this.bar = $('<div />')
             .addClass('simpleprogress')
             .addClass(this.style)
-            .append(this.progress)
-            .append(this.decallayer);
+            .append(this.progress);
+
+
 
         this.container = $('<div />')
             .addClass(this.classes.join(' '))
@@ -81,7 +88,14 @@ class SimpleProgressMeter {
             .append(this.labelobj)
             .append(this.bar);
 
-        if ((this.previousrank) || (this.nextrank)) {
+        if (this.decalposition === 'exterior') {
+            this.container.append(this.decallayer);
+            this.bar.addClass('exteriordecal');
+        } else {
+            this.bar.append(this.decallayer);
+        }
+
+        if (((this.currentrank) || (this.nextrank)) && (this.decalposition !== 'exterior')) {
             this.bar.addClass('withdecals');
         }
 
@@ -92,13 +106,16 @@ class SimpleProgressMeter {
     }
 
     buildDecalLayer() {
-        if ((!this.previousrank) && (!this.nextrank) && (!this.showcaps)) { return null; }
+        if ((!this.currentrank) && (!this.nextrank) && (!this.showcaps)) { return null; }
 
-        this.decallayer = $('<div />').addClass('decals');
-        if ((this.previousrank) || (this.showcaps)) {
-            let $p = $('<div />').addClass('previous');
-            if (this.previousrank) {
-                $p.append($('<div />').addClass('name').html(this.previousrank))
+        this.decallayer = $('<div />')
+            .addClass('decals')
+            .addClass(this.decalposition);
+
+        if ((this.currentrank) || (this.showcaps)) {
+            let $p = $('<div />').addClass('current');
+            if (this.currentrank) {
+                $p.append($('<div />').addClass('name').html(this.currentrank))
             }
             if (this.showcaps) {
                 $p.append($('<div />').addClass('value').html(this.minvalue));
@@ -107,7 +124,7 @@ class SimpleProgressMeter {
         }
         if ((this.nextrank) || (this.showcaps)) {
             let $p = $('<div />').addClass('next');
-            if (this.previousrank) {
+            if (this.nextrank) {
                 $p.append($('<div />').addClass('name').html(this.nextrank))
             }
             if (this.showcaps) {
@@ -163,6 +180,9 @@ class SimpleProgressMeter {
     }
     set decallayer(decallayer) { this._decallayer = decallayer; }
 
+    get decalposition() { return this.config.decalposition; }
+    set decalposition(decalposition) { this.config.decalposition = decalposition; }
+
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
@@ -189,8 +209,8 @@ class SimpleProgressMeter {
     get nextrank() { return this.config.nextrank; }
     set nextrank(nextrank) { this.config.nextrank = nextrank; }
 
-    get previousrank() { return this.config.previousrank; }
-    set previousrank(previousrank) { this.config.previousrank = previousrank; }
+    get currentrank() { return this.config.currentrank; }
+    set currentrank(currentrank) { this.config.currentrank = currentrank; }
 
     get progress() { return this._progress; }
     set progress(progress) { this._progress = progress; }
