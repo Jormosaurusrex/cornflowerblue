@@ -438,7 +438,7 @@ class CornflowerBlueDemo {
                 .append(
                     new RadialProgressMeter({
                         label: "Overall Progress",
-                        value: 25,
+                        value: 37,
                         numberposition: 'bottomleft'
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
@@ -446,8 +446,8 @@ class CornflowerBlueDemo {
                 .append(
                     new RadialProgressMeter({
                         label: "Overall Progress",
-                        value: 76,
-                        badge: 7600,
+                        value: 72,
+                        badge: 7200,
                         stinger: 'Points'
 
                     }).container
