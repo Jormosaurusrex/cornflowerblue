@@ -9,9 +9,84 @@ div.progressbar-container {
   --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
   --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
 
+  --progressmeter-radial-background-color: transparent;
+  --progressmeter-radial-stroke-color: var(--darkblue);
+  --progressmeter-radial-gutter-color: var(--blue-quarter);
+  --progressmeter-radial-decal-text-color: var(--grey-dark);
+  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
+
 
   margin: .5em 0 .5em 0;
   position: relative;
+
+
+  div.circlewrap {
+    position: relative;
+    svg {
+      &.progressgutter {
+        position: relative;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        clear: both;
+      }
+      &.progressbar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+      }
+      circle.gutter {
+        stroke: var(--progressmeter-radial-gutter-color);
+        fill: var(--progressmeter-radial-background-color);
+      }
+      circle.radialcircle {
+        stroke-dasharray: 10, 20;
+        transition: stroke-dashoffset 1s ease-in-out;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+        stroke: var(--progressmeter-radial-stroke-color);
+        fill: var(--progressmeter-radial-background-color);
+        box-shadow: var(--panel-shadow);
+        stroke-linecap: butt;
+      }
+    }
+    div.decals {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      div.badge,
+      div.stinger {
+        color: var(--progressmeter-radial-decal-text-color);
+        text-shadow: var(--progressmeter-radial-decal-text-shadow);
+      }
+      div.badge {
+        font-weight: normal;
+        font-size: 200%;
+        sup {
+          font-size: 50%;
+        }
+      }
+      div.stinger {
+        font-weight: 100;
+      }
+      &.bottomright {
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      &.bottomright {
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+    }
+  }
 
   div.simpleprogress {
     position: relative;
@@ -30,7 +105,7 @@ div.progressbar-container {
     div.progress {
       margin: 0;
       background-color: var(--progressmeter-simpleprogress-progress-background-color);
-      background-image: var(--progressmeter-simpleprogress-progress-background-image);
+      //background-image: var(--progressmeter-simpleprogress-progress-background-image);
       border-right: .2em solid var(--progressmeter-simpleprogress-marker-color);
       box-shadow: var(--progressmeter-simpleprogress-progress-box-shadow);
       height: 100%;
@@ -54,6 +129,7 @@ div.progressbar-container {
         display: flex;
         flex-direction: column;
         padding: .5em;
+        margin: 0 1em 0 1em;
         div.name,
         div.value {
           color: var(--progressmeter-simpleprogress-decal-text-color);
@@ -82,12 +158,16 @@ div.progressbar-container {
         }
       }
     }
-  }
-  &.pillcap {
-    div.simpleprogress {
+    &.interiorroundcap {
       div.progress {
         border-top-right-radius: 1.5em;
         border-bottom-right-radius: 1.5em;
+      }
+    }
+    &.roundcap {
+      border-radius: 1.5em;
+      div.progress {
+        border-radius: 1.5em;
       }
     }
   }

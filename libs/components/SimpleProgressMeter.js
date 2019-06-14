@@ -9,6 +9,10 @@ class SimpleProgressMeter {
             label: null, // The title
             help: null, // Help text.
 
+            style: null, // One of a handful of styles:
+                        // * roundcap : both sides of the progress bar will be round capped.
+                        // * interiorroundcap : the progress bar's right side will be round capped.
+
             previousrank: null, // A string, if present, will be displayed inside (along with minvalue)
             nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
             showcaps: true, // if true, show the min and max values.  True by default if previousrank or nextrank is set.
@@ -67,10 +71,9 @@ class SimpleProgressMeter {
 
         this.bar = $('<div />')
             .addClass('simpleprogress')
+            .addClass(this.style)
             .append(this.progress)
             .append(this.decallayer);
-
-
 
         this.container = $('<div />')
             .addClass(this.classes.join(' '))
@@ -197,6 +200,9 @@ class SimpleProgressMeter {
 
     get showcaps() { return this.config.showcaps; }
     set showcaps(showcaps) { this.config.showcaps = showcaps; }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
 
     get width() { return this.config.width; }
     set width(width) { this.config.width = width; }

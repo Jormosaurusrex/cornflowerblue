@@ -392,35 +392,68 @@ class CornflowerBlueDemo {
 
     grindProgressMeters() {
         const $simple = $('#progressmeter-simple');
-        const $variable = $('#progressmeter-variable');
+        const $radial = $('#progressmeter-radial');
 
 
-        $simple.append(new SimpleProgressMeter({
-            label: "Overall Progress",
-            value: 25
-        }).container
-            .click(function() { me.dumpConfig($(this).data('self')); })
+        $simple.append(
+            $('<div />').addClass('example').addClass('vert')
+                .append(
+                    new SimpleProgressMeter({
+                        label: "Overall Progress",
+                        value: 25
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleProgressMeter({
+                        label: "Rank 3 Progress",
+                        previousrank: "Bronze",
+                        nextrank: "Silver",
+                        minvalue: 200,
+                        maxvalue: 600,
+                        value: 335
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleProgressMeter({
+                        label: "Style: roundcap",
+                        style: 'roundcap',
+                        value: 89
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleProgressMeter({
+                        label: "Style: interiorroundcap",
+                        style: 'interiorroundcap',
+                        value: 23
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
         );
 
-        $simple.append(new SimpleProgressMeter({
-            label: "Rank 3 Progress",
-            previousrank: "Bronze",
-            nextrank: "Silver",
-            minvalue: 200,
-            maxvalue: 600,
-            value: 335
-        }).container
-            .click(function() { me.dumpConfig($(this).data('self')); })
-        );
+        $radial.append(
+            $('<div />').addClass('example')
+                .append(
+                    new RadialProgressMeter({
+                        label: "Overall Progress",
+                        value: 25,
+                        numberposition: 'bottomleft'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "Overall Progress",
+                        value: 76,
+                        badge: 7600,
+                        stinger: 'Points'
 
-        $simple.append(new SimpleProgressMeter({
-                label: "Overall Progress",
-                classes: ['pillcap'],
-                value: 89
-            }).container
-                .click(function() { me.dumpConfig($(this).data('self')); })
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
         );
-
 
     }
 

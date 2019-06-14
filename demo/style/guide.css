@@ -3029,8 +3029,66 @@ div.progressbar-container {
   --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
   --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
   --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
+  --progressmeter-radial-background-color: transparent;
+  --progressmeter-radial-stroke-color: var(--darkblue);
+  --progressmeter-radial-gutter-color: var(--blue-quarter);
+  --progressmeter-radial-decal-text-color: var(--grey-dark);
+  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
   margin: .5em 0 .5em 0;
   position: relative; }
+  div.progressbar-container div.circlewrap {
+    position: relative; }
+    div.progressbar-container div.circlewrap svg.progressgutter {
+      position: relative;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      clear: both; }
+    div.progressbar-container div.circlewrap svg.progressbar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 2; }
+    div.progressbar-container div.circlewrap svg circle.gutter {
+      stroke: var(--progressmeter-radial-gutter-color);
+      fill: var(--progressmeter-radial-background-color); }
+    div.progressbar-container div.circlewrap svg circle.radialcircle {
+      stroke-dasharray: 10, 20;
+      transition: stroke-dashoffset 1s ease-in-out;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      stroke: var(--progressmeter-radial-stroke-color);
+      fill: var(--progressmeter-radial-background-color);
+      box-shadow: var(--panel-shadow);
+      stroke-linecap: butt; }
+    div.progressbar-container div.circlewrap div.decals {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      align-items: center; }
+      div.progressbar-container div.circlewrap div.decals div.badge,
+      div.progressbar-container div.circlewrap div.decals div.stinger {
+        color: var(--progressmeter-radial-decal-text-color);
+        text-shadow: var(--progressmeter-radial-decal-text-shadow); }
+      div.progressbar-container div.circlewrap div.decals div.badge {
+        font-weight: normal;
+        font-size: 200%; }
+        div.progressbar-container div.circlewrap div.decals div.badge sup {
+          font-size: 50%; }
+      div.progressbar-container div.circlewrap div.decals div.stinger {
+        font-weight: 100; }
+      div.progressbar-container div.circlewrap div.decals.bottomright {
+        justify-content: flex-end;
+        align-items: flex-end; }
+      div.progressbar-container div.circlewrap div.decals.bottomright {
+        justify-content: flex-end;
+        align-items: flex-end; }
   div.progressbar-container div.simpleprogress {
     position: relative;
     margin: 1em 0 1em 0;
@@ -3048,7 +3106,6 @@ div.progressbar-container {
     div.progressbar-container div.simpleprogress div.progress {
       margin: 0;
       background-color: var(--progressmeter-simpleprogress-progress-background-color);
-      background-image: var(--progressmeter-simpleprogress-progress-background-image);
       border-right: 0.2em solid var(--progressmeter-simpleprogress-marker-color);
       box-shadow: var(--progressmeter-simpleprogress-progress-box-shadow);
       height: 100%;
@@ -3070,7 +3127,8 @@ div.progressbar-container {
       div.progressbar-container div.simpleprogress div.decals div.next {
         display: flex;
         flex-direction: column;
-        padding: .5em; }
+        padding: .5em;
+        margin: 0 1em 0 1em; }
         div.progressbar-container div.simpleprogress div.decals div.previous div.name,
         div.progressbar-container div.simpleprogress div.decals div.previous div.value,
         div.progressbar-container div.simpleprogress div.decals div.next div.name,
@@ -3092,9 +3150,13 @@ div.progressbar-container {
         align-self: flex-start; }
       div.progressbar-container div.simpleprogress.withdecals div.decals div.next {
         align-self: flex-end; }
-  div.progressbar-container.pillcap div.simpleprogress div.progress {
-    border-top-right-radius: 1.5em;
-    border-bottom-right-radius: 1.5em; }
+    div.progressbar-container div.simpleprogress.interiorroundcap div.progress {
+      border-top-right-radius: 1.5em;
+      border-bottom-right-radius: 1.5em; }
+    div.progressbar-container div.simpleprogress.roundcap {
+      border-radius: 1.5em; }
+      div.progressbar-container div.simpleprogress.roundcap div.progress {
+        border-radius: 1.5em; }
 
 :root {
   --tabbar-background-color: var(--canvas-color-tertiary);
