@@ -55,6 +55,8 @@
 .cfb-eye-slash:before { content: '\56'; } /* 'V' */
 .cfb-eye:before { content: '\57'; } /* 'W' */
 .cfb-disc-check:before { content: '\58'; } /* 'X' */
-.cfb-arrow-up-circle:before { content: '\59'; } /* 'Y' */
-.cfb-arrow-down-circle:before { content: '\5a'; } /* 'Z' */
+.cfb-arrow-down-circle:before { content: '\59'; } /* 'Y' */
+.cfb-arrow-up-circle:before { content: '\5a'; } /* 'Z' */
 .cfb-pencil-circle:before { content: '\5b'; } /* '[' */
+.cfb-download:before { content: '\5c'; } /* '\' */
+.cfb-upload:before { content: '\5d'; } /* ']' */

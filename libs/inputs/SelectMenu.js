@@ -5,6 +5,7 @@ class SelectMenu extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             unselectedtext: "(Select)",
+            icon: "triangle-down",
             searchtext: true,
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
@@ -153,9 +154,9 @@ class SelectMenu extends InputElement {
                 }
                 me.open();
             });
-        if (this.mute) {
-            this.triggerbox.addClass('mute');
-        }
+        if (this.mute) { this.triggerbox.addClass('mute'); }
+        if (this.icon) { this.triggerbox.addClass(`cfb-${this.icon}`); }
+
     }
 
     buildOptions() {

@@ -5,6 +5,7 @@ class FileInput extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             type: "file",
+            icon: "upload",
             accept: 'image/png,image/gif,image/jpg,image/jpeg', // the default accept mime-type
             multiple: false, // Should the file uploader accept multiple files?
             onchange: null // The change handler. Passed (event, self).
@@ -55,17 +56,15 @@ class FileInput extends InputElement {
     }
 
     disable() {
-        this.triggerbox.prop('disabled', true);
+        this.triggerbox.prop('disabled', true).addClass('disabled');
+        this.container.addClass('disabled');
         this.disabled = true;
-        if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
-        if (this.container) { this.container.addClass('disabled'); }
     }
 
     enable() {
-        this.triggerbox.removeAttr('disabled');
+        this.triggerbox.removeAttr('disabled').removeClass('disabled');
+        this.container.removeClass('disabled');
         this.disabled = false;
-        if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
-        if (this.container) { this.container.removeClass('disabled'); }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -107,9 +106,10 @@ class FileInput extends InputElement {
                     me.labelobj.trigger('click');
                 }
             });
-        if (this.mute) {
-            this.triggerbox.addClass('mute');
-        }
+
+        if (this.mute) { this.triggerbox.addClass('mute'); }
+
+        if (this.icon) { this.triggerbox.addClass(`cfb-${this.icon}`); }
     }
 
     buildFileInput() {

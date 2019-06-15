@@ -16,6 +16,8 @@ class InputElement {
                                // To insure a blank placeholder, set the value to ""
             title: null,
             pattern: null,
+            icon: null, // Use to define a specific icon, used in some specific controls.
+
 
             passive: false, // Start life in "passive" mode.
             unsettext: "(Not Set)", // what to display in passive mode if the value is empty
@@ -472,6 +474,9 @@ class InputElement {
             this.input.addClass('mute');
             if (this.label) { this.input.attr('placeholder', this.label); }
         }
+
+        if (this.icon) { this.input.addClass(`cfb-${this.icon}`); }
+
     }
 
     /**
@@ -613,17 +618,11 @@ class InputElement {
     get helpwaittime() { return this.config.helpwaittime; }
     set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
 
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
-
-    get passive() { return this.config.passive; }
-    set passive(passive) { this.config.passive = passive; }
-
-    get passivebox() {
-        if (!this._passivebox) { this.buildInactiveBox(); }
-        return this._passivebox;
-    }
-    set passivebox(passivebox) { this._passivebox = passivebox; }
 
     get input() {
         if (!this._input) { this.buildInput(); }
@@ -683,6 +682,15 @@ class InputElement {
 
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
+
+    get passive() { return this.config.passive; }
+    set passive(passive) { this.config.passive = passive; }
+
+    get passivebox() {
+        if (!this._passivebox) { this.buildInactiveBox(); }
+        return this._passivebox;
+    }
+    set passivebox(passivebox) { this._passivebox = passivebox; }
 
     get pattern() { return this.config.pattern; }
     set pattern(pattern) { this.config.pattern = pattern; }
