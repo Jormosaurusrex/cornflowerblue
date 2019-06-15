@@ -3018,7 +3018,6 @@ ul.tabbar {
       color: var(--tabbar-tab-text-color);
       text-shadow: var(--tabbar-tab-text-shadow);
       cursor: pointer;
-      text-decoration: none;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -3032,24 +3031,18 @@ ul.tabbar {
         color: var(--tabbar-hover-tab-text-color);
         background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
-        text-decoration: none;
         filter: none; }
       ul.tabbar li a:focus {
+        margin: .3em;
         outline-width: .1em;
         outline-style: dashed;
         outline-color: var(--grey-medium);
-        outline-offset: 0;
+        outline-offset: .2em;
         text-decoration: underline double; }
     ul.tabbar li:hover {
       background-color: var(--tabbar-hover-tab-background-color);
       border-color: var(--tabbar-hover-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color); }
-      ul.tabbar li:hover a {
-        color: var(--tabbar-hover-tab-text-color);
-        background-color: var(--tabbar-hover-tab-background-color);
-        text-shadow: var(--tabbar-hover-tab-text-shadow);
-        text-decoration: none;
-        filter: none; }
     ul.tabbar li[aria-selected="true"] {
       box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color);
