@@ -391,6 +391,7 @@ class CornflowerBlueDemo {
 
 
     grindProgressMeters() {
+        const me = this;
         const $simple = $('#progressmeter-simple');
         const $radial = $('#progressmeter-radial');
 
@@ -407,7 +408,7 @@ class CornflowerBlueDemo {
                 .append(
                     new SimpleProgressMeter({
                         label: "Rank 3 Progress",
-                        previousrank: "Bronze",
+                        currentrank: "Bronze",
                         nextrank: "Silver",
                         minvalue: 200,
                         maxvalue: 600,
@@ -2500,10 +2501,11 @@ class CornflowerBlueDemo {
      */
     writeConfig(title, config) {
         this.codebox.empty();
-
-        this.codebox.append($('<h2 />').html(title));
-
-        this.codebox.append($('<div />').addClass('config').html(config));
+        this.codebox.append(
+            $('<div />').addClass('fixbox')
+                .append($('<h2 />').html(title))
+                .append($('<div />').addClass('config').html(config))
+        );
     }
 
     /**

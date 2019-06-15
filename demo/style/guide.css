@@ -3213,19 +3213,21 @@ div#container {
     max-width: 25em;
     min-width: 25em;
     font-size: 80%; }
-    div#container div#codebox div.config {
-      padding: .5em;
-      overflow: auto;
-      white-space: pre;
-      font-family: "Courier New", Courier, monospace; }
-      div#container div#codebox div.config span.key {
-        color: var(--grey-darkest);
-        font-weight: bold; }
-      div#container div#codebox div.config span.value {
-        color: var(--blue); }
-      div#container div#codebox div.config span.default span.value,
-      div#container div#codebox div.config span.default span.key {
-        color: var(--grey-medium); }
+    div#container div#codebox div.fixbox {
+      position: fixed; }
+      div#container div#codebox div.fixbox div.config {
+        padding: .5em;
+        overflow: auto;
+        white-space: pre;
+        font-family: var(--fontstack-monospace); }
+        div#container div#codebox div.fixbox div.config span.key {
+          color: var(--grey-darkest);
+          font-weight: bold; }
+        div#container div#codebox div.fixbox div.config span.value {
+          color: var(--blue); }
+        div#container div#codebox div.fixbox div.config span.default span.value,
+        div#container div#codebox div.fixbox div.config span.default span.key {
+          color: var(--grey-medium); }
 
 div.example {
   margin: 0 0 1em 0;

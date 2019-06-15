@@ -44,6 +44,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         const me = this;
 
         this.container = $('<div />')
+            .data('self', this)
             .addClass('progressbar-container')
             .append(this.labelobj);
 

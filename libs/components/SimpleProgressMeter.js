@@ -80,9 +80,8 @@ class SimpleProgressMeter {
             .addClass(this.style)
             .append(this.progress);
 
-
-
         this.container = $('<div />')
+            .data('self', this)
             .addClass(this.classes.join(' '))
             .addClass('progressbar-container')
             .append(this.labelobj)

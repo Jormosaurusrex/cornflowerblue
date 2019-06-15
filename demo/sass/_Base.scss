@@ -10,7 +10,6 @@ body {
   background-image: url('../image/med_blue_parchment.png');
 }
 
-
 div#container {
   margin-left: auto;
   margin-right: auto;
@@ -50,22 +49,25 @@ div#container {
     max-width: 25em;
     min-width: 25em;
     font-size: 80%;
-    div.config {
-      padding: .5em;
-      overflow: auto;
-      white-space: pre;
-      font-family: "Courier New", Courier, monospace;
-      span.key {
-        color: var(--grey-darkest);
-        font-weight: bold;
-      }
-      span.value {
-        color: var(--blue);
-      }
-      span.default {
-        span.value,
+    div.fixbox {
+      position: fixed;
+      div.config {
+        padding: .5em;
+        overflow: auto;
+        white-space: pre;
+        font-family: var(--fontstack-monospace);
         span.key {
-          color: var(--grey-medium);
+          color: var(--grey-darkest);
+          font-weight: bold;
+        }
+        span.value {
+          color: var(--blue);
+        }
+        span.default {
+          span.value,
+          span.key {
+            color: var(--grey-medium);
+          }
         }
       }
     }
