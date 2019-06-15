@@ -41,8 +41,13 @@ class TabBar {
             console.warn(`Tab does not exist: ${tab}`);
             return;
         }
-        if (this.selected) { this.selected.removeClass('selected'); }
-        this.selected = tab.addClass('selected');
+        if (this.selected) {
+            this.selected.attr('aria-selected', false);
+            this.selected.attr('tabindex', -1);
+        }
+        this.selected = tab.attr('aria-selected', true);
+        this.selected.attr('tabindex', 0);
+
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -54,35 +59,43 @@ class TabBar {
     buildContainer() {
         const me = this;
 
-        this.container = $('<ul />')
+
+        this.list = $('<ul />')
             .data('self', me)
             .attr('role', 'tablist')
             .addClass(this.classes.join(' '))
             .addClass('tabbar');
 
         if (this.vertical) {
-            this.container.addClass('vertical');
+            this.list.addClass('vertical');
         }
 
         for (let tabdef of this.tabs) {
-            this.tabmap[tabdef.id] = $('<li />')
-                .html(tabdef.label)
-                .attr('aria-label', tabdef.label)
+            let $link = $('<a />')
                 .attr('role', 'tab')
+                .attr('aria-controls', `t-${tabdef.id}`)
+                .attr('tabindex', -1)
                 .attr('id', tabdef.id)
                 .attr('data-tabid', tabdef.id)
-                .attr('tabindex', 0)
+                .html(tabdef.label)
                 .click(function(e) {
                     e.preventDefault();
                     me.select(tabdef.id);
                     if ((tabdef.action) && (typeof tabdef.action === 'function')) {
                         tabdef.action(e);
-                    } else {
-                        me.switchTab(tabdef.id);
                     }
                 });
 
-            this.container.append(this.tabmap[tabdef.id]);
+            this.tabmap[tabdef.id] = $('<li />')
+                .attr('role', 'presentation')
+                .append($link);
+
+            this.list.append(this.tabmap[tabdef.id]);
+
+            this.container = $('<div />')
+                .addClass('tablist-container')
+                .append(this.list);
+
 
             if (tabdef.selected) { this.select(tabdef.id); }
         }
@@ -109,6 +122,9 @@ class TabBar {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get list() { return this._list; }
+    set list(list) { this._list = list; }
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }

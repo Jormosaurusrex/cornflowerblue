@@ -14,19 +14,24 @@ ul.tabbar {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 110%;
-    padding: 0 1em 0 1em;
     margin: 0 1em 0 1em;
-    cursor: pointer;
-    white-space: nowrap;
-    background-color: var(--tabbar-tab-background-color);
-    color: var(--tabbar-tab-text-color);
-    text-shadow: var(--tabbar-tab-text-shadow);
-    &.selected {
-      background-color: var(--tabbar-selected-tab-background-color);
-      box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
-      color: var(--tabbar-selected-tab-text-color);
-      text-shadow: var(--tabbar-selected-tab-text-shadow);
+    padding: 0;
+    a {
+      padding: 0 1em 0 1em;
+      font-size: 110%;
+      white-space: nowrap;
+      background-color: var(--tabbar-tab-background-color);
+      color: var(--tabbar-tab-text-color);
+      text-shadow: var(--tabbar-tab-text-shadow);
+      display: block;
+      cursor: pointer;
+      text-decoration: none;
+      &[aria-selected="true"] {
+        background-color: var(--tabbar-selected-tab-background-color);
+        box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
+        color: var(--tabbar-selected-tab-text-color);
+        text-shadow: var(--tabbar-selected-tab-text-shadow);
+      }
     }
     &:hover,
     &:active,
@@ -34,7 +39,24 @@ ul.tabbar {
       background-color: var(--tabbar-hover-tab-background-color);
       border-color: var(--tabbar-hover-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color);
-      text-shadow: var(--tabbar-hover-tab-text-shadow);
+      a {
+        color: var(--tabbar-hover-tab-text-color);
+        text-shadow: var(--tabbar-hover-tab-text-shadow);
+        text-decoration: none;
+        &[aria-selected="true"] {
+          color: var(--tabbar-tab-text-color);
+          text-shadow: var(--tabbar-hover-tab-text-shadow);
+        }
+      }
+    }
+    &[aria-selected="true"] {
+      box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
+      color: var(--tabbar-hover-tab-text-color);
+      text-shadow: var(--tabbar-selected-tab-text-shadow);
+      &:hover {
+        color: var(--tabbar-tab-text-color);
+        text-shadow: var(--tabbar-hover-tab-text-shadow);
+      }
     }
   }
   &.vertical {
@@ -42,8 +64,10 @@ ul.tabbar {
     justify-content: flex-start;
     border-radius: 0;
     li {
-      padding: .5em 1em .5em 1em;
       margin: 0;
+      a {
+        padding: .5em 1em .5em 1em;
+      }
     }
   }
 }
