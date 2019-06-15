@@ -78,6 +78,19 @@ class TabBar {
                 .attr('id', tabdef.id)
                 .attr('data-tabid', tabdef.id)
                 .html(tabdef.label)
+                .on('keydown', function(e) {
+                    if (e.keyCode === 37) { // Left arrow
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $(this).parent().prev().children('a').focus();
+                    } else if (e.keyCode === 39) { // Right arrow
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $(this).parent().next().children('a').focus();
+                    } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
+                        $link.trigger('click');
+                    }
+                })
                 .click(function(e) {
                     e.preventDefault();
                     me.select(tabdef.id);

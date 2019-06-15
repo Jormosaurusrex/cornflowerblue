@@ -23,30 +23,45 @@ ul.tabbar {
       background-color: var(--tabbar-tab-background-color);
       color: var(--tabbar-tab-text-color);
       text-shadow: var(--tabbar-tab-text-shadow);
-      display: block;
       cursor: pointer;
       text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-grow: 1;
       &[aria-selected="true"] {
         background-color: var(--tabbar-selected-tab-background-color);
         box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
         color: var(--tabbar-selected-tab-text-color);
         text-shadow: var(--tabbar-selected-tab-text-shadow);
       }
+      &:hover,
+      &:active,
+      &:focus {
+        color: var(--tabbar-hover-tab-text-color);
+        background-color: var(--tabbar-hover-tab-background-color);
+        text-shadow: var(--tabbar-hover-tab-text-shadow);
+        text-decoration: none;
+        filter: none;
+      }
+      &:focus {
+        outline-width: .1em;
+        outline-style: dashed;
+        outline-color: var(--grey-medium);
+        outline-offset: 0;
+        text-decoration: underline double;
+      }
     }
-    &:hover,
-    &:active,
-    &:focus {
+    &:hover {
       background-color: var(--tabbar-hover-tab-background-color);
       border-color: var(--tabbar-hover-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color);
       a {
         color: var(--tabbar-hover-tab-text-color);
+        background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
         text-decoration: none;
-        &[aria-selected="true"] {
-          color: var(--tabbar-tab-text-color);
-          text-shadow: var(--tabbar-hover-tab-text-shadow);
-        }
+        filter: none;
       }
     }
     &[aria-selected="true"] {
@@ -54,7 +69,7 @@ ul.tabbar {
       color: var(--tabbar-hover-tab-text-color);
       text-shadow: var(--tabbar-selected-tab-text-shadow);
       &:hover {
-        color: var(--tabbar-tab-text-color);
+        color: var(--tabbar-hover-tab-text-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
       }
     }

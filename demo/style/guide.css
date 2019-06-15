@@ -3017,31 +3017,45 @@ ul.tabbar {
       background-color: var(--tabbar-tab-background-color);
       color: var(--tabbar-tab-text-color);
       text-shadow: var(--tabbar-tab-text-shadow);
-      display: block;
       cursor: pointer;
-      text-decoration: none; }
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-grow: 1; }
       ul.tabbar li a[aria-selected="true"] {
         background-color: var(--tabbar-selected-tab-background-color);
         box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
         color: var(--tabbar-selected-tab-text-color);
         text-shadow: var(--tabbar-selected-tab-text-shadow); }
-    ul.tabbar li:hover, ul.tabbar li:active, ul.tabbar li:focus {
+      ul.tabbar li a:hover, ul.tabbar li a:active, ul.tabbar li a:focus {
+        color: var(--tabbar-hover-tab-text-color);
+        background-color: var(--tabbar-hover-tab-background-color);
+        text-shadow: var(--tabbar-hover-tab-text-shadow);
+        text-decoration: none;
+        filter: none; }
+      ul.tabbar li a:focus {
+        outline-width: .1em;
+        outline-style: dashed;
+        outline-color: var(--grey-medium);
+        outline-offset: 0;
+        text-decoration: underline double; }
+    ul.tabbar li:hover {
       background-color: var(--tabbar-hover-tab-background-color);
       border-color: var(--tabbar-hover-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color); }
-      ul.tabbar li:hover a, ul.tabbar li:active a, ul.tabbar li:focus a {
+      ul.tabbar li:hover a {
         color: var(--tabbar-hover-tab-text-color);
+        background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
-        text-decoration: none; }
-        ul.tabbar li:hover a[aria-selected="true"], ul.tabbar li:active a[aria-selected="true"], ul.tabbar li:focus a[aria-selected="true"] {
-          color: var(--tabbar-tab-text-color);
-          text-shadow: var(--tabbar-hover-tab-text-shadow); }
+        text-decoration: none;
+        filter: none; }
     ul.tabbar li[aria-selected="true"] {
       box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color);
       text-shadow: var(--tabbar-selected-tab-text-shadow); }
       ul.tabbar li[aria-selected="true"]:hover {
-        color: var(--tabbar-tab-text-color);
+        color: var(--tabbar-hover-tab-text-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow); }
   ul.tabbar.vertical {
     flex-direction: column;
