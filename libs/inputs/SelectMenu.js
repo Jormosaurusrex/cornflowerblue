@@ -88,8 +88,10 @@ class SelectMenu extends InputElement {
 
         if (this.selected) {
             this.scrollto(this.optionlist.find('li.selected'));
+            this.optionlist.find('li.selected').focus();
         } else {
             this.scrollto(this.optionlist.find('li:first-child'));
+            this.optionlist.find('li:first-child').focus();
         }
 
         $(document).one('click', function closeMenu(e) {
@@ -219,7 +221,7 @@ class SelectMenu extends InputElement {
             .attr('id', lId)
             .attr('type', 'radio')
             .attr('name', this.name)
-            .attr('tabindex', 0) // always 0
+            .attr('tabindex', -1) // always 0
             .attr('value', def.value)
             .attr('aria-labelledby', lId)
             .attr('aria-label', def.label)

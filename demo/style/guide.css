@@ -1601,6 +1601,13 @@ div.select-container {
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
         div.select-container ul.selectmenu li:hover.selected label:before, div.select-container ul.selectmenu li:focus.selected label:before {
           color: var(--selectmenu-menu-item-hover-text-color); }
+      div.select-container ul.selectmenu li:focus {
+        margin: .3em 0 .3em 0;
+        outline-width: .2em;
+        outline-style: dashed;
+        outline-color: var(--focus-color);
+        outline-offset: .1em;
+        text-decoration: underline double; }
     div.select-container ul.selectmenu.vert {
       bottom: 2.4em;
       box-shadow: var(--panel-shadow-light-inverse); }
