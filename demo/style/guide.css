@@ -1517,6 +1517,12 @@ div.select-container {
       border-left: none;
       border-right: none;
       padding: .5em 1em .5em 1.5em; }
+    div.select-container div.trigger[aria-expanded="true"] {
+      border-color: var(--input-focused-border-color);
+      background-color: var(--input-focused-background-color);
+      box-shadow: inset 0.5em 0 0 var(--input-focused-border-color); }
+      div.select-container div.trigger[aria-expanded="true"]:before {
+        transform: rotate(180deg); }
   div.select-container div.searchdisplay {
     transition: all .2s;
     opacity: 1;
@@ -1535,7 +1541,7 @@ div.select-container {
     top: 3em; }
   div.select-container ul.selectmenu {
     list-style-type: none;
-    display: none;
+    display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     background-color: var(--selectmenu-menu-background-color);
@@ -1598,8 +1604,8 @@ div.select-container {
     div.select-container ul.selectmenu.vert {
       bottom: 2.4em;
       box-shadow: var(--panel-shadow-light-inverse); }
-    div.select-container ul.selectmenu.open {
-      display: flex; }
+    div.select-container ul.selectmenu[aria-hidden='true'] {
+      display: none; }
   div.select-container.mute label {
     opacity: 1; }
   div.select-container.disabled div.trigger:before {
@@ -1872,10 +1878,9 @@ button {
       border: 0.1em solid var(--button-menu-background-color);
       background-color: var(--button-menu-background-color);
       color: var(--button-menu-item-text-color);
-      text-shadow: var(--button-menu-item-text-shadow);
       box-shadow: var(--button-menu-box-shadow); }
       button.menu ul li {
-        padding: 0.6em 1em 0.6em 1em;
+        padding: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -1884,6 +1889,32 @@ button {
           background-color: var(--button-menu-item-hover-background-color);
           color: var(--button-menu-item-hover-text-color);
           text-shadow: var(--button-menu-item-hover-text-shadow); }
+          button.menu ul li:hover a, button.menu ul li:active a, button.menu ul li:focus a {
+            color: var(--button-menu-item-hover-text-color); }
+        button.menu ul li a {
+          padding: 0.6em 1em 0.6em 1em;
+          white-space: nowrap;
+          background-color: transparent;
+          color: var(--button-menu-item-text-color);
+          text-shadow: var(--button-menu-item-text-shadow);
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          flex-grow: 1; }
+          button.menu ul li a:hover, button.menu ul li a:active {
+            color: var(--button-menu-item-hover-text-color);
+            filter: none; }
+          button.menu ul li a:focus {
+            margin: .3em;
+            outline-width: .1em;
+            outline-style: dashed;
+            outline-color: var(--grey-medium);
+            outline-offset: .2em;
+            text-decoration: underline double; }
+          button.menu ul li a span.icon {
+            margin-right: 1em; }
       button.menu ul:before {
         content: "";
         width: 0;
@@ -1894,14 +1925,14 @@ button {
         border-width: 0 .7em .7em .7em;
         border-style: solid;
         border-color: var(--button-menu-background-color) transparent; }
-    button.menu.open {
+    button.menu[aria-expanded='true'] {
       color: var(--button-hover-text-color);
       text-shadow: var(--button-text-shadow);
       background-color: var(--button-default-color);
       box-shadow: var(--hover-box-shadow);
       outline: none;
       text-decoration: none; }
-      button.menu.open ul {
+      button.menu[aria-expanded='true'] ul {
         display: flex; }
   button.hexagon {
     transition: none;
@@ -3029,7 +3060,7 @@ ul.tabbar {
         box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
         color: var(--tabbar-selected-tab-text-color);
         text-shadow: var(--tabbar-selected-tab-text-shadow); }
-      ul.tabbar li a:hover, ul.tabbar li a:active, ul.tabbar li a:focus {
+      ul.tabbar li a:hover, ul.tabbar li a:active {
         color: var(--tabbar-hover-tab-text-color);
         background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
@@ -3060,6 +3091,13 @@ ul.tabbar {
       margin: 0; }
       ul.tabbar.vertical li a {
         padding: .5em 1em .5em 1em; }
+        ul.tabbar.vertical li a:focus {
+          margin: 0;
+          outline-width: .1em;
+          outline-style: dashed;
+          outline-color: var(--grey-medium);
+          outline-offset: .2em;
+          text-decoration: underline double; }
 
 div.progressbar-container {
   margin: .5em 0 .5em 0;

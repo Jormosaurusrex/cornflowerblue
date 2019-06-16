@@ -369,20 +369,52 @@ button {
       border: .1em solid var(--button-menu-background-color);
       background-color: var(--button-menu-background-color);
       color: var(--button-menu-item-text-color);
-      text-shadow: var(--button-menu-item-text-shadow);
       box-shadow: var(--button-menu-box-shadow);
       li {
-        padding: 0.6em 1em 0.6em 1em;
+        padding: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
+
         &:hover,
         &:active,
         &:focus {
           background-color: var(--button-menu-item-hover-background-color);
           color: var(--button-menu-item-hover-text-color);
           text-shadow: var(--button-menu-item-hover-text-shadow);
+          a {
+            color: var(--button-menu-item-hover-text-color);
+          }
+        }
+        a {
+          padding: 0.6em 1em 0.6em 1em;
+          white-space: nowrap;
+          background-color: transparent;
+          color: var(--button-menu-item-text-color);
+          text-shadow: var(--button-menu-item-text-shadow);
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          flex-grow: 1;
+          &:hover,
+          &:active {
+            color: var(--button-menu-item-hover-text-color);
+            filter: none;
+          }
+          &:focus {
+            margin: .3em;
+            outline-width: .1em;
+            outline-style: dashed;
+            outline-color: var(--grey-medium);
+            outline-offset: .2em;
+            text-decoration: underline double;
+          }
+          span.icon {
+            margin-right: 1em;
+          }
         }
       }
       &:before {
@@ -397,7 +429,7 @@ button {
         border-color: var(--button-menu-background-color) transparent;
       }
     }
-    &.open {
+    &[aria-expanded='true'] {
       color: var(--button-hover-text-color);
       text-shadow: var(--button-text-shadow);
       background-color: var(--button-default-color);

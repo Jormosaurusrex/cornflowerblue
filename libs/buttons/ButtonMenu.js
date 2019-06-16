@@ -4,7 +4,8 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) { self.toggleMenu(e, self); },
+            focusin: function(e, self) { self.open(); },
+            focusout: function(e, self) { self.close(); },
             secondicon: 'triangle-down', // this is passed up as a secondicon
             items: [] // list of menuitems
             // {
@@ -24,50 +25,83 @@ class ButtonMenu extends SimpleButton {
             config.classes = ['menu'];
         }
         super(config);
+        if (!this.menu) { this.buildMenu(); }
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Let us know if the button is open
+     * @return true if it is!
+     */
+    get isopen() {
+        return this.button.attr('aria-expanded');
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Open the menu
+     */
+    open() {
+        const me = this;
+        if (this.isopen) {
+            console.log("already open");
+            return;
+        }
+        this.button.attr('aria-expanded', true);
+        this.menu.removeAttr('aria-hidden');
+        let clickid = `click-${me.id}`;
+    }
+
+    /**
+     * Close the button
+     */
+    close() {
+        this.button.removeAttr('aria-expanded');
+        this.menu.attr('aria-hidden', true);
+
     }
 
     /**
      * Toggle visibility of the menu.
      */
-    toggleMenu(e, self) {
-
-        if (!this.menu) { this.buildMenu(); }
-
-        this.button.toggleClass('open');
-
-        e.stopPropagation();
-
-        $(document).one('click', function closeMenu (e){
-            if (self.button.has(e.target).length === 0) {
-                self.button.removeClass('open');
-            } else {
-                $(document).one('click', closeMenu);
-            }
-        });
-
+    toggleMenu() {
+        if (this.isopen) {
+            this.close();
+        } else {
+            this.open();
+        }
     }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
      * Builds the menu.
      * @returns {jQuery} jQuery representation
      */
     buildMenu() {
-        this.menu = $('<ul />');
+        const me = this;
+        this.menu = $('<ul />')
+            .attr('aria-hidden', true);
         for (let item of this.items) {
             let $menuitem = $('<li />');
+            let $anchor = $('<a />');
 
             if (item.icon) {
-                $menuitem.append(IconFactory.makeIcon(item.icon));
+                $anchor.append(IconFactory.makeIcon(item.icon));
             }
-
-            $menuitem.append($('<span />').html(item.label))
+            $anchor
+                .append($('<span />').html(item.label))
                 .click(function(e) {
                     e.preventDefault();
                     if ((item.action) && (typeof item.action === 'function')) {
                         item.action(e);
                     }
+                    me.close();
                 });
-            this.menu.append($menuitem);
+
+            this.menu.append($menuitem.append($anchor));
         }
         this.button.append(this.menu);
     }

@@ -5,7 +5,7 @@ class SelectMenu extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             unselectedtext: "(Select)",
-            icon: "triangle-down",
+            icon: "chevron-down",
             searchtext: true,
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
@@ -38,6 +38,10 @@ class SelectMenu extends InputElement {
         return null;
     }
 
+    get isopen() {
+        return this.triggerbox.attr('aria-expanded');
+    }
+
     get value() {
         if (this.selected) { return this.selected.val(); }
         return ''; // Return empty string for no value.
@@ -62,7 +66,8 @@ class SelectMenu extends InputElement {
 
         let vertpos;
 
-        this.optionlist.addClass('open');
+        this.optionlist.attr('aria-hidden', false);
+        this.triggerbox.attr('aria-expanded', true);
 
         if (this.container) {
             vertpos = (this.container.offset().top - $(window).scrollTop());
@@ -100,12 +105,14 @@ class SelectMenu extends InputElement {
      * Closes the option list.
      */
     close() {
-        this.optionlist.removeClass('open');
+        this.optionlist.attr('aria-hidden', true);
+        this.triggerbox.attr('aria-expanded', false);
     }
 
     disable() {
         this.optionlist.find('input:radio').attr('disabled',true);
         this.triggerbox.prop('disabled', true);
+        this.triggerbox.attr('aria-expanded', false);
         this.disabled = true;
         if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
         if (this.container) { this.container.addClass('disabled'); }
@@ -117,6 +124,18 @@ class SelectMenu extends InputElement {
         this.disabled = false;
         if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
         if (this.container) { this.container.removeClass('disabled'); }
+    }
+
+    pacify() {
+        this.container.addClass('passive');
+        this.optionlist.attr('aria-hidden', true);
+        this.passive = true;
+    }
+
+    activate() {
+        this.container.removeClass('passive');
+        this.optionlist.attr('aria-hidden', false);
+        this.passive = false;
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -144,6 +163,7 @@ class SelectMenu extends InputElement {
         const me = this;
         this.triggerbox = $('<div />')
             .addClass('trigger')
+            .attr('aria-expanded', false)
             .attr('tabindex', 0)
             .focusin(function(e) {
                 // Only need the focus handler because a click fires focus _then_ click
@@ -165,6 +185,7 @@ class SelectMenu extends InputElement {
         this.optionlist = $('<ul />')
             .addClass('selectmenu')
             .attr('id', this.id)
+            .attr('aria-hidden', true)
             .attr('tabindex', 0)
             .attr('role', 'radiogroup');
 
@@ -237,11 +258,9 @@ class SelectMenu extends InputElement {
                     me.close();
                 } else if (e.keyCode === 38) { // Up arrow
                     e.preventDefault();
-                    e.stopPropagation();
                     $(this).prev().focus();
                 } else if (e.keyCode === 40) { // Down arrow
                     e.preventDefault();
-                    e.stopPropagation();
                     $(this).next().focus();
                 } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
                     $op.trigger('click');

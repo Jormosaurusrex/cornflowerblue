@@ -28,6 +28,8 @@ class SimpleButton {
             link: false, //if true, make the button behave like a normal link.
             naked: false, //if true, remove all styles from the button.
             action: null, // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
+            focusin: null, // The focus in handler.  Passed (event, self) as arguments.
+            focusout: null, // The focus out handler.  Passed (event, self) as arguments.
             hoverin: null, // The on hover handler.  Passed (event, self) as arguments.
             hoverout: null // The off hover handler.  Passed (event, self) as arguments.
         };
@@ -114,16 +116,26 @@ class SimpleButton {
             .data('self', this)
             .addClass(this.size)
             .addClass(this.classes.join(' '))
+            .on('focusin', function(e) {
+                if ((me.focusin) && (typeof me.focusin === 'function')) {
+                    me.focusin(e, me);
+                }
+            })
+            .on('focusout', function(e) {
+                if ((me.focusout) && (typeof me.focusout === 'function')) {
+                    me.focusout(e, me);
+                }
+            })
             .on('mouseover', function(e) {
                 if ((me.hoverin) && (typeof me.hoverin === 'function')) {
                     me.hoverin(e, me);
                 }
             })
             .on('mouseout', function(e) {
-            if ((me.hoverout) && (typeof me.hoverout === 'function')) {
-                me.hoverout(e, me);
-            }
-        });
+                if ((me.hoverout) && (typeof me.hoverout === 'function')) {
+                    me.hoverout(e, me);
+                }
+            });
 
         if (this.notab) { this.button.attr('tabindex', '-1'); }
         if (this.disabled) { this.disable(); }
@@ -237,6 +249,22 @@ class SimpleButton {
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
+
+    get focusin() { return this.config.focusin; }
+    set focusin(focusin) {
+        if (typeof focusin !== 'function') {
+            console.error("Value provided to focusin is not a function!");
+        }
+        this.config.focusin = focusin;
+    }
+
+    get focusout() { return this.config.focusout; }
+    set focusout(focusout) {
+        if (typeof focusout !== 'function') {
+            console.error("Value provided to focusout is not a function!");
+        }
+        this.config.focusout = focusout;
+    }
 
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }

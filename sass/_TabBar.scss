@@ -35,8 +35,7 @@ ul.tabbar {
         text-shadow: var(--tabbar-selected-tab-text-shadow);
       }
       &:hover,
-      &:active,
-      &:focus {
+      &:active {
         color: var(--tabbar-hover-tab-text-color);
         background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
@@ -74,6 +73,14 @@ ul.tabbar {
       margin: 0;
       a {
         padding: .5em 1em .5em 1em;
+        &:focus {
+          margin: 0;
+          outline-width: .1em;
+          outline-style: dashed;
+          outline-color: var(--grey-medium);
+          outline-offset: .2em;
+          text-decoration: underline double;
+        }
       }
     }
   }

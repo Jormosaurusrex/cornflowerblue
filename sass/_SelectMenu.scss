@@ -63,6 +63,14 @@ div.select-container {
       border-right: none;
       padding: .5em 1em .5em 1.5em;
     }
+    &[aria-expanded="true"] {
+      border-color: var(--input-focused-border-color);
+      background-color: var(--input-focused-background-color);
+      box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+      &:before {
+        transform: rotate(180deg);
+      }
+    }
   }
   div.searchdisplay {
     transition: all .2s;
@@ -89,12 +97,11 @@ div.select-container {
   }
   ul.selectmenu {
     list-style-type: none;
-    display: none;
+    display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     background-color: var(--selectmenu-menu-background-color);
     border: .1em solid var(--input-default-border-color);
-    //border-top: none;
     padding: 0;
     overflow: auto;
     max-height: 10em;
@@ -176,8 +183,8 @@ div.select-container {
       bottom: 2.4em;
       box-shadow: var(--panel-shadow-light-inverse);
     }
-    &.open {
-      display: flex;
+    &[aria-hidden='true'] {
+      display: none;
     }
   }
   &.mute {

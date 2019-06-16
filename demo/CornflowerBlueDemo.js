@@ -284,6 +284,13 @@ class CornflowerBlueDemo {
                     }
                 },
                 {
+                    label: 'Tabs and Menus',
+                    id: 'tabsmenus',
+                    action: function() {
+                        me.switchTab('tabsmenus');
+                    }
+                },
+                {
                     label: 'Forms',
                     id: 'forms',
                     action: function() {
@@ -343,6 +350,7 @@ class CornflowerBlueDemo {
         this.grindForms();
 
         this.grindProgressMeters();
+        this.grindTabsAndMenus();
 
         this.grindPWChange();
         this.handleInternalLinks();
@@ -387,6 +395,55 @@ class CornflowerBlueDemo {
         $target.append(new PasswordChangeForm({
 
         }).container);
+    }
+
+    grindTabsAndMenus() {
+        const me = this;
+        const $target = $('#tabsmenus-buttonmenu');
+        $target.append(
+            $('<div />').addClass('example')
+                .append(
+                    new ButtonMenu({
+                        text: "User",
+                        icon: 'user-circle',
+                        items: [
+                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ButtonMenu({
+                        text: "User",
+                        icon: 'user-circle',
+                        mute: true,
+                        items: [
+                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ButtonMenu({
+                        text: "User",
+                        icon: 'user-circle',
+                        disabled: true,
+                        items: [
+                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+            );
     }
 
 
