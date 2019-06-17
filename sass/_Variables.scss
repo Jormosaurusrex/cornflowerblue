@@ -472,7 +472,7 @@
 
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
-  --tabbar-tab-background-color: var(--light);
+  --tabbar-tab-background-color: var(--ultralight);
   --tabbar-tab-text-shadow: none;
 
   --tabbar-selected-tab-background-color: var(--ultralight);
@@ -484,6 +484,7 @@
   --tabbar-hover-tab-highlight-color: var(--focus-color);
   --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
+
 
   // Tooltip
   --tooltip-border-radius: var(--border-radius);

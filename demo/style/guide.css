@@ -367,7 +367,7 @@
   --tabbar-border-radius: var(--border-radius);
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
-  --tabbar-tab-background-color: var(--light);
+  --tabbar-tab-background-color: var(--ultralight);
   --tabbar-tab-text-shadow: none;
   --tabbar-selected-tab-background-color: var(--ultralight);
   --tabbar-selected-tab-highlight-color: var(--focus-color);
@@ -3037,7 +3037,10 @@ ul.tabbar {
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);
   overflow: hidden;
-  padding: 0; }
+  padding: 0;
+  height: 3em;
+  min-height: 3em;
+  max-height: 3em; }
   ul.tabbar li {
     display: flex;
     flex-direction: column;
@@ -3053,7 +3056,8 @@ ul.tabbar {
       text-shadow: var(--tabbar-tab-text-shadow);
       cursor: pointer;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
       justify-content: center;
       flex-grow: 1; }
       ul.tabbar li a[aria-selected="true"] {
@@ -3067,12 +3071,15 @@ ul.tabbar {
         text-shadow: var(--tabbar-hover-tab-text-shadow);
         filter: none; }
       ul.tabbar li a:focus {
-        margin: .3em;
         outline-width: .1em;
         outline-style: dashed;
         outline-color: var(--grey-medium);
-        outline-offset: .2em;
+        outline-offset: -.3em;
         text-decoration: underline double; }
+        ul.tabbar li a:focus:hover {
+          outline-color: var(--ultralight); }
+      ul.tabbar li a span.icon {
+        margin-right: .5em; }
     ul.tabbar li:hover {
       background-color: var(--tabbar-hover-tab-background-color);
       border-color: var(--tabbar-hover-tab-highlight-color);
@@ -3087,7 +3094,10 @@ ul.tabbar {
   ul.tabbar.vertical {
     flex-direction: column;
     justify-content: flex-start;
-    border-radius: 0; }
+    border-radius: 0;
+    height: unset;
+    min-height: unset;
+    max-height: unset; }
     ul.tabbar.vertical li {
       margin: 0; }
       ul.tabbar.vertical li a {
@@ -3097,8 +3107,10 @@ ul.tabbar {
           outline-width: .1em;
           outline-style: dashed;
           outline-color: var(--grey-medium);
-          outline-offset: .2em;
+          outline-offset: -.2em;
           text-decoration: underline double; }
+          ul.tabbar.vertical li a:focus:hover {
+            outline-color: var(--ultralight); }
 
 div.progressbar-container {
   margin: .5em 0 .5em 0;
@@ -3234,10 +3246,6 @@ div.progressbar-container {
       div.progressbar-container div.simpleprogress.roundcap div.progress {
         border-radius: 1.5em; }
 
-:root {
-  --tabbar-background-color: var(--canvas-color-tertiary);
-  --tabbar-box-shadow: none; }
-
 body {
   background-color: var(--grey-darkest);
   font-family: var(--default-font-family);
@@ -3254,7 +3262,8 @@ div#container {
   display: flex;
   flex-direction: row;
   align-items: stretch; }
-  div#container div.tablist-container {
+  div#container div.tablist-container.demo {
+    --tabbar-box-shadow: none;
     --tabbar-tab-background-color: transparent;
     --tabbar-background-color: transparent;
     flex-grow: 0;

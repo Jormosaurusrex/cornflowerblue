@@ -8,8 +8,9 @@ class TabBar {
             vertical: false, // Vertical or horizontal
             tabs: [], // An array of tab definitions
             // {
-            //    label: "Tab Text", // text
+            //    label: "Tab Text", // text, optional if given an icon
             //    id: null, // tab id, used with "activate(tabid)"
+            //    icon: null, // an icon identifier, optional
             //    selected: false, // if true, start selected
             //    action: function() { } // what to do when the tab is clicked.
             // }
@@ -35,14 +36,14 @@ class TabBar {
      */
     select(tab) {
         if (typeof tab === 'string') {
-            tab = this.container.find(`[data-tabid='${tab}']`);
+            tab = this.list.find(`[data-tabid='${tab}']`);
         }
         if (!tab) {
             console.warn(`Tab does not exist: ${tab}`);
             return;
         }
         if (this.selected) {
-            this.selected.attr('aria-selected', false);
+            this.selected.removeAttr('aria-selected');
             this.selected.attr('tabindex', -1);
         }
         this.selected = tab.attr('aria-selected', true);
@@ -59,7 +60,6 @@ class TabBar {
     buildContainer() {
         const me = this;
 
-
         this.list = $('<ul />')
             .data('self', me)
             .attr('role', 'tablist')
@@ -71,13 +71,29 @@ class TabBar {
         }
 
         for (let tabdef of this.tabs) {
+            let $icon,
+                $linktext;
+
+            if ((!tabdef.label) && (!tabdef.icon)) {
+                console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
+                break;
+            }
+
+            if (tabdef.icon) {
+                $icon = IconFactory.makeIcon(tabdef.icon);
+            }
+            if (tabdef.label) {
+                $linktext = $('<span />').html(tabdef.label);
+            }
+
             let $link = $('<a />')
                 .attr('role', 'tab')
                 .attr('aria-controls', `t-${tabdef.id}`)
                 .attr('tabindex', -1)
                 .attr('id', tabdef.id)
                 .attr('data-tabid', tabdef.id)
-                .html(tabdef.label)
+                .append($icon)
+                .append($linktext)
                 .on('keydown', function(e) {
                     if (e.keyCode === 37) { // Left arrow
                         e.preventDefault();
@@ -107,6 +123,8 @@ class TabBar {
 
             this.container = $('<div />')
                 .addClass('tablist-container')
+                .data('self', me)
+                .addClass(this.classes.join(' '))
                 .append(this.list);
 
 

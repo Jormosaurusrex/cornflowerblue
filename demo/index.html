@@ -486,11 +486,15 @@ And drunk the milk of Paradise.</pre>
                     <div class="demobox" id="tabsmenus-buttonmenu">
                         <h3>Button Menu</h3>
                         <code class="invoker">new ButtonMenu({options});</code>
-                        
-
+                        <p>A <dfn>ButtonMenu</dfn> is just that: a <code>SimpleButton</code> that opens a menu.  Accordingly, it accepts all <code>SimpleButton</code> parameters, with the addition of <code>secondicon</code> (for the menu icon) and then an <code>items</code> array for each menu entry.</p>
+                        <p>The <code>items</code> array contains a dictionary of parameters: <code>label</code>, <code>icon</code> (optional), and <code>action</code>, which is a function.</p>
                     </div>
-
-
+                    <div class="demobox" id="tabsmenus-tabbar">
+                        <h3>Tab Bar</h3>
+                        <code class="invoker">new TabBar({options});</code>
+                        <p>A <dfn>TabBar</dfn> is basically a permanently open <code>ButtonMenu</code>. It is mostly intended for navigation.</p>
+                        <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
+                    </div>
                 </section>
                 <section id="t-pwchanger" aria-labeledby="pwchanger">
                     <h1>Password Changer</h1>

@@ -211,6 +211,7 @@ class CornflowerBlueDemo {
 
         this.navigation = new TabBar({
             vertical: true,
+            classes: ['demo'],
             tabs: [
                 {
                     label: 'Intro',
@@ -399,8 +400,9 @@ class CornflowerBlueDemo {
 
     grindTabsAndMenus() {
         const me = this;
-        const $target = $('#tabsmenus-buttonmenu');
-        $target.append(
+        const $buttonmenu = $('#tabsmenus-buttonmenu');
+        const $tabbar = $('#tabsmenus-tabbar');
+        $buttonmenu.append(
             $('<div />').addClass('example')
                 .append(
                     new ButtonMenu({
@@ -444,6 +446,21 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
             );
+
+        $tabbar.append(
+            $('<div />').addClass('example')
+                .append(
+                    new TabBar({
+                        tabs: [
+                            { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: function() { Growler.growl("Clicked 'Home'") } },
+                            { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: function() { Growler.growl("Clicked 'Feed'") } },
+                            { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: function() { Growler.growl("Clicked 'Messages'") } },
+                            { id: 'dt-1-profile', label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'Profile'") } }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
     }
 
 

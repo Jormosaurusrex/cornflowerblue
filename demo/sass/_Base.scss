@@ -1,6 +1,4 @@
 :root {
-  --tabbar-background-color: var(--canvas-color-tertiary);
-  --tabbar-box-shadow: none;
 }
 
 body {
@@ -20,7 +18,8 @@ div#container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  div.tablist-container {
+  div.tablist-container.demo {
+    --tabbar-box-shadow: none;
     --tabbar-tab-background-color: transparent;
     --tabbar-background-color: transparent;
     flex-grow: 0;
@@ -103,7 +102,6 @@ div.example {
 }
 
 div.wiki {
-
   span.colorswatch {
     border: 1px dotted var(--grey-darkest);
     width: 1em;
@@ -140,7 +138,6 @@ div.wiki {
     background-color: var(--canvas-color-secondary);
   }
 }
-
 
 body.modalopen {
   div.container {

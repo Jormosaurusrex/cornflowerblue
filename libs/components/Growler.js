@@ -7,8 +7,7 @@ class Growler {
             id : null, // The id
             title: null, // The growler title
             text : null, // The growler text payload
-            duration: 0,
-            //duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
+            duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
             icon: null, // An optional icon. Position of this depends on whether there is text or a title.
                         // If a title is given but no text, it will be in the titlebar. Else it
                         // gets placed in the text area.

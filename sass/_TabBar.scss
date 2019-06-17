@@ -10,6 +10,9 @@ ul.tabbar {
   box-shadow: var(--tabbar-box-shadow);
   overflow: hidden;
   padding: 0;
+  height: 3em;
+  min-height: 3em;
+  max-height: 3em;
   li {
     display: flex;
     flex-direction: column;
@@ -25,7 +28,8 @@ ul.tabbar {
       text-shadow: var(--tabbar-tab-text-shadow);
       cursor: pointer;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
       justify-content: center;
       flex-grow: 1;
       &[aria-selected="true"] {
@@ -42,12 +46,17 @@ ul.tabbar {
         filter: none;
       }
       &:focus {
-        margin: .3em;
         outline-width: .1em;
         outline-style: dashed;
         outline-color: var(--grey-medium);
-        outline-offset: .2em;
+        outline-offset: -.3em;
         text-decoration: underline double;
+        &:hover {
+          outline-color: var(--ultralight);
+        }
+      }
+      span.icon {
+        margin-right: .5em;
       }
     }
     &:hover {
@@ -69,6 +78,9 @@ ul.tabbar {
     flex-direction: column;
     justify-content: flex-start;
     border-radius: 0;
+    height: unset;
+    min-height: unset;
+    max-height: unset;
     li {
       margin: 0;
       a {
@@ -78,8 +90,11 @@ ul.tabbar {
           outline-width: .1em;
           outline-style: dashed;
           outline-color: var(--grey-medium);
-          outline-offset: .2em;
+          outline-offset: -.2em;
           text-decoration: underline double;
+          &:hover {
+            outline-color: var(--ultralight);
+          }
         }
       }
     }
