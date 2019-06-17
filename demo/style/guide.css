@@ -1862,7 +1862,8 @@ button {
     box-shadow: none;
     margin-right: .5em; }
     button.closebutton:hover, button.closebutton:focus, button.closebutton:active {
-      color: var(--hot-text-color); }
+      color: var(--hot-text-color);
+      background: none; }
     button.closebutton:hover {
       opacity: 1;
       background: none; }
@@ -2701,25 +2702,6 @@ div.growlbox {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch; }
-  .growler button.closebutton {
-    opacity: 0.5;
-    box-shadow: none;
-    margin: 0;
-    padding: 0;
-    height: auto;
-    width: auto;
-    background: none;
-    border: none;
-    color: var(--growler-text-color);
-    text-shadow: var(--growler-text-shadow);
-    border-color: transparent;
-    background-color: transparent;
-    font-size: 100%; }
-    .growler button.closebutton:active, .growler button.closebutton:focus, .growler button.closebutton:hover {
-      opacity: 1;
-      outline: none;
-      box-shadow: none;
-      text-shadow: none; }
   .growler div.title {
     background-color: var(--growler-core-color);
     color: var(--growler-header-text-color);
@@ -2746,7 +2728,8 @@ div.growlbox {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     color: var(--growler-text-color);
     text-shadow: var(--growler-text-shadow); }
     .growler div.payload span.i {
@@ -2760,7 +2743,18 @@ div.growlbox {
       text-shadow: var(--growler-text-shadow); }
     .growler div.payload div.text {
       font-size: 110%;
-      padding: 0 1em .5em 1em; }
+      padding: 0; }
+    .growler div.payload button.closebutton {
+      position: absolute;
+      top: .5em;
+      right: .5em;
+      margin: 0;
+      padding: 0;
+      color: var(--growler-text-color);
+      text-shadow: var(--growler-text-shadow);
+      font-size: 100%; }
+      .growler div.payload button.closebutton:active, .growler div.payload button.closebutton:focus, .growler div.payload button.closebutton:hover {
+        opacity: 1; }
   .growler.error {
     --growler-core-color: var(--error-color);
     border-color: var(--error-color); }

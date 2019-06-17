@@ -344,6 +344,7 @@ button {
     &:focus,
     &:active {
       color: var(--hot-text-color);
+      background: none;
     }
     &:hover {
       opacity: 1;

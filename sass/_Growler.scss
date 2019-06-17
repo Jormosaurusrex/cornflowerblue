@@ -58,29 +58,6 @@ div.growlbox {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
-  button.closebutton {
-    opacity: 0.5;
-    box-shadow: none;
-    margin: 0;
-    padding: 0;
-    height: auto;
-    width: auto;
-    background: none;
-    border: none;
-    color: var(--growler-text-color);
-    text-shadow: var(--growler-text-shadow);
-    border-color: transparent;
-    background-color: transparent;
-    font-size: 100%;
-    &:active,
-    &:focus,
-    &:hover {
-      opacity: 1;
-      outline: none;
-      box-shadow: none;
-      text-shadow: none;
-    }
-  }
   div.title {
     background-color: var(--growler-core-color);
     color: var(--growler-header-text-color);
@@ -112,7 +89,8 @@ div.growlbox {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     color: var(--growler-text-color);
     text-shadow: var(--growler-text-shadow);
     span.i {
@@ -127,7 +105,22 @@ div.growlbox {
     }
     div.text {
       font-size: 110%;
-      padding: 0 1em .5em 1em;
+      padding: 0;
+    }
+    button.closebutton {
+      position: absolute;
+      top: .5em;
+      right: .5em;
+      margin: 0;
+      padding: 0;
+      color: var(--growler-text-color);
+      text-shadow: var(--growler-text-shadow);
+      font-size: 100%;
+      &:active,
+      &:focus,
+      &:hover {
+        opacity: 1;
+      }
     }
   }
   &.error {
