@@ -91,6 +91,12 @@ class RadioGroup extends SelectMenu {
 
         if (this.passive) { this.pacify(); }
         if (this.disabled) { this.disable(); }
+
+        if (this.help) {
+            this.optionlist
+                .attr('aria-described-by', `${this.help.id}-tt`)
+                .attr('aria-labeled-by', `label-${this.id}`);
+        }
     }
 
     buildOption(def) {

@@ -64,16 +64,13 @@ class InputElement {
         if (!this.id) { // need to generate an id for label stuff
             this.id = `e-${Utils.getUniqueKey(5)}`;
         }
-        if (!this.name) {
-            this.name = this.id;
-        }
+        if (!this.name) { this.name = this.id; }
 
         if (this.config.value) { // store the supplied value if any
             this.origval = this.config.value;
         } else {
             this.origval = '';
         }
-
 
         this.touched = false; // set untouched on creation.
     }
@@ -345,6 +342,12 @@ class InputElement {
         if (this.passive) {
             this.pacify()
         }
+        if (this.help) {
+            this.input
+                .attr('aria-described-by', `${this.help.id}-tt`)
+                .attr('aria-labeled-by', `label-${this.id}`);
+        }
+
         this.validate(true);
     }
 
@@ -490,6 +493,7 @@ class InputElement {
 
         this.labelobj = $('<label />')
             .attr('for', this.id)
+            .attr('id', `label-${this.id}`)
             .html(this.label)
             .click(function() {
                 $('#' + $(this).attr('for')).focus();

@@ -86,7 +86,10 @@ class HelpButton extends SimpleButton {
             this.tooltip.append(IconFactory.makeIcon(this.tipicon).addClass('tipicon'));
         }
 
-        this.helptext = $('<div />').addClass('helptext').html(this.help);
+        this.helptext = $('<div />')
+            .addClass('helptext')
+            .attr('id', `${this.id}-tt`)
+            .html(this.help);
         this.closebutton = new SimpleButton({
             icon: 'echx',
             text: "Close",
