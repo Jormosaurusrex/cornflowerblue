@@ -12,6 +12,10 @@ html {
 html,
 body {
   height: 100%;
+  ::selection {
+    background-color: var(--highlight-color);
+    color: var(--hot-text-color);
+  }
 }
 body {
   &.noisy {

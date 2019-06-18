@@ -2038,6 +2038,7 @@ class CornflowerBlueDemo {
                         label: "Year",
                         name: "year-select",
                         required: true,
+                        prefix: 'Year:',
                         options: [
                             { label: "2019", value: "2019" },
                             { label: "2018", value: "2018" },

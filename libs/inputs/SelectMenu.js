@@ -6,7 +6,8 @@ class SelectMenu extends InputElement {
         return {
             unselectedtext: "(Select)",
             icon: "chevron-down",
-            searchtext: true,
+            prefix: null, // a prefix to display in the trigger box.
+            searchtext: true, // Show the "searchtext" box.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
             onchange: null // The change handler. Passed (event, self).
@@ -226,7 +227,12 @@ class SelectMenu extends InputElement {
             .attr('aria-labelledby', lId)
             .attr('aria-label', def.label)
             .change(function(e) {
-                me.triggerbox.html(def.label);
+                if (me.prefix) {
+                    me.triggerbox.html(`${me.prefix} ${def.label}`);
+                } else {
+                    me.triggerbox.html(def.label);
+                }
+
                 me.selectedoption = def;
                 if (def.label === me.unselectedtext) {
                     me.passivebox.html(me.unsettext);
@@ -279,7 +285,11 @@ class SelectMenu extends InputElement {
 
         if (def.checked) {
             this.origval = def.value;
-            this.triggerbox.html(def.label);
+            if (this.prefix) {
+                this.triggerbox.html(`${this.prefix} ${def.label}`);
+            } else {
+                this.triggerbox.html(def.label);
+            }
             $li.addClass('selected');
             $op.attr('aria-checked', 'checked')
                 .attr('checked', 'checked')
@@ -380,6 +390,9 @@ class SelectMenu extends InputElement {
 
     get options() { return this.config.options; }
     set options(options) { this.config.options = options; }
+
+    get prefix() { return this.config.prefix; }
+    set prefix(prefix) { this.config.prefix = prefix; }
 
     get searchdisplay() {
         if (!this._searchdisplay) { this.buildSearchDisplay(); }

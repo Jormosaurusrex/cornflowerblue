@@ -85,6 +85,7 @@ ul.tabbar {
       margin: 0;
       a {
         padding: .5em 1em .5em 1em;
+        justify-content: flex-start;
         &:focus {
           margin: 0;
           outline-width: .1em;

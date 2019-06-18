@@ -52,7 +52,6 @@
                     <h1>Introduction</h1>
 
 
-
                     <h2>My $deity Why</h2>
                     <p>I am constantly writing a lot of small, self-contained websites, many of which require design and form elements. These projects usually don't need gigantic toolkits, so I would end up writing, re-writing, cutting-and-pasting, and re-using elements from earlier projects.  I'm lazy, so I started collecting them.</p>
                     <p>Of course, once you start down this dark path, forever will it dominate your destiny. Consume you, it will. It's <em>fun</em> for me; I like exploring the weird edges and thinking about what I think are the "best" behaviors for things.</p>
@@ -302,13 +301,13 @@
                     <h1>Selects</h1>
                     <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
                     <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
-                    <p>Under the hood, the <code>SelectMenu</code> is implemented with Radio Buttons, so it maintains compatability.</p>
+                    <p>Under the hood, the <code>SelectMenu</code> is implemented with Radio Buttons so it maintains compatibility.</p>
                     <div class="demobox" id="selects-standard">
                         <h3>Standard</h3>
                         <code class="invoker">new SelectMenu({options});</code>
                         <p>Options for the <code>SelectMenu</code> list are provided with the <code>options:</code> parameter.  This is an array of option definitions, which look like <code>{ label: "Label to show", value: "v" }</code>. Include <code>checked: true</code> to automatically select that option.</p>
-                        <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element.</p>
-                        <p>By default, a small search indicator will appear if the user begins typing while the input has focus. Set <code>searchtext</code> searchtext to <i>false</i> to disable this.  The display will switch between top and bottom, depending on which direction the menu opens.</p>
+                        <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element. Giving it a <code>prefix</code> will attach that before options when they're selected.</p>
+                        <p>By default, a small search indicator will appear if the user begins typing while the input has focus. Set <code>searchtext</code> to <i>false</i> to disable this.  The display will switch between top and bottom, depending on which direction the menu opens.</p>
                     </div>
                     <div class="demobox" id="selects-passive">
                         <h3>Passive</h3>
