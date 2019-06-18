@@ -300,7 +300,6 @@ class InputElement {
     /**
      * Builds and returns a container object for all parts.
      * This gets over-ridden in elements that have additional structures, like a character counter
-     * @returns {jQuery} jQuery representation of the label and the input together.
      */
     buildContainer() {
         this.container = $('<div />')
@@ -362,7 +361,6 @@ class InputElement {
 
     /**
      * Builds the input's DOM.
-     * @returns {jQuery} jQuery representation of the input
      */
     buildInput() {
         const me = this;
@@ -484,7 +482,6 @@ class InputElement {
 
     /**
      * Builds the input's DOM.
-     * @returns {jQuery} jQuery representation of the input
      */
     buildLabel() {
         const me = this;

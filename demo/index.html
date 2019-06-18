@@ -48,7 +48,7 @@
     <body>
         <div class="container" id="container">
             <div class="displaybox">
-                <section role="tabpanel" tabindex="-1"id="t-intro" aria-labelledby="intro">
+                <article role="tabpanel" tabindex="-1" id="t-intro" aria-labelledby="intro">
                     <h1>Introduction</h1>
 
 
@@ -60,9 +60,9 @@
                     <h3>Why "cornflower blue"</h3>
                     <p>I hate explaining jokes.</p>
 
-                </section>
+                </article>
 
-                <section id="t-wiki" aria-labelledby="wiki">
+                <article role="tabpanel" tabindex="-1" id="t-wiki" aria-labelledby="wiki">
                     <h1>Cornflower Blue</h1>
                     <div class="wiki">
                         <figure>
@@ -119,9 +119,9 @@
                             </ol>
                         </div>
                     </div>
-                </section>
+                </article>
 
-                <section id="t-text" aria-labelledby="text">
+                <article role="tabpanel" tabindex="-1" id="t-text" aria-labelledby="text">
                     <h1>Text</h1>
 
                     <p>This is a text style and inheritence playground.  An application of the aesthetic to a <a class="internal" data-tab-target="wiki">wikipedia page</a> is available.</p>
@@ -160,9 +160,9 @@
                         <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
                         <p>Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</p>
                     </div>
-                </section>
+                </article>
 
-                <section id="t-messageboxes" aria-labelledby="messageboxes">
+                <article role="tabpanel" tabindex="-1" id="t-messageboxes" aria-labelledby="messageboxes">
                     <h1>Message Boxes</h1>
                     <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
                     <div class="demobox" id="boxes-instructions">
@@ -176,8 +176,8 @@
                         <p>When submitted, forms can succeed or fail. In doing so, they can return messages (results, errors, and warnings).  Warnings alone do not prevent a form's success. These messages are returned and displayed automagically when using a <code>SimpleForm</code>, so these shouldn't be invoked alone.</p>
                         <p>A <code>MessageBox</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain both <code>results</code> and <code>warnings</code> or <code>errors</code> and <code>warnings</code>.</p>
                     </div>
-                </section>
-                <section id="t-buttons" aria-labelledby="buttons">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-buttons" aria-labelledby="buttons">
                     <h1>Buttons</h1>
                     <code class="invoker">new SimpleButton({options});</code>
 
@@ -217,8 +217,8 @@
                         <p>Buttons with <code>naked: true</code> (or the <code>naked</code> class) have all borders and states reset. This is very similar to <code>link</code> buttons but they retain colors.</p>
                     </div>
 
-                </section>
-                <section id="t-textareas" aria-labelledby="textareas">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-textareas" aria-labelledby="textareas">
                     <h1>Text Areas</h1>
                     <code class="invoker">new TextArea({options});</code>
                     <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
@@ -238,8 +238,8 @@
                         <h3>Disabled</h3>
                         <p>Disabled <code>TextArea</code> elements behave like disabled TextInputs in nearly all respects.</p>
                     </div>
-                </section>
-                <section id="t-inputs" aria-labelledby="inputs">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-inputs" aria-labelledby="inputs">
                     <h1>Inputs</h1>
                     <code class="invoker">new TextInput({options});</code>
                     <p>A <dfn>TextInput</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a <code>TextArea</code> element). All <code>TextInput</code> classes extend <code>InputElement</code>.</p>
@@ -296,8 +296,8 @@
                         <code class="invoker">new HiddenInput({options});</code>
                         <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
                     </div>
-                </section>
-                <section id="t-selects" aria-labelledby="selects">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-selects" aria-labelledby="selects">
                     <h1>Selects</h1>
                     <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
                     <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
@@ -329,8 +329,8 @@
                         <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
                         <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
                     </div>
-                </section>
-                <section id="t-radiobuttons" aria-labelledby="radiobuttons">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-radiobuttons" aria-labelledby="radiobuttons">
                     <h1>Radio Buttons</h1>
                     <code class="invoker">new RadioGroup({options});</code>
                     <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
@@ -351,8 +351,8 @@
                         <p><dfn>RadioGroup</dfn> elements can also be made disabled, like other inputs.</p>
                     </div>
 
-                </section>
-                <section id="t-toggles" aria-labelledby="toggles">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-toggles" aria-labelledby="toggles">
                     <h1>Checkboxes and Toggles</h1>
                     <code class="invoker">new BooleanToggle({options});</code>
 
@@ -367,8 +367,8 @@
                         <h3>Styled</h3>
                         <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
                     </div>
-                </section>
-                <section id="t-forms" aria-labelledby="forms">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-forms" aria-labelledby="forms">
                     <h1>Forms</h1>
                     <code class="invoker">new SimpleForm({options});</code>
                     <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
@@ -381,8 +381,8 @@
                         <h3>Profile</h3>
                         <p>Forms can be made <i>passive</i>, like inputs.  Forms that can be made passive accepts  <code>passiveinstructions</code> and <code>passiveactions</code> parameters, both of which displays when the form is in <i>passive</i> mode.  If either are omitted, no harm and no foul.</p>
                     </div>
-                </section>
-                <section id="t-dialogs" aria-labelledby="dialogs">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-dialogs" aria-labelledby="dialogs">
                     <h1>Dialogs</h1>
                     <code class="invoker">new DialogWindow({options});</code>
                     <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a jQuery object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a jQuery object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
@@ -457,8 +457,8 @@ And drunk the milk of Paradise.</pre>
                     </div>
 
 
-                </section>
-                <section id="t-growlers" aria-labelledby="growlers">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-growlers" aria-labelledby="growlers">
                     <h1>Growlers</h1>
 
                     <code class="invoker">new Growler({options});</code>
@@ -478,8 +478,8 @@ And drunk the milk of Paradise.</pre>
                             Growler.error('This is an error message!');
                         </code>
                     </div>
-                </section>
-                <section id="t-tabsmenus" aria-labeledby="tabsmenus">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-tabsmenus" aria-labeledby="tabsmenus">
                     <h1>Tabs and Menus</h1>
 
                     <div class="demobox" id="tabsmenus-buttonmenu">
@@ -494,8 +494,8 @@ And drunk the milk of Paradise.</pre>
                         <p>A <dfn>TabBar</dfn> is basically a permanently open <code>ButtonMenu</code>. It is mostly intended for navigation.</p>
                         <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
                     </div>
-                </section>
-                <section id="t-pwchanger" aria-labeledby="pwchanger">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-pwchanger" aria-labeledby="pwchanger">
                     <h1>Password Changer</h1>
 
                     <div class="demobox" id="pwchanger-simple">
@@ -505,8 +505,8 @@ And drunk the milk of Paradise.</pre>
                     </div>
 
 
-                </section>
-                <section id="t-progressmeter" aria-labeledby="progressmeter">
+                </article>
+                <article role="tabpanel" tabindex="-1" id="t-progressmeter" aria-labeledby="progressmeter">
                     <h1>Progress Meters</h1>
                     <div class="demobox" id="progressmeter-simple">
                         <h3>Simple</h3>
@@ -521,7 +521,7 @@ And drunk the milk of Paradise.</pre>
                         <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
                         <p>Since they are implemented in SVG, they cannot be easily sized via css. Ergo, they require a <code>size</code> parameter, in pixels.</p>
                     </div>
-                </section>
+                </article>
 
             </div>
             <div id="codebox">

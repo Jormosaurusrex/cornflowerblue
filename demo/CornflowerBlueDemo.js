@@ -188,15 +188,27 @@ class CornflowerBlueDemo {
         }
     }
 
+    /**
+     * Switch tabs on the demo page.
+     * @param tab
+     */
     switchTab(tab) {
-        $('section').css('display', 'none');
-        $(`#t-${tab}`).css('display', 'block');
+        $('article')
+            .attr('aria-hiddden', true)
+            .css('display', 'none');
+
+        $(`#t-${tab}`)
+            .css('display', 'block')
+            .attr('aria-hidden', false);
+
         this.navigation.select(tab);
+
         if(history.pushState) {
             history.pushState(null, null, `#${tab}`);
         } else {
             location.hash = `#${tab}`;
         }
+
         if ((tab === 'wiki') || (tab === 'intro')) {
             this.codebox.css('display', 'none');
         } else {
@@ -212,126 +224,56 @@ class CornflowerBlueDemo {
         this.navigation = new TabBar({
             vertical: true,
             classes: ['demo'],
+            navigation: true,
             tabs: [
-                {
-                    label: 'Intro',
-                    id: 'intro',
-                    action: function() {
-                        me.switchTab('intro');
-                    }
-                },
-                {
-                    label: 'cornflowerblue',
-                    id: 'wiki',
-                    action: function() {
-                        me.switchTab('wiki');
-                    }
-                },
-                {
-                    label: 'Text',
-                    id: 'text',
-                    action: function() {
-                        me.switchTab('text');
-                    }
-                },
-                {
-                    label: 'Message Boxes',
-                    id: 'messageboxes',
-                    action: function() {
-                        me.switchTab('messageboxes');
-                    }
-                },
-                {
-                    label: 'Buttons',
-                    id: 'buttons',
-                    action: function() {
-                        me.switchTab('buttons');
-                    }
-                },
-                {
-                    label: 'Inputs',
-                    id: 'inputs',
-                    selected: true,
-                    action: function() {
-                        me.switchTab('inputs');
-                    }
-                },
-                {
-                    label: 'Text Areas',
-                    id: 'textareas',
-                    action: function() {
-                        me.switchTab('textareas');
-                    }
-                },
-                {
-                    label: 'Select',
-                    id: 'selects',
-                    action: function() {
-                        me.switchTab('selects');
-                    }
-                },
-                {
-                    label: 'Radio Buttons',
-                    id: 'radiobuttons',
-                    action: function() {
-                        me.switchTab('radiobuttons');
-                    }
-                },
-                {
-                    label: 'Toggles',
-                    id: 'toggles',
-                    action: function() {
-                        me.switchTab('toggles');
-                    }
-                },
-                {
-                    label: 'Tabs and Menus',
-                    id: 'tabsmenus',
-                    action: function() {
-                        me.switchTab('tabsmenus');
-                    }
-                },
-                {
-                    label: 'Forms',
-                    id: 'forms',
-                    action: function() {
-                        me.switchTab('forms');
-                    }
-                },
-                {
-                    label: 'Dialogs',
-                    id: 'dialogs',
-                    action: function() {
-                        me.switchTab('dialogs');
+                { label: 'Intro', id: 'intro' },
+                { label: 'cornflowerblue', id: 'wiki' },
+                { label: 'Text',  id: 'text' },
+                { label: 'Message Boxes', id: 'messageboxes' },
+                { label: 'Buttons', id: 'buttons' },
+                { label: 'Inputs', id: 'inputs' },
+                { label: 'Text Areas', id: 'textareas' },
+                { label: 'Select', id: 'selects' },
+                { label: 'Radio Buttons', id: 'radiobuttons' },
+                { label: 'Toggles', id: 'toggles' },
+                { label: 'Tabs and Menus', id: 'tabsmenus' },
+                { label: 'Forms', id: 'forms' },
+                { label: 'Dialogs', id: 'dialogs',
+                    action: function(tabid, self) {
+                        self.action(tabid, self);
                         me.dialog = new DialogWindow({
                             title: "Login",
                             form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
                         }).open();
+                    }
+                },
+                { label: 'Growlers', id: 'growlers' },
+                { label: 'Password Changer', id: 'pwchanger' },
+                { label: 'Progress Meters', id: 'progressmeter' }
+            ],
+            action: function(tab, self) {
+                $('article')
+                    .attr('aria-hiddden', true)
+                    .css('display', 'none');
 
-                    }
-                },
-                {
-                    label: 'Growlers',
-                    id: 'growlers',
-                    action: function() {
-                        me.switchTab('growlers');
-                    }
-                },
-                {
-                    label: 'Password Changer',
-                    id: 'pwchanger',
-                    action: function() {
-                        me.switchTab('pwchanger');
-                    }
-                },
-                {
-                    label: 'Progress Meters',
-                    id: 'progressmeter',
-                    action: function() {
-                        me.switchTab('progressmeter');
-                    }
+                $(`#t-${tab}`)
+                    .css('display', 'block')
+                    .attr('aria-hidden', false);
+
+                self.select(tab);
+
+                if(history.pushState) {
+                    history.pushState(null, null, `#${tab}`);
+                } else {
+                    location.hash = `#${tab}`;
                 }
-            ]
+
+                if ((tab === 'wiki') || (tab === 'intro')) {
+                    me.codebox.css('display', 'none');
+                } else {
+                    me.codebox.css('display', 'block');
+                }
+            }
         });
 
         this.codebox = $('#codebox');

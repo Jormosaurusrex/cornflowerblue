@@ -44,14 +44,9 @@ class ButtonMenu extends SimpleButton {
      * Open the menu
      */
     open() {
-        const me = this;
-        if (this.isopen) {
-            console.log("already open");
-            return;
-        }
+        if (this.isopen) { return; }
         this.button.attr('aria-expanded', true);
         this.menu.removeAttr('aria-hidden');
-        let clickid = `click-${me.id}`;
     }
 
     /**
@@ -61,17 +56,6 @@ class ButtonMenu extends SimpleButton {
         this.button.removeAttr('aria-expanded');
         this.menu.attr('aria-hidden', true);
 
-    }
-
-    /**
-     * Toggle visibility of the menu.
-     */
-    toggleMenu() {
-        if (this.isopen) {
-            this.close();
-        } else {
-            this.open();
-        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */

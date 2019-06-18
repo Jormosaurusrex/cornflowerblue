@@ -39,10 +39,6 @@ class SelectMenu extends InputElement {
         return null;
     }
 
-    get isopen() {
-        return this.triggerbox.attr('aria-expanded');
-    }
-
     get value() {
         if (this.selected) { return this.selected.val(); }
         return ''; // Return empty string for no value.
@@ -71,9 +67,9 @@ class SelectMenu extends InputElement {
         this.triggerbox.attr('aria-expanded', true);
 
         if (this.container) {
-            vertpos = (this.container.offset().top - $(window).scrollTop());
+            vertpos = (this.container.offset().top - $(window).scrollTop);
         } else {
-            vertpos = (this.optionlist.offset().top - $(window).scrollTop());
+            vertpos = (this.optionlist.offset().top - $(window).scrollTop);
         }
 
         let bodyheight = $('body').height();
@@ -183,8 +179,6 @@ class SelectMenu extends InputElement {
     }
 
     buildOptions() {
-        const me = this;
-
         this.optionlist = $('<ul />')
             .addClass('selectmenu')
             .attr('id', this.id)
@@ -217,6 +211,10 @@ class SelectMenu extends InputElement {
 
         const lId = this.id + '-' + Utils.getUniqueKey(5);
 
+        let $opLabel = $('<label />')
+            .attr('for', lId)
+            .html(def.label);
+
         let $op = $('<input />')
             .data('self', this)
             .attr('id', lId)
@@ -226,7 +224,7 @@ class SelectMenu extends InputElement {
             .attr('value', def.value)
             .attr('aria-labelledby', lId)
             .attr('aria-label', def.label)
-            .change(function(e) {
+            .on('change', function() {
                 if (me.prefix) {
                     me.triggerbox.html(`${me.prefix} ${def.label}`);
                 } else {
@@ -234,6 +232,7 @@ class SelectMenu extends InputElement {
                 }
 
                 me.selectedoption = def;
+
                 if (def.label === me.unselectedtext) {
                     me.passivebox.html(me.unsettext);
                 } else {
@@ -247,14 +246,10 @@ class SelectMenu extends InputElement {
                 if (me.form) { me.form.validate(); }
 
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
-                    me.onchange(e, me);
+                    me.onchange(me);
                 }
             })
             .attr('role', 'radio');
-
-        let $opLabel = $('<label />')
-            .attr('for', lId)
-            .html(def.label);
 
         let $li = $('<li />')
             .attr('tabindex', 0)
@@ -278,7 +273,7 @@ class SelectMenu extends InputElement {
                     me.runKeySearch(e.key);
                 }
             })
-            .click(function(e) {
+            .click(function() {
                 me.optionlist.find('li').removeClass('selected');
                 $(this).addClass('selected');
             });
@@ -351,13 +346,14 @@ class SelectMenu extends InputElement {
 
     /**
      * Search the list of options and scroll to it
-     * @param string the string to search
+     * @param s the string to search
      */
-    findByString(string) {
+    findByString(s) {
+        if ((!s) || (typeof s !== 'string')) { return; }
         let $target;
         for (let li of this.optionlist.children('li')) {
             let label = $(li).find('label')[0];
-            if ($(label).html().toUpperCase().startsWith(string.toUpperCase())) {
+            if ($(label).html().toUpperCase().startsWith( s.toUpperCase())) {
                 $target = $(li);
                 break;
             }
@@ -404,7 +400,6 @@ class SelectMenu extends InputElement {
         if (!this._searchkeys) { this._searchkeys = []; }
         return this._searchkeys;
     }
-    set searchkeys(searchkeys) { return this._searchkeys; }
 
     get searchtext() { return this.config.searchtext; }
     set searchtext(searchtext) { this.config.searchtext = searchtext; }

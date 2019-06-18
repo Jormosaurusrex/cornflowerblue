@@ -1617,9 +1617,7 @@ div.select-container {
           color: var(--selectmenu-menu-item-hover-text-color); }
       div.select-container ul.selectmenu li:focus {
         margin: .3em 0 .3em 0;
-        outline-width: .2em;
-        outline-style: dashed;
-        outline-color: var(--focus-color);
+        outline: var(--focus-color) dashed 0.2em;
         outline-offset: .1em;
         text-decoration: underline double; }
     div.select-container ul.selectmenu.vert {
@@ -3085,9 +3083,7 @@ ul.tabbar {
         text-shadow: var(--tabbar-hover-tab-text-shadow);
         filter: none; }
       ul.tabbar li a:focus {
-        outline-width: .1em;
-        outline-style: dashed;
-        outline-color: var(--grey-medium);
+        outline: var(--grey-medium) dashed 0.1em;
         outline-offset: -.3em;
         text-decoration: underline double; }
         ul.tabbar li a:focus:hover {
@@ -3119,9 +3115,7 @@ ul.tabbar {
         justify-content: flex-start; }
         ul.tabbar.vertical li a:focus {
           margin: 0;
-          outline-width: .1em;
-          outline-style: dashed;
-          outline-color: var(--grey-medium);
+          outline: var(--grey-medium) dashed 0.1em;
           outline-offset: -.2em;
           text-decoration: underline double; }
           ul.tabbar.vertical li a:focus:hover {
@@ -3277,7 +3271,7 @@ div#container {
   display: flex;
   flex-direction: row;
   align-items: stretch; }
-  div#container div.tablist-container.demo {
+  div#container nav.tablist-container.demo {
     --tabbar-box-shadow: none;
     --tabbar-tab-background-color: transparent;
     --tabbar-background-color: transparent;

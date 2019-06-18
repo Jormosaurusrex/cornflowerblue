@@ -15,7 +15,7 @@ class RadioGroup extends SelectMenu {
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
-            onchange: null, // The change handler. Passed (event, self).
+            onchange: null, // The change handler. Passed (self).
             validator: null // A function to run to test validity. Passed the self; returns true or false.
         };
     }
@@ -115,7 +115,7 @@ class RadioGroup extends SelectMenu {
             //.attr('aria-checked', def.checked)
             //.attr('checked', def.checked)
             .addClass(this.classes.join(' '))
-            .change(function(e) {
+            .on('change', function() {
                 $(this).prop('aria-checked', $(this).prop('checked'));
 
                 me.selectedoption = def;
@@ -130,7 +130,7 @@ class RadioGroup extends SelectMenu {
                 if (me.form) { me.form.validate(); }
 
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
-                    me.onchange(e, me);
+                    me.onchange(me);
                 }
             });
 
@@ -148,7 +148,6 @@ class RadioGroup extends SelectMenu {
     }
 
     buildOptions() {
-        const me = this;
         this.optionlist = $('<ul />')
             .addClass('radiogroup')
             .attr('tabindex', -1)

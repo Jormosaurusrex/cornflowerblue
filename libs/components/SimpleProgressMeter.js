@@ -71,11 +71,13 @@ class SimpleProgressMeter {
         }
 
         this.width =  (subjectivevalue / pointscale) * 100;
-        console.log(`width: ${this.width}`);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
+    /**
+     * Builds the container
+     */
     buildContainer() {
         const me = this;
 
@@ -107,11 +109,14 @@ class SimpleProgressMeter {
         }
 
         // Don't allow the the width animation to fire until it's in the page
-        let animtimer = setTimeout(function() {
+        setTimeout(function() {
             me.progress.css('width', `${me.width}%`);
         }, 500);
     }
 
+    /**
+     * Builds the decal layer
+     */
     buildDecalLayer() {
         if ((!this.currentrank) && (!this.nextrank) && (!this.showcaps)) { return null; }
         if (this.decalposition === 'none') { return null; }
@@ -142,7 +147,11 @@ class SimpleProgressMeter {
         }
     }
 
+    /**
+     * Builds the label
+     */
     buildLabel() {
+        const me = this;
         if (!this.label) { return null; }
 
         this.labelobj = $('<label />')

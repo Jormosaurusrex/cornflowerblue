@@ -180,9 +180,7 @@ div.select-container {
       }
       &:focus {
         margin: .3em 0 .3em 0;
-        outline-width: .2em;
-        outline-style: dashed;
-        outline-color: var(--focus-color);
+        outline: var(--focus-color) dashed .2em;
         outline-offset: .1em;
         text-decoration: underline double;
       }

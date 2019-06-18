@@ -5,6 +5,8 @@ class TabBar {
     static get DEFAULT_CONFIG() {
         return {
             id: null, // The id
+            navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
+            arialabel: 'Primary', // the aria label to use if this is a navigation
             vertical: false, // Vertical or horizontal
             tabs: [], // An array of tab definitions
             // {
@@ -12,8 +14,10 @@ class TabBar {
             //    id: null, // tab id, used with "activate(tabid)"
             //    icon: null, // an icon identifier, optional
             //    selected: false, // if true, start selected
-            //    action: function() { } // what to do when the tab is clicked.
+            //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
             // }
+            action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
+                          // This is what will fire if there is no action defined on the tab definition.
             classes: [] //Extra css classes to apply
         }
     };
@@ -111,7 +115,9 @@ class TabBar {
                     e.preventDefault();
                     me.select(tabdef.id);
                     if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                        tabdef.action(e);
+                        tabdef.action(tabdef.id, me);
+                    } else if (me.action) {
+                        me.action(tabdef.id, me);
                     }
                 });
 
@@ -121,7 +127,16 @@ class TabBar {
 
             this.list.append(this.tabmap[tabdef.id]);
 
-            this.container = $('<div />')
+            if (this.navigation) {
+                this.container = $('<nav />')
+                    .attr('role', 'navigation')
+                    .attr('aria-label', this.arialabel);
+
+            } else {
+                this.container = $('<div />');
+            }
+
+            this.container
                 .addClass('tablist-container')
                 .data('self', me)
                 .addClass(this.classes.join(' '))
@@ -142,6 +157,12 @@ class TabBar {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get action() { return this.config.action; }
+    set action(action) { this.config.action = action; }
+
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -156,6 +177,9 @@ class TabBar {
 
     get list() { return this._list; }
     set list(list) { this._list = list; }
+
+    get navigation() { return this.config.navigation; }
+    set navigation(navigation) { this.config.navigation = navigation; }
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }

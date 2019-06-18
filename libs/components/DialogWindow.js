@@ -180,9 +180,6 @@ class DialogWindow {
     get header() { return this.config.header; }
     set header(header) { this.config.header = header; }
 
-    get headerbox() { return this._headerbox; }
-    set headerbox(headerbox) { this._headerbox = headerbox; }
-
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
@@ -194,9 +191,6 @@ class DialogWindow {
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
-
-    get titlebox() { return this._titlebox; }
-    set titlebox(titlebox) { this._titlebox = titlebox; }
 
     get window() { return this._window; }
     set window(window) { this._window = window; }

@@ -46,9 +46,7 @@ ul.tabbar {
         filter: none;
       }
       &:focus {
-        outline-width: .1em;
-        outline-style: dashed;
-        outline-color: var(--grey-medium);
+        outline: var(--grey-medium) dashed .1em;
         outline-offset: -.3em;
         text-decoration: underline double;
         &:hover {
@@ -88,9 +86,7 @@ ul.tabbar {
         justify-content: flex-start;
         &:focus {
           margin: 0;
-          outline-width: .1em;
-          outline-style: dashed;
-          outline-color: var(--grey-medium);
+          outline: var(--grey-medium) dashed .1em;
           outline-offset: -.2em;
           text-decoration: underline double;
           &:hover {

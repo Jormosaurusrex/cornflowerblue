@@ -59,7 +59,7 @@ class MessageBox {
      * @return {*|jQuery}
      */
     buildBox(type = 'results') {
-        var list,
+        let list,
             icon,
             title;
 
