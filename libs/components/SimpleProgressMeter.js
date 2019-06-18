@@ -17,7 +17,8 @@ class SimpleProgressMeter {
             nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
             showcaps: true, // if true, show the min and max values.  True by default if currentrank or nextrank is set.
             decalposition: 'interior-offset', // Where should the decals appear?
-                        // * 'interior-offset' : decals are drawn inside of the bar, staggared
+                        // * 'none' : Don't show any decals
+                        // * 'interior-offset' : decals are drawn inside of the bar, staggered
                         // * 'interior-center' : decals are drawn inside of the bar, centered
                         // * 'interior-top' : decals are drawn inside of the bar, top-aligned
                         // * 'interior-bottom' : decals are drawn inside of the bar, bottom-aligned
@@ -65,7 +66,12 @@ class SimpleProgressMeter {
 
         let pointscale = (this.maxvalue - this.minvalue);
         let subjectivevalue = this.value - this.minvalue;
+        if (this.value < this.minvalue) {
+            subjectivevalue = this.value;
+        }
+
         this.width =  (subjectivevalue / pointscale) * 100;
+        console.log(`width: ${this.width}`);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -94,7 +100,9 @@ class SimpleProgressMeter {
             this.bar.append(this.decallayer);
         }
 
-        if (((this.currentrank) || (this.nextrank)) && (this.decalposition !== 'exterior')) {
+        if (((this.currentrank) || (this.nextrank))
+            && (this.decalposition !== 'exterior')
+            && (this.decalposition !== 'none')) {
             this.bar.addClass('withdecals');
         }
 
@@ -106,6 +114,7 @@ class SimpleProgressMeter {
 
     buildDecalLayer() {
         if ((!this.currentrank) && (!this.nextrank) && (!this.showcaps)) { return null; }
+        if (this.decalposition === 'none') { return null; }
 
         this.decallayer = $('<div />')
             .addClass('decals')
