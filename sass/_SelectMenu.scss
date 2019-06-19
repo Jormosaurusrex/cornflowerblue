@@ -134,7 +134,7 @@ div.select-container {
         }
       }
       &:focus {
-        outline: var(--selectmenu-menu-background-color) dashed .2em;
+        outline: var(--selectmenu-menu-background-color) dashed .1em;
         outline-offset: -.3em;
         text-decoration: underline double;
       }

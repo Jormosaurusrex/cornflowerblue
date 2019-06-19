@@ -39,7 +39,8 @@ ul.tabbar {
         text-shadow: var(--tabbar-selected-tab-text-shadow);
       }
       &:hover,
-      &:active {
+      &:active,
+      &:focus {
         color: var(--tabbar-hover-tab-text-color);
         background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);

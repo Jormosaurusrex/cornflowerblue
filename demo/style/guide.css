@@ -1590,7 +1590,7 @@ div.select-container {
         div.select-container ul.selectmenu li label:after {
           display: none; }
       div.select-container ul.selectmenu li:focus {
-        outline: var(--selectmenu-menu-background-color) dashed 0.2em;
+        outline: var(--selectmenu-menu-background-color) dashed 0.1em;
         outline-offset: -.3em;
         text-decoration: underline double; }
       div.select-container ul.selectmenu li.selected {
@@ -3056,7 +3056,7 @@ ul.tabbar {
         box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
         color: var(--tabbar-selected-tab-text-color);
         text-shadow: var(--tabbar-selected-tab-text-shadow); }
-      ul.tabbar li a:hover, ul.tabbar li a:active {
+      ul.tabbar li a:hover, ul.tabbar li a:active, ul.tabbar li a:focus {
         color: var(--tabbar-hover-tab-text-color);
         background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
@@ -3251,6 +3251,12 @@ body {
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   background-image: url("../image/med_blue_parchment.png"); }
+
+#content-jump {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  z-index: 90000; }
 
 div#container {
   margin-left: auto;

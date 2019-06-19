@@ -164,7 +164,7 @@ class SelectMenu extends InputElement {
             .addClass('trigger')
             .attr('aria-expanded', false)
             .attr('tabindex', 0)
-            .focusin(function(e) {
+            .on('focus', function(e) {
                 // Only need the focus handler because a click fires focus _then_ click
                 // And focus happens in more ways than click (tab in, etc.)
                 if (me.disabled) {

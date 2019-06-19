@@ -137,7 +137,11 @@ class SimpleButton {
                 }
             });
 
-        if (this.notab) { this.button.attr('tabindex', '-1'); }
+        if (this.notab) {
+            this.button.attr('tabindex', '-1');
+        } else {
+            this.button.attr('tabindex', 0);
+        }
         if (this.disabled) { this.disable(); }
 
         if (this.hidden) { this.hide(); }

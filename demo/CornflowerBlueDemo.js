@@ -181,10 +181,9 @@ class CornflowerBlueDemo {
         this.build();
 
         this.body.addClass('noisy');
+
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
-        } else {
-            this.switchTab('buttons');
         }
     }
 
@@ -218,6 +217,26 @@ class CornflowerBlueDemo {
 
     build() {
         const me = this;
+
+        this.contentbutton = new SimpleButton({
+            text: "Jump to Content",
+            classes: ['visually-hidden'],
+            id: 'content-jump',
+            hot: true,
+            focusin: function(e, self) {
+                self.button.removeClass('visually-hidden');
+            },
+            focusout: function(e, self) {
+                self.button.addClass('visually-hidden');
+            },
+            action: function(e, self) {
+                let url = location.href;
+                location.href = "#content-start";
+                history.replaceState(null,null,url);
+            }
+        });
+
+        this.body.prepend(this.contentbutton.button);
 
         this.container = $('#container');
 
@@ -2602,20 +2621,15 @@ class CornflowerBlueDemo {
     get container() { return this._container; }
     set container(container) { this._container = container; }
 
-    get demobox() { return this._demobox; }
-    set demobox(demobox) { this._demobox = demobox; }
+    get contentbutton() { return this._contentbutton; }
+    set contentbutton(contentbutton) { this._contentbutton = contentbutton; }
 
     get dialog() { return this._dialog; }
     set dialog(dialog) { this._dialog = dialog; }
 
-    get displaybox() { return this._displaybox; }
-    set displaybox(displaybox) { this._displaybox = displaybox; }
-
     get navigation() { return this._navigation; }
     set navigation(navigation) { this._navigation = navigation; }
 
-    get titlebox() { return this._titlebox; }
-    set titlebox(titlebox) { this._titlebox = titlebox; }
 
 
 }

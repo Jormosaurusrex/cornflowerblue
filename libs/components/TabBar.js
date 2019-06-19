@@ -99,11 +99,11 @@ class TabBar {
                 .append($icon)
                 .append($linktext)
                 .on('keydown', function(e) {
-                    if (e.keyCode === 37) { // Left arrow
+                    if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
                         e.preventDefault();
                         e.stopPropagation();
                         $(this).parent().prev().children('a').focus();
-                    } else if (e.keyCode === 39) { // Right arrow
+                    } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
                         e.preventDefault();
                         e.stopPropagation();
                         $(this).parent().next().children('a').focus();

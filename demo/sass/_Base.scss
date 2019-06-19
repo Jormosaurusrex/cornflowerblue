@@ -7,6 +7,12 @@ body {
   font-size: var(--default-font-size);
   background-image: url('../image/med_blue_parchment.png');
 }
+#content-jump {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  z-index: 90000;
+}
 
 div#container {
   margin-left: auto;
