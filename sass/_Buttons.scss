@@ -62,9 +62,7 @@ button {
   }
   &:focus,
   &.focus {
-    outline-width: .1em;
-    outline-style: dashed;
-    outline-color: var(--grey-medium);
+    outline: var(--grey-medium) dashed .1em;
     outline-offset: .2em;
     text-decoration: underline double;
   }
@@ -138,9 +136,7 @@ button {
     }
     &:focus,
     &.focus {
-      outline-width: .1em;
-      outline-style: dashed;
-      outline-color: var(--grey-medium);
+      outline: var(--grey-medium) dashed .1em;
       outline-offset: .2em;
       text-decoration: underline double;
     }
@@ -309,9 +305,6 @@ button {
         a {
           color: var(--hot-text-color);
         }
-        button {
-
-        }
       }
       button.closebutton {
         display: none;
@@ -320,7 +313,7 @@ button {
     span.icon {
       margin: 0;
     }
-    &.open,
+    &[aria-expanded='true'],
     &.stayopen {
       div.tooltip {
         display: flex;
@@ -407,9 +400,7 @@ button {
           }
           &:focus {
             margin: .3em;
-            outline-width: .1em;
-            outline-style: dashed;
-            outline-color: var(--grey-medium);
+            outline: var(--grey-medium) dashed .1em;
             outline-offset: .2em;
             text-decoration: underline double;
           }

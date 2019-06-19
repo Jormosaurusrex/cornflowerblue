@@ -239,6 +239,9 @@ class SelectMenu extends InputElement {
                     me.passivebox.html(def.label);
                 }
 
+                me.optionlist.find('label').removeClass('cfb-triangle-down');
+                $opLabel.addClass('cfb-triangle-down');
+
                 me.close();
 
                 me.validate();

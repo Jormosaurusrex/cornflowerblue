@@ -8,7 +8,7 @@ class FileInput extends InputElement {
             icon: "upload",
             accept: 'image/png,image/gif,image/jpg,image/jpeg', // the default accept mime-type
             multiple: false, // Should the file uploader accept multiple files?
-            onchange: null // The change handler. Passed (event, self).
+            onchange: null // The change handler. Passed (self).
         };
     }
 
@@ -19,10 +19,6 @@ class FileInput extends InputElement {
         }
     }
 
-    /**
-     * Define the FileInput
-     * @param config a dictionary object
-     */
     constructor(config) {
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
 
@@ -112,6 +108,9 @@ class FileInput extends InputElement {
         if (this.icon) { this.triggerbox.addClass(`cfb-${this.icon}`); }
     }
 
+    /**
+     * Build file input
+     */
     buildFileInput() {
         const me = this;
 
@@ -123,10 +122,10 @@ class FileInput extends InputElement {
             .attr('accept', this.accept)
             .attr('multiple', this.multiple)
             .attr('aria-labelled-by', this.labelobj.id)
-            .on('focusin', function(e) {
+            .on('focusin', function() {
                 me.triggerbox.focus();
             })
-            .on('change', function(e) {
+            .on('change', function(me) {
                 if (($(this).prop('files')) && ($(this).prop('files').length > 0)) {
                     let farray =  $(this).prop('files');
                     let fnames = [];
@@ -139,17 +138,11 @@ class FileInput extends InputElement {
                         me.triggerbox.removeClass('files').html(me.placeholder);
                     }
                 }
-
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
-                    me.onchange(e, me);
+                    me.onchange(me);
                 }
             });
     }
-
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

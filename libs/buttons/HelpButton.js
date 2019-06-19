@@ -29,23 +29,6 @@ class HelpButton extends SimpleButton {
     }
 
     /**
-     * Toggle visibility of the help.
-     */
-    toggleHelp(e, self) {
-        if (!this.tooltip) { this.buildTooltip(); }
-        this.open();
-        e.stopPropagation();
-        $(document).one('click', function closeHelp (e){
-            if (self.button.has(e.target).length === 0) {
-                self.close();
-            } else {
-                $(document).one('click', closeHelp);
-            }
-        });
-
-    }
-
-    /**
      * Force the tooltip to stay open.
      */
     stayopen() {
@@ -59,7 +42,8 @@ class HelpButton extends SimpleButton {
     open() {
         const me = this;
         if (!this.tooltip) { this.buildTooltip(); }
-        this.button.addClass('open');
+        this.button.attr('aria-expanded', true);
+        this.tooltip.removeAttr('aria-hidden');
         setTimeout(function() {
             me.tooltip.css('top', `calc(0px - ${me.tooltip.css('height')} - .5em)`);
         },1);
@@ -69,17 +53,19 @@ class HelpButton extends SimpleButton {
      * Closes the help tooltip.
      */
     close() {
-        this.button.removeClass('open');
+        if (this.button.hasClass('stayopen')) { return; }
+        this.button.attr('aria-expanded', false);
+        this.tooltip.attr('aria-hidden', true);
     }
 
     /**
      * Builds the help.
-     * @returns {jQuery} jQuery representation
      */
     buildTooltip() {
         const me = this;
         this.tooltip = $('<div />')
             .addClass('tooltip')
+            .attr('aria-hidden', true)
             .attr('id', this.id);
 
         if (this.tipicon) {
@@ -90,6 +76,7 @@ class HelpButton extends SimpleButton {
             .addClass('helptext')
             .attr('id', `${this.id}-tt`)
             .html(this.help);
+
         this.closebutton = new SimpleButton({
             icon: 'echx',
             text: "Close",
@@ -103,8 +90,13 @@ class HelpButton extends SimpleButton {
             }
         });
 
-        this.tooltip.append(this.helptext).append(this.closebutton.button);
-        this.button.append(this.tooltip);
+        this.tooltip
+            .append(this.helptext)
+            .append(this.closebutton.button);
+
+        this.button
+            .attr('aria-expanded', false)
+            .append(this.tooltip);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
@@ -124,9 +116,6 @@ class HelpButton extends SimpleButton {
 
     get helptext() { return this._helptext; }
     set helptext(helptext) { this._helptext = helptext; }
-
-    get helptimer() { return this._helptimer; }
-    set helptimer(helptimer) { this._helptimer = helptimer; }
 
     get tipicon() { return this.config.tipicon; }
     set tipicon(tipicon) { this.config.tipicon = tipicon; }

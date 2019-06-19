@@ -18,10 +18,6 @@ class BooleanToggle {
         };
     }
 
-    /**
-     * Define the BooleanToggle
-     * @param config a dictionary object
-     */
     constructor(config) {
         this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
         
@@ -30,7 +26,7 @@ class BooleanToggle {
         }
 
         if (!this.id) { // need to generate an id for label stuff
-            this.id = "check-" + Utils.getUniqueKey();
+            this.id = "check-" + Utils.getUniqueKey(5);
         }
         if (!this.name) { this.name = this.id; }
         this.origval = this.checked;
@@ -56,14 +52,6 @@ class BooleanToggle {
             valid = this.validator(this);
         }
         return valid;
-    }
-    
-    /**
-     * Has the field been changed or not?
-     * @return {boolean} true or false, depending.
-     */
-    isDirty() {
-        return (this.origval !== this.value);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -91,7 +79,6 @@ class BooleanToggle {
 
     /**
      * Builds the DOM.
-     * @returns {jQuery} jQuery representation of the BooleanToggle
      */
     build() {
         const me = this;
@@ -110,21 +97,21 @@ class BooleanToggle {
             .attr('role', 'checkbox')
             .addClass(this.classes.join(' '))
             .addClass(this.style)
-            .change(function(e) {
+            .on('change', function() {
                 $(this).prop('aria-checked', $(this).prop('checked'));
 
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
-                    me.onchange(e, me);
+                    me.onchange(me);
                 }
             });
     }
 
     /**
      * Builds the input's DOM.
-     * @returns {jQuery} jQuery representation of the input
      */
     buildLabel() {
         if (!this.label) { return null; }
+
         this.labelobj = $('<label />')
             .attr('for', this.id)
             .html(this.label);

@@ -1588,23 +1588,12 @@ div.select-container {
         min-width: 100%; }
         div.select-container ul.selectmenu li label:after {
           display: none; }
+      div.select-container ul.selectmenu li:focus {
+        outline: var(--selectmenu-menu-background-color) dashed 0.2em;
+        outline-offset: -.3em;
+        text-decoration: underline double; }
       div.select-container ul.selectmenu li.selected {
         box-shadow: inset 0.5em 0 0 var(--input-focused-border-color); }
-        div.select-container ul.selectmenu li.selected label:before {
-          font-family: "cornflowerblue", serif;
-          font-style: normal;
-          font-weight: normal;
-          speak: none;
-          text-decoration: inherit;
-          text-align: center;
-          font-variant: normal;
-          text-transform: none;
-          line-height: 1em;
-          content: '\34';
-          color: var(--input-focused-border-color);
-          text-shadow: var(--input-status-icon-text-shadow);
-          margin-right: .5em;
-          margin-left: -1em; }
       div.select-container ul.selectmenu li:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color); }
       div.select-container ul.selectmenu li:hover, div.select-container ul.selectmenu li:focus {
@@ -1615,11 +1604,6 @@ div.select-container {
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
         div.select-container ul.selectmenu li:hover.selected label:before, div.select-container ul.selectmenu li:focus.selected label:before {
           color: var(--selectmenu-menu-item-hover-text-color); }
-      div.select-container ul.selectmenu li:focus {
-        margin: .3em 0 .3em 0;
-        outline: var(--focus-color) dashed 0.2em;
-        outline-offset: .1em;
-        text-decoration: underline double; }
     div.select-container ul.selectmenu.vert {
       bottom: 2.4em;
       box-shadow: var(--panel-shadow-light-inverse); }
@@ -1677,9 +1661,7 @@ button {
     text-decoration: none;
     box-shadow: none; }
   button:focus, button.focus {
-    outline-width: .1em;
-    outline-style: dashed;
-    outline-color: var(--grey-medium);
+    outline: var(--grey-medium) dashed 0.1em;
     outline-offset: .2em;
     text-decoration: underline double; }
   button.constructive {
@@ -1728,9 +1710,7 @@ button {
       text-decoration: none;
       box-shadow: none; }
     button.mute:focus, button.mute.focus {
-      outline-width: .1em;
-      outline-style: dashed;
-      outline-color: var(--grey-medium);
+      outline: var(--grey-medium) dashed 0.1em;
       outline-offset: .2em;
       text-decoration: underline double; }
     button.mute:disabled {
@@ -1863,7 +1843,7 @@ button {
         display: none; }
     button.help span.icon {
       margin: 0; }
-    button.help.open div.tooltip, button.help.stayopen div.tooltip {
+    button.help[aria-expanded='true'] div.tooltip, button.help.stayopen div.tooltip {
       display: flex;
       animation: fadein-delay-half .2s; }
     button.help.stayopen div.tooltip button.closebutton {
@@ -1928,9 +1908,7 @@ button {
             filter: none; }
           button.menu ul li a:focus {
             margin: .3em;
-            outline-width: .1em;
-            outline-style: dashed;
-            outline-color: var(--grey-medium);
+            outline: var(--grey-medium) dashed 0.1em;
             outline-offset: .2em;
             text-decoration: underline double; }
           button.menu ul li a span.icon {

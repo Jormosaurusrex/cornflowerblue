@@ -9,7 +9,6 @@ class URIInput extends TextInput {
         };
     }
 
-
     /**
      * Check if the URI is encoded already
      * @param uri the URI to check
@@ -29,11 +28,6 @@ class URIInput extends TextInput {
         return new RegExp(/\w+:(\/?\/?)[^\s]+/).test(uri);
     }
 
-
-    /**
-     * Define the object
-     * @param config a dictionary object
-     */
     constructor(config) {
         config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
 

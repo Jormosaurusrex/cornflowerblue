@@ -19,10 +19,6 @@ class EmailInput extends TextInput {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
     }
 
-        /**
-     * Define the object
-     * @param config a dictionary object
-     */
     constructor(config) {
         config = Object.assign({}, EmailInput.DEFAULT_CONFIG, config);
         super(config);
