@@ -9,7 +9,7 @@
 .cfb-chevron-down:before { content: '\28'; } /* '(' */
 .cfb-calendar:before { content: '\29'; } /* ')' */
 .cfb-trashcan:before { content: '\2a'; } /* '*' */
-.cfb-minimize:before { content: '\2b'; } /* '+' */
+.cfb-tag:before { content: '\2b'; } /* '+' */
 .cfb-legend:before { content: '\2c'; } /* ',' */
 .cfb-echx:before { content: '\2d'; } /* '-' */
 .cfb-triangle-down:before { content: '\2e'; } /* '.' */
@@ -60,3 +60,16 @@
 .cfb-pencil-circle:before { content: '\5b'; } /* '[' */
 .cfb-download:before { content: '\5c'; } /* '\' */
 .cfb-upload:before { content: '\5d'; } /* ']' */
+.cfb-speaker-slash:before { content: '\5e'; } /* '^' */
+.cfb-speaker-mute:before { content: '\5f'; } /* '_' */
+.cfb-speaker-medium:before { content: '\60'; } /* '`' */
+.cfb-speaker-low:before { content: '\61'; } /* 'a' */
+.cfb-speaker-full:before { content: '\62'; } /* 'b' */
+.cfb-printer:before { content: '\63'; } /* 'c' */
+.cfb-minimize:before { content: '\64'; } /* 'd' */
+.cfb-microphone:before { content: '\65'; } /* 'e' */
+.cfb-microphone-slash:before { content: '\66'; } /* 'f' */
+.cfb-lock-closed:before { content: '\67'; } /* 'g' */
+.cfb-image:before { content: '\68'; } /* 'h' */
+.cfb-folder:before { content: '\69'; } /* 'i' */
+.cfb-document:before { content: '\6a'; } /* 'j' */
