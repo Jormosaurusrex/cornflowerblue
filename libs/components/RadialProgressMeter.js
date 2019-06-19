@@ -13,8 +13,8 @@ class RadialProgressMeter extends SimpleProgressMeter {
                         // Numbers in pixels and ems, as strings ('300px' or '5em')
                         // Or if given a number, assumes pixels
             style: 'solid', // 'solid' or 'ticks'.
-                        // If set to 'ticks', disables any 'ticks' value.
-            ticks: null, // Displays tick marks in the circle.
+                        // If set to 'ticks', disables any 'segments' value.
+            segments: null, // Displays tick marks in the circle.
                         // Takes a number; this is the number of divisions. If you want segments of 10%, set it
                         // to 10.  If you want segments of 25%, set it to 4.
             strokewidth: null // If provided, the stroke will be this wide.
@@ -36,7 +36,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
             this.strokewidth = this.actualsize * .07;
         }
         if (this.style === 'ticks') {
-            this.ticks = null;
+            this.segments = null;
         }
 
         this.radius = (this.actualsize / 2) - (this.strokewidth * 2); // have to cut the stroke
@@ -106,10 +106,16 @@ class RadialProgressMeter extends SimpleProgressMeter {
             .css('stroke-dasharray', `${this.circumference} ${this.circumference}`)
             .css('stroke-dashoffset', offset);
 
-        if (this.ticks) {
-            let segment = this.circumference / this.ticks;
+        if (this.segments) {
+            //this.radius = (this.actualsize / 2) - (this.strokewidth * 2); // have to cut the stroke
+            //this.circumference = this.radius * 2 * Math.PI; // pie are round
+
+            //let seglength = (this.actualsize * Math.PI) / this.segments;
+
+
+            let seglength = (this.circumference - this.strokewidth) / this.segments;
             this.container.find('.tickmarks')
-                .css('stroke-dasharray', `2, ${segment}`);
+                .css('stroke-dasharray', `2, ${seglength}`);
         }
     }
 
@@ -152,7 +158,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
             .append(this.circleTemplate('gutter'))
             .append(this.circleTemplate('radialcircle'));
 
-        if ((this.ticks) || (this.style === 'ticks')) {
+        if ((this.segments) || (this.style === 'ticks')) {
             $svg.append(this.circleTemplate('tickmarks'));
         }
 
@@ -229,8 +235,8 @@ class RadialProgressMeter extends SimpleProgressMeter {
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }
 
-    get ticks() { return this.config.ticks; }
-    set ticks(ticks) { this.config.ticks = ticks; }
+    get segments() { return this.config.segments; }
+    set segments(segments) { this.config.segments = segments; }
 
     get wrap() { return this._wrap; }
     set wrap(wrap) { this._wrap = wrap; }

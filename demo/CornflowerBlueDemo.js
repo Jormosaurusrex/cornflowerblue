@@ -484,7 +484,7 @@ class CornflowerBlueDemo {
                     new RadialProgressMeter({
                         label: "With Ticks",
                         value: 60,
-                        ticks: 10
+                        segments: 12
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
@@ -524,7 +524,7 @@ class CornflowerBlueDemo {
                         label: "size: 'small'",
                         value: 37,
                         size: 'small',
-                        ticks: 20
+                        segments: 5
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
