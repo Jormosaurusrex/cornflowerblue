@@ -2,6 +2,9 @@
 
 class Utils {
 
+
+    /* GENERAL METHODS__________________________________________________________________ */
+
     /**
      * Get the value of a specific cookie.
      * @param name the name of the cookie
@@ -167,6 +170,12 @@ class Utils {
         return config;
     }
 
+    /**
+     * Test if both arrays are equal
+     * @param a the one array
+     * @param b the other array
+     * @return {boolean}
+     */
     static arrayEquals(a, b) {
         if (a === b) return true;
         if (a == null || b == null) return false;
@@ -190,22 +199,66 @@ class Utils {
         return true;
     }
 
+    /**
+     * Calculates the pixel value of an em.
+     * @return {number}
+     */
+    static getSingleEmInPixels() {
+        let low = 0;
+        let high = 200;
+        let emWidth = Math.round((high - low) / 2) + low;
+        let iters = 0;
+        const maxIters = 10;
+        while (high - low > 1) {
+            const match = window.matchMedia(`(min-width: ${emWidth}em)`).matches;
+            iters += 1;
+            if (match) {
+                low = emWidth;
+            } else {
+                high = emWidth;
+            }
+            emWidth = Math.round((high - low) / 2) + low;
+            if (iters > maxIters) {
+                break;
+            }
+        }
+        return Math.ceil(window.innerWidth / emWidth);
+    }
 
-    // Returns if browser supports the crypto api
+    /* CRYPTOGRAPHY METHODS_____________________________________________________________ */
+
+    /**
+     * Does this browser support crypto?
+     * @return true or false, depending
+     */
     static supportsCrypto () {
         return window.crypto && crypto.subtle && window.TextEncoder;
     }
 
-    static hash(algo, str) {
-        return crypto.subtle.digest(algo, new TextEncoder().encode(str));
+    /**
+     * Hash a string with a specific algorithm.
+     * @param a the algorithm
+     * @param s the string to hash
+     * @return {PromiseLike<ArrayBuffer>}
+     */
+    static hash(a, s) {
+        return crypto.subtle.digest(a, new TextEncoder().encode(s));
     }
 
-    // Hex function for ArrayBuffer
+    /**
+     * Turn a buffer into a hex string
+     * @param buff the buffer
+     * @return {string} a string of hexes
+     */
     static hex(buff) {
         return [].map.call(new Uint8Array(buff), b => ('00' + b.toString(16)).slice(-2)).join('');
     }
 
-// Base64 encode
+    /**
+     * Encode a buffer in base 64
+     * @param buff the buffer to encode
+     * @return {string} the encoded string
+     */
     static encode64(buff) {
         return btoa(new Uint8Array(buff).reduce((s, b) => s + String.fromCharCode(b), ''));
     }
@@ -251,6 +304,8 @@ class Utils {
 
     }
 
+    /* FORMAT METHODS___________________________________________________________________ */
+
     /**
      * Add commas to a number in the right place
      * @param num the number to change
@@ -285,16 +340,6 @@ class Utils {
         j = (j = i.length) > 3 ? j % 3 : 0;
 
         return sign + currencySymbol + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-    }
-
-    /**
-     * Tests whether or not a string is a valid email address.
-     * @param email The email address to check
-     * @return {boolean} true or false, depending
-     */
-    static isValidEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
     }
 
     /* RANDOMIZATION METHODS____________________________________________________________ */

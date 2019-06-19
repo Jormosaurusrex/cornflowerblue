@@ -5,7 +5,7 @@ class NumberInput extends TextInput {
     static get DEFAULT_CONFIG() {
         return {
             type: 'text',
-            pattern:'[0-9.%+-]$',
+            //pattern:'[0-9.%+-]$',
             minnumber: null,
             maxnumber: null,
             wholenumbers: false, // Require whole numbers
@@ -14,10 +14,6 @@ class NumberInput extends TextInput {
         };
     }
 
-    /**
-     * Define the object
-     * @param config a dictionary object
-     */
     constructor(config) {
         config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);
 
@@ -25,7 +21,7 @@ class NumberInput extends TextInput {
          * Number inputs have a startlingly complicated set of configuration
          */
         if (config.step) {
-            if (isNaN(config.step)) {
+            if (isNaN(parseFloat(config.step))) {
                 console.error(`step is defined as ${config.step} but is not a number. Deleting.`);
                 delete config.step;
             } else if (Number(config.step) <= 0) {
@@ -36,7 +32,7 @@ class NumberInput extends TextInput {
             }
         }
         if (config.maxnumber) {
-            if (isNaN(config.maxnumber)) {
+            if (isNaN(parseFloat(config.maxnumber))) {
                 console.error(`maxnumber is defined as ${config.maxnumber} but is not a number. Deleting.`);
                 delete config.maxnumber;
             } else {
@@ -44,7 +40,7 @@ class NumberInput extends TextInput {
             }
         }
         if (config.minnumber) {
-            if (isNaN(config.minnumber)) {
+            if (isNaN(parseFloat(config.minnumber))) {
                 console.error(`minnumber is defined as ${config.minnumber} but is not a number. Deleting.`);
                 delete config.maxnumber;
             } else {
@@ -90,7 +86,7 @@ class NumberInput extends TextInput {
                 this.errors.push("This is not a number.");
                 return;
             }
-            let v = Number(this.value);
+            let v = parseFloat(this.value);
             if ((this.minnumber !== 'undefined') && (v < this.minnumber)) {
                 this.errors.push(`The minimum value for this field is '${this.minnumber}'.`);
             } else if ((this.maxnumber !== 'undefined') && (v > this.maxnumber)) {
@@ -196,9 +192,7 @@ class NumberInput extends TextInput {
         }
     }
 
-
     /* ACCESSOR METHODS_________________________________________________________________ */
-
 
     get downbtn() { return this._downbtn; }
     set downbtn(downbtn) { this._downbtn = downbtn; }

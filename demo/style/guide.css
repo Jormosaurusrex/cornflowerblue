@@ -336,6 +336,7 @@
   --progressmeter-radial-gutter-color: var(--blue-quarter);
   --progressmeter-radial-decal-text-color: var(--grey-dark);
   --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
+  --progressmeter-radial-tick-color: var(--hot-text-color);
   --sup-text-color: var(--paragraph-text-color);
   --sup-text-shadow: var(--paragraph-text-shadow);
   --radio-size: 2.2em;
@@ -3128,31 +3129,43 @@ div.progressbar-container {
         font-style: italic; }
     div.progressbar-container .decals div.next {
       text-align: right; }
+  div.progressbar-container.tiny .decals {
+    font-size: 50%; }
+  div.progressbar-container.small .decals {
+    font-size: 50%; }
+  div.progressbar-container.medium .decals {
+    font-size: 100%; }
+  div.progressbar-container.large .decals {
+    font-size: 200%; }
+  div.progressbar-container.huge .decals {
+    font-size: 400%; }
   div.progressbar-container div.circlewrap {
     position: relative; }
-    div.progressbar-container div.circlewrap svg.progressgutter {
+    div.progressbar-container div.circlewrap svg circle {
       position: relative;
       left: 0;
       top: 0;
       z-index: 1;
-      clear: both; }
-    div.progressbar-container div.circlewrap svg.progressbar {
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 2; }
-    div.progressbar-container div.circlewrap svg circle.gutter {
-      stroke: var(--progressmeter-radial-gutter-color);
-      fill: var(--progressmeter-radial-background-color); }
-    div.progressbar-container div.circlewrap svg circle.radialcircle {
-      stroke-dasharray: 10, 20;
-      transition: stroke-dashoffset 1s ease-in-out;
+      clear: both;
       transform: rotate(-90deg);
       transform-origin: 50% 50%;
-      stroke: var(--progressmeter-radial-stroke-color);
-      fill: var(--progressmeter-radial-background-color);
-      box-shadow: var(--panel-shadow);
       stroke-linecap: butt; }
+      div.progressbar-container div.circlewrap svg circle.gutter {
+        stroke: var(--progressmeter-radial-gutter-color);
+        fill: var(--progressmeter-radial-background-color); }
+      div.progressbar-container div.circlewrap svg circle.radialcircle {
+        stroke-dasharray: 10, 20;
+        transition: stroke-dashoffset 1s ease-in-out;
+        stroke: var(--progressmeter-radial-stroke-color);
+        fill: var(--progressmeter-radial-background-color);
+        box-shadow: var(--panel-shadow); }
+      div.progressbar-container div.circlewrap svg circle.tickmarks {
+        stroke-dasharray: 1, 10%;
+        stroke: var(--progressmeter-radial-tick-color);
+        fill: transparent; }
+    div.progressbar-container div.circlewrap svg.ticks circle.tickmarks {
+      stroke: var(--canvas-color-primary);
+      stroke-dasharray: 2, 2; }
     div.progressbar-container div.circlewrap div.decals {
       position: absolute;
       left: 0;

@@ -519,7 +519,8 @@ And drunk the milk of Paradise.</pre>
                         <h3>Radial</h3>
                         <code class="invoker">new RadialProgressMeter({options});</code>
                         <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
-                        <p>Since they are implemented in SVG, they cannot be easily sized via css. Ergo, they require a <code>size</code> parameter, in pixels.</p>
+                        <p>Since they are implemented in SVG they cannot be easily sized via css. They take a <code>size</code> parameter which can be a string ('small', 'medium', 'large', 'huge'), values in 'px' or 'em', or a number (which gets interpreted as pixels).  The default is <code>medium</code>.</p>
+                        <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
                     </div>
                 </article>
 

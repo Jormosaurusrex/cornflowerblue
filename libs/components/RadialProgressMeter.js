@@ -8,7 +8,15 @@ class RadialProgressMeter extends SimpleProgressMeter {
                                     // Values include: center, bottomleft, bottomright, topleft, topright
             badge: null, // the large central number to show. If left empty, it will display the percentage.
             stinger: null, // A small text to display below the main badge
-            size: 200,
+            size: 'medium', // Can be one of several values or metrics!
+                        // Accepts: 'small', 'medium', 'large', 'huge' as strings
+                        // Numbers in pixels and ems, as strings ('300px' or '5em')
+                        // Or if given a number, assumes pixels
+            style: 'solid', // 'solid' or 'ticks'.
+                        // If set to 'ticks', disables any 'ticks' value.
+            ticks: null, // Displays tick marks in the circle.
+                        // Takes a number; this is the number of divisions. If you want segments of 10%, set it
+                        // to 10.  If you want segments of 25%, set it to 4.
             strokewidth: null // If provided, the stroke will be this wide.
                             // If not provided, the width will be 5% of the circle's whole size
         };
@@ -22,22 +30,104 @@ class RadialProgressMeter extends SimpleProgressMeter {
         config = Object.assign({}, RadialProgressMeter.DEFAULT_CONFIG, config);
         super(config);
 
+        this.calculateSize();
+
         if (!this.strokewidth) {
-            this.strokewidth = this.size * .07;
+            this.strokewidth = this.actualsize * .07;
+        }
+        if (this.style === 'ticks') {
+            this.ticks = null;
         }
 
-        this.radius = (this.size / 2) - (this.strokewidth * 2); // have to cut the stroke
+        this.radius = (this.actualsize / 2) - (this.strokewidth * 2); // have to cut the stroke
         this.circumference = this.radius * 2 * Math.PI; // pie are round
     }
 
+    /**
+     * Calculates the size of the SVG to use.
+     * - Parses the 'size' attribute into 'actualsize'
+     * - Determines the 'sizeclass'
+     */
+    calculateSize() {
+        if (typeof this.size === 'number') {
+            this.actualsize = this.size;
+        } else if (this.size.toLowerCase().endsWith('px')) {
+            this.actualsize = parseInt(this.size);
+            if (isNaN(this.actualsize)) {
+                console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
+                this.actualsize = 200;
+            }
+        } else if (this.size.toLowerCase().endsWith('em')) {
+            this.actualsize = (Utils.getSingleEmInPixels() * parseInt(this.size));
+            if (isNaN(this.actualsize)) {
+                console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
+                this.actualsize = 200;
+            }
+        } else {
+            switch(this.size) {
+                case 'small':
+                    this.actualsize = 100;
+                    break;
+                case 'large':
+                    this.actualsize = 400;
+                    break;
+                case 'huge':
+                    this.actualsize = 800;
+                    break;
+                case 'medium':
+                default:
+                    this.actualsize = 200;
+                    break;
+            }
+        }
+
+        // Now we parse a size class
+        if (this.actualsize >= 800) {
+            this.sizeclass = 'huge';
+        } else if (this.actualsize >= 400) {
+            this.sizeclass = 'large';
+        } else if (this.actualsize >= 200) {
+            this.sizeclass = 'medium';
+        } else if (this.actualsize >= 100) {
+            this.sizeclass = 'small';
+        } else  {
+            this.sizeclass = 'tiny';
+        }
+    }
+
+    /**
+     * Set the progress value of the meter
+     * @param percent the percent to set it to.
+     */
     setProgress(percent) {
         const offset = this.circumference - percent / 100 * this.circumference;
+
         this.container.find('.radialcircle')
             .css('stroke-dasharray', `${this.circumference} ${this.circumference}`)
             .css('stroke-dashoffset', offset);
+
+        if (this.ticks) {
+            let segment = this.circumference / this.ticks;
+            this.container.find('.tickmarks')
+                .css('stroke-dasharray', `2, ${segment}`);
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build a circle template
+     * @param target the class to apply
+     * @return {*|null|undefined|jQuery}
+     */
+    circleTemplate(target) {
+        return $('<circle />')
+            .addClass(target)
+            .attr('stroke-width', this.strokewidth)
+            .attr('r', this.radius)
+            .attr('cx', this.actualsize / 2)
+            .attr('cy', this.actualsize / 2)
+    }
 
     buildContainer() {
 
@@ -45,45 +135,32 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
         this.container = $('<div />')
             .data('self', this)
+            .addClass(this.sizeclass)
             .addClass('progressbar-container')
             .append(this.labelobj);
 
-        let wrap = $('<div />')
+        let $wrap = $('<div />')
             .addClass('circlewrap')
-            .css('width', `${this.size}`)
-            .css('height', `${this.size}`);
+            .css('width', `${this.actualsize}`)
+            .css('height', `${this.actualsize}`);
 
-        wrap.append($('<svg />') // the background gutter circle
-            .attr('height', this.size)
-            .attr('width', this.size)
+        let $svg = $('<svg />') // the background gutter circle
+            .attr('height', this.actualsize)
+            .attr('width', this.actualsize)
             .addClass('progressgutter')
-            .append(
-                $('<circle />')
-                    .addClass('gutter')
-                    .attr('stroke-width', this.strokewidth)
-                    .attr('r', this.radius)
-                    .attr('cx', this.size / 2)
-                    .attr('cy', this.size / 2)
-            )
-        );
+            .addClass(this.style)
+            .append(this.circleTemplate('gutter'))
+            .append(this.circleTemplate('radialcircle'));
 
-        wrap.append($('<svg />')
-            .attr('height', this.size)
-            .attr('width', this.size)
-            .addClass('progressbar')
-            .append(
-                $('<circle />')
-                    .addClass('radialcircle')
-                    .attr('stroke-width', this.strokewidth)
-                    .attr('r', this.radius)
-                    .attr('cx', this.size / 2)
-                    .attr('cy', this.size / 2)
-            )
-        );
+        if ((this.ticks) || (this.style === 'ticks')) {
+            $svg.append(this.circleTemplate('tickmarks'));
+        }
 
-        wrap.append(this.decallayer);
-
-        this.container.append(wrap);
+        this.container
+            .append($wrap
+                .append($svg)
+                .append(this.decallayer)
+            );
 
         this.container.html(this.container.html()); // this is funky b/c manipulating svgs can't be done with jquery
 
@@ -102,7 +179,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         this.badgeobj = $('<div />').addClass('badge').html(this.badge);
 
         if (this.stinger) {
-            this.stingerobj = $('<div />').addClass('stringer').html(this.stinger);
+            this.stingerobj = $('<div />').addClass('stinger').html(this.stinger);
         }
 
         this.decallayer = $('<div />')
@@ -115,6 +192,9 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actualsize() { return this._actualsize; }
+    set actualsize(actualsize) { this._actualsize = actualsize; }
 
     get badge() { return this.config.badge; }
     set badge(badge) { this.config.badge = badge; }
@@ -134,6 +214,9 @@ class RadialProgressMeter extends SimpleProgressMeter {
     get size() { return this.config.size; }
     set size(size) { this.config.size = size; }
 
+    get sizeclass() { return this._sizeclass; }
+    set sizeclass(sizeclass) { this._sizeclass = sizeclass; }
+
     get stinger() { return this.config.stinger; }
     set stinger(stinger) { this.config.stinger = stinger; }
 
@@ -142,6 +225,12 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
     get strokewidth() { return this.config.strokewidth; }
     set strokewidth(strokewidth) { this.config.strokewidth = strokewidth; }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
+
+    get ticks() { return this.config.ticks; }
+    set ticks(ticks) { this.config.ticks = ticks; }
 
     get wrap() { return this._wrap; }
     set wrap(wrap) { this._wrap = wrap; }

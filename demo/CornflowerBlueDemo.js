@@ -411,7 +411,6 @@ class CornflowerBlueDemo {
         const $simple = $('#progressmeter-simple');
         const $radial = $('#progressmeter-radial');
 
-
         $simple.append(
             $('<div />').addClass('example').addClass('vert')
                 .append(
@@ -426,6 +425,18 @@ class CornflowerBlueDemo {
                         label: "Rank 3 Progress",
                         currentrank: "Bronze",
                         nextrank: "Silver",
+                        minvalue: 200,
+                        maxvalue: 600,
+                        value: 335
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleProgressMeter({
+                        label: "Decalposition: exterior",
+                        currentrank: "Bronze",
+                        nextrank: "Silver",
+                        decalposition: 'exterior',
                         minvalue: 200,
                         maxvalue: 600,
                         value: 335
@@ -455,8 +466,7 @@ class CornflowerBlueDemo {
                 .append(
                     new RadialProgressMeter({
                         label: "Overall Progress",
-                        value: 37,
-                        numberposition: 'bottomleft'
+                        value: 37
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
@@ -470,8 +480,56 @@ class CornflowerBlueDemo {
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
+                .append(
+                    new RadialProgressMeter({
+                        label: "With Ticks",
+                        value: 60,
+                        ticks: 10
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
         );
+        $radial.append(
+            $('<div />').addClass('example')
+                .append(
+                    new RadialProgressMeter({
+                        label: "style: 'ticks'",
+                        value: 37,
+                        style: 'ticks'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "style: 'ticks'",
+                        value: 72,
+                        badge: 7200,
+                        stinger: 'Points',
+                        style: 'ticks'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "size: 'small'",
+                        value: 72,
+                        badge: 7200,
+                        stinger: 'Points',
+                        size: 'small'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "size: 'small'",
+                        value: 37,
+                        size: 'small',
+                        ticks: 20
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
 
+        );
     }
 
     grindInputs() {

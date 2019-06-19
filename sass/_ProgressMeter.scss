@@ -30,36 +30,67 @@ div.progressbar-container {
       text-align: right;
     }
   }
-
+  &.tiny {
+    .decals {
+      font-size: 50%;
+    }
+  }
+  &.small {
+    .decals {
+      font-size: 50%;
+    }
+  }
+  &.medium {
+    .decals {
+      font-size: 100%;
+    }
+  }
+  &.large {
+    .decals {
+      font-size: 200%;
+    }
+  }
+  &.huge {
+    .decals {
+      font-size: 400%;
+    }
+  }
   div.circlewrap {
     position: relative;
     svg {
-      &.progressgutter {
+      circle {
         position: relative;
         left: 0;
         top: 0;
         z-index: 1;
         clear: both;
-      }
-      &.progressbar {
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 2;
-      }
-      circle.gutter {
-        stroke: var(--progressmeter-radial-gutter-color);
-        fill: var(--progressmeter-radial-background-color);
-      }
-      circle.radialcircle {
-        stroke-dasharray: 10, 20;
-        transition: stroke-dashoffset 1s ease-in-out;
         transform: rotate(-90deg);
         transform-origin: 50% 50%;
-        stroke: var(--progressmeter-radial-stroke-color);
-        fill: var(--progressmeter-radial-background-color);
-        box-shadow: var(--panel-shadow);
         stroke-linecap: butt;
+        &.gutter {
+          stroke: var(--progressmeter-radial-gutter-color);
+          fill: var(--progressmeter-radial-background-color);
+        }
+        &.radialcircle {
+          stroke-dasharray: 10, 20;
+          transition: stroke-dashoffset 1s ease-in-out;
+          stroke: var(--progressmeter-radial-stroke-color);
+          fill: var(--progressmeter-radial-background-color);
+          box-shadow: var(--panel-shadow);
+        }
+        &.tickmarks {
+          stroke-dasharray: 1, 10%;
+          stroke: var(--progressmeter-radial-tick-color);
+          fill: transparent;
+        }
+      }
+      &.ticks {
+        circle {
+          &.tickmarks {
+            stroke: var(--canvas-color-primary);
+            stroke-dasharray: 2, 2;
+          }
+        }
       }
     }
     div.decals {
