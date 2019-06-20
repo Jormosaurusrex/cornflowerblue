@@ -107,15 +107,16 @@ class RadialProgressMeter extends SimpleProgressMeter {
             .css('stroke-dashoffset', offset);
 
         if (this.segments) {
-            //this.radius = (this.actualsize / 2) - (this.strokewidth * 2); // have to cut the stroke
-            //this.circumference = this.radius * 2 * Math.PI; // pie are round
 
-            //let seglength = (this.actualsize * Math.PI) / this.segments;
+            let tickwidth = this.segments * 2;
 
+            let seglength = (((this.radius * 2) * Math.PI) - tickwidth) / (this.segments);
 
-            let seglength = (this.circumference - this.strokewidth) / this.segments;
+            //console.log(`actualsize: ${this.actualsize} :: circumference: ${this.circumference} :: segments: ${this.segments} seglength: ${seglength}`);
+
             this.container.find('.tickmarks')
-                .css('stroke-dasharray', `2, ${seglength}`);
+                .css('stroke-dasharray', `2px ${seglength}px`)
+                .css('stroke-dashoffset', 0);
         }
     }
 
