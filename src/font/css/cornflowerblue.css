@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?64569894');
-  src: url('../font/cornflowerblue.eot?64569894#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?64569894') format('woff2'),
-       url('../font/cornflowerblue.woff?64569894') format('woff'),
-       url('../font/cornflowerblue.ttf?64569894') format('truetype'),
-       url('../font/cornflowerblue.svg?64569894#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?45759279');
+  src: url('../font/cornflowerblue.eot?45759279#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?45759279') format('woff2'),
+       url('../font/cornflowerblue.woff?45759279') format('woff'),
+       url('../font/cornflowerblue.ttf?45759279') format('truetype'),
+       url('../font/cornflowerblue.svg?45759279#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?64569894#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?45759279#cornflowerblue') format('svg');
   }
 }
 */
@@ -55,35 +55,35 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.cfb-pencil:before { content: '\21'; } /* '!' */
-.cfb-chevrons-vertical:before { content: '\22'; } /* '&quot;' */
-.cfb-chevrons-horizontal:before { content: '\23'; } /* '#' */
+.cfb-arrow-down-circle:before { content: '\21'; } /* '!' */
+.cfb-arrow-up:before { content: '\22'; } /* '&quot;' */
+.cfb-arrow-up-circle:before { content: '\23'; } /* '#' */
 .cfb-map:before { content: '\24'; } /* '$' */
-.cfb-minus:before { content: '\25'; } /* '%' */
-.cfb-plus:before { content: '\26'; } /* '&amp;' */
-.cfb-popout:before { content: '\27'; } /* ''' */
-.cfb-chevron-down:before { content: '\28'; } /* '(' */
+.cfb-arrow-right:before { content: '\25'; } /* '%' */
+.cfb-arrow-right-circle:before { content: '\26'; } /* '&amp;' */
+.cfb-arrow-left:before { content: '\27'; } /* ''' */
+.cfb-arrow-left-circle:before { content: '\28'; } /* '(' */
 .cfb-calendar:before { content: '\29'; } /* ')' */
 .cfb-trashcan:before { content: '\2a'; } /* '*' */
 .cfb-tag:before { content: '\2b'; } /* '+' */
 .cfb-legend:before { content: '\2c'; } /* ',' */
 .cfb-echx:before { content: '\2d'; } /* '-' */
-.cfb-triangle-down:before { content: '\2e'; } /* '.' */
-.cfb-triangle-left:before { content: '\2f'; } /* '/' */
-.cfb-triangle-mini-down:before { content: '\30'; } /* '0' */
-.cfb-triangle-mini-left:before { content: '\31'; } /* '1' */
-.cfb-triangle-mini-right:before { content: '\32'; } /* '2' */
-.cfb-triangle-mini-up:before { content: '\33'; } /* '3' */
-.cfb-triangle-right:before { content: '\34'; } /* '4' */
-.cfb-triangle-up:before { content: '\35'; } /* '5' */
-.cfb-check:before { content: '\36'; } /* '6' */
+.cfb-arrow-down:before { content: '\2e'; } /* '.' */
+.cfb-check-circle-disc:before { content: '\2f'; } /* '/' */
+.cfb-checkmark-circle:before { content: '\30'; } /* '0' */
+.cfb-chevron-down:before { content: '\31'; } /* '1' */
+.cfb-checkmark:before { content: '\32'; } /* '2' */
+.cfb-chevron-left:before { content: '\33'; } /* '3' */
+.cfb-chevron-right:before { content: '\34'; } /* '4' */
+.cfb-chevron-up:before { content: '\35'; } /* '5' */
+.cfb-double-triangle-vertical:before { content: '\36'; } /* '6' */
 .cfb-chat:before { content: '\37'; } /* '7' */
 .cfb-heart:before { content: '\38'; } /* '8' */
 .cfb-no:before { content: '\39'; } /* '9' */
-.cfb-refresh:before { content: '\3a'; } /* ':' */
-.cfb-chevron-left:before { content: '\3b'; } /* ';' */
-.cfb-chevron-right:before { content: '\3c'; } /* '&lt;' */
-.cfb-chevron-up:before { content: '\3d'; } /* '=' */
+.cfb-double-triangle-horizontal:before { content: '\3a'; } /* ':' */
+.cfb-download:before { content: '\3b'; } /* ';' */
+.cfb-echx-circle:before { content: '\3c'; } /* '&lt;' */
+.cfb-echx-1:before { content: '\3d'; } /* '=' */
 .cfb-spinner-circle:before { content: '\3e'; } /* '&gt;' */
 .cfb-circle-disc-chopped:before { content: '\3f'; } /* '?' */
 .cfb-circle:before { content: '\40'; } /* '@' */
@@ -106,26 +106,36 @@
 .cfb-warn-circle:before { content: '\51'; } /* 'Q' */
 .cfb-warn-hex:before { content: '\52'; } /* 'R' */
 .cfb-warn-triangle:before { content: '\53'; } /* 'S' */
-.cfb-check-circle:before { content: '\54'; } /* 'T' */
-.cfb-echx-circle:before { content: '\55'; } /* 'U' */
-.cfb-eye-slash:before { content: '\56'; } /* 'V' */
+.cfb-eye-slash:before { content: '\54'; } /* 'T' */
+.cfb-microphone-slash:before { content: '\55'; } /* 'U' */
+.cfb-minimize:before { content: '\56'; } /* 'V' */
 .cfb-eye:before { content: '\57'; } /* 'W' */
 .cfb-disc-check:before { content: '\58'; } /* 'X' */
-.cfb-arrow-down-circle:before { content: '\59'; } /* 'Y' */
-.cfb-arrow-up-circle:before { content: '\5a'; } /* 'Z' */
-.cfb-pencil-circle:before { content: '\5b'; } /* '[' */
-.cfb-download:before { content: '\5c'; } /* '\' */
-.cfb-upload:before { content: '\5d'; } /* ']' */
-.cfb-speaker-slash:before { content: '\5e'; } /* '^' */
-.cfb-speaker-mute:before { content: '\5f'; } /* '_' */
-.cfb-speaker-medium:before { content: '\60'; } /* '`' */
-.cfb-speaker-low:before { content: '\61'; } /* 'a' */
-.cfb-speaker-full:before { content: '\62'; } /* 'b' */
+.cfb-minus-circle:before { content: '\59'; } /* 'Y' */
+.cfb-minus:before { content: '\5a'; } /* 'Z' */
+.cfb-popout:before { content: '\5b'; } /* '[' */
+.cfb-plus:before { content: '\5c'; } /* '\' */
+.cfb-plus-circle:before { content: '\5d'; } /* ']' */
+.cfb-pencil:before { content: '\5e'; } /* '^' */
+.cfb-pencil-circle:before { content: '\5f'; } /* '_' */
+.cfb-refresh:before { content: '\60'; } /* '`' */
+.cfb-speaker-high:before { content: '\61'; } /* 'a' */
+.cfb-speaker-low:before { content: '\62'; } /* 'b' */
 .cfb-printer:before { content: '\63'; } /* 'c' */
-.cfb-minimize:before { content: '\64'; } /* 'd' */
+.cfb-speaker-medium:before { content: '\64'; } /* 'd' */
 .cfb-microphone:before { content: '\65'; } /* 'e' */
-.cfb-microphone-slash:before { content: '\66'; } /* 'f' */
+.cfb-speaker-mute:before { content: '\66'; } /* 'f' */
 .cfb-lock-closed:before { content: '\67'; } /* 'g' */
 .cfb-image:before { content: '\68'; } /* 'h' */
 .cfb-folder:before { content: '\69'; } /* 'i' */
 .cfb-document:before { content: '\6a'; } /* 'j' */
+.cfb-speaker-slash:before { content: '\6b'; } /* 'k' */
+.cfb-triangle-down-small:before { content: '\6c'; } /* 'l' */
+.cfb-triangle-down:before { content: '\6d'; } /* 'm' */
+.cfb-triangle-left-small:before { content: '\6e'; } /* 'n' */
+.cfb-triangle-left:before { content: '\6f'; } /* 'o' */
+.cfb-triangle-right-small:before { content: '\70'; } /* 'p' */
+.cfb-triangle-up:before { content: '\71'; } /* 'q' */
+.cfb-triangle-up-small:before { content: '\72'; } /* 'r' */
+.cfb-triangle-right:before { content: '\73'; } /* 's' */
+.cfb-upload:before { content: '\74'; } /* 't' */

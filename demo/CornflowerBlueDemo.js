@@ -2545,7 +2545,7 @@ class CornflowerBlueDemo {
             passiveactions: [
                 new SimpleButton({
                     text: "Make Changes",
-                    icon: "pencil",
+                    icon: "pencil-circle",
                     action: function(e, self) {
                         e.preventDefault();
                         self.form.activate();
