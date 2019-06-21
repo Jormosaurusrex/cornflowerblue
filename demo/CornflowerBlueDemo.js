@@ -218,8 +218,8 @@ class CornflowerBlueDemo {
     build() {
         const me = this;
 
-        this.contentbutton = new SimpleButton({
-            text: "Jump to Content",
+        this.skipbutton = new SimpleButton({
+            text: "Skip to Content",
             classes: ['visually-hidden'],
             id: 'content-jump',
             hot: true,
@@ -236,7 +236,7 @@ class CornflowerBlueDemo {
             }
         });
 
-        this.body.prepend(this.contentbutton.button);
+        this.body.prepend(this.skipbutton.button);
 
         this.container = $('#container');
 
@@ -2621,8 +2621,8 @@ class CornflowerBlueDemo {
     get container() { return this._container; }
     set container(container) { this._container = container; }
 
-    get contentbutton() { return this._contentbutton; }
-    set contentbutton(contentbutton) { this._contentbutton = contentbutton; }
+    get skipbutton() { return this._skipbutton; }
+    set skipbutton(skipbutton) { this._skipbutton = skipbutton; }
 
     get dialog() { return this._dialog; }
     set dialog(dialog) { this._dialog = dialog; }
