@@ -2602,6 +2602,34 @@ div.radiogroup-container.disabled ul.radiogroup li.radio label {
   color: var(--disabled-highlight-color);
   text-decoration: none; }
 
+div.shade {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2000;
+  background-color: var(--form-shade-background-color);
+  border: 0.1em solid var(--form-shade-border-color);
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center; }
+  div.shade span.icon {
+    display: block;
+    color: var(--form-shade-icon-color);
+    font-size: 100pt;
+    text-shadow: var(--form-shade-icon-shadow);
+    margin-top: -1em;
+    animation: localspin 2s linear infinite; }
+    div.shade span.icon:before {
+      line-height: normal; }
+  div.shade div.spinnertext {
+    color: var(--form-shade-text-color);
+    font-size: 200%;
+    text-shadow: var(--form-shade-text-shadow); }
+
 form {
   margin: 0;
   position: relative;
@@ -2609,7 +2637,7 @@ form {
   background-color: var(--form-background-color);
   display: block;
   padding: 0; }
-  form div.shade {
+  form div.shade2 {
     display: none;
     position: absolute;
     left: 0;
@@ -2623,16 +2651,16 @@ form {
     justify-content: center;
     align-content: center;
     align-items: center; }
-    form div.shade span.icon {
+    form div.shade2 span.icon {
       display: block;
       color: var(--form-shade-icon-color);
       font-size: 100pt;
       text-shadow: var(--form-shade-icon-shadow);
       margin-top: -1em;
       animation: localspin 2s linear infinite; }
-      form div.shade span.icon:before {
+      form div.shade2 span.icon:before {
         line-height: normal; }
-    form div.shade div.spinnertext {
+    form div.shade2 div.spinnertext {
       color: var(--form-shade-text-color);
       font-size: 200%;
       text-shadow: var(--form-shade-text-shadow); }
