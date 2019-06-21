@@ -218,23 +218,7 @@ class CornflowerBlueDemo {
     build() {
         const me = this;
 
-        this.skipbutton = new SimpleButton({
-            text: "Skip to Content",
-            classes: ['visually-hidden'],
-            id: 'content-jump',
-            hot: true,
-            focusin: function(e, self) {
-                self.button.removeClass('visually-hidden');
-            },
-            focusout: function(e, self) {
-                self.button.addClass('visually-hidden');
-            },
-            action: function(e, self) {
-                let url = location.href;
-                location.href = "#content-start";
-                history.replaceState(null,null,url);
-            }
-        });
+        this.skipbutton = new SkipButton(); // defaults are fine
 
         this.body.prepend(this.skipbutton.button);
 
