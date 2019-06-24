@@ -14,7 +14,8 @@ class BooleanToggle {
             labelside: 'right', // Which side to put the label on.
             style: null, // Default to box
             onchange: null, // The change handler. Passed (event, self).
-            validator: null // A function to run to test validity. Passed the self; returns true or false.
+            validator: null, // A function to run to test validity. Passed the self; returns true or false.,
+            value: null // the value of the checkbox
         };
     }
 
@@ -95,6 +96,7 @@ class BooleanToggle {
             .attr('hidden', this.hidden)
             .attr('disabled', this.disabled)
             .attr('role', 'checkbox')
+            .attr('value', this.value)
             .addClass(this.classes.join(' '))
             .addClass(this.style)
             .on('change', function() {
@@ -218,5 +220,11 @@ class BooleanToggle {
 
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
+
+    get value() { return this.config.value; }
+    set value(value) {
+        this.input.attr('value', value);
+        this.config.value = value;
+    }
 
 }
