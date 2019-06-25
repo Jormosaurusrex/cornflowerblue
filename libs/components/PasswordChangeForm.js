@@ -184,7 +184,7 @@ class PasswordChangeForm {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
-    
+
     get authenticationhook() { return this.config.authenticationhook; }
     set authenticationhook(authenticationhook) {
         if (typeof authenticationhook !== 'function') {
