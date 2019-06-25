@@ -1139,7 +1139,7 @@ div.textarea-container {
       font-variant: normal;
       text-transform: none;
       line-height: 1em;
-      content: '\54';
+      content: '\30';
       font-size: 20pt;
       color: var(--input-status-icon-color);
       text-shadow: var(--input-status-icon-text-shadow);
@@ -1150,7 +1150,7 @@ div.textarea-container {
   div.textarea-container div.topcontrol {
     position: absolute;
     right: 0;
-    top: 1.3em;
+    top: .9em;
     z-index: 10;
     transition: all .2s;
     --button-default-color: var(--input-subline-text-color);
@@ -1239,7 +1239,7 @@ div.textarea-container {
     background-color: var(--input-status-valid-background-color);
     text-shadow: var(--input-status-valid-icon-text-shadow);
     color: var(--input-status-valid-icon-color);
-    content: '\54'; }
+    content: '\30'; }
   div.input-container.valid.active div.wrap:after,
   div.textarea-container.valid.active div.wrap:after {
     background-color: var(--input-status-active-background-color);
@@ -2168,22 +2168,12 @@ input[type="radio"] {
   input[type="radio"]:before {
     display: none;
     font-family: "cornflowerblue", serif;
-    font-style: normal;
-    font-weight: normal;
-    speak: none;
-    text-decoration: inherit;
-    width: 1em;
-    margin-right: .2em;
-    text-align: center;
-    font-variant: normal;
-    text-transform: none;
     line-height: 1em;
-    margin-left: .2em;
     content: '\32';
-    font-size: 3em;
+    font-size: 220%;
     position: absolute;
-    top: -.2em;
-    left: -.3em;
+    left: -5%;
+    bottom: -10%;
     color: var(--checkbox-checkmark-text-color);
     text-shadow: var(--checkbox-checkmark-text-shadow); }
   input[type="checkbox"]:checked,
@@ -3365,6 +3355,40 @@ div.progressbar-container {
       border-radius: 1.5em; }
       div.progressbar-container div.simpleprogress.roundcap div.progress {
         border-radius: 1.5em; }
+
+div.pwgenerator {
+  --pwgenerator-background-color: transparent;
+  --pwgenerator-checkbox-size: 2em;
+  --checkbox-size: var(--pwgenerator-checkbox-size);
+  background-color: var(--pwgenerator-background-color);
+  display: flex;
+  flex-direction: column; }
+  div.pwgenerator div.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center; }
+    div.pwgenerator div.controls button.config {
+      padding: .5em;
+      opacity: .5; }
+      div.pwgenerator div.controls button.config:hover {
+        opacity: 1; }
+  div.pwgenerator ul.datasets {
+    margin: 0;
+    padding: .5em 0 .5em 0;
+    list-style-type: none;
+    display: flex; }
+    div.pwgenerator ul.datasets li {
+      font-size: 75%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center; }
+      div.pwgenerator ul.datasets li div.input-container {
+        margin: 0; }
+    div.pwgenerator ul.datasets[aria-hidden=true] {
+      display: none; }
 
 body {
   background-color: var(--grey-darkest);

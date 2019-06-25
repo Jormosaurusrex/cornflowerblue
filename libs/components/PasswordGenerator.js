@@ -23,25 +23,26 @@ class PasswordGenerator {
         }
     }
 
-
+    /**
+     * Get a dataset definition by id
+     * @param id the id of the dataset
+     * @return {*} the dataset definition, or null
+     */
     static getDataSet(id) {
         return PasswordGenerator.DATASETS[id];
     }
 
     /**
      * Generates a random password string.  Takes an array of character objects to include
-     * @param datasets an array of character sets: ['a-z', 'A-Z', '0-9', '#'] (default all)
-     * @param length how long of a password to generate (default 10);
+     * @param datasets an array of dataset identifiers (defaults to all)
+     * @param length how long of a password to generate (default 15);
      * @returns {string}
      */
-    static randomPassword (datasets, length) {
-        if (!length) { length = PasswordGenerator.DEFAULT_CONFIG.length; }
-
-        if ((!datasets) || (datasets.length === 0)) { datasets = PasswordGenerator.DEFAULT_CONFIG.sets; }
+    static randomPassword (datasets = PasswordGenerator.DEFAULT_CONFIG.sets, length = 15) {
 
         let corpus = '';
         for (let ds of datasets) {
-            if (ds in PasswordGenerator.DATASETS) {
+            if (PasswordGenerator.getDataSet(ds)) {
                 corpus += PasswordGenerator.getDataSet(ds).chars;
             }
         }
@@ -61,11 +62,7 @@ class PasswordGenerator {
         this.setactuals = [];
     }
 
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-
     /* ACTION METHODS___________________________________________________________________ */
-
 
     /**
      * Does the actual password generation
@@ -84,7 +81,6 @@ class PasswordGenerator {
 
         let genpw =  PasswordGenerator.randomPassword(sets, this.length);
 
-
         if ((this.autofills) && (this.autofills.length > 0)) {
             let theform;
             for (let af of this.autofills) {
@@ -99,12 +95,16 @@ class PasswordGenerator {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
+    /**
+     * Build the container for the generator
+     */
     buildContainer() {
-
         const me = this;
         this.container = $('<div />').addClass('pwgenerator');
 
-        this.datasetblock = $('<ul />');
+        this.datasetblock = $('<ul />')
+            .addClass('datasets')
+            .attr('aria-hidden', true);
 
         if (this.sets.length > 0) {
             for (let ds of this.sets) {
@@ -113,10 +113,9 @@ class PasswordGenerator {
                     let cb = new BooleanToggle({
                         name: `dset-${set.id}`,
                         id: `${this.id}-${set.id}`,
-                        value: set.set,
+                        value: set.id,
                         label: set.label,
-                        checked: true,
-                        style: 'toggle'
+                        checked: true
                     });
                     this.setactuals.push(cb);
                     this.datasetblock.append($('<li />').append(cb.container));
@@ -126,8 +125,8 @@ class PasswordGenerator {
         }
 
         this.button = new SimpleButton({
-            icon: this.buttonicon,
             text: this.buttontext,
+            naked: true,
             action: function(e) {
                 e.preventDefault();
                 me.generatePassword();
@@ -135,7 +134,26 @@ class PasswordGenerator {
 
         });
 
-        this.container.append(this.datasetblock).append(this.button);
+        this.configbutton = new SimpleButton({
+            icon: 'gear',
+            naked: true,
+            arialabel: 'Configure Generator',
+            classes: ['config'],
+            action: function(e) {
+                e.preventDefault();
+                if (me.datasetblock.attr('aria-hidden')) {
+                    me.datasetblock.removeAttr('aria-hidden');
+                } else {
+                    me.datasetblock.attr('aria-hidden', true);
+                }
+            }
+
+        });
+
+
+        this.container.append(
+            $('<div />').addClass('controls').append(this.button.button).append(this.configbutton.button)
+        ).append(this.datasetblock);
 
     }
 
@@ -154,6 +172,9 @@ class PasswordGenerator {
 
     get button() { return this._button; }
     set button(button) { this._button = button; }
+
+    get configbutton() { return this._configbutton; }
+    set configbutton(configbutton) { this._configbutton = configbutton; }
 
     get buttonicon() { return this.config.buttonicon; }
     set buttonicon(buttonicon) { this.config.buttonicon = buttonicon; }

@@ -52,7 +52,7 @@ div.textarea-container {
       font-variant: normal;
       text-transform: none;
       line-height: 1em;
-      content: '\54'; // circle checkmark
+      content: '\30'; // circle checkmark
       font-size: 20pt;
       color: var(--input-status-icon-color);
       text-shadow: var(--input-status-icon-text-shadow);
@@ -64,7 +64,7 @@ div.textarea-container {
   div.topcontrol {
     position: absolute;
     right: 0;
-    top: 1.3em;
+    top: .9em;
     z-index: 10;
     transition: all .2s;
     --button-default-color: var(--input-subline-text-color);
@@ -161,7 +161,7 @@ div.textarea-container {
         background-color: var(--input-status-valid-background-color);
         text-shadow: var(--input-status-valid-icon-text-shadow);
         color: var(--input-status-valid-icon-color);
-        content: '\54';
+        content: '\30';
       }
     }
     &.active {

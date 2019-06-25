@@ -503,6 +503,9 @@ And drunk the milk of Paradise.</pre>
                     <div class="demobox" id="pwchanger-simple">
                         <h3>Simple</h3>
                         <code class="invoker">new PasswordChangeForm({options});</code>
+                        <p>A <dfn>PasswordChangeForm</dfn> is a self-contained password manipulation form.  It can be passed an array of values that it will reject as acceptable with the <code>cannotbe:</code> parameter and has a hook for checking passwords against external bad password lists (like NIST) using <code>badpasswordhook:</code>.</p>
+
+                        <p>It includes a <code>PasswordGenerator</code> component, which can be used anywhere else.  The generator can be configured by the user to include various sets of characters in the generation.</p>
 
                     </div>
 

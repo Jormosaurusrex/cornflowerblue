@@ -337,9 +337,9 @@ class CornflowerBlueDemo {
 
 
     grindPWChange() {
-        const $target = $('#pwchanger-default');
+        const $target = $('#pwchanger-simple');
         $target.append(new PasswordChangeForm({
-
+            cannotbe: ['password', '']
         }).container);
     }
 

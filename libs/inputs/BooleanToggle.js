@@ -100,7 +100,13 @@ class BooleanToggle {
             .addClass(this.classes.join(' '))
             .addClass(this.style)
             .on('change', function() {
-                $(this).prop('aria-checked', $(this).prop('checked'));
+                if ($(this).prop('checked')) {
+                    $(this).prop('aria-checked', $(this).prop('checked'));
+                } else {
+                    $(this).removeAttr('aria-checked');
+                    $(this).removeAttr('checked');
+                }
+                me.checked = $(this).prop('checked');
 
                 if ((me.onchange) && (typeof me.onchange === 'function')) {
                     me.onchange(me);

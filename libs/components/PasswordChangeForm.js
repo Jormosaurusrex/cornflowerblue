@@ -19,9 +19,7 @@ class PasswordChangeForm {
             pwtwolabel: 'Confirm Password',
             pwtwoplaceholder: null,
             pwtwohelp: null,
-            badpasswordhook: null, // Function used to test the value against an external bad password list, like the one used by NIST.
-            authenticationhook: null, // Function used to re-authenticate against the "current password".  If this isn't present, the current password element will not display or be used in calculation
-
+            badpasswordhook: null // Function used to test the value against an external bad password list, like the one used by NIST.
         };
     }
 
@@ -48,12 +46,19 @@ class PasswordChangeForm {
             this.pwone.showMessages();
             valid = false;
         }
+        if ((this.cannotbe) && (this.cannotbe.length > 0)) {
+            for (let cbs of this.cannotbe) {
+                if (this.pwone.value === cbs) {
+                    this.pwone.errors.push('This cannot be used as a password.');
+                    valid = false;
+                }
+            }
+        }
         if ((valid) && (this.badpasswordhook) && (typeof this.badpasswordhook === 'function')) {
             valid = this.badpasswordhook(this.pwone);
         }
-        if ((valid) && (this.authenticationhook) && (typeof this.authenticationhook === 'function')) {
-            valid = this.authenticationhook(this.pwone);
-        }
+
+
         if (valid) {
             this.pwone.clearMessages();
         }
@@ -184,14 +189,6 @@ class PasswordChangeForm {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get authenticationhook() { return this.config.authenticationhook; }
-    set authenticationhook(authenticationhook) {
-        if (typeof authenticationhook !== 'function') {
-            console.error("Action provided for authenticationhook is not a function!");
-        }
-        this.config.authenticationhook = authenticationhook;
-    }
 
     get badpasswordhook() { return this.config.badpasswordhook; }
     set badpasswordhook(badpasswordhook) {
