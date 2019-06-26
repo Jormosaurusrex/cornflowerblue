@@ -14,6 +14,7 @@
         <script type="text/javascript" src="libs/buttons/DestructiveButton.js"></script>
         <script type="text/javascript" src="libs/buttons/ButtonMenu.js"></script>
         <script type="text/javascript" src="libs/buttons/HelpButton.js"></script>
+        <script type="text/javascript" src="libs/buttons/SkipButton.js"></script>
         <script type="text/javascript" src="libs/inputs/InputElement.js"></script>
         <script type="text/javascript" src="libs/inputs/TextInput.js"></script>
         <script type="text/javascript" src="libs/inputs/BooleanToggle.js"></script>
@@ -31,6 +32,7 @@
         <script type="text/javascript" src="libs/components/Growler.js"></script>
         <script type="text/javascript" src="libs/components/InstructionBox.js"></script>
         <script type="text/javascript" src="libs/components/MessageBox.js"></script>
+        <script type="text/javascript" src="libs/components/PasswordGenerator.js"></script>
         <script type="text/javascript" src="libs/components/PasswordChangeForm.js"></script>
         <script type="text/javascript" src="libs/components/TabBar.js"></script>
         <script type="text/javascript" src="libs/components/SimpleProgressMeter.js"></script>
@@ -501,6 +503,9 @@ And drunk the milk of Paradise.</pre>
                     <div class="demobox" id="pwchanger-simple">
                         <h3>Simple</h3>
                         <code class="invoker">new PasswordChangeForm({options});</code>
+                        <p>A <dfn>PasswordChangeForm</dfn> is a self-contained password manipulation form.  It can be passed an array of values that it will reject as acceptable with the <code>cannotbe:</code> parameter and has a hook for checking passwords against external bad password lists (like NIST) using <code>badpasswordhook:</code>.</p>
+
+                        <p>It includes a <code>PasswordGenerator</code> component, which can be used anywhere else.  The generator can be configured by the user to include various sets of characters in the generation.</p>
 
                     </div>
 
