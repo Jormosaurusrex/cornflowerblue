@@ -34,11 +34,10 @@ class IconFactory {
             return icon;
         }
         let $i = $('<span />')
-            .addClass('icon')
-            .addClass("cfb-" + icon);
+            .addClass('icon');
 
         if (Array.isArray(icon)) {
-            $.i.addClass(icon.join(' '));
+            $i.addClass(icon.join(' '));
         } else {
             $i.addClass(icon);
         }
