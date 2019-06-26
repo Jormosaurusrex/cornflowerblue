@@ -88,7 +88,7 @@ class MessageBox {
 
         let $lbox = $('<div />').addClass('lbox');
 
-        if (icon) { $lbox.append(IconFactory.makeIcon(icon)); }
+        if (icon) { $lbox.append(IconFactory.icon(icon)); }
 
 
         let $list = $('<ul />');

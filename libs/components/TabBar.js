@@ -84,7 +84,7 @@ class TabBar {
             }
 
             if (tabdef.icon) {
-                $icon = IconFactory.makeIcon(tabdef.icon);
+                $icon = IconFactory.icon(tabdef.icon);
             }
             if (tabdef.label) {
                 $linktext = $('<span />').html(tabdef.label);

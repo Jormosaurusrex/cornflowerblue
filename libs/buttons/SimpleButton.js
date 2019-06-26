@@ -71,14 +71,14 @@ class SimpleButton {
             if (this.shape === 'hexagon') {
                 this.button = $('<button />');
                 if (this.icon) {
-                    this.button.append($('<span />').append(IconFactory.makeIcon(this.icon, this.text)));
+                    this.button.append($('<span />').append(IconFactory.icon(this.icon, this.text)));
                 } else if (this.text) {
                     this.button.append(this.textobj);
                 }
             } else {
                 this.button = $('<button />');
                 if (this.icon) {
-                    this.button.append(IconFactory.makeIcon(this.icon, this.text));
+                    this.button.append(IconFactory.icon(this.icon, this.text));
                 } else if (this.text) {
                     this.button.html(this.textobj);
                 }
@@ -88,10 +88,10 @@ class SimpleButton {
             this.button = $('<button />');
             let $icon, $secondicon;
             if (this.icon) {
-                $icon = IconFactory.makeIcon(this.icon);
+                $icon = IconFactory.icon(this.icon);
             }
             if (this.secondicon) {
-                $secondicon = IconFactory.makeIcon(this.secondicon).addClass('secondicon');
+                $secondicon = IconFactory.icon(this.secondicon).addClass('secondicon');
             }
 
             if ((this.iconside) && (this.iconside === 'right')) {

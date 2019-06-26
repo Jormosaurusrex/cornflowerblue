@@ -183,7 +183,7 @@ class Growler {
             let $tbox = $('<div />').addClass('title');
 
             if ((this.icon) && (!this.text)) {
-                $tbox.append(IconFactory.makeIcon(this.icon).addClass('i'));
+                $tbox.append(IconFactory.icon(this.icon).addClass('i'));
             }
             $tbox.append($('<div />').addClass('t').html(this.title))
                 .append(this.closebutton.button);
@@ -193,7 +193,7 @@ class Growler {
         if (this.text) {
             let $payload = $('<div />').addClass('payload');
             if (this.icon) {
-                $payload.append(IconFactory.makeIcon(this.icon).addClass('i'));
+                $payload.append(IconFactory.icon(this.icon).addClass('i'));
             }
             $payload.append(
                 $('<div />')
