@@ -32,7 +32,7 @@ class InstructionBox {
             .data('self', this)
             .addClass(this.classes.join(' '));
         if (this.icon) {
-            this.container.append(IconFactory.makeIcon(this.icon));
+            this.container.append(IconFactory.icon(this.icon));
         }
         if ((this.instructions) && (this.instructions.length > 0)) {
             this.setInstructions(this.instructions);

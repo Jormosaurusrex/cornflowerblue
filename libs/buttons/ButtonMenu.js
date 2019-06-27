@@ -73,7 +73,7 @@ class ButtonMenu extends SimpleButton {
             let $anchor = $('<a />');
 
             if (item.icon) {
-                $anchor.append(IconFactory.makeIcon(item.icon));
+                $anchor.append(IconFactory.icon(item.icon));
             }
             $anchor
                 .append($('<span />').html(item.label))

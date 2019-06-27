@@ -69,7 +69,7 @@ class HelpButton extends SimpleButton {
             .attr('id', this.id);
 
         if (this.tipicon) {
-            this.tooltip.append(IconFactory.makeIcon(this.tipicon).addClass('tipicon'));
+            this.tooltip.append(IconFactory.icon(this.tipicon).addClass('tipicon'));
         }
 
         this.helptext = $('<div />')
