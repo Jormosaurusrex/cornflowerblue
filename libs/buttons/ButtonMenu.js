@@ -4,16 +4,16 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            focusin: function(e, self) { self.open(); },
-            focusout: function(e, self) { self.close(); },
+            focusin: function(e, self) { self.open(); },    //
+            focusout: function(e, self) { self.close(); },  //
             secondicon: 'triangle-down', // this is passed up as a secondicon
-            items: [] // list of menuitems
-            // {
-            //    label: "Menu Text", // text
-            //    tooltip: null, // Tooltip text
-            //    icon: null, // Icon to use, if any
-            //    action: function() { } // what to do when the tab is clicked.
-            // }
+            items: [] // list of menu item definitions
+                    // {
+                    //    label: "Menu Text", // text
+                    //    tooltip: null, // Tooltip text
+                    //    icon: null, // Icon to use, if any
+                    //    action: function() { } // what to do when the tab is clicked.
+                    // }
         };
     }
 
@@ -41,7 +41,7 @@ class ButtonMenu extends SimpleButton {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
-     * Open the menu
+     * Opens the menu
      */
     open() {
         if (this.isopen) { return; }
@@ -50,7 +50,7 @@ class ButtonMenu extends SimpleButton {
     }
 
     /**
-     * Close the button
+     * Closes the button
      */
     close() {
         this.button.removeAttr('aria-expanded');

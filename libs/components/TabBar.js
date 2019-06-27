@@ -8,6 +8,7 @@ class TabBar {
             navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
             arialabel: 'Primary', // the aria label to use if this is a navigation
             vertical: false, // Vertical or horizontal
+            animation: 'popin', // Set to null to disable animations
             tabs: [], // An array of tab definitions
             // {
             //    label: "Tab Text", // text, optional if given an icon
@@ -73,6 +74,7 @@ class TabBar {
         if (this.vertical) {
             this.list.addClass('vertical');
         }
+        let order = 0;
 
         for (let tabdef of this.tabs) {
             let $icon,
@@ -125,13 +127,18 @@ class TabBar {
                 .attr('role', 'presentation')
                 .append($link);
 
+            if (this.animation) {
+                this.tabmap[tabdef.id]
+                    .css('--anim-order', `${order++}`) // used in animations
+                    .addClass(this.animation)
+            }
+
             this.list.append(this.tabmap[tabdef.id]);
 
             if (this.navigation) {
                 this.container = $('<nav />')
                     .attr('role', 'navigation')
                     .attr('aria-label', this.arialabel);
-
             } else {
                 this.container = $('<div />');
             }
@@ -159,6 +166,9 @@ class TabBar {
 
     get action() { return this.config.action; }
     set action(action) { this.config.action = action; }
+
+    get animation() { return this.config.animation; }
+    set animation(animation) { this.config.animation = animation; }
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }

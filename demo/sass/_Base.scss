@@ -144,14 +144,18 @@ div.wiki {
   }
 }
 
+article {
+  animation-name: fadein;
+  animation-duration: 250ms;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  &[aria-hidden=true] {
+    display: none;
+  }
+}
+
 body.modalopen {
   div.container {
     filter: blur(3px);
   }
-}
-
-@-webkit-keyframes blurify {
-  0% { filter: blur(1px); }
-  50% { filter: blur(2px); }
-  100% { filter: blur(3px); }
 }

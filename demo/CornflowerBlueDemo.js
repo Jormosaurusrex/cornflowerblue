@@ -184,6 +184,8 @@ class CornflowerBlueDemo {
 
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
+        } else {
+            this.switchTab('intro');
         }
     }
 
@@ -192,13 +194,9 @@ class CornflowerBlueDemo {
      * @param tab
      */
     switchTab(tab) {
-        $('article')
-            .attr('aria-hiddden', true)
-            .css('display', 'none');
+        $('article').attr('aria-hiddden', true);
 
-        $(`#t-${tab}`)
-            .css('display', 'block')
-            .attr('aria-hidden', false);
+        $(`#t-${tab}`).attr('aria-hidden', false);
 
         this.navigation.select(tab);
 
