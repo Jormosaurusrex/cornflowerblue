@@ -2808,6 +2808,58 @@ div.spinner.bounce {
   div.spinner.bounce:after {
     animation-delay: -1.0s; }
 
+div.panel {
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-secondary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+  position: fixed;
+  z-index: 1000;
+  max-width: var(--panel-max-width);
+  border-radius: var(--panel-border-radius);
+  transition: all .2s ease-in-out;
+  box-shadow: var(--panel-text-shadow);
+  color: var(--panel-text-color);
+  background-color: var(--panel-background-color);
+  margin: 0 auto 1em auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch; }
+  div.panel button.closebutton {
+    margin-right: .5em;
+    margin-left: auto;
+    position: relative;
+    left: auto;
+    top: auto; }
+  div.panel.top-left {
+    top: 1em;
+    left: 1em; }
+  div.panel.top-right {
+    top: 1em;
+    right: 1em; }
+  div.panel.bottom-left {
+    bottom: 1em;
+    left: 1em; }
+  div.panel.bottom-right {
+    bottom: 1em;
+    right: 1em; }
+  div.panel.top-center {
+    top: 1em;
+    right: 1em;
+    left: 1em;
+    margin-left: auto;
+    margin-right: auto; }
+  div.panel.bottom-center {
+    bottom: 1em;
+    right: 1em;
+    left: 1em;
+    margin-left: auto;
+    margin-right: auto; }
+
 div.growlbox {
   z-index: 50000;
   position: fixed;

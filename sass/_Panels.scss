@@ -1,0 +1,62 @@
+div.panel {
+
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-secondary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+
+  position: fixed;
+  z-index: 1000;
+  max-width: var(--panel-max-width);
+  border-radius: var(--panel-border-radius);
+  transition: all .2s ease-in-out;
+  box-shadow: var(--panel-text-shadow);
+  color: var(--panel-text-color);
+  background-color: var(--panel-background-color);
+  margin: 0 auto 1em auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+
+  button.closebutton {
+    margin-right: .5em;
+    margin-left: auto;
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+  &.top-left {
+    top: 1em;
+    left: 1em;
+  }
+  &.top-right {
+    top: 1em;
+    right: 1em;
+  }
+  &.bottom-left {
+    bottom: 1em;
+    left: 1em;
+  }
+  &.bottom-right {
+    bottom: 1em;
+    right: 1em;
+  }
+  &.top-center {
+    top: 1em;
+    right: 1em;
+    left: 1em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &.bottom-center {
+    bottom: 1em;
+    right: 1em;
+    left: 1em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

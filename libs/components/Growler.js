@@ -131,6 +131,7 @@ class Growler {
         setTimeout(function() {
             me.growler.remove()
         }, 2501);
+
         if ((me.onclose) && (typeof me.onclose === 'function')) {
             me.onclose(me);
         }

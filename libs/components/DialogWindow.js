@@ -29,7 +29,6 @@ class DialogWindow {
         }
 
         this.build();
-        return this;
     }
 
     /**
