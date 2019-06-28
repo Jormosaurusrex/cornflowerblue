@@ -20,7 +20,7 @@ html {
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
   ::selection {
     background-color: var(--highlight-color);
     color: var(--hot-text-color);

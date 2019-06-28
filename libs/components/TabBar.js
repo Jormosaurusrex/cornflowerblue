@@ -130,7 +130,7 @@ class TabBar {
             if (this.animation) {
                 this.tabmap[tabdef.id]
                     .css('--anim-order', `${order++}`) // used in animations
-                    .addClass(this.animation)
+                    .addClass(this.animation);
             }
 
             this.list.append(this.tabmap[tabdef.id]);

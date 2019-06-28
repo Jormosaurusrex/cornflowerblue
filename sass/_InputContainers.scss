@@ -87,13 +87,14 @@ div.textarea-container {
   }
   ul.messagebox {
     transition: all .2s;
-    display: none;
     font-size: 90%;
     margin: 0;
+    height: auto;
     padding: .5em 1em .5em 2em;
     background-color: var(--input-messages-background-color);
-    &.shown {
-      display: block;
+    &[aria-hidden=true] {
+      height: 0;
+      max-height: 0;
     }
     li {
       margin: .5em 0 .5em 0;

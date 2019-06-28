@@ -226,6 +226,7 @@ class CornflowerBlueDemo {
             vertical: true,
             classes: ['demo'],
             navigation: true,
+            animation: null,
             tabs: [
                 { label: 'Intro', id: 'intro' },
                 { label: 'cornflowerblue', id: 'wiki' },

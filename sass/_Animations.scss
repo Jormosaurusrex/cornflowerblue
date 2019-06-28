@@ -1,34 +1,39 @@
-@keyframes localspin {
+@keyframes cfb-localspin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes cfb-spinner-bounce {
+  0%, 100% { transform: scale(0.0); }
+  50% { transform: scale(1.0); }
+}
+@keyframes cfb-spinner-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.shake {
-  animation: shake .7s;
-}
-
-@keyframes shake {
+@keyframes cfb-shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
   20%, 40%, 60%, 80% { transform: translateX(10px); }
 }
 
-@keyframes fadein {
+@keyframes cfb-fadein {
   0% { opacity:0; }
   100% { opacity:1; }
 }
 
-@keyframes fadeout {
+@keyframes cfb-fadeout {
   0% { opacity:1; }
   100% { opacity:0; }
 }
 
-@keyframes fadein-delay-half {
+@keyframes cfb-fadein-delay-half {
   0% { opacity:0; }
   50% { opacity: 0; }
   100% { opacity:1; }
 }
-@keyframes popin {
+
+@keyframes cfb-popin {
   0% {
     opacity: 0;
     transform: scale(0.5) translateY(-8px);
@@ -37,17 +42,62 @@
     opacity: 1;
   }
 }
-.popin {
-  --anim-order: 1;
-  animation-name: popin;
+@keyframes cfb-popout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-8px);
+  }
+}
+
+@keyframes cfb-blurify {
+  0% { filter: blur(1px); }
+  50% { filter: blur(2px); }
+  100% { filter: blur(3px); }
+}
+
+@keyframes cfb-dropin {
+  0% {
+    transform: scale(4);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cfb-pushup {
+  0% {
+    transform: scale(.5);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.shake {
+  animation: cfb-shake .7s;
+}
+.popin,
+.popout {
+  --anim-order: 0;
   animation-duration: 250ms;
   animation-delay: calc(var(--anim-order) * 100ms);
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
+  &.fast {
+    animation-duration: 75ms;
+  }
+}
+.popin {
+  animation-name: cfb-popin;
 }
 
-@keyframes blurify {
-  0% { filter: blur(1px); }
-  50% { filter: blur(2px); }
-  100% { filter: blur(3px); }
+.popin {
+  animation-name: cfb-popin;
 }

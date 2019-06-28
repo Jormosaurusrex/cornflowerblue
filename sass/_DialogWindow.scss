@@ -1,7 +1,6 @@
 body.modalopen {
   height: 100vh;
   overflow-y: hidden;
-  padding-right: 15px; /* Avoid width reflow */
 }
 div.window-container {
   width: 100vw;
@@ -38,8 +37,10 @@ div.window-container {
     align-items: stretch;
     align-content: flex-start;
     transition: all 0.2s;
-    animation-duration: .1s;
-    animation-name: panelFadeIn;
+
+    animation-duration: .2s;
+    animation-name: cfb-pushup;
+
     h2 {
       background-color: var(--dialog-header-background-color);
       color: var(--dialog-header-text-color);
@@ -124,25 +125,4 @@ div.window-mask {
   right: 0;
   bottom: 0;
   z-index: 2000;
-}
-
-@keyframes dialogEntry {
-  0% {
-    transform: scale(4);
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes windowMaskEntry {
-  0% { opacity: 0; }
-  100% { opacity: var(--dialog-window-mask-opacity); }
-}
-
-@keyframes panelFadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
 }

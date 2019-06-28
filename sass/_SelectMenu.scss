@@ -47,6 +47,7 @@ div.select-container {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      transition: all .2s;
       color: var(--input-default-placeholder-color);
     }
     &:focus {
@@ -102,14 +103,16 @@ div.select-container {
     flex-wrap: nowrap;
     background-color: var(--selectmenu-menu-background-color);
     border: .1em solid var(--input-default-border-color);
+    border-top: none;
     padding: 0;
     overflow: auto;
     max-height: 10em;
     z-index: 201;
     position: absolute;
-    margin: -.1em 0 0 0;
+    margin: 0;
     box-shadow: var(--panel-shadow-light);
     width: 100%;
+    transition: all .2s;
     li {
       display: flex;
       flex-direction: row;
@@ -162,11 +165,16 @@ div.select-container {
       }
     }
     &.vert {
-      bottom: 2.4em;
+      bottom: 3.4em;
       box-shadow: var(--panel-shadow-light-inverse);
+      border-top: .1em solid var(--input-default-border-color);
+      border-bottom: none;
     }
     &[aria-hidden='true'] {
-      display: none;
+      height: 0;
+      max-height: 0;
+      box-shadow: none;
+      border: none;
     }
   }
   &.mute {

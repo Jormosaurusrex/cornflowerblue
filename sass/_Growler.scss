@@ -153,7 +153,7 @@ div.growlbox {
     }
   }
   &.showing {
-    animation: fadein .5s;
+    animation: cfb-fadein .5s;
     opacity: 1;
   }
 }

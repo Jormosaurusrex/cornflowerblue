@@ -61,19 +61,20 @@ class SelectMenu extends InputElement {
     open() {
         const me = this;
 
+
+        this.optionlist.removeAttr('aria-hidden');
+        this.triggerbox.removeAttr('aria-expanded');
+
         let vertpos;
 
-        this.optionlist.attr('aria-hidden', false);
-        this.triggerbox.attr('aria-expanded', true);
-
         if (this.container) {
-            vertpos = (this.container.offset().top - $(window).scrollTop);
+            vertpos = (this.container.offset().top - $(window).scrollTop());
         } else {
-            vertpos = (this.optionlist.offset().top - $(window).scrollTop);
+            vertpos = (this.optionlist.offset().top - $(window).scrollTop());
         }
 
         let bodyheight = $('body').height();
-        let menuheight = this.optionlist.height();
+        let menuheight = Utils.getSingleEmInPixels() * 10;
 
         if ((vertpos + menuheight) > bodyheight) {
             this.optionlist.addClass('vert');
@@ -83,13 +84,15 @@ class SelectMenu extends InputElement {
             if (this.container) { this.container.removeClass('vert'); }
         }
 
-        if (this.selected) {
-            this.scrollto(this.optionlist.find('li.selected'));
-            this.optionlist.find('li.selected').focus();
-        } else {
-            this.scrollto(this.optionlist.find('li:first-child'));
-            this.optionlist.find('li:first-child').focus();
-        }
+        setTimeout(function() {
+            if (me.selected) {
+                me.scrollto(me.optionlist.find('li.selected'));
+                me.optionlist.find('li.selected').focus();
+            } else {
+                me.scrollto(me.optionlist.find('li:first-child'));
+                me.optionlist.find('li:first-child').focus();
+            }
+        }, 100);
 
         $(document).one('click', function closeMenu(e) {
             if (me.container.has(e.target).length === 0) {
@@ -105,13 +108,15 @@ class SelectMenu extends InputElement {
      */
     close() {
         this.optionlist.attr('aria-hidden', true);
-        this.triggerbox.attr('aria-expanded', false);
+        this.triggerbox.removeAttr('aria-expanded');
+        this.searchkeys = [];
+        this.updateSearch();
     }
 
     disable() {
         this.optionlist.find('input:radio').attr('disabled',true);
         this.triggerbox.prop('disabled', true);
-        this.triggerbox.attr('aria-expanded', false);
+        this.triggerbox.removeAttr('aria-expanded');
         this.disabled = true;
         if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
         if (this.container) { this.container.addClass('disabled'); }
@@ -133,7 +138,7 @@ class SelectMenu extends InputElement {
 
     activate() {
         this.container.removeClass('passive');
-        this.optionlist.attr('aria-hidden', false);
+        this.optionlist.removeAttr('aria-hidden');
         this.passive = false;
     }
 
@@ -272,6 +277,11 @@ class SelectMenu extends InputElement {
                     $op.trigger('click');
                 } else if (e.keyCode === 8) { // Backspace
                     me.rmSearchKey();
+                } else if ((e.keyCode === 17) // ctrl
+                    || (e.keyCode === 18) // alt
+                    || (e.keyCode === 91) // command
+                ) {
+                    // do nothing, ignore
                 } else { // Anything else
                     me.runKeySearch(e.key);
                 }
@@ -403,6 +413,7 @@ class SelectMenu extends InputElement {
         if (!this._searchkeys) { this._searchkeys = []; }
         return this._searchkeys;
     }
+    set searchkeys(searchkeys) { this._searchkeys = searchkeys; }
 
     get searchtext() { return this.config.searchtext; }
     set searchtext(searchtext) { this.config.searchtext = searchtext; }

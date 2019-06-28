@@ -1511,8 +1511,8 @@ div.window-container {
     align-items: stretch;
     align-content: flex-start;
     transition: all 0.5s;
-    animation-duration: .2s;
-    animation-name: dialogEntry; }
+    cfb-duration: .2s;
+    cfb-name: dialogEntry; }
     div.window-container div.dialog h2 {
       background-color: var(--dialog-header-background-color);
       color: var(--dialog-header-text-color);

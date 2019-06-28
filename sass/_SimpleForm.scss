@@ -18,7 +18,7 @@ div.shade {
     font-size: 100pt;
     text-shadow: var(--form-shade-icon-shadow);
     margin-top:-1em;
-    animation: localspin 2s linear infinite;
+    animation: cfb-localspin 2s linear infinite;
     &:before {
       line-height: normal;
     }
@@ -146,7 +146,7 @@ div.spinner.spin {
   margin: 1em 0 1em 0;
   border: .75em solid var(--form-shade-spinner-downcolor);
   border-top-color: var(--form-shade-spinner-color);
-  animation: spinner-spin 1.1s infinite linear;
+  animation: cfb-localspin 1.1s infinite linear;
 }
 
 div.spinner.bounce {
@@ -166,31 +166,10 @@ div.spinner.bounce {
     position: absolute;
     top: 0;
     left: 0;
-    animation: spinner-bounce 2.0s infinite ease-in-out;
+    animation: cfb-spinner-bounce 2.0s infinite ease-in-out;
   }
   &:after {
     animation-delay: -1.0s;
   }
 }
 
-@keyframes spinner-bounce {
-  0%, 100% {
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 50% {
-      transform: scale(1.0);
-      -webkit-transform: scale(1.0);
-    }
-}
-
-
-@keyframes spinner-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}

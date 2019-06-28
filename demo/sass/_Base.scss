@@ -49,6 +49,7 @@ div#container {
   div#codebox {
     flex-grow: 0;
     padding: 3em 1em 0 1em;
+    position: relative;
     background-color: var(--canvas-color-secondary);
     width: 25em;
     max-width: 25em;
@@ -56,6 +57,9 @@ div#container {
     font-size: 80%;
     div.fixbox {
       position: fixed;
+      width: 23em;
+      max-width: 23em;
+      min-width: 23em;
       div.config {
         padding: .5em;
         overflow: auto;
@@ -145,7 +149,7 @@ div.wiki {
 }
 
 article {
-  animation-name: fadein;
+  animation-name: cfb-fadein;
   animation-duration: 250ms;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;

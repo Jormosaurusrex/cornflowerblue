@@ -385,59 +385,98 @@
   --tooltip-text-shadow: var(--text-shadow);
   --tooltip-box-shadow: var(--panel-shadow); }
 
-@keyframes localspin {
+@keyframes cfb-localspin {
   0% {
     transform: rotate(0deg); }
   100% {
     transform: rotate(360deg); } }
-.shake {
-  animation: shake .7s; }
-
-@keyframes shake {
+@keyframes cfb-spinner-bounce {
+  0%, 100% {
+    transform: scale(0); }
+  50% {
+    transform: scale(1); } }
+@keyframes cfb-spinner-spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+@keyframes cfb-shake {
   0%, 100% {
     transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% {
     transform: translateX(-10px); }
   20%, 40%, 60%, 80% {
     transform: translateX(10px); } }
-@keyframes fadein {
+@keyframes cfb-fadein {
   0% {
     opacity: 0; }
   100% {
     opacity: 1; } }
-@keyframes fadeout {
+@keyframes cfb-fadeout {
   0% {
     opacity: 1; }
   100% {
     opacity: 0; } }
-@keyframes fadein-delay-half {
+@keyframes cfb-fadein-delay-half {
   0% {
     opacity: 0; }
   50% {
     opacity: 0; }
   100% {
     opacity: 1; } }
-@keyframes popin {
+@keyframes cfb-popin {
   0% {
     opacity: 0;
     transform: scale(0.5) translateY(-8px); }
   100% {
     opacity: 1; } }
-.popin {
-  --anim-order: 1;
-  animation-name: popin;
-  animation-duration: 250ms;
-  animation-delay: calc(var(--anim-order) * 100ms);
-  animation-fill-mode: both;
-  animation-timing-function: ease-in-out; }
-
-@keyframes blurify {
+@keyframes cfb-popout {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-8px); } }
+@keyframes cfb-blurify {
   0% {
     filter: blur(1px); }
   50% {
     filter: blur(2px); }
   100% {
     filter: blur(3px); } }
+@keyframes cfb-dropin {
+  0% {
+    transform: scale(4);
+    opacity: 0; }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+@keyframes cfb-pushup {
+  0% {
+    transform: scale(0.5);
+    opacity: 0; }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+.shake {
+  animation: cfb-shake .7s; }
+
+.popin,
+.popout {
+  --anim-order: 0;
+  animation-duration: 250ms;
+  animation-delay: calc(var(--anim-order) * 100ms);
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out; }
+  .popin.fast,
+  .popout.fast {
+    animation-duration: 75ms; }
+
+.popin {
+  animation-name: cfb-popin; }
+
+.popin {
+  animation-name: cfb-popin; }
+
 * {
   padding: 0;
   margin: 0;
@@ -458,7 +497,7 @@ html {
 
 html,
 body {
-  height: 100%; }
+  height: 100vh; }
   html ::selection,
   body ::selection {
     background-color: var(--highlight-color);
@@ -1199,14 +1238,15 @@ div.textarea-container {
   div.input-container ul.messagebox,
   div.textarea-container ul.messagebox {
     transition: all .2s;
-    display: none;
     font-size: 90%;
     margin: 0;
+    height: auto;
     padding: .5em 1em .5em 2em;
     background-color: var(--input-messages-background-color); }
-    div.input-container ul.messagebox.shown,
-    div.textarea-container ul.messagebox.shown {
-      display: block; }
+    div.input-container ul.messagebox[aria-hidden=true],
+    div.textarea-container ul.messagebox[aria-hidden=true] {
+      height: 0;
+      max-height: 0; }
     div.input-container ul.messagebox li,
     div.textarea-container ul.messagebox li {
       margin: .5em 0 .5em 0; }
@@ -1633,6 +1673,7 @@ div.select-container {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      transition: all .2s;
       color: var(--input-default-placeholder-color); }
     div.select-container div.trigger:focus {
       border-color: var(--input-focused-border-color);
@@ -1674,14 +1715,16 @@ div.select-container {
     flex-wrap: nowrap;
     background-color: var(--selectmenu-menu-background-color);
     border: 0.1em solid var(--input-default-border-color);
+    border-top: none;
     padding: 0;
     overflow: auto;
     max-height: 10em;
     z-index: 201;
     position: absolute;
-    margin: -.1em 0 0 0;
+    margin: 0;
     box-shadow: var(--panel-shadow-light);
-    width: 100%; }
+    width: 100%;
+    transition: all .2s; }
     div.select-container ul.selectmenu li {
       display: flex;
       flex-direction: row;
@@ -1719,10 +1762,15 @@ div.select-container {
         div.select-container ul.selectmenu li:hover.selected label:before, div.select-container ul.selectmenu li:focus.selected label:before {
           color: var(--selectmenu-menu-item-hover-text-color); }
     div.select-container ul.selectmenu.vert {
-      bottom: 2.4em;
-      box-shadow: var(--panel-shadow-light-inverse); }
+      bottom: 3.4em;
+      box-shadow: var(--panel-shadow-light-inverse);
+      border-top: 0.1em solid var(--input-default-border-color);
+      border-bottom: none; }
     div.select-container ul.selectmenu[aria-hidden='true'] {
-      display: none; }
+      height: 0;
+      max-height: 0;
+      box-shadow: none;
+      border: none; }
   div.select-container.mute label {
     opacity: 1; }
   div.select-container.disabled div.trigger:before {
@@ -1959,7 +2007,7 @@ button {
       margin: 0; }
     button.help[aria-expanded='true'] div.tooltip, button.help.stayopen div.tooltip {
       display: flex;
-      animation: fadein-delay-half .2s; }
+      animation: cfb-fadein-delay-half .2s; }
     button.help.stayopen div.tooltip button.closebutton {
       display: inline-block; }
   button.closebutton {
@@ -2110,7 +2158,8 @@ button {
     box-shadow: none;
     background-image: none;
     height: auto;
-    width: auto; }
+    width: auto;
+    transition: brightness .5s; }
     button.naked:hover, button.naked.hover, button.naked:focus, button.naked.focus, button.naked:active, button.naked.active, button.link:hover, button.link.hover, button.link:focus, button.link.focus, button.link:active, button.link.active {
       background-color: transparent;
       background-image: none;
@@ -2633,7 +2682,7 @@ div.shade {
     font-size: 100pt;
     text-shadow: var(--form-shade-icon-shadow);
     margin-top: -1em;
-    animation: localspin 2s linear infinite; }
+    animation: cfb-localspin 2s linear infinite; }
     div.shade span.icon:before {
       line-height: normal; }
   div.shade div.spinnertext {
@@ -2737,7 +2786,7 @@ div.spinner.spin {
   margin: 1em 0 1em 0;
   border: 0.75em solid var(--form-shade-spinner-downcolor);
   border-top-color: var(--form-shade-spinner-color);
-  animation: spinner-spin 1.1s infinite linear; }
+  animation: cfb-localspin 1.1s infinite linear; }
 
 div.spinner.bounce {
   width: 4em;
@@ -2755,24 +2804,10 @@ div.spinner.bounce {
     position: absolute;
     top: 0;
     left: 0;
-    animation: spinner-bounce 2.0s infinite ease-in-out; }
+    animation: cfb-spinner-bounce 2.0s infinite ease-in-out; }
   div.spinner.bounce:after {
     animation-delay: -1.0s; }
 
-@keyframes spinner-bounce {
-  0%, 100% {
-    transform: scale(0);
-    -webkit-transform: scale(0); }
-  50% {
-    transform: scale(1);
-    -webkit-transform: scale(1); } }
-@keyframes spinner-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
 div.growlbox {
   z-index: 50000;
   position: fixed;
@@ -2899,7 +2934,7 @@ div.growlbox {
     .growler.success div.payload {
       background-image: var(--success-stripes); }
   .growler.showing {
-    animation: fadein .5s;
+    animation: cfb-fadein .5s;
     opacity: 1; }
 
 div.instructions {
@@ -3024,9 +3059,7 @@ div.messagebox {
 
 body.modalopen {
   height: 100vh;
-  overflow-y: hidden;
-  padding-right: 15px;
-  /* Avoid width reflow */ }
+  overflow-y: hidden; }
 
 div.window-container {
   width: 100vw;
@@ -3063,8 +3096,8 @@ div.window-container {
     align-items: stretch;
     align-content: flex-start;
     transition: all 0.2s;
-    animation-duration: .1s;
-    animation-name: panelFadeIn; }
+    animation-duration: .2s;
+    animation-name: cfb-pushup; }
     div.window-container div.dialog h2 {
       background-color: var(--dialog-header-background-color);
       color: var(--dialog-header-text-color);
@@ -3131,23 +3164,6 @@ div.window-mask {
   bottom: 0;
   z-index: 2000; }
 
-@keyframes dialogEntry {
-  0% {
-    transform: scale(4);
-    opacity: 0; }
-  100% {
-    opacity: 1;
-    transform: scale(1); } }
-@keyframes windowMaskEntry {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: var(--dialog-window-mask-opacity); } }
-@keyframes panelFadeIn {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
 ul.tabbar {
   list-style-type: none;
   display: flex;
@@ -3181,7 +3197,8 @@ ul.tabbar {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      flex-grow: 1; }
+      flex-grow: 1;
+      transition: all .1s linear; }
       ul.tabbar li a[aria-selected="true"] {
         background-color: var(--tabbar-selected-tab-background-color);
         box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
@@ -3455,13 +3472,17 @@ div#container {
   div#container div#codebox {
     flex-grow: 0;
     padding: 3em 1em 0 1em;
+    position: relative;
     background-color: var(--canvas-color-secondary);
     width: 25em;
     max-width: 25em;
     min-width: 25em;
     font-size: 80%; }
     div#container div#codebox div.fixbox {
-      position: fixed; }
+      position: fixed;
+      width: 23em;
+      max-width: 23em;
+      min-width: 23em; }
       div#container div#codebox div.fixbox div.config {
         padding: .5em;
         overflow: auto;
@@ -3527,7 +3548,7 @@ div.wiki div.reflist {
   background-color: var(--canvas-color-secondary); }
 
 article {
-  animation-name: fadein;
+  animation-name: cfb-fadein;
   animation-duration: 250ms;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out; }

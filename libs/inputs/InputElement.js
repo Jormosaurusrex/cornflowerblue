@@ -174,7 +174,7 @@ class InputElement {
         } else if (this.warnings.length > 0) {
             this.container.addClass('warning');
         }
-        this.messagebox.addClass('shown');
+        this.messagebox.removeAttr('aria-hidden');
     }
 
     /**
@@ -183,7 +183,7 @@ class InputElement {
     clearMessages() {
         this.errors = [];
         this.warnings = [];
-        this.messagebox.empty().removeClass('shown');
+        this.messagebox.empty().attr('aria-hidden', true);
         this.container.removeClass('error').removeClass('warning');
     }
 
