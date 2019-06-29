@@ -12,11 +12,9 @@ class FloatingPanel {
             // - 'ghost': similar to 'plain' except that it turns translucent when not in focus or hover
             // - 'invisible: panel behaves as normal but the background is transparent
 
-            closecontrol: true, // show a close control (this removes the panel)
+            closecontrol: true, // show a visibility toggle
+            closeicon: 'triangle-down',
             minimized: false, // Start minimized
-            minimizecontrol: true, // show a minimize, maximize icon
-            minimiziedtitle: null, // Text to show in the panel if the control is minimized to a bar.
-                                    // If not supplied, will use 'title' if also supplied.
             position: 'top-left', // Position for the panel. Valid values:
             // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
             classes: [], //Extra css classes to apply,
@@ -33,8 +31,46 @@ class FloatingPanel {
         if (!this.id) {
             this.id = "panel-" + Utils.getUniqueKey(5);
         }
-        if ((!this.minimizedtitle) && (this.title)) { this.minimizedtitle = this.title; }
     }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Toggle panel minimization
+     */
+    toggleClose() {
+        if (this.minimized) {
+            this.open();
+            return;
+        }
+        this.close();
+    }
+
+    /**
+     * Unminimize the panel
+     */
+    open() {
+        this.container.attr('aria-expanded', true);
+        this.content.removeAttr('aria-hidden');
+        this.minimized = false;
+        if ((this.onopen) && (typeof this.onopen === 'function')) {
+            this.onopen(this);
+        }
+    }
+
+    /**
+     * Minimize the panel
+     */
+    close() {
+        this.container.attr('aria-expanded', false);
+        this.content.attr('aria-hidden', true);
+        this.minimized = true;
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
      * Build the HTML elements of the Floating Panel
@@ -44,75 +80,48 @@ class FloatingPanel {
 
         const me = this;
 
+        this.container = $('<div />')
+            .addClass('panel')
+            .addClass(this.classes.join(' '))
+            .addClass(this.style)
+            .addClass(this.position);
+
         if (this.closecontrol) {
             this.closebutton = new SimpleButton({
-                icon: 'echx',
+                icon: this.closeicon,
                 text: "Close",
                 shape: "square",
                 classes: ["closebutton"],
                 action: function(e) {
                     e.preventDefault();
-                    me.close();
+                    me.toggleClose();
                 }
             });
+            this.container.append(this.closebutton.button);
         }
 
-        if (this.minimizecontrol) {
-            this.minimizebutton = new SimpleButton({
-                icon: "minimize",
-                text: "Minimize",
-                classes: ["minimize"],
-                shape: "square",
-                action: function(e) {
+        if (this.title) {
+            this.titlecontainer = $('<h3 />')
+                .html(this.title)
+                .on('click', function(e) {
                     e.preventDefault();
-                    me.toggleMinimization();
-                }
-            });
+                    me.toggleClose();
+                });
         }
 
-        this.container = $('<div />')
-            .addClass('panel')
-            .addClass(this.style)
-            .addClass(this.position)
-            .append(this.minimizebutton)
-            .append(this.closebutton)
-            .append(this.content);
+        this.contentbox = $('<div />')
+            .addClass('content')
+            .append(this.titlecontainer)
+            .append(this.content.addClass('pcontent'));
+
+        this.container.append(this.contentbox);
 
         if ((Utils.isMobile()) || (this.minimized)) {
-            this.minimize();
+            this.close();
+        } else {
+            this.open();
         }
 
-    }
-
-    /**
-     * Close and remove the panel
-     */
-    close() {
-        this.container.remove();
-    }
-
-    toggleMinimization() {
-        if (this.minimized) {
-            this.maximize();
-            return;
-        }
-        this.minimize();
-    }
-
-    /**
-     * Unminimizes the panel
-     */
-    maximize() {
-        this.container.attr('aria-expanded', true);
-        this.minimized = false;
-    }
-
-    /**
-     * Minimizes the panel
-     */
-    minimize() {
-        this.container.removeAttr('aria-expanded');
-        this.minimized = true;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -134,6 +143,9 @@ class FloatingPanel {
     get closecontrol() { return this.config.closecontrol; }
     set closecontrol(closecontrol) { this.config.closecontrol = closecontrol; }
 
+    get closeicon() { return this.config.closeicon; }
+    set closeicon(closeicon) { this.config.closeicon = closeicon; }
+
     get container() {
         if (!this._container) { this.buildContainer(); }
         return this._container;
@@ -143,20 +155,14 @@ class FloatingPanel {
     get content() { return this.config.content; }
     set content(content) { this.config.content = content; }
 
+    get contentbox() { return this._contentbox; }
+    set contentbox(contentbox) { this._contentbox = contentbox; }
+
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get minimizecontrol() { return this.config.minimizecontrol; }
-    set minimizecontrol(minimizecontrol) { this.config.minimizecontrol = minimizecontrol; }
-
     get minimized() { return this._minimized; }
     set minimized(minimized) { this._minimized = minimized; }
-
-    get minimizebutton() { return this._minimizebutton; }
-    set minimizebutton(minimizebutton) { this._minimizebutton = minimizebutton; }
-
-    get minimizedtitle() { return this.config.minimizedtitle; }
-    set minimizedtitle(minimizedtitle) { this.config.minimizedtitle = minimizedtitle; }
 
     get onclose() { return this.config.onclose; }
     set onclose(onclose) {
@@ -182,5 +188,8 @@ class FloatingPanel {
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
+
+    get titlecontainer() { return this._titlecontainer; }
+    set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }
 
 }

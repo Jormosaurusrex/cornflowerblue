@@ -2815,26 +2815,54 @@ div.panel {
   --panel-box-shadow: var(--panel-shadow);
   --panel-text-color: var(--grey-darkest);
   --panel-text-shadow: var(--text-shadow);
+  --panel-padding: .5em 1em .5em 1em;
   position: fixed;
   z-index: 1000;
   max-width: var(--panel-max-width);
   border-radius: var(--panel-border-radius);
+  box-shadow: var(--panel-box-shadow);
   transition: all .2s ease-in-out;
-  box-shadow: var(--panel-text-shadow);
+  text-shadow: var(--panel-text-shadow);
   color: var(--panel-text-color);
   background-color: var(--panel-background-color);
-  margin: 0 auto 1em auto;
-  padding: 0;
+  margin: 0;
+  padding: var(--panel-padding);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
-  align-items: stretch; }
+  align-items: flex-start;
+  transition: all .2s; }
   div.panel button.closebutton {
-    margin-right: .5em;
-    margin-left: auto;
-    position: relative;
-    left: auto;
-    top: auto; }
+    --button-default-color: var(--panel-text-color);
+    margin: .3em .5em 0 0;
+    width: 1em;
+    height: 1em; }
+    div.panel button.closebutton:hover, div.panel button.closebutton:focus, div.panel button.closebutton:active {
+      color: var(--panel-text-color);
+      opacity: 1; }
+  div.panel div.content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch; }
+    div.panel div.content h3 {
+      margin: 0 0 .5em 0;
+      cursor: pointer;
+      border-bottom: 0.1em var(--panel-text-color);
+      text-transform: unset; }
+  div.panel[aria-expanded=false] button.closebutton {
+    transform: rotate(-90deg); }
+  div.panel[aria-expanded=false] div.content h3 {
+    margin: 0; }
+  div.panel[aria-expanded=false] div.content .pcontent {
+    display: none; }
+  div.panel.ghost {
+    opacity: .5; }
+    div.panel.ghost:hover, div.panel.ghost:focus, div.panel.ghost:focus-within {
+      opacity: 1; }
+  div.panel.invisible {
+    background-color: transparent;
+    box-shadow: none; }
   div.panel.top-left {
     top: 1em;
     left: 1em; }
