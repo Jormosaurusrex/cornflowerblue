@@ -36,6 +36,9 @@ class DialogWindow {
      */
     open() {
         const me = this;
+
+        this.prevfocus = $(':focus');
+
         this.mask = $('<div />')
             .addClass('window-mask')
             .addClass(this.classes.join(' '))
@@ -51,7 +54,10 @@ class DialogWindow {
             .append(this.mask)
             .append(this.container)
             .addClass('modalopen');
-        return this;
+
+        setTimeout(function() {
+            me.contentbox.find('*').filter('[tabindex=0]').eq(0).focus(); // Set focus
+        }, 100);
     }
 
     /**
@@ -65,6 +71,7 @@ class DialogWindow {
             me.mask.animate({ opacity: 0 }, 50, function() {
                 me.mask.remove();
                 $(document).bind("keyup.DialogWindow"); // get rid of our keyup
+                me.prevfocus.focus();
             });
         });
         $('body').removeClass('modalopen');
@@ -184,6 +191,9 @@ class DialogWindow {
 
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }
+
+    get prevfocus() { return this._prevfocus; }
+    set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
 
     get showclose() { return this.config.showclose; }
     set showclose(showclose) { this.config.showclose = showclose; }
