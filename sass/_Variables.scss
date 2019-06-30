@@ -29,33 +29,43 @@
   --black: #000;
 
   // Half opacity colors
+  --white-threequarter: rgba(255, 255, 255, 0.75); // #fff
   --white-half: rgba(255, 255, 255, 0.5); // #fff
   --white-quarter: rgba(255, 255, 255, 0.25); // #fff
   --white-translucent: rgba(255, 255, 255, 0.1); // #fff
+  --grey-threequarter: rgba(153, 153, 153, 0.75); // #999
   --grey-half: rgba(153, 153, 153, 0.5); // #999
   --grey-quarter: rgba(153, 153, 153, 0.25); // #999
   --grey-translucent: rgba(153, 153, 153, 0.1); // #999
+  --black-threequarter: rgba(0, 0, 0, 0.75); // #000
   --black-half: rgba(0, 0, 0, 0.5); // #000
   --black-quarter: rgba(0, 0, 0, 0.25); // #000
   --black-translucent: rgba(0, 0, 0, 0.1); // #000
+  --blue-threequarter: rgba(100, 149, 237, 0.75); // #6495ED
   --blue-half: rgba(100, 149, 237, 0.5); // #6495ED
   --blue-quarter: rgba(100, 149, 237, 0.25); // #6495ED
   --blue-translucent: rgba(100, 149, 237, 0.1); // #6495ED
+  --darkblue-threequarter: rgba(0, 84, 166, 0.75); // #0054a6
   --darkblue-half: rgba(0, 84, 166, 0.5); // #0054a6
   --darkblue-quarter: rgba(0, 84, 166, 0.25); // #0054a6
   --darkblue-translucent: rgba(0, 84, 166, 0.1); // #0054a6
+  --green-threequarter: rgba(0, 94, 32, 0.75); // #005e20
   --green-half: rgba(0, 94, 32, 0.5); // #005e20
   --green-quarter: rgba(0, 94, 32, 0.25); // #005e20
   --green-translucent: rgba(0, 94, 32, 0.1); // #005e20
+  --red-threequarter: rgba(145, 0, 0, 0.75); // #910000
   --red-half: rgba(145, 0, 0, 0.5); // #910000
   --red-quarter: rgba(145, 0, 0, 0.25); // #910000
   --red-translucent: rgba(145, 0, 0, 0.1); // #910000
+  --orange-threequarter: rgba(255, 153, 0, 0.75); // #ff9900
   --orange-half: rgba(255, 153, 0, 0.5); // #ff9900
   --orange-quarter: rgba(255, 153, 0, 0.25); // #ff9900
   --orange-translucent: rgba(255, 153, 0, 0.1); // #ff9900
+  --yellow-threequarter: rgba(255, 221, 27, 0.75); // #ffdd1b
   --yellow-half: rgba(255, 221, 27, 0.5); // #ffdd1b
   --yellow-quarter: rgba(255, 221, 27, 0.25); // #ffdd1b
   --yellow-translucent: rgba(255, 221, 27, 0.1); // #ffdd1b
+  --purple-threequarter: rgba(86, 59, 103, 0.75); // #563b67
   --purple-half: rgba(86, 59, 103, 0.5); // #563b67
   --purple-quarter: rgba(86, 59, 103, 0.25); // #563b67
   --purple-translucent: rgba(86, 59, 103, 0.1); // #563b67
@@ -403,26 +413,33 @@
   --link-color: var(--focus-color);
   --link-text-shadow: var(--on-white-text-shadow);
 
+
+  // Panels
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-secondary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+  --panel-padding: .5em 1em .5em 1em;
+
+
   // Paragraph
   --paragraph-text-color: var(--grey-dark);
-  //--paragraph-measure: var(--standard-measure);
   --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
   --paragraph-font-family: var(--fontstack-sansserif);
 
-  //--paragraph-shadow: -.02em 0 .07em rgba(0,0,0,.3), 0 -.02em .07em rgba(255,255,255,1);
-  //--paragraph-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
-
   // Progressmeter
-  --progressmeter-simpleprogress-background-color: var(--ultralight);
-  --progressmeter-simpleprogress-background-image: var(--darker-grey-stripes);
-  --progressmeter-simpleprogress-border-color: var(--grey-light);
-  --progressmeter-simpleprogress-marker-color: var(--blue);
-  --progressmeter-simpleprogress-progress-background-color: var(--blue-half);
-  --progressmeter-simpleprogress-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
-  --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
-  --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
-  --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
+  --progressmeter-simple-background-color: var(--ultralight);
+  --progressmeter-simple-background-image: var(--darker-grey-stripes);
+  --progressmeter-simple-border-color: var(--grey-light);
+  --progressmeter-simple-marker-color: var(--blue);
+  --progressmeter-simple-progress-background-color: var(--blue-half);
+  --progressmeter-simple-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
+  --progressmeter-simple-progress-background-image: var(--blue-stripes);
+  --progressmeter-simple-decal-text-color: var(--grey-dark);
+  --progressmeter-simple-decal-text-shadow: var(--text-shadow-heavy);
 
   --progressmeter-radial-background-color: transparent;
   --progressmeter-radial-stroke-color: var(--darkblue);

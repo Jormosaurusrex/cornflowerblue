@@ -90,7 +90,7 @@ ul.tabbar {
         justify-content: flex-start;
         &:focus {
           margin: 0;
-          outline: var(--grey-medium) dashed .1em;
+          outline: var(--ultralight) dashed .15em;
           outline-offset: -.2em;
           text-decoration: underline double;
           &:hover {

@@ -206,11 +206,7 @@ class CornflowerBlueDemo {
             location.hash = `#${tab}`;
         }
 
-        if ((tab === 'wiki') || (tab === 'intro')) {
-            this.codebox.css('display', 'none');
-        } else {
-            this.codebox.css('display', 'block');
-        }
+        this.codebox.hide();
     }
 
     build() {
@@ -269,18 +265,20 @@ class CornflowerBlueDemo {
                 } else {
                     location.hash = `#${tab}`;
                 }
-
-                if ((tab === 'wiki') || (tab === 'intro')) {
-                    me.codebox.css('display', 'none');
-                } else {
-                    me.codebox.css('display', 'block');
-                }
+                me.codebox.hide();
             }
         });
 
-        this.codebox = $('#codebox');
+        this.codebox = new FloatingPanel({
+            title: 'Class',
+            position: 'top-right',
+            content: $('<div />'),
+            classes: ['codebox']
+        });
+
         this.container
-            .prepend(this.navigation.container);
+            .prepend(this.navigation.container)
+            .append(this.codebox.container);
 
         this.grindInputs();
         this.grindSelects();
@@ -1715,7 +1713,7 @@ class CornflowerBlueDemo {
                             new Growler({
                                 position: 'top-right',
                                 icon: 'star',
-                                title: 'Growler with an icon and no text.',
+                                title: 'Growler with no text.',
                                 onopen: function(g) { me.dumpConfig(g);}
                             });
                         }
@@ -2577,12 +2575,17 @@ class CornflowerBlueDemo {
      * @param config the config string to write.
      */
     writeConfig(title, config) {
-        this.codebox.empty();
+
+        this.codebox.title = title;
+        this.codebox.content = config;
+        this.codebox.show();
+        /*
         this.codebox.append(
             $('<div />').addClass('fixbox')
                 .append($('<h2 />').html(title))
                 .append($('<div />').addClass('config').html(config))
         );
+        */
     }
 
     /**

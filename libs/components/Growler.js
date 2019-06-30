@@ -1,22 +1,17 @@
 "use strict";
 
-class Growler {
+class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            title: null, // The growler title
-            text : null, // The growler text payload
+            text : null, // The growler payload
+            closeicon: 'echx',
             duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
             icon: null, // An optional icon. Position of this depends on whether there is text or a title.
                         // If a title is given but no text, it will be in the titlebar. Else it
                         // gets placed in the text area.
-            position: 'bottom-right', // Position for the growler. Valid values:
-            // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
-            classes: [], //Extra css classes to apply,
-            onclose: null, // A function to run to when the growler closes. Passed the self.
-            onopen: null // A function to run to when the growler opens. Passed the self.
-
+            position: 'bottom-right' // Position for the growler. Valid values:
+                        // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
         };
     }
 
@@ -110,14 +105,16 @@ class Growler {
      * @param config a dictionary object
      */
     constructor(config) {
-        this.config = Object.assign({}, Growler.DEFAULT_CONFIG, config);
+        config = Object.assign({}, Growler.DEFAULT_CONFIG, config);
+        super(config);
+
         let mygb = `#${Growler.GROWLBOX_ID}${this.position}`;
         if ($(mygb).length > 0) {
             this.growlbox = $(mygb);
         } else {
             this.growlbox = Growler.buildGrowlbox(this.position);
         }
-        return this.build();
+        this.show();
     }
 
     /**
@@ -126,10 +123,10 @@ class Growler {
     close() {
         const me = this;
         if (this.timer) { clearTimeout(this.timer); }
-        me.growler.removeClass('showing');
+        this.container.attr('aria-hidden', true);
 
         setTimeout(function() {
-            me.growler.remove()
+            me.container.remove()
         }, 2501);
 
         if ((me.onclose) && (typeof me.onclose === 'function')) {
@@ -142,7 +139,7 @@ class Growler {
      */
     quickClose() {
         if (this.timer) { clearTimeout(this.timer); }
-        this.growler.remove();
+        this.container.remove();
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -152,20 +149,26 @@ class Growler {
      * Show the growler
      */
     show() {
-        this.growler.addClass('showing');
+        const me = this;
+        this.container.removeAttr('aria-hidden');
+
+        if (this.duration > 0) {
+            this.timer = setTimeout(function() {
+                me.close();
+            }, this.duration);
+        }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
     }
 
-    /**
-     * Builds the DOM.
-     * @returns {jQuery} jQuery representation
-     */
-    build() {
+
+    buildContainer() {
         const me = this;
-        this.growler = $('<div />')
+
+        this.container = $('<div />')
             .data('self', me)
+            .attr('aria-hidden', true)
             .addClass(this.classes.join(' '))
             .addClass('growler');
 
@@ -179,18 +182,14 @@ class Growler {
                 me.quickClose();
             }
         });
-
         if (this.title) {
-            let $tbox = $('<div />').addClass('title');
-
-            if ((this.icon) && (!this.text)) {
-                $tbox.append(IconFactory.icon(this.icon).addClass('i'));
-            }
-            $tbox.append($('<div />').addClass('t').html(this.title))
-                .append(this.closebutton.button);
-
-            this.growler.append($tbox);
+            this.container.append($('<h3 />')
+                .append($('<span />').addClass('text').html(this.title))
+                .append(this.closebutton.button));
+        } else {
+            this.container.append(this.closebutton.button);
         }
+
         if (this.text) {
             let $payload = $('<div />').addClass('payload');
             if (this.icon) {
@@ -201,21 +200,11 @@ class Growler {
                     .addClass('text')
                     .html(this.text)
             );
-            if (!this.title) {
-                $payload.append(this.closebutton.button);
-            }
-            this.growler.append($payload);
+            this.container.append($payload);
         }
 
-        this.growlbox.append(this.growler);
+        this.growlbox.append(this.container);
 
-        this.show();
-
-        if (this.duration > 0) {
-            this.timer = setTimeout(function() {
-                me.close();
-            }, this.duration);
-        }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -228,54 +217,20 @@ class Growler {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get closebutton() { return this._closebutton; }
-    set closebutton(closebutton) { this._closebutton = closebutton; }
-
     get duration() { return this.config.duration; }
     set duration(duration) { this.config.duration = duration; }
 
     get growlbox() { return this._growlbox; }
     set growlbox(growlbox) { this._growlbox = growlbox; }
 
-    get growler() { return this._growler; }
-    set growler(growler) { this._growler = growler; }
-
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get onclose() { return this.config.onclose; }
-    set onclose(onclose) {
-        if (typeof onclose !== 'function') {
-            console.error("Action provided for onclose is not a function!");
-        }
-        this.config.onclose = onclose;
-    }
-
-    get onopen() { return this.config.onopen; }
-    set onopen(onopen) {
-        if (typeof onopen !== 'function') {
-            console.error("Action provided for onopen is not a function!");
-        }
-        this.config.onopen = onopen;
-    }
-
-    get position() { return this.config.position; }
-    set position(position) { this.config.position = position; }
 
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }
 
     get timer() { return this._timer; }
     set timer(timer) { this._timer = timer; }
-
-    get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
 
 }
 

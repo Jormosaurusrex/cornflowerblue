@@ -24,33 +24,43 @@
   --grey-darker: #444444;
   --grey-darkest: #222222;
   --black: #000;
+  --white-threequarter: rgba(255, 255, 255, 0.75);
   --white-half: rgba(255, 255, 255, 0.5);
   --white-quarter: rgba(255, 255, 255, 0.25);
   --white-translucent: rgba(255, 255, 255, 0.1);
+  --grey-threequarter: rgba(153, 153, 153, 0.75);
   --grey-half: rgba(153, 153, 153, 0.5);
   --grey-quarter: rgba(153, 153, 153, 0.25);
   --grey-translucent: rgba(153, 153, 153, 0.1);
+  --black-threequarter: rgba(0, 0, 0, 0.75);
   --black-half: rgba(0, 0, 0, 0.5);
   --black-quarter: rgba(0, 0, 0, 0.25);
   --black-translucent: rgba(0, 0, 0, 0.1);
+  --blue-threequarter: rgba(100, 149, 237, 0.75);
   --blue-half: rgba(100, 149, 237, 0.5);
   --blue-quarter: rgba(100, 149, 237, 0.25);
   --blue-translucent: rgba(100, 149, 237, 0.1);
+  --darkblue-threequarter: rgba(0, 84, 166, 0.75);
   --darkblue-half: rgba(0, 84, 166, 0.5);
   --darkblue-quarter: rgba(0, 84, 166, 0.25);
   --darkblue-translucent: rgba(0, 84, 166, 0.1);
+  --green-threequarter: rgba(0, 94, 32, 0.75);
   --green-half: rgba(0, 94, 32, 0.5);
   --green-quarter: rgba(0, 94, 32, 0.25);
   --green-translucent: rgba(0, 94, 32, 0.1);
+  --red-threequarter: rgba(145, 0, 0, 0.75);
   --red-half: rgba(145, 0, 0, 0.5);
   --red-quarter: rgba(145, 0, 0, 0.25);
   --red-translucent: rgba(145, 0, 0, 0.1);
+  --orange-threequarter: rgba(255, 153, 0, 0.75);
   --orange-half: rgba(255, 153, 0, 0.5);
   --orange-quarter: rgba(255, 153, 0, 0.25);
   --orange-translucent: rgba(255, 153, 0, 0.1);
+  --yellow-threequarter: rgba(255, 221, 27, 0.75);
   --yellow-half: rgba(255, 221, 27, 0.5);
   --yellow-quarter: rgba(255, 221, 27, 0.25);
   --yellow-translucent: rgba(255, 221, 27, 0.1);
+  --purple-threequarter: rgba(86, 59, 103, 0.75);
   --purple-half: rgba(86, 59, 103, 0.5);
   --purple-quarter: rgba(86, 59, 103, 0.25);
   --purple-translucent: rgba(86, 59, 103, 0.1);
@@ -318,19 +328,26 @@
   --link-visited-color: var(--focus-color);
   --link-color: var(--focus-color);
   --link-text-shadow: var(--on-white-text-shadow);
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-secondary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+  --panel-padding: .5em 1em .5em 1em;
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
   --paragraph-font-family: var(--fontstack-sansserif);
-  --progressmeter-simpleprogress-background-color: var(--ultralight);
-  --progressmeter-simpleprogress-background-image: var(--darker-grey-stripes);
-  --progressmeter-simpleprogress-border-color: var(--grey-light);
-  --progressmeter-simpleprogress-marker-color: var(--blue);
-  --progressmeter-simpleprogress-progress-background-color: var(--blue-half);
-  --progressmeter-simpleprogress-progress-box-shadow: 0.2em 0 0.5em -0.1em rgba(0, 0, 0, 0.2);
-  --progressmeter-simpleprogress-progress-background-image: var(--blue-stripes);
-  --progressmeter-simpleprogress-decal-text-color: var(--grey-dark);
-  --progressmeter-simpleprogress-decal-text-shadow: var(--text-shadow-heavy);
+  --progressmeter-simple-background-color: var(--ultralight);
+  --progressmeter-simple-background-image: var(--darker-grey-stripes);
+  --progressmeter-simple-border-color: var(--grey-light);
+  --progressmeter-simple-marker-color: var(--blue);
+  --progressmeter-simple-progress-background-color: var(--blue-half);
+  --progressmeter-simple-progress-box-shadow: 0.2em 0 0.5em -0.1em rgba(0, 0, 0, 0.2);
+  --progressmeter-simple-progress-background-image: var(--blue-stripes);
+  --progressmeter-simple-decal-text-color: var(--grey-dark);
+  --progressmeter-simple-decal-text-shadow: var(--text-shadow-heavy);
   --progressmeter-radial-background-color: transparent;
   --progressmeter-radial-stroke-color: var(--darkblue);
   --progressmeter-radial-gutter-color: var(--blue-quarter);
@@ -495,13 +512,10 @@
 html {
   scroll-behavior: smooth; }
 
-html,
-body {
-  height: 100vh; }
-  html ::selection,
-  body ::selection {
-    background-color: var(--highlight-color);
-    color: var(--hot-text-color); }
+html ::selection,
+body ::selection {
+  background-color: var(--highlight-color);
+  color: var(--hot-text-color); }
 
 body.noisy:after {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAG1mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDUgNzkuMTYzNDk5LCAyMDE4LzA4LzEzLTE2OjQwOjIyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTggKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDE5LTA1LTE5VDE1OjMxOjM0LTA3OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOS0wNS0xOVQxNjoxNTozNS0wNzowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOS0wNS0xOVQxNjoxNTozNS0wNzowMCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3NDQyMTc1Yi00MGIyLTQ5MGUtODY0MC01NDM5ZDhlN2U0ZGIiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDpiYjJlODg0YS0xNzZkLTI2NGItYTFkNy0xMjYwMTI5MDI5NzgiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpERkEzMDU3QTc0QUMxMUU4QjQ1NDhFQUIwOTJGMEU4RCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRGQTMwNTc3NzRBQzExRThCNDU0OEVBQjA5MkYwRThEIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRGQTMwNTc4NzRBQzExRThCNDU0OEVBQjA5MkYwRThEIi8+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOmY0YTdjMzU2LWQwYTktNDY3Yi1iZDExLTE2YWIyNTZkZDc0YSIgc3RFdnQ6d2hlbj0iMjAxOS0wNS0xOVQxNjoxNTozNS0wNzowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjc0NDIxNzViLTQwYjItNDkwZS04NjQwLTU0MzlkOGU3ZTRkYiIgc3RFdnQ6d2hlbj0iMjAxOS0wNS0xOVQxNjoxNTozNS0wNzowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNr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);
@@ -759,12 +773,14 @@ code {
   font-family: var(--code-font-family);
   background-color: var(--code-background-color);
   color: var(--code-text-color);
-  text-shadow: var(--code-text-shadow); }
+  text-shadow: var(--code-text-shadow);
+  white-space: nowrap; }
   code.block {
     display: block;
     font-size: 90%;
     padding: 1.5em;
-    overflow: auto; }
+    overflow: auto;
+    white-space: unset; }
 
 @font-face {
   font-family: 'cornflowerblue';
@@ -2809,13 +2825,6 @@ div.spinner.bounce {
     animation-delay: -1.0s; }
 
 div.panel {
-  --panel-max-width: 22em;
-  --panel-border-radius: var(--border-radius);
-  --panel-background-color: var(--canvas-color-secondary);
-  --panel-box-shadow: var(--panel-shadow);
-  --panel-text-color: var(--grey-darkest);
-  --panel-text-shadow: var(--text-shadow);
-  --panel-padding: .5em 1em .5em 1em;
   position: absolute;
   z-index: 1000;
   border-radius: var(--panel-border-radius);
@@ -2830,15 +2839,6 @@ div.panel {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start; }
-  div.panel button.closebutton {
-    --button-default-color: var(--panel-text-color);
-    margin: .3em .5em 0 0;
-    width: 1em;
-    height: 1em;
-    opacity: 1; }
-    div.panel button.closebutton:hover, div.panel button.closebutton:focus, div.panel button.closebutton:active {
-      color: var(--panel-text-color);
-      opacity: 1; }
   div.panel div.content {
     display: flex;
     flex-direction: column;
@@ -2849,12 +2849,30 @@ div.panel {
       cursor: pointer;
       border-bottom: 0.1em var(--panel-text-color);
       text-transform: unset;
-      white-space: nowrap; }
-  div.panel[aria-expanded=false] button.closebutton {
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      align-items: center; }
+      div.panel div.content h3 button.togglebutton {
+        --button-default-color: var(--panel-text-color);
+        margin: 0 .5em 0 0;
+        box-shadow: none;
+        width: 1em;
+        height: 1em;
+        opacity: 1;
+        border: none; }
+        div.panel div.content h3 button.togglebutton:hover, div.panel div.content h3 button.togglebutton:focus, div.panel div.content h3 button.togglebutton:active {
+          color: var(--panel-text-color);
+          opacity: 1;
+          background: none;
+          box-shadow: none; }
+  div.panel[aria-hidden=true] {
+    display: none; }
+  div.panel[aria-expanded=false] button.togglebutton {
     transform: rotate(-90deg); }
   div.panel[aria-expanded=false] div.content h3 {
     margin: 0; }
-  div.panel[aria-expanded=false] div.content .pcontent {
+  div.panel[aria-expanded=false] div.content div.pcontent {
     display: none; }
   div.panel.ghost {
     opacity: .5; }
@@ -2922,8 +2940,9 @@ div.growlbox {
     margin-left: auto;
     margin-right: auto; }
 
-.growler {
-  opacity: 0;
+div.growler {
+  animation: cfb-fadein .5s;
+  opacity: 1;
   position: relative;
   border-radius: var(--growler-border-radius);
   transition: all .5s ease-in-out;
@@ -2939,37 +2958,53 @@ div.growlbox {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch; }
-  .growler div.title {
+  div.growler[aria-hidden=true] {
+    opacity: 0; }
+  div.growler button.closebutton {
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    margin: 0;
+    padding: 0;
+    color: var(--growler-text-color);
+    text-shadow: var(--growler-text-shadow);
+    font-size: 100%; }
+    div.growler button.closebutton:active, div.growler button.closebutton:focus, div.growler button.closebutton:hover {
+      opacity: 1; }
+  div.growler h3 {
     background-color: var(--growler-core-color);
     color: var(--growler-header-text-color);
     display: flex;
+    margin: 0;
+    padding: .5em 0 .5em 1em;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: baseline; }
-    .growler div.title span.i {
+    justify-content: space-between;
+    align-items: baseline;
+    text-transform: unset;
+    white-space: nowrap; }
+    div.growler h3 span.text {
       text-shadow: var(--growler-header-text-shadow); }
-    .growler div.title div.t {
-      text-shadow: var(--growler-header-text-shadow);
-      padding: .5em 1em .5em 1em; }
-    .growler div.title button.closebutton {
+    div.growler h3 button.closebutton {
       color: var(--growler-header-text-color);
-      margin-right: .5em;
-      margin-left: auto;
+      margin: 0;
       position: relative;
       left: auto;
-      top: auto; }
-      .growler div.title button.closebutton:hover {
+      top: auto;
+      width: unset;
+      height: unset; }
+      div.growler h3 button.closebutton:hover {
         text-shadow: var(--growler-header-text-shadow); }
-  .growler div.payload {
+  div.growler div.payload {
     padding: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     color: var(--growler-text-color);
     text-shadow: var(--growler-text-shadow); }
-    .growler div.payload span.i {
+    div.growler div.payload span.icon.i {
       font-size: 30pt;
       display: flex;
       flex-direction: row;
@@ -2978,44 +3013,30 @@ div.growlbox {
       margin: 0;
       color: var(--growler-text-color);
       text-shadow: var(--growler-text-shadow); }
-    .growler div.payload div.text {
+    div.growler div.payload div.text {
       font-size: 110%;
-      padding: 0; }
-    .growler div.payload button.closebutton {
-      position: absolute;
-      top: .5em;
-      right: .5em;
-      margin: 0;
-      padding: 0;
-      color: var(--growler-text-color);
-      text-shadow: var(--growler-text-shadow);
-      font-size: 100%; }
-      .growler div.payload button.closebutton:active, .growler div.payload button.closebutton:focus, .growler div.payload button.closebutton:hover {
-        opacity: 1; }
-  .growler.error {
+      padding: 0 0 0 .5em; }
+  div.growler.error {
     --growler-core-color: var(--error-color);
     border-color: var(--error-color); }
-    .growler.error div.payload {
+    div.growler.error div.payload {
       background-image: var(--error-stripes); }
-  .growler.warn {
+  div.growler.warn {
     --growler-core-color: var(--warning-color);
     border-color: var(--warning-color); }
-    .growler.warn div.payload {
+    div.growler.warn div.payload {
       background-image: var(--warning-stripes); }
-  .growler.caution {
+  div.growler.caution {
     --growler-header-text-color: var(--growler-text-color);
     --growler-core-color: var(--caution-color);
     border-color: var(--caution-color); }
-    .growler.caution div.payload {
+    div.growler.caution div.payload {
       background-image: var(--caution-stripes); }
-  .growler.success {
+  div.growler.success {
     --growler-core-color: var(--success-color);
     border-color: var(--success-color); }
-    .growler.success div.payload {
+    div.growler.success div.payload {
       background-image: var(--success-stripes); }
-  .growler.showing {
-    animation: cfb-fadein .5s;
-    opacity: 1; }
 
 div.instructions {
   margin: 1em 0 1em 0;
@@ -3322,7 +3343,7 @@ ul.tabbar {
         justify-content: flex-start; }
         ul.tabbar.vertical li a:focus {
           margin: 0;
-          outline: var(--grey-medium) dashed 0.1em;
+          outline: var(--ultralight) dashed 0.15em;
           outline-offset: -.2em;
           text-decoration: underline double; }
           ul.tabbar.vertical li a:focus:hover {
@@ -3346,8 +3367,8 @@ div.progressbar-container {
       div.progressbar-container .decals div.current div.value,
       div.progressbar-container .decals div.next div.name,
       div.progressbar-container .decals div.next div.value {
-        color: var(--progressmeter-simpleprogress-decal-text-color);
-        text-shadow: var(--progressmeter-simpleprogress-decal-text-shadow); }
+        color: var(--progressmeter-simple-decal-text-color);
+        text-shadow: var(--progressmeter-simple-decal-text-shadow); }
       div.progressbar-container .decals div.current div.name,
       div.progressbar-container .decals div.next div.name {
         text-transform: uppercase;
@@ -3426,21 +3447,21 @@ div.progressbar-container {
     position: relative;
     margin: 1em 0 1em 0;
     padding: 0;
-    background-color: var(--progressmeter-simpleprogress-background-color);
-    background-image: var(--progressmeter-simpleprogress-background-image);
+    background-color: var(--progressmeter-simple-background-color);
+    background-image: var(--progressmeter-simple-background-image);
     height: 2em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: stretch;
-    border-bottom: 0.1em solid var(--progressmeter-simpleprogress-border-color);
+    border-bottom: 0.1em solid var(--progressmeter-simple-border-color);
     overflow: hidden; }
     div.progressbar-container div.simpleprogress div.progress {
       margin: 0;
-      background-color: var(--progressmeter-simpleprogress-progress-background-color);
-      border-right: 0.2em solid var(--progressmeter-simpleprogress-marker-color);
-      box-shadow: var(--progressmeter-simpleprogress-progress-box-shadow);
+      background-color: var(--progressmeter-simple-progress-background-color);
+      border-right: 0.2em solid var(--progressmeter-simple-marker-color);
+      box-shadow: var(--progressmeter-simple-progress-box-shadow);
       height: 100%;
       width: 0;
       transition: width 1s ease-in-out;
@@ -3526,7 +3547,7 @@ div#container {
   min-width: 50%;
   max-width: 75%;
   min-height: 100vh;
-  background-color: var(--grey-dark);
+  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: stretch; }
@@ -3543,39 +3564,33 @@ div#container {
     flex-grow: 1;
     background-color: var(--canvas-color-primary);
     padding: 2em;
-    scroll-snap-type: y mandatory; }
+    scroll-snap-type: y mandatory;
+    max-width: 45em; }
     div#container div.displaybox code.invoker {
       display: block;
       float: right;
       padding: 1em;
       margin: 0 0 .5em .5em; }
-  div#container div#codebox {
-    flex-grow: 0;
-    padding: 3em 1em 0 1em;
-    position: relative;
+  div#container div.codebox {
+    position: fixed;
     background-color: var(--canvas-color-secondary);
     width: 25em;
     max-width: 25em;
     min-width: 25em;
     font-size: 80%; }
-    div#container div#codebox div.fixbox {
-      position: fixed;
-      width: 23em;
-      max-width: 23em;
-      min-width: 23em; }
-      div#container div#codebox div.fixbox div.config {
-        padding: .5em;
-        overflow: auto;
-        white-space: pre;
-        font-family: var(--fontstack-monospace); }
-        div#container div#codebox div.fixbox div.config span.key {
-          color: var(--grey-darkest);
-          font-weight: bold; }
-        div#container div#codebox div.fixbox div.config span.value {
-          color: var(--blue); }
-        div#container div#codebox div.fixbox div.config span.default span.value,
-        div#container div#codebox div.fixbox div.config span.default span.key {
-          color: var(--grey-medium); }
+    div#container div.codebox div.content {
+      padding: .5em;
+      overflow: auto;
+      white-space: pre;
+      font-family: var(--fontstack-monospace); }
+      div#container div.codebox div.content span.key {
+        color: var(--grey-darkest);
+        font-weight: bold; }
+      div#container div.codebox div.content span.value {
+        color: var(--blue); }
+      div#container div.codebox div.content span.default span.value,
+      div#container div.codebox div.content span.default span.key {
+        color: var(--grey-medium); }
 
 div.example {
   margin: 0 0 1em 0;

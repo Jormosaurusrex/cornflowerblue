@@ -12,7 +12,8 @@ class FloatingPanel {
             // - 'ghost': similar to 'plain' except that it turns translucent when not in focus or hover
             // - 'invisible: panel behaves as normal but the background is transparent
 
-            closecontrol: true, // show a visibility toggle
+            hidden: false, // set to true to hide
+            togglecontrol: true, // show a visibility toggle
             closeicon: 'triangle-down',
             minimized: false, // Start minimized
             position: 'top-left', // Position for the panel. Valid values:
@@ -51,7 +52,7 @@ class FloatingPanel {
      */
     open() {
         this.container.attr('aria-expanded', true);
-        this.content.removeAttr('aria-hidden');
+        this.pcontent.removeAttr('aria-hidden');
         this.minimized = false;
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
@@ -63,11 +64,19 @@ class FloatingPanel {
      */
     close() {
         this.container.attr('aria-expanded', false);
-        this.content.attr('aria-hidden', true);
+        this.pcontent.attr('aria-hidden', true);
         this.minimized = true;
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
+    }
+
+    show() {
+        this.container.removeAttr('aria-hidden');
+    }
+
+    hide() {
+        this.container.attr('aria-hidden', true);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -82,37 +91,52 @@ class FloatingPanel {
 
         this.container = $('<div />')
             .addClass('panel')
+            .data('self', me)
             .addClass(this.classes.join(' '))
             .addClass(this.style)
             .addClass(this.position);
 
-        if (this.closecontrol) {
-            this.closebutton = new SimpleButton({
+        if (this.togglecontrol) {
+            this.togglebutton = new SimpleButton({
                 icon: this.closeicon,
                 text: "Close",
+                naked: true,
                 shape: "square",
-                classes: ["closebutton"],
+                classes: ["togglebutton"],
                 action: function(e) {
                     e.preventDefault();
                     me.toggleClose();
                 }
             });
-            this.container.append(this.closebutton.button);
         }
 
         if (this.title) {
             this.titlecontainer = $('<h3 />')
-                .html(this.title)
                 .on('click', function(e) {
                     e.preventDefault();
                     me.toggleClose();
                 });
+
+            if (this.togglecontrol) {
+                this.titlecontainer.append(this.togglebutton.button);
+            }
+            this.titleactual = $('<span />').addClass('text').html(this.title);
+            this.titlecontainer.append(this.titleactual);
+        } else {
+            console.log('bar');
+            if (this.togglecontrol) {
+                this.container.append(this.togglebutton.button);
+            }
         }
+
+        this.pcontent = $('<div />')
+            .addClass('pcontent')
+            .append(this.content);
 
         this.contentbox = $('<div />')
             .addClass('content')
             .append(this.titlecontainer)
-            .append(this.content.addClass('pcontent'));
+            .append(this.pcontent);
 
         this.container.append(this.contentbox);
 
@@ -122,6 +146,7 @@ class FloatingPanel {
             this.open();
         }
 
+        if (this.hidden) { this.hide(); }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -137,11 +162,11 @@ class FloatingPanel {
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
-    get closebutton() { return this._closebutton; }
-    set closebutton(closebutton) { this._closebutton = closebutton; }
+    get togglebutton() { return this._togglebutton; }
+    set togglebutton(togglebutton) { this._togglebutton = togglebutton; }
 
-    get closecontrol() { return this.config.closecontrol; }
-    set closecontrol(closecontrol) { this.config.closecontrol = closecontrol; }
+    get togglecontrol() { return this.config.togglecontrol; }
+    set togglecontrol(togglecontrol) { this.config.togglecontrol = togglecontrol; }
 
     get closeicon() { return this.config.closeicon; }
     set closeicon(closeicon) { this.config.closeicon = closeicon; }
@@ -153,10 +178,16 @@ class FloatingPanel {
     set container(container) { this._container = container; }
 
     get content() { return this.config.content; }
-    set content(content) { this.config.content = content; }
+    set content(content) {
+        if (this.pcontent) { this.pcontent.html(content); }
+        this.config.content = content;
+    }
 
     get contentbox() { return this._contentbox; }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get hidden() { return this.config.hidden; }
+    set hidden(hidden) { this.config.hidden = hidden; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -180,6 +211,9 @@ class FloatingPanel {
         this.config.onopen = onopen;
     }
 
+    get pcontent() { return this._pcontent; }
+    set pcontent(pcontent) { this._pcontent = pcontent; }
+
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }
 
@@ -187,7 +221,13 @@ class FloatingPanel {
     set style(style) { this.config.style = style; }
 
     get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
+    set title(title) {
+        this.config.title = title;
+        if (this.titleactual) { this.titleactual.html(title); }
+    }
+
+    get titleactual() { return this._titleactual; }
+    set titleactual(titleactual) { this._titleactual = titleactual; }
 
     get titlecontainer() { return this._titlecontainer; }
     set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }

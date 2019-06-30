@@ -40,9 +40,9 @@ div.growlbox {
     margin-right: auto;
   }
 }
-
-.growler {
-  opacity: 0;
+div.growler {
+  animation: cfb-fadein .5s;
+  opacity: 1;
   position: relative;
   border-radius: var(--growler-border-radius);
   transition: all .5s ease-in-out;
@@ -58,27 +58,48 @@ div.growlbox {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
-  div.title {
+  &[aria-hidden=true] {
+    opacity: 0;
+  }
+  button.closebutton {
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    margin: 0;
+    padding: 0;
+    color: var(--growler-text-color);
+    text-shadow: var(--growler-text-shadow);
+    font-size: 100%;
+    &:active,
+    &:focus,
+    &:hover {
+      opacity: 1;
+    }
+  }
+  h3 {
     background-color: var(--growler-core-color);
     color: var(--growler-header-text-color);
     display: flex;
+    margin: 0;
+    padding: .5em 0 .5em 1em;
     flex-direction: row;
     flex-wrap: nowrap;
+    justify-content: space-between;
     align-items: baseline;
-    span.i {
+    text-transform: unset;
+    white-space: nowrap;
+    span.text {
       text-shadow: var(--growler-header-text-shadow);
-    }
-    div.t {
-      text-shadow: var(--growler-header-text-shadow);
-      padding: .5em 1em .5em 1em;
+      //padding: .5em 1em .5em 1em;
     }
     button.closebutton {
       color: var(--growler-header-text-color);
-      margin-right: .5em;
-      margin-left: auto;
+      margin: 0;
       position: relative;
       left: auto;
       top: auto;
+      width: unset;
+      height: unset;
       &:hover {
         text-shadow: var(--growler-header-text-shadow);
       }
@@ -89,11 +110,11 @@ div.growlbox {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     color: var(--growler-text-color);
     text-shadow: var(--growler-text-shadow);
-    span.i {
+    span.icon.i {
       font-size: 30pt;
       display: flex;
       flex-direction: row;
@@ -105,22 +126,7 @@ div.growlbox {
     }
     div.text {
       font-size: 110%;
-      padding: 0;
-    }
-    button.closebutton {
-      position: absolute;
-      top: .5em;
-      right: .5em;
-      margin: 0;
-      padding: 0;
-      color: var(--growler-text-color);
-      text-shadow: var(--growler-text-shadow);
-      font-size: 100%;
-      &:active,
-      &:focus,
-      &:hover {
-        opacity: 1;
-      }
+      padding: 0 0 0 .5em;
     }
   }
   &.error {
@@ -151,10 +157,6 @@ div.growlbox {
     div.payload {
       background-image: var(--success-stripes);
     }
-  }
-  &.showing {
-    animation: cfb-fadein .5s;
-    opacity: 1;
   }
 }
 

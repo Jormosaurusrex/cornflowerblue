@@ -1,13 +1,4 @@
 div.panel {
-
-  --panel-max-width: 22em;
-  --panel-border-radius: var(--border-radius);
-  --panel-background-color: var(--canvas-color-secondary);
-  --panel-box-shadow: var(--panel-shadow);
-  --panel-text-color: var(--grey-darkest);
-  --panel-text-shadow: var(--text-shadow);
-  --panel-padding: .5em 1em .5em 1em;
-
   position: absolute;
   z-index: 1000;
   border-radius: var(--panel-border-radius);
@@ -18,25 +9,10 @@ div.panel {
   background-color: var(--panel-background-color);
   margin: 0;
   padding: var(--panel-padding);
-
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start;
-  button.closebutton {
-    --button-default-color: var(--panel-text-color);
-    margin: .3em .5em 0 0;
-    //padding: 0;
-    width: 1em;
-    height: 1em;
-    opacity: 1;
-    &:hover,
-    &:focus,
-    &:active {
-      color: var(--panel-text-color);
-      opacity: 1;
-    }
-  }
   div.content {
     display: flex;
     flex-direction: column;
@@ -48,17 +24,40 @@ div.panel {
       border-bottom: .1em var(--panel-text-color);
       text-transform: unset;
       white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      button.togglebutton {
+        --button-default-color: var(--panel-text-color);
+        margin: 0 .5em 0 0;
+        box-shadow: none;
+        width: 1em;
+        height: 1em;
+        opacity: 1;
+        border: none;
+        &:hover,
+        &:focus,
+        &:active {
+          color: var(--panel-text-color);
+          opacity: 1;
+          background: none;
+          box-shadow: none;
+        }
+      }
     }
   }
+  &[aria-hidden=true] {
+    display: none;
+  }
   &[aria-expanded=false] {
-    button.closebutton {
+    button.togglebutton {
       transform: rotate(-90deg);
     }
     div.content {
       h3 {
         margin: 0;
       }
-      .pcontent {
+      div.pcontent {
         display: none;
       }
     }

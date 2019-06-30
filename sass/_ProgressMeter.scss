@@ -15,8 +15,8 @@ div.progressbar-container {
       margin: 0 1em 0 1em;
       div.name,
       div.value {
-        color: var(--progressmeter-simpleprogress-decal-text-color);
-        text-shadow: var(--progressmeter-simpleprogress-decal-text-shadow);
+        color: var(--progressmeter-simple-decal-text-color);
+        text-shadow: var(--progressmeter-simple-decal-text-shadow);
       }
       div.name {
         text-transform: uppercase;
@@ -133,21 +133,21 @@ div.progressbar-container {
     position: relative;
     margin: 1em 0 1em 0;
     padding: 0;
-    background-color: var(--progressmeter-simpleprogress-background-color);
-    background-image: var(--progressmeter-simpleprogress-background-image);
+    background-color: var(--progressmeter-simple-background-color);
+    background-image: var(--progressmeter-simple-background-image);
     height: 2em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: stretch;
-    border-bottom: .1em solid var(--progressmeter-simpleprogress-border-color);
+    border-bottom: .1em solid var(--progressmeter-simple-border-color);
     overflow: hidden;
     div.progress {
       margin: 0;
-      background-color: var(--progressmeter-simpleprogress-progress-background-color);
-      border-right: .2em solid var(--progressmeter-simpleprogress-marker-color);
-      box-shadow: var(--progressmeter-simpleprogress-progress-box-shadow);
+      background-color: var(--progressmeter-simple-progress-background-color);
+      border-right: .2em solid var(--progressmeter-simple-marker-color);
+      box-shadow: var(--progressmeter-simple-progress-box-shadow);
       height: 100%;
       width: 0;
       transition: width 1s ease-in-out;

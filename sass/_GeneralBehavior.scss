@@ -17,10 +17,9 @@
 html {
   scroll-behavior: smooth;
 }
-
 html,
 body {
-  height: 100vh;
+  //height: 100vh;
   ::selection {
     background-color: var(--highlight-color);
     color: var(--hot-text-color);
@@ -304,11 +303,13 @@ code {
   background-color: var(--code-background-color);
   color: var(--code-text-color);
   text-shadow: var(--code-text-shadow);
+  white-space: nowrap;
   &.block {
     display: block;
     font-size: 90%;
     padding: 1.5em;
     overflow: auto;
+    white-space: unset;
   }
 }
 
