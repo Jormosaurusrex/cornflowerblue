@@ -1,12 +1,12 @@
 
 .cfb-arrow-down-circle:before { content: '\21'; } /* '!' */
 .cfb-arrow-up:before { content: '\22'; } /* '&quot;' */
-.cfb-arrow-up-circle:before { content: '\23'; } /* '#' */
+.cfb-download:before { content: '\23'; } /* '#' */
 .cfb-map:before { content: '\24'; } /* '$' */
 .cfb-arrow-right:before { content: '\25'; } /* '%' */
-.cfb-arrow-right-circle:before { content: '\26'; } /* '&amp;' */
+.cfb-upload:before { content: '\26'; } /* '&amp;' */
 .cfb-arrow-left:before { content: '\27'; } /* ''' */
-.cfb-arrow-left-circle:before { content: '\28'; } /* '(' */
+.cfb-arrow-down-circle-1:before { content: '\28'; } /* '(' */
 .cfb-calendar:before { content: '\29'; } /* ')' */
 .cfb-trashcan:before { content: '\2a'; } /* '*' */
 .cfb-tag:before { content: '\2b'; } /* '+' */
@@ -25,7 +25,7 @@
 .cfb-heart:before { content: '\38'; } /* '8' */
 .cfb-no:before { content: '\39'; } /* '9' */
 .cfb-double-triangle-horizontal:before { content: '\3a'; } /* ':' */
-.cfb-download:before { content: '\3b'; } /* ';' */
+.cfb-arrow-left-circle:before { content: '\3b'; } /* ';' */
 .cfb-echx-circle:before { content: '\3c'; } /* '&lt;' */
 .cfb-echx-1:before { content: '\3d'; } /* '=' */
 .cfb-spinner-circle:before { content: '\3e'; } /* '&gt;' */
@@ -82,4 +82,15 @@
 .cfb-triangle-up:before { content: '\71'; } /* 'q' */
 .cfb-triangle-up-small:before { content: '\72'; } /* 'r' */
 .cfb-triangle-right:before { content: '\73'; } /* 's' */
-.cfb-upload:before { content: '\74'; } /* 't' */
+.cfb-arrow-right-circle:before { content: '\74'; } /* 't' */
+.cfb-arrow-up-circle:before { content: '\75'; } /* 'u' */
+.cfb-triangle-down-circle:before { content: '\76'; } /* 'v' */
+.cfb-triangle-left-circle:before { content: '\77'; } /* 'w' */
+.cfb-triangle-right-circle:before { content: '\78'; } /* 'x' */
+.cfb-triangle-up-circle:before { content: '\79'; } /* 'y' */
+.cfb-flag-notched:before { content: '\7a'; } /* 'z' */
+.cfb-flag-pointed:before { content: '\7b'; } /* '{' */
+.cfb-flag-rectangle:before { content: '\7c'; } /* '|' */
+.cfb-flag-notched-angle:before { content: '\7d'; } /* '}' */
+.cfb-flag-pointed-angle:before { content: '\7e'; } /* '~' */
+.cfb-flag-rectangle-angle:before { content: '\e800'; } /* '' */
