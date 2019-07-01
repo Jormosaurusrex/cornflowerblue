@@ -1,6 +1,6 @@
 @keyframes cfb-localspin {
   0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  100% { transform: rotate(359deg); }
 }
 @keyframes cfb-spinner-bounce {
   0%, 100% { transform: scale(0.0); }
@@ -51,13 +51,11 @@
     transform: scale(0.5) translateY(-8px);
   }
 }
-
 @keyframes cfb-blurify {
   0% { filter: blur(1px); }
   50% { filter: blur(2px); }
   100% { filter: blur(3px); }
 }
-
 @keyframes cfb-dropin {
   0% {
     transform: scale(4);
@@ -68,7 +66,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes cfb-pushup {
   0% {
     transform: scale(.5);
@@ -79,10 +76,14 @@
     transform: scale(1);
   }
 }
-
+.spin {
+  animation: cfb-localspin 2s infinite linear;
+}
 .shake {
   animation: cfb-shake .7s;
 }
+.fadein,
+.fadeout,
 .popin,
 .popout {
   --anim-order: 0;
@@ -94,10 +95,8 @@
     animation-duration: 75ms;
   }
 }
-.popin {
-  animation-name: cfb-popin;
-}
 
-.popin {
-  animation-name: cfb-popin;
-}
+.fadein { animation-name: cfb-fadein; }
+.fadeout { animation-name: cfb-fadeout; }
+.popin { animation-name: cfb-popin; }
+.popout { animation-name: cfb-popout; }

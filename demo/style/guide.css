@@ -336,6 +336,8 @@
   --panel-text-color: var(--grey-darkest);
   --panel-text-shadow: var(--text-shadow);
   --panel-padding: .5em 1em .5em 1em;
+  --panel-closed-hover-background-color: var(--focus-color);
+  --panel-closed-hover-text-color: var(--hot-text-color);
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
@@ -407,7 +409,7 @@
   0% {
     transform: rotate(0deg); }
   100% {
-    transform: rotate(360deg); } }
+    transform: rotate(359deg); } }
 @keyframes cfb-spinner-bounce {
   0%, 100% {
     transform: scale(0); }
@@ -475,9 +477,14 @@
   100% {
     opacity: 1;
     transform: scale(1); } }
+.spin {
+  animation: cfb-localspin 2s infinite linear; }
+
 .shake {
   animation: cfb-shake .7s; }
 
+.fadein,
+.fadeout,
 .popin,
 .popout {
   --anim-order: 0;
@@ -485,15 +492,23 @@
   animation-delay: calc(var(--anim-order) * 100ms);
   animation-fill-mode: both;
   animation-timing-function: ease-in-out; }
+  .fadein.fast,
+  .fadeout.fast,
   .popin.fast,
   .popout.fast {
     animation-duration: 75ms; }
 
-.popin {
-  animation-name: cfb-popin; }
+.fadein {
+  animation-name: cfb-fadein; }
+
+.fadeout {
+  animation-name: cfb-fadeout; }
 
 .popin {
   animation-name: cfb-popin; }
+
+.popout {
+  animation-name: cfb-popout; }
 
 * {
   padding: 0;
@@ -2874,7 +2889,7 @@ div.panel {
   z-index: 1000;
   border-radius: var(--panel-border-radius);
   box-shadow: var(--panel-box-shadow);
-  transition: all .5s ease-in-out;
+  transition: all .2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
   color: var(--panel-text-color);
   background-color: var(--panel-background-color);
@@ -2911,6 +2926,8 @@ div.panel {
           opacity: 1;
           background: none;
           box-shadow: none; }
+    div.panel div.content div.pcontent {
+      transition: all .2s; }
   div.panel[aria-hidden=true] {
     display: none; }
   div.panel[aria-expanded=false] button.togglebutton {
@@ -2919,6 +2936,15 @@ div.panel {
     margin: 0; }
   div.panel[aria-expanded=false] div.content div.pcontent {
     display: none; }
+  div.panel[aria-expanded=false]:hover, div.panel[aria-expanded=false]:focus {
+    background-color: var(--panel-closed-hover-background-color);
+    color: var(--panel-closed-hover-text-color); }
+    div.panel[aria-expanded=false]:hover h3, div.panel[aria-expanded=false]:focus h3 {
+      color: var(--panel-closed-hover-text-color); }
+    div.panel[aria-expanded=false]:hover button.togglebutton, div.panel[aria-expanded=false]:focus button.togglebutton {
+      color: var(--panel-closed-hover-text-color); }
+      div.panel[aria-expanded=false]:hover button.togglebutton:hover, div.panel[aria-expanded=false]:focus button.togglebutton:hover {
+        color: var(--panel-closed-hover-text-color); }
   div.panel.ghost {
     opacity: .5; }
     div.panel.ghost:hover, div.panel.ghost:focus, div.panel.ghost:focus-within {

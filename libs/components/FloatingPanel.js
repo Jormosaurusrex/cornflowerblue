@@ -14,7 +14,7 @@ class FloatingPanel {
 
             hidden: false, // set to true to hide
             togglecontrol: true, // show a visibility toggle
-            closeicon: 'triangle-down',
+            closeicon: 'triangle-down-circle',
             minimized: false, // Start minimized
             position: 'top-left', // Position for the panel. Valid values:
             // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)

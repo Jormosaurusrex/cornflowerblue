@@ -3,7 +3,7 @@ div.panel {
   z-index: 1000;
   border-radius: var(--panel-border-radius);
   box-shadow: var(--panel-box-shadow);
-  transition: all .5s ease-in-out;
+  transition: all .2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
   color: var(--panel-text-color);
   background-color: var(--panel-background-color);
@@ -45,6 +45,9 @@ div.panel {
         }
       }
     }
+    div.pcontent {
+      transition: all .2s;
+    }
   }
   &[aria-hidden=true] {
     display: none;
@@ -61,8 +64,21 @@ div.panel {
         display: none;
       }
     }
+    &:hover,
+    &:focus {
+      background-color: var(--panel-closed-hover-background-color);
+      color: var(--panel-closed-hover-text-color);
+      h3 {
+        color: var(--panel-closed-hover-text-color);
+      }
+      button.togglebutton {
+        color: var(--panel-closed-hover-text-color);
+        &:hover {
+          color: var(--panel-closed-hover-text-color);
+        }
+      }
+    }
   }
-
   // Styles
   &.ghost {
     opacity: .5;
