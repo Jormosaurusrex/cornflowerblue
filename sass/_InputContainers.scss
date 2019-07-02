@@ -93,8 +93,7 @@ div.textarea-container {
     padding: .5em 1em .5em 2em;
     background-color: var(--input-messages-background-color);
     &[aria-hidden=true] {
-      height: 0;
-      max-height: 0;
+      display: none;
     }
     li {
       margin: .5em 0 .5em 0;

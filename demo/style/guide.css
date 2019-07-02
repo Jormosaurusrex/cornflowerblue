@@ -1321,8 +1321,7 @@ div.textarea-container {
     background-color: var(--input-messages-background-color); }
     div.input-container ul.messagebox[aria-hidden=true],
     div.textarea-container ul.messagebox[aria-hidden=true] {
-      height: 0;
-      max-height: 0; }
+      display: none; }
     div.input-container ul.messagebox li,
     div.textarea-container ul.messagebox li {
       margin: .5em 0 .5em 0; }
