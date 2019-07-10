@@ -13,6 +13,7 @@ class SimpleProgressMeter {
                         // * roundcap : both sides of the progress bar will be round capped.
                         // * interiorroundcap : the progress bar's right side will be round capped.
 
+            commaseparate: true, // set to false to not comma separate numbers
             currentrank: null, // A string, if present, will be displayed inside (along with minvalue)
             nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
             showcaps: true, // if true, show the min and max values.  True by default if currentrank or nextrank is set.
@@ -131,7 +132,7 @@ class SimpleProgressMeter {
                 $p.append($('<div />').addClass('name').html(this.currentrank))
             }
             if (this.showcaps) {
-                $p.append($('<div />').addClass('value').html(this.minvalue));
+                $p.append($('<div />').addClass('value').html((this.commaseparate ? Utils.readableNumber(this.minvalue) : this.minvalue)));
             }
             this.decallayer.append($p);
         }
@@ -141,7 +142,7 @@ class SimpleProgressMeter {
                 $p.append($('<div />').addClass('name').html(this.nextrank))
             }
             if (this.showcaps) {
-                $p.append($('<div />').addClass('value').html(this.maxvalue));
+                $p.append($('<div />').addClass('value').html((this.commaseparate ? Utils.readableNumber(this.maxvalue) : this.maxvalue)));
             }
             this.decallayer.append($p);
         }
@@ -184,6 +185,9 @@ class SimpleProgressMeter {
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
+
+    get commaseparate() { return this.config.commaseparate; }
+    set commaseparate(commaseparate) { this.config.commaseparate = commaseparate; }
 
     get container() {
         if (!this._container) { this.buildContainer(); }

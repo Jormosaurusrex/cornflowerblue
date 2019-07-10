@@ -52,7 +52,7 @@ button {
   &:hover,
   &.hover {
     text-decoration: underline;
-    filter: brightness(120%);
+    filter: var(--button-hover-filter);
   }
   &:active,
   &.active {

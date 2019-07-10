@@ -204,6 +204,8 @@
   --button-hover-highlight-color: var(--white-half);
   --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
   --button-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
+  --button-hover-filter: brightness(120%);
+
 
   --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
   --button-font-family: var(--default-font-family);
