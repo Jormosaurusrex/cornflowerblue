@@ -247,7 +247,8 @@ class CornflowerBlueDemo {
                 },
                 { label: 'Growlers', id: 'growlers' },
                 { label: 'Password Changer', id: 'pwchanger' },
-                { label: 'Progress Meters', id: 'progressmeter' }
+                { label: 'Progress Meters', id: 'progressmeter' },
+                { label: 'Data Grid', id: 'datagrid' }
             ],
             action: function(tab, self) {
                 $('article')
@@ -291,6 +292,7 @@ class CornflowerBlueDemo {
         this.grindButtons();
         this.grindMessageBoxes();
         this.grindForms();
+        this.grindDataGrids();
 
         this.grindProgressMeters();
         this.grindTabsAndMenus();
@@ -2476,6 +2478,7 @@ class CornflowerBlueDemo {
 
         );
     }
+
     grindForms() {
         const $standard = $('#forms-standard');
         const $profile = $('#forms-passive');
@@ -2553,6 +2556,34 @@ class CornflowerBlueDemo {
             ]
         });
         $profile.append(p.container);
+    }
+
+
+
+    grindDataGrids() {
+        const $basic = $('#datagrid-basic');
+
+        let dg = new DataGrid({
+            fields: [
+                { name: "track", label: "Track", width: 1, type: "number", renderer: function(data) { return `${data}.`; } },
+                { name: "title", label: "Title", width: 3, type: "string", classes: ['title'] },
+                { name: "writers", label: "Writers", width: 3, type: "stringarray", separator: " &middot; " },
+                { name: "length", label: "Length", width: 1, type: "string" }
+            ],
+            data: [
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" }
+            ]
+        });
+
+        $basic.append(dg.container);
+
     }
 
     /**

@@ -56,9 +56,9 @@ class PasswordGenerator {
 
     constructor(config) {
         this.config = Object.assign({}, PasswordGenerator.DEFAULT_CONFIG, config);
-        if (!this.id) { // need to generate an id for label stuff
-            this.id = `pwgen-${Utils.getUniqueKey(5)}`;
-        }
+
+        if (!this.id) { this.id = `pwgen-${Utils.getUniqueKey(5)}`; }
+
         this.setactuals = [];
     }
 

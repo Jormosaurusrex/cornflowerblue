@@ -20,10 +20,6 @@ class SelectMenu extends InputElement {
      */
     constructor(config) {
         config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
-
-        if (!config.id) { // need to generate an id for label stuff
-            config.id = "select-" + Utils.getUniqueKey(5);
-        }
         super(config);
     }
 
@@ -60,7 +56,6 @@ class SelectMenu extends InputElement {
      */
     open() {
         const me = this;
-
 
         this.optionlist.removeAttr('aria-hidden');
         this.triggerbox.removeAttr('aria-expanded');

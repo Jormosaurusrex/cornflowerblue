@@ -26,10 +26,7 @@ class PasswordChangeForm {
     constructor(config) {
         this.config = Object.assign({}, PasswordChangeForm.DEFAULT_CONFIG, config);
 
-        if (!this.id) { // need to generate an id for label stuff
-            this.id = `pwchange-${Utils.getUniqueKey(5)}`;
-        }
-        return this;
+        if (!this.id) { this.id = `pwchange-${Utils.getUniqueKey(5)}`; }
     }
 
     /* ACTION METHODS___________________________________________________________________ */

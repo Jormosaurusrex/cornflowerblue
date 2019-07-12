@@ -51,9 +51,7 @@ class SimpleProgressMeter {
     constructor(config) {
         this.config = Object.assign({}, SimpleProgressMeter.DEFAULT_CONFIG, config);
 
-        if (!this.id) { // need to generate an id for label stuff
-            this.id = `progress-${Utils.getUniqueKey(5)}`;
-        }
+        if (!this.id) { this.id = `progress-${Utils.getUniqueKey(5)}`; }
         this.determineWidth();
     }
 

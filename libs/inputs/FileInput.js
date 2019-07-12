@@ -21,10 +21,6 @@ class FileInput extends InputElement {
 
     constructor(config) {
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
-
-        if (!config.id) { // need to generate an id for label stuff
-            config.id = "file-" + Utils.getUniqueKey(5);
-        }
         super(config);
     }
 

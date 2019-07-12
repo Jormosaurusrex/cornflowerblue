@@ -35,9 +35,6 @@ class StateMenu extends SelectMenu {
         }
 
         config.options = options;
-        if (!config.id) { // need to generate an id for label stuff
-            config.id = "state-" + Utils.getUniqueKey(5);
-        }
         super(config);
 
     }

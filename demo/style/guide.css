@@ -2839,14 +2839,14 @@ form {
     form div.actions button,
     form div.passiveactions button {
       margin-right: 1em; }
-    form div.actions button:first-child,
-    form div.passiveactions button:first-child {
-      margin-left: 0; }
-    form div.actions button:last-child:not(:only-of-type),
-    form div.passiveactions button:last-child:not(:only-of-type) {
-      align-self: flex-end;
-      margin-left: auto;
-      margin-right: 1em; }
+      form div.actions button:first-child,
+      form div.passiveactions button:first-child {
+        margin-left: 0; }
+      form div.actions button:last-child:not(:only-of-type),
+      form div.passiveactions button:last-child:not(:only-of-type) {
+        align-self: flex-end;
+        margin-left: auto;
+        margin-right: 1em; }
   form div.passiveactions {
     display: none; }
   form.passive div.actions {
@@ -3599,6 +3599,58 @@ div.pwgenerator {
         margin: 0; }
     div.pwgenerator ul.datasets[aria-hidden=true] {
       display: none; }
+
+div.datagrid-container {
+  --datagrid-grid-color: var(--grey-medium);
+  --datagrid-header-background-color: var(--grey-medium);
+  --datagrid-header-color: var(--grey-darkest);
+  --datagrid-header-grid-color: var(--grey-darker); }
+  div.datagrid-container div.header {
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border-right: 0.1em solid var(--datagrid-grid-color);
+    border-top: 0.1em solid var(--datagrid-grid-color);
+    background-color: var(--datagrid-header-background-color);
+    display: grid; }
+    div.datagrid-container div.header div.cell {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      padding: .5em 2em .5em 1em;
+      color: var(--datagrid-header-color);
+      cursor: pointer;
+      border-left: 0.1em solid var(--datagrid-header-grid-color);
+      border-bottom: 0.1em solid var(--datagrid-header-grid-color); }
+      div.datagrid-container div.header div.cell:before {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: all .2s;
+        color: var(--datagrid-header-color);
+        opacity: 0; }
+      div.datagrid-container div.header div.cell[data-sort='asc']:before {
+        opacity: 1; }
+      div.datagrid-container div.header div.cell[data-sort='desc']:before {
+        opacity: 1;
+        transform: rotate(180deg); }
+  div.datagrid-container ul.grid {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border-right: 0.1em solid var(--datagrid-grid-color);
+    border-top: 0.1em solid var(--datagrid-grid-color); }
+    div.datagrid-container ul.grid li {
+      display: grid; }
+      div.datagrid-container ul.grid li div.cell {
+        display: inline-block;
+        padding: .5em 2em .5em 1em;
+        border-left: 0.1em solid var(--datagrid-grid-color);
+        border-bottom: 0.1em solid var(--datagrid-grid-color); }
 
 body {
   background-color: var(--grey-darkest);
