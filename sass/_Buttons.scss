@@ -61,7 +61,7 @@ button {
   }
   &:focus,
   &.focus {
-    outline: var(--grey-medium) dashed .1em;
+    outline: var(--hot-text-color) dashed .1em;
     outline-offset: .2em;
     text-decoration: underline double;
   }
@@ -135,7 +135,7 @@ button {
     }
     &:focus,
     &.focus {
-      outline: var(--grey-medium) dashed .1em;
+      outline: var(--hot-text-color) dashed .1em;
       outline-offset: .2em;
       text-decoration: underline double;
     }
@@ -399,7 +399,7 @@ button {
           }
           &:focus {
             margin: .3em;
-            outline: var(--grey-medium) dashed .1em;
+            outline: var(--hot-text-color) dashed .1em;
             outline-offset: .2em;
             text-decoration: underline double;
           }
