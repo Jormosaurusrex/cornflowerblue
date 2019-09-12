@@ -29,9 +29,7 @@ class FloatingPanel {
     constructor(config) {
         this.config = Object.assign({}, FloatingPanel.DEFAULT_CONFIG, config);
 
-        if (!this.id) {
-            this.id = "panel-" + Utils.getUniqueKey(5);
-        }
+        if (!this.id) { this.id = "panel-" + Utils.getUniqueKey(5); }
     }
 
     /* CORE METHODS_____________________________________________________________________ */

@@ -1835,7 +1835,7 @@ div.select-container {
         div.select-container ul.selectmenu li:hover label, div.select-container ul.selectmenu li:focus label {
           color: var(--selectmenu-menu-item-hover-text-color);
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow); }
-        div.select-container ul.selectmenu li:hover.selected label:before, div.select-container ul.selectmenu li:focus.selected label:before {
+        div.select-container ul.selectmenu li:hover[aria-selected=true] label:before, div.select-container ul.selectmenu li:focus[aria-selected=true] label:before {
           color: var(--selectmenu-menu-item-hover-text-color); }
     div.select-container ul.selectmenu.vert {
       bottom: 3.4em;
@@ -1899,7 +1899,7 @@ button {
     text-decoration: none;
     box-shadow: none; }
   button:focus, button.focus {
-    outline: var(--grey-medium) dashed 0.1em;
+    outline: var(--hot-text-color) dashed 0.1em;
     outline-offset: .2em;
     text-decoration: underline double; }
   button.constructive {
@@ -1948,7 +1948,7 @@ button {
       text-decoration: none;
       box-shadow: none; }
     button.mute:focus, button.mute.focus {
-      outline: var(--grey-medium) dashed 0.1em;
+      outline: var(--hot-text-color) dashed 0.1em;
       outline-offset: .2em;
       text-decoration: underline double; }
     button.mute:disabled {
@@ -2146,7 +2146,7 @@ button {
             filter: none; }
           button.menu ul li a:focus {
             margin: .3em;
-            outline: var(--grey-medium) dashed 0.1em;
+            outline: var(--hot-text-color) dashed 0.1em;
             outline-offset: .2em;
             text-decoration: underline double; }
           button.menu ul li a span.icon {
@@ -2823,6 +2823,14 @@ form {
       align-self: flex-end;
       margin-left: auto;
       margin-right: 1em; }
+      form div.actions button:last-child:not(:only-of-type):first-child,
+      form div.passiveactions button:last-child:not(:only-of-type):first-child {
+        margin-left: 0; }
+      form div.actions button:last-child:not(:only-of-type):last-child:not(:only-of-type),
+      form div.passiveactions button:last-child:not(:only-of-type):last-child:not(:only-of-type) {
+        align-self: flex-end;
+        margin-left: auto;
+        margin-right: 1em; }
   form div.passiveactions {
     display: none; }
   form.passive div.actions {
@@ -3335,7 +3343,6 @@ ul.tabbar {
     padding: 0; }
     ul.tabbar li a {
       padding: 0 1em 0 1em;
-      font-size: 110%;
       white-space: nowrap;
       background-color: var(--tabbar-tab-background-color);
       color: var(--tabbar-tab-text-color);
@@ -3346,6 +3353,7 @@ ul.tabbar {
       align-items: center;
       justify-content: center;
       flex-grow: 1;
+      font-size: 110%;
       transition: all .1s linear; }
       ul.tabbar li a[aria-selected="true"] {
         background-color: var(--tabbar-selected-tab-background-color);
@@ -3358,7 +3366,7 @@ ul.tabbar {
         text-shadow: var(--tabbar-hover-tab-text-shadow);
         filter: none; }
       ul.tabbar li a:focus {
-        outline: var(--grey-medium) dashed 0.1em;
+        outline: var(--hot-text-color) dashed 0.1em;
         outline-offset: -.3em;
         text-decoration: underline double; }
         ul.tabbar li a:focus:hover {
@@ -3390,8 +3398,8 @@ ul.tabbar {
         justify-content: flex-start; }
         ul.tabbar.vertical li a:focus {
           margin: 0;
-          outline: var(--ultralight) dashed 0.15em;
-          outline-offset: -.2em;
+          outline: var(--ultralight) dashed 0.1em;
+          outline-offset: -.3em;
           text-decoration: underline double; }
           ul.tabbar.vertical li a:focus:hover {
             outline-color: var(--ultralight); }
@@ -3575,6 +3583,105 @@ div.pwgenerator {
         margin: 0; }
     div.pwgenerator ul.datasets[aria-hidden=true] {
       display: none; }
+
+div.datagrid-container {
+  --datagrid-header-background-color: var(--light);
+  --datagrid-header-text-color: var(--grey-darkest);
+  --datagrid-header-grid-text-color: var(--grey-darker);
+  --datagrid-header-hover-text-shadow: var(--text-shadow);
+  --datagrid-header-hover-text-color: var(--hot-text-color);
+  --datagrid-header-hover-background-color: var(--darkblue);
+  --datagrid-grid-color: transparent;
+  --datagrid-grid-text-color: var(--grey-darkest);
+  --datagrid-grid-selected-background-color: var(--focus-color);
+  --datagrid-grid-selected-text-color: var(--hot-text-color);
+  --datagrid-grid-background-color: var(--ultralight);
+  --datagrid-grid-alternate-background-color: var(--grey-translucent);
+  --datagrid-grid-hover-background-color: var(--focus-color);
+  --datagrid-grid-hover-text-color: var(--hot-text-color);
+  --datagrid-grid-hover-text-shadow: var(--text-shadow);
+  max-height: 80vh;
+  overflow: auto; }
+  div.datagrid-container table.grid {
+    padding: 0;
+    margin: 0;
+    border-spacing: 0; }
+    div.datagrid-container table.grid thead tr th {
+      cursor: pointer;
+      padding: 0;
+      color: var(--datagrid-header-text-color);
+      background-color: var(--datagrid-header-background-color);
+      text-align: left;
+      font-weight: normal;
+      position: sticky;
+      top: 0;
+      z-index: 10; }
+      div.datagrid-container table.grid thead tr th div {
+        padding: .5em 1.5em .5em 1em;
+        position: relative;
+        white-space: nowrap; }
+        div.datagrid-container table.grid thead tr th div:before {
+          position: absolute;
+          right: .5em;
+          margin: 0;
+          flex-direction: column;
+          font-size: 70%;
+          justify-content: center;
+          align-items: center;
+          transition: all .2s;
+          color: var(--datagrid-header-color);
+          opacity: 0; }
+      div.datagrid-container table.grid thead tr th:hover, div.datagrid-container table.grid thead tr th:focus, div.datagrid-container table.grid thead tr th:active, div.datagrid-container table.grid thead tr th.focus, div.datagrid-container table.grid thead tr th.active, div.datagrid-container table.grid thead tr th.hover {
+        color: var(--datagrid-header-hover-text-color);
+        text-shadow: var(--datagrid-header-hover-text-shadow);
+        background-color: var(--datagrid-header-hover-background-color);
+        outline: none; }
+      div.datagrid-container table.grid thead tr th:hover, div.datagrid-container table.grid thead tr th.hover {
+        text-decoration: underline; }
+      div.datagrid-container table.grid thead tr th:active, div.datagrid-container table.grid thead tr th.active {
+        text-decoration: none;
+        box-shadow: none; }
+      div.datagrid-container table.grid thead tr th:focus, div.datagrid-container table.grid thead tr th.focus {
+        outline: var(--hot-text-color) dashed 0.1em;
+        outline-offset: -.3em;
+        text-decoration: underline double; }
+      div.datagrid-container table.grid thead tr th[data-sort='asc'] div:before {
+        opacity: 1; }
+      div.datagrid-container table.grid thead tr th[data-sort='desc'] div:before {
+        opacity: 1;
+        transform: rotate(180deg); }
+      div.datagrid-container table.grid thead tr th.right, div.datagrid-container table.grid thead tr th.number {
+        text-align: right; }
+      div.datagrid-container table.grid thead tr th.center {
+        text-align: center; }
+    div.datagrid-container table.grid tbody tr {
+      background-color: var(--datagrid-grid-background-color);
+      color: var(--datagrid-grid-text-color); }
+      div.datagrid-container table.grid tbody tr td {
+        padding: .5em 1.5em .5em 1em;
+        vertical-align: top; }
+        div.datagrid-container table.grid tbody tr td.number, div.datagrid-container table.grid tbody tr td.time {
+          text-align: right; }
+        div.datagrid-container table.grid tbody tr td.nowrap {
+          white-space: nowrap; }
+        div.datagrid-container table.grid tbody tr td.italic {
+          font-style: oblique; }
+        div.datagrid-container table.grid tbody tr td.smaller {
+          font-size: 80%; }
+      div.datagrid-container table.grid tbody tr:nth-child(even) {
+        background-color: var(--datagrid-grid-alternate-background-color); }
+    div.datagrid-container table.grid.selectable tbody tr {
+      cursor: pointer; }
+      div.datagrid-container table.grid.selectable tbody tr:focus {
+        outline: var(--datagrid-grid-hover-text-color) dashed 0.1em;
+        outline-offset: -.3em; }
+      div.datagrid-container table.grid.selectable tbody tr:hover, div.datagrid-container table.grid.selectable tbody tr:focus {
+        background-color: var(--datagrid-grid-hover-background-color);
+        color: var(--datagrid-grid-hover-text-color);
+        text-shadow: var(--datagrid-grid-hover-text-shadow); }
+      div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] {
+        background-color: var(--datagrid-grid-selected-background-color);
+        color: var(--datagrid-grid-selected-text-color); }
 
 body {
   background-color: var(--grey-darkest);

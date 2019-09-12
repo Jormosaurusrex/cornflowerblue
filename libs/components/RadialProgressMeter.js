@@ -23,7 +23,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
     }
 
     /**
-     * Define the StateMenu
+     * Define the RadialProgresMeter
      * @param config a dictionary object
      */
     constructor(config) {

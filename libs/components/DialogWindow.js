@@ -24,9 +24,7 @@ class DialogWindow {
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
-        if (!config.id) {
-            config.id = "dialog-" + Utils.getUniqueKey(5);
-        }
+        if (!config.id) { config.id = "dialog-" + Utils.getUniqueKey(5); }
 
         this.build();
     }

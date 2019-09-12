@@ -20,10 +20,6 @@ class SelectMenu extends InputElement {
      */
     constructor(config) {
         config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
-
-        if (!config.id) { // need to generate an id for label stuff
-            config.id = "select-" + Utils.getUniqueKey(5);
-        }
         super(config);
     }
 
@@ -61,9 +57,8 @@ class SelectMenu extends InputElement {
     open() {
         const me = this;
 
-
         this.optionlist.removeAttr('aria-hidden');
-        this.triggerbox.removeAttr('aria-expanded');
+        this.triggerbox.attr('aria-expanded', true);
 
         let vertpos;
 
@@ -274,7 +269,7 @@ class SelectMenu extends InputElement {
                     e.preventDefault();
                     $(this).next().focus();
                 } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                    $op.trigger('click');
+                    $(this).trigger('click');
                 } else if (e.keyCode === 8) { // Backspace
                     me.rmSearchKey();
                 } else if ((e.keyCode === 17) // ctrl
@@ -287,8 +282,8 @@ class SelectMenu extends InputElement {
                 }
             })
             .click(function() {
-                me.optionlist.find('li').removeClass('selected');
-                $(this).addClass('selected');
+                me.optionlist.find('li').removeAttr('aria-selected');
+                $(this).attr('aria-selected', true);
             });
 
         if (def.checked) {
@@ -298,7 +293,7 @@ class SelectMenu extends InputElement {
             } else {
                 this.triggerbox.html(def.label);
             }
-            $li.addClass('selected');
+            $li.attr('aria-selected', true);
             $op.attr('aria-checked', 'checked')
                 .attr('checked', 'checked')
         }

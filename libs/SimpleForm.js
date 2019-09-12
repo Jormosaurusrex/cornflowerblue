@@ -57,10 +57,7 @@ class SimpleForm {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleForm.DEFAULT_CONFIG, config);
-        if (!this.id) { // need to generate an id for label stuff
-            this.id = `form-${Utils.getUniqueKey(5)}`;
-        }
-        return this;
+        if (!this.id) { this.id = `form-${Utils.getUniqueKey(5)}`; }
     }
 
     /* CONTROL METHODS__________________________________________________________________ */

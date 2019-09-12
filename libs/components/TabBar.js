@@ -30,7 +30,7 @@ class TabBar {
     constructor(config) {
         this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
         this.tabmap = {};
-        return this;
+        if (!this.id) { this.id = "tabbar-" + Utils.getUniqueKey(5); }
     }
 
     /* CORE METHODS_____________________________________________________________________ */

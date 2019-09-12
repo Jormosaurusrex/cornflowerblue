@@ -41,7 +41,7 @@ class SimpleButton {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleButton.DEFAULT_CONFIG, config);
-        return this;
+        if (!this.id) { this.id = "button-" + Utils.getUniqueKey(5); }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */

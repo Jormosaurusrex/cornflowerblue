@@ -26,13 +26,9 @@ class BooleanToggle {
             this.arialabel = this.label;
         }
 
-        if (!this.id) { // need to generate an id for label stuff
-            this.id = "check-" + Utils.getUniqueKey(5);
-        }
+        if (!this.id) { this.id = "check-" + Utils.getUniqueKey(5); }
         if (!this.name) { this.name = this.id; }
         this.origval = this.checked;
-        
-        return this;
     }
 
     /**

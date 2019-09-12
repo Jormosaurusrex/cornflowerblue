@@ -69,6 +69,7 @@ div.select-container {
       background-color: var(--input-focused-background-color);
       box-shadow: inset .5em 0 0 var(--input-focused-border-color);
       &:before {
+
         transform: rotate(180deg);
       }
     }
@@ -155,7 +156,7 @@ div.select-container {
           color: var(--selectmenu-menu-item-hover-text-color);
           text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
         }
-        &.selected {
+        &[aria-selected=true] {
           label {
             &:before {
               color: var(--selectmenu-menu-item-hover-text-color);
