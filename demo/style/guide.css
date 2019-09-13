@@ -3607,13 +3607,14 @@ div.datagrid-container {
   --datagrid-header-hover-text-shadow: var(--text-shadow);
   --datagrid-header-hover-text-color: var(--hot-text-color);
   --datagrid-header-hover-background-color: var(--darkblue);
+  --datagrid-header-sort-highlight-color: var(--focus-color);
   --datagrid-grid-color: transparent;
   --datagrid-grid-text-color: var(--grey-darkest);
   --datagrid-grid-selected-background-color: var(--focus-color);
   --datagrid-grid-selected-text-color: var(--hot-text-color);
   --datagrid-grid-background-color: var(--ultralight);
   --datagrid-grid-alternate-background-color: var(--grey-translucent);
-  --datagrid-grid-hover-background-color: var(--focus-color);
+  --datagrid-grid-hover-background-color: var(--focus-color-half);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   max-height: 80vh;
@@ -3621,7 +3622,8 @@ div.datagrid-container {
   div.datagrid-container table.grid {
     padding: 0;
     margin: 0;
-    border-spacing: 0; }
+    border-spacing: 0;
+    width: 100%; }
     div.datagrid-container table.grid thead tr th {
       cursor: pointer;
       padding: 0;
@@ -3661,10 +3663,11 @@ div.datagrid-container {
         outline: var(--hot-text-color) dashed 0.1em;
         outline-offset: -.3em;
         text-decoration: underline double; }
-      div.datagrid-container table.grid thead tr th[data-sort='asc'] div:before {
-        opacity: 1; }
+      div.datagrid-container table.grid thead tr th[data-sort='asc'] div, div.datagrid-container table.grid thead tr th[data-sort='desc'] div {
+        box-shadow: inset 0px -0.3em 0 0 var(--datagrid-header-sort-highlight-color); }
+        div.datagrid-container table.grid thead tr th[data-sort='asc'] div:before, div.datagrid-container table.grid thead tr th[data-sort='desc'] div:before {
+          opacity: 1; }
       div.datagrid-container table.grid thead tr th[data-sort='desc'] div:before {
-        opacity: 1;
         transform: rotate(180deg); }
       div.datagrid-container table.grid thead tr th.right, div.datagrid-container table.grid thead tr th.number {
         text-align: right; }
