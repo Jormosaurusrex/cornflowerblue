@@ -38,37 +38,6 @@ form {
   background-color: var(--form-background-color);
   display: block;
   padding: 0;
-  div.shade2 {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 2000;
-    background-color: var(--form-shade-background-color);
-    border: .1em solid var(--form-shade-border-color);
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    span.icon {
-      display: block;
-      color: var(--form-shade-icon-color);
-      font-size: 100pt;
-      text-shadow: var(--form-shade-icon-shadow);
-      margin-top:-1em;
-      animation: localspin 2s linear infinite;
-      &:before {
-        line-height: normal;
-      }
-    }
-    div.spinnertext {
-      color: var(--form-shade-text-color);
-      font-size: 200%;
-      text-shadow: var(--form-shade-text-shadow);
-    }
-  }
   &.shaded {
     overflow: hidden;
     div.shade {
@@ -113,6 +82,17 @@ form {
     border-top: .1em solid var(--form-actions-border-color);
     padding: .5em 1.5em .5em 1.5em;
     button {
+      margin-right: 1em;
+      &.fill {
+        margin: 0;
+      }
+    }
+    button:first-child {
+      margin-left: 0;
+    }
+    button:last-child:not(:only-of-type) {
+      align-self: flex-end;
+      margin-left: auto;
       margin-right: 1em;
       &:first-child {
         margin-left: 0;

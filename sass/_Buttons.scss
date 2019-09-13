@@ -71,7 +71,7 @@ button {
   &.destructive {
     --button-default-color: var(--destructive-color);
   }
-  &:disabled {
+  &:disabled-old {
     color: var(--button-disabled-text-color);
     background-color: var(--button-disabled-color);
     border-color: var(--button-disabled-color);
@@ -85,6 +85,25 @@ button {
       color: var(--button-disabled-text-color);
       background-color: var(--button-disabled-color);
       border-color: var(--button-disabled-color);
+      text-shadow: none;
+      box-shadow: none;
+    }
+    &.hexagon,
+    &.hexagon::before,
+    &.hexagon::after {
+      box-shadow: var(--hexagon-shadow);
+    }
+  }
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    text-shadow: none;
+    box-shadow: none;
+    pointer-events: none;
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 0.3;
       text-shadow: none;
       box-shadow: none;
     }

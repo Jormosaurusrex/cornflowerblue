@@ -12,7 +12,7 @@
   --green: #005e20;
   --tan: #eadcbc;
   --purple: #563b67;
-  --white: #e1ffff;
+  --white: #fff;
   --ultralight: #fdfdfd;
   --bright: #eee;
   --morelight: #f3f3f3;
@@ -1906,7 +1906,7 @@ button {
     --button-default-color: var(--constructive-color); }
   button.destructive {
     --button-default-color: var(--destructive-color); }
-  button:disabled {
+  button:disabled-old {
     color: var(--button-disabled-text-color);
     background-color: var(--button-disabled-color);
     border-color: var(--button-disabled-color);
@@ -1914,10 +1914,22 @@ button {
     text-shadow: none;
     box-shadow: none;
     pointer-events: none; }
-    button:disabled:hover, button:disabled:focus, button:disabled:active {
+    button:disabled-old:hover, button:disabled-old:focus, button:disabled-old:active {
       color: var(--button-disabled-text-color);
       background-color: var(--button-disabled-color);
       border-color: var(--button-disabled-color);
+      text-shadow: none;
+      box-shadow: none; }
+    button:disabled-old.hexagon, button:disabled-old.hexagon::before, button:disabled-old.hexagon::after {
+      box-shadow: var(--hexagon-shadow); }
+  button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    text-shadow: none;
+    box-shadow: none;
+    pointer-events: none; }
+    button:disabled:hover, button:disabled:focus, button:disabled:active {
+      opacity: 0.3;
       text-shadow: none;
       box-shadow: none; }
     button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {
@@ -2773,33 +2785,6 @@ form {
   background-color: var(--form-background-color);
   display: block;
   padding: 0; }
-  form div.shade2 {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 2000;
-    background-color: var(--form-shade-background-color);
-    border: 0.1em solid var(--form-shade-border-color);
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center; }
-    form div.shade2 span.icon {
-      display: block;
-      color: var(--form-shade-icon-color);
-      font-size: 100pt;
-      text-shadow: var(--form-shade-icon-shadow);
-      margin-top: -1em;
-      animation: localspin 2s linear infinite; }
-      form div.shade2 span.icon:before {
-        line-height: normal; }
-    form div.shade2 div.spinnertext {
-      color: var(--form-shade-text-color);
-      font-size: 200%;
-      text-shadow: var(--form-shade-text-shadow); }
   form.shaded {
     overflow: hidden; }
     form.shaded div.shade {
@@ -2839,11 +2824,22 @@ form {
     form div.actions button,
     form div.passiveactions button {
       margin-right: 1em; }
-      form div.actions button:first-child,
-      form div.passiveactions button:first-child {
+      form div.actions button.fill,
+      form div.passiveactions button.fill {
+        margin: 0; }
+    form div.actions button:first-child,
+    form div.passiveactions button:first-child {
+      margin-left: 0; }
+    form div.actions button:last-child:not(:only-of-type),
+    form div.passiveactions button:last-child:not(:only-of-type) {
+      align-self: flex-end;
+      margin-left: auto;
+      margin-right: 1em; }
+      form div.actions button:last-child:not(:only-of-type):first-child,
+      form div.passiveactions button:last-child:not(:only-of-type):first-child {
         margin-left: 0; }
-      form div.actions button:last-child:not(:only-of-type),
-      form div.passiveactions button:last-child:not(:only-of-type) {
+      form div.actions button:last-child:not(:only-of-type):last-child:not(:only-of-type),
+      form div.passiveactions button:last-child:not(:only-of-type):last-child:not(:only-of-type) {
         align-self: flex-end;
         margin-left: auto;
         margin-right: 1em; }
