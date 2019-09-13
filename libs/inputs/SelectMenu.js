@@ -378,7 +378,11 @@ class SelectMenu extends InputElement {
         if ((this.scrolleditem) && ($element.attr('id') === this.scrolleditem.attr('id'))) {
             return; // this is us, don't reflow.
         }
-        this.optionlist.scrollTop($element.offset().top - $element.height());
+        let top = 0;
+        if (($element) && ($element.offset())) {
+            top = $element.offset().top;
+        }
+        this.optionlist.scrollTop(top - $element.height());
         $element.focus();
         this.scrolleditem = $element;
     }

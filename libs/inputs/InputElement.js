@@ -472,7 +472,7 @@ class InputElement {
 
         if (this.mute) {
             this.input.addClass('mute');
-            if (this.label) { this.input.attr('placeholder', this.label); }
+            if (this.label) { this.input.attr('placeholder', `${this.label} (required)`); }
         }
 
         if (this.icon) { this.input.addClass(`cfb-${this.icon}`); }
