@@ -1,6 +1,5 @@
 
 [hidden] { display: none; }
-
 input[type="text"],
 input[type="number"],
 input[type="password"],
@@ -10,6 +9,8 @@ textarea {
   outline: none;
   position: relative;
   font-family: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
   font-size: 105%;
   width: 100%;
   background-color: var(--input-default-background-color);

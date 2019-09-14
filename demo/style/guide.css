@@ -1367,7 +1367,7 @@ div.textarea-container {
   div.input-container.required label:after,
   div.textarea-container.required label:after {
     color: var(--label-required-marker-color);
-    content: 'required';
+    content: attr(data-required-text);
     font-size: 75%;
     margin-left: .5em; }
   div.input-container.valid div.wrap:after,
@@ -1527,6 +1527,8 @@ textarea {
   outline: none;
   position: relative;
   font-family: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
   font-size: 105%;
   width: 100%;
   background-color: var(--input-default-background-color);
@@ -1906,7 +1908,7 @@ button {
     --button-default-color: var(--constructive-color); }
   button.destructive {
     --button-default-color: var(--destructive-color); }
-  button:disabled-old {
+  button:disabled {
     color: var(--button-disabled-text-color);
     background-color: var(--button-disabled-color);
     border-color: var(--button-disabled-color);
@@ -1914,22 +1916,10 @@ button {
     text-shadow: none;
     box-shadow: none;
     pointer-events: none; }
-    button:disabled-old:hover, button:disabled-old:focus, button:disabled-old:active {
+    button:disabled:hover, button:disabled:focus, button:disabled:active {
       color: var(--button-disabled-text-color);
       background-color: var(--button-disabled-color);
       border-color: var(--button-disabled-color);
-      text-shadow: none;
-      box-shadow: none; }
-    button:disabled-old.hexagon, button:disabled-old.hexagon::before, button:disabled-old.hexagon::after {
-      box-shadow: var(--hexagon-shadow); }
-  button:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    text-shadow: none;
-    box-shadow: none;
-    pointer-events: none; }
-    button:disabled:hover, button:disabled:focus, button:disabled:active {
-      opacity: 0.3;
       text-shadow: none;
       box-shadow: none; }
     button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {

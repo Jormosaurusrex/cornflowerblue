@@ -25,6 +25,8 @@ class InputElement {
             help: null, // Help text.
             helpwaittime: 5000, // How long to wait before automatically showing help tooltip
             required: false, // Is this a required field or not
+            requiredtext: 'required', // text to display on required items
+            requirederror: 'This field is required', // error to display if required item isn't filled.
             hidden: false, // Whether or not to be hidden
             autocomplete: 'off', // Enable browser autocomplete. Default is off.
             arialabel: null, // The aria-label value. If null, follows: label > title > null
@@ -47,10 +49,6 @@ class InputElement {
      * @param config a dictionary object
      */
     constructor(config) {
-
-        if (config.type === 'range') {
-            console.log(`type: ${config.type}`);
-        }
         this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
 
         if (!this.arialabel) { // munch aria label.
@@ -123,7 +121,7 @@ class InputElement {
         this.errors = [];
         this.warnings = [];
         if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
-            this.errors.push('This field is required.');
+            this.errors.push(this.requirederror);
         }
         if ((this.localValidator) && (typeof this.localValidator === 'function')) {
             this.localValidator(onload);
@@ -450,7 +448,7 @@ class InputElement {
                 }
 
                 if ((me.mute) && (me.label)) {
-                    $(this).attr('placeholder', me.label);
+                    $(this).attr('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
                 }
 
                 if (me.container) {
@@ -468,11 +466,14 @@ class InputElement {
 
         if (this.required) {
             this.input.attr('required', true);
+            if (this.label) {
+                this.labelobj.attr('data-required-text', `${this.requiredtext}`);
+            }
         }
 
         if (this.mute) {
             this.input.addClass('mute');
-            if (this.label) { this.input.attr('placeholder', `${this.label} (required)`); }
+            if (this.label) { this.input.attr('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`); }
         }
 
         if (this.icon) { this.input.addClass(`cfb-${this.icon}`); }
@@ -703,6 +704,12 @@ class InputElement {
 
     get required() { return this.config.required; }
     set required(required) { this.config.required = required; }
+
+    get requirederror() { return this.config.requirederror; }
+    set requirederror(requirederror) { this.config.requirederror = requirederror; }
+
+    get requiredtext() { return this.config.requiredtext; }
+    set requiredtext(requiredtext) { this.config.requiredtext = requiredtext; }
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }

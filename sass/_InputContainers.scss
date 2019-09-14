@@ -134,7 +134,6 @@ div.textarea-container {
       }
       div.topcontrol {
         opacity: 1;
-
       }
     }
     div.wrap {
@@ -142,13 +141,12 @@ div.textarea-container {
         right: 0;
       }
     }
-
   }
   &.required {
     label {
       &:after {
         color: var(--label-required-marker-color);
-        content: 'required';
+        content: attr(data-required-text);
         font-size: 75%;
         margin-left: .5em;
       }
