@@ -53,18 +53,18 @@ button {
     text-shadow: var(--button-text-shadow);
     background-color: var(--button-default-color);
     outline: none;
-    box-shadow: var(--button-hover-box-shadow);
     background-image: var(--button-hover-gradient);
   }
   &:hover,
   &.hover {
     text-decoration: underline;
+    box-shadow: var(--button-hover-box-shadow);
     filter: var(--button-hover-filter);
   }
   &:active,
   &.active {
+    box-shadow: var(--button-active-box-shadow);
     text-decoration: none;
-    box-shadow: none;
   }
   &:focus,
   &.focus {
