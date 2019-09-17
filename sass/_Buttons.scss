@@ -14,11 +14,13 @@ button {
   line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
-  color: var(--button-default-color);
-  background-color: transparent;
-  box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
+  color: var(--button-hover-text-color);
+  text-shadow: var(--button-text-shadow);
+  background-color: var(--button-default-color);
   border: none;
   border-radius: var(--button-border-radius);
+  box-shadow: var(--button-box-shadow);
+
   span.icon {
     margin: 0 .2em 0 0;
     &:before {
@@ -35,6 +37,11 @@ button {
         margin: 0 .2em 0 0;
       }
     }
+  }
+  &.ghost {
+    color: var(--button-default-color);
+    background-color: transparent;
+    box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
   }
   &:hover,
   &:focus,
@@ -61,7 +68,7 @@ button {
   }
   &:focus,
   &.focus {
-    outline: var(--hot-text-color) dashed .1em;
+    outline: var(--button-default-color) dashed .1em;
     outline-offset: .2em;
     text-decoration: underline double;
   }
@@ -95,6 +102,7 @@ button {
     }
   }
   &.mute {
+    color: var(--button-default-color);
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
@@ -442,6 +450,7 @@ button {
     padding: 0;
     border: none;
     background-color: var(--morelight);
+    color: var(--button-default-color);
     span {
       z-index: 3;
       display: flex;
@@ -512,6 +521,7 @@ button {
   &.link {
     margin: 0;
     padding: 0;
+    background-color: transparent;
     box-shadow: none;
     background-image: none;
     height: auto;
@@ -528,6 +538,9 @@ button {
       background-image: none;
       color: var(--button-default-color);
     }
+  }
+  &.naked {
+    color: var(--button-default-color);
   }
   &.link {
     color: var(--link-color);

@@ -49,6 +49,7 @@ class FloatingPanel {
      * Unminimize the panel
      */
     open() {
+        console.log("open");
         this.container.attr('aria-expanded', true);
         this.pcontent.removeAttr('aria-hidden');
         this.minimized = false;
@@ -103,7 +104,6 @@ class FloatingPanel {
                 classes: ["togglebutton"],
                 action: function(e) {
                     e.preventDefault();
-                    me.toggleClose();
                 }
             });
         }
@@ -114,14 +114,12 @@ class FloatingPanel {
                     e.preventDefault();
                     me.toggleClose();
                 });
-
             if (this.togglecontrol) {
                 this.titlecontainer.append(this.togglebutton.button);
             }
             this.titleactual = $('<span />').addClass('text').html(this.title);
             this.titlecontainer.append(this.titleactual);
         } else {
-            console.log('bar');
             if (this.togglecontrol) {
                 this.container.append(this.togglebutton.button);
             }

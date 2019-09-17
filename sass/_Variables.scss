@@ -197,6 +197,8 @@
   --blockquote-border-color: var(--blue);
 
   // Button keys
+  --button-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
+  --button-hover-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.7);
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--darkblue);
   --button-default-text-color: var(--button-default-color);
@@ -425,7 +427,6 @@
   --panel-text-shadow: var(--text-shadow);
   --panel-padding: .5em 1em .5em 1em;
   --panel-closed-hover-background-color: var(--focus-color);
-  --panel-closed-hover-text-color: var(--hot-text-color);
 
   // Paragraph
   --paragraph-text-color: var(--grey-dark);

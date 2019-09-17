@@ -160,6 +160,8 @@
   --blockquote-text-shadow: var(--text-shadow);
   --blockquote-background-color: var(--canvas-color-callout-lightweight);
   --blockquote-border-color: var(--blue);
+  --button-box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.5);
+  --button-hover-box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.7);
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--darkblue);
   --button-default-text-color: var(--button-default-color);
@@ -338,7 +340,6 @@
   --panel-text-shadow: var(--text-shadow);
   --panel-padding: .5em 1em .5em 1em;
   --panel-closed-hover-background-color: var(--focus-color);
-  --panel-closed-hover-text-color: var(--hot-text-color);
   --paragraph-text-color: var(--grey-dark);
   --paragraph-measure: auto;
   --paragraph-shadow: var(--text-shadow);
@@ -1872,11 +1873,12 @@ button {
   line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
-  color: var(--button-default-color);
-  background-color: transparent;
-  box-shadow: inset -0.1em -0.1em 0 0 var(--button-default-color), inset 0.1em -0.1em 0 0 var(--button-default-color), inset -0.1em 0.1em 0 0 var(--button-default-color), inset 0.1em 0.1em 0 0 var(--button-default-color);
+  color: var(--button-hover-text-color);
+  text-shadow: var(--button-text-shadow);
+  background-color: var(--button-default-color);
   border: none;
-  border-radius: var(--button-border-radius); }
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--button-box-shadow); }
   button span.icon {
     margin: 0 .2em 0 0; }
     button span.icon:before {
@@ -1887,6 +1889,10 @@ button {
     margin: 0 0 0 .2em; }
     button.righticon span.icon.secondicon {
       margin: 0 .2em 0 0; }
+  button.ghost {
+    color: var(--button-default-color);
+    background-color: transparent;
+    box-shadow: inset -0.1em -0.1em 0 0 var(--button-default-color), inset 0.1em -0.1em 0 0 var(--button-default-color), inset -0.1em 0.1em 0 0 var(--button-default-color), inset 0.1em 0.1em 0 0 var(--button-default-color); }
   button:hover, button:focus, button:active, button.focus, button.active, button.hover {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
@@ -1901,7 +1907,7 @@ button {
     text-decoration: none;
     box-shadow: none; }
   button:focus, button.focus {
-    outline: var(--hot-text-color) dashed 0.1em;
+    outline: var(--button-default-color) dashed 0.1em;
     outline-offset: .2em;
     text-decoration: underline double; }
   button.constructive {
@@ -1925,6 +1931,7 @@ button {
     button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {
       box-shadow: var(--hexagon-shadow); }
   button.mute {
+    color: var(--button-default-color);
     background-color: transparent;
     border-color: transparent;
     box-shadow: none; }
@@ -2181,7 +2188,8 @@ button {
     box-shadow: var(--hexagon-shadow);
     padding: 0;
     border: none;
-    background-color: var(--morelight); }
+    background-color: var(--morelight);
+    color: var(--button-default-color); }
     button.hexagon span {
       z-index: 3;
       display: flex;
@@ -2233,6 +2241,7 @@ button {
   button.naked, button.link {
     margin: 0;
     padding: 0;
+    background-color: transparent;
     box-shadow: none;
     background-image: none;
     height: auto;
@@ -2242,6 +2251,8 @@ button {
       background-color: transparent;
       background-image: none;
       color: var(--button-default-color); }
+  button.naked {
+    color: var(--button-default-color); }
   button.link {
     color: var(--link-color);
     text-shadow: var(--link-text-shadow);
@@ -2924,13 +2935,13 @@ div.panel {
     display: none; }
   div.panel[aria-expanded=false]:hover, div.panel[aria-expanded=false]:focus {
     background-color: var(--panel-closed-hover-background-color);
-    color: var(--panel-closed-hover-text-color); }
+    color: var(--panel-text-color); }
     div.panel[aria-expanded=false]:hover h3, div.panel[aria-expanded=false]:focus h3 {
-      color: var(--panel-closed-hover-text-color); }
+      color: var(--panel-text-color); }
     div.panel[aria-expanded=false]:hover button.togglebutton, div.panel[aria-expanded=false]:focus button.togglebutton {
-      color: var(--panel-closed-hover-text-color); }
+      color: var(--panel-text-color); }
       div.panel[aria-expanded=false]:hover button.togglebutton:hover, div.panel[aria-expanded=false]:focus button.togglebutton:hover {
-        color: var(--panel-closed-hover-text-color); }
+        color: var(--panel-text-color); }
   div.panel.ghost {
     opacity: .5; }
     div.panel.ghost:hover, div.panel.ghost:focus, div.panel.ghost:focus-within {

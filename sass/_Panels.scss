@@ -67,14 +67,14 @@ div.panel {
     &:hover,
     &:focus {
       background-color: var(--panel-closed-hover-background-color);
-      color: var(--panel-closed-hover-text-color);
+      color: var(--panel-text-color);
       h3 {
-        color: var(--panel-closed-hover-text-color);
+        color: var(--panel-text-color);
       }
       button.togglebutton {
-        color: var(--panel-closed-hover-text-color);
+        color: var(--panel-text-color);
         &:hover {
-          color: var(--panel-closed-hover-text-color);
+          color: var(--panel-text-color);
         }
       }
     }

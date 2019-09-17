@@ -24,6 +24,7 @@ class SimpleButton {
             notab: false, // if true, don't be tabindexed.
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
+            ghost: false, //if true, make the button ghost.
             hot: false, //if true, make the button hot.
             link: false, //if true, make the button behave like a normal link.
             naked: false, //if true, remove all styles from the button.
@@ -150,6 +151,8 @@ class SimpleButton {
             this.button.addClass('hot');
         } else if (this.mute) {
             this.button.addClass('mute');
+        } else if (this.ghost) {
+            this.button.addClass('ghost');
         } else if (this.link) {
             this.button.addClass('link');
         } else if (this.naked) {
@@ -273,11 +276,8 @@ class SimpleButton {
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
 
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get iconside() { return this.config.iconside; }
-    set iconside(iconside) { this.config.iconside = iconside; }
+    get ghost() { return this.config.ghost; }
+    set ghost(ghost) { this.config.ghost = ghost; }
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
@@ -300,6 +300,12 @@ class SimpleButton {
         }
         this.config.hoverout = hoverout;
     }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get iconside() { return this.config.iconside; }
+    set iconside(iconside) { this.config.iconside = iconside; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }

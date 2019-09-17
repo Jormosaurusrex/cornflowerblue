@@ -736,6 +736,7 @@ class CornflowerBlueDemo {
     grindButtons() {
         const me = this;
         const $target = $('#buttons-normal');
+        const $ghost = $('#buttons-ghost');
         const $mutes = $('#buttons-mute');
         const $links = $('#buttons-link');
         const $nakeds = $('#buttons-naked');
@@ -1040,6 +1041,183 @@ class CornflowerBlueDemo {
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $ghost.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Default",
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Hover",
+                        classes: ['hover'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Active",
+                        classes: ['active'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Focus",
+                        classes: ['focus'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Disabled",
+                        disabled: true,
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+        $ghost.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new SimpleButton({
+                        text: "Normal",
+                        ghost: true,
+                        icon: "globe"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        ghost: true,
+                        icon: "check"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        ghost: true,
+                        icon: "trashcan"
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
+
+        $ghost.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new ConstructiveButton({
+                        text: "Constructive",
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Hover",
+                        classes: ['hover'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Active",
+                        classes: ['active'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Focus",
+                        classes: ['focus'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ConstructiveButton({
+                        text: "Disabled",
+                        disabled: true,
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        $ghost.append(
+            $('<div />').addClass('example').addClass('centered')
+                .append(
+                    new DestructiveButton({
+                        text: "Destructive",
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Hover",
+                        classes: ['hover'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Active",
+                        classes: ['active'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Focus",
+                        classes: ['focus'],
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new DestructiveButton({
+                        text: "Disabled",
+                        disabled: true,
+                        ghost: true
+                    }).button
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+
 
 
         $links.append(
@@ -2558,8 +2736,6 @@ class CornflowerBlueDemo {
         $profile.append(p.container);
     }
 
-
-
     grindDataGrids() {
         const $basic = $('#datagrid-basic');
 
@@ -2655,17 +2831,9 @@ class CornflowerBlueDemo {
      * @param config the config string to write.
      */
     writeConfig(title, config) {
-
         this.codebox.title = title;
         this.codebox.content = config;
         this.codebox.show();
-        /*
-        this.codebox.append(
-            $('<div />').addClass('fixbox')
-                .append($('<h2 />').html(title))
-                .append($('<div />').addClass('config').html(config))
-        );
-        */
     }
 
     /**
