@@ -25,7 +25,6 @@ class SimpleButton {
             disabled: false, // if true, make the button disabled.
             mute: false, //if true, make the button mute.
             ghost: false, //if true, make the button ghost.
-            hot: false, //if true, make the button hot.
             link: false, //if true, make the button behave like a normal link.
             naked: false, //if true, remove all styles from the button.
             action: null, // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
@@ -147,9 +146,7 @@ class SimpleButton {
 
         if (this.hidden) { this.hide(); }
 
-        if (this.hot) { // hot takes precidence over mute
-            this.button.addClass('hot');
-        } else if (this.mute) {
+        if (this.mute) {
             this.button.addClass('mute');
         } else if (this.ghost) {
             this.button.addClass('ghost');
@@ -203,24 +200,6 @@ class SimpleButton {
     hide() {
         this.button.addClass('hidden');
         this.hidden = true;
-        return this;
-    }
-
-    /**
-     * Turn the button hot
-     */
-    heat() {
-        this.button.addClass('hot');
-        this.hot = true;
-        return this;
-    }
-
-    /**
-     * Turnt the button cold
-     */
-    cool() {
-        this.button.removeClass('hot');
-        this.hot = false;
         return this;
     }
 
@@ -281,9 +260,6 @@ class SimpleButton {
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
-
-    get hot() { return this.config.hot; }
-    set hot(hot) { this.config.hot = hot; }
 
     get hoverin() { return this.config.hoverin; }
     set hoverin(hoverin) {

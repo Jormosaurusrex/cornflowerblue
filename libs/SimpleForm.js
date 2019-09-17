@@ -227,12 +227,12 @@ class SimpleForm {
 
     /**
      * This runs when the all elements in the form are valid.
-     * It will enable and heat all elements in this.submittors().
+     * It will enable all elements in this.submittors().
      * It then executes any supplied onvalid function, passing self.
      */
     runValid() {
         for (let submittor of this.submittors) {
-            submittor.enable().heat();
+            submittor.enable();
         }
         if ((this.onvalid) && (typeof this.onvalid === 'function')) {
             this.onvalid(this);
@@ -241,12 +241,12 @@ class SimpleForm {
 
     /**
      * This runs when the all elements in the form are valid.
-     * It will enable and heat all elements in this.submittors().
+     * It will enable all elements in this.submittors().
      * It then executes any supplied onvalid function, passing self.
      */
     runInvalid() {
         for (let submittor of this.submittors) {
-            submittor.disable().cool();
+            submittor.disable();
         }
         if ((this.oninvalid) && (typeof this.oninvalid === 'function')) {
             this.oninvalid(this);
