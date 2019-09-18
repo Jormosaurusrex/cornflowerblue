@@ -160,9 +160,9 @@
   --blockquote-text-shadow: var(--text-shadow);
   --blockquote-background-color: var(--canvas-color-callout-lightweight);
   --blockquote-border-color: var(--blue);
-  --button-box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.5);
-  --button-hover-box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
-  --button-active-box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.7);
+  --button-box-shadow: 0 0.1em 0.2em 0 rgba(50, 50, 50, 0.5);
+  --button-hover-box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.7);
+  --button-active-box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.5);
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--darkblue);
   --button-default-text-color: var(--button-default-color);
@@ -170,6 +170,8 @@
   --button-hover-highlight-color: var(--white-half);
   --button-hover-gradient: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
   --button-hover-filter: brightness(120%);
+  --button-active-gradient: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+  --button-active-filter: brightness(90%);
   --button-circle-hover-box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
   --button-font-family: var(--default-font-family);
   --button-text-shadow: var(--text-shadow);
@@ -1903,13 +1905,16 @@ button {
     text-decoration: underline;
     box-shadow: var(--button-hover-box-shadow);
     filter: var(--button-hover-filter); }
-  button:active, button.active {
-    box-shadow: var(--button-active-box-shadow);
-    text-decoration: none; }
   button:focus, button.focus {
     outline: var(--button-default-color) dashed 0.1em;
     outline-offset: .2em;
     text-decoration: underline double; }
+  button:active, button.active {
+    box-shadow: var(--button-active-box-shadow);
+    text-decoration: none;
+    background-image: var(--button-active-gradient);
+    filter: var(--button-active-filter);
+    outline: none; }
   button.constructive {
     --button-default-color: var(--constructive-color); }
   button.destructive {

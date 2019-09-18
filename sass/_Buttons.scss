@@ -61,16 +61,19 @@ button {
     box-shadow: var(--button-hover-box-shadow);
     filter: var(--button-hover-filter);
   }
-  &:active,
-  &.active {
-    box-shadow: var(--button-active-box-shadow);
-    text-decoration: none;
-  }
   &:focus,
   &.focus {
     outline: var(--button-default-color) dashed .1em;
     outline-offset: .2em;
     text-decoration: underline double;
+  }
+  &:active,
+  &.active {
+    box-shadow: var(--button-active-box-shadow);
+    text-decoration: none;
+    background-image: var(--button-active-gradient);
+    filter: var(--button-active-filter);
+    outline: none;
   }
   &.constructive {
     --button-default-color: var(--constructive-color);
