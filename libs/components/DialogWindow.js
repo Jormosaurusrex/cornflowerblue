@@ -38,8 +38,8 @@ class DialogWindow {
         this.prevfocus = $(':focus');
 
         this.mask = $('<div />')
-            .addClass('window-mask')
-            .addClass(this.classes.join(' '))
+            .classList.add('window-mask')
+            .classList.add(this.classes.join(' '))
             .click(function(e) {
                 e.preventDefault();
                 if (me.clickoutsidetoclose) {
@@ -51,7 +51,7 @@ class DialogWindow {
         $('body')
             .append(this.mask)
             .append(this.container)
-            .addClass('modalopen');
+            .classList.add('modalopen');
 
         setTimeout(function() {
             me.contentbox.find('*').filter('[tabindex=0]').eq(0).focus(); // Set focus
@@ -72,7 +72,7 @@ class DialogWindow {
                 me.prevfocus.focus();
             });
         });
-        $('body').removeClass('modalopen');
+        $('body').classList.remove('modalopen');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -83,12 +83,12 @@ class DialogWindow {
     build() {
         const me = this;
         this.container = $('<div />')
-            .addClass(this.classes.join(' '))
-            .addClass('window-container');
+            .classList.add(this.classes.join(' '))
+            .classList.add('window-container');
 
         this.window = $('<div />')
-            .addClass('dialog')
-            .addClass(this.classes.join(' '))
+            .classList.add('dialog')
+            .classList.add(this.classes.join(' '))
             .attr('id', this.id);
 
         if ((this.title) || (this.header)) {
@@ -96,7 +96,7 @@ class DialogWindow {
             if (this.header) {
                 this.window.append(this.header);
             } else {
-                this.title = $('<h2 />').append( $('<span />').addClass('t').html(this.title) );
+                this.title = $('<h2 />').append( $('<span />').classList.add('t').html(this.title) );
                 this.window.append(this.title);
             }
 
@@ -122,17 +122,17 @@ class DialogWindow {
             this.form.dialog = this;
 
             this.contentbox = $('<div />')
-                .addClass('content')
+                .classList.add('content')
                 .append(this.form.form);
 
             this.window
-                .addClass('isform')
+                .classList.add('isform')
                 .append(this.contentbox);
 
         } else if (this.content) { // It's a jQuery object
 
             this.contentbox = $('<div />')
-                .addClass('content')
+                .classList.add('content')
                 .append(this.content);
 
             this.window.append(this.contentbox);

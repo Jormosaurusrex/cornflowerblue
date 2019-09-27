@@ -59,15 +59,15 @@ class BooleanToggle {
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)
-            .addClass('input-container')
-            .addClass('checkbox');
+            .classList.add('input-container')
+            .classList.add('checkbox');
 
         if (this.hidden) { this.container.css('display', 'none'); }
-        if (this.disabled) { this.container.addClass('disabled'); }
+        if (this.disabled) { this.container.classList.add('disabled'); }
 
         if (this.labelside === 'right') {
             this.container
-                .addClass('rightside')
+                .classList.add('rightside')
                 .append(this.toggle).append(this.labelobj);
         } else {
             this.container.append(this.labelobj).append(this.toggle);
@@ -93,8 +93,8 @@ class BooleanToggle {
             .attr('disabled', this.disabled)
             .attr('role', 'checkbox')
             .attr('value', this.value)
-            .addClass(this.classes.join(' '))
-            .addClass(this.style)
+            .classList.add(this.classes.join(' '))
+            .classList.add(this.style)
             .on('change', function() {
                 if ($(this).prop('checked')) {
                     $(this).prop('aria-checked', $(this).prop('checked'));
@@ -133,7 +133,7 @@ class BooleanToggle {
     disable() {
         this.toggle.prop('disabled', true);
         this.disabled = true;
-        if (this.container) { this.container.addClass('disabled'); }
+        if (this.container) { this.container.classList.add('disabled'); }
     }
 
     /**
@@ -142,7 +142,7 @@ class BooleanToggle {
     enable() {
         this.toggle.removeAttr('disabled');
         this.disabled = false;
-        if (this.container) { this.container.removeClass('disabled'); }
+        if (this.container) { this.container.classList.remove('disabled'); }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

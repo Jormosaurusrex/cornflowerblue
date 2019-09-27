@@ -12,15 +12,15 @@ class IconFactory {
         if (icon instanceof Object) { // this is probably a pre-defined icon
             return icon;
         }
-        let $i = $('<span />')
-            .addClass('icon')
-            .addClass("cfb-" + icon);
+        let i = document.createElement('span');
+        i.classList.add('icon');
+        i.classList.add(`cfb-${icon}`);
         if (arialabel) {
-            $i.attr('aria-label', arialabel);
+            i.setAttribute('aria-label', arialabel);
         } else {
-            $i.attr('aria-hidden', true)
+            i.setAttribute('aria-hidden', "true");
         }
-        return $i;
+        return i;
     }
 
     /**
@@ -33,20 +33,22 @@ class IconFactory {
         if (icon instanceof Object) { // this is probably a pre-defined icon
             return icon;
         }
-        let $i = $('<span />')
-            .addClass('icon');
+        let i = document.createElement('span');
+        i.classList.add('icon');
 
         if (Array.isArray(icon)) {
-            $i.addClass(icon.join(' '));
+            for (let c of icon) {
+                i.classList.add(c);
+            }
         } else {
-            $i.addClass(icon);
+            i.classList.add(icon);
         }
 
         if (arialabel) {
-            $i.attr('aria-label', arialabel);
+            i.setAttribute('aria-label', arialabel);
         } else {
-            $i.attr('aria-hidden', true)
+            i.setAttribute('aria-hidden', "true");
         }
-        return $i;
+        return i;
     }
 }

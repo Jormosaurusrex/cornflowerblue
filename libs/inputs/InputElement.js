@@ -140,9 +140,9 @@ class InputElement {
             this.clearMessages();
             this.input.attr('aria-invalid', false);
             if ((this.isDirty()) && (!onload)) { // This has to be valid
-                this.container.addClass('valid');
+                this.container.classList.add('valid');
             } else {
-                this.container.removeClass('valid');
+                this.container.classList.remove('valid');
             }
         }
         return (this.errors.length < 1);
@@ -167,9 +167,9 @@ class InputElement {
             this.addWarning(warning);
         }
         if (this.errors.length > 0) {
-            this.container.addClass('error');
+            this.container.classList.add('error');
         } else if (this.warnings.length > 0) {
-            this.container.addClass('warning');
+            this.container.classList.add('warning');
         }
         this.messagebox.removeAttr('aria-hidden');
     }
@@ -181,7 +181,7 @@ class InputElement {
         this.errors = [];
         this.warnings = [];
         this.messagebox.empty().attr('aria-hidden', true);
-        this.container.removeClass('error').removeClass('warning');
+        this.container.classList.remove('error').classList.remove('warning');
     }
 
     /**
@@ -189,7 +189,7 @@ class InputElement {
      * @param error the error to add
      */
     addError(error) {
-        this.messagebox.append($('<li />').addClass('error').html(error));
+        this.messagebox.append($('<li />').classList.add('error').html(error));
     }
 
     /**
@@ -197,7 +197,7 @@ class InputElement {
      * @param warning the warning to add
      */
     addWarning(warning) {
-        this.messagebox.append($('<li />').addClass('warning').html(warning));
+        this.messagebox.append($('<li />').classList.add('warning').html(warning));
     }
 
     /**
@@ -218,14 +218,14 @@ class InputElement {
         this.charactercounter.html(ctext);
 
         if ((this.maxlength) && (this.value.length >= this.maxlength)) {
-            this.charactercounter.addClass('outofbounds');
+            this.charactercounter.classList.add('outofbounds');
         } else if ((this.counter !== 'sky')
             && (this.value.length >= (this.maxlength * .90))) {
-            this.charactercounter.removeClass('outofbounds');
-            this.charactercounter.addClass('danger');
+            this.charactercounter.classList.remove('outofbounds');
+            this.charactercounter.classList.add('danger');
         } else {
-            this.charactercounter.removeClass('danger');
-            this.charactercounter.removeClass('outofbounds');
+            this.charactercounter.classList.remove('danger');
+            this.charactercounter.classList.remove('outofbounds');
         }
     }
 
@@ -245,7 +245,7 @@ class InputElement {
     disable() {
         this.input.prop('disabled', true);
         this.disabled = true;
-        if (this.container) { this.container.addClass('disabled'); }
+        if (this.container) { this.container.classList.add('disabled'); }
     }
 
     /**
@@ -254,14 +254,14 @@ class InputElement {
     enable() {
         this.input.removeAttr('disabled');
         this.disabled = false;
-        if (this.container) { this.container.removeClass('disabled'); }
+        if (this.container) { this.container.classList.remove('disabled'); }
     }
 
     /**
      * Switch to 'passive' mode.
      */
     pacify() {
-        this.container.addClass('passive');
+        this.container.classList.add('passive');
         this.passive = true;
     }
 
@@ -269,7 +269,7 @@ class InputElement {
      * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
-        this.container.removeClass('passive');
+        this.container.classList.remove('passive');
         this.passive = false;
     }
 
@@ -301,11 +301,11 @@ class InputElement {
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)
-            .addClass('input-container')
-            .addClass(this.classes.join(' '))
+            .classList.add('input-container')
+            .classList.add(this.classes.join(' '))
             .append(this.labelobj)
             .append($('<div />')
-                .addClass('wrap')
+                .classList.add('wrap')
                 .append(this.input)
                 .append(this.inputcontrol)
             )
@@ -322,18 +322,18 @@ class InputElement {
      */
     postContainerScrub() {
         if (this.required) {
-            this.container.addClass('required');
+            this.container.classList.add('required');
             this.input.attr('required', 'required');
         }
-        if (this.mute) { this.container.addClass('mute'); }
-        if (this.disabled) { this.container.addClass('disabled'); }
+        if (this.mute) { this.container.classList.add('mute'); }
+        if (this.disabled) { this.container.classList.add('disabled'); }
 
         if (this.hidden) {
             this.container.css('display', 'none');
             this.container.attr('aria-hidden', true);
         }
         if ((this.config.value) && (this.config.value.length > 0)) {
-            this.container.addClass('filled');
+            this.container.classList.add('filled');
         }
         if (this.passive) {
             this.pacify()
@@ -352,7 +352,7 @@ class InputElement {
      */
     buildInactiveBox() {
         this.passivebox = $('<div />')
-            .addClass('passivebox')
+            .classList.add('passivebox')
             .html(this.passivetext);
     }
 
@@ -387,7 +387,7 @@ class InputElement {
             .attr('hidden', this.hidden)
             .attr('aria-hidden', this.hidden)
             .attr('disabled', this.disabled)
-            .addClass(this.classes.join(' '))
+            .classList.add(this.classes.join(' '))
             .on('keydown', function(e) {
                 // Reset this to keep readers from constantly beeping. It will re-validate later.
                 me.input.attr('aria-invalid', false);
@@ -404,9 +404,9 @@ class InputElement {
                 }
 
                 if ((me.value) && (me.value.length > 0) && (me.container)) {
-                    me.container.addClass('filled');
+                    me.container.classList.add('filled');
                 } else {
-                    me.container.removeClass('filled');
+                    me.container.classList.remove('filled');
                 }
 
                 if ((me.form) && (me.required) // If this is the only thing required, tell the form.
@@ -427,7 +427,7 @@ class InputElement {
                     $(this).attr('placeholder', me.placeholder);
                 }
                 if (me.container) {
-                    me.container.addClass('active');
+                    me.container.classList.add('active');
                 }
                 if (me.help) {
                     me.helptimer = setTimeout(function() {
@@ -452,7 +452,7 @@ class InputElement {
                 }
 
                 if (me.container) {
-                    me.container.removeClass('active');
+                    me.container.classList.remove('active');
                 }
                 me.validate();
 
@@ -472,11 +472,11 @@ class InputElement {
         }
 
         if (this.mute) {
-            this.input.addClass('mute');
+            this.input.classList.add('mute');
             if (this.label) { this.input.attr('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`); }
         }
 
-        if (this.icon) { this.input.addClass(`cfb-${this.icon}`); }
+        if (this.icon) { this.input.classList.add(`cfb-${this.icon}`); }
 
     }
 
@@ -517,7 +517,7 @@ class InputElement {
     buildMessagebox() {
         this.messagebox = $('<ul />')
             .attr('id', `msg-${this.id}`)
-            .addClass('messagebox');
+            .classList.add('messagebox');
     }
 
     /**
@@ -526,9 +526,9 @@ class InputElement {
     buildCharacterCounter() {
         if (this.counter) {
             this.charactercounter = $('<div />')
-                .addClass('charcounter')
-                .addClass('topcontrol')
-                .addClass(this.counter);
+                .classList.add('charcounter')
+                .classList.add('topcontrol')
+                .classList.add(this.counter);
 
             if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
 

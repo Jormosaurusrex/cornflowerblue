@@ -35,7 +35,7 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
-        return this.button.attr('aria-expanded');
+        return this.button.hasAttribute('aria-expanded');
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -45,16 +45,16 @@ class ButtonMenu extends SimpleButton {
      */
     open() {
         if (this.isopen) { return; }
-        this.button.attr('aria-expanded', true);
-        this.menu.removeAttr('aria-hidden');
+        this.button.setAttribute('aria-expanded', 'true');
+        this.menu.removeAttribute('aria-hidden');
     }
 
     /**
      * Closes the button
      */
     close() {
-        this.button.removeAttr('aria-expanded');
-        this.menu.attr('aria-hidden', true);
+        this.button.removeAttribute('aria-expanded');
+        this.menu.setAttribute('aria-hidden', 'true');
 
     }
 
@@ -66,18 +66,19 @@ class ButtonMenu extends SimpleButton {
      */
     buildMenu() {
         const me = this;
-        this.menu = $('<ul />')
-            .attr('aria-hidden', true);
+        this.menu = document.createElement('ul');
+        this.menu.setAttribute('aria-hidden', 'true');
         for (let item of this.items) {
-            let $menuitem = $('<li />');
-            let $anchor = $('<a />');
+            let menuitem = document.createElement('li');
+            let anchor = document.createElement('a');
 
             if (item.icon) {
-                $anchor.append(IconFactory.icon(item.icon));
+                anchor.appendChild(IconFactory.icon(item.icon));
             }
-            $anchor
-                .append($('<span />').html(item.label))
-                .click(function(e) {
+            let s = document.createElement('span');
+            s.innerHTML = item.label;
+            anchor.appendChild(s);
+            anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     if ((item.action) && (typeof item.action === 'function')) {
                         item.action(e);
@@ -85,9 +86,10 @@ class ButtonMenu extends SimpleButton {
                     me.close();
                 });
 
-            this.menu.append($menuitem.append($anchor));
+            menuitem.appendChild(anchor);
+            this.menu.appendChild(menuitem);
         }
-        this.button.append(this.menu);
+        this.button.appendChild(this.menu);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

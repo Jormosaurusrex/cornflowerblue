@@ -80,23 +80,23 @@ class SimpleProgressMeter {
     buildContainer() {
         const me = this;
 
-        this.progress = $('<div />').addClass('progress');
+        this.progress = $('<div />').classList.add('progress');
 
         this.bar = $('<div />')
-            .addClass('simpleprogress')
-            .addClass(this.style)
+            .classList.add('simpleprogress')
+            .classList.add(this.style)
             .append(this.progress);
 
         this.container = $('<div />')
             .data('self', this)
-            .addClass(this.classes.join(' '))
-            .addClass('progressbar-container')
+            .classList.add(this.classes.join(' '))
+            .classList.add('progressbar-container')
             .append(this.labelobj)
             .append(this.bar);
 
         if (this.decalposition === 'exterior') {
             this.container.append(this.decallayer);
-            this.bar.addClass('exteriordecal');
+            this.bar.classList.add('exteriordecal');
         } else {
             this.bar.append(this.decallayer);
         }
@@ -104,7 +104,7 @@ class SimpleProgressMeter {
         if (((this.currentrank) || (this.nextrank))
             && (this.decalposition !== 'exterior')
             && (this.decalposition !== 'none')) {
-            this.bar.addClass('withdecals');
+            this.bar.classList.add('withdecals');
         }
 
         // Don't allow the the width animation to fire until it's in the page
@@ -121,26 +121,26 @@ class SimpleProgressMeter {
         if (this.decalposition === 'none') { return null; }
 
         this.decallayer = $('<div />')
-            .addClass('decals')
-            .addClass(this.decalposition);
+            .classList.add('decals')
+            .classList.add(this.decalposition);
 
         if ((this.currentrank) || (this.showcaps)) {
-            let $p = $('<div />').addClass('current');
+            let $p = $('<div />').classList.add('current');
             if (this.currentrank) {
-                $p.append($('<div />').addClass('name').html(this.currentrank))
+                $p.append($('<div />').classList.add('name').html(this.currentrank))
             }
             if (this.showcaps) {
-                $p.append($('<div />').addClass('value').html((this.commaseparate ? Utils.readableNumber(this.minvalue) : this.minvalue)));
+                $p.append($('<div />').classList.add('value').html((this.commaseparate ? Utils.readableNumber(this.minvalue) : this.minvalue)));
             }
             this.decallayer.append($p);
         }
         if ((this.nextrank) || (this.showcaps)) {
-            let $p = $('<div />').addClass('next');
+            let $p = $('<div />').classList.add('next');
             if (this.nextrank) {
-                $p.append($('<div />').addClass('name').html(this.nextrank))
+                $p.append($('<div />').classList.add('name').html(this.nextrank))
             }
             if (this.showcaps) {
-                $p.append($('<div />').addClass('value').html((this.commaseparate ? Utils.readableNumber(this.maxvalue) : this.maxvalue)));
+                $p.append($('<div />').classList.add('value').html((this.commaseparate ? Utils.readableNumber(this.maxvalue) : this.maxvalue)));
             }
             this.decallayer.append($p);
         }

@@ -93,9 +93,9 @@ class Growler extends FloatingPanel {
      */
     static buildGrowlbox(position) {
         let $gb = $('<div />')
-            .addClass('growlbox')
+            .classList.add('growlbox')
             .attr('id', Growler.GROWLBOX_ID + position)
-            .addClass(position);
+            .classList.add(position);
         $('body').append($gb);
         return $gb;
     }
@@ -169,8 +169,8 @@ class Growler extends FloatingPanel {
         this.container = $('<div />')
             .data('self', me)
             .attr('aria-hidden', true)
-            .addClass(this.classes.join(' '))
-            .addClass('growler');
+            .classList.add(this.classes.join(' '))
+            .classList.add('growler');
 
         this.closebutton = new SimpleButton({
             icon: 'echx',
@@ -184,20 +184,20 @@ class Growler extends FloatingPanel {
         });
         if (this.title) {
             this.container.append($('<h3 />')
-                .append($('<span />').addClass('text').html(this.title))
+                .append($('<span />').classList.add('text').html(this.title))
                 .append(this.closebutton.button));
         } else {
             this.container.append(this.closebutton.button);
         }
 
         if (this.text) {
-            let $payload = $('<div />').addClass('payload');
+            let $payload = $('<div />').classList.add('payload');
             if (this.icon) {
-                $payload.append(IconFactory.icon(this.icon).addClass('i'));
+                $payload.append(IconFactory.icon(this.icon).classList.add('i'));
             }
             $payload.append(
                 $('<div />')
-                    .addClass('text')
+                    .classList.add('text')
                     .html(this.text)
             );
             this.container.append($payload);

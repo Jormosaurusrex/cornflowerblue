@@ -35,9 +35,9 @@ class MessageBox {
      */
     buildContainer() {
         this.container = $('<div />')
-            .addClass('messagebox')
+            .classList.add('messagebox')
             .data('self', this)
-            .addClass(this.classes.join(' '));
+            .classList.add(this.classes.join(' '));
 
         if ((this.errors) && (this.errors.length > 0)) {
             this.container.append(this.buildBox("errors"));
@@ -63,7 +63,7 @@ class MessageBox {
             icon,
             title;
 
-        let $box = $('<div />').addClass('box').addClass(type);
+        let $box = $('<div />').classList.add('box').classList.add(type);
 
         switch(type) {
             case 'errors':
@@ -86,7 +86,7 @@ class MessageBox {
 
         if (title) { $box.append($('<h4 />').html(title)); }
 
-        let $lbox = $('<div />').addClass('lbox');
+        let $lbox = $('<div />').classList.add('lbox');
 
         if (icon) { $lbox.append(IconFactory.icon(icon)); }
 
@@ -97,7 +97,7 @@ class MessageBox {
         }
 
         $lbox.append($list);
-        $lbox.addClass(`size-${list.length}`);
+        $lbox.classList.add(`size-${list.length}`);
 
         return $box.append($lbox);
     }

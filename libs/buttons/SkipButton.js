@@ -10,10 +10,10 @@ class SkipButton extends SimpleButton {
             hot: true,
             contentstart: "#content-start",
             focusin: function(e, self) {
-                self.button.removeClass('visually-hidden');
+                self.button.classList.remove('visually-hidden');
             },
             focusout: function(e, self) {
-                self.button.addClass('visually-hidden');
+                self.button.classList.add('visually-hidden');
             },
             action: function(e, self) {
                 let url = location.href;

@@ -182,8 +182,8 @@ class NumberInput extends TextInput {
                 }
             });
             this.stepbuttons = $('<div />')
-                .addClass('stepbuttons')
-                .addClass('inputcontrol')
+                .classList.add('stepbuttons')
+                .classList.add('inputcontrol')
                 .append(this.upbtn.button)
                 .append(this.downbtn.button)
                 .on('mousedown', function(event) {

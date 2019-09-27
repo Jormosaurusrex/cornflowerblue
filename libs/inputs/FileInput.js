@@ -48,14 +48,14 @@ class FileInput extends InputElement {
     }
 
     disable() {
-        this.triggerbox.prop('disabled', true).addClass('disabled');
-        this.container.addClass('disabled');
+        this.triggerbox.prop('disabled', true).classList.add('disabled');
+        this.container.classList.add('disabled');
         this.disabled = true;
     }
 
     enable() {
-        this.triggerbox.removeAttr('disabled').removeClass('disabled');
-        this.container.removeClass('disabled');
+        this.triggerbox.removeAttr('disabled').classList.remove('disabled');
+        this.container.classList.remove('disabled');
         this.disabled = false;
     }
 
@@ -64,12 +64,12 @@ class FileInput extends InputElement {
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)
-            .addClass('input-container')
-            .addClass('file-container')
-            .addClass(this.classes.join(' '))
+            .classList.add('input-container')
+            .classList.add('file-container')
+            .classList.add(this.classes.join(' '))
             .append(this.labelobj)
             .append(this.fileinput)
-            .append($('<div />').addClass('wrap').append(this.triggerbox))
+            .append($('<div />').classList.add('wrap').append(this.triggerbox))
             .append(this.messagebox);
 
         this.postContainerScrub();
@@ -81,7 +81,7 @@ class FileInput extends InputElement {
     buildTriggerBox() {
         const me = this;
         this.triggerbox = $('<div />')
-            .addClass('trigger')
+            .classList.add('trigger')
             .attr('tabindex', -1)
             .html(this.placeholder)
             .click(function(e) {
@@ -99,9 +99,9 @@ class FileInput extends InputElement {
                 }
             });
 
-        if (this.mute) { this.triggerbox.addClass('mute'); }
+        if (this.mute) { this.triggerbox.classList.add('mute'); }
 
-        if (this.icon) { this.triggerbox.addClass(`cfb-${this.icon}`); }
+        if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
     }
 
     /**
@@ -129,9 +129,9 @@ class FileInput extends InputElement {
                         fnames.push(i.name);
                     }
                     if (fnames.length > 0) {
-                        me.triggerbox.addClass('files').html(fnames.join(', '));
+                        me.triggerbox.classList.add('files').html(fnames.join(', '));
                     } else {
-                        me.triggerbox.removeClass('files').html(me.placeholder);
+                        me.triggerbox.classList.remove('files').html(me.placeholder);
                     }
                 }
                 if ((me.onchange) && (typeof me.onchange === 'function')) {

@@ -41,7 +41,7 @@ class SimpleButton {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleButton.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = "button-" + Utils.getUniqueKey(5); }
+        if (!this.id) { this.id = `button-${Utils.getUniqueKey(5)}`; }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -64,100 +64,107 @@ class SimpleButton {
         const me = this;
 
         if (this.text) {
-            this.textobj = $('<span />').addClass('text').html(this.text);
+            this.textobj = document.createElement('span');
+            this.textobj.classList.add('text');
+            this.textobj.innerHTML = this.text;
         }
 
         if (this.shape) {
             if (this.shape === 'hexagon') {
-                this.button = $('<button />');
+                this.button = document.createElement('button');
                 if (this.icon) {
-                    this.button.append($('<span />').append(IconFactory.icon(this.icon, this.text)));
+                    let span = document.createElement('span');
+                    span.appendChild(IconFactory.icon(this.icon, this.text));
+                    this.button.appendChild(span);
                 } else if (this.text) {
-                    this.button.append(this.textobj);
+                    this.button.appendChild(this.textobj);
                 }
             } else {
-                this.button = $('<button />');
+                this.button = document.createElement('button');
                 if (this.icon) {
-                    this.button.append(IconFactory.icon(this.icon, this.text));
+                    this.button.appendChild(IconFactory.icon(this.icon, this.text));
                 } else if (this.text) {
-                    this.button.html(this.textobj);
+                    this.button.appendChild(this.textobj);
                 }
             }
-            this.button.addClass(this.shape);
+            this.button.classList.add(this.shape);
         } else {
-            this.button = $('<button />');
-            let $icon, $secondicon;
+            this.button = document.createElement('button');
+            let icon,
+                secondicon;
             if (this.icon) {
-                $icon = IconFactory.icon(this.icon);
+                icon = IconFactory.icon(this.icon);
             }
             if (this.secondicon) {
-                $secondicon = IconFactory.icon(this.secondicon).addClass('secondicon');
+                secondicon = IconFactory.icon(this.secondicon);
+                secondicon.classList.add('secondicon');
             }
 
+            // XXX TODO: change to flex order
             if ((this.iconside) && (this.iconside === 'right')) {
-                this.button.addClass('righticon')
-                    .append($secondicon)
-                    .append(this.textobj)
-                    .append($icon);
-
-            } else {
-                this.button.append($icon)
-                    .append(this.textobj)
-                    .append($secondicon);
+                this.button.classList.add('righticon');
             }
-
+            if (icon) {
+                this.button.appendChild(icon);
+            }
+            this.button.appendChild(this.textobj);
+            if (secondicon) {
+                this.button.appendChild(secondicon);
+            }
         }
 
-        this.button
-            .attr('aria-label', this.text)
-            .attr('id', this.id)
-            .attr('role', 'button')
-            .attr('type', (this.submits ? 'submit' : 'button'))
-            .data('self', this)
-            .addClass(this.size)
-            .addClass(this.classes.join(' '))
-            .on('focusin', function(e) {
+
+        this.button.setAttribute('aria-label', this.text);
+        this.button.setAttribute('id', this.id);
+        this.button.setAttribute('role', 'button');
+        this.button.setAttribute('type', (this.submits ? 'submit' : 'button'));
+        this.button.classList.add(this.size);
+
+        for (let c of this.classes) {
+            this.button.classList.add(c);
+        }
+        this.button.addEventListener('focusin', function(e) {
                 if ((me.focusin) && (typeof me.focusin === 'function')) {
                     me.focusin(e, me);
                 }
-            })
-            .on('focusout', function(e) {
+            });
+        this.button.addEventListener('focusout', function(e) {
                 if ((me.focusout) && (typeof me.focusout === 'function')) {
                     me.focusout(e, me);
                 }
-            })
-            .on('mouseover', function(e) {
+            });
+        this.button.addEventListener('mouseover', function(e) {
                 if ((me.hoverin) && (typeof me.hoverin === 'function')) {
                     me.hoverin(e, me);
                 }
-            })
-            .on('mouseout', function(e) {
+            });
+        this.button.addEventListener('mouseout', function(e) {
                 if ((me.hoverout) && (typeof me.hoverout === 'function')) {
                     me.hoverout(e, me);
                 }
             });
 
         if (this.notab) {
-            this.button.attr('tabindex', '-1');
+            this.button.setAttribute('tabindex', '-1');
         } else {
-            this.button.attr('tabindex', 0);
+            this.button.setAttribute('tabindex', '0');
         }
         if (this.disabled) { this.disable(); }
 
         if (this.hidden) { this.hide(); }
 
         if (this.mute) {
-            this.button.addClass('mute');
+            this.button.classList.add('mute');
         } else if (this.ghost) {
-            this.button.addClass('ghost');
+            this.button.classList.add('ghost');
         } else if (this.link) {
-            this.button.addClass('link');
+            this.button.classList.add('link');
         } else if (this.naked) {
-            this.button.addClass('naked');
+            this.button.classList.add('naked');
         }
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
-            this.button.click(function (e) {
+            this.button.addEventListener('click', function (e) {
                 if (!me.disabled) {
                     me.action(e, me);
                 }
@@ -171,7 +178,7 @@ class SimpleButton {
      * Enable the button
      */
     disable() {
-        this.button.prop('disabled', true);
+        this.button.setAttribute('disabled', 'disabled');
         this.disabled = true;
         return this;
     }
@@ -180,7 +187,7 @@ class SimpleButton {
      * Disable the button
      */
     enable() {
-        this.button.removeAttr('disabled');
+        this.button.removeAttribute('disabled');
         this.disabled = false;
         return this;
     }
@@ -189,7 +196,7 @@ class SimpleButton {
      * Show the button
      */
     show() {
-        this.button.removeClass('hidden');
+        this.button.classList.remove('hidden');
         this.hidden = false;
         return this;
     }
@@ -198,7 +205,7 @@ class SimpleButton {
      * Hide the button
      */
     hide() {
-        this.button.addClass('hidden');
+        this.button.classList.add('hidden');
         this.hidden = true;
         return this;
     }

@@ -30,7 +30,7 @@ class TabBar {
     constructor(config) {
         this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
         this.tabmap = {};
-        if (!this.id) { this.id = "tabbar-" + Utils.getUniqueKey(5); }
+        if (!this.id) { this.id = `tabbar-${Utils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -41,18 +41,19 @@ class TabBar {
      */
     select(tab) {
         if (typeof tab === 'string') {
-            tab = this.list.find(`[data-tabid='${tab}']`);
+            tab = document.querySelectorAll(`[data-tabid='${tab}']`)[0];
         }
         if (!tab) {
             console.warn(`Tab does not exist: ${tab}`);
             return;
         }
         if (this.selected) {
-            this.selected.removeAttr('aria-selected');
-            this.selected.attr('tabindex', -1);
+            this.selected.removeAttribute('aria-selected');
+            this.selected.setAttribute('tabindex', '-1');
         }
-        this.selected = tab.attr('aria-selected', true);
-        this.selected.attr('tabindex', 0);
+        this.selected = tab;
+        this.selected.setAttribute('aria-selected', 'true');
+        this.selected.setAttribute('tabindex', '0');
 
     }
 
@@ -65,20 +66,20 @@ class TabBar {
     buildContainer() {
         const me = this;
 
-        this.list = $('<ul />')
-            .data('self', me)
-            .attr('role', 'tablist')
-            .addClass(this.classes.join(' '))
-            .addClass('tabbar');
-
+        this.list = document.createElement('ul');
+        this.list.setAttribute('role', 'tablist');
+        this.list.classList.add('tabbar');
+        for (let c of this.classes) {
+            this.list.classList.add(c);
+        }
         if (this.vertical) {
-            this.list.addClass('vertical');
+            this.list.classList.add('vertical');
         }
         let order = 0;
 
         for (let tabdef of this.tabs) {
-            let $icon,
-                $linktext;
+            let icon,
+                linktext;
 
             if ((!tabdef.label) && (!tabdef.icon)) {
                 console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
@@ -86,34 +87,38 @@ class TabBar {
             }
 
             if (tabdef.icon) {
-                $icon = IconFactory.icon(tabdef.icon);
+                icon = IconFactory.icon(tabdef.icon);
             }
             if (tabdef.label) {
-                $linktext = $('<span />').html(tabdef.label);
+                linktext = document.createElement('span');
+                linktext.innerHTML = tabdef.label;
             }
 
-            let $link = $('<a />')
-                .attr('role', 'tab')
-                .attr('aria-controls', `t-${tabdef.id}`)
-                .attr('tabindex', -1)
-                .attr('id', tabdef.id)
-                .attr('data-tabid', tabdef.id)
-                .append($icon)
-                .append($linktext)
-                .on('keydown', function(e) {
+            let link = document.createElement('a');
+            link.setAttribute('role', 'tab');
+            link.setAttribute('aria-controls', `t-${tabdef.id}`);
+            link.setAttribute('tabindex', '-1');
+            link.setAttribute('id', tabdef.id);
+            link.setAttribute('data-tabid', tabdef.id);
+            if (icon) { link.appendChild(icon); }
+            link.appendChild(linktext);
+
+            link.addEventListener('keydown', function(e) {
                     if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
                         e.preventDefault();
                         e.stopPropagation();
-                        $(this).parent().prev().children('a').focus();
+                        // XXX JQUERY FIX HERE
+                        //$(this).parent().prev().children('a').focus();
                     } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
                         e.preventDefault();
                         e.stopPropagation();
-                        $(this).parent().next().children('a').focus();
+                        // XXX JQUERY FIX HERE
+                        //$(this).parent().next().children('a').focus();
                     } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                        $link.trigger('click');
+                        link.dispatchEvent('click');
                     }
-                })
-                .click(function(e) {
+                });
+            link.addEventListener('click', function(e) {
                     e.preventDefault();
                     me.select(tabdef.id);
                     if ((tabdef.action) && (typeof tabdef.action === 'function')) {
@@ -123,32 +128,32 @@ class TabBar {
                     }
                 });
 
-            this.tabmap[tabdef.id] = $('<li />')
-                .attr('role', 'presentation')
-                .append($link);
+            let maplink = document.createElement('li');
+            maplink.setAttribute('role', 'presentation');
+            maplink.appendChild(link);
+            this.tabmap[tabdef.id] = maplink;
 
             if (this.animation) {
-                this.tabmap[tabdef.id]
-                    .css('--anim-order', `${order++}`) // used in animations
-                    .addClass(this.animation);
+                this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order++}`); // used in animations
+                this.tabmap[tabdef.id].classList.add(this.animation);
             }
 
-            this.list.append(this.tabmap[tabdef.id]);
+            this.list.appendChild(this.tabmap[tabdef.id]);
 
             if (this.navigation) {
-                this.container = $('<nav />')
-                    .attr('role', 'navigation')
-                    .attr('aria-label', this.arialabel);
+                this.container = document.createElement('nav');
+                this.container.setAttribute('role', 'navigation');
+                this.container.setAttribute('aria-label', this.arialabel);
             } else {
-                this.container = $('<div />');
+                this.container = document.createElement('nav');
             }
 
-            this.container
-                .addClass('tablist-container')
-                .data('self', me)
-                .addClass(this.classes.join(' '))
-                .append(this.list);
+            this.container.classList.add('tablist-container');
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
 
+            this.container.appendChild(this.list);
 
             if (tabdef.selected) { this.select(tabdef.id); }
         }

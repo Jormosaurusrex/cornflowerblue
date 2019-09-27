@@ -100,10 +100,10 @@ class PasswordGenerator {
      */
     buildContainer() {
         const me = this;
-        this.container = $('<div />').addClass('pwgenerator');
+        this.container = $('<div />').classList.add('pwgenerator');
 
         this.datasetblock = $('<ul />')
-            .addClass('datasets')
+            .classList.add('datasets')
             .attr('aria-hidden', true);
 
         if (this.sets.length > 0) {
@@ -152,7 +152,7 @@ class PasswordGenerator {
 
 
         this.container.append(
-            $('<div />').addClass('controls').append(this.button.button).append(this.configbutton.button)
+            $('<div />').classList.add('controls').append(this.button.button).append(this.configbutton.button)
         ).append(this.datasetblock);
 
     }

@@ -22,7 +22,7 @@ class HelpButton extends SimpleButton {
             config.classes = ['naked', 'help'];
         }
         if (!config.id) { // need to generate an id for aria stuff
-            config.id = "help-" + Utils.getUniqueKey(5);
+            config.id = `help-${Utils.getUniqueKey(5)}`;
         }
 
         super(config);
@@ -32,7 +32,7 @@ class HelpButton extends SimpleButton {
      * Force the tooltip to stay open.
      */
     stayopen() {
-        this.button.addClass('stayopen');
+        this.button.classList.add('stayopen');
         this.open();
     }
 
@@ -42,10 +42,10 @@ class HelpButton extends SimpleButton {
     open() {
         const me = this;
         if (!this.tooltip) { this.buildTooltip(); }
-        this.button.attr('aria-expanded', true);
-        this.tooltip.removeAttr('aria-hidden');
+        this.button.setAttribute('aria-expanded', 'true');
+        this.tooltip.removeAttribute('aria-hidden');
         setTimeout(function() {
-            me.tooltip.css('top', `calc(0px - ${me.tooltip.css('height')} - .5em)`);
+            me.tooltip.style.top = `calc(0px - ${me.tooltip.style.height} - .5em)`;
         },1);
     }
 
@@ -53,9 +53,9 @@ class HelpButton extends SimpleButton {
      * Closes the help tooltip.
      */
     close() {
-        if (this.button.hasClass('stayopen')) { return; }
-        this.button.attr('aria-expanded', false);
-        this.tooltip.attr('aria-hidden', true);
+        if (this.button.classList.contains('stayopen')) { return; }
+        this.button.removeAttribute('aria-expanded');
+        this.tooltip.setAttribute('aria-hidden', 'true');
     }
 
     /**
@@ -63,19 +63,21 @@ class HelpButton extends SimpleButton {
      */
     buildTooltip() {
         const me = this;
-        this.tooltip = $('<div />')
-            .addClass('tooltip')
-            .attr('aria-hidden', true)
-            .attr('id', this.id);
+        this.tooltip = document.createElement('div');
+        this.tooltip.classList.add('tooltip');
+        this.tooltip.setAttribute('aria-hidden', 'true');
+        this.tooltip.setAttribute('id', this.id);
 
         if (this.tipicon) {
-            this.tooltip.append(IconFactory.icon(this.tipicon).addClass('tipicon'));
+            let icon = IconFactory.icon(this.tipicon);
+            icon.classList.add('tipicon');
+            this.tooltip.appendChild(icon);
         }
 
-        this.helptext = $('<div />')
-            .addClass('helptext')
-            .attr('id', `${this.id}-tt`)
-            .html(this.help);
+        this.helptext = document.createElement('div');
+        this.helptext.classList.add('helptext');
+        this.helptext.setAttribute('id', `${this.id}-tt`);
+        this.helptext.innerHTML = this.help;
 
         this.closebutton = new SimpleButton({
             icon: 'echx',
@@ -85,18 +87,16 @@ class HelpButton extends SimpleButton {
             action: function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                me.button.removeClass('stayopen');
+                me.button.classList.remove('stayopen');
                 me.close();
             }
         });
 
-        this.tooltip
-            .append(this.helptext)
-            .append(this.closebutton.button);
+        this.tooltip.appendChild(this.helptext);
+        this.tooltip.appendChild(this.closebutton.button);
 
-        this.button
-            .attr('aria-expanded', false)
-            .append(this.tooltip);
+        this.button.removeAttribute('aria-expanded');
+        this.button.appendChild(this.tooltip);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

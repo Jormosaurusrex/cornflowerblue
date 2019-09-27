@@ -29,7 +29,7 @@ class FloatingPanel {
     constructor(config) {
         this.config = Object.assign({}, FloatingPanel.DEFAULT_CONFIG, config);
 
-        if (!this.id) { this.id = "panel-" + Utils.getUniqueKey(5); }
+        if (!this.id) { this.id = `panel-${Utils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -49,9 +49,8 @@ class FloatingPanel {
      * Unminimize the panel
      */
     open() {
-        console.log("open");
-        this.container.attr('aria-expanded', true);
-        this.pcontent.removeAttr('aria-hidden');
+        this.container.setAttribute('aria-expanded', 'true');
+        this.pcontent.removeAttribute('aria-hidden');
         this.minimized = false;
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
@@ -62,8 +61,8 @@ class FloatingPanel {
      * Minimize the panel
      */
     close() {
-        this.container.attr('aria-expanded', false);
-        this.pcontent.attr('aria-hidden', true);
+        this.container.removeAttribute('aria-expanded');
+        this.pcontent.setAttribute('aria-hidden', 'true');
         this.minimized = true;
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
@@ -71,11 +70,11 @@ class FloatingPanel {
     }
 
     show() {
-        this.container.removeAttr('aria-hidden');
+        this.container.removeAttribute('aria-hidden');
     }
 
     hide() {
-        this.container.attr('aria-hidden', true);
+        this.container.setAttribute('aria-hidden', 'true');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -88,12 +87,14 @@ class FloatingPanel {
 
         const me = this;
 
-        this.container = $('<div />')
-            .addClass('panel')
-            .data('self', me)
-            .addClass(this.classes.join(' '))
-            .addClass(this.style)
-            .addClass(this.position);
+        this.container = document.createElement('div');
+        this.container.classList.add('panel');
+        this.container.classList.add(this.style);
+        this.container.classList.add(this.position);
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
 
         if (this.togglecontrol) {
             this.togglebutton = new SimpleButton({
@@ -109,32 +110,34 @@ class FloatingPanel {
         }
 
         if (this.title) {
-            this.titlecontainer = $('<h3 />')
-                .on('click', function(e) {
+            this.titlecontainer = document.createElement('h3');
+            this.titlecontainer.addEventListener('click', function(e) {
                     e.preventDefault();
                     me.toggleClose();
                 });
             if (this.togglecontrol) {
-                this.titlecontainer.append(this.togglebutton.button);
+                this.titlecontainer.appendChild(this.togglebutton.button);
             }
-            this.titleactual = $('<span />').addClass('text').html(this.title);
-            this.titlecontainer.append(this.titleactual);
+            this.titleactual = document.createElement('span');
+            this.titleactual.classList.add('text');
+            this.titleactual.innerHTML = this.title;
+            this.titlecontainer.appendChild(this.titleactual);
         } else {
             if (this.togglecontrol) {
-                this.container.append(this.togglebutton.button);
+                this.container.appendChild(this.togglebutton.button);
             }
         }
 
-        this.pcontent = $('<div />')
-            .addClass('pcontent')
-            .append(this.content);
+        this.pcontent = document.createElement('div');
+        this.pcontent.classList.add('pcontent');
+        this.pcontent.appendChild(this.content);
 
-        this.contentbox = $('<div />')
-            .addClass('content')
-            .append(this.titlecontainer)
-            .append(this.pcontent);
+        this.contentbox = document.createElement('div');
+        this.contentbox.classList.add('content');
+        this.contentbox.appendChild(this.titlecontainer);
+        this.contentbox.appendChild(this.pcontent);
 
-        this.container.append(this.contentbox);
+        this.container.appendChild(this.contentbox);
 
         if ((Utils.isMobile()) || (this.minimized)) {
             this.close();
@@ -175,7 +178,7 @@ class FloatingPanel {
 
     get content() { return this.config.content; }
     set content(content) {
-        if (this.pcontent) { this.pcontent.html(content); }
+        if (this.pcontent) { this.pcontent.innerHTML = content; }
         this.config.content = content;
     }
 
@@ -219,7 +222,7 @@ class FloatingPanel {
     get title() { return this.config.title; }
     set title(title) {
         this.config.title = title;
-        if (this.titleactual) { this.titleactual.html(title); }
+        if (this.titleactual) { this.titleactual.innerHTML = title; }
     }
 
     get titleactual() { return this._titleactual; }

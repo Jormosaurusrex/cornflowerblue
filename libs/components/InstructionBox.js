@@ -28,9 +28,9 @@ class InstructionBox {
      */
     buildContainer() {
         this.container = $('<div />')
-            .addClass('instructions')
+            .classList.add('instructions')
             .data('self', this)
-            .addClass(this.classes.join(' '));
+            .classList.add(this.classes.join(' '));
         if (this.icon) {
             this.container.append(IconFactory.icon(this.icon));
         }
@@ -53,13 +53,13 @@ class InstructionBox {
      * @param instructions an array of strings.
      */
     setInstructions(instructions) {
-        this.container.removeClass('size-1').removeClass('size-2').removeClass('size-3');
+        this.container.classList.remove('size-1').classList.remove('size-2').classList.remove('size-3');
         this.list.empty();
         for (let text of instructions) {
             this.list.append($('<li>').html(text));
         }
         if ((instructions.length > 0) && (instructions.length < 4)) {
-            this.container.addClass(`size-${instructions.length}`);
+            this.container.classList.add(`size-${instructions.length}`);
         }
     }
 

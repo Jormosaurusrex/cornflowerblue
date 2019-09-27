@@ -51,13 +51,13 @@ class RadioGroup extends SelectMenu {
     disable() {
         this.optionlist.find('input:radio').attr('disabled',true);
         this.disabled = true;
-        if (this.container) { this.container.addClass('disabled'); }
+        if (this.container) { this.container.classList.add('disabled'); }
     }
 
     enable() {
         this.optionlist.find('input:radio').removeAttr('disabled');
         this.disabled = false;
-        if (this.container) { this.container.removeClass('disabled'); }
+        if (this.container) { this.container.classList.remove('disabled'); }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -65,9 +65,9 @@ class RadioGroup extends SelectMenu {
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)
-            .addClass('input-container')
-            .addClass('radiogroup-container')
-            .addClass(this.classes.join(' '))
+            .classList.add('input-container')
+            .classList.add('radiogroup-container')
+            .classList.add(this.classes.join(' '))
             .append(this.labelobj)
             .append(this.optionlist)
             .append(this.passivebox);
@@ -80,7 +80,7 @@ class RadioGroup extends SelectMenu {
         if (this.hidden) { this.container.css('display', 'none'); }
 
         if (this.required) {
-            this.container.addClass('required');
+            this.container.classList.add('required');
             this.optionlist.attr('required', 'required');
         }
 
@@ -112,7 +112,7 @@ class RadioGroup extends SelectMenu {
             .attr('value', def.value)
             .attr('aria-label', def.label)
             .attr('role', 'radio')
-            .addClass(this.classes.join(' '))
+            .classList.add(this.classes.join(' '))
             .on('change', function() {
                 $(this).prop('aria-checked', $(this).prop('checked'));
 
@@ -142,12 +142,12 @@ class RadioGroup extends SelectMenu {
                 .attr('checked', true)
         }
 
-        return $('<li />').addClass('radio').append($op).append($opLabel);
+        return $('<li />').classList.add('radio').append($op).append($opLabel);
     }
 
     buildOptions() {
         this.optionlist = $('<ul />')
-            .addClass('radiogroup')
+            .classList.add('radiogroup')
             .attr('tabindex', -1)
             .attr('role', 'radiogroup');
 

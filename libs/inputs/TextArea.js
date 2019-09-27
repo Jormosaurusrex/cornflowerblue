@@ -19,11 +19,11 @@ class TextArea extends InputElement {
 
     buildContainer() {
         this.container = $('<div />')
-            .addClass('textarea-container')
+            .classList.add('textarea-container')
             .data('self', this)
             .append(this.labelobj)
             .append(this.charactercounter)
-            .append($('<div />').addClass('wrap').append(this.input))
+            .append($('<div />').classList.add('wrap').append(this.input))
             .append(this.passivebox)
             .append(this.messagebox);
 

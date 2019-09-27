@@ -66,7 +66,7 @@ class SimpleForm {
      * Switch to 'passive' mode.
      */
     pacify() {
-        this.form.addClass('passive');
+        this.form.classList.add('passive');
         this.passive = true;
         for (let e of this.elements) {
             e.pacify();
@@ -80,7 +80,7 @@ class SimpleForm {
      * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
-        this.form.removeClass('passive');
+        this.form.classList.remove('passive');
         this.passive = false;
         for (let e of this.elements) {
             e.activate();
@@ -115,13 +115,13 @@ class SimpleForm {
 
         if (this.validate()) {
             if (this.handler) {
-                this.form.addClass('shaded');
+                this.form.classList.add('shaded');
 
                 if (typeof this.handler === 'function') {
                     this.handler(me, function(results) {
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
-                            me.container.removeClass('shaded');
+                            me.container.classList.remove('shaded');
                         } else {
                             me.handleResults(results);
                         }
@@ -130,7 +130,7 @@ class SimpleForm {
                     this.doAjax(function(results) {
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
-                            me.container.removeClass('shaded');
+                            me.container.classList.remove('shaded');
                         } else {
                             me.handleResults(results);
                         }
@@ -183,7 +183,7 @@ class SimpleForm {
         if (this.messagebox) { this.messagebox.remove(); }
         this.messagebox = new MessageBox(results).container;
         this.headerbox.append(this.messagebox);
-        this.container.removeClass('shaded');
+        this.container.classList.remove('shaded');
 
         if (!noexecution) {
             if ((results.success) && ((this.onsuccess) && (typeof this.onsuccess === 'function'))) {
@@ -268,8 +268,8 @@ class SimpleForm {
             .attr('enctype', this.enctype)
             .attr('role', 'form')
             .attr('autocomplete', this.autocomplete)
-            .addClass('cornflowerblue')
-            .addClass(this.classes.join(' '))
+            .classList.add('cornflowerblue')
+            .classList.add(this.classes.join(' '))
             .on('submit', function(e) {
                 e.preventDefault();
                 me.submit();
@@ -299,7 +299,7 @@ class SimpleForm {
      * Build the header for the form.
      */
     buildHeaderBox() {
-        this.headerbox = $('<div />').addClass('header');
+        this.headerbox = $('<div />').classList.add('header');
         if ((this.header) || ((this.instructions) && (this.instructions.instructions) && (this.instructions.instructions.length > 0))) {
             if (this.header) { this.headerbox.append(this.header); }
             if (this.instructions) {
@@ -329,14 +329,14 @@ class SimpleForm {
      * Draw the Form's shade
      */
     buildShade() {
-        this.shade = $('<div />').addClass('shade');
+        this.shade = $('<div />').classList.add('shade');
 
         if (this.spinnerstyle) {
-            this.shade.append($('<div />').addClass('spinner').addClass(this.spinnerstyle));
+            this.shade.append($('<div />').classList.add('spinner').classList.add(this.spinnerstyle));
         }
 
         if (this.spinnertext) {
-            this.shade.append($('<div />').addClass('spinnertext').html(this.spinnertext));
+            this.shade.append($('<div />').classList.add('spinnertext').html(this.spinnertext));
         }
     }
 
@@ -344,7 +344,7 @@ class SimpleForm {
      * Draw individual form elements
      */
     buildElementBox() {
-        this.elementbox = $('<div />').addClass('elements');
+        this.elementbox = $('<div />').classList.add('elements');
         for (let element of this.elements) {
             element.form = this;
             if (element.type === 'file') {
@@ -364,7 +364,7 @@ class SimpleForm {
      * Draw the content box
      */
     buildContentBox() {
-        this.contentbox = $('<div />').addClass('contentbox');
+        this.contentbox = $('<div />').classList.add('contentbox');
     }
 
     /**
@@ -372,7 +372,7 @@ class SimpleForm {
      */
     buildActionBox() {
         if ((this.actions) && (this.actions.length > 0)) {
-            this.actionbox = $('<div />').addClass('actions');
+            this.actionbox = $('<div />').classList.add('actions');
             for (let action of this.actions) {
                 if ((action.cansubmit) && (action.submits)) {
                     this.submittors.push(action);
@@ -388,7 +388,7 @@ class SimpleForm {
      */
     buildPassiveActionBox() {
         if ((this.passiveactions) && (this.passiveactions.length > 0)) {
-            this.passiveactionbox = $('<div />').addClass('passiveactions');
+            this.passiveactionbox = $('<div />').classList.add('passiveactions');
             for (let action of this.passiveactions) {
                 if ((action.cansubmit) && (action.submits)) {
                     this.submittors.push(action);

@@ -129,7 +129,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
      */
     circleTemplate(target) {
         return $('<circle />')
-            .addClass(target)
+            .classList.add(target)
             .attr('stroke-width', this.strokewidth)
             .attr('r', this.radius)
             .attr('cx', this.actualsize / 2)
@@ -142,20 +142,20 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
         this.container = $('<div />')
             .data('self', this)
-            .addClass(this.sizeclass)
-            .addClass('progressbar-container')
+            .classList.add(this.sizeclass)
+            .classList.add('progressbar-container')
             .append(this.labelobj);
 
         let $wrap = $('<div />')
-            .addClass('circlewrap')
+            .classList.add('circlewrap')
             .css('width', `${this.actualsize}`)
             .css('height', `${this.actualsize}`);
 
         let $svg = $('<svg />') // the background gutter circle
             .attr('height', this.actualsize)
             .attr('width', this.actualsize)
-            .addClass('progressgutter')
-            .addClass(this.style)
+            .classList.add('progressgutter')
+            .classList.add(this.style)
             .append(this.circleTemplate('gutter'))
             .append(this.circleTemplate('radialcircle'));
 
@@ -183,15 +183,15 @@ class RadialProgressMeter extends SimpleProgressMeter {
     buildDecalLayer() {
         if (!this.badge) { this.badge = `${this.value}<sup>%</sup>`; }
 
-        this.badgeobj = $('<div />').addClass('badge').html(this.badge);
+        this.badgeobj = $('<div />').classList.add('badge').html(this.badge);
 
         if (this.stinger) {
-            this.stingerobj = $('<div />').addClass('stinger').html(this.stinger);
+            this.stingerobj = $('<div />').classList.add('stinger').html(this.stinger);
         }
 
         this.decallayer = $('<div />')
-            .addClass('decals')
-            .addClass(this.numberposition)
+            .classList.add('decals')
+            .classList.add(this.numberposition)
             .append(this.badgeobj)
             .append(this.stingerobj);
 

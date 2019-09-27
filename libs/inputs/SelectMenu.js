@@ -72,11 +72,11 @@ class SelectMenu extends InputElement {
         let menuheight = Utils.getSingleEmInPixels() * 10;
 
         if ((vertpos + menuheight) > bodyheight) {
-            this.optionlist.addClass('vert');
-            if (this.container) { this.container.addClass('vert'); }
+            this.optionlist.classList.add('vert');
+            if (this.container) { this.container.classList.add('vert'); }
         } else {
-            this.optionlist.removeClass('vert');
-            if (this.container) { this.container.removeClass('vert'); }
+            this.optionlist.classList.remove('vert');
+            if (this.container) { this.container.classList.remove('vert'); }
         }
 
         setTimeout(function() {
@@ -113,26 +113,26 @@ class SelectMenu extends InputElement {
         this.triggerbox.prop('disabled', true);
         this.triggerbox.removeAttr('aria-expanded');
         this.disabled = true;
-        if (this.triggerbox) { this.triggerbox.addClass('disabled'); }
-        if (this.container) { this.container.addClass('disabled'); }
+        if (this.triggerbox) { this.triggerbox.classList.add('disabled'); }
+        if (this.container) { this.container.classList.add('disabled'); }
     }
 
     enable() {
         this.optionlist.find('input:radio').removeAttr('disabled');
         this.triggerbox.removeAttr('disabled');
         this.disabled = false;
-        if (this.triggerbox) { this.triggerbox.removeClass('disabled'); }
-        if (this.container) { this.container.removeClass('disabled'); }
+        if (this.triggerbox) { this.triggerbox.classList.remove('disabled'); }
+        if (this.container) { this.container.classList.remove('disabled'); }
     }
 
     pacify() {
-        this.container.addClass('passive');
+        this.container.classList.add('passive');
         this.optionlist.attr('aria-hidden', true);
         this.passive = true;
     }
 
     activate() {
-        this.container.removeClass('passive');
+        this.container.classList.remove('passive');
         this.optionlist.removeAttr('aria-hidden');
         this.passive = false;
     }
@@ -142,11 +142,11 @@ class SelectMenu extends InputElement {
     buildContainer() {
         this.container = $('<div />')
             .data('self', this)
-            .addClass('input-container')
-            .addClass('select-container')
-            .addClass(this.classes.join(' '))
+            .classList.add('input-container')
+            .classList.add('select-container')
+            .classList.add(this.classes.join(' '))
             .append(this.labelobj)
-            .append($('<div />').addClass('wrap').append(this.triggerbox))
+            .append($('<div />').classList.add('wrap').append(this.triggerbox))
             .append(this.optionlist)
             .append(this.passivebox)
             .append(this.topcontrol)
@@ -161,7 +161,7 @@ class SelectMenu extends InputElement {
     buildTriggerBox() {
         const me = this;
         this.triggerbox = $('<div />')
-            .addClass('trigger')
+            .classList.add('trigger')
             .attr('aria-expanded', false)
             .attr('tabindex', 0)
             .on('focus', function(e) {
@@ -173,14 +173,14 @@ class SelectMenu extends InputElement {
                 }
                 me.open();
             });
-        if (this.mute) { this.triggerbox.addClass('mute'); }
-        if (this.icon) { this.triggerbox.addClass(`cfb-${this.icon}`); }
+        if (this.mute) { this.triggerbox.classList.add('mute'); }
+        if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
 
     }
 
     buildOptions() {
         this.optionlist = $('<ul />')
-            .addClass('selectmenu')
+            .classList.add('selectmenu')
             .attr('id', this.id)
             .attr('aria-hidden', true)
             .attr('tabindex', 0)
@@ -239,8 +239,8 @@ class SelectMenu extends InputElement {
                     me.passivebox.html(def.label);
                 }
 
-                me.optionlist.find('label').removeClass('cfb-triangle-down');
-                $opLabel.addClass('cfb-triangle-down');
+                me.optionlist.find('label').classList.remove('cfb-triangle-down');
+                $opLabel.classList.add('cfb-triangle-down');
 
                 me.close();
 
@@ -307,8 +307,8 @@ class SelectMenu extends InputElement {
     buildSearchDisplay() {
         if (this.searchtext) {
             this.searchdisplay = $('<div />')
-                .addClass('searchdisplay')
-                .addClass('topcontrol');
+                .classList.add('searchdisplay')
+                .classList.add('topcontrol');
             this.updateSearch();
         }
     }
@@ -318,11 +318,11 @@ class SelectMenu extends InputElement {
      */
     updateSearch() {
         if (this.searchkeys.length === 0) {
-            this.searchdisplay.addClass('hidden');
+            this.searchdisplay.classList.add('hidden');
             this.searchdisplay.html('');
             return;
         }
-        this.searchdisplay.removeClass('hidden');
+        this.searchdisplay.classList.remove('hidden');
         this.searchdisplay.html(this.searchkeys.join(''));
     }
 

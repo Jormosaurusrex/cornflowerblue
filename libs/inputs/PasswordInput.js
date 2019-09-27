@@ -57,8 +57,8 @@ class PasswordInput extends TextInput {
             });
 
             this.visibilityswitcher = $('<div />')
-                .addClass('visibilityswitch')
-                .addClass('topcontrol')
+                .classList.add('visibilityswitch')
+                .classList.add('topcontrol')
                 .append(this.hidepwbutton.button)
                 .append(this.showpwbutton.button);
 

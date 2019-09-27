@@ -101,7 +101,7 @@ class DataGrid {
         }
 
         this.container = $('<div />')
-            .addClass('datagrid-container')
+            .classList.add('datagrid-container')
             .attr('id', this.id)
             .append(
                 this.grid
@@ -112,9 +112,9 @@ class DataGrid {
 
     buildGrid() {
         this.grid = $('<table />')
-            .addClass('grid');
+            .classList.add('grid');
         if (this.selectable) {
-            this.grid.addClass('selectable');
+            this.grid.classList.add('selectable');
         }
     }
 
@@ -129,10 +129,10 @@ class DataGrid {
         const me = this;
 
         let $div = $('<div />').html(item.label)
-        if (this.sorticon) { $div.addClass(`cfb-${this.sorticon}`); }
+        if (this.sorticon) { $div.classList.add(`cfb-${this.sorticon}`); }
 
         let $cell = $('<th />')
-            .addClass(item.type)
+            .classList.add(item.type)
             .attr('id', `${this.id}-h-c-${item.name}`)
             .attr('data-name', item.name)
             .append($div);
@@ -165,7 +165,7 @@ class DataGrid {
         this.gridbody = $('<tbody />');
     }
     buildGridHeader() {
-        this.gridheader = $('<tr />').addClass('header');
+        this.gridheader = $('<tr />').classList.add('header');
     }
 
     buildRow(rdata) {
@@ -230,19 +230,19 @@ class DataGrid {
         }
 
         let $cell = $('<td />')
-            .addClass(field.name)
-            .addClass(field.type)
+            .classList.add(field.name)
+            .classList.add(field.type)
             .html(content);
 
         if (field.classes) {
-            $cell.addClass(field.classes.join(' '));
+            $cell.classList.add(field.classes.join(' '));
         }
 
         return $cell;
     }
 
     buildFooter() {
-        this.footer = $('<div />').addClass('footer');
+        this.footer = $('<div />').classList.add('footer');
     }
 
 
