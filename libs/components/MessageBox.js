@@ -34,21 +34,22 @@ class MessageBox {
      * Build the full messagebox container
      */
     buildContainer() {
-        this.container = $('<div />')
-            .classList.add('messagebox')
-            .data('self', this)
-            .classList.add(this.classes.join(' '));
+        this.container = document.createElement('div');
+        this.container.classList.add('messagebox');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
 
         if ((this.errors) && (this.errors.length > 0)) {
-            this.container.append(this.buildBox("errors"));
+            this.container.appendChild(this.buildBox("errors"));
         }
 
         if ((this.results) && (this.results.length > 0)) {
-            this.container.append(this.buildBox("results"));
+            this.container.appendChild(this.buildBox("results"));
         }
 
         if ((this.warnings) && (this.warnings.length > 0)) {
-            this.container.append(this.buildBox("warnings"));
+            this.container.appendChild(this.buildBox("warnings"));
         }
 
     }
@@ -63,7 +64,9 @@ class MessageBox {
             icon,
             title;
 
-        let $box = $('<div />').classList.add('box').classList.add(type);
+        let box = document.createElement('div');
+        box.classList.add('box');
+        box.classList.add(type);
 
         switch(type) {
             case 'errors':
@@ -84,22 +87,32 @@ class MessageBox {
                 break;
         }
 
-        if (title) { $box.append($('<h4 />').html(title)); }
-
-        let $lbox = $('<div />').classList.add('lbox');
-
-        if (icon) { $lbox.append(IconFactory.icon(icon)); }
-
-
-        let $list = $('<ul />');
-        for (let text of list) {
-            $list.append($('<li>').html(text));
+        if (title) {
+            let telem = document.createElement('h4');
+            telem.innerHTML = title;
+            box.appendChild(telem);
         }
 
-        $lbox.append($list);
-        $lbox.classList.add(`size-${list.length}`);
+        let lbox = document.createElement('div');
+        lbox.classList.add('lbox');
 
-        return $box.append($lbox);
+
+        if (icon) { lbox.appendChild(IconFactory.icon(icon)); }
+
+
+        let mlist = document.createElement('ul');
+        for (let text of list) {
+            let li = document.createElement('li');
+            li.innerHTML = text;
+            mlist.appendChild(li);
+        }
+
+        lbox.appendChild(mlist);
+
+        lbox.classList.add(`size-${list.length}`);
+
+        box.appendChild(lbox);
+        return box;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

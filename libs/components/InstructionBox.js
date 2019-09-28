@@ -27,16 +27,18 @@ class InstructionBox {
      * Build the actual DOM container.
      */
     buildContainer() {
-        this.container = $('<div />')
-            .classList.add('instructions')
-            .data('self', this)
-            .classList.add(this.classes.join(' '));
+        this.container = document.createElement('div');
+        this.container.classList.add('instructions');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
         if (this.icon) {
-            this.container.append(IconFactory.icon(this.icon));
+            this.container.appendChild(IconFactory.icon(this.icon));
         }
         if ((this.instructions) && (this.instructions.length > 0)) {
             this.setInstructions(this.instructions);
-            this.container.append(this.list);
+            this.container.appendChild(this.list);
             // Apply specific style based on how many lines there are
         }
     }
@@ -45,7 +47,7 @@ class InstructionBox {
      * Build the list object.  This is the dumbest method I've ever written.
      */
     buildList() {
-        this.list = $('<ul />');
+        this.list = document.createElement('ul');
     }
 
     /**
@@ -53,11 +55,17 @@ class InstructionBox {
      * @param instructions an array of strings.
      */
     setInstructions(instructions) {
-        this.container.classList.remove('size-1').classList.remove('size-2').classList.remove('size-3');
-        this.list.empty();
+        this.container.classList.remove('size-1');
+        this.container.classList.remove('size-2');
+        this.container.classList.remove('size-3');
+        this.list.innerHTML = '';
+
         for (let text of instructions) {
-            this.list.append($('<li>').html(text));
+            let li = document.createElement('li');
+            li.innerHTML = text;
+            this.list.appendChild(li);
         }
+
         if ((instructions.length > 0) && (instructions.length < 4)) {
             this.container.classList.add(`size-${instructions.length}`);
         }

@@ -282,6 +282,7 @@ class CornflowerBlueDemo {
 
 
         this.grindButtons();
+        this.grindMessageBoxes();
 
         /*
         this.grindInputs();
@@ -292,7 +293,6 @@ class CornflowerBlueDemo {
         this.grindCheckboxes();
         this.grindStyledCheckboxes();
         this.grindGrowlers();
-        this.grindMessageBoxes();
         this.grindForms();
         this.grindDataGrids();
 
@@ -1646,69 +1646,55 @@ class CornflowerBlueDemo {
     }
     grindMessageBoxes() {
         const me = this;
-        const $target = $('#boxes-instructions');
-        const $responses = $('#boxes-responses');
 
-        $target.append(
-            $('<div />').addClass('example').addClass("vert")
-                .append(
-                    new InstructionBox({
-                        instructions: [ "Enter your username and password." ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new InstructionBox({
-                        instructions: [
-                            "Things have never been so swell",
-                            "And I have never failed to fail"
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new InstructionBox({
-                        instructions: [
-                            "Angel left wing, right wing, broken wing",
-                            "Lack of iron and/or sleeping",
-                            "Protector of the kennel, Ecto-plasma, Ecto-Skeletal, Obituary birthday",
-                            "Your scent is still here in my place of recovery"
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let instructions = document.createElement('div');
+        instructions.classList.add('example');
+        instructions.classList.add('vert');
+        instructions.appendChild(new InstructionBox({
+                            instructions: [ "Enter your username and password." ]
+                    }).container);
+        instructions.appendChild(new InstructionBox({
+            instructions: [
+                "Things have never been so swell",
+                "And I have never failed to fail"
+            ]
+        }).container);
+        instructions.appendChild(new InstructionBox({
+            instructions: [
+                "Angel left wing, right wing, broken wing",
+                "Lack of iron and/or sleeping",
+                "Protector of the kennel, Ecto-plasma, Ecto-Skeletal, Obituary birthday",
+                "Your scent is still here in my place of recovery"
+            ]
+        }).container);
 
-        $responses.append(
-            $('<div />').addClass('example').addClass("vert")
-                .append(
-                    new MessageBox({
-                        results: [
-                            "The file was imported successfully!"
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new MessageBox({
-                        warnings: [
-                            "The file was imported successfully, but some of the data was duplicated.",
-                            "Duplicate entries have been removed."
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new MessageBox({
-                        errors: [
-                            "The file was not imported.",
-                            "The file's size was larger than can be accepted."
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
+        document.getElementById('boxes-instructions').appendChild(instructions);
 
-        );
+        let responses = document.createElement('div');
+        responses.classList.add('example');
+        responses.classList.add('vert');
+
+        responses.appendChild(new MessageBox({
+            results: [
+                "The file was imported successfully!"
+            ]
+        }).container);
+
+        responses.appendChild(new MessageBox({
+            warnings: [
+                "The file was imported successfully, but some of the data was duplicated.",
+                "Duplicate entries have been removed."
+            ]
+        }).container);
+
+        responses.appendChild(new MessageBox({
+            errors: [
+                "The file was not imported.",
+                "The file's size was larger than can be accepted."
+            ]
+        }).container);
+
+        document.getElementById('boxes-responses').appendChild(responses);
     }
 
     grindForms() {
