@@ -138,7 +138,7 @@ class SimpleForm {
                 }
 
             } else if (this.url) {
-                this.form[0].submit();
+                this.form.submit();
             } else {
                 console.log(`No handler defined for form ${this.id} :: ${this.name}`);
             }
@@ -155,7 +155,7 @@ class SimpleForm {
         //application/x-www-form-urlencoded
         //multipart/form-data
 
-        const body = new URLSearchParams(new FormData(this.form[0])).toString();
+        const body = new URLSearchParams(new FormData(this.form)).toString();
 
         fetch(this.handler, {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -260,32 +260,34 @@ class SimpleForm {
      */
     buildForm() {
         const me = this;
-        this.form = $('<form />')
-            .attr('id', this.id)
-            .attr('novalidate', true) // turn off browser validation 'cause we do it by hand
-            .attr('name', this.name)
-            .attr('method', this.method)
-            .attr('enctype', this.enctype)
-            .attr('role', 'form')
-            .attr('autocomplete', this.autocomplete)
-            .classList.add('cornflowerblue')
-            .classList.add(this.classes.join(' '))
-            .on('submit', function(e) {
-                e.preventDefault();
-                me.submit();
-            });
+        this.form = document.createElement('form');
+        this.form.setAttribute('id', this.id);
+        this.form.setAttribute('novalidate', true); // turn off browser validation 'cause we do it by hand
+        this.form.setAttribute('name', this.name);
+        this.form.setAttribute('method', this.method);
+        this.form.setAttribute('enctype', this.enctype);
+        this.form.setAttribute('role', 'form');
+        this.form.setAttribute('autocomplete', this.autocomplete);
+        this.form.classList.add('cornflowerblue');
+        for (let c of this.classes) {
+            this.form.classList.add(c);
+        }
+        this.form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            me.submit();
+        });
 
         if ((this.handler) && (typeof this.handler !== 'function')) {
-            this.form.attr('target', this.target);
+            this.form.setAttribute('target', this.target);
         }
 
-        this.contentbox.append(this.headerbox)
-            .append(this.elementbox);
+        this.contentbox.appendChild(this.headerbox);
+        this.contentbox.appendChild(this.elementbox);
 
-        this.form.append(this.shade)
-            .append(this.contentbox)
-            .append(this.actionbox)
-            .append(this.passiveactionbox);
+        this.form.appendChild(this.shade);
+        this.form.appendChild(this.contentbox);
+        if (this.actions.length > 0) { this.form.appendChild(this.actionbox); }
+        if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox) };
 
         this.validate();
 
@@ -299,11 +301,12 @@ class SimpleForm {
      * Build the header for the form.
      */
     buildHeaderBox() {
-        this.headerbox = $('<div />').classList.add('header');
+        this.headerbox = document.createElement('div');
+        this.headerbox.classList.add('header');
         if ((this.header) || ((this.instructions) && (this.instructions.instructions) && (this.instructions.instructions.length > 0))) {
-            if (this.header) { this.headerbox.append(this.header); }
+            if (this.header) { this.headerbox.appendChild(this.header); }
             if (this.instructions) {
-                this.headerbox.append(this.instructionbox.container);
+                this.headerbox.appendChild(this.instructionbox.container);
             }
         }
         if (this.results) {
@@ -329,14 +332,21 @@ class SimpleForm {
      * Draw the Form's shade
      */
     buildShade() {
-        this.shade = $('<div />').classList.add('shade');
+        this.shade = document.createElement('div');
+        this.shade.classList.add('shade');
 
         if (this.spinnerstyle) {
-            this.shade.append($('<div />').classList.add('spinner').classList.add(this.spinnerstyle));
+            let d = document.createElement('div');
+            d.classList.add('spinner');
+            d.classList.add('this.spinnerstyle');
+            this.shade.append(d);
         }
 
         if (this.spinnertext) {
-            this.shade.append($('<div />').classList.add('spinnertext').html(this.spinnertext));
+            let d = document.createElement('div');
+            d.classList.add('spinnertext');
+            d.classList.innerHTML = this.spinnertext;
+            this.shade.append(d);
         }
     }
 
@@ -344,11 +354,12 @@ class SimpleForm {
      * Draw individual form elements
      */
     buildElementBox() {
-        this.elementbox = $('<div />').classList.add('elements');
+        this.elementbox = document.createElement('div');
+        this.elementbox.classList.add('elements');
         for (let element of this.elements) {
             element.form = this;
             if (element.type === 'file') {
-                this.form.attr('enctype', 'multipart/form-data');
+                this.form.setAttribute('enctype', 'multipart/form-data');
             }
             if ((!element.id) && (element.name)) {
                 element.id = `${this.id}-${element.name}`;
@@ -356,7 +367,7 @@ class SimpleForm {
                 element.id = `${this.id}-e-${Utils.getUniqueKey(5)}`;
             }
             this.addElement(element);
-            this.elementbox.append(element.container);
+            this.elementbox.appendChild(element.container);
         }
     }
 
@@ -364,7 +375,8 @@ class SimpleForm {
      * Draw the content box
      */
     buildContentBox() {
-        this.contentbox = $('<div />').classList.add('contentbox');
+        this.contentbox = document.createElement('div');
+        this.contentbox.classList.add('contentbox');
     }
 
     /**
@@ -372,13 +384,14 @@ class SimpleForm {
      */
     buildActionBox() {
         if ((this.actions) && (this.actions.length > 0)) {
-            this.actionbox = $('<div />').classList.add('actions');
+            this.actionbox = document.createElement('div');
+            this.actionbox.classList.add('actions');
             for (let action of this.actions) {
                 if ((action.cansubmit) && (action.submits)) {
                     this.submittors.push(action);
                 }
                 action.form = this;
-                this.actionbox.append(action.container);
+                this.actionbox.appendChild(action.container);
             }
         }
     }
@@ -388,13 +401,14 @@ class SimpleForm {
      */
     buildPassiveActionBox() {
         if ((this.passiveactions) && (this.passiveactions.length > 0)) {
-            this.passiveactionbox = $('<div />').classList.add('passiveactions');
+            this.passiveactionbox = document.createElement('div');
+            this.passiveactionbox.classList.add('passiveactions');
             for (let action of this.passiveactions) {
                 if ((action.cansubmit) && (action.submits)) {
                     this.submittors.push(action);
                 }
                 action.form = this;
-                this.passiveactionbox.append(action.container);
+                this.passiveactionbox.appendChild(action.container);
             }
         }
     }

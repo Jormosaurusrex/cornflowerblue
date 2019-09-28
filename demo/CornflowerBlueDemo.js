@@ -282,6 +282,7 @@ class CornflowerBlueDemo {
 
         this.grindButtons();
         this.grindCheckboxes();
+        this.grindForms();
         this.grindGrowlers();
         this.grindInputs();
         this.grindMessageBoxes();
@@ -293,7 +294,6 @@ class CornflowerBlueDemo {
 
         /*
         this.grindDialogs();
-        this.grindForms();
         this.grindDataGrids();
 
         this.grindProgressMeters();
@@ -657,10 +657,9 @@ class CornflowerBlueDemo {
     }
 
     grindForms() {
-        const $standard = $('#forms-standard');
-        const $profile = $('#forms-passive');
+
         let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
-        $standard.append(f.container);
+        document.getElementById('forms-standard').appendChild(f.container);
 
         let p = new SimpleForm({
             passive: true,
@@ -731,7 +730,8 @@ class CornflowerBlueDemo {
                 })
             ]
         });
-        $profile.append(p.container);
+        document.getElementById('forms-passive').appendChild(p.container);
+
     }
 
     grindGrowlers() {
