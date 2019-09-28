@@ -159,7 +159,7 @@ class InputElement {
      * Show messages and warnings
      */
     showMessages() {
-        this.messagebox.empty();
+        this.messagebox.innerHTML = "";
         for (let error of this.errors) {
             this.addError(error);
         }
@@ -171,7 +171,7 @@ class InputElement {
         } else if (this.warnings.length > 0) {
             this.container.classList.add('warning');
         }
-        this.messagebox.removeAttr('aria-hidden');
+        this.messagebox.removeAttribute('aria-hidden');
     }
 
     /**

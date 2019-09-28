@@ -28,7 +28,7 @@ class RadioGroup extends SelectMenu {
         config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
 
         if (!config.id) { // need to generate an id for label stuff
-            config.id = "radiogroup-" + Utils.getUniqueKey(5);
+            config.id = `radiogroup-${Utils.getUniqueKey(5)}`;
         }
         if (!config.name) { config.name = config.id; }
 
@@ -49,13 +49,19 @@ class RadioGroup extends SelectMenu {
     /* CONTROL METHODS__________________________________________________________________ */
 
     disable() {
-        this.optionlist.find('input:radio').attr('disabled',true);
+        let radios = this.optionlist.querySelectorAll("input[type='radio']");
+        for (let r of radios) {
+            r.setAttribute('disabled', 'disabled');
+        }
         this.disabled = true;
         if (this.container) { this.container.classList.add('disabled'); }
     }
 
     enable() {
-        this.optionlist.find('input:radio').removeAttr('disabled');
+        let radios = this.optionlist.querySelectorAll("input[type='radio']");
+        for (let r of radios) {
+            r.removeAttribute('disabled');
+        }
         this.disabled = false;
         if (this.container) { this.container.classList.remove('disabled'); }
     }
@@ -63,100 +69,109 @@ class RadioGroup extends SelectMenu {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
-        this.container = $('<div />')
-            .data('self', this)
-            .classList.add('input-container')
-            .classList.add('radiogroup-container')
-            .classList.add(this.classes.join(' '))
-            .append(this.labelobj)
-            .append(this.optionlist)
-            .append(this.passivebox);
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('radiogroup-container');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.appendChild(this.labelobj);
+        this.container.appendChild(this.optionlist);
+        this.container.appendChild(this.passivebox);
 
         this.postContainerScrub();
 
     }
 
     postContainerScrub() {
-        if (this.hidden) { this.container.css('display', 'none'); }
+        if (this.hidden) { this.container.style.display = 'none'; }
 
         if (this.required) {
             this.container.classList.add('required');
-            this.optionlist.attr('required', 'required');
+            this.optionlist.setAttribute('required', 'required');
         }
 
         if (this.hidden) {
-            this.container.css('display', 'none');
-            this.container.attr('aria-hidden', true);
+            this.container.style.display = 'none';
+            this.container.setAttribute('aria-hidden', 'true');
         }
 
         if (this.passive) { this.pacify(); }
         if (this.disabled) { this.disable(); }
 
         if (this.help) {
-            this.optionlist
-                .attr('aria-described-by', `${this.help.id}-tt`)
-                .attr('aria-labeled-by', `label-${this.id}`);
+            this.optionlist.setAttribute('aria-described-by', `${this.help.id}-tt`);
+            this.optionlist.setAttribute('aria-labeled-by', `label-${this.id}`);
         }
     }
 
     buildOption(def) {
 
         const me = this;
-        const lId = this.id + '-' + Utils.getUniqueKey(5);
-        let $op = $('<input />')
-            .data('self', this)
-            .attr('id', lId)
-            .attr('type', 'radio')
-            .attr('name', this.name)
-            .attr('tabindex', 0) // always 0
-            .attr('value', def.value)
-            .attr('aria-label', def.label)
-            .attr('role', 'radio')
-            .classList.add(this.classes.join(' '))
-            .on('change', function() {
-                $(this).prop('aria-checked', $(this).prop('checked'));
+        const lId = `${this.id}-${Utils.getUniqueKey(5)}`;
+        let op = document.createElement('input');
+        op.setAttribute('id', lId);
+        op.setAttribute('type', 'radio');
+        op.setAttribute('name', this.name);
+        op.setAttribute('tabindex', '0'); // always 0
+        op.setAttribute('value', def.value);
+        op.setAttribute('aria-label', def.label);
+        op.setAttribute('role', 'radio');
+        for (let c of this.classes) {
+            op.classList.add(c);
+        }
+        op.addEventListener('change', function() {
+            if (op.checked) {
+                op.setAttribute('aria-checked', 'true');
+            } else {
+                op.removeAttribute('aria-checked');
+            }
 
-                me.selectedoption = def;
-                if (def.label === me.unselectedtext) {
-                    me.passivebox.html(me.unsettext);
-                } else {
-                    me.passivebox.html(def.label);
-                }
+            me.selectedoption = def;
+            if (def.label === me.unselectedtext) {
+                me.passivebox.innerHTML = me.unsettext;
+            } else {
+                me.passivebox.innerHTML = def.label;
+            }
 
-                me.validate();
+            me.validate();
 
-                if (me.form) { me.form.validate(); }
+            if (me.form) { me.form.validate(); }
 
-                if ((me.onchange) && (typeof me.onchange === 'function')) {
-                    me.onchange(me);
-                }
-            });
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
 
-        let $opLabel = $('<label />')
-            .attr('for', lId)
-            .html(def.label);
+        let opLabel = document.createElement('label');
+        opLabel.setAttribute('for', lId);
+        opLabel.innerHTML = def.label;
 
         if (def.checked) {
             this.origval = def.value;
-            $op.attr('aria-checked', true)
-                .attr('checked', true)
+            op.checked = true;
+            op.setAttribute('aria-checked', 'true');
         }
 
-        return $('<li />').classList.add('radio').append($op).append($opLabel);
+        let li = document.createElement('li');
+        li.classList.add('radio');
+        li.appendChild(op);
+        li.appendChild(opLabel);
+        return li;
     }
 
     buildOptions() {
-        this.optionlist = $('<ul />')
-            .classList.add('radiogroup')
-            .attr('tabindex', -1)
-            .attr('role', 'radiogroup');
+        this.optionlist = document.createElement('ul');
+        this.optionlist.classList.add('radiogroup');
+        this.optionlist.setAttribute('tabindex', '-1');
+        this.optionlist.setAttribute('role', 'radiogroup');
 
         for (let opt of this.options) {
-            let $o = this.buildOption(opt);
+            let o = this.buildOption(opt);
             if (opt.checked) {
                 this.selectedoption = opt;
             }
-            this.optionlist.append($o);
+            this.optionlist.appendChild(o);
         }
     }
 

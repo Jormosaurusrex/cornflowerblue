@@ -270,7 +270,6 @@ class CornflowerBlueDemo {
 
         this.container.prepend(this.navigation.container);
 
-
         this.codebox = new FloatingPanel({
             title: 'Class',
             position: 'top-right',
@@ -282,16 +281,16 @@ class CornflowerBlueDemo {
 
 
         this.grindButtons();
+        this.grindCheckboxes();
         this.grindInputs();
         this.grindMessageBoxes();
+        this.grindRadioGroups();
+        this.grindSelects();
+        this.grindStyledCheckboxes();
         this.grindTextAreas();
 
         /*
-        this.grindSelects();
-        this.grindRadioGroups();
         this.grindDialogs();
-        this.grindCheckboxes();
-        this.grindStyledCheckboxes();
         this.grindGrowlers();
         this.grindForms();
         this.grindDataGrids();
@@ -300,32 +299,32 @@ class CornflowerBlueDemo {
         this.grindTabsAndMenus();
 
         this.grindPWChange();
+         */
         this.handleInternalLinks();
         this.handleWikiCitations();
-
-         */
-
     }
 
     handleInternalLinks() {
         const me = this;
-        let links = $('a.internal');
+        let links = document.querySelectorAll('a.internal');
         for (let l of links) {
-            let target = $(l).attr('data-tab-target');
-            $(l).click(function(e) {
-               e.preventDefault();
-               me.switchTab(target);
+            let target = l.getAttribute('data-tab-target');
+            l.addEventListener('click', function(e) {
+                e.preventDefault();
+                me.switchTab(target);
             });
         }
-
     }
 
     handleWikiCitations() {
-        let citations = $('sup.reference');
+
+        let citations = document.querySelectorAll('sup.reference');
         for (let cite of citations) {
-            let target = $(cite).find('a').attr('href');
-            let content = $(target).html();
-            let text = $(cite).find('a').html();
+            let a = cite.querySelector('a');
+            let targetID = a.getAttribute('href');
+            let target = document.querySelector(targetID);
+            let content = target.innerHTML;
+            let text = a.innerHTML;
             let b = new HelpButton({
                 text: text,
                 icon: null,
@@ -333,364 +332,12 @@ class CornflowerBlueDemo {
                 tipicon: 'legend',
                 help: content
             });
-            $(cite).empty().append(b.button);
+            cite.innerHTML = '';
+            cite.appendChild(b.button);
         }
-
     }
 
 
-    grindPWChange() {
-        const $target = $('#pwchanger-simple');
-        $target.append(new PasswordChangeForm({
-            cannotbe: ['password', '']
-        }).container);
-    }
-
-    grindTabsAndMenus() {
-        const me = this;
-        const $buttonmenu = $('#tabsmenus-buttonmenu');
-        const $tabbar = $('#tabsmenus-tabbar');
-        $buttonmenu.append(
-            $('<div />').addClass('example')
-                .append(
-                    new ButtonMenu({
-                        text: "User",
-                        icon: 'user-circle',
-                        items: [
-                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ButtonMenu({
-                        text: "User",
-                        icon: 'user-circle',
-                        mute: true,
-                        items: [
-                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ButtonMenu({
-                        text: "User",
-                        icon: 'user-circle',
-                        disabled: true,
-                        items: [
-                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-            );
-
-        $tabbar.append(
-            $('<div />').addClass('example')
-                .append(
-                    new TabBar({
-                        tabs: [
-                            { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: function() { Growler.growl("Clicked 'Home'") } },
-                            { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: function() { Growler.growl("Clicked 'Feed'") } },
-                            { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: function() { Growler.growl("Clicked 'Messages'") } },
-                            { id: 'dt-1-profile', label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'Profile'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-    }
-
-
-    grindProgressMeters() {
-        const me = this;
-        const $simple = $('#progressmeter-simple');
-        const $radial = $('#progressmeter-radial');
-
-        $simple.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new SimpleProgressMeter({
-                        label: "Overall Progress",
-                        value: 25
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleProgressMeter({
-                        label: "Rank 3 Progress",
-                        currentrank: "Bronze",
-                        nextrank: "Silver",
-                        minvalue: 200,
-                        maxvalue: 600,
-                        value: 335
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleProgressMeter({
-                        label: "Decalposition: exterior",
-                        currentrank: "Bronze",
-                        nextrank: "Silver",
-                        decalposition: 'exterior',
-                        minvalue: 200,
-                        maxvalue: 600,
-                        value: 335
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleProgressMeter({
-                        label: "Style: roundcap",
-                        style: 'roundcap',
-                        value: 89
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SimpleProgressMeter({
-                        label: "Style: interiorroundcap",
-                        style: 'interiorroundcap',
-                        value: 23
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $radial.append(
-            $('<div />').addClass('example')
-                .append(
-                    new RadialProgressMeter({
-                        label: "Overall Progress",
-                        value: 37
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new RadialProgressMeter({
-                        label: "Overall Progress",
-                        value: 72,
-                        badge: 7200,
-                        stinger: 'Points'
-
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new RadialProgressMeter({
-                        label: "With Ticks",
-                        value: 60,
-                        segments: 10
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-        $radial.append(
-            $('<div />').addClass('example')
-                .append(
-                    new RadialProgressMeter({
-                        label: "style: 'ticks'",
-                        value: 37,
-                        style: 'ticks'
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new RadialProgressMeter({
-                        label: "style: 'ticks'",
-                        value: 72,
-                        badge: 7200,
-                        stinger: 'Points',
-                        style: 'ticks'
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new RadialProgressMeter({
-                        label: "size: 'small'",
-                        value: 72,
-                        badge: 7200,
-                        stinger: 'Points',
-                        size: 'small'
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new RadialProgressMeter({
-                        label: "size: 'small'",
-                        value: 37,
-                        size: 'small',
-                        segments: 10
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-
-        );
-    }
-
-    grindInputs() {
-        const me = this;
-
-        const $uri = $('#inputs-uri');
-        const $disabled = $('#inputs-disabled');
-
-        let standard = document.createElement('div');
-        standard.classList.add('example');
-        standard.classList.add('vert');
-        standard.appendChild(new TextInput({
-            label: "Name",
-            maxlength: 50,
-            required: true,
-            counter: 'remaining',
-            placeholder: "Your full name",
-            help: "Use your full name, in whatever manner befits your culture."
-        }).container);
-        document.getElementById('inputs-standard').appendChild(standard);
-
-
-        let file = document.createElement('div');
-        file.classList.add('example');
-        file.classList.add('vert');
-        file.appendChild(new FileInput({
-            label: "File to Upload"
-        }).container);
-        file.appendChild(new FileInput({
-            label: "Portfolio Images",
-            mute: true,
-            multiple: true
-        }).container);
-        file.appendChild(new FileInput({
-            label: "Your Resume",
-            disabled: true,
-        }).container);
-        document.getElementById('inputs-file').appendChild(file);
-
-        let passiveTest = new TextInput({
-            label: "Name",
-            maxlength: 50,
-            required: true,
-            passive: true,
-            counter: 'remaining',
-            placeholder: "Your full name",
-            help: "Use your full name, in whatever manner befits your culture."
-        });
-
-        let toggleButton = new SimpleButton({
-           text: ".activate()",
-           action: function(e, self) {
-               passiveTest.toggleActivation();
-               if (passiveTest.passive) {
-                   self.text = ".activate()";
-               } else {
-                   self.text = ".pacify()";
-               }
-           }
-        });
-        let passive = document.createElement('div');
-        passive.classList.add('example');
-        passive.classList.add('vert');
-        passive.appendChild(passiveTest.container);
-        passive.appendChild(toggleButton.button);
-        document.getElementById('inputs-passive').appendChild(passive);
-
-
-        let number = document.createElement('div');
-        number.classList.add('example');
-        number.classList.add('vert');
-        number.appendChild(new NumberInput({
-            label: "Amount Requested",
-            minnumber: 0,
-            maxnumber: 20,
-            help: "How many items do you wish to purchase."
-        }).container);
-        document.getElementById('inputs-number').appendChild(number);
-
-
-        let mute = document.createElement('div');
-        mute.classList.add('example');
-        mute.classList.add('vert');
-        mute.appendChild(new TextInput({
-            label: "Name",
-            maxlength: 50,
-            counter: 'remaining',
-            mute: true,
-            placeholder: "Your full name",
-            help: "Use your full name, in whatever manner befits your culture."
-        }).container);
-        document.getElementById('inputs-mute').appendChild(mute);
-
-
-        let password = document.createElement('div');
-        password.classList.add('example');
-        password.classList.add('vert');
-        password.appendChild(new PasswordInput({
-            label: "Password",
-            placeholder: "Enter your password."
-        }).container);
-        password.appendChild(new PasswordInput({
-            label: "Password",
-            mute: true,
-            placeholder: "Enter your password."
-        }).container);
-        document.getElementById('inputs-password').appendChild(password);
-
-        let email = document.createElement('div');
-        email.classList.add('example');
-        email.classList.add('vert');
-        email.appendChild(new EmailInput({
-            label: "Email Address (valid required)"
-        }).container);
-        email.appendChild(new EmailInput({
-            label: "Email Address (invalid allowed)",
-            forceconstraints: false,
-        }).container);
-        document.getElementById('inputs-email').appendChild(email);
-
-
-        let uri = document.createElement('div');
-        uri.classList.add('example');
-        uri.classList.add('vert');
-        uri.appendChild(new URIInput({
-            label: "Web Page (valid required)"
-        }).container);
-        uri.appendChild(new URIInput({
-            label: "Web Page (invalid allowed)",
-            forceconstraints: false,
-        }).container);
-        document.getElementById('inputs-uri').appendChild(uri);
-
-        let disabled = document.createElement('div');
-        disabled.classList.add('example');
-        disabled.classList.add('vert');
-        disabled.appendChild(new TextInput({
-            label: "Name",
-            maxlength: 50,
-            counter: 'remaining',
-            disabled: true,
-            placeholder: "Your full name",
-            help: "Use your full name, in whatever manner befits your culture."
-        }).container);
-        disabled.appendChild(new TextInput({
-            label: "Name",
-            maxlength: 50,
-            counter: 'remaining',
-            disabled: true,
-            mute: true,
-            placeholder: "Your full name",
-            help: "Use your full name, in whatever manner befits your culture."
-        }).container);
-        document.getElementById('inputs-disabled').appendChild(disabled);
-    }
     grindButtons() {
         const me = this;
         const normal = document.getElementById('buttons-normal');
@@ -859,6 +506,242 @@ class CornflowerBlueDemo {
         }
 
     }
+
+    grindCheckboxes() {
+        const me = this;
+
+        let checkboxes = document.createElement('div');
+        checkboxes.classList.add('example');
+        checkboxes.classList.add('centered');
+        checkboxes.appendChild(new BooleanToggle({
+            label: "Normal"
+        }).container);
+        checkboxes.appendChild(new BooleanToggle({
+            checked: true,
+            label: "Checked"
+        }).container);
+        checkboxes.appendChild(new BooleanToggle({
+            disabled: true,
+            label: "Disabled"
+        }).container);
+        checkboxes.appendChild(new BooleanToggle({
+            checked: true,
+            disabled: true,
+            label: "Disabled"
+        }).container);
+        document.getElementById('inputs-checkboxes').appendChild(checkboxes);
+
+        let checkboxes2 = document.createElement('div');
+        checkboxes2.classList.add('example');
+        checkboxes2.classList.add('centered');
+        checkboxes2.appendChild(new BooleanToggle({
+            labelside: 'left',
+            label: "Normal"
+        }).container);
+        checkboxes2.appendChild(new BooleanToggle({
+            checked: true,
+            labelside: 'left',
+            label: "Toggled"
+        }).container);
+        checkboxes2.appendChild(new BooleanToggle({
+            labelside: 'left',
+            disabled: true,
+            label: "Disabled"
+        }).container);
+        checkboxes2.appendChild(new BooleanToggle({
+            labelside: 'left',
+            checked: true,
+            disabled: true,
+            label: "Disabled"
+        }).container);
+        document.getElementById('inputs-checkboxes').appendChild(checkboxes2);
+
+    }
+
+    grindDataGrids() {
+        const $basic = $('#datagrid-basic');
+
+        let dg = new DataGrid({
+            selectable: true,
+            fields: [
+                { name: "track", label: "Track", width: 1, type: "number", renderer: function(data) { return `${data}.`; } },
+                { name: "title", label: "Title", width: 3, type: "string", classes: ['nowrap', 'italic'] },
+                { name: "writers", label: "Writers", width: 3, type: "stringarray", separator: " &middot; ", classes: ['smaller'] },
+                { name: "length", label: "Length", width: 1, type: "time" }
+            ],
+            data: [
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
+                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
+                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
+                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
+                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
+                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
+                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
+                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
+                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" }
+            ]
+        });
+
+        $basic.append(dg.container);
+
+    }
+
+    grindDialogs() {
+        const me = this;
+        const $target = $('#inputs-dialogs');
+
+        $target.append(
+            $('<div />').addClass('example')
+                .append(
+                    new SimpleButton({
+                        text: "Login Form"
+                    }).button
+                        .click(function() {
+                            me.dialog = new DialogWindow({
+                                title: "Login",
+                                form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
+                            }).open();
+                        })
+                )
+                .append(
+                    new SimpleButton({
+                        text: "Kubla Khan"
+                    }).button
+                        .click(function() {
+                            me.dialog = new DialogWindow({
+                                title: "Kubla Khan",
+                                content: $('#khan').clone().css('padding', '1.5em')
+                            }).open();
+                        })
+                )
+        );
+    }
+
+    grindForms() {
+        const $standard = $('#forms-standard');
+        const $profile = $('#forms-passive');
+        let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
+        $standard.append(f.container);
+
+        let p = new SimpleForm({
+            passive: true,
+            instructions: {
+                icon: 'help-circle',
+                instructions: [
+                    "Make changes to your profile below."
+                ],
+            },
+            passiveinstructions: {
+                instructions: [
+                    "Review your profile information below.",
+                    "Make changes if you need to!"
+                ]
+            },
+            elements: [
+                new TextInput({
+                    label: "Name",
+                    autocomplete: 'off',
+                    placeholder: "Miyamoto Musashi",
+                    help: "Enter your name in whatever manner befits your culture."
+                }),
+                new TextInput({
+                    label: "Nickname",
+                    autocomplete: 'off',
+                    placeholder: "Musashi",
+                    help: "What should we call you? This is your short name."
+                }),
+                new EmailInput({
+                    label: "Email",
+                    autocomplete: 'off',
+                    required: true
+                })
+            ],
+            handler: function(self, callback) {
+                let results = {
+                    success: true,
+                    results: ['Your account has been updated successfully!']
+                };
+                self.pacify();
+                callback(results);
+            },
+            passiveactions: [
+                new SimpleButton({
+                    text: "Make Changes",
+                    icon: "pencil-circle",
+                    action: function(e, self) {
+                        e.preventDefault();
+                        self.form.activate();
+                    }
+                })
+            ],
+            actions: [
+                new ConstructiveButton({
+                    text: "Save Changes",
+                    icon: "check-circle",
+                    submits: true,
+                    disabled: true  // No action needed.
+                }),
+                new DestructiveButton({
+                    text: "Cancel Changes",
+                    icon: "echx-circle",
+                    mute: true,
+                    action: function(e, self) {
+                        e.preventDefault();
+                        self.form.pacify();
+                    }
+                })
+            ]
+        });
+        $profile.append(p.container);
+    }
+
     grindGrowlers() {
         const me = this;
         const $positions = $('#growlers-positions');
@@ -1002,83 +885,726 @@ class CornflowerBlueDemo {
                 )
         );
     }
-    grindCheckboxes() {
-        const me = this;
-        const $target = $('#inputs-checkboxes');
 
-        $target.append(
-            $('<div />').addClass('example').addClass("centered")
+    grindInputs() {
+        let standard = document.createElement('div');
+        standard.classList.add('example');
+        standard.classList.add('vert');
+        standard.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            required: true,
+            counter: 'remaining',
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        document.getElementById('inputs-standard').appendChild(standard);
+
+
+        let file = document.createElement('div');
+        file.classList.add('example');
+        file.classList.add('vert');
+        file.appendChild(new FileInput({
+            label: "File to Upload"
+        }).container);
+        file.appendChild(new FileInput({
+            label: "Portfolio Images",
+            mute: true,
+            multiple: true
+        }).container);
+        file.appendChild(new FileInput({
+            label: "Your Resume",
+            disabled: true,
+        }).container);
+        document.getElementById('inputs-file').appendChild(file);
+
+        let passiveTest = new TextInput({
+            label: "Name",
+            maxlength: 50,
+            required: true,
+            passive: true,
+            counter: 'remaining',
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        });
+
+        let toggleButton = new SimpleButton({
+            text: ".activate()",
+            action: function(e, self) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
+                    self.text = ".activate()";
+                } else {
+                    self.text = ".pacify()";
+                }
+            }
+        });
+        let passive = document.createElement('div');
+        passive.classList.add('example');
+        passive.classList.add('vert');
+        passive.appendChild(passiveTest.container);
+        passive.appendChild(toggleButton.button);
+        document.getElementById('inputs-passive').appendChild(passive);
+
+
+        let number = document.createElement('div');
+        number.classList.add('example');
+        number.classList.add('vert');
+        number.appendChild(new NumberInput({
+            label: "Amount Requested",
+            minnumber: 0,
+            maxnumber: 20,
+            help: "How many items do you wish to purchase."
+        }).container);
+        document.getElementById('inputs-number').appendChild(number);
+
+
+        let mute = document.createElement('div');
+        mute.classList.add('example');
+        mute.classList.add('vert');
+        mute.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            counter: 'remaining',
+            mute: true,
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        document.getElementById('inputs-mute').appendChild(mute);
+
+
+        let password = document.createElement('div');
+        password.classList.add('example');
+        password.classList.add('vert');
+        password.appendChild(new PasswordInput({
+            label: "Password",
+            placeholder: "Enter your password."
+        }).container);
+        password.appendChild(new PasswordInput({
+            label: "Password",
+            mute: true,
+            placeholder: "Enter your password."
+        }).container);
+        document.getElementById('inputs-password').appendChild(password);
+
+        let email = document.createElement('div');
+        email.classList.add('example');
+        email.classList.add('vert');
+        email.appendChild(new EmailInput({
+            label: "Email Address (valid required)"
+        }).container);
+        email.appendChild(new EmailInput({
+            label: "Email Address (invalid allowed)",
+            forceconstraints: false,
+        }).container);
+        document.getElementById('inputs-email').appendChild(email);
+
+
+        let uri = document.createElement('div');
+        uri.classList.add('example');
+        uri.classList.add('vert');
+        uri.appendChild(new URIInput({
+            label: "Web Page (valid required)"
+        }).container);
+        uri.appendChild(new URIInput({
+            label: "Web Page (invalid allowed)",
+            forceconstraints: false,
+        }).container);
+        document.getElementById('inputs-uri').appendChild(uri);
+
+        let disabled = document.createElement('div');
+        disabled.classList.add('example');
+        disabled.classList.add('vert');
+        disabled.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            counter: 'remaining',
+            disabled: true,
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        disabled.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            counter: 'remaining',
+            disabled: true,
+            mute: true,
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        document.getElementById('inputs-disabled').appendChild(disabled);
+    }
+
+    grindMessageBoxes() {
+        const me = this;
+
+        let instructions = document.createElement('div');
+        instructions.classList.add('example');
+        instructions.classList.add('vert');
+        instructions.appendChild(new InstructionBox({
+            instructions: [ "Enter your username and password." ]
+        }).container);
+        instructions.appendChild(new InstructionBox({
+            instructions: [
+                "Things have never been so swell",
+                "And I have never failed to fail"
+            ]
+        }).container);
+        instructions.appendChild(new InstructionBox({
+            instructions: [
+                "Angel left wing, right wing, broken wing",
+                "Lack of iron and/or sleeping",
+                "Protector of the kennel, Ecto-plasma, Ecto-Skeletal, Obituary birthday",
+                "Your scent is still here in my place of recovery"
+            ]
+        }).container);
+
+        document.getElementById('boxes-instructions').appendChild(instructions);
+
+        let responses = document.createElement('div');
+        responses.classList.add('example');
+        responses.classList.add('vert');
+
+        responses.appendChild(new MessageBox({
+            results: [
+                "The file was imported successfully!"
+            ]
+        }).container);
+
+        responses.appendChild(new MessageBox({
+            warnings: [
+                "The file was imported successfully, but some of the data was duplicated.",
+                "Duplicate entries have been removed."
+            ]
+        }).container);
+
+        responses.appendChild(new MessageBox({
+            errors: [
+                "The file was not imported.",
+                "The file's size was larger than can be accepted."
+            ]
+        }).container);
+
+        document.getElementById('boxes-responses').appendChild(responses);
+    }
+
+    grindProgressMeters() {
+        const me = this;
+        const $simple = $('#progressmeter-simple');
+        const $radial = $('#progressmeter-radial');
+
+        $simple.append(
+            $('<div />').addClass('example').addClass('vert')
                 .append(
-                    new BooleanToggle({
-                        label: "Normal"
+                    new SimpleProgressMeter({
+                        label: "Overall Progress",
+                        value: 25
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Checked"
+                    new SimpleProgressMeter({
+                        label: "Rank 3 Progress",
+                        currentrank: "Bronze",
+                        nextrank: "Silver",
+                        minvalue: 200,
+                        maxvalue: 600,
+                        value: 335
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled"
+                    new SimpleProgressMeter({
+                        label: "Decalposition: exterior",
+                        currentrank: "Bronze",
+                        nextrank: "Silver",
+                        decalposition: 'exterior',
+                        minvalue: 200,
+                        maxvalue: 600,
+                        value: 335
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled"
+                    new SimpleProgressMeter({
+                        label: "Style: roundcap",
+                        style: 'roundcap',
+                        value: 89
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new SimpleProgressMeter({
+                        label: "Style: interiorroundcap",
+                        style: 'interiorroundcap',
+                        value: 23
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
 
-        $target.append(
-            $('<div />').addClass('example').addClass("centered")
+        $radial.append(
+            $('<div />').addClass('example')
                 .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        label: "Normal"
+                    new RadialProgressMeter({
+                        label: "Overall Progress",
+                        value: 37
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
-                    new BooleanToggle({
-                        checked: true,
-                        labelside: 'left',
-                        label: "Toggled"
+                    new RadialProgressMeter({
+                        label: "Overall Progress",
+                        value: 72,
+                        badge: 7200,
+                        stinger: 'Points'
+
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
                 .append(
-                    new BooleanToggle({
-                        labelside: 'left',
+                    new RadialProgressMeter({
+                        label: "With Ticks",
+                        value: 60,
+                        segments: 10
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+        );
+        $radial.append(
+            $('<div />').addClass('example')
+                .append(
+                    new RadialProgressMeter({
+                        label: "style: 'ticks'",
+                        value: 37,
+                        style: 'ticks'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "style: 'ticks'",
+                        value: 72,
+                        badge: 7200,
+                        stinger: 'Points',
+                        style: 'ticks'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "size: 'small'",
+                        value: 72,
+                        badge: 7200,
+                        stinger: 'Points',
+                        size: 'small'
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new RadialProgressMeter({
+                        label: "size: 'small'",
+                        value: 37,
+                        size: 'small',
+                        segments: 10
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+
+        );
+    }
+
+    grindPWChange() {
+        const $target = $('#pwchanger-simple');
+        $target.append(new PasswordChangeForm({
+            cannotbe: ['password', '']
+        }).container);
+    }
+
+    grindRadioGroups() {
+
+        let standard = document.createElement('div');
+        standard.classList.add('example');
+        standard.classList.add('vert');
+        standard.appendChild(new RadioGroup({
+            label: "Best Avenger",
+            name: "avenger",
+            required: true,
+            help: "Stop looking for Tony; he's not in the list.",
+            options: [
+                { label: "Natasha", value: "Natasha" },
+                { label: "Steve", value: "Steve", checked: true },
+                { label: "Thor", value: "Thor" },
+                { label: "Clint", value: "Clint" },
+                { label: "Bruce", value: "Bruce" }
+            ]
+        }).container);
+        document.getElementById('radiogroups-standard').appendChild(standard);
+
+        let passiveTest = new RadioGroup({
+            label: "Year",
+            name: "year-radio-passive",
+            required: true,
+            passive: true,
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", checked: true, value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" }
+            ]
+        });
+
+        let toggleButton = new SimpleButton({
+            text: ".activate()",
+            action: function(e, self) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
+                    self.text = ".activate()";
+                } else {
+                    self.text = ".pacify()";
+                }
+            }
+        });
+
+        let passive = document.createElement('div');
+        passive.classList.add('example');
+        passive.classList.add('vert');
+        passive.appendChild(passiveTest.container);
+        passive.appendChild(toggleButton.button);
+        document.getElementById('radiogroups-passive').appendChild(passive);
+
+
+        let disabled = document.createElement('div');
+        disabled.classList.add('example');
+        disabled.classList.add('vert');
+        disabled.appendChild(new RadioGroup({
+            label: "Year",
+            name: "year-radio-disabled",
+            disabled: true,
+            required: true,
+            help: "Select the year you wish to recieve data for.",
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", value: "2018", checked: true },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" }
+            ]
+        }).container);
+        document.getElementById('radiogroups-disabled').appendChild(disabled);
+
+    }
+
+    grindSelects() {
+        const me = this;
+
+        let passiveTest = new SelectMenu({
+            label: "Year",
+            name: "year-passive",
+            required: true,
+            passive: true,
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" },
+                { label: "2015", value: "2015" },
+                { label: "2014", value: "2014" },
+                { label: "2013", value: "2013" },
+                { label: "2012", value: "2012" }
+            ]
+        });
+
+        let toggleButton = new SimpleButton({
+            text: ".activate()",
+            action: function(e, self) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
+                    self.text = ".activate()";
+                } else {
+                    self.text = ".pacify()";
+                }
+            }
+        });
+
+        let passive = document.createElement('div');
+        passive.classList.add('example');
+        passive.classList.add('vert');
+        passive.appendChild(passiveTest.container);
+        passive.appendChild(toggleButton.button);
+        document.getElementById('selects-passive').appendChild(passive);
+
+        let state = document.createElement('div');
+        state.classList.add('example');
+        state.classList.add('vert');
+        state.appendChild( new StateMenu({
+            value: 'WV'
+        }).container);
+        document.getElementById('selects-state').appendChild(state);
+
+        let standard = document.createElement('div');
+        standard.classList.add('example');
+        standard.classList.add('vert');
+        standard.appendChild(new SelectMenu({
+            label: "Year",
+            name: "year-select",
+            required: true,
+            prefix: 'Year:',
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" },
+                { label: "2015", value: "2015" },
+                { label: "2014", value: "2014" },
+                { label: "2013", value: "2013" },
+                { label: "2012", value: "2012" }
+            ]
+        }).container);
+        standard.appendChild(new SelectMenu({
+            label: "Favorite Album",
+            name: "favorite_album",
+            options: [
+                { label: "Sgt. Pepper's Lonely Hearts Club Band", value: "Sgt. Pepper's Lonely Hearts Club Band" },
+                { label: "The Nylon Curtain", value: "The Nylon Curtain" },
+                { label: "Reign in Blood", value: "Reign in Blood" },
+                { label: "Back in Black", value: "Back in Black" },
+                { label: "Nevermind", value: "Nevermind" },
+                { label: "Master of Reality", value: "Master of Reality" },
+                { label: "Doolittle", value: "Doolittle" },
+                { label: "Blizzard of Ozz", value: "Blizzard of Ozz" },
+                { label: "Purple Rain", value: "Purple Rain" },
+                { label: "1989", value: "1989" },
+                { label: "Crystal Visions", value: "Crystal Visions" },
+                { label: "Led Zeppelin IV", value: "Led Zeppelin IV", checked: true },
+                { label: "Congregation", value: "Congregation" },
+                { label: "Pet Sounds", value: "Pet Sounds" },
+                { label: "...And Justice for All", value: "...And Justice for All" },
+                { label: "Welcome to Sky Valley", value: "Welcome to Sky Valley" },
+                { label: "Live Through This", value: "Live Through This" },
+                { label: "Nothing's Shocking", value: "Nothing's Shocking" },
+                { label: "Thriller", value: "Thriller" },
+                { label: "Appetite for Destruction", value: "Appetite for Destruction" }
+            ]
+        }).container);
+        document.getElementById('selects-standard').appendChild(standard);
+
+        let mute = document.createElement('div');
+        mute.classList.add('example');
+        mute.classList.add('vert');
+        mute.appendChild(new SelectMenu({
+            label: "Year",
+            name: "year-select-mute",
+            mute: true,
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" },
+                { label: "2015", value: "2015" },
+                { label: "2014", value: "2014" },
+                { label: "2013", value: "2013" },
+                { label: "2012", value: "2012" }
+            ]
+        }).container);
+        mute.appendChild(new StateMenu({
+            value: 'WV',
+            label: 'State',
+            mute: true
+        }).container);
+        document.getElementById('selects-mute').appendChild(mute);
+
+        let disabled = document.createElement('div');
+        disabled.classList.add('example');
+        disabled.classList.add('vert');
+        disabled.appendChild(new SelectMenu({
+            label: "Year",
+            name: "year-select-disabled",
+            disabled: true,
+            options: [
+                { label: "2019", value: "2019" },
+                { label: "2018", value: "2018" },
+                { label: "2017", value: "2017" },
+                { label: "2016", value: "2016" },
+                { label: "2015", value: "2015" },
+                { label: "2014", value: "2014" },
+                { label: "2013", value: "2013" },
+                { label: "2012", value: "2012" }
+            ]
+        }).container);
+        document.getElementById('selects-disabled').appendChild(disabled);
+
+    }
+
+    grindStyledCheckboxes() {
+
+        let styledsquare = document.createElement('div');
+        styledsquare.classList.add('example');
+        styledsquare.classList.add('centered');
+        styledsquare.appendChild(new BooleanToggle({
+            label: "Normal",
+            style: "square"
+        }).container);
+        styledsquare.appendChild(new BooleanToggle({
+            checked: true,
+            label: "Toggled",
+            style: "square"
+        }).container);
+        styledsquare.appendChild(new BooleanToggle({
+            disabled: true,
+            label: "Disabled",
+            style: "square"
+        }).container);
+        styledsquare.appendChild(new BooleanToggle({
+            checked: true,
+            disabled: true,
+            label: "Disabled",
+            style: "square"
+        }).container);
+        document.getElementById('inputs-checkboxes-styled').appendChild(styledsquare);
+
+        let styledround = document.createElement('div');
+        styledround.classList.add('example');
+        styledround.classList.add('centered');
+        styledround.appendChild(new BooleanToggle({
+            label: "Normal",
+            style: "round"
+        }).container);
+        styledround.appendChild(new BooleanToggle({
+            checked: true,
+            label: "Toggled",
+            style: "round"
+        }).container);
+        styledround.appendChild(new BooleanToggle({
+            disabled: true,
+            label: "Disabled",
+            style: "round"
+        }).container);
+        styledround.appendChild(new BooleanToggle({
+            checked: true,
+            disabled: true,
+            label: "Disabled",
+            style: "round"
+        }).container);
+        document.getElementById('inputs-checkboxes-styled').appendChild(styledround);
+
+        let styledswitch = document.createElement('div');
+        styledswitch.classList.add('example');
+        styledswitch.classList.add('centered');
+        styledswitch.appendChild(new BooleanToggle({
+            label: "Normal",
+            style: "switch"
+        }).container);
+        styledswitch.appendChild(new BooleanToggle({
+            checked: true,
+            label: "Toggled",
+            style: "switch"
+        }).container);
+        styledswitch.appendChild(new BooleanToggle({
+            disabled: true,
+            label: "Disabled",
+            style: "switch"
+        }).container);
+        styledswitch.appendChild(new BooleanToggle({
+            checked: true,
+            disabled: true,
+            label: "Disabled",
+            style: "switch"
+        }).container);
+        document.getElementById('inputs-checkboxes-styled').appendChild(styledswitch);
+
+        let styledtoggle = document.createElement('div');
+        styledtoggle.classList.add('example');
+        styledtoggle.classList.add('centered');
+        styledtoggle.appendChild(new BooleanToggle({
+            label: "Normal",
+            style: "toggle"
+        }).container);
+        styledtoggle.appendChild(new BooleanToggle({
+            checked: true,
+            label: "Toggled",
+            style: "toggle"
+        }).container);
+        styledtoggle.appendChild(new BooleanToggle({
+            disabled: true,
+            label: "Disabled",
+            style: "toggle"
+        }).container);
+        styledtoggle.appendChild(new BooleanToggle({
+            checked: true,
+            disabled: true,
+            label: "Disabled",
+            style: "toggle"
+        }).container);
+        document.getElementById('inputs-checkboxes-styled').appendChild(styledtoggle);
+
+    }
+
+    grindTabsAndMenus() {
+        const me = this;
+        const $buttonmenu = $('#tabsmenus-buttonmenu');
+        const $tabbar = $('#tabsmenus-tabbar');
+        $buttonmenu.append(
+            $('<div />').addClass('example')
+                .append(
+                    new ButtonMenu({
+                        text: "User",
+                        icon: 'user-circle',
+                        items: [
+                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ButtonMenu({
+                        text: "User",
+                        icon: 'user-circle',
+                        mute: true,
+                        items: [
+                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                        ]
+                    }).container
+                        .click(function() { me.dumpConfig($(this).data('self')); })
+                )
+                .append(
+                    new ButtonMenu({
+                        text: "User",
+                        icon: 'user-circle',
                         disabled: true,
-                        label: "Disabled"
+                        items: [
+                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                        ]
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
+        );
+
+        $tabbar.append(
+            $('<div />').addClass('example')
                 .append(
-                    new BooleanToggle({
-                        labelside: 'left',
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled"
+                    new TabBar({
+                        tabs: [
+                            { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: function() { Growler.growl("Clicked 'Home'") } },
+                            { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: function() { Growler.growl("Clicked 'Feed'") } },
+                            { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: function() { Growler.growl("Clicked 'Messages'") } },
+                            { id: 'dt-1-profile', label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'Profile'") } }
+                        ]
                     }).container
                         .click(function() { me.dumpConfig($(this).data('self')); })
                 )
         );
     }
+
     grindTextAreas() {
-        const $target = $('#textareas-standard');
-        const $mute = $('#textareas-mute');
-        const $disabled = $('#textareas-disabled');
-        const $passive = $('#textareas-passive');
 
         let standard = document.createElement('div');
         standard.classList.add('example');
@@ -1147,649 +1673,13 @@ class CornflowerBlueDemo {
 
 
     }
-    grindSelects() {
-        const me = this;
-        const $standard = $('#selects-standard');
-        const $mute = $('#selects-mute');
-        const $state = $('#selects-state');
-        const $passive = $('#selects-passive');
-        const $disabled = $('#selects-disabled');
 
 
-        let passiveTest = new SelectMenu({
-            label: "Year",
-            name: "year-passive",
-            required: true,
-            passive: true,
-            options: [
-                { label: "2019", value: "2019" },
-                { label: "2018", value: "2018" },
-                { label: "2017", value: "2017" },
-                { label: "2016", value: "2016" },
-                { label: "2015", value: "2015" },
-                { label: "2014", value: "2014" },
-                { label: "2013", value: "2013" },
-                { label: "2012", value: "2012" }
-            ]
-        });
-
-        let toggleButton = new SimpleButton({
-            text: ".activate()",
-            action: function(e, self) {
-                passiveTest.toggleActivation();
-                if (passiveTest.passive) {
-                    self.text = ".activate()";
-                } else {
-                    self.text = ".pacify()";
-                }
-            }
-        });
-
-        $passive.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    passiveTest.container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    toggleButton.button
-                )
-        );
-
-        $state.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new StateMenu({
-                        value: 'WV'
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $standard.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new SelectMenu({
-                        label: "Year",
-                        name: "year-select",
-                        required: true,
-                        prefix: 'Year:',
-                        options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" },
-                            { label: "2015", value: "2015" },
-                            { label: "2014", value: "2014" },
-                            { label: "2013", value: "2013" },
-                            { label: "2012", value: "2012" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new SelectMenu({
-                        label: "Favorite Album",
-                        name: "favorite_album",
-                        options: [
-                            { label: "Sgt. Pepper's Lonely Hearts Club Band", value: "Sgt. Pepper's Lonely Hearts Club Band" },
-                            { label: "The Nylon Curtain", value: "The Nylon Curtain" },
-                            { label: "Reign in Blood", value: "Reign in Blood" },
-                            { label: "Back in Black", value: "Back in Black" },
-                            { label: "Nevermind", value: "Nevermind" },
-                            { label: "Master of Reality", value: "Master of Reality" },
-                            { label: "Doolittle", value: "Doolittle" },
-                            { label: "Blizzard of Ozz", value: "Blizzard of Ozz" },
-                            { label: "Purple Rain", value: "Purple Rain" },
-                            { label: "1989", value: "1989" },
-                            { label: "Crystal Visions", value: "Crystal Visions" },
-                            { label: "Led Zeppelin IV", value: "Led Zeppelin IV", checked: true },
-                            { label: "Congregation", value: "Congregation" },
-                            { label: "Pet Sounds", value: "Pet Sounds" },
-                            { label: "...And Justice for All", value: "...And Justice for All" },
-                            { label: "Welcome to Sky Valley", value: "Welcome to Sky Valley" },
-                            { label: "Live Through This", value: "Live Through This" },
-                            { label: "Nothing's Shocking", value: "Nothing's Shocking" },
-                            { label: "Thriller", value: "Thriller" },
-                            { label: "Appetite for Destruction", value: "Appetite for Destruction" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $mute.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new SelectMenu({
-                        label: "Year",
-                        name: "year-select-mute",
-                        mute: true,
-                        options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" },
-                            { label: "2015", value: "2015" },
-                            { label: "2014", value: "2014" },
-                            { label: "2013", value: "2013" },
-                            { label: "2012", value: "2012" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new StateMenu({
-                        value: 'WV',
-                        label: 'State',
-                        mute: true
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $disabled.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new SelectMenu({
-                        label: "Year",
-                        name: "year-select-disabled",
-                        disabled: true,
-                        options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", value: "2018" },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" },
-                            { label: "2015", value: "2015" },
-                            { label: "2014", value: "2014" },
-                            { label: "2013", value: "2013" },
-                            { label: "2012", value: "2012" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new StateMenu({
-                        value: 'WV',
-                        label: 'State',
-                        disabled: true,
-                        mute: true
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
 
 
-    }
-    grindRadioGroups() {
-        const me = this;
-        const $standard = $('#radiogroups-standard');
-        const $passive = $('#radiogroups-passive');
-        const $disabled = $('#radiogroups-disabled');
-
-        $disabled.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new RadioGroup({
-                        label: "Year",
-                        name: "year-radio-disabled",
-                        disabled: true,
-                        required: true,
-                        help: "Select the year you wish to recieve data for.",
-                        options: [
-                            { label: "2019", value: "2019" },
-                            { label: "2018", value: "2018", checked: true },
-                            { label: "2017", value: "2017" },
-                            { label: "2016", value: "2016" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $standard.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new RadioGroup({
-                        label: "Best Avenger",
-                        name: "avenger",
-                        required: true,
-                        help: "Stop looking for Tony; he's not in the list.",
-                        options: [
-                            { label: "Natasha", value: "Natasha" },
-                            { label: "Steve", value: "Steve", checked: true },
-                            { label: "Thor", value: "Thor" },
-                            { label: "Clint", value: "Clint" },
-                            { label: "Bruce", value: "Bruce" }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        let passiveTest = new RadioGroup({
-            label: "Year",
-            name: "year-radio-passive",
-            required: true,
-            passive: true,
-            options: [
-                { label: "2019", value: "2019" },
-                { label: "2018", checked: true, value: "2018" },
-                { label: "2017", value: "2017" },
-                { label: "2016", value: "2016" }
-            ]
-        });
-
-        let toggleButton = new SimpleButton({
-            text: ".activate()",
-            action: function(e, self) {
-                passiveTest.toggleActivation();
-                if (passiveTest.passive) {
-                    self.text = ".activate()";
-                } else {
-                    self.text = ".pacify()";
-                }
-            }
-        });
-
-        $passive.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    passiveTest.container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    toggleButton.button
-                )
-        );
 
 
-    }
-    grindDialogs() {
-        const me = this;
-        const $target = $('#inputs-dialogs');
 
-        $target.append(
-            $('<div />').addClass('example')
-                .append(
-                    new SimpleButton({
-                        text: "Login Form"
-                    }).button
-                        .click(function() {
-                            me.dialog = new DialogWindow({
-                                title: "Login",
-                                form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
-                            }).open();
-                        })
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Kubla Khan"
-                    }).button
-                        .click(function() {
-                            me.dialog = new DialogWindow({
-                                title: "Kubla Khan",
-                                content: $('#khan').clone().css('padding', '1.5em')
-                            }).open();
-                        })
-                )
-        );
-    }
-    grindStyledCheckboxes() {
-        const me = this;
-        const $target = $('#inputs-checkboxes-styled');
-
-        $target.append(
-            $('<div />').addClass('example').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "square"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('example').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "round"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('example').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "switch"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-        $target.append(
-            $('<div />').addClass('example').addClass("centered")
-                .append(
-                    new BooleanToggle({
-                        label: "Normal",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        label: "Toggled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        disabled: true,
-                        label: "Disabled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new BooleanToggle({
-                        checked: true,
-                        disabled: true,
-                        label: "Disabled",
-                        style: "toggle"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
-
-
-    }
-    grindMessageBoxes() {
-        const me = this;
-
-        let instructions = document.createElement('div');
-        instructions.classList.add('example');
-        instructions.classList.add('vert');
-        instructions.appendChild(new InstructionBox({
-                            instructions: [ "Enter your username and password." ]
-                    }).container);
-        instructions.appendChild(new InstructionBox({
-            instructions: [
-                "Things have never been so swell",
-                "And I have never failed to fail"
-            ]
-        }).container);
-        instructions.appendChild(new InstructionBox({
-            instructions: [
-                "Angel left wing, right wing, broken wing",
-                "Lack of iron and/or sleeping",
-                "Protector of the kennel, Ecto-plasma, Ecto-Skeletal, Obituary birthday",
-                "Your scent is still here in my place of recovery"
-            ]
-        }).container);
-
-        document.getElementById('boxes-instructions').appendChild(instructions);
-
-        let responses = document.createElement('div');
-        responses.classList.add('example');
-        responses.classList.add('vert');
-
-        responses.appendChild(new MessageBox({
-            results: [
-                "The file was imported successfully!"
-            ]
-        }).container);
-
-        responses.appendChild(new MessageBox({
-            warnings: [
-                "The file was imported successfully, but some of the data was duplicated.",
-                "Duplicate entries have been removed."
-            ]
-        }).container);
-
-        responses.appendChild(new MessageBox({
-            errors: [
-                "The file was not imported.",
-                "The file's size was larger than can be accepted."
-            ]
-        }).container);
-
-        document.getElementById('boxes-responses').appendChild(responses);
-    }
-
-    grindForms() {
-        const $standard = $('#forms-standard');
-        const $profile = $('#forms-passive');
-        let f = new SimpleForm(CornflowerBlueDemo.SIMPLE_LOGIN_FORM);
-        $standard.append(f.container);
-
-        let p = new SimpleForm({
-            passive: true,
-            instructions: {
-                icon: 'help-circle',
-                instructions: [
-                    "Make changes to your profile below."
-                ],
-            },
-            passiveinstructions: {
-                instructions: [
-                    "Review your profile information below.",
-                    "Make changes if you need to!"
-                ]
-            },
-            elements: [
-                new TextInput({
-                    label: "Name",
-                    autocomplete: 'off',
-                    placeholder: "Miyamoto Musashi",
-                    help: "Enter your name in whatever manner befits your culture."
-                }),
-                new TextInput({
-                    label: "Nickname",
-                    autocomplete: 'off',
-                    placeholder: "Musashi",
-                    help: "What should we call you? This is your short name."
-                }),
-                new EmailInput({
-                    label: "Email",
-                    autocomplete: 'off',
-                    required: true
-                })
-            ],
-            handler: function(self, callback) {
-                let results = {
-                    success: true,
-                    results: ['Your account has been updated successfully!']
-                };
-                self.pacify();
-                callback(results);
-            },
-            passiveactions: [
-                new SimpleButton({
-                    text: "Make Changes",
-                    icon: "pencil-circle",
-                    action: function(e, self) {
-                        e.preventDefault();
-                        self.form.activate();
-                    }
-                })
-            ],
-            actions: [
-                new ConstructiveButton({
-                    text: "Save Changes",
-                    icon: "check-circle",
-                    submits: true,
-                    disabled: true  // No action needed.
-                }),
-                new DestructiveButton({
-                    text: "Cancel Changes",
-                    icon: "echx-circle",
-                    mute: true,
-                    action: function(e, self) {
-                        e.preventDefault();
-                        self.form.pacify();
-                    }
-                })
-            ]
-        });
-        $profile.append(p.container);
-    }
-
-    grindDataGrids() {
-        const $basic = $('#datagrid-basic');
-
-        let dg = new DataGrid({
-            selectable: true,
-            fields: [
-                { name: "track", label: "Track", width: 1, type: "number", renderer: function(data) { return `${data}.`; } },
-                { name: "title", label: "Title", width: 3, type: "string", classes: ['nowrap', 'italic'] },
-                { name: "writers", label: "Writers", width: 3, type: "stringarray", separator: " &middot; ", classes: ['smaller'] },
-                { name: "length", label: "Length", width: 1, type: "time" }
-            ],
-            data: [
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" },
-                { track: 1, title: "Black Dog", writers: ["Page", "Plant", "Jones"], length: "4:54" },
-                { track: 2, title: "Rock and Roll", writers: ["Page", "Plant", "Jones", "Bonham"], length: "3:40" },
-                { track: 3, title: "The Battle of Evermore", writers: ["Page", "Plant"], length: "5:51" },
-                { track: 4, title: "Stairway to Heaven", writers: ["Page", "Plant"], length: "8:02" },
-                { track: 5, title: "Misty Mountain Hop", writers: ["Page", "Plant"], length: "4:38" },
-                { track: 6, title: "Four Sticks", writers: ["Page", "Plant"], length: "4:44" },
-                { track: 7, title: "Going to California", writers: ["Page", "Plant"], length: "3:31" },
-                { track: 8, title: "When the Levee Breaks", writers: ["Page", "Plant", "Jones", "Bohnam", "Minnie"], length: "7:07" }
-            ]
-        });
-
-        $basic.append(dg.container);
-
-    }
 
     /**
      * Show the forms.

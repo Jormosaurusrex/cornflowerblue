@@ -1843,7 +1843,7 @@ div.select-container {
         div.select-container ul.selectmenu li:hover[aria-selected=true] label:before, div.select-container ul.selectmenu li:focus[aria-selected=true] label:before {
           color: var(--selectmenu-menu-item-hover-text-color); }
     div.select-container ul.selectmenu.vert {
-      bottom: 3.4em;
+      bottom: 2.5em;
       box-shadow: var(--panel-shadow-light-inverse);
       border-top: 0.1em solid var(--input-default-border-color);
       border-bottom: none; }

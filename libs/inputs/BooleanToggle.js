@@ -26,7 +26,7 @@ class BooleanToggle {
             this.arialabel = this.label;
         }
 
-        if (!this.id) { this.id = "check-" + Utils.getUniqueKey(5); }
+        if (!this.id) { this.id = `check-${Utils.getUniqueKey(5)}`; }
         if (!this.name) { this.name = this.id; }
         this.origval = this.checked;
     }
@@ -57,20 +57,20 @@ class BooleanToggle {
      * Build the container
      */
     buildContainer() {
-        this.container = $('<div />')
-            .data('self', this)
-            .classList.add('input-container')
-            .classList.add('checkbox');
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('checkbox');
 
-        if (this.hidden) { this.container.css('display', 'none'); }
+        if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }
 
         if (this.labelside === 'right') {
-            this.container
-                .classList.add('rightside')
-                .append(this.toggle).append(this.labelobj);
+            this.container.classList.add('rightside');
+            this.container.appendChild(this.toggle);
+            this.container.appendChild(this.labelobj);
         } else {
-            this.container.append(this.labelobj).append(this.toggle);
+            this.container.appendChild(this.labelobj);
+            this.container.appendChild(this.toggle);
         }
     }
 
@@ -79,35 +79,41 @@ class BooleanToggle {
      */
     build() {
         const me = this;
-        this.toggle = $('<input />')
-            .data('self', this)
-            .attr('type', "checkbox")
-            .attr('id', this.id)
-            .attr('name', this.name)
-            .attr('tabindex', 0) // always 0
-            .attr('aria-label', this.arialabel)
-            .attr('aria-invalid', false)
-            .attr('aria-checked', this.checked)
-            .attr('checked', this.checked)
-            .attr('hidden', this.hidden)
-            .attr('disabled', this.disabled)
-            .attr('role', 'checkbox')
-            .attr('value', this.value)
-            .classList.add(this.classes.join(' '))
-            .classList.add(this.style)
-            .on('change', function() {
-                if ($(this).prop('checked')) {
-                    $(this).prop('aria-checked', $(this).prop('checked'));
-                } else {
-                    $(this).removeAttr('aria-checked');
-                    $(this).removeAttr('checked');
-                }
-                me.checked = $(this).prop('checked');
+        this.toggle = document.createElement('input');
+        this.toggle.setAttribute('type', "checkbox");
+        this.toggle.setAttribute('id', this.id);
+        this.toggle.setAttribute('name', this.name);
+        this.toggle.setAttribute('tabindex', '0'); // always 0
+        this.toggle.setAttribute('role', 'checkbox');
+        this.toggle.setAttribute('value', this.value);
+        this.toggle.classList.add(this.style);
 
-                if ((me.onchange) && (typeof me.onchange === 'function')) {
-                    me.onchange(me);
-                }
-            });
+        for (let c of this.classes) {
+            this.toggle.classList.add(c);
+        }
+
+        this.toggle.addEventListener('change', function() {
+            if (me.toggle.checked) {
+                me.toggle.setAttribute('aria-checked','true');
+                me.toggle.checked = true;
+            } else {
+                me.toggle.removeAttribute('aria-checked');
+                me.toggle.checked = false;
+            }
+            me.checked = me.toggle.checked;
+
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+
+        if (this.disabled) { this.disable(); }
+        if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
+
+        if (this.checked) {
+            this.toggle.checked = true;
+            this.toggle.setAttribute('aria-checked', 'true');
+        }
     }
 
     /**
@@ -116,12 +122,12 @@ class BooleanToggle {
     buildLabel() {
         if (!this.label) { return null; }
 
-        this.labelobj = $('<label />')
-            .attr('for', this.id)
-            .html(this.label);
+        this.labelobj = document.createElement('label');
+        this.labelobj.setAttribute('for', this.id);
+        this.labelobj.innerHTML = this.label;
 
         if (this.form) {
-            this.labelobj.attr('form', this.form.id);
+            this.labelobj.setAttribute('form', this.form.id);
         }
     }
 
@@ -131,7 +137,7 @@ class BooleanToggle {
      * Enable the toggle
      */
     disable() {
-        this.toggle.prop('disabled', true);
+        this.toggle.setAttribute('disabled', 'disabled');
         this.disabled = true;
         if (this.container) { this.container.classList.add('disabled'); }
     }
