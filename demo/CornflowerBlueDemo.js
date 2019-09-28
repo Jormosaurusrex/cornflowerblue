@@ -191,6 +191,7 @@ class CornflowerBlueDemo {
      * @param tab
      */
     switchTab(tab) {
+        // XXX JQUERY
         $('article').attr('aria-hiddden', true);
 
         $(`#t-${tab}`).attr('aria-hidden', false);

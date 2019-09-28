@@ -79,7 +79,12 @@ class TabBar {
 
         for (let tabdef of this.tabs) {
             let icon,
-                linktext;
+                linktext,
+                next = order + 1,
+                previous = order - 1;
+
+            if (previous < 0) { previous = 0; }
+            if (next > this.tabs.length) { next = this.tabs.length; }
 
             if ((!tabdef.label) && (!tabdef.icon)) {
                 console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
@@ -98,35 +103,36 @@ class TabBar {
             link.setAttribute('role', 'tab');
             link.setAttribute('aria-controls', `t-${tabdef.id}`);
             link.setAttribute('tabindex', '-1');
+            link.setAttribute('data-tabno', order);
             link.setAttribute('id', tabdef.id);
             link.setAttribute('data-tabid', tabdef.id);
             if (icon) { link.appendChild(icon); }
             link.appendChild(linktext);
 
             link.addEventListener('keydown', function(e) {
-                    if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
-                        e.preventDefault();
-                        e.stopPropagation();
-                        // XXX JQUERY FIX HERE
-                        //$(this).parent().prev().children('a').focus();
-                    } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
-                        e.preventDefault();
-                        e.stopPropagation();
-                        // XXX JQUERY FIX HERE
-                        //$(this).parent().next().children('a').focus();
-                    } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                        link.dispatchEvent('click');
-                    }
-                });
-            link.addEventListener('click', function(e) {
+                let keyCode = e.key || e.keyCode;
+                console.log(keyCode);
+                if ((keyCode === 'ArrowLeft') || (keyCode === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
-                    me.select(tabdef.id);
-                    if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                        tabdef.action(tabdef.id, me);
-                    } else if (me.action) {
-                        me.action(tabdef.id, me);
-                    }
-                });
+                    e.stopPropagation();
+                    me.list.querySelectorAll(`[data-tabno='${previous}']`)[0].focus();
+                } else if ((keyCode === 'ArrowRight') || (keyCode === 'ArrowDown')) { // Right arrow || Down Arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.list.querySelectorAll(`[data-tabno='${next}']`)[0].focus();
+                } else if ((keyCode === 'Space') || (keyCode === 'Enter')) { // return or space
+                    link.click();
+                }
+            });
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                me.select(tabdef.id);
+                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
+                    tabdef.action(tabdef.id, me);
+                } else if (me.action) {
+                    me.action(tabdef.id, me);
+                }
+            });
 
             let maplink = document.createElement('li');
             maplink.setAttribute('role', 'presentation');
@@ -134,7 +140,7 @@ class TabBar {
             this.tabmap[tabdef.id] = maplink;
 
             if (this.animation) {
-                this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order++}`); // used in animations
+                this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
                 this.tabmap[tabdef.id].classList.add(this.animation);
             }
 
@@ -154,7 +160,7 @@ class TabBar {
             }
 
             this.container.appendChild(this.list);
-
+            order++;
             if (tabdef.selected) { this.select(tabdef.id); }
         }
     }
