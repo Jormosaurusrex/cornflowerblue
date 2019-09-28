@@ -75,7 +75,7 @@ class TabBar {
         if (this.vertical) {
             this.list.classList.add('vertical');
         }
-        let order = 0;
+        let order = 1;
 
         for (let tabdef of this.tabs) {
             let icon,
@@ -83,7 +83,7 @@ class TabBar {
                 next = order + 1,
                 previous = order - 1;
 
-            if (previous < 0) { previous = 0; }
+            if (previous < 1) { previous = 1; }
             if (next > this.tabs.length) { next = this.tabs.length; }
 
             if ((!tabdef.label) && (!tabdef.icon)) {
@@ -111,7 +111,6 @@ class TabBar {
 
             link.addEventListener('keydown', function(e) {
                 let keyCode = e.key || e.keyCode;
-                console.log(keyCode);
                 if ((keyCode === 'ArrowLeft') || (keyCode === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
@@ -120,7 +119,7 @@ class TabBar {
                     e.preventDefault();
                     e.stopPropagation();
                     me.list.querySelectorAll(`[data-tabno='${next}']`)[0].focus();
-                } else if ((keyCode === 'Space') || (keyCode === 'Enter')) { // return or space
+                } else if ((keyCode === " " ) || (keyCode === "Spacebar" ) || (keyCode === 'Enter')) { // return or space
                     link.click();
                 }
             });
@@ -160,7 +159,9 @@ class TabBar {
             }
 
             this.container.appendChild(this.list);
+
             order++;
+
             if (tabdef.selected) { this.select(tabdef.id); }
         }
     }
