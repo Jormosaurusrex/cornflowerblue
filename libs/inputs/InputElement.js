@@ -132,13 +132,13 @@ class InputElement {
         if ((this.errors.length > 0) || (this.warnings.length > 0)) {
             this.showMessages();
             if (this.errors.length > 0) {
-                this.input.attr('aria-invalid', true);
+                this.input.setAttribute('aria-invalid', 'true');
             } else {
-                this.input.attr('aria-invalid', false);
+                this.input.removeAttribute('aria-invalid');
             }
         } else {
             this.clearMessages();
-            this.input.attr('aria-invalid', false);
+            this.input.removeAttribute('aria-invalid');
             if ((this.isDirty()) && (!onload)) { // This has to be valid
                 this.container.classList.add('valid');
             } else {
@@ -180,8 +180,10 @@ class InputElement {
     clearMessages() {
         this.errors = [];
         this.warnings = [];
-        this.messagebox.empty().attr('aria-hidden', true);
-        this.container.classList.remove('error').classList.remove('warning');
+        this.messagebox.innerHTML = '';
+        this.messagebox.setAttribute('aria-hidden', 'true');
+        this.container.classList.remove('error');
+        this.container.classList.remove('warning');
     }
 
     /**
@@ -189,7 +191,10 @@ class InputElement {
      * @param error the error to add
      */
     addError(error) {
-        this.messagebox.append($('<li />').classList.add('error').html(error));
+        let err = document.createElement('li');
+        err.classList.add('error');
+        err.innerHTML = error;
+        this.messagebox.appendChild(err);
     }
 
     /**
@@ -197,7 +202,10 @@ class InputElement {
      * @param warning the warning to add
      */
     addWarning(warning) {
-        this.messagebox.append($('<li />').classList.add('warning').html(warning));
+        let warn = document.createElement('li');
+        warn.classList.add('warning');
+        warn.innerHTML = warning;
+        this.messagebox.appendChild(warn);
     }
 
     /**
@@ -215,7 +223,7 @@ class InputElement {
             ctext = `${(this.maxlength - this.value.length)} characters remaining`;
         }
 
-        this.charactercounter.html(ctext);
+        this.charactercounter.innerHTML = ctext;
 
         if ((this.maxlength) && (this.value.length >= this.maxlength)) {
             this.charactercounter.classList.add('outofbounds');
@@ -243,7 +251,7 @@ class InputElement {
      * Enable the element
      */
     disable() {
-        this.input.prop('disabled', true);
+        this.input.setAttribute('disabled', 'true');
         this.disabled = true;
         if (this.container) { this.container.classList.add('disabled'); }
     }
@@ -252,7 +260,7 @@ class InputElement {
      * Disable the element
      */
     enable() {
-        this.input.removeAttr('disabled');
+        this.input.removeAttribute('disabled');
         this.disabled = false;
         if (this.container) { this.container.classList.remove('disabled'); }
     }
@@ -277,7 +285,7 @@ class InputElement {
      * Toggle the passive/active modes
      */
     toggleActivation() {
-        if (this.container.hasClass('passive')) {
+        if (this.container.classList.contains('passive')) {
             this.activate();
             return;
         }
@@ -299,19 +307,23 @@ class InputElement {
      * This gets over-ridden in elements that have additional structures, like a character counter
      */
     buildContainer() {
-        this.container = $('<div />')
-            .data('self', this)
-            .classList.add('input-container')
-            .classList.add(this.classes.join(' '))
-            .append(this.labelobj)
-            .append($('<div />')
-                .classList.add('wrap')
-                .append(this.input)
-                .append(this.inputcontrol)
-            )
-            .append(this.passivebox)
-            .append(this.topcontrol)
-            .append(this.messagebox);
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.appendChild(this.labelobj);
+
+        let wrap = document.createElement('div');
+        wrap.classList.add('wrap');
+        wrap.appendChild(this.input);
+        if (this.inputcontrol) { wrap.appendChild(this.inputcontrol); }
+        this.container.appendChild(wrap);
+        console.log(wrap);
+
+        this.container.appendChild(this.passivebox);
+        if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
+        this.container.appendChild(this.messagebox);
 
         this.postContainerScrub();
 
@@ -323,14 +335,14 @@ class InputElement {
     postContainerScrub() {
         if (this.required) {
             this.container.classList.add('required');
-            this.input.attr('required', 'required');
+            this.input.setAttribute('required', 'required');
         }
         if (this.mute) { this.container.classList.add('mute'); }
         if (this.disabled) { this.container.classList.add('disabled'); }
 
         if (this.hidden) {
-            this.container.css('display', 'none');
-            this.container.attr('aria-hidden', true);
+            this.container.style.display = 'none';
+            this.container.setAttribute('aria-hidden', 'true');
         }
         if ((this.config.value) && (this.config.value.length > 0)) {
             this.container.classList.add('filled');
@@ -339,9 +351,8 @@ class InputElement {
             this.pacify()
         }
         if (this.help) {
-            this.input
-                .attr('aria-described-by', `${this.help.id}-tt`)
-                .attr('aria-labeled-by', `label-${this.id}`);
+            this.input.setAttribute('aria-described-by', `${this.help.id}-tt`);
+            this.input.setAttribute('aria-labeled-by', `label-${this.id}`);
         }
 
         this.validate(true);
@@ -351,9 +362,9 @@ class InputElement {
      * Build the passive text box.
      */
     buildInactiveBox() {
-        this.passivebox = $('<div />')
-            .classList.add('passivebox')
-            .html(this.passivetext);
+        this.passivebox = document.createElement('div');
+        this.passivebox.classList.add('passivebox');
+        this.passivebox.innerHTML = this.passivetext;
     }
 
     /**
@@ -363,118 +374,118 @@ class InputElement {
         const me = this;
 
         if (this.type === 'textarea') {
-            this.input = $('<textarea />');
+            this.input = document.createElement('textarea');
         } else {
-            this.input = $('<input />');
+            this.input = document.createElement('input');
         }
 
-        this.input
-            .data('self', this)
-            .attr('type', this.type)
-            .attr('id', this.id)
-            .attr('name', this.name)
-            .attr('title', this.title)
-            .attr('inputmode', this.inputmode)
-            .attr('autocomplete', this.autocomplete)
-            .attr('placeholder', this.placeholder)
-            .attr('aria-label', this.arialabel)
-            .attr('aria-describedby', `msg-${this.id}`)
-            .attr('aria-invalid', false)
-            .attr('role', 'textbox')
-            .attr('tabindex', 0) // always 0
-            .attr('pattern', this.pattern)
-            .attr('maxlength', this.maxlength)
-            .attr('hidden', this.hidden)
-            .attr('aria-hidden', this.hidden)
-            .attr('disabled', this.disabled)
-            .classList.add(this.classes.join(' '))
-            .on('keydown', function(e) {
-                // Reset this to keep readers from constantly beeping. It will re-validate later.
-                me.input.attr('aria-invalid', false);
-                me.updateCounter();
-                me.touched = true; // set self as touched.
-                if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
-                    me.onkeydown(e, me);
-                }
-            })
-            .on('keyup', function(e) {
-                if (me.helptimer) {
-                    clearTimeout(me.helptimer);
-                    me.helpicon.close();
-                }
+        this.input.setAttribute('type', this.type);
+        this.input.setAttribute('id', this.id);
+        this.input.setAttribute('name', this.name);
+        this.input.setAttribute('inputmode', this.inputmode);
+        this.input.setAttribute('aria-describedby', `msg-${this.id}`);
+        this.input.setAttribute('role', 'textbox');
+        this.input.setAttribute('tabindex', '0');
 
-                if ((me.value) && (me.value.length > 0) && (me.container)) {
-                    me.container.classList.add('filled');
-                } else {
-                    me.container.classList.remove('filled');
-                }
+        if (this.title) { this.input.setAttribute('title', this.title); }
+        if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
+        if (this.placeholder) { this.input.setAttribute('placeholder', this.placeholder); }
+        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
+        if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 
-                if ((me.form) && (me.required) // If this is the only thing required, tell the form.
-                    && (($(this).val().length === 0) || ($(this).val().length === 1))) { // Only these two lengths matter
-                    if (me.form) { me.form.validate(); }
-                }
-                if ((e.keyCode === 13) // Return key
-                    && (me.onreturn) && (typeof me.onreturn === 'function')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.onreturn(e, me);
-                } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
-                    me.onkeyup(e, me);
-                }
-            })
-            .on('focusin', function(e) {
-                if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
-                    $(this).attr('placeholder', me.placeholder);
-                }
-                if (me.container) {
-                    me.container.classList.add('active');
-                }
-                if (me.help) {
-                    me.helptimer = setTimeout(function() {
-                        me.helpicon.open();
-                    }, me.helpwaittime);
-                }
-                if ((me.focusin) && (typeof me.focusin === 'function')) {
-                    me.focusin(e, me);
-                }
-            })
-            .on('focusout', function(e) {
+        for (let c of this.classes) {
+            this.input.classList.add(c);
+        }
+        this.input.addEventListener('keydown', function(e) {
+            // Reset this to keep readers from constantly beeping. It will re-validate later.
+            me.input.removeAttribute('aria-invalid');
+            me.updateCounter();
+            me.touched = true; // set self as touched.
+            if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
+                me.onkeydown(e, me);
+            }
+        });
+        this.input.addEventListener('keyup', function(e) {
+            if (me.helptimer) {
+                clearTimeout(me.helptimer);
+                me.helpicon.close();
+            }
 
-                me.passivebox.html(me.passivetext);
+            if ((me.value) && (me.value.length > 0) && (me.container)) {
+                me.container.classList.add('filled');
+            } else {
+                me.container.classList.remove('filled');
+            }
 
-                if (me.helptimer) {
-                    clearTimeout(me.helptimer);
-                    me.helpicon.close();
-                }
-
-                if ((me.mute) && (me.label)) {
-                    $(this).attr('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
-                }
-
-                if (me.container) {
-                    me.container.classList.remove('active');
-                }
-                me.validate();
-
+            if ((me.form) && (me.required) // If this is the only thing required, tell the form.
+                && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
                 if (me.form) { me.form.validate(); }
+            }
+            if ((e.keyCode === 13) // Return key
+                && (me.onreturn) && (typeof me.onreturn === 'function')) {
+                e.preventDefault();
+                e.stopPropagation();
+                me.onreturn(e, me);
+            } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
+                me.onkeyup(e, me);
+            }
+        });
+        this.input.addEventListener('focusin', function(e) {
+            if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
+                me.input.setAttribute('placeholder', me.placeholder);
+            }
+            if (me.container) {
+                me.container.classList.add('active');
+            }
+            if (me.help) {
+                me.helptimer = setTimeout(function() {
+                    me.helpicon.open();
+                }, me.helpwaittime);
+            }
+            if ((me.focusin) && (typeof me.focusin === 'function')) {
+                me.focusin(e, me);
+            }
+        });
+        this.input.addEventListener('focusout', function(e) {
 
-                if ((me.focusout) && (typeof me.focusout === 'function')) {
-                    me.focusout(e, me);
-                }
-            })
-            .val(this.config.value);
+            me.passivebox.innerHTML = me.passivetext;
+
+            if (me.helptimer) {
+                clearTimeout(me.helptimer);
+                me.helpicon.close();
+            }
+
+            if ((me.mute) && (me.label)) {
+                me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+            }
+
+            if (me.container) { me.container.classList.remove('active'); }
+            me.validate();
+
+            if (me.form) { me.form.validate(); }
+
+            if ((me.focusout) && (typeof me.focusout === 'function')) {
+                me.focusout(e, me);
+            }
+        });
+        this.input.value = this.config.value;
 
         if (this.required) {
-            this.input.attr('required', true);
+            this.input.setAttribute('required', 'true');
             if (this.label) {
-                this.labelobj.attr('data-required-text', `${this.requiredtext}`);
+                this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
             }
         }
 
         if (this.mute) {
             this.input.classList.add('mute');
-            if (this.label) { this.input.attr('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`); }
+            if (this.label) {
+                this.input.setAttribute('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`);
+            }
         }
+
+        if (this.hidden) { this.hide(); }
+        if (this.disabled) { this.disable(); }
 
         if (this.icon) { this.input.classList.add(`cfb-${this.icon}`); }
 
@@ -488,26 +499,28 @@ class InputElement {
 
         if (!this.label) { return null; }
 
-        this.labelobj = $('<label />')
-            .attr('for', this.id)
-            .attr('id', `label-${this.id}`)
-            .html(this.label)
-            .click(function() {
-                $('#' + $(this).attr('for')).focus();
-            });
+        this.labelobj = document.createElement('label');
+        this.labelobj.setAttribute('for', this.id);
+        this.labelobj.setAttribute('id', `label-${this.id}`);
+        this.labelobj.innerHTML = this.label;
+        this.labelobj.addEventListener('click', function() {
+            // XXX JQUERY
+            //$('#' + $(this).attr('for')).focus();
+        });
 
         if (this.form) {
-            this.labelobj.attr('form', this.form.id);
+            this.labelobj.setAttribute('form', this.form.id);
         }
 
         if (this.help) {
             this.helpicon = new HelpButton({ help: this.help });
-            this.labelobj
-                .append(this.helpicon.button)
-                .hover(
-                    function() { me.helpicon.open(); },
-                    function() { me.helpicon.close(); }
-                );
+            this.labelobj.appendChild(this.helpicon.button);
+            this.labelobj.addEventListener('onmouseover', function() {
+                me.helpicon.open();
+            });
+            this.labelobj.addEventListener('onmouseout', function() {
+                me.helpicon.close();
+            });
         }
     }
 
@@ -515,9 +528,9 @@ class InputElement {
      * Build the message box.
      */
     buildMessagebox() {
-        this.messagebox = $('<ul />')
-            .attr('id', `msg-${this.id}`)
-            .classList.add('messagebox');
+        this.messagebox = document.createElement('ul');
+        this.messagebox.setAttribute('id', `msg-${this.id}`);
+        this.messagebox.classList.add('messagebox');
     }
 
     /**
@@ -525,10 +538,10 @@ class InputElement {
      */
     buildCharacterCounter() {
         if (this.counter) {
-            this.charactercounter = $('<div />')
-                .classList.add('charcounter')
-                .classList.add('topcontrol')
-                .classList.add(this.counter);
+            this.charactercounter = document.createElement('div');
+            this.charactercounter.classList.add('charcounter');
+            this.charactercounter.classList.add('topcontrol');
+            this.charactercounter.classList.add(this.counter);
 
             if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
 
@@ -726,11 +739,11 @@ class InputElement {
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 
-    get value() { return this.input.val(); }
+    get value() { return this.input.value; }
     set value(value) {
         this.config.value = value;
-        this.input.val(value);
-        this.passivebox.val(value);
+        this.input.value = value;
+        this.passivebox.value = value;
     }
 
     get warnings() { return this._warnings; }

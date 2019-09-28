@@ -181,14 +181,14 @@ class NumberInput extends TextInput {
                     me.decrement(me.step);
                 }
             });
-            this.stepbuttons = $('<div />')
-                .classList.add('stepbuttons')
-                .classList.add('inputcontrol')
-                .append(this.upbtn.button)
-                .append(this.downbtn.button)
-                .on('mousedown', function(event) {
-                    event.preventDefault(); // Prevents focus shifting.
-                });
+            this.stepbuttons = document.createElement('div');
+            this.stepbuttons.classList.add('stepbuttons');
+            this.stepbuttons.classList.add('inputcontrol');
+            this.stepbuttons.appendChild(this.upbtn.button);
+            this.stepbuttons.appendChild(this.downbtn.button);
+            this.stepbuttons.addEventListener('mousedown', function(e) {
+                e.preventDefault(); // Prevents focus shifting.
+            });
         }
     }
 

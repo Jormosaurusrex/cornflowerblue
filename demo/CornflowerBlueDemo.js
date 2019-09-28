@@ -282,10 +282,10 @@ class CornflowerBlueDemo {
 
 
         this.grindButtons();
+        this.grindInputs();
         this.grindMessageBoxes();
 
         /*
-        this.grindInputs();
         this.grindSelects();
         this.grindTextAreas();
         this.grindRadioGroups();
@@ -540,59 +540,40 @@ class CornflowerBlueDemo {
 
     grindInputs() {
         const me = this;
-        const $standard = $('#inputs-standard');
-        const $passive = $('#inputs-passive');
-        const $mute = $('#inputs-mute');
-        const $password = $('#inputs-password');
-        const $email = $('#inputs-email');
+
         const $uri = $('#inputs-uri');
-        const $number = $('#inputs-number');
-        const $file = $('#inputs-file');
         const $disabled = $('#inputs-disabled');
 
-        $file.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(new FileInput({
-                        label: "File to Upload"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
+        let standard = document.createElement('div');
+        standard.classList.add('example');
+        standard.classList.add('vert');
+        standard.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            required: true,
+            counter: 'remaining',
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        document.getElementById('inputs-standard').appendChild(standard);
 
-                )
-        ).append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(new FileInput({
-                        label: "Portfolio Images",
-                        mute: true,
-                        multiple: true
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
 
-                )
-        ).append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(new FileInput({
-                        label: "Your Resume",
-                        disabled: true,
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-
-                )
-        );
-
-        $standard.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new TextInput({
-                        label: "Name",
-                        maxlength: 50,
-                        required: true,
-                        counter: 'remaining',
-                        placeholder: "Your full name",
-                        help: "Use your full name, in whatever manner befits your culture."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let file = document.createElement('div');
+        file.classList.add('example');
+        file.classList.add('vert');
+        file.appendChild(new FileInput({
+            label: "File to Upload"
+        }).container);
+        file.appendChild(new FileInput({
+            label: "Portfolio Images",
+            mute: true,
+            multiple: true
+        }).container);
+        file.appendChild(new FileInput({
+            label: "Your Resume",
+            disabled: true,
+        }).container);
+        document.getElementById('inputs-file').appendChild(file);
 
         let passiveTest = new TextInput({
             label: "Name",
@@ -607,7 +588,6 @@ class CornflowerBlueDemo {
         let toggleButton = new SimpleButton({
            text: ".activate()",
            action: function(e, self) {
-               console.log('click');
                passiveTest.toggleActivation();
                if (passiveTest.passive) {
                    self.text = ".activate()";
@@ -616,126 +596,101 @@ class CornflowerBlueDemo {
                }
            }
         });
+        let passive = document.createElement('div');
+        passive.classList.add('example');
+        passive.classList.add('vert');
+        passive.appendChild(passiveTest.container);
+        passive.appendChild(toggleButton.button);
+        document.getElementById('inputs-passive').appendChild(passive);
 
-        $passive.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    passiveTest.container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    toggleButton.button
-                )
-        );
 
-        $number.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new NumberInput({
-                        label: "Amount Requested",
-                        minnumber: 0,
-                        maxnumber: 20,
-                        help: "How many items do you wish to purchase."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
+        let number = document.createElement('div');
+        number.classList.add('example');
+        number.classList.add('vert');
+        number.appendChild(new NumberInput({
+            label: "Amount Requested",
+            minnumber: 0,
+            maxnumber: 20,
+            help: "How many items do you wish to purchase."
+        }).container);
+        document.getElementById('inputs-number').appendChild(number);
 
-                )
-        );
-        $mute.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new TextInput({
-                        label: "Name",
-                        maxlength: 50,
-                        counter: 'remaining',
-                        mute: true,
-                        placeholder: "Your full name",
-                        help: "Use your full name, in whatever manner befits your culture."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
 
-        $password.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new PasswordInput({
-                        label: "Password",
-                        placeholder: "Enter your password."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new PasswordInput({
-                        label: "Password",
-                        mute: true,
-                        placeholder: "Enter your password."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let mute = document.createElement('div');
+        mute.classList.add('example');
+        mute.classList.add('vert');
+        mute.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            counter: 'remaining',
+            mute: true,
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        document.getElementById('inputs-mute').appendChild(mute);
 
-        $email.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new EmailInput({
-                        label: "Email Address (valid required)"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new EmailInput({
-                        label: "Email Address (invalid allowed)",
-                        forceconstraints: false,
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
 
-        $uri.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new URIInput({
-                        label: "Web Page (valid required)"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new URIInput({
-                        label: "Web Page (invalid allowed)",
-                        forceconstraints: false,
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let password = document.createElement('div');
+        password.classList.add('example');
+        password.classList.add('vert');
+        password.appendChild(new PasswordInput({
+            label: "Password",
+            placeholder: "Enter your password."
+        }).container);
+        password.appendChild(new PasswordInput({
+            label: "Password",
+            mute: true,
+            placeholder: "Enter your password."
+        }).container);
+        document.getElementById('inputs-password').appendChild(password);
 
-        $disabled.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new TextInput({
-                        label: "Name",
-                        maxlength: 50,
-                        counter: 'remaining',
-                        disabled: true,
-                        placeholder: "Your full name",
-                        help: "Use your full name, in whatever manner befits your culture."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new TextInput({
-                        label: "Name",
-                        maxlength: 50,
-                        counter: 'remaining',
-                        disabled: true,
-                        mute: true,
-                        placeholder: "Your full name",
-                        help: "Use your full name, in whatever manner befits your culture."
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
 
+        let email = document.createElement('div');
+        email.classList.add('example');
+        email.classList.add('vert');
+        email.appendChild(new EmailInput({
+            label: "Email Address (valid required)"
+        }).container);
+        email.appendChild(new EmailInput({
+            label: "Email Address (invalid allowed)",
+            forceconstraints: false,
+        }).container);
+        document.getElementById('inputs-email').appendChild(email);
+
+
+        let uri = document.createElement('div');
+        uri.classList.add('example');
+        uri.classList.add('vert');
+        uri.appendChild(new URIInput({
+            label: "Web Page (valid required)"
+        }).container);
+        uri.appendChild(new URIInput({
+            label: "Web Page (invalid allowed)",
+            forceconstraints: false,
+        }).container);
+        document.getElementById('inputs-uri').appendChild(uri);
+
+        let disabled = document.createElement('div');
+        disabled.classList.add('example');
+        disabled.classList.add('vert');
+        disabled.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            counter: 'remaining',
+            disabled: true,
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        disabled.appendChild(new TextInput({
+            label: "Name",
+            maxlength: 50,
+            counter: 'remaining',
+            disabled: true,
+            mute: true,
+            placeholder: "Your full name",
+            help: "Use your full name, in whatever manner befits your culture."
+        }).container);
+        document.getElementById('inputs-disabled').appendChild(disabled);
     }
     grindButtons() {
         const me = this;

@@ -56,11 +56,11 @@ class PasswordInput extends TextInput {
                 }
             });
 
-            this.visibilityswitcher = $('<div />')
-                .classList.add('visibilityswitch')
-                .classList.add('topcontrol')
-                .append(this.hidepwbutton.button)
-                .append(this.showpwbutton.button);
+            this.visibilityswitcher = document.createElement('div');
+            this.visibilityswitcher.classList.add('visibilityswitch');
+            this.visibilityswitcher.classList.add('topcontrol');
+            this.visibilityswitcher.appendChild(this.hidepwbutton.button);
+            this.visibilityswitcher.appendChild(this.showpwbutton.button);
 
             this.setVisibility(this.startvisible);
 
@@ -76,12 +76,12 @@ class PasswordInput extends TextInput {
     setVisibility(visible) {
         if (visible) {
             this.mode = false;
-            this.input.attr('type', 'text');
+            this.input.setAttribute('type', 'text');
             this.hidepwbutton.show();
             this.showpwbutton.hide();
         } else {
             this.mode = true;
-            this.input.attr('type', 'password');
+            this.input.setAttribute('type', 'password');
             this.hidepwbutton.hide();
             this.showpwbutton.show();
         }

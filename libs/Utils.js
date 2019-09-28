@@ -27,10 +27,10 @@ class Utils {
     static getAllURLParams(url) {
 
         // get query string from url (optional) or window
-        var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+        let queryString = url ? url.split('?')[1] : window.location.search.slice(1);
 
         // we'll store the parameters here
-        var dict = {};
+        let dict = {};
 
         // if query string exists
         if (queryString) {
@@ -39,15 +39,15 @@ class Utils {
             queryString = queryString.split('#')[0];
 
             // split our query string into its component parts
-            var arr = queryString.split('&');
+            let arr = queryString.split('&');
 
-            for (var i = 0; i < arr.length; i++) {
+            for (let i = 0; i < arr.length; i++) {
                 // separate the keys and the values
-                var a = arr[i].split('=');
+                let a = arr[i].split('=');
 
                 // set parameter name and value (use 'true' if empty)
-                var paramName = a[0];
-                var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
+                let paramName = a[0];
+                let paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
 
                 // (optional) keep case consistent
                 paramName = paramName.toLowerCase();
@@ -57,13 +57,13 @@ class Utils {
                 if (paramName.match(/\[(\d+)?\]$/)) {
 
                     // create key if it doesn't exist
-                    var key = paramName.replace(/\[(\d+)?\]/, '');
+                    let key = paramName.replace(/\[(\d+)?\]/, '');
                     if (!dict[key]) dict[key] = [];
 
                     // if it's an indexed array e.g. colors[2]
                     if (paramName.match(/\[\d+\]$/)) {
                         // get the index value and add the entry at the appropriate position
-                        var index = /\[(\d+)\]/.exec(paramName)[1];
+                        let index = /\[(\d+)\]/.exec(paramName)[1];
                         dict[key][index] = paramValue;
                     } else {
                         // otherwise add the value to the end of the array
@@ -95,7 +95,7 @@ class Utils {
      */
     static getConfig(obj) {
         let keys = Object.keys(obj.config).sort(function(a, b){
-            var a1 = a.toLowerCase(),
+            let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
@@ -125,7 +125,7 @@ class Utils {
      */
     static prettyPrintConfig(obj) {
         let keys = Object.keys(obj.config).sort(function(a, b){
-            var a1 = a.toLowerCase(),
+            let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
@@ -181,13 +181,13 @@ class Utils {
         if (a == null || b == null) return false;
         if (a.length !== b.length) return false;
         a.sort(function(a, b){
-            var a1 = a.toLowerCase(),
+            let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
         });
         b.sort(function(a, b){
-            var a1 = a.toLowerCase(),
+            let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
@@ -332,10 +332,10 @@ class Utils {
         thouSeparator = thouSeparator === undefined ? "," : thouSeparator;
         currencySymbol = currencySymbol === undefined ? "$" : currencySymbol;
 
-        var n = value;
-        var i;
-        var j;
-        var sign = n < 0 ? "-" : "";
+        let n = value;
+        let i;
+        let j;
+        let sign = n < 0 ? "-" : "";
         i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "";
         j = (j = i.length) > 3 ? j % 3 : 0;
 

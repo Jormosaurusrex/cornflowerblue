@@ -107,7 +107,9 @@ class SimpleButton {
             if (icon) {
                 this.button.appendChild(icon);
             }
-            this.button.appendChild(this.textobj);
+            if (this.textobj) {
+                this.button.appendChild(this.textobj);
+            }
             if (secondicon) {
                 this.button.appendChild(secondicon);
             }
@@ -124,25 +126,25 @@ class SimpleButton {
             this.button.classList.add(c);
         }
         this.button.addEventListener('focusin', function(e) {
-                if ((me.focusin) && (typeof me.focusin === 'function')) {
-                    me.focusin(e, me);
-                }
-            });
+            if ((me.focusin) && (typeof me.focusin === 'function')) {
+                me.focusin(e, me);
+            }
+        });
         this.button.addEventListener('focusout', function(e) {
-                if ((me.focusout) && (typeof me.focusout === 'function')) {
-                    me.focusout(e, me);
-                }
-            });
+            if ((me.focusout) && (typeof me.focusout === 'function')) {
+                me.focusout(e, me);
+            }
+        });
         this.button.addEventListener('mouseover', function(e) {
-                if ((me.hoverin) && (typeof me.hoverin === 'function')) {
-                    me.hoverin(e, me);
-                }
-            });
+            if ((me.hoverin) && (typeof me.hoverin === 'function')) {
+                me.hoverin(e, me);
+            }
+        });
         this.button.addEventListener('mouseout', function(e) {
-                if ((me.hoverout) && (typeof me.hoverout === 'function')) {
-                    me.hoverout(e, me);
-                }
-            });
+            if ((me.hoverout) && (typeof me.hoverout === 'function')) {
+                me.hoverout(e, me);
+            }
+        });
 
         if (this.notab) {
             this.button.setAttribute('tabindex', '-1');
@@ -319,7 +321,7 @@ class SimpleButton {
 
     get text() { return this.config.text; }
     set text(text) {
-        if (this.textobj) { this.textobj.html(text); }
+        if (this.textobj) { this.textobj.innerHTML = text; }
         this.config.text = text;
     }
 
