@@ -36,8 +36,7 @@ class SelectMenu extends InputElement {
     }
 
     get value() {
-        if (this.selected) { return this.selected.val(); }
-        return ''; // Return empty string for no value.
+        return this.optionlist.querySelector(`input[name=${this.name}]:checked`).value;
     }
 
     get topcontrol() { return this.searchdisplay; }
@@ -75,7 +74,7 @@ class SelectMenu extends InputElement {
             if (this.container) { this.container.classList.remove('vert'); }
         }
 
-        setTimeout(function() {
+        setTimeout(function() { // Have to wait until we're sure we're in the DOM
             let sel = me.optionlist.querySelector('li[aria-selected="true"]');
             if (!sel) {
                 sel = me.optionlist.querySelector('li:first-child');
@@ -86,9 +85,29 @@ class SelectMenu extends InputElement {
             }
         }, 100);
 
-        //this.setCloseListener();
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 200);
+
     }
 
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+        window.addEventListener('click', function(e) {
+            if (e.target === me.optionlist) {
+                me.setCloseListener();
+            } else if ((e.target === me.triggerbox) && (me.triggerbox.getAttribute('aria-expanded') === 'true')) {
+                me.close();
+            } else {
+                me.close();
+            }
+        }, {
+            once: true,
+        });
+    }
 
     /**
      * Scroll to a specific element in the list
@@ -104,20 +123,7 @@ class SelectMenu extends InputElement {
         this.scrolleditem = element;
     }
 
-    setCloseListener() {
-        const me = this;
-        window.addEventListener('click', function(e) {
-            console.log(e.target);
-            if (e.target === me.optionlist) {
-                console.log("IS TARGET");
-            } else {
-                console.log("NOT TARGET");
-            }
-            me.setCloseListener();
-        }, {
-            once: true,
-        });
-    }
+
 
     /**
      * Closes the option list.
@@ -215,11 +221,13 @@ class SelectMenu extends InputElement {
         this.optionlist.setAttribute('tabindex', '0');
         this.optionlist.setAttribute('role', 'radiogroup');
 
+        let order = 1;
         for (let opt of this.options) {
-            let o = this.buildOption(opt);
+            let o = this.buildOption(opt, order);
             if (opt.checked) {
                 this.selectedoption = opt;
             }
+            order++;
             this.optionlist.appendChild(o);
         }
 
@@ -230,19 +238,30 @@ class SelectMenu extends InputElement {
                 checked: !this.selectedoption,
                 unselectoption: true
             };
-            let o = this.buildOption(unselconfig);
+            let o = this.buildOption(unselconfig, 0);
+            o.setAttribute('data-menuorder', 0);
             this.optionlist.prepend(o);
         }
     }
 
-    buildOption(def) {
+    buildOption(def, order) {
         const me = this;
 
         const lId = `${this.id}-${Utils.getUniqueKey(5)}`;
+        let next = order + 1,
+            previous = order - 1;
+        if (this.unselectedtext) {
+            if (previous < 0) { previous = 0; }
+        } else {
+            if (previous < 1) { previous = 1; }
+        }
+        if (next > this.options.length) { next = this.options.length; }
 
         let li = document.createElement('li');
         li.setAttribute('tabindex', '0');
         li.setAttribute('id', `li-${lId}`);
+        li.setAttribute('data-menuorder', order);
+
         li.addEventListener('keydown', function(e) {
             if (e.keyCode === 9) { // Tab
                 me.close();
@@ -250,12 +269,12 @@ class SelectMenu extends InputElement {
                 me.close();
             } else if (e.keyCode === 38) { // Up arrow
                 e.preventDefault();
-                $(this).prev().focus();
+                me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
             } else if (e.keyCode === 40) { // Down arrow
                 e.preventDefault();
-                $(this).next().focus();
+                me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
             } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                $(this).trigger('click');
+                li.querySelector('input').click(); // click the one inside
             } else if (e.keyCode === 8) { // Backspace
                 me.rmSearchKey();
             } else if ((e.keyCode === 17) // ctrl

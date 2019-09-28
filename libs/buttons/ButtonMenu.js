@@ -55,7 +55,6 @@ class ButtonMenu extends SimpleButton {
     close() {
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');
-
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */

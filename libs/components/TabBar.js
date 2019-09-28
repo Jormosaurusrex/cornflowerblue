@@ -114,11 +114,11 @@ class TabBar {
                 if ((keyCode === 'ArrowLeft') || (keyCode === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
-                    me.list.querySelectorAll(`[data-tabno='${previous}']`)[0].focus();
+                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
                 } else if ((keyCode === 'ArrowRight') || (keyCode === 'ArrowDown')) { // Right arrow || Down Arrow
                     e.preventDefault();
                     e.stopPropagation();
-                    me.list.querySelectorAll(`[data-tabno='${next}']`)[0].focus();
+                    me.list.querySelector(`[data-tabno='${next}']`).focus();
                 } else if ((keyCode === " " ) || (keyCode === "Spacebar" ) || (keyCode === 'Enter')) { // return or space
                     link.click();
                 }
