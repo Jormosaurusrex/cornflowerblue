@@ -23,7 +23,7 @@ class TextArea extends InputElement {
         this.container.appendChild(this.labelobj);
         this.container.appendChild(this.charactercounter);
 
-        let wrap = document.createElement('wrap');
+        let wrap = document.createElement('div');
         wrap.classList.add('wrap');
         wrap.appendChild(this.input);
         this.container.appendChild(wrap);

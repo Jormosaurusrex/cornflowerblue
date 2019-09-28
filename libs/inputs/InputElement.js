@@ -319,7 +319,6 @@ class InputElement {
         wrap.appendChild(this.input);
         if (this.inputcontrol) { wrap.appendChild(this.inputcontrol); }
         this.container.appendChild(wrap);
-        console.log(wrap);
 
         this.container.appendChild(this.passivebox);
         if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
@@ -348,7 +347,7 @@ class InputElement {
             this.container.classList.add('filled');
         }
         if (this.passive) {
-            this.pacify()
+            this.pacify();
         }
         if (this.help) {
             this.input.setAttribute('aria-described-by', `${this.help.id}-tt`);

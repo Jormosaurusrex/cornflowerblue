@@ -284,10 +284,10 @@ class CornflowerBlueDemo {
         this.grindButtons();
         this.grindInputs();
         this.grindMessageBoxes();
+        this.grindTextAreas();
 
         /*
         this.grindSelects();
-        this.grindTextAreas();
         this.grindRadioGroups();
         this.grindDialogs();
         this.grindCheckboxes();
@@ -643,7 +643,6 @@ class CornflowerBlueDemo {
             placeholder: "Enter your password."
         }).container);
         document.getElementById('inputs-password').appendChild(password);
-
 
         let email = document.createElement('div');
         email.classList.add('example');
@@ -1076,59 +1075,49 @@ class CornflowerBlueDemo {
         );
     }
     grindTextAreas() {
-        const me = this;
         const $target = $('#textareas-standard');
         const $mute = $('#textareas-mute');
         const $disabled = $('#textareas-disabled');
         const $passive = $('#textareas-passive');
 
-        $target.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Post Content",
-                        maxlength: 2000,
-                        placeholder: "Write your post here!"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let standard = document.createElement('div');
+        standard.classList.add('example');
+        standard.classList.add('vert');
+        standard.appendChild(new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
+            placeholder: "Write your post here!"
+        }).container);
+        document.getElementById('textareas-standard').appendChild(standard);
 
-        $mute.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Post Content",
-                        mute: true,
-                        maxlength: 2000,
-                        placeholder: "Write your post here!"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let mute = document.createElement('div');
+        mute.classList.add('example');
+        mute.classList.add('vert');
+        mute.appendChild(new TextArea({
+            label: "Post Content",
+            mute: true,
+            maxlength: 2000,
+            placeholder: "Write your post here!"
+        }).container);
+        document.getElementById('textareas-mute').appendChild(mute);
 
-        $disabled.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    new TextArea({
-                        label: "Post Content",
-                        maxlength: 2000,
-                        disabled: true,
-                        placeholder: "Write your post here!"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new TextArea({
-                        label: "Post Content",
-                        maxlength: 2000,
-                        disabled: true,
-                        mute: true,
-                        placeholder: "Write your post here!"
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let disabled = document.createElement('div');
+        disabled.classList.add('example');
+        disabled.classList.add('vert');
+        disabled.appendChild(new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
+            disabled: true,
+            placeholder: "Write your post here!"
+        }).container);
+        disabled.appendChild(new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
+            disabled: true,
+            mute: true,
+            placeholder: "Write your post here!"
+        }).container);
+        document.getElementById('textareas-disabled').appendChild(disabled);
 
         let passiveTest = new TextArea({
             label: "Post Content",
@@ -1149,16 +1138,13 @@ class CornflowerBlueDemo {
             }
         });
 
-        $passive.append(
-            $('<div />').addClass('example').addClass('vert')
-                .append(
-                    passiveTest.container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    toggleButton.button
-                )
-        );
+        let passive = document.createElement('div');
+        passive.classList.add('example');
+        passive.classList.add('vert');
+        passive.appendChild(passiveTest.container);
+        passive.appendChild(toggleButton.button);
+        document.getElementById('textareas-passive').appendChild(passive);
+
 
     }
     grindSelects() {
