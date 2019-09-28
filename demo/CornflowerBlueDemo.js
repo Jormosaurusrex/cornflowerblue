@@ -282,21 +282,21 @@ class CornflowerBlueDemo {
 
         this.grindButtons();
         this.grindCheckboxes();
+        this.grindGrowlers();
         this.grindInputs();
         this.grindMessageBoxes();
         this.grindRadioGroups();
         this.grindSelects();
         this.grindStyledCheckboxes();
+        this.grindTabsAndMenus();
         this.grindTextAreas();
 
         /*
         this.grindDialogs();
-        this.grindGrowlers();
         this.grindForms();
         this.grindDataGrids();
 
         this.grindProgressMeters();
-        this.grindTabsAndMenus();
 
         this.grindPWChange();
          */
@@ -340,14 +340,6 @@ class CornflowerBlueDemo {
 
     grindButtons() {
         const me = this;
-        const normal = document.getElementById('buttons-normal');
-        const ghosts = document.getElementById('buttons-ghost');
-        const mutes = document.getElementById('buttons-mute');
-        const links = document.getElementById('buttons-link');
-        const nakeds = document.getElementById('buttons-naked');
-        const squares = document.getElementById('buttons-shaped-square');
-        const circles = document.getElementById('buttons-shaped-circle');
-        const hexes = document.getElementById('buttons-shaped-hex');
 
         let baseconfigs = [
             { text: "Default", type: "normal", action: function(e, self) { me.dumpConfig(self); } },
@@ -747,143 +739,128 @@ class CornflowerBlueDemo {
         const $positions = $('#growlers-positions');
         const $special = $('#growlers-special');
 
-        $positions.append(
-            $('<div />').addClass('example').addClass('centered')
-                .append(
-                    new SimpleButton({
-                        text: "Top Left",
-                        action: function() {
-                            new Growler({
-                                position: 'top-left',
-                                icon: 'globe',
-                                title: 'Top Left Growler',
-                                text: 'A growler is here!',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
+        let positions = document.createElement('div');
+        positions.classList.add('example');
+        positions.classList.add('centered');
+        positions.appendChild(new SimpleButton({
+            text: "Top Left",
+            action: function() {
+                new Growler({
+                    position: 'top-left',
+                    icon: 'globe',
+                    title: 'Top Left Growler',
+                    text: 'A growler is here!',
+                    onopen: function(g) { me.dumpConfig(g);}
+                });
 
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Center",
-                        action: function() {
-                            new Growler({
-                                position: 'top-center',
-                                icon: 'chat',
-                                text: 'A top-center growler with an icon and no title.',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Top Right",
-                        action: function() {
-                            new Growler({
-                                position: 'top-right',
-                                icon: 'star',
-                                title: 'Growler with no text.',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-        ).append(
-            $('<div />').addClass('example').addClass('centered')
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Left",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-left',
-                                title: 'Bottom Left Growler',
-                                text: 'This growler has duration:0, and will stay until dismissed.',
-                                duration: 0,
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Center",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-center',
-                                icon: 'heart',
-                                title: 'Bottom Center Growler',
-                                text: 'This growler has duration:0, so will stay until dismissed.',
-                                duration: 0,
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Bottom Right",
-                        action: function() {
-                            new Growler({
-                                position: 'bottom-right',
-                                title: 'Bottom Right Growler',
-                                text: 'Another growler over here!',
-                                onopen: function(g) { me.dumpConfig(g);}
-                            });
-                        }
-                    }).button
-                )
-        );
-        $special.append(
-            $('<div />').addClass('example').addClass('centered')
-                .append(
-                    new SimpleButton({
-                        text: "Quick Growl",
-                        action: function() {
-                            Growler.growl('This is a growl message!', 'Growler.growl');
-                            me.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Success",
-                        action: function() {
-                            Growler.success('This is a success message!');
-                            me.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Error",
-                        action: function() {
-                            Growler.error('This is an error message!');
-                            me.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Warn",
-                        action: function() {
-                            Growler.warn('This is a warning message!');
-                            me.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
-                        }
-                    }).button
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Caution",
-                        action: function() {
-                            Growler.caution('This is a caution message!');
-                            me.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
+            }
+        }).button);
+        positions.appendChild(new SimpleButton({
+            text: "Top Center",
+            action: function() {
+                new Growler({
+                    position: 'top-center',
+                    icon: 'chat',
+                    text: 'A top-center growler with an icon and no title.',
+                    onopen: function(g) { me.dumpConfig(g);}
+                });
+            }
+        }).button);
+        positions.appendChild(new SimpleButton({
+            text: "Top Right",
+            action: function() {
+                new Growler({
+                    position: 'top-right',
+                    icon: 'star',
+                    title: 'Growler with no text.',
+                    onopen: function(g) { me.dumpConfig(g);}
+                });
+            }
+        }).button);
+        document.getElementById('growlers-positions').appendChild(positions);
 
-                        }
-                    }).button
-                )
-        );
+        let positionslower = document.createElement('div');
+        positionslower.classList.add('example');
+        positionslower.classList.add('centered');
+        positionslower.appendChild(new SimpleButton({
+            text: "Bottom Left",
+            action: function() {
+                new Growler({
+                    position: 'bottom-left',
+                    title: 'Bottom Left Growler',
+                    text: 'This growler has duration:0, and will stay until dismissed.',
+                    duration: 0,
+                    onopen: function(g) { me.dumpConfig(g);}
+                });
+            }
+        }).button);
+        positionslower.appendChild(new SimpleButton({
+            text: "Bottom Center",
+            action: function() {
+                new Growler({
+                    position: 'bottom-center',
+                    icon: 'heart',
+                    title: 'Bottom Center Growler',
+                    text: 'This growler has duration:0, so will stay until dismissed.',
+                    duration: 0,
+                    onopen: function(g) { me.dumpConfig(g);}
+                });
+            }
+        }).button);
+        positionslower.appendChild(new SimpleButton({
+            text: "Bottom Right",
+            action: function() {
+                new Growler({
+                    position: 'bottom-right',
+                    title: 'Bottom Right Growler',
+                    text: 'Another growler over here!',
+                    onopen: function(g) { me.dumpConfig(g);}
+                });
+            }
+        }).button);
+        document.getElementById('growlers-positions').appendChild(positionslower);
+
+
+        let special = document.createElement('div');
+        special.classList.add('example');
+        special.classList.add('centered');
+        special.appendChild(new SimpleButton({
+            text: "Quick Growl",
+            action: function() {
+                Growler.growl('This is a growl message!', 'Growler.growl');
+                me.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
+            }
+        }).button);
+        special.appendChild(new SimpleButton({
+            text: "Success",
+            action: function() {
+                Growler.success('This is a success message!');
+                me.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
+            }
+        }).button);
+        special.appendChild(new SimpleButton({
+            text: "Error",
+            action: function() {
+                Growler.error('This is an error message!');
+                me.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
+            }
+        }).button);
+        special.appendChild(new SimpleButton({
+            text: "Warn",
+            action: function() {
+                Growler.warn('This is a warning message!');
+                me.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
+            }
+        }).button);
+        special.appendChild(new SimpleButton({
+            text: "Caution",
+            action: function() {
+                Growler.caution('This is a caution message!');
+                me.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
+
+            }
+        }).button);
+        document.getElementById('growlers-special').appendChild(special);
     }
 
     grindInputs() {
@@ -1543,65 +1520,55 @@ class CornflowerBlueDemo {
         const me = this;
         const $buttonmenu = $('#tabsmenus-buttonmenu');
         const $tabbar = $('#tabsmenus-tabbar');
-        $buttonmenu.append(
-            $('<div />').addClass('example')
-                .append(
-                    new ButtonMenu({
-                        text: "User",
-                        icon: 'user-circle',
-                        items: [
-                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ButtonMenu({
-                        text: "User",
-                        icon: 'user-circle',
-                        mute: true,
-                        items: [
-                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-                .append(
-                    new ButtonMenu({
-                        text: "User",
-                        icon: 'user-circle',
-                        disabled: true,
-                        items: [
-                            { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                            { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                            { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                            { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
 
-        $tabbar.append(
-            $('<div />').addClass('example')
-                .append(
-                    new TabBar({
-                        tabs: [
-                            { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: function() { Growler.growl("Clicked 'Home'") } },
-                            { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: function() { Growler.growl("Clicked 'Feed'") } },
-                            { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: function() { Growler.growl("Clicked 'Messages'") } },
-                            { id: 'dt-1-profile', label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'Profile'") } }
-                        ]
-                    }).container
-                        .click(function() { me.dumpConfig($(this).data('self')); })
-                )
-        );
+        let buttonmenu = document.createElement('div');
+        buttonmenu.classList.add('example');
+        buttonmenu.appendChild(new ButtonMenu({
+            text: "User",
+            icon: 'user-circle',
+            items: [
+                { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+            ]
+        }).container);
+        buttonmenu.appendChild(new ButtonMenu({
+            text: "User",
+            icon: 'user-circle',
+            mute: true,
+            items: [
+                { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+            ]
+        }).container);
+        buttonmenu.appendChild(new ButtonMenu({
+            text: "User",
+            icon: 'user-circle',
+            disabled: true,
+            items: [
+                { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+            ]
+        }).container);
+        document.getElementById('tabsmenus-buttonmenu').appendChild(buttonmenu);
+
+        let tabbar = document.createElement('div');
+        tabbar.classList.add('example');
+        tabbar.appendChild(new TabBar({
+            tabs: [
+                { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: function() { Growler.growl("Clicked 'Home'") } },
+                { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: function() { Growler.growl("Clicked 'Feed'") } },
+                { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: function() { Growler.growl("Clicked 'Messages'") } },
+                { id: 'dt-1-profile', label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'Profile'") } }
+            ]
+        }).container);
+        document.getElementById('tabsmenus-tabbar').appendChild(tabbar);
+
     }
 
     grindTextAreas() {
@@ -1676,14 +1643,6 @@ class CornflowerBlueDemo {
 
 
 
-
-
-
-
-
-    /**
-     * Show the forms.
-     */
 
     /* UTILITY METHODS__________________________________________________________________ */
 

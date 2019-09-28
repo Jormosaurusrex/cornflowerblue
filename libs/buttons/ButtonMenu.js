@@ -35,6 +35,7 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
+        console.log(`isopen: ${this.button.hasAttribute('aria-expanded')}`);
         return this.button.hasAttribute('aria-expanded');
     }
 
@@ -78,12 +79,13 @@ class ButtonMenu extends SimpleButton {
             s.innerHTML = item.label;
             anchor.appendChild(s);
             anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if ((item.action) && (typeof item.action === 'function')) {
-                        item.action(e);
-                    }
-                    me.close();
-                });
+                e.preventDefault();
+                if ((item.action) && (typeof item.action === 'function')) {
+                    item.action(e);
+                }
+                me.close();
+                me.button.blur();
+            });
 
             menuitem.appendChild(anchor);
             this.menu.appendChild(menuitem);

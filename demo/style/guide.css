@@ -2104,7 +2104,8 @@ button {
     --button-default-color: var(--hot-text-color);
     opacity: 0.5;
     box-shadow: none;
-    margin-right: .5em; }
+    margin-right: .5em;
+    background: none; }
     button.closebutton:hover, button.closebutton:focus, button.closebutton:active {
       color: var(--hot-text-color);
       background: none; }

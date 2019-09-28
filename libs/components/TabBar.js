@@ -162,7 +162,11 @@ class TabBar {
 
             order++;
 
-            if (tabdef.selected) { this.select(tabdef.id); }
+            if (tabdef.selected) {
+                setTimeout(function() { // Have to wait until we're sure we're in the DOM
+                    me.select(tabdef.id);
+                }, 100);
+            }
         }
     }
 

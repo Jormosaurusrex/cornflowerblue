@@ -92,12 +92,12 @@ class Growler extends FloatingPanel {
      * @return {jQuery} the growlbox object
      */
     static buildGrowlbox(position) {
-        let $gb = $('<div />')
-            .classList.add('growlbox')
-            .attr('id', Growler.GROWLBOX_ID + position)
-            .classList.add(position);
-        $('body').append($gb);
-        return $gb;
+        let gb = document.createElement('div');
+        gb.classList.add('growlbox');
+        gb.setAttribute('id', `${Growler.GROWLBOX_ID}${position}`);
+        gb.classList.add(position);
+        document.querySelector('body').appendChild(gb);
+        return gb;
     }
 
     /**
@@ -108,10 +108,8 @@ class Growler extends FloatingPanel {
         config = Object.assign({}, Growler.DEFAULT_CONFIG, config);
         super(config);
 
-        let mygb = `#${Growler.GROWLBOX_ID}${this.position}`;
-        if ($(mygb).length > 0) {
-            this.growlbox = $(mygb);
-        } else {
+        this.growlbox = document.getElementById(`${Growler.GROWLBOX_ID}${this.position}`);
+        if (!this.growlbox) {
             this.growlbox = Growler.buildGrowlbox(this.position);
         }
         this.show();
@@ -123,10 +121,10 @@ class Growler extends FloatingPanel {
     close() {
         const me = this;
         if (this.timer) { clearTimeout(this.timer); }
-        this.container.attr('aria-hidden', true);
+        this.container.setAttribute('aria-hidden', 'true');
 
         setTimeout(function() {
-            me.container.remove()
+            me.container.parentNode.removeChild(me.container);
         }, 2501);
 
         if ((me.onclose) && (typeof me.onclose === 'function')) {
@@ -139,7 +137,7 @@ class Growler extends FloatingPanel {
      */
     quickClose() {
         if (this.timer) { clearTimeout(this.timer); }
-        this.container.remove();
+        this.container.parentNode.removeChild(this.container);
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -150,7 +148,7 @@ class Growler extends FloatingPanel {
      */
     show() {
         const me = this;
-        this.container.removeAttr('aria-hidden');
+        this.container.removeAttribute('aria-hidden');
 
         if (this.duration > 0) {
             this.timer = setTimeout(function() {
@@ -166,11 +164,13 @@ class Growler extends FloatingPanel {
     buildContainer() {
         const me = this;
 
-        this.container = $('<div />')
-            .data('self', me)
-            .attr('aria-hidden', true)
-            .classList.add(this.classes.join(' '))
-            .classList.add('growler');
+        this.container = document.createElement('div');
+        this.container.setAttribute('aria-hidden', 'true');
+        this.container.classList.add('growler');
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
 
         this.closebutton = new SimpleButton({
             icon: 'echx',
@@ -183,27 +183,35 @@ class Growler extends FloatingPanel {
             }
         });
         if (this.title) {
-            this.container.append($('<h3 />')
-                .append($('<span />').classList.add('text').html(this.title))
-                .append(this.closebutton.button));
+            let h3 = document.createElement('h3');
+            let span = document.createElement('span');
+            span.classList.add('text');
+            span.innerHTML = this.title;
+            h3.appendChild(span);
+            h3.appendChild(this.closebutton.button);
+            this.container.appendChild(h3);
         } else {
-            this.container.append(this.closebutton.button);
+            this.container.appendChild(this.closebutton.button);
         }
 
         if (this.text) {
-            let $payload = $('<div />').classList.add('payload');
+            let payload = document.createElement('div');
+            payload.classList.add('payload');
             if (this.icon) {
-                $payload.append(IconFactory.icon(this.icon).classList.add('i'));
+                let i = IconFactory.icon(this.icon);
+                i.classList.add('i');
+                payload.append(i);
             }
-            $payload.append(
-                $('<div />')
-                    .classList.add('text')
-                    .html(this.text)
-            );
-            this.container.append($payload);
+
+            let d = document.createElement('div');
+            d.classList.add('text');
+            d.innerHTML = this.text;
+            payload.appendChild(d);
+
+            this.container.appendChild(payload);
         }
 
-        this.growlbox.append(this.container);
+        this.growlbox.appendChild(this.container);
 
     }
 
