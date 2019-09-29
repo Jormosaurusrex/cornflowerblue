@@ -357,7 +357,10 @@ class CornflowerBlueDemo {
             { type: 'ghost', target: 'buttons-ghost' },
             { type: 'mute', target: 'buttons-mute' },
             { type: 'link', target: 'buttons-link' },
-            { type: 'naked', target: 'buttons-naked' }
+            { type: 'naked', target: 'buttons-naked' },
+            { type: 'pill', target: 'buttons-shaped-pill' },
+            { type: 'pill-ghost', target: 'buttons-shaped-pill' },
+            { type: 'pill-mute', target: 'buttons-shaped-pill' }
         ];
 
 
@@ -379,6 +382,17 @@ class CornflowerBlueDemo {
                         break;
                     case 'naked':
                         cfg.naked = true;
+                        break;
+                    case 'pill':
+                        cfg.shape = 'pill';
+                        break;
+                    case 'pill-ghost':
+                        cfg.shape = 'pill';
+                        cfg.ghost = true;
+                        break;
+                    case 'pill-mute':
+                        cfg.shape = 'pill';
+                        cfg.mute = true;
                         break;
                     case 'normal':
                     default:
@@ -405,7 +419,6 @@ class CornflowerBlueDemo {
             div2.classList.add('centered');
             for (let scfg of secondconfigs) {
                 let cfg = Object.assign({}, {}, scfg);
-
                 switch (t.type) {
                     case 'mute':
                         cfg.mute = true;
@@ -418,6 +431,17 @@ class CornflowerBlueDemo {
                         break;
                     case 'naked':
                         cfg.naked = true;
+                        break;
+                    case 'pill':
+                        cfg.shape = 'pill';
+                        break;
+                    case 'pill-ghost':
+                        cfg.shape = 'pill';
+                        cfg.ghost = true;
+                        break;
+                    case 'pill-mute':
+                        cfg.shape = 'pill';
+                        cfg.mute = true;
                         break;
                     case 'normal':
                     default:
@@ -440,7 +464,8 @@ class CornflowerBlueDemo {
             document.getElementById(t.target).appendChild(div2);
         }
 
-        let shapes = ['square', 'circle', 'pill'];
+
+        let shapes = ['square', 'circle'];
         let shapeconfigs = [
             { text: "Normal", type: "normal", icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
             { text: "Constructive", type: "constructive", icon: "echx", action: function(e, self) { me.dumpConfig(self); } },

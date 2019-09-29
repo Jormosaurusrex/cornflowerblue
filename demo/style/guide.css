@@ -1860,9 +1860,14 @@ div.select-container {
     background-color: var(--input-mute-disabled-background-color); }
 
 button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
   box-sizing: border-box;
   position: relative;
-  display: inline-block;
   text-align: center;
   vertical-align: middle;
   text-decoration: none;
@@ -1882,15 +1887,17 @@ button {
   border-radius: var(--button-border-radius);
   box-shadow: var(--button-box-shadow); }
   button span.icon {
-    margin: 0 .2em 0 0; }
+    margin: 0 .3em 0 0; }
     button span.icon:before {
       margin: 0; }
     button span.icon.secondicon {
-      margin: 0 0 0 .2em; }
-  button.righticon span.icon {
-    margin: 0 0 0 .2em; }
-    button.righticon span.icon.secondicon {
-      margin: 0 .2em 0 0; }
+      margin: 0 0 0 .3em; }
+  button.righticon {
+    flex-direction: row-reverse; }
+    button.righticon span.icon {
+      margin: 0 0 0 .3em; }
+      button.righticon span.icon.secondicon {
+        margin: 0 .3em 0 0; }
   button.ghost {
     color: var(--button-default-color);
     background-color: transparent;
@@ -2014,6 +2021,10 @@ button {
     flex-direction: column; }
     button.square span.icon, button.circle span.icon {
       margin: 0; }
+    button.square span.secondicon,
+    button.square span.text, button.circle span.secondicon,
+    button.circle span.text {
+      display: none; }
     button.square:hover, button.square:focus, button.square:active, button.circle:hover, button.circle:focus, button.circle:active {
       text-decoration: none; }
   button.circle {
@@ -2040,6 +2051,11 @@ button {
   button.pill {
     border-radius: 1.5em;
     margin: 0; }
+    button.pill.ghost {
+      box-shadow: none;
+      border: 0.1em solid var(--button-default-color); }
+    button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled {
+      border: none; }
   button.hidden {
     display: none; }
   button.help {

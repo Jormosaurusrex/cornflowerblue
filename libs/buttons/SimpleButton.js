@@ -69,41 +69,30 @@ class SimpleButton {
             this.textobj.innerHTML = this.text;
         }
 
-        if (this.shape) {
-            this.button = document.createElement('button');
-            if (this.icon) {
-                this.button.appendChild(IconFactory.icon(this.icon, this.text));
-            } else if (this.text) {
-                this.button.appendChild(this.textobj);
-            }
-            this.button.classList.add(this.shape);
-        } else {
-            this.button = document.createElement('button');
-            let icon,
-                secondicon;
-            if (this.icon) {
-                icon = IconFactory.icon(this.icon);
-            }
-            if (this.secondicon) {
-                secondicon = IconFactory.icon(this.secondicon);
-                secondicon.classList.add('secondicon');
-            }
-
-            // XXX TODO: change to flex order
-            if ((this.iconside) && (this.iconside === 'right')) {
-                this.button.classList.add('righticon');
-            }
-            if (icon) {
-                this.button.appendChild(icon);
-            }
-            if (this.textobj) {
-                this.button.appendChild(this.textobj);
-            }
-            if (secondicon) {
-                this.button.appendChild(secondicon);
-            }
+        this.button = document.createElement('button');
+        let icon,
+            secondicon;
+        if (this.icon) {
+            icon = IconFactory.icon(this.icon);
+        }
+        if (this.secondicon) {
+            secondicon = IconFactory.icon(this.secondicon);
+            secondicon.classList.add('secondicon');
         }
 
+        // XXX TODO: change to flex order
+        if ((this.iconside) && (this.iconside === 'right')) {
+            this.button.classList.add('righticon');
+        }
+        if (icon) {
+            this.button.appendChild(icon);
+        }
+        if (this.textobj) {
+            this.button.appendChild(this.textobj);
+        }
+        if (secondicon) {
+            this.button.appendChild(secondicon);
+        }
 
         this.button.setAttribute('aria-label', this.text);
         this.button.setAttribute('id', this.id);
@@ -114,6 +103,7 @@ class SimpleButton {
         for (let c of this.classes) {
             this.button.classList.add(c);
         }
+
         this.button.addEventListener('focusin', function(e) {
             if ((me.focusin) && (typeof me.focusin === 'function')) {
                 me.focusin(e, me);
@@ -153,6 +143,8 @@ class SimpleButton {
         } else if (this.naked) {
             this.button.classList.add('naked');
         }
+        if (this.shape) { this.button.classList.add(this.shape); }
+
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', function (e) {
