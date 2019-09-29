@@ -1933,8 +1933,6 @@ button {
       border-color: var(--button-disabled-color);
       text-shadow: none;
       box-shadow: none; }
-    button:disabled.hexagon, button:disabled.hexagon::before, button:disabled.hexagon::after {
-      box-shadow: var(--hexagon-shadow); }
   button.mute {
     color: var(--button-default-color);
     background-color: transparent;
@@ -1979,8 +1977,6 @@ button {
         border-color: transparent;
         text-shadow: none;
         box-shadow: none; }
-      button.mute:disabled.hexagon, button.mute:disabled.hexagon::before, button.mute:disabled.hexagon::after {
-        box-shadow: var(--hexagon-shadow); }
   button.hot {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
@@ -2006,8 +2002,6 @@ button {
         border-color: var(--button-disabled-color);
         text-shadow: none;
         box-shadow: none; }
-      button.hot:disabled.hexagon, button.hot:disabled.hexagon::before, button.hot:disabled.hexagon::after {
-        box-shadow: var(--hexagon-shadow); }
   button.square, button.circle {
     padding: .5em;
     width: 2em;
@@ -2185,65 +2179,6 @@ button {
       text-decoration: none; }
       button.menu[aria-expanded='true'] ul {
         display: flex; }
-  button.hexagon {
-    transition: none;
-    width: 42px;
-    height: 24.25px;
-    font-size: 120%;
-    line-height: 1;
-    box-shadow: var(--hexagon-shadow);
-    padding: 0;
-    border: none;
-    background-color: var(--morelight);
-    color: var(--button-default-color); }
-    button.hexagon span {
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      white-space: nowrap;
-      position: absolute;
-      background: inherit;
-      top: 0;
-      left: 0;
-      width: 42px;
-      height: 24.2487px; }
-      button.hexagon span.icon {
-        margin: 0; }
-    button.hexagon:before, button.hexagon:after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      width: 29.70px;
-      height: 29.70px;
-      -webkit-transform: scaleY(0.5774) rotate(-45deg);
-      -ms-transform: scaleY(0.5774) rotate(-45deg);
-      transform: scaleY(0.5774) rotate(-45deg);
-      background-color: inherit;
-      left: 6.1508px;
-      box-shadow: inherit; }
-    button.hexagon:before {
-      top: -14.8492px; }
-    button.hexagon:after {
-      bottom: -14.8492px; }
-    button.hexagon:nth-child(even) {
-      left: 21px; }
-    button.hexagon:hover, button.hexagon:focus, button.hexagon:active {
-      color: var(--button-hover-text-color);
-      text-shadow: var(--button-text-shadow);
-      background-color: var(--button-default-color);
-      background-image: none;
-      box-shadow: var(--hover-box-shadow);
-      outline: none;
-      text-decoration: none; }
-    button.hexagon.constructive {
-      --button-default-color: var(--constructive-color); }
-    button.hexagon.destructive {
-      --button-default-color: var(--destructive-color); }
-    button.hexagon:disabled, button.hexagon:disabled:before, button.hexagon:disabled:after, button.hexagon:disabled:hover {
-      background-color: var(--button-disabled-color);
-      box-shadow: var(--hexagon-shadow-disabled); }
   button.naked, button.link {
     margin: 0;
     padding: 0;

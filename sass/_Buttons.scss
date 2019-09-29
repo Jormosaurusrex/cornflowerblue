@@ -98,11 +98,6 @@ button {
       text-shadow: none;
       box-shadow: none;
     }
-    &.hexagon,
-    &.hexagon::before,
-    &.hexagon::after {
-      box-shadow: var(--hexagon-shadow);
-    }
   }
   &.mute {
     color: var(--button-default-color);
@@ -167,11 +162,6 @@ button {
         text-shadow: none;
         box-shadow: none;
       }
-      &.hexagon,
-      &.hexagon::before,
-      &.hexagon::after {
-        box-shadow: var(--hexagon-shadow);
-      }
     }
   }
   &.hot {
@@ -203,11 +193,6 @@ button {
         border-color: var(--button-disabled-color);
         text-shadow: none;
         box-shadow: none;
-      }
-      &.hexagon,
-      &.hexagon::before,
-      &.hexagon::after {
-        box-shadow: var(--hexagon-shadow);
       }
     }
   }
@@ -442,83 +427,6 @@ button {
       ul {
         display: flex;
       }
-    }
-  }
-  &.hexagon {
-    transition: none;
-    width: 42px;
-    height: 24.25px;
-    font-size: 120%;
-    line-height: 1;
-    box-shadow: var(--hexagon-shadow);
-    padding: 0;
-    border: none;
-    background-color: var(--morelight);
-    color: var(--button-default-color);
-    span {
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      white-space: nowrap;
-
-      position: absolute;
-      background: inherit;
-      top:0;
-      left: 0;
-      width:42px;
-      height:24.2487px;
-      &.icon {
-        margin: 0;
-      }
-    }
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      width: 29.70px;
-      height: 29.70px;
-      -webkit-transform: scaleY(0.5774) rotate(-45deg);
-      -ms-transform: scaleY(0.5774) rotate(-45deg);
-      transform: scaleY(0.5774) rotate(-45deg);
-      background-color: inherit;
-      left: 6.1508px;
-      box-shadow: inherit;
-    }
-    &:before {
-      top: -14.8492px;
-    }
-    &:after {
-      bottom: -14.8492px;
-    }
-    &:nth-child(even) {
-      left: 21px;
-    }
-    &:hover,
-    &:focus,
-    &:active {
-      color: var(--button-hover-text-color);
-      text-shadow: var(--button-text-shadow);
-      background-color: var(--button-default-color);
-      background-image: none;
-      box-shadow: var(--hover-box-shadow);
-      outline: none;
-      text-decoration: none;
-    }
-    &.constructive {
-      --button-default-color: var(--constructive-color);
-    }
-    &.destructive {
-      --button-default-color: var(--destructive-color);
-    }
-    &:disabled,
-    &:disabled:before,
-    &:disabled:after,
-    &:disabled:hover {
-      background-color: var(--button-disabled-color);
-      box-shadow: var(--hexagon-shadow-disabled);
     }
   }
   &.naked,

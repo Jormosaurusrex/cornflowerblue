@@ -10,7 +10,7 @@ class SimpleButton {
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
             text : null, // The text for the button. This is also used as aria-label.
-            shape : null, // (null|square|circle|hexagon|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
+            shape : null, // (null|square|circle|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             hidden: false, // Start hidden or not.
@@ -70,22 +70,11 @@ class SimpleButton {
         }
 
         if (this.shape) {
-            if (this.shape === 'hexagon') {
-                this.button = document.createElement('button');
-                if (this.icon) {
-                    let span = document.createElement('span');
-                    span.appendChild(IconFactory.icon(this.icon, this.text));
-                    this.button.appendChild(span);
-                } else if (this.text) {
-                    this.button.appendChild(this.textobj);
-                }
-            } else {
-                this.button = document.createElement('button');
-                if (this.icon) {
-                    this.button.appendChild(IconFactory.icon(this.icon, this.text));
-                } else if (this.text) {
-                    this.button.appendChild(this.textobj);
-                }
+            this.button = document.createElement('button');
+            if (this.icon) {
+                this.button.appendChild(IconFactory.icon(this.icon, this.text));
+            } else if (this.text) {
+                this.button.appendChild(this.textobj);
             }
             this.button.classList.add(this.shape);
         } else {

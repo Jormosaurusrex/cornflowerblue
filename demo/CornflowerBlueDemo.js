@@ -440,7 +440,7 @@ class CornflowerBlueDemo {
             document.getElementById(t.target).appendChild(div2);
         }
 
-        let shapes = ['square', 'circle', 'hex'];
+        let shapes = ['square', 'circle', 'pill'];
         let shapeconfigs = [
             { text: "Normal", type: "normal", icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
             { text: "Constructive", type: "constructive", icon: "echx", action: function(e, self) { me.dumpConfig(self); } },
@@ -458,7 +458,6 @@ class CornflowerBlueDemo {
             div1.classList.add('example');
             div1.classList.add('centered');
             for (let cfg of shapeconfigs) {
-
                 switch (shape) {
                     case 'square':
                         cfg.shape = 'square';
@@ -466,11 +465,8 @@ class CornflowerBlueDemo {
                     case 'circle':
                         cfg.shape = 'circle';
                         break;
-                    case 'hex':
-                        cfg.shape = 'hexagon';
-                        if ((cfg.mute) || (cfg.ghost)) {
-                            continue;
-                        }
+                    case 'pill':
+                        cfg.shape = 'pill';
                         break;
                     default:
                         break;
