@@ -36,33 +36,34 @@ class DataGrid {
      */
     constructor(config) {
         this.config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = "grid-" + Utils.getUniqueKey(5); }
+        if (!this.id) { this.id = `grid-${Utils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
 
     sortField(field) {
-        const me = this;
-
         let sort = "asc";
 
-        let $hCell = this.gridheader.find(`[data-name='${field}']`);
+        let hCell = this.gridheader.querySelector(`[data-name='${field}']`);
 
-        if ($hCell.attr('data-sort')) {
-            if ($hCell.attr('data-sort') === 'asc') {
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
                 sort = "desc"
             }
         }
 
-        this.gridheader.children('th').removeAttr('data-sort');
+        let hchildren = this.gridheader.querySelectorAll('th');
+        for (let hc of hchildren) {
+            hc.removeAttribute('data-sort');
+        }
 
-        $hCell.attr('data-sort', sort);
+        hCell.setAttribute('data-sort', sort);
 
-        let elements = $.makeArray(this.gridbody.children("tr"));
+        let elements = Array.from(this.gridbody.childNodes);
 
         elements.sort(function(a, b) {
-            let textA = $(a).children(`.${field}`).text();
-            let textB = $(b).children(`.${field}`).text();
+            let textA = a.querySelector(`.${field}`).innerHTML;
+            let textB = b.querySelector(`.${field}`).innerHTML;
 
             if (sort === 'asc') {
                 if (textA < textB) return -1;
@@ -75,17 +76,20 @@ class DataGrid {
             return 0;
         });
 
-        this.gridbody.empty();
+        this.gridbody.innerHTML = "";
 
-        $.each(elements, function() {
-            me.gridbody.append(this);
-        });
+        for (let row of elements) {
+            this.gridbody.appendChild(row);
+        }
+
     }
 
-
-    select($row) {
-        this.gridbody.find('tr').removeAttr('aria-selected');
-        $row.attr('aria-selected', true);
+    select(row) {
+        let rows = this.gridbody.querySelectorAll('tr');
+        for (let r of rows) {
+            r.removeAttribute('aria-selected');
+        }
+        row.setAttribute('aria-selected', 'true');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -97,22 +101,22 @@ class DataGrid {
     buildContainer() {
 
         for (let rdata of this.data) {
-            this.gridbody.append(this.buildRow(rdata));
+            this.gridbody.appendChild(this.buildRow(rdata));
         }
 
-        this.container = $('<div />')
-            .classList.add('datagrid-container')
-            .attr('id', this.id)
-            .append(
-                this.grid
-                    .append(this.header)
-                    .append(this.gridbody)
-            );
+        this.container = document.createElement('div');
+        this.container.classList.add('datagrid-container');
+        this.container.setAttribute('id', this.id);
+
+        this.grid.appendChild(this.header);
+        this.grid.appendChild(this.gridbody);
+        this.container.append(this.grid);
+
     }
 
     buildGrid() {
-        this.grid = $('<table />')
-            .classList.add('grid');
+        this.grid = document.createElement('table');
+        this.grid.classList.add('grid');
         if (this.selectable) {
             this.grid.classList.add('selectable');
         }
@@ -120,86 +124,78 @@ class DataGrid {
 
     buildHeader() {
         for (let f of this.fields) {
-            this.gridheader.append(this.buildHeaderCell(f));
+            this.gridheader.appendChild(this.buildHeaderCell(f));
         }
-        this.header = $('<thead />').append(this.gridheader);
+        this.header = document.createElement('thead');
+        this.header.appendChild(this.gridheader);
     }
 
     buildHeaderCell(item) {
         const me = this;
 
-        let $div = $('<div />').html(item.label)
-        if (this.sorticon) { $div.classList.add(`cfb-${this.sorticon}`); }
+        let div = document.createElement('div');
+        div.innerHTML = item.label;
+        if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
 
-        let $cell = $('<th />')
-            .classList.add(item.type)
-            .attr('id', `${this.id}-h-c-${item.name}`)
-            .attr('data-name', item.name)
-            .append($div);
+        let cell = document.createElement('th');
+        cell.classList.add(item.type);
+        cell.setAttribute('id', `${this.id}-h-c-${item.name}`);
+        cell.setAttribute('data-name', item.name);
+        cell.appendChild(div);
 
         if (this.sortable) {
-            $cell.attr('tabindex', 1)
-                .click(function(e) {
-                    e.preventDefault();
-                    me.sortField(item.name);
-                })
-                .on('keydown', function(e) {
-                    if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
-                        e.preventDefault();
-                        $(this).prev().focus();
-                    } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
-                        e.preventDefault();
-                        $(this).next().focus();
-                    } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                        $(this).trigger('click');
-                    }
-                });
+            cell.setAttribute('tabindex', '0');
+            cell.addEventListener('click', function(e) {
+                e.preventDefault();
+                me.sortField(item.name);
+            });
         }
 
-        this.headercells[item.name] = $cell;
+        this.headercells[item.name] = cell;
 
-        return $cell;
+        return cell;
     }
 
     buildGridBody() {
-        this.gridbody = $('<tbody />');
+        this.gridbody = document.createElement('tbody');
     }
     buildGridHeader() {
-        this.gridheader = $('<tr />').classList.add('header');
+        this.gridheader = document.createElement('tr');
+        this.gridheader.classList.add('header');
     }
 
     buildRow(rdata) {
         const me = this;
-        let $row = $('<tr />')
-            .data('rdata', rdata);
+        let row = document.createElement('tr');
 
         if (this.selectable) {
-            $row.attr('tabindex', 1)
-                .click(function(e) {
-                    if (me.selectable) { me.select($row); }
-                    if ((me.rowclick) && (typeof me.rowclick === 'function')) {
-                        me.rowclick(e, me);
-                    }
-                })
-                .on('keydown', function(e) {
-                    console.log('foo');
-                    if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
-                        e.preventDefault();
-                        $(this).prev().focus();
-                    } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
-                        e.preventDefault();
-                        $(this).next().focus();
-                    } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                        $(this).trigger('click');
-                    }
-                });
+            row.setAttribute('tabindex', '1');
+            row.addEventListener('click', function(e) {
+                if (me.selectable) { me.select(row); }
+                if ((me.rowclick) && (typeof me.rowclick === 'function')) {
+                    me.rowclick(e, me);
+                }
+            });
+            row.addEventListener('keydown', function(e) {
+                if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
+                    e.preventDefault();
+                    let previous = row.parentNode.rows[row.rowIndex - 2];
+                    if (previous) { previous.focus(); }
+                } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
+                    e.preventDefault();
+                    let next = row.parentNode.rows[row.rowIndex];
+                    if (next) { next.focus(); }
+                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
+                    row.click();
+                }
+            });
         }
 
         for (let f of this.fields) {
-            $row.append(this.buildCell(rdata, f));
+            row.appendChild(this.buildCell(rdata, f));
         }
 
-        return $row;
+        return row;
     }
 
     buildCell(data, field) {
@@ -229,22 +225,24 @@ class DataGrid {
             }
         }
 
-        let $cell = $('<td />')
-            .classList.add(field.name)
-            .classList.add(field.type)
-            .html(content);
+        let cell = document.createElement('td');
+        cell.classList.add(field.name);
+        cell.classList.add(field.type);
+        cell.innerHTML = content;
 
         if (field.classes) {
-            $cell.classList.add(field.classes.join(' '));
+            for (let c of field.classes) {
+                cell.classList.add(c);
+            }
         }
 
-        return $cell;
+        return cell;
     }
 
     buildFooter() {
-        this.footer = $('<div />').classList.add('footer');
+        this.footer = document.createElement('div');
+        this.footer.classList.add('footer');
     }
-
 
     /* UTILITY METHODS__________________________________________________________________ */
 

@@ -279,9 +279,9 @@ class CornflowerBlueDemo {
 
         this.container.appendChild(this.codebox.container);
 
-
         this.grindButtons();
         this.grindCheckboxes();
+        this.grindDataGrids();
         this.grindDialogs();
         this.grindForms();
         this.grindGrowlers();
@@ -295,11 +295,6 @@ class CornflowerBlueDemo {
         this.grindTabsAndMenus();
         this.grindTextAreas();
 
-        /*
-        this.grindDataGrids();
-
-
-         */
         this.handleInternalLinks();
         this.handleWikiCitations();
     }
@@ -551,7 +546,6 @@ class CornflowerBlueDemo {
     }
 
     grindDataGrids() {
-        const $basic = $('#datagrid-basic');
 
         let dg = new DataGrid({
             selectable: true,
@@ -621,8 +615,7 @@ class CornflowerBlueDemo {
             ]
         });
 
-        $basic.append(dg.container);
-
+        document.getElementById('datagrid-basic').appendChild(dg.container);
     }
 
     grindDialogs() {
