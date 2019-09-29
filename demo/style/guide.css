@@ -2059,7 +2059,8 @@ button {
   button.hidden {
     display: none; }
   button.help {
-    overflow: visible; }
+    overflow: visible;
+    display: inline-block; }
     button.help div.tooltip {
       display: none;
       flex-direction: row;
@@ -2072,7 +2073,7 @@ button {
       padding: .5em;
       position: absolute;
       left: -1em;
-      top: 0;
+      bottom: 1.5em;
       overflow: visible;
       z-index: 220;
       border-radius: var(--tooltip-border-radius);
