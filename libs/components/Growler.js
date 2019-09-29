@@ -124,12 +124,12 @@ class Growler extends FloatingPanel {
         this.container.setAttribute('aria-hidden', 'true');
 
         setTimeout(function() {
+            if ((me.onclose) && (typeof me.onclose === 'function')) {
+                me.onclose(me);
+            }
             me.container.parentNode.removeChild(me.container);
-        }, 2501);
+        }, 100);
 
-        if ((me.onclose) && (typeof me.onclose === 'function')) {
-            me.onclose(me);
-        }
     }
 
     /**
@@ -182,6 +182,7 @@ class Growler extends FloatingPanel {
                 me.quickClose();
             }
         });
+
         if (this.title) {
             let h3 = document.createElement('h3');
             let span = document.createElement('span');

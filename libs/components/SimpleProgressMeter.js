@@ -80,36 +80,38 @@ class SimpleProgressMeter {
     buildContainer() {
         const me = this;
 
-        this.progress = $('<div />').classList.add('progress');
+        this.progress = document.createElement('div');
+        this.progress.classList.add('progress');
 
-        this.bar = $('<div />')
-            .classList.add('simpleprogress')
-            .classList.add(this.style)
-            .append(this.progress);
+        this.bar = document.createElement('div');
+        this.bar.classList.add('simpleprogress');
+        this.bar.classList.add(this.style);
+        this.bar.appendChild(this.progress);
 
-        this.container = $('<div />')
-            .data('self', this)
-            .classList.add(this.classes.join(' '))
-            .classList.add('progressbar-container')
-            .append(this.labelobj)
-            .append(this.bar);
-
-        if (this.decalposition === 'exterior') {
-            this.container.append(this.decallayer);
-            this.bar.classList.add('exteriordecal');
-        } else {
-            this.bar.append(this.decallayer);
+        this.container = document.createElement('div');
+        this.container.classList.add('progressbar-container');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
         }
+        if (this.label) { this.container.append(this.labelobj); }
+        this.container.append(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
             && (this.decalposition !== 'exterior')
             && (this.decalposition !== 'none')) {
+
+            if (this.decalposition === 'exterior') {
+                this.container.appendChild(this.decallayer);
+                this.bar.classList.add('exteriordecal');
+            } else {
+                this.bar.appendChild(this.decallayer);
+            }
             this.bar.classList.add('withdecals');
         }
 
         // Don't allow the the width animation to fire until it's in the page
         setTimeout(function() {
-            me.progress.css('width', `${me.width}%`);
+            me.progress.style.width = `${me.width}%`;
         }, 500);
     }
 
@@ -120,29 +122,43 @@ class SimpleProgressMeter {
         if ((!this.currentrank) && (!this.nextrank) && (!this.showcaps)) { return null; }
         if (this.decalposition === 'none') { return null; }
 
-        this.decallayer = $('<div />')
-            .classList.add('decals')
-            .classList.add(this.decalposition);
+        this.decallayer = document.createElement('div');
+        this.decallayer.classList.add('decals');
+        this.decallayer.classList.add(this.decalposition);
 
         if ((this.currentrank) || (this.showcaps)) {
-            let $p = $('<div />').classList.add('current');
+            let p = document.createElement('div');
+            p.classList.add('current');
             if (this.currentrank) {
-                $p.append($('<div />').classList.add('name').html(this.currentrank))
+                let currrank = document.createElement('div');
+                currrank.classList.add('name');
+                currrank.innerHTML = this.currentrank;
+                p.appendChild(currrank);
             }
             if (this.showcaps) {
-                $p.append($('<div />').classList.add('value').html((this.commaseparate ? Utils.readableNumber(this.minvalue) : this.minvalue)));
+                let value = document.createElement('div');
+                value.classList.add('value');
+                value.innerHTML = (this.commaseparate ? Utils.readableNumber(this.minvalue) : this.minvalue);
+                p.appendChild(value);
             }
-            this.decallayer.append($p);
+            this.decallayer.append(p);
         }
         if ((this.nextrank) || (this.showcaps)) {
-            let $p = $('<div />').classList.add('next');
+            let p = document.createElement('div');
+            p.classList.add('next');
             if (this.nextrank) {
-                $p.append($('<div />').classList.add('name').html(this.nextrank))
+                let nrank = document.createElement('div');
+                nrank.classList.add('name');
+                nrank.innerHTML = this.nextrank;
+                p.appendChild(nrank);
             }
             if (this.showcaps) {
-                $p.append($('<div />').classList.add('value').html((this.commaseparate ? Utils.readableNumber(this.maxvalue) : this.maxvalue)));
+                let value = document.createElement('div');
+                value.classList.add('value');
+                value.innerHTML = (this.commaseparate ? Utils.readableNumber(this.maxvalue) : this.maxvalue);
+                p.appendChild(value);
             }
-            this.decallayer.append($p);
+            this.decallayer.appendChild(p);
         }
     }
 
@@ -153,18 +169,19 @@ class SimpleProgressMeter {
         const me = this;
         if (!this.label) { return null; }
 
-        this.labelobj = $('<label />')
-            .attr('for', this.id)
-            .html(this.label);
+        this.labelobj = document.createElement('label');
+        this.labelobj.setAttribute('for', this.id);
+        this.labelobj.innerHTML = this.label;
 
         if (this.help) {
             this.helpicon = new HelpButton({ help: this.help });
-            this.labelobj
-                .append(this.helpicon.button)
-                .hover(
-                    function() { me.helpicon.open(); },
-                    function() { me.helpicon.close(); }
-                );
+            this.labelobj.appendChild(this.helpicon.button);
+            this.labelobj.addEventListener('onmouseover', function() {
+                me.helpicon.open();
+            });
+            this.labelobj.addEventListener('onmouseout', function() {
+                me.helpicon.close();
+            });
         }
     }
 

@@ -102,9 +102,9 @@ class RadialProgressMeter extends SimpleProgressMeter {
     setProgress(percent) {
         const offset = this.circumference - percent / 100 * this.circumference;
 
-        this.container.find('.radialcircle')
-            .css('stroke-dasharray', `${this.circumference} ${this.circumference}`)
-            .css('stroke-dashoffset', offset);
+        let circle = this.container.querySelector('.radialcircle');
+        circle.style.strokeDasharray = `${this.circumference} ${this.circumference}`;
+        circle.style.strokeDashoffset = offset;
 
         if (this.segments) {
 
@@ -112,11 +112,10 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
             let seglength = (((this.radius * 2) * Math.PI) - tickwidth) / (this.segments);
 
-            //console.log(`actualsize: ${this.actualsize} :: circumference: ${this.circumference} :: segments: ${this.segments} seglength: ${seglength}`);
+            let tickmarks = this.container.querySelector('.tickmarks');
+            tickmarks.style.strokeDasharray = `2px ${seglength}px`;
+            tickmarks.style.strokeDashoffset = 0;
 
-            this.container.find('.tickmarks')
-                .css('stroke-dasharray', `2px ${seglength}px`)
-                .css('stroke-dashoffset', 0);
         }
     }
 
@@ -128,48 +127,47 @@ class RadialProgressMeter extends SimpleProgressMeter {
      * @return {*|null|undefined|jQuery}
      */
     circleTemplate(target) {
-        return $('<circle />')
-            .classList.add(target)
-            .attr('stroke-width', this.strokewidth)
-            .attr('r', this.radius)
-            .attr('cx', this.actualsize / 2)
-            .attr('cy', this.actualsize / 2)
+        let c = document.createElement('circle');
+        c.classList.add(target);
+        c.setAttribute('stroke-width', this.strokewidth);
+        c.setAttribute('r', this.radius);
+        c.setAttribute('cx', this.actualsize / 2);
+        c.setAttribute('cy', this.actualsize / 2);
+
+        return c;
     }
 
     buildContainer() {
 
         const me = this;
 
-        this.container = $('<div />')
-            .data('self', this)
-            .classList.add(this.sizeclass)
-            .classList.add('progressbar-container')
-            .append(this.labelobj);
+        this.container = document.createElement('div');
+        this.container.classList.add(this.sizeclass);
+        this.container.classList.add('progressbar-container');
+        if (this.label) { this.container.appendChild(this.labelobj); }
 
-        let $wrap = $('<div />')
-            .classList.add('circlewrap')
-            .css('width', `${this.actualsize}`)
-            .css('height', `${this.actualsize}`);
+        let wrap = document.createElement('div');
+        wrap.classList.add('circlewrap');
+        wrap.style.width = `${this.actualsize}`;
+        wrap.style.height = `${this.actualsize}`;
 
-        let $svg = $('<svg />') // the background gutter circle
-            .attr('height', this.actualsize)
-            .attr('width', this.actualsize)
-            .classList.add('progressgutter')
-            .classList.add(this.style)
-            .append(this.circleTemplate('gutter'))
-            .append(this.circleTemplate('radialcircle'));
+        let svg = document.createElement('svg'); // the background gutter circle
+        svg.setAttribute('height', this.actualsize);
+        svg.setAttribute('width', this.actualsize);
+        svg.classList.add('progressgutter');
+        svg.classList.add(this.style);
+        svg.appendChild(this.circleTemplate('gutter'));
+        svg.appendChild(this.circleTemplate('radialcircle'));
 
         if ((this.segments) || (this.style === 'ticks')) {
-            $svg.append(this.circleTemplate('tickmarks'));
+            svg.appendChild(this.circleTemplate('tickmarks'));
         }
 
-        this.container
-            .append($wrap
-                .append($svg)
-                .append(this.decallayer)
-            );
+        wrap.appendChild(svg);
+        wrap.appendChild(this.decallayer);
+        this.container.appendChild(wrap);
 
-        this.container.html(this.container.html()); // this is funky b/c manipulating svgs can't be done with jquery
+        this.container.innerHTML = this.container.innerHTML; // this is funky but necessary ¯\_(ツ)_/¯
 
         this.setProgress(0); // flatten
 
@@ -183,17 +181,21 @@ class RadialProgressMeter extends SimpleProgressMeter {
     buildDecalLayer() {
         if (!this.badge) { this.badge = `${this.value}<sup>%</sup>`; }
 
-        this.badgeobj = $('<div />').classList.add('badge').html(this.badge);
+        this.badgeobj = document.createElement('div');
+        this.badgeobj.classList.add('badge');
+        this.badgeobj.innerHTML = this.badge;
 
         if (this.stinger) {
-            this.stingerobj = $('<div />').classList.add('stinger').html(this.stinger);
+            this.stingerobj = document.createElement('div');
+            this.stingerobj.classList.add('stinger');
+            this.stingerobj.innerHTML = this.stinger;
         }
 
-        this.decallayer = $('<div />')
-            .classList.add('decals')
-            .classList.add(this.numberposition)
-            .append(this.badgeobj)
-            .append(this.stingerobj);
+        this.decallayer = document.createElement('div');
+        this.decallayer.classList.add('decals');
+        this.decallayer.classList.add(this.numberposition);
+        this.decallayer.appendChild(this.badgeobj);
+        if (this.stinger) { this.decallayer.appendChild(this.stingerobj) };
 
     }
 
