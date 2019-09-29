@@ -191,10 +191,12 @@ class CornflowerBlueDemo {
      * @param tab
      */
     switchTab(tab) {
-        // XXX JQUERY
-        $('article').attr('aria-hiddden', true);
+        let articles = document.querySelectorAll('article');
+        for (let a of articles) {
+            a.setAttribute('aria-hidden', true);
+        }
 
-        $(`#t-${tab}`).attr('aria-hidden', false);
+        document.getElementById(`t-${tab}`).removeAttribute('aria-hidden');
 
         this.navigation.select(tab);
 
@@ -727,8 +729,6 @@ class CornflowerBlueDemo {
 
     grindGrowlers() {
         const me = this;
-        const $positions = $('#growlers-positions');
-        const $special = $('#growlers-special');
 
         let positions = document.createElement('div');
         positions.classList.add('example');
@@ -1058,8 +1058,6 @@ class CornflowerBlueDemo {
 
     grindProgressMeters() {
         const me = this;
-        const $simple = $('#progressmeter-simple');
-        const $radial = $('#progressmeter-radial');
 
         let simple = document.createElement('div');
         simple.classList.add('example');
@@ -1474,8 +1472,6 @@ class CornflowerBlueDemo {
 
     grindTabsAndMenus() {
         const me = this;
-        const $buttonmenu = $('#tabsmenus-buttonmenu');
-        const $tabbar = $('#tabsmenus-tabbar');
 
         let buttonmenu = document.createElement('div');
         buttonmenu.classList.add('example');
