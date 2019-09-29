@@ -314,7 +314,7 @@ class InputElement {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        this.container.appendChild(this.labelobj);
+        if (this.label) { this.container.appendChild(this.labelobj) } ;
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');
@@ -485,7 +485,7 @@ class InputElement {
             }
         }
 
-        if (this.hidden) { this.hide(); }
+        if (this.hidden) { this.input.setAttribute('hidden', 'hidden'); }
         if (this.disabled) { this.disable(); }
 
         if (this.icon) { this.input.classList.add(`cfb-${this.icon}`); }

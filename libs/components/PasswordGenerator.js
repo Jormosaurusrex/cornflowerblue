@@ -100,11 +100,12 @@ class PasswordGenerator {
      */
     buildContainer() {
         const me = this;
-        this.container = $('<div />').classList.add('pwgenerator');
+        this.container = document.createElement('div');
+        this.container.classList.add('pwgenerator');
 
-        this.datasetblock = $('<ul />')
-            .classList.add('datasets')
-            .attr('aria-hidden', true);
+        this.datasetblock = document.createElement('ul');
+        this.datasetblock.classList.add('datasets');
+        this.datasetblock.setAttribute('aria-hidden', 'true');
 
         if (this.sets.length > 0) {
             for (let ds of this.sets) {
@@ -118,9 +119,10 @@ class PasswordGenerator {
                         checked: true
                     });
                     this.setactuals.push(cb);
-                    this.datasetblock.append($('<li />').append(cb.container));
+                    let li = document.createElement('li');
+                    li.appendChild(cb.container);
+                    this.datasetblock.appendChild(li);
                 }
-
             }
         }
 
@@ -141,19 +143,21 @@ class PasswordGenerator {
             classes: ['config'],
             action: function(e) {
                 e.preventDefault();
-                if (me.datasetblock.attr('aria-hidden')) {
-                    me.datasetblock.removeAttr('aria-hidden');
+                if (me.datasetblock.getAttribute('aria-hidden')) {
+                    me.datasetblock.removeAttribute('aria-hidden');
                 } else {
-                    me.datasetblock.attr('aria-hidden', true);
+                    me.datasetblock.setAttribute('aria-hidden', 'true');
                 }
             }
 
         });
+        let controls = document.createElement('div');
+        controls.classList.add('controls');
+        controls.appendChild(this.button.button);
+        controls.appendChild(this.configbutton.button);
 
-
-        this.container.append(
-            $('<div />').classList.add('controls').append(this.button.button).append(this.configbutton.button)
-        ).append(this.datasetblock);
+        this.container.appendChild(controls);
+        this.container.appendChild(this.datasetblock);
 
     }
 

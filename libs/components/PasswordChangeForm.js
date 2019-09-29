@@ -55,7 +55,6 @@ class PasswordChangeForm {
             valid = this.badpasswordhook(this.pwone);
         }
 
-
         if (valid) {
             this.pwone.clearMessages();
         }

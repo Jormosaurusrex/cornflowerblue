@@ -287,6 +287,7 @@ class CornflowerBlueDemo {
         this.grindGrowlers();
         this.grindInputs();
         this.grindMessageBoxes();
+        this.grindPWChange();
         this.grindRadioGroups();
         this.grindSelects();
         this.grindStyledCheckboxes();
@@ -298,7 +299,6 @@ class CornflowerBlueDemo {
 
         this.grindProgressMeters();
 
-        this.grindPWChange();
          */
         this.handleInternalLinks();
         this.handleWikiCitations();
@@ -1190,8 +1190,7 @@ class CornflowerBlueDemo {
     }
 
     grindPWChange() {
-        const $target = $('#pwchanger-simple');
-        $target.append(new PasswordChangeForm({
+        document.getElementById('pwchanger-simple').appendChild(new PasswordChangeForm({
             cannotbe: ['password', '']
         }).container);
     }

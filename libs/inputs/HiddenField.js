@@ -9,4 +9,8 @@ class HiddenField extends TextInput {
         config.type = "hidden";
         super(config);
     }
+
+    get container() {
+        return this.input;
+    }
 }
