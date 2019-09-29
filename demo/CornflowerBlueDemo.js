@@ -282,6 +282,7 @@ class CornflowerBlueDemo {
 
         this.grindButtons();
         this.grindCheckboxes();
+        this.grindDialogs();
         this.grindForms();
         this.grindGrowlers();
         this.grindInputs();
@@ -293,7 +294,6 @@ class CornflowerBlueDemo {
         this.grindTextAreas();
 
         /*
-        this.grindDialogs();
         this.grindDataGrids();
 
         this.grindProgressMeters();
@@ -627,33 +627,31 @@ class CornflowerBlueDemo {
 
     grindDialogs() {
         const me = this;
-        const $target = $('#inputs-dialogs');
 
-        $target.append(
-            $('<div />').addClass('example')
-                .append(
-                    new SimpleButton({
-                        text: "Login Form"
-                    }).button
-                        .click(function() {
-                            me.dialog = new DialogWindow({
-                                title: "Login",
-                                form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
-                            }).open();
-                        })
-                )
-                .append(
-                    new SimpleButton({
-                        text: "Kubla Khan"
-                    }).button
-                        .click(function() {
-                            me.dialog = new DialogWindow({
-                                title: "Kubla Khan",
-                                content: $('#khan').clone().css('padding', '1.5em')
-                            }).open();
-                        })
-                )
-        );
+        let dialogs = document.createElement('div');
+        dialogs.classList.add('example');
+        dialogs.classList.add('centered');
+        dialogs.appendChild(new SimpleButton({
+            text: "Login Form",
+            action: function() {
+                me.dialog = new DialogWindow({
+                    title: "Login",
+                    form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
+                }).open();
+            }
+        }).button);
+        dialogs.appendChild(new SimpleButton({
+            text: "Kubla Khan",
+            action: function() {
+                let khan = document.querySelector('#khan').cloneNode(true);
+                khan.style.padding = '1.5em';
+                me.dialog = new DialogWindow({
+                    title: "Kubla Khan",
+                    content: khan
+                }).open();
+            }
+        }).button);
+        document.getElementById('inputs-dialogs').appendChild(dialogs);
     }
 
     grindForms() {

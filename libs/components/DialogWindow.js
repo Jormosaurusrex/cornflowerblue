@@ -6,7 +6,7 @@ class DialogWindow {
        return {
             id: null,
             form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-            content: $('<p />').html("No provided content"), // This is the content of the dialog
+            content: '<p />No provided content</p', // This is the content of the dialog
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // jQuery object, will be used if passed before title.
             title: null,  // Adds a title to the dialog if present. header must be null.
@@ -24,7 +24,7 @@ class DialogWindow {
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
-        if (!config.id) { config.id = "dialog-" + Utils.getUniqueKey(5); }
+        if (!config.id) { config.id = `dialog-${Utils.getUniqueKey(5)}`; }
 
         this.build();
     }
@@ -35,26 +35,39 @@ class DialogWindow {
     open() {
         const me = this;
 
-        this.prevfocus = $(':focus');
+        this.prevfocus = document.querySelector(':focus');
 
-        this.mask = $('<div />')
-            .classList.add('window-mask')
-            .classList.add(this.classes.join(' '))
-            .click(function(e) {
-                e.preventDefault();
-                if (me.clickoutsidetoclose) {
-                    me.close();
-                }
-            });
+        this.mask = document.createElement('div');
+        this.mask.classList.add('window-mask');
+        for (let c of this.classes) {
+            this.mask.classList.add(c);
+        }
+        this.mask.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (me.clickoutsidetoclose) {
+                me.close();
+            }
+        });
         this.container.append(me.window);
 
-        $('body')
-            .append(this.mask)
-            .append(this.container)
-            .classList.add('modalopen');
+        document.body.appendChild(this.mask);
+        document.body.append(this.container);
+        document.body.classList.add('modalopen');
+
+        this.escapelistener = function(e) {
+            if (e.key === 'Escape') {
+                me.close();
+            }
+        };
 
         setTimeout(function() {
-            me.contentbox.find('*').filter('[tabindex=0]').eq(0).focus(); // Set focus
+            let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (focusable[0]) {
+                focusable[0].focus();
+            }
+            if (me.escapecloses) {
+                document.addEventListener('keyup', me.escapelistener);
+            }
         }, 100);
     }
 
@@ -62,17 +75,25 @@ class DialogWindow {
      * Closes the dialog window
      */
     close() {
-        const me = this;
-        // XXX TODO Change this to css animations
-        this.container.animate({ opacity: 0 }, 50, function() {
-            me.container.remove();
-            me.mask.animate({ opacity: 0 }, 50, function() {
-                me.mask.remove();
-                $(document).bind("keyup.DialogWindow"); // get rid of our keyup
-                me.prevfocus.focus();
-            });
-        });
-        $('body').classList.remove('modalopen');
+        this.container.parentNode.removeChild(this.container);
+        this.mask.parentNode.removeChild(this.mask);
+        this.prevfocus.focus();
+
+        document.body.classList.remove('modalopen');
+        document.removeEventListener('keyup', this.escapelistener);
+    }
+
+    /**
+     * Check to see if escape should close the thing
+     * @param e the event.
+     */
+    escape(e, self) {
+        console.log(e.key);
+        if (e.key === 'Escape') {
+            console.log("asdfadssadfasdfasdads");
+            console.log(self);
+            self.close();
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -82,23 +103,28 @@ class DialogWindow {
      */
     build() {
         const me = this;
-        this.container = $('<div />')
-            .classList.add(this.classes.join(' '))
-            .classList.add('window-container');
 
-        this.window = $('<div />')
-            .classList.add('dialog')
-            .classList.add(this.classes.join(' '))
-            .attr('id', this.id);
+        this.container = document.createElement('div');
+        this.container.classList.add('window-container');
+
+        this.window = document.createElement('div');
+        this.window.classList.add('dialog');
+        this.window.setAttribute('id', this.id);
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+            this.window.classList.add(c);
+        }
 
         if ((this.title) || (this.header)) {
-
-            if (this.header) {
-                this.window.append(this.header);
-            } else {
-                this.title = $('<h2 />').append( $('<span />').classList.add('t').html(this.title) );
-                this.window.append(this.title);
+            if (!this.header) {
+                this.header = document.createElement('h2');
+                let span = document.createElement('span');
+                span.classList.add('t');
+                span.innerHTML = this.title;
+                this.header.appendChild(span);
             }
+            this.window.appendChild(this.header);
 
             if (this.showclose) {
                 this.closebutton = new SimpleButton({
@@ -111,7 +137,7 @@ class DialogWindow {
                         me.close();
                     }
                 });
-                this.title.append(this.closebutton.button);
+                this.header.appendChild(this.closebutton.button);
             }
         } else if (this.showclose) {
             console.error("Dialog defines 'showclose' but no title is defined.")
@@ -121,29 +147,20 @@ class DialogWindow {
 
             this.form.dialog = this;
 
-            this.contentbox = $('<div />')
-                .classList.add('content')
-                .append(this.form.form);
+            this.contentbox = document.createElement('div');
+            this.contentbox.classList.add('content');
+            this.contentbox.appendChild(this.form.form);
 
-            this.window
-                .classList.add('isform')
-                .append(this.contentbox);
+            this.window.classList.add('isform');
+            this.window.appendChild(this.contentbox);
 
         } else if (this.content) { // It's a jQuery object
 
-            this.contentbox = $('<div />')
-                .classList.add('content')
-                .append(this.content);
+            this.contentbox = document.createElement('div');
+            this.contentbox.classList.add('content');
+            this.contentbox.appendChild(this.content);
 
-            this.window.append(this.contentbox);
-        }
-
-        if (this.escapecloses) {
-            $(document).bind("keyup.DialogWindow", function(e) {
-                if (e.keyCode === 27) { // escape key maps to keycode `27`
-                    me.close();
-                }
-            });
+            this.window.appendChild(this.contentbox);
         }
     }
 
@@ -177,6 +194,9 @@ class DialogWindow {
 
     get escapecloses() { return this.config.escapecloses; }
     set escapecloses(escapecloses) { this.config.escapecloses = escapecloses; }
+
+    get escapelistener() { return this._escapelistener; }
+    set escapelistener(escapelistener) { this._escapelistener = escapelistener; }
 
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
