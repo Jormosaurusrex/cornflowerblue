@@ -134,7 +134,7 @@ class FloatingPanel {
 
         this.contentbox = document.createElement('div');
         this.contentbox.classList.add('content');
-        this.contentbox.appendChild(this.titlecontainer);
+        if (this.title) { this.contentbox.appendChild(this.titlecontainer) };
         this.contentbox.appendChild(this.pcontent);
 
         this.container.appendChild(this.contentbox);
