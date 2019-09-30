@@ -3777,9 +3777,14 @@ article {
   animation-timing-function: ease-in-out; }
   article[aria-hidden=true] {
     display: none; }
+  article h1 {
+    margin-top: 0; }
 
 body.modalopen div.container {
   filter: blur(3px); }
+
+img.banner-image {
+  width: 100%; }
 
 /* latin */
 @font-face {
