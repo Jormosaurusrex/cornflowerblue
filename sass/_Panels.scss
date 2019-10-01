@@ -1,4 +1,15 @@
 div.panel {
+
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-secondary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+  --panel-padding: .5em 1em .5em 1em;
+  --panel-closed-hover-background-color: var(--focus-color);
+  --panel-closed-hover-text-color: var(--hot-text-color);
+
   position: absolute;
   z-index: 1000;
   border-radius: var(--panel-border-radius);
@@ -19,7 +30,7 @@ div.panel {
     flex-wrap: nowrap;
     align-items: stretch;
     h3 {
-      margin: 0 0 .5em 0;
+      margin: 0 .5em 0 0;
       cursor: pointer;
       border-bottom: .1em var(--panel-text-color);
       text-transform: unset;
@@ -38,7 +49,6 @@ div.panel {
         &:hover,
         &:focus,
         &:active {
-          color: var(--panel-text-color);
           opacity: 1;
           background: none;
           box-shadow: none;
@@ -55,6 +65,11 @@ div.panel {
   &[aria-expanded=false] {
     button.togglebutton {
       transform: rotate(-90deg);
+      &:hover,
+      &:focus,
+      &:active {
+        color: var(--panel-text-color);
+      }
     }
     div.content {
       h3 {
@@ -65,16 +80,16 @@ div.panel {
       }
     }
     &:hover,
+    &:active,
     &:focus {
-      background-color: var(--panel-closed-hover-background-color);
-      color: var(--panel-text-color);
+      background-color: var(--focus-color);
       h3 {
-        color: var(--panel-text-color);
+        color: var(--hot-text-color);
       }
       button.togglebutton {
-        color: var(--panel-text-color);
+        color: var(--hot-text-color);
         &:hover {
-          color: var(--panel-text-color);
+          color: var(--hot-text-color);
         }
       }
     }

@@ -50,7 +50,7 @@ class FloatingPanel {
      */
     open() {
         this.container.setAttribute('aria-expanded', 'true');
-        this.pcontent.removeAttribute('aria-hidden');
+        this.pcontent.setAttribute('aria-hidden', 'false');
         this.minimized = false;
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
@@ -61,7 +61,7 @@ class FloatingPanel {
      * Minimize the panel
      */
     close() {
-        this.container.removeAttribute('aria-expanded');
+        this.container.setAttribute('aria-expanded', 'false');
         this.pcontent.setAttribute('aria-hidden', 'true');
         this.minimized = true;
         if ((this.onclose) && (typeof this.onclose === 'function')) {
