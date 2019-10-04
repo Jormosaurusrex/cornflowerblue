@@ -63,6 +63,8 @@ class InputElement {
 
         if (!this.name) { this.name = this.id; }
 
+        if (!this.config.value) { this.config.value = ''; }
+
         if (this.config.value) { // store the supplied value if any
             this.origval = this.config.value;
         } else {
