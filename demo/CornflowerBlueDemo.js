@@ -334,7 +334,6 @@ class CornflowerBlueDemo {
         }
     }
 
-
     grindButtons() {
         const me = this;
 
@@ -523,6 +522,8 @@ class CornflowerBlueDemo {
         let checkboxes = document.createElement('div');
         checkboxes.classList.add('example');
         checkboxes.classList.add('centered');
+
+
         checkboxes.appendChild(new BooleanToggle({
             label: "Normal"
         }).container);
