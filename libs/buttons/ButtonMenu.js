@@ -35,7 +35,6 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
-        console.log(`isopen: ${this.button.hasAttribute('aria-expanded')}`);
         return this.button.hasAttribute('aria-expanded');
     }
 

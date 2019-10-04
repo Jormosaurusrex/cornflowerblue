@@ -77,8 +77,9 @@ class DialogWindow {
     close() {
         this.container.parentNode.removeChild(this.container);
         this.mask.parentNode.removeChild(this.mask);
-        this.prevfocus.focus();
-
+        if (this.prevfocus) {
+            this.prevfocus.focus();
+        }
         document.body.classList.remove('modalopen');
         document.removeEventListener('keyup', this.escapelistener);
     }
