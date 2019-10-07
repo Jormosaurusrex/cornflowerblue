@@ -97,7 +97,6 @@ class SimpleProgressMeter {
         this.container.append(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
-            && (this.decalposition !== 'exterior')
             && (this.decalposition !== 'none')) {
 
             if (this.decalposition === 'exterior') {
@@ -105,8 +104,8 @@ class SimpleProgressMeter {
                 this.bar.classList.add('exteriordecal');
             } else {
                 this.bar.appendChild(this.decallayer);
+                this.bar.classList.add('withdecals');
             }
-            this.bar.classList.add('withdecals');
         }
 
         // Don't allow the the width animation to fire until it's in the page
