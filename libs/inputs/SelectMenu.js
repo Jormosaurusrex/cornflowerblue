@@ -59,6 +59,12 @@ class SelectMenu extends InputElement {
         this.optionlist.removeAttribute('aria-hidden');
         this.triggerbox.setAttribute('aria-expanded', 'true');
 
+        let items = Array.from(this.optionlist.querySelector('li'));
+        for (let li of items) {
+            console.log(li);
+            li.setAttribute('tabindex', '0');
+        }
+
         let vertpos = (Utils.getSingleEmInPixels() * 15); // menu height
         if (this.container) {
             vertpos += parseInt(this.container.getBoundingClientRect().top);
@@ -129,6 +135,12 @@ class SelectMenu extends InputElement {
     close() {
         this.optionlist.setAttribute('aria-hidden', 'true');
         this.triggerbox.removeAttribute('aria-expanded');
+
+        let items = Array.from(this.optionlist.querySelector('li'));
+        for (let li of items) {
+            li.setAttribute('tabindex', '-1');
+        }
+
         this.searchkeys = [];
         this.updateSearch();
     }
@@ -256,12 +268,14 @@ class SelectMenu extends InputElement {
         if (next > this.options.length) { next = this.options.length; }
 
         let li = document.createElement('li');
-        li.setAttribute('tabindex', '0');
+        li.setAttribute('tabindex', '-1');
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
 
         li.addEventListener('keydown', function(e) {
-            if (e.keyCode === 9) { // Tab
+            if((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+                me.close();
+            } else if (e.keyCode === 9) { // Tab
                 me.close();
             } else if (e.keyCode === 27) { // Escape
                 me.close();

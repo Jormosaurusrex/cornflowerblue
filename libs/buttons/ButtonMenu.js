@@ -48,6 +48,11 @@ class ButtonMenu extends SimpleButton {
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
         this.menu.querySelector('li:first-child').focus();
+
+        let items = Array.from(this.menu.querySelector('li'));
+        for (let li of items) {
+            li.setAttribute('tabindex', '0');
+        }
     }
 
     /**
@@ -56,6 +61,11 @@ class ButtonMenu extends SimpleButton {
     close() {
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');
+
+        let items = Array.from(this.menu.querySelector('li'));
+        for (let li of items) {
+            li.setAttribute('tabindex', '-1');
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -79,7 +89,7 @@ class ButtonMenu extends SimpleButton {
             if (next > this.items.length) { next = this.items.length; }
 
             let menuitem = document.createElement('li');
-            menuitem.setAttribute('tabindex', '0');
+            menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
             menuitem.addEventListener('keydown', function(e) {
