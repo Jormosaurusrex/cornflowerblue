@@ -123,8 +123,6 @@ class SelectMenu extends InputElement {
         this.scrolleditem = element;
     }
 
-
-
     /**
      * Closes the option list.
      */

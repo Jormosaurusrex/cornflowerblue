@@ -5,7 +5,7 @@ class ButtonMenu extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             focusin: function(e, self) { self.open(); },    //
-            focusout: function(e, self) { self.close(); },  //
+            //focusout: function(e, self) { self.close(); },  //
             secondicon: 'triangle-down', // this is passed up as a secondicon
             items: [] // list of menu item definitions
                     // {
@@ -47,6 +47,7 @@ class ButtonMenu extends SimpleButton {
         if (this.isopen) { return; }
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
+        this.menu.querySelector('li:first-child').focus();
     }
 
     /**
@@ -67,27 +68,58 @@ class ButtonMenu extends SimpleButton {
         const me = this;
         this.menu = document.createElement('ul');
         this.menu.setAttribute('aria-hidden', 'true');
-        for (let item of this.items) {
-            let menuitem = document.createElement('li');
-            let anchor = document.createElement('a');
+        this.menu.setAttribute('tabindex', '0');
+        let order = 1;
 
+        for (let item of this.items) {
+
+            let next = order + 1,
+                previous = order - 1;
+            if (previous < 1) { previous = 1; }
+            if (next > this.items.length) { next = this.items.length; }
+
+            let menuitem = document.createElement('li');
+            menuitem.setAttribute('tabindex', '0');
+            menuitem.setAttribute('data-order', order);
+
+            menuitem.addEventListener('keydown', function(e) {
+                if (e.keyCode === 9) { // Tab
+                    me.close();
+                } else if (e.keyCode === 27) { // Escape
+                    me.close();
+                } else if (e.keyCode === 38) { // Up arrow
+                    e.preventDefault();
+                    me.menu.querySelector(`[data-order='${previous}']`).focus();
+                } else if (e.keyCode === 40) { // Down arrow
+                    e.preventDefault();
+                    me.menu.querySelector(`[data-order='${next}']`).focus();
+                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
+                    me.querySelector('a').click(); // click the one inside
+                }
+            });
+
+            let anchor = document.createElement('a');
             if (item.icon) {
                 anchor.appendChild(IconFactory.icon(item.icon));
             }
+
             let s = document.createElement('span');
             s.innerHTML = item.label;
             anchor.appendChild(s);
+
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
                     item.action(e);
                 }
                 me.close();
-                me.button.blur();
             });
 
             menuitem.appendChild(anchor);
+
             this.menu.appendChild(menuitem);
+
+            order++;
         }
         this.button.appendChild(this.menu);
     }
