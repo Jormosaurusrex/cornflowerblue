@@ -4,8 +4,7 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            focusin: function(e, self) { self.open(); },    //
-            //focusout: function(e, self) { self.close(); },  //
+            focusin: function(e, self) { self.open(); },    // open on focus
             secondicon: 'triangle-down', // this is passed up as a secondicon
             items: [] // list of menu item definitions
                     // {
@@ -40,10 +39,19 @@ class ButtonMenu extends SimpleButton {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
+    toggle() {
+        if (this.isopen) {
+            this.close();
+            return;
+        }
+        this.open();
+    }
+
     /**
      * Opens the menu
      */
     open() {
+        const me = this;
         if (this.isopen) { return; }
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
@@ -53,6 +61,10 @@ class ButtonMenu extends SimpleButton {
         for (let li of items) {
             li.setAttribute('tabindex', '0');
         }
+
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 200);
     }
 
     /**
@@ -68,6 +80,22 @@ class ButtonMenu extends SimpleButton {
         }
     }
 
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+        window.addEventListener('click', function(e) {
+            if (e.target === me.menu) {
+                me.setCloseListener();
+            } else {
+                me.close();
+            }
+        }, {
+            once: true,
+        });
+    }
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**

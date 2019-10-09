@@ -338,7 +338,7 @@ class SimpleForm {
         if (this.spinnerstyle) {
             let d = document.createElement('div');
             d.classList.add('spinner');
-            d.classList.add('this.spinnerstyle');
+            d.classList.add(this.spinnerstyle);
             this.shade.append(d);
         }
 
