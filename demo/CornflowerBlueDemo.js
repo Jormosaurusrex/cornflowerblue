@@ -226,6 +226,7 @@ class CornflowerBlueDemo {
             tabs: [
                 { label: 'Intro', id: 'intro' },
                 { label: 'cornflowerblue', id: 'wiki' },
+                { label: 'Font Glyphs', id: 'fontglyphs' },
                 { label: 'Text',  id: 'text' },
                 { label: 'Message Boxes', id: 'messageboxes' },
                 { label: 'Buttons', id: 'buttons' },
@@ -299,6 +300,44 @@ class CornflowerBlueDemo {
 
         this.handleInternalLinks();
         this.handleWikiCitations();
+
+        this.drawFontGlyphs();
+    }
+
+    drawFontGlyphs() {
+        let glyphs = IconFactory.LIST;
+        glyphs.sort();
+
+        let table = document.createElement('table');
+        table.classList.add('glyphchart');
+
+        let tbody = document.createElement('tbody');
+        let newrow = true;
+        let tr;
+        for (let g of glyphs) {
+            if (newrow) {
+                tr = document.createElement('tr');
+            }
+
+            let ltd = document.createElement('td');
+            ltd.classList.add('label');
+            ltd.innerHTML = g;
+            tr.appendChild(ltd);
+
+            let vtd = document.createElement('td');
+            vtd.classList.add('icon');
+            vtd.appendChild(IconFactory.icon(g, g));
+            tr.appendChild(vtd);
+
+            if (newrow) {
+                newrow = false;
+            } else {
+                tbody.append(tr);
+                newrow = true;
+            }
+        }
+        table.appendChild(tbody);
+        document.getElementById('glyphs').appendChild(table);
     }
 
     handleInternalLinks() {

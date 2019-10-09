@@ -141,6 +141,19 @@ div.wiki {
   }
 }
 
+table.glyphchart {
+  width: 100%;
+  tr {
+    td.label {
+      font-size: 110%;
+    }
+    td.icon {
+      font-size: 2em;
+      text-align: left;
+    }
+  }
+}
+
 article {
   animation-name: cfb-fadein;
   animation-duration: 250ms;
