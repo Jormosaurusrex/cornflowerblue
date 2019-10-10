@@ -146,7 +146,7 @@ button {
     }
     &:focus,
     &.focus {
-      outline: var(--hot-text-color) dashed .1em;
+      outline: var(--button-default-color) dashed .1em;
       outline-offset: .2em;
       text-decoration: underline double;
     }

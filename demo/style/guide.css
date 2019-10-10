@@ -1486,7 +1486,7 @@ div.input-container div.topcontrol,
 div.textarea-container div.topcontrol {
   position: absolute;
   right: 0;
-  top: 0.9em;
+  top: 1.3em;
   z-index: 10;
   transition: all 0.2s;
   --button-default-color: var(--input-subline-text-color);
@@ -2295,7 +2295,7 @@ button.mute:active, button.mute.active {
   box-shadow: none;
 }
 button.mute:focus, button.mute.focus {
-  outline: var(--hot-text-color) dashed 0.1em;
+  outline: var(--button-default-color) dashed 0.1em;
   outline-offset: 0.2em;
   text-decoration: underline double;
 }

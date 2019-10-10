@@ -401,7 +401,6 @@ class CornflowerBlueDemo {
             { type: 'pill-mute', target: 'buttons-shaped-pill' }
         ];
 
-
         for (let t of types) {
             let div1 = document.createElement('div');
             div1.classList.add('example');
@@ -502,7 +501,6 @@ class CornflowerBlueDemo {
             document.getElementById(t.target).appendChild(div2);
         }
 
-
         let shapes = ['square', 'circle'];
         let shapeconfigs = [
             { text: "Normal", type: "normal", icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
@@ -520,6 +518,7 @@ class CornflowerBlueDemo {
             let div1 = document.createElement('div');
             div1.classList.add('example');
             div1.classList.add('centered');
+
             for (let cfg of shapeconfigs) {
                 switch (shape) {
                     case 'square':
@@ -553,6 +552,20 @@ class CornflowerBlueDemo {
 
         }
 
+        let sizediv = document.createElement('div');
+        sizediv.classList.add('example');
+        sizediv.classList.add('vert');
+
+        let sizes = ['micro', 'small', 'medium', 'large', 'fill'];
+
+        for (let size of sizes) {
+            sizediv.appendChild(new SimpleButton({
+                text: `Size: ${size}`,
+                size: size,
+                action: function(e, self) { me.dumpConfig(self); }
+            }).button);
+        }
+        document.getElementById('buttons-sizes').appendChild(sizediv);
     }
 
     grindCheckboxes() {
