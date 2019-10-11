@@ -150,12 +150,15 @@ class SimpleForm {
      * @param callback the callback to fire when done
      */
     doAjax(callback) {
-        // XXX TODO POST AS JSON
-        //let body = new FormData(this.form[0]);
-        //application/x-www-form-urlencoded
-        //multipart/form-data
 
-        const body = new URLSearchParams(new FormData(this.form)).toString();
+        // Edge is terrible and doesn't support FormData;
+        //const body = new URLSearchParams(new FormData(this.form)).toString();
+
+        let urlelements = [];
+        for (let i of this.elements) {
+            urlelements.push(`${i.name}=${i.value}`)
+        }
+        const body = urlelements.join('&');
 
         fetch(this.handler, {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -263,9 +266,9 @@ class SimpleForm {
         this.form = document.createElement('form');
         this.form.setAttribute('id', this.id);
         this.form.setAttribute('novalidate', true); // turn off browser validation 'cause we do it by hand
-        this.form.setAttribute('name', this.name);
+        if (this.name) { this.form.setAttribute('name', this.name); }
         this.form.setAttribute('method', this.method);
-        this.form.setAttribute('enctype', this.enctype);
+        if (this.enctype) { this.form.setAttribute('enctype', this.enctype); }
         this.form.setAttribute('role', 'form');
         this.form.setAttribute('autocomplete', this.autocomplete);
         this.form.classList.add('cornflowerblue');
@@ -277,7 +280,7 @@ class SimpleForm {
             me.submit();
         });
 
-        if ((this.handler) && (typeof this.handler !== 'function')) {
+        if ((this.handler) && (typeof this.handler !== 'function') && (this.target)) {
             this.form.setAttribute('target', this.target);
         }
 
