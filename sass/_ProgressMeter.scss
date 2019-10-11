@@ -1,7 +1,6 @@
 div.progressbar-container {
   margin: .5em 0 .5em 0;
   position: relative;
-
   .decals {
     display: flex;
     flex-direction: row;
@@ -12,7 +11,7 @@ div.progressbar-container {
       display: flex;
       flex-direction: column;
       padding: .5em;
-      margin: 0 1em 0 1em;
+      margin: 0;
       div.name,
       div.value {
         color: var(--progressmeter-simple-decal-text-color);
@@ -155,10 +154,7 @@ div.progressbar-container {
       border-bottom-right-radius: .2em;
     }
     div.decals {
-      &.interior-offset,
-      &.interior-center,
-      &.interior-top,
-      &.interior-bottom {
+      &.interior {
         position: absolute;
         left: 0;
         top: 0;
@@ -167,33 +163,13 @@ div.progressbar-container {
       }
     }
     &.exteriordecal {
+      margin: 0;
+    }
+    &.exteriordecal-bottom {
       margin: 1em 0 0 0;
     }
     &.withdecals {
-      height: 5em;
-      div.decals {
-        &.interior-offset {
-          div.current {
-            align-self: flex-start;
-          }
-          div.next {
-            align-self: flex-end;
-          }
-        }
-        &.interior-top {
-          div.current,
-          div.next {
-            align-self: flex-start;
-          }
-        }
-        &.interior-bottom {
-          div.current,
-          div.next {
-            align-self: flex-end;
-          }
-        }
-
-      }
+      height: 3em;
     }
     &.interiorroundcap {
       div.progress {

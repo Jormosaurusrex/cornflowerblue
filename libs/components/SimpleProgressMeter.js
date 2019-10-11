@@ -17,13 +17,10 @@ class SimpleProgressMeter {
             currentrank: null, // A string, if present, will be displayed inside (along with minvalue)
             nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
             showcaps: true, // if true, show the min and max values.  True by default if currentrank or nextrank is set.
-            decalposition: 'interior-offset', // Where should the decals appear?
+            decalposition: 'interior', // Where should the decals appear?
                         // * 'none' : Don't show any decals
-                        // * 'interior-offset' : decals are drawn inside of the bar, staggered
-                        // * 'interior-center' : decals are drawn inside of the bar, centered
-                        // * 'interior-top' : decals are drawn inside of the bar, top-aligned
-                        // * 'interior-bottom' : decals are drawn inside of the bar, bottom-aligned
-                        // * 'exterior' : decals are drawn outside of and below the bar
+                        // * 'exterior' : decals are drawn outside of and above the bar
+                        // * 'exterior-bottom' : decals are drawn outside of and below the bar
 
             /*
                 The meter can have a variable scale, but the width of its progressbar is absolute within
@@ -94,14 +91,20 @@ class SimpleProgressMeter {
             this.container.classList.add(c);
         }
         if (this.label) { this.container.append(this.labelobj); }
+
+        if (((this.currentrank) || (this.nextrank))
+            && (this.decalposition) && (this.decalposition === 'exterior')) {
+            this.container.appendChild(this.decallayer);
+            this.bar.classList.add('exteriordecal');
+        }
+
         this.container.append(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
-            && (this.decalposition !== 'none')) {
-
-            if (this.decalposition === 'exterior') {
+            && (this.decalposition) && (this.decalposition !== 'exterior') && (this.decalposition !== 'none')) {
+            if (this.decalposition === 'exterior-bottom') {
                 this.container.appendChild(this.decallayer);
-                this.bar.classList.add('exteriordecal');
+                this.bar.classList.add('exteriordecal-bottom');
             } else {
                 this.bar.appendChild(this.decallayer);
                 this.bar.classList.add('withdecals');

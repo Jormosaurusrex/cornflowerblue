@@ -3987,7 +3987,7 @@ div.progressbar-container .decals div.next {
   display: flex;
   flex-direction: column;
   padding: 0.5em;
-  margin: 0 1em 0 1em;
+  margin: 0;
 }
 div.progressbar-container .decals div.current div.name,
 div.progressbar-container .decals div.current div.value,
@@ -4117,7 +4117,7 @@ div.progressbar-container div.simpleprogress div.progress {
   border-top-right-radius: 0.2em;
   border-bottom-right-radius: 0.2em;
 }
-div.progressbar-container div.simpleprogress div.decals.interior-offset, div.progressbar-container div.simpleprogress div.decals.interior-center, div.progressbar-container div.simpleprogress div.decals.interior-top, div.progressbar-container div.simpleprogress div.decals.interior-bottom {
+div.progressbar-container div.simpleprogress div.decals.interior {
   position: absolute;
   left: 0;
   top: 0;
@@ -4125,24 +4125,13 @@ div.progressbar-container div.simpleprogress div.decals.interior-offset, div.pro
   bottom: 0;
 }
 div.progressbar-container div.simpleprogress.exteriordecal {
+  margin: 0;
+}
+div.progressbar-container div.simpleprogress.exteriordecal-bottom {
   margin: 1em 0 0 0;
 }
 div.progressbar-container div.simpleprogress.withdecals {
-  height: 5em;
-}
-div.progressbar-container div.simpleprogress.withdecals div.decals.interior-offset div.current {
-  align-self: flex-start;
-}
-div.progressbar-container div.simpleprogress.withdecals div.decals.interior-offset div.next {
-  align-self: flex-end;
-}
-div.progressbar-container div.simpleprogress.withdecals div.decals.interior-top div.current,
-div.progressbar-container div.simpleprogress.withdecals div.decals.interior-top div.next {
-  align-self: flex-start;
-}
-div.progressbar-container div.simpleprogress.withdecals div.decals.interior-bottom div.current,
-div.progressbar-container div.simpleprogress.withdecals div.decals.interior-bottom div.next {
-  align-self: flex-end;
+  height: 3em;
 }
 div.progressbar-container div.simpleprogress.interiorroundcap div.progress {
   border-top-right-radius: 1.5em;

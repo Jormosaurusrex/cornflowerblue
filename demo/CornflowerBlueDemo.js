@@ -1131,7 +1131,6 @@ class CornflowerBlueDemo {
     }
 
     grindProgressMeters() {
-        const me = this;
 
         let simple = document.createElement('div');
         simple.classList.add('example');
@@ -1149,10 +1148,28 @@ class CornflowerBlueDemo {
             value: 335
         }).container);
         simple.appendChild(new SimpleProgressMeter({
+            label: "Decalposition: interior-center",
+            currentrank: "Bronze",
+            decalposition: 'interior',
+            nextrank: "Silver",
+            minvalue: 200,
+            maxvalue: 600,
+            value: 335
+        }).container);
+        simple.appendChild(new SimpleProgressMeter({
             label: "Decalposition: exterior",
             currentrank: "Bronze",
             nextrank: "Silver",
             decalposition: 'exterior',
+            minvalue: 200,
+            maxvalue: 600,
+            value: 335
+        }).container);
+        simple.appendChild(new SimpleProgressMeter({
+            label: "Decalposition: exteriorbottom",
+            currentrank: "Bronze",
+            nextrank: "Silver",
+            decalposition: 'exterior-bottom',
             minvalue: 200,
             maxvalue: 600,
             value: 335
