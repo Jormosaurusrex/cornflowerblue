@@ -10,6 +10,9 @@ class DialogWindow {
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // jQuery object, will be used if passed before title.
             title: null,  // Adds a title to the dialog if present. header must be null.
+            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
+                           // or a string.  If it's a string, it creates a div at the bottom
+                           // with the value of the text.
             clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
             escapecloses: true, // Allow the window to be closed by the escape key
             showclose: true  // Show or hide the X button in the corner (requires title != null)
@@ -48,10 +51,19 @@ class DialogWindow {
                 me.close();
             }
         });
-        this.container.append(me.window);
+        this.container.appendChild(me.window);
+
+        if ((this.trailer) && (typeof this.trailer === 'string')) {
+            let trail = document.createElement('div');
+            trail.classList.add('trailer');
+            trail.innerHTML = this.trailer;
+            this.container.appendChild(trail);
+        } else if (this.trailer) { // it's an html object
+            this.container.appendChild(this.trailer);
+        }
 
         document.body.appendChild(this.mask);
-        document.body.append(this.container);
+        document.body.appendChild(this.container);
         document.body.classList.add('modalopen');
 
         this.escapelistener = function(e) {
@@ -219,6 +231,9 @@ class DialogWindow {
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
+
+    get trailer() { return this.config.trailer; }
+    set trailer(trailer) { this.config.trailer = trailer; }
 
     get window() { return this._window; }
     set window(window) { this._window = window; }

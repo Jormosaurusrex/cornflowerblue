@@ -3770,6 +3770,7 @@ div.window-container {
   align-items: center;
   vertical-align: middle;
   display: flex;
+  flex-direction: column;
   pointer-events: none;
 }
 div.window-container div.dialog {
@@ -3857,6 +3858,17 @@ div.window-container div.dialog.isform div.content form div.actions {
   height: 5em;
   min-height: 5em;
   max-height: 5em;
+}
+div.window-container div.trailer {
+  position: absolute;
+  bottom: 0;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 200%;
+  width: 100%;
+  color: var(--white-half);
 }
 
 div.window-mask {

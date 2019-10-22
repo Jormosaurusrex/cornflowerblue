@@ -15,6 +15,7 @@ div.window-container {
   align-items: center;
   vertical-align: middle;
   display: flex;
+  flex-direction: column;
   pointer-events: none;
   div.dialog {
     background-color: var(--dialog-background-color);
@@ -111,6 +112,17 @@ div.window-container {
         }
       }
     }
+  }
+  div.trailer {
+    position: absolute;
+    bottom: 0;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 200%;
+    width: 100%;
+    color: var(--white-half);
   }
 }
 
