@@ -61,7 +61,7 @@ class TabBar {
 
     /**
      * Builds the DOM.
-     * @returns {jQuery} jQuery representation
+     * @returns the container object
      */
     buildContainer() {
         const me = this;
@@ -103,23 +103,22 @@ class TabBar {
             link.setAttribute('role', 'tab');
             link.setAttribute('aria-controls', `t-${tabdef.id}`);
             link.setAttribute('tabindex', '-1');
-            link.setAttribute('data-tabno', order);
+            link.setAttribute('data-tabno', `${order}`);
             link.setAttribute('id', tabdef.id);
             link.setAttribute('data-tabid', tabdef.id);
             if (icon) { link.appendChild(icon); }
             link.appendChild(linktext);
 
             link.addEventListener('keydown', function(e) {
-                let keyCode = e.key || e.keyCode;
-                if ((keyCode === 'ArrowLeft') || (keyCode === 'ArrowUp')) { // Left arrow || Up Arrow
+                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
                     me.list.querySelector(`[data-tabno='${previous}']`).focus();
-                } else if ((keyCode === 'ArrowRight') || (keyCode === 'ArrowDown')) { // Right arrow || Down Arrow
+                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
                     e.preventDefault();
                     e.stopPropagation();
                     me.list.querySelector(`[data-tabno='${next}']`).focus();
-                } else if ((keyCode === " " ) || (keyCode === "Spacebar" ) || (keyCode === 'Enter')) { // return or space
+                } else if ((e.key === " " ) || (e.key === "Spacebar" ) || (e.key === 'Enter')) { // return or space
                     link.click();
                 }
             });

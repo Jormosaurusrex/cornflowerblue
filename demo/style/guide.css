@@ -732,6 +732,13 @@ p {
   text-shadow: var(--paragraph-shadow);
   font-family: var(--paragraph-font-family);
 }
+p.dropcap:first-letter {
+  font-size: 5.5em;
+  float: left;
+  line-height: 0.6;
+  /* from 1 */
+  margin-right: 0.05em;
+}
 
 a {
   color: var(--link-color);

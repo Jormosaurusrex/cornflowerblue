@@ -569,7 +569,6 @@ class CornflowerBlueDemo {
     }
 
     grindCheckboxes() {
-        const me = this;
 
         let checkboxes = document.createElement('div');
         checkboxes.classList.add('example');
@@ -1140,17 +1139,9 @@ class CornflowerBlueDemo {
             value: 25
         }).container);
         simple.appendChild(new SimpleProgressMeter({
-            label: "Rank 3 Progress",
-            currentrank: "Bronze",
-            nextrank: "Silver",
-            minvalue: 200,
-            maxvalue: 600,
-            value: 335
-        }).container);
-        simple.appendChild(new SimpleProgressMeter({
-            label: "Decalposition: interior-center",
-            currentrank: "Bronze",
+            label: "Decalposition: interior",
             decalposition: 'interior',
+            currentrank: "Bronze",
             nextrank: "Silver",
             minvalue: 200,
             maxvalue: 600,
@@ -1158,15 +1149,15 @@ class CornflowerBlueDemo {
         }).container);
         simple.appendChild(new SimpleProgressMeter({
             label: "Decalposition: exterior",
+            decalposition: 'exterior',
             currentrank: "Bronze",
             nextrank: "Silver",
-            decalposition: 'exterior',
             minvalue: 200,
             maxvalue: 600,
             value: 335
         }).container);
         simple.appendChild(new SimpleProgressMeter({
-            label: "Decalposition: exteriorbottom",
+            label: "Decalposition: exterior-bottom",
             currentrank: "Bronze",
             nextrank: "Silver",
             decalposition: 'exterior-bottom',
@@ -1317,8 +1308,6 @@ class CornflowerBlueDemo {
     }
 
     grindSelects() {
-        const me = this;
-
         let passiveTest = new SelectMenu({
             label: "Year",
             name: "year-passive",
@@ -1562,8 +1551,6 @@ class CornflowerBlueDemo {
     }
 
     grindTabsAndMenus() {
-        const me = this;
-
         let buttonmenu = document.createElement('div');
         buttonmenu.classList.add('example');
         buttonmenu.appendChild(new ButtonMenu({

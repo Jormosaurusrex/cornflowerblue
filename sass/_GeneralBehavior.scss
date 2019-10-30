@@ -154,6 +154,14 @@ p {
   width: var(--paragraph-measure);
   text-shadow: var(--paragraph-shadow);
   font-family: var(--paragraph-font-family);
+  &.dropcap {
+    &:first-letter {
+      font-size: 5.5em;
+      float: left;
+      line-height: .6; /* from 1 */
+      margin-right: 0.05em;
+    }
+  }
 }
 
 a {
