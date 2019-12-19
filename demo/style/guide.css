@@ -3867,8 +3867,6 @@ div.window-container div.dialog.isform div.content form div.actions {
   max-height: 5em;
 }
 div.window-container div.trailer {
-  position: absolute;
-  bottom: 0;
   padding: 1em;
   display: flex;
   justify-content: center;
