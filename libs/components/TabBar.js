@@ -6,6 +6,9 @@ class TabBar {
         return {
             id: null, // The id
             navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
+            responsive: true, // Set to false to disable responsive collapsing.
+            menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
+            menulabel: "Toggle Menu", // Default text for the menu
             arialabel: 'Primary', // the aria label to use if this is a navigation
             vertical: false, // Vertical or horizontal
             animation: 'popin', // Set to null to disable animations
@@ -144,17 +147,28 @@ class TabBar {
 
             this.list.appendChild(this.tabmap[tabdef.id]);
 
+            this.container = document.createElement('nav');
+            this.container.classList.add('tablist-container');
+
             if (this.navigation) {
-                this.container = document.createElement('nav');
                 this.container.setAttribute('role', 'navigation');
                 this.container.setAttribute('aria-label', this.arialabel);
-            } else {
-                this.container = document.createElement('nav');
             }
 
-            this.container.classList.add('tablist-container');
             for (let c of this.classes) {
                 this.container.classList.add(c);
+            }
+
+            if (this.responsive) {
+                this.menubutton = new SimpleButton({
+                    action: function(e, self) { me.toggle(); },
+                    icon: this.menuicon,
+                    shape: 'square',
+                    text: this.menulable,
+                    classes: ['menuicon']
+                });
+                this.container.classList.add('responsive');
+                this.container.appendChild(this.menubutton.button);
             }
 
             this.container.appendChild(this.list);
@@ -167,6 +181,64 @@ class TabBar {
                 }, 100);
             }
         }
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Let us know if the button is open
+     * @return true if it is!
+     */
+    get isopen() {
+        return this.container.hasAttribute('aria-expanded');
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    toggle() {
+        if (this.isopen) {
+            this.close();
+            return;
+        }
+        this.open();
+    }
+
+
+    /**
+     * Opens the menu
+     */
+    open() {
+        const me = this;
+        if (this.isopen) { return; }
+        this.container.setAttribute('aria-expanded', 'true');
+
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 200);
+    }
+
+    /**
+     * Closes the button
+     */
+    close() {
+        this.container.removeAttribute('aria-expanded');
+    }
+
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+        window.addEventListener('click', function(e) {
+            if (e.target === me.list) {
+                me.setCloseListener();
+            } else {
+                me.close();
+            }
+        }, {
+            once: true,
+        });
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -203,8 +275,20 @@ class TabBar {
     get list() { return this._list; }
     set list(list) { this._list = list; }
 
+    get menuicon() { return this.config.menuicon; }
+    set menuicon(menuicon) { this.config.menuicon = menuicon; }
+
+    get menulable() { return this.config.menulable; }
+    set menulable(menulable) { this.config.menulable = menulable; }
+
+    get menubutton() { return this._menubutton; }
+    set menubutton(menubutton) { this._menubutton = menubutton; }
+
     get navigation() { return this.config.navigation; }
     set navigation(navigation) { this.config.navigation = navigation; }
+
+    get responsive() { return this.config.responsive; }
+    set responsive(responsive) { this.config.responsive = responsive; }
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }

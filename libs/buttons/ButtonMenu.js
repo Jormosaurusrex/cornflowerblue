@@ -96,6 +96,7 @@ class ButtonMenu extends SimpleButton {
             once: true,
         });
     }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**

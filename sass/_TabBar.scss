@@ -99,3 +99,78 @@ ul.tabbar {
     }
   }
 }
+nav.tablist-container {
+  &.responsive {
+    position: relative;
+    overflow: visible;
+    button.menuicon {
+      display: none;
+    }
+    @include for-phone-only {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      box-shadow: var(--tabbar-box-shadow);
+      button.menuicon {
+        display: inline-block;
+      }
+      ul.tabbar {
+        box-shadow: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        border-radius: 0;
+        height: unset;
+        min-height: unset;
+        max-height: unset;
+        flex-grow: 1;
+        li {
+          margin: 0;
+          width: 100%;
+          a {
+            width: 100%;
+            height: 4em;
+            min-height: 4em;
+            max-height: 4em;
+            padding: .5em 1em .5em 1em;
+            justify-content: flex-start;
+            display: none;
+            &[aria-selected="true"] {
+              display: flex;
+              box-shadow: none;
+              &:hover,
+              &:active,
+              &:focus {
+                background-color: var(--tabbar-selected-tab-background-color);
+                box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
+                color: var(--tabbar-selected-tab-text-color);
+                text-shadow: var(--tabbar-selected-tab-text-shadow);
+              }
+            }
+          }
+        }
+      }
+      &[aria-expanded="true"] {
+        ul.tabbar {
+          height: unset;
+          min-height: unset;
+          max-height: unset;
+          li {
+            margin: 0;
+            height: 4em;
+            min-height: 4em;
+            max-height: 4em;
+            a {
+              display: flex;
+              padding: .5em 1em .5em 1em;
+              justify-content: flex-start;
+              &[aria-selected="true"] {
+                display: flex;
+                box-shadow: inset 0 -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
