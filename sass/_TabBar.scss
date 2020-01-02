@@ -19,6 +19,12 @@ ul.tabbar {
     justify-content: center;
     margin: 0 1em 0 1em;
     padding: 0;
+    &.mobileonly {
+      display: none;
+      @include for-phone-only {
+        display: flex;
+      }
+    }
     a {
       padding: 0 1em 0 1em;
       white-space: nowrap;

@@ -14,6 +14,8 @@ class TabBar {
             animation: 'popin', // Set to null to disable animations
             tabs: [], // An array of tab definitions
             // {
+            //    classes: [] // An array of css classes to add
+                              // include "mobileonly" to only show item in mobile
             //    label: "Tab Text", // text, optional if given an icon
             //    id: null, // tab id, used with "activate(tabid)"
             //    icon: null, // an icon identifier, optional
@@ -86,8 +88,12 @@ class TabBar {
                 next = order + 1,
                 previous = order - 1;
 
-            if (previous < 1) { previous = 1; }
-            if (next > this.tabs.length) { next = this.tabs.length; }
+            if (previous < 1) {
+                previous = 1;
+            }
+            if (next > this.tabs.length) {
+                next = this.tabs.length;
+            }
 
             if ((!tabdef.label) && (!tabdef.icon)) {
                 console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
@@ -109,10 +115,12 @@ class TabBar {
             link.setAttribute('data-tabno', `${order}`);
             link.setAttribute('id', tabdef.id);
             link.setAttribute('data-tabid', tabdef.id);
-            if (icon) { link.appendChild(icon); }
+            if (icon) {
+                link.appendChild(icon);
+            }
             link.appendChild(linktext);
 
-            link.addEventListener('keydown', function(e) {
+            link.addEventListener('keydown', function (e) {
                 if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
@@ -121,11 +129,11 @@ class TabBar {
                     e.preventDefault();
                     e.stopPropagation();
                     me.list.querySelector(`[data-tabno='${next}']`).focus();
-                } else if ((e.key === " " ) || (e.key === "Spacebar" ) || (e.key === 'Enter')) { // return or space
+                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
                     link.click();
                 }
             });
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 me.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
@@ -138,6 +146,12 @@ class TabBar {
             let maplink = document.createElement('li');
             maplink.setAttribute('role', 'presentation');
             maplink.appendChild(link);
+            if (tabdef.classes) {
+                for (let c of tabdef.classes) {
+                    maplink.classList.add(c);
+                }
+            }
+
             this.tabmap[tabdef.id] = maplink;
 
             if (this.animation) {
@@ -147,40 +161,41 @@ class TabBar {
 
             this.list.appendChild(this.tabmap[tabdef.id]);
 
-            this.container = document.createElement('nav');
-            this.container.classList.add('tablist-container');
-
-            if (this.navigation) {
-                this.container.setAttribute('role', 'navigation');
-                this.container.setAttribute('aria-label', this.arialabel);
-            }
-
-            for (let c of this.classes) {
-                this.container.classList.add(c);
-            }
-
-            if (this.responsive) {
-                this.menubutton = new SimpleButton({
-                    action: function(e, self) { me.toggle(); },
-                    icon: this.menuicon,
-                    shape: 'square',
-                    text: this.menulable,
-                    classes: ['menuicon']
-                });
-                this.container.classList.add('responsive');
-                this.container.appendChild(this.menubutton.button);
-            }
-
-            this.container.appendChild(this.list);
-
             order++;
 
+
             if (tabdef.selected) {
-                setTimeout(function() { // Have to wait until we're sure we're in the DOM
+                setTimeout(function () { // Have to wait until we're sure we're in the DOM
                     me.select(tabdef.id);
                 }, 100);
             }
         }
+
+        this.container = document.createElement('nav');
+        this.container.classList.add('tablist-container');
+
+        if (this.navigation) {
+            this.container.setAttribute('role', 'navigation');
+            this.container.setAttribute('aria-label', this.arialabel);
+        }
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        if (this.responsive) {
+            this.menubutton = new SimpleButton({
+                action: function(e, self) { me.toggle(); },
+                icon: this.menuicon,
+                shape: 'square',
+                text: this.menulable,
+                classes: ['menuicon']
+            });
+            this.container.classList.add('responsive');
+            this.container.appendChild(this.menubutton.button);
+        }
+
+        this.container.appendChild(this.list);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */

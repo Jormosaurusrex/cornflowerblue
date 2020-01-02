@@ -3937,6 +3937,14 @@ ul.tabbar li {
   margin: 0 1em 0 1em;
   padding: 0;
 }
+ul.tabbar li.mobileonly {
+  display: none;
+}
+@media (max-width: 599px) {
+  ul.tabbar li.mobileonly {
+    display: flex;
+  }
+}
 ul.tabbar li a {
   padding: 0 1em 0 1em;
   white-space: nowrap;
