@@ -17,6 +17,9 @@ div.instructions {
     margin: 0;
     color: var(--instructions-icon-color);
     text-shadow: var(--instructions-icon-text-shadow);
+    @include for-phone-only {
+      display: none;
+    }
   }
   ul {
     flex-grow: 2;
@@ -29,7 +32,7 @@ div.instructions {
     text-shadow: var(--instructions-text-shadow);
   }
   &.size-1 {
-    align-items: center;
+    align-items: flex-start;
     span.icon {
       font-size: 24pt;
       margin-right: .5em;
@@ -39,7 +42,7 @@ div.instructions {
     }
   }
   &.size-2 {
-    align-items: center;
+    align-items: flex-start;
     span.icon {
       font-size: 40pt;
       margin-right: .5em;

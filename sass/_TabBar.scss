@@ -107,6 +107,7 @@ nav.tablist-container {
       display: none;
     }
     @include for-phone-only {
+      background-color: var(--tabbar-background-color);
       display: flex;
       flex-direction: row;
       justify-content: flex-start;

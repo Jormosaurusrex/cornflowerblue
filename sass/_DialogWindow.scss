@@ -1,6 +1,9 @@
 body.modalopen {
   height: 100vh;
   overflow-y: hidden;
+  @include for-phone-only {
+    overflow-y: scroll;
+  }
 }
 div.window-container {
   width: 100vw;
@@ -121,6 +124,9 @@ div.window-container {
     font-size: 200%;
     width: 100%;
     color: var(--white-half);
+    @include for-phone-only {
+      padding: .5em;
+    }
   }
 }
 

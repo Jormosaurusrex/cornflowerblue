@@ -2398,10 +2398,20 @@ button.small {
 button.large {
   font-size: 120%;
 }
+@media (max-width: 599px) {
+  button.large {
+    font-size: 100%;
+  }
+}
 button.fill {
   font-size: 120%;
   width: 100%;
   height: 100%;
+}
+@media (max-width: 599px) {
+  button.fill {
+    font-size: 100%;
+  }
 }
 button.pill {
   border-radius: 1.5em;
@@ -3637,6 +3647,11 @@ div.instructions span.icon {
   color: var(--instructions-icon-color);
   text-shadow: var(--instructions-icon-text-shadow);
 }
+@media (max-width: 599px) {
+  div.instructions span.icon {
+    display: none;
+  }
+}
 div.instructions ul {
   flex-grow: 2;
   display: flex;
@@ -3648,7 +3663,7 @@ div.instructions ul {
   text-shadow: var(--instructions-text-shadow);
 }
 div.instructions.size-1 {
-  align-items: center;
+  align-items: flex-start;
 }
 div.instructions.size-1 span.icon {
   font-size: 24pt;
@@ -3658,7 +3673,7 @@ div.instructions.size-1 ul {
   list-style-type: none;
 }
 div.instructions.size-2 {
-  align-items: center;
+  align-items: flex-start;
 }
 div.instructions.size-2 span.icon {
   font-size: 40pt;
@@ -3762,6 +3777,11 @@ div.messagebox div.box.warnings {
 body.modalopen {
   height: 100vh;
   overflow-y: hidden;
+}
+@media (max-width: 599px) {
+  body.modalopen {
+    overflow-y: scroll;
+  }
 }
 
 div.window-container {
@@ -3874,6 +3894,11 @@ div.window-container div.trailer {
   font-size: 200%;
   width: 100%;
   color: var(--white-half);
+}
+@media (max-width: 599px) {
+  div.window-container div.trailer {
+    padding: 0.5em;
+  }
 }
 
 div.window-mask {
@@ -3998,6 +4023,7 @@ nav.tablist-container.responsive button.menuicon {
 }
 @media (max-width: 599px) {
   nav.tablist-container.responsive {
+    background-color: var(--tabbar-background-color);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
