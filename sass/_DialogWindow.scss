@@ -41,7 +41,6 @@ div.window-container {
     align-items: stretch;
     align-content: flex-start;
     transition: all 0.2s;
-
     animation-duration: .2s;
     animation-name: cfb-pushup;
 
@@ -124,6 +123,7 @@ div.window-container {
     font-size: 200%;
     width: 100%;
     color: var(--white-half);
+    pointer-events: auto;
     @include for-phone-only {
       padding: .5em;
     }

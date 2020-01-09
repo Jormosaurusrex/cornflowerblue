@@ -113,13 +113,18 @@ nav.tablist-container {
       display: none;
     }
     @include for-phone-only {
-      background-color: var(--tabbar-background-color);
       display: flex;
+      background-color: var(--tabbar-background-color);
       flex-direction: row;
       justify-content: flex-start;
+      align-items: flex-start;
+      vertical-align: top;
       box-shadow: var(--tabbar-box-shadow);
       button.menuicon {
         display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 0;
       }
       ul.tabbar {
         box-shadow: none;
@@ -130,6 +135,9 @@ nav.tablist-container {
         min-height: unset;
         max-height: unset;
         flex-grow: 1;
+        display: inline-block;
+        margin-left: 3.5em;
+        width: 100%;
         li {
           margin: 0;
           width: 100%;
@@ -159,7 +167,7 @@ nav.tablist-container {
       &[aria-expanded="true"] {
         ul.tabbar {
           height: unset;
-          min-height: unset;
+          min-height: 4em;
           max-height: unset;
           li {
             margin: 0;

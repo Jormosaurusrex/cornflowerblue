@@ -2103,7 +2103,7 @@ div.select-container ul.selectmenu {
   transition: all 0.2s;
 }
 div.select-container ul.selectmenu li {
-  display: flex;
+  display: block;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -3701,6 +3701,11 @@ div.messagebox div.box {
   flex-direction: column;
   flex-wrap: nowrap;
 }
+@media (max-width: 599px) {
+  div.messagebox div.box {
+    overflow: auto;
+  }
+}
 div.messagebox div.box h4 {
   font-weight: normal;
   font-size: 15pt;
@@ -3733,6 +3738,11 @@ div.messagebox div.box div.lbox span.icon {
   margin: 0;
   color: var(--color-base);
   text-shadow: var(--resultsbox-icon-text-shadow);
+}
+@media (max-width: 599px) {
+  div.messagebox div.box div.lbox span.icon {
+    display: none;
+  }
 }
 div.messagebox div.box div.lbox ul {
   flex-grow: 2;
@@ -3894,6 +3904,7 @@ div.window-container div.trailer {
   font-size: 200%;
   width: 100%;
   color: var(--white-half);
+  pointer-events: auto;
 }
 @media (max-width: 599px) {
   div.window-container div.trailer {
@@ -4031,14 +4042,19 @@ nav.tablist-container.responsive button.menuicon {
 }
 @media (max-width: 599px) {
   nav.tablist-container.responsive {
-    background-color: var(--tabbar-background-color);
     display: flex;
+    background-color: var(--tabbar-background-color);
     flex-direction: row;
     justify-content: flex-start;
+    align-items: flex-start;
+    vertical-align: top;
     box-shadow: var(--tabbar-box-shadow);
   }
   nav.tablist-container.responsive button.menuicon {
     display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
   nav.tablist-container.responsive ul.tabbar {
     box-shadow: none;
@@ -4049,6 +4065,9 @@ nav.tablist-container.responsive button.menuicon {
     min-height: unset;
     max-height: unset;
     flex-grow: 1;
+    display: inline-block;
+    margin-left: 3.5em;
+    width: 100%;
   }
   nav.tablist-container.responsive ul.tabbar li {
     margin: 0;
@@ -4075,7 +4094,7 @@ nav.tablist-container.responsive button.menuicon {
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar {
     height: unset;
-    min-height: unset;
+    min-height: 4em;
     max-height: unset;
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
