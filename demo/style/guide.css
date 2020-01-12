@@ -4067,7 +4067,6 @@ nav.tablist-container.responsive button.menuicon {
     flex-grow: 1;
     display: inline-block;
     margin-left: 3.5em;
-    width: 100%;
   }
   nav.tablist-container.responsive ul.tabbar li {
     margin: 0;
