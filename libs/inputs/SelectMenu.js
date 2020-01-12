@@ -61,7 +61,6 @@ class SelectMenu extends InputElement {
 
         let items = Array.from(this.optionlist.querySelector('li'));
         for (let li of items) {
-            console.log(li);
             li.setAttribute('tabindex', '0');
         }
 
@@ -106,7 +105,7 @@ class SelectMenu extends InputElement {
             if (e.target === me.optionlist) {
                 me.setCloseListener();
             } else if ((e.target === me.triggerbox) && (me.triggerbox.getAttribute('aria-expanded') === 'true')) {
-                me.close();
+                // Do _nothing_
             } else {
                 me.close();
             }
