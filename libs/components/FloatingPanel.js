@@ -69,10 +69,16 @@ class FloatingPanel {
         }
     }
 
+    /**
+     * Show the panel
+     */
     show() {
         this.container.removeAttribute('aria-hidden');
     }
 
+    /**
+     * Hide the panel
+     */
     hide() {
         this.container.setAttribute('aria-hidden', 'true');
     }
@@ -130,7 +136,9 @@ class FloatingPanel {
 
         this.pcontent = document.createElement('div');
         this.pcontent.classList.add('pcontent');
-        this.pcontent.appendChild(this.content);
+        if (this.content) {
+            this.pcontent.appendChild(this.content);
+        }
 
         this.contentbox = document.createElement('div');
         this.contentbox.classList.add('content');
@@ -146,6 +154,16 @@ class FloatingPanel {
         }
 
         if (this.hidden) { this.hide(); }
+    }
+
+    /**
+     * Replace the content with other content
+     * @param content the content to place
+     */
+    replace(content) {
+        this.content = content;
+        this.pcontent.innerHTML = "";
+        this.pcontent.appendChild(this.content);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
