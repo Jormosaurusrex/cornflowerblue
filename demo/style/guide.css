@@ -3373,7 +3373,7 @@ div.panel div.content {
   align-items: stretch;
 }
 div.panel div.content h3 {
-  margin: 0 0.5em 0 0;
+  margin: 0 0.5em 0.5em 0;
   cursor: pointer;
   border-bottom: 0.1em var(--panel-text-color);
   text-transform: unset;
@@ -3390,6 +3390,7 @@ div.panel div.content h3 button.togglebutton {
   height: 1em;
   opacity: 1;
   border: none;
+  font-size: 85%;
 }
 div.panel div.content h3 button.togglebutton:hover, div.panel div.content h3 button.togglebutton:focus, div.panel div.content h3 button.togglebutton:active {
   opacity: 1;

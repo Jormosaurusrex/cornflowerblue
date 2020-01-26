@@ -147,7 +147,7 @@ class FloatingPanel {
 
         this.container.appendChild(this.contentbox);
 
-        if ((Utils.isMobile()) || (this.minimized)) {
+        if (this.minimized) {
             this.close();
         } else {
             this.open();

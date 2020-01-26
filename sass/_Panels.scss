@@ -30,7 +30,7 @@ div.panel {
     flex-wrap: nowrap;
     align-items: stretch;
     h3 {
-      margin: 0 .5em 0 0;
+      margin: 0 .5em .5em 0;
       cursor: pointer;
       border-bottom: .1em var(--panel-text-color);
       text-transform: unset;
@@ -46,6 +46,7 @@ div.panel {
         height: 1em;
         opacity: 1;
         border: none;
+        font-size: 85%;
         &:hover,
         &:focus,
         &:active {
