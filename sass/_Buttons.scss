@@ -19,7 +19,7 @@ button {
   line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
-  color: var(--button-hover-text-color);
+  color: var(--button-default-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
   border: none;
@@ -170,7 +170,7 @@ button {
     }
   }
   &.hot {
-    color: var(--button-hover-text-color);
+    color: var(--button-default-text-color);
     text-shadow: var(--button-text-shadow);
     background-color: var(--button-default-color);
     border-color: var(--button-default-color);
@@ -444,7 +444,7 @@ button {
       }
     }
     &[aria-expanded='true'] {
-      color: var(--button-hover-text-color);
+      color: var(--button-default-text-color);
       text-shadow: var(--button-text-shadow);
       background-color: var(--button-default-color);
       box-shadow: var(--hover-box-shadow);
