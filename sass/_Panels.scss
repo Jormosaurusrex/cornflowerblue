@@ -1,15 +1,4 @@
 div.panel {
-
-  --panel-max-width: 22em;
-  --panel-border-radius: var(--border-radius);
-  --panel-background-color: var(--canvas-color-secondary);
-  --panel-box-shadow: var(--panel-shadow);
-  --panel-text-color: var(--grey-darkest);
-  --panel-text-shadow: var(--text-shadow);
-  --panel-padding: .5em 1em .5em 1em;
-  --panel-closed-hover-background-color: var(--focus-color);
-  --panel-closed-hover-text-color: var(--hot-text-color);
-
   position: absolute;
   z-index: 1000;
   border-radius: var(--panel-border-radius);
@@ -39,6 +28,7 @@ div.panel {
       flex-direction: row;
       align-items: center;
       button.togglebutton {
+        --button-default-color: var(--panel-text-color);
         --button-default-color: var(--panel-text-color);
         margin: 0 .5em 0 0;
         box-shadow: none;
@@ -91,6 +81,9 @@ div.panel {
         color: var(--hot-text-color);
         &:hover {
           color: var(--hot-text-color);
+        }
+        &:focus {
+          outline-color: var(--hot-text-color);
         }
       }
     }

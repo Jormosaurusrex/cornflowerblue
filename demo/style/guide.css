@@ -3342,15 +3342,6 @@ div.spinner.bounce:after {
 }
 
 div.panel {
-  --panel-max-width: 22em;
-  --panel-border-radius: var(--border-radius);
-  --panel-background-color: var(--canvas-color-secondary);
-  --panel-box-shadow: var(--panel-shadow);
-  --panel-text-color: var(--grey-darkest);
-  --panel-text-shadow: var(--text-shadow);
-  --panel-padding: .5em 1em .5em 1em;
-  --panel-closed-hover-background-color: var(--focus-color);
-  --panel-closed-hover-text-color: var(--hot-text-color);
   position: absolute;
   z-index: 1000;
   border-radius: var(--panel-border-radius);
@@ -3383,6 +3374,7 @@ div.panel div.content h3 {
   align-items: center;
 }
 div.panel div.content h3 button.togglebutton {
+  --button-default-color: var(--panel-text-color);
   --button-default-color: var(--panel-text-color);
   margin: 0 0.5em 0 0;
   box-shadow: none;
@@ -3426,6 +3418,9 @@ div.panel[aria-expanded=false]:hover button.togglebutton, div.panel[aria-expande
 }
 div.panel[aria-expanded=false]:hover button.togglebutton:hover, div.panel[aria-expanded=false]:active button.togglebutton:hover, div.panel[aria-expanded=false]:focus button.togglebutton:hover {
   color: var(--hot-text-color);
+}
+div.panel[aria-expanded=false]:hover button.togglebutton:focus, div.panel[aria-expanded=false]:active button.togglebutton:focus, div.panel[aria-expanded=false]:focus button.togglebutton:focus {
+  outline-color: var(--hot-text-color);
 }
 div.panel.ghost {
   opacity: 0.5;
