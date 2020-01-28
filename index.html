@@ -16,53 +16,52 @@
 
         <link rel="stylesheet" type="text/css" href="demo/style/guide.css" />
 
-        <script type="text/javascript" src="libs/factory/IconFactory.js"></script>
-        <script type="text/javascript" src="libs/factory/StateProvince.js"></script>
-        <script type="text/javascript" src="libs/buttons/SimpleButton.js"></script>
-        <script type="text/javascript" src="libs/buttons/ConstructiveButton.js"></script>
-        <script type="text/javascript" src="libs/buttons/DestructiveButton.js"></script>
-        <script type="text/javascript" src="libs/buttons/ButtonMenu.js"></script>
-        <script type="text/javascript" src="libs/buttons/HelpButton.js"></script>
-        <script type="text/javascript" src="libs/buttons/SkipButton.js"></script>
-        <script type="text/javascript" src="libs/inputs/InputElement.js"></script>
-        <script type="text/javascript" src="libs/inputs/TextInput.js"></script>
-        <script type="text/javascript" src="libs/inputs/BooleanToggle.js"></script>
-        <script type="text/javascript" src="libs/inputs/NumberInput.js"></script>
-        <script type="text/javascript" src="libs/inputs/EmailInput.js"></script>
-        <script type="text/javascript" src="libs/inputs/URIInput.js"></script>
-        <script type="text/javascript" src="libs/inputs/HiddenField.js"></script>
-        <script type="text/javascript" src="libs/inputs/PasswordInput.js"></script>
-        <script type="text/javascript" src="libs/inputs/SelectMenu.js"></script>
-        <script type="text/javascript" src="libs/inputs/RadioGroup.js"></script>
-        <script type="text/javascript" src="libs/inputs/StateMenu.js"></script>
-        <script type="text/javascript" src="libs/inputs/TextArea.js"></script>
-        <script type="text/javascript" src="libs/inputs/FileInput.js"></script>
-        <script type="text/javascript" src="libs/components/DialogWindow.js"></script>
-        <script type="text/javascript" src="libs/components/FloatingPanel.js"></script>
-        <script type="text/javascript" src="libs/components/Growler.js"></script>
-        <script type="text/javascript" src="libs/components/InstructionBox.js"></script>
-        <script type="text/javascript" src="libs/components/MessageBox.js"></script>
-        <script type="text/javascript" src="libs/components/PasswordGenerator.js"></script>
-        <script type="text/javascript" src="libs/components/PasswordChangeForm.js"></script>
-        <script type="text/javascript" src="libs/components/TabBar.js"></script>
-        <script type="text/javascript" src="libs/components/SimpleProgressMeter.js"></script>
-        <script type="text/javascript" src="libs/components/RadialProgressMeter.js"></script>
-        <script type="text/javascript" src="libs/components/grid/DataGrid.js"></script>
-        <script type="text/javascript" src="libs/SimpleForm.js"></script>
-        <script type="text/javascript" src="libs/Utils.js"></script>
+        <script type="text/javascript" src="src/libs/factory/IconFactory.js"></script>
+        <script type="text/javascript" src="src/libs/factory/StateProvince.js"></script>
+        <script type="text/javascript" src="src/libs/buttons/SimpleButton.js"></script>
+        <script type="text/javascript" src="src/libs/buttons/ConstructiveButton.js"></script>
+        <script type="text/javascript" src="src/libs/buttons/DestructiveButton.js"></script>
+        <script type="text/javascript" src="src/libs/buttons/ButtonMenu.js"></script>
+        <script type="text/javascript" src="src/libs/buttons/HelpButton.js"></script>
+        <script type="text/javascript" src="src/libs/buttons/SkipButton.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/InputElement.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/TextInput.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/BooleanToggle.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/NumberInput.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/EmailInput.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/URIInput.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/HiddenField.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/PasswordInput.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/SelectMenu.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/RadioGroup.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/StateMenu.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/TextArea.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/FileInput.js"></script>
+        <script type="text/javascript" src="src/libs/components/DialogWindow.js"></script>
+        <script type="text/javascript" src="src/libs/components/FloatingPanel.js"></script>
+        <script type="text/javascript" src="src/libs/components/Growler.js"></script>
+        <script type="text/javascript" src="src/libs/components/InstructionBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/MessageBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/PasswordGenerator.js"></script>
+        <script type="text/javascript" src="src/libs/components/PasswordChangeForm.js"></script>
+        <script type="text/javascript" src="src/libs/components/TabBar.js"></script>
+        <script type="text/javascript" src="src/libs/components/SimpleProgressMeter.js"></script>
+        <script type="text/javascript" src="src/libs/components/RadialProgressMeter.js"></script>
+        <script type="text/javascript" src="src/libs/components/grid/DataGrid.js"></script>
+        <script type="text/javascript" src="src/libs/SimpleForm.js"></script>
+        <script type="text/javascript" src="src/libs/Utils.js"></script>
         <script type="text/javascript" src="demo/CornflowerBlueDemo.js"></script>
         <script type="text/javascript">
             if (!window.console) { console={}; console.log = function(){}; }
             document.addEventListener("DOMContentLoaded", function(event) {
                 const demo = new CornflowerBlueDemo();
-
             });
         </script>
     </head>
     <body>
         <div class="container" id="container">
             <div class="displaybox">
-                <a class="visually-hidden" name="content-start" />Content</a>
+                <a class="visually-hidden" name="content-start">Content</a>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-intro" aria-labelledby="intro">
                     <img src="demo/image/cfb-banner.jpg" alt="[cornflower blue]" class="banner-image" />
                     <h1>Introduction</h1>

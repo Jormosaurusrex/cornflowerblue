@@ -163,7 +163,7 @@ class TabBar {
 
 
             if (tabdef.selected) {
-                window.setTimeout(function(me, tabdef) { // Have to wait until we're sure we're in the DOM
+                window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
                     me.select(tabdef.id);
                 }, 100);
             }
