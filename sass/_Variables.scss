@@ -83,7 +83,6 @@
   --dark-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(102, 102, 102, 0.05) .5em, rgba(102, 102, 102, 0.05) 1em);
   --darker-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(68, 68, 68, 0.05) .5em, rgba(68, 68, 68, 0.05) 1em);
 
-
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
@@ -104,11 +103,7 @@
   --interior-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --interior-shadow-inverse: 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --hexagon-shadow: 0 0 .5em rgba(0,0,0,0.6);
-  --hexagon-shadow-disabled: none;
-  //--hexagon-shadow-disabled: 0 0 .5em rgba(0,0,0,0.2);
 
-  --standard-measure: 33em;
   --wide-measure: 40em;
   --thin-measure: 25em;
 
@@ -124,7 +119,6 @@
   --border-radius: .2em;
 
   // Semantic colors
-  //--standard-color: var(--blue);
   --standard-color: var(--grey-dark);
   --placeholder-color: var(--grey-medium);
 
@@ -252,8 +246,6 @@
 
   --checkbox-checked-shadow: inset 0 .1em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --checkbox-checked-shadow-hover: 0 .1em .5em 0 rgba(50, 50, 50, 0.5), inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-
-
 
   // Code
   --code-background-color: var(--canvas-color-callout-lightweight);
@@ -510,7 +502,6 @@
   --tabbar-hover-tab-highlight-color: var(--focus-color);
   --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
-
 
   // Tooltip
   --tooltip-border-radius: var(--border-radius);

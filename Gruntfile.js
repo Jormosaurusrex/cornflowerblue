@@ -18,6 +18,34 @@ module.exports = function(grunt) {
                 banner: '<%= banner %>',
                 stripBanners: true
             },
+            sass: {
+                src: [
+                    'sass/_Variables.scss',
+                    'sass/_ChecksAndRadios.scss',
+                    'sass/_PasswordGenerator.scss',
+                    'sass/_DialogWindow.scss',
+                    'sass/_Animations.scss',
+                    'sass/cornflowerblue.scss',
+                    'sass/_DataGrid.scss',
+                    'sass/_SimpleForm.scss',
+                    'sass/_Inputs.scss',
+                    'sass/_SelectMenu.scss',
+                    'sass/_GeneralBehavior.scss',
+                    'sass/_Buttons.scss',
+                    'sass/_Growler.scss',
+                    'sass/_MessageBox.scss',
+                    'sass/_Panels.scss',
+                    'sass/_FileInput.scss',
+                    'sass/_InstructionBox.scss',
+                    'sass/_Font.scss',
+                    'sass/_Mixins.scss',
+                    'sass/_TabBar.scss',
+                    'sass/_InputContainers.scss',
+                    'sass/_ProgressMeter.scss',
+                    'sass/_RadioGroup.scss'
+                ],
+                dest: 'dist/sass/cornflowerblue.scss'
+            },
             dist: {
                 src: [
                     './libs/Utils.js',
@@ -86,19 +114,22 @@ module.exports = function(grunt) {
             },
             gruntfile: {
                 src: 'Gruntfile.js'
-            },
-            lib_test: {
-                src: ['libs/**/*.js', 'test/**/*.js']
+            }
+        },
+        sass: {
+            dist: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'dist/style/cornflowerblue.css': 'sass/cornflowerblue.scss'
+                }
             }
         },
         watch: {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
                 tasks: ['jshint:gruntfile']
-            },
-            lib_test: {
-                files: '<%= jshint.lib_test.src %>',
-                tasks: ['jshint:lib_test']
             }
         }
     });
@@ -111,6 +142,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'sass']);
 
 };
