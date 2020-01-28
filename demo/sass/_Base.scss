@@ -24,6 +24,7 @@ div#container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  position: relative;
   nav.tablist-container.demo {
     --tabbar-box-shadow: none;
     --tabbar-tab-background-color: transparent;
@@ -33,6 +34,32 @@ div#container {
     width: 10em;
     min-width: 200px;
     background-image: url('../image/light_grunge.png');
+    position: relative;
+    z-index: 500;
+    @include for-phone-only {
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      position: fixed;
+      --tabbar-box-shadow: var(--panel-shadow);
+      li {
+        a {
+          text-transform: uppercase;
+          &[aria-selected="true"] {
+            box-shadow: none;
+            background-color: transparent;
+            color: var(--tabbar-selected-tab-text-color);
+            text-shadow: var(--tabbar-selected-tab-text-shadow);
+          }
+        }
+        &:hover {
+            background-color: transparent;
+            border-color: transparent;
+        }
+      }
+    }
+
   }
   div.displaybox {
     flex-grow: 1;
@@ -40,11 +67,23 @@ div#container {
     padding: 2em;
     scroll-snap-type: y mandatory;
     max-width: 45em;
+    z-index: 300;
     code.invoker {
       display: block;
       float: right;
       padding: 1em;
       margin: 0 0 .5em .5em;
+      @include for-phone-only {
+        float: none;
+        width: 100%;
+        text-align: right;
+        margin-left: 0;
+      }
+    }
+    @include for-phone-only {
+      min-width: 100%;
+      max-width: 100%;
+      padding: 5em 1em 2em 1em;
     }
   }
   div.codebox {
@@ -73,6 +112,14 @@ div#container {
         }
       }
     }
+    @include for-phone-only {
+      display: none;
+    }
+  }
+  @include for-phone-only {
+    min-width: 100%;
+    max-width: 100%;
+    flex-direction: column;
   }
 }
 

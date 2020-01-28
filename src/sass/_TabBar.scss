@@ -120,6 +120,7 @@ nav.tablist-container {
       align-items: flex-start;
       vertical-align: top;
       box-shadow: var(--tabbar-box-shadow);
+
       button.menuicon {
         display: inline-block;
         position: absolute;
@@ -168,7 +169,8 @@ nav.tablist-container {
         ul.tabbar {
           height: unset;
           min-height: 4em;
-          max-height: unset;
+          max-height: 70vh;
+          overflow: scroll;
           li {
             margin: 0;
             height: 4em;

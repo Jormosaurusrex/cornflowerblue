@@ -70,6 +70,9 @@ h1 {
     -moz-background-clip: text;
     background-clip: text;
   }
+  @include for-phone-only {
+   font-size: 2em;
+  }
 }
 h2 {
   font-weight: 400;

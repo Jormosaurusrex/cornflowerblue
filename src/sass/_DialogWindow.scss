@@ -43,7 +43,6 @@ div.window-container {
     transition: all 0.2s;
     animation-duration: .2s;
     animation-name: cfb-pushup;
-
     h2 {
       background-color: var(--dialog-header-background-color);
       color: var(--dialog-header-text-color);
@@ -61,7 +60,6 @@ div.window-container {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-
       &:after {
         display: none;
       }
@@ -81,7 +79,6 @@ div.window-container {
       div.content {
         margin: 0;
         padding: 0;
-        //padding: .5em 1em .5em 1em;
         form {
           position: relative;
           margin: 0;
@@ -91,8 +88,6 @@ div.window-container {
             position: relative;
             flex-grow: 1;
             overflow: auto;
-            //height: calc(100% - 100px);
-            //min-height: 200px;
             max-height: 30%;
             z-index: 10;
             padding: .5em 1.5em .5em 1.5em;
@@ -110,9 +105,18 @@ div.window-container {
             height: 5em;
             min-height: 5em;
             max-height: 5em;
+            overflow: auto;
           }
         }
       }
+    }
+    @include for-phone-only {
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      height: auto;
+      min-height: unset;
+      max-height: 100vh;
     }
   }
   div.trailer {
