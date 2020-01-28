@@ -183,7 +183,7 @@ class TabBar {
 
         if (this.responsive) {
             this.menubutton = new SimpleButton({
-                action: function(e, self) { me.toggle(); },
+                action: function(e, self) { self.toggle(); },
                 icon: this.menuicon,
                 shape: 'square',
                 text: this.menulable,
