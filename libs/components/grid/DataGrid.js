@@ -1,4 +1,4 @@
-"use strict";
+
 
 class DataGrid {
 
@@ -18,7 +18,7 @@ class DataGrid {
             id: null, // The id
             classes: [] //Extra css classes to apply
         };
-    };
+    }
 
     static get BLANK_STATE() {
         return {
@@ -28,7 +28,7 @@ class DataGrid {
             filter: null, // a string/filter name
             fields: {} // A dictionary that holds field configuration
         };
-    };
+    }
 
     /**
      * Define a DataGrid
@@ -48,7 +48,7 @@ class DataGrid {
 
         if ((hCell) && (hCell.getAttribute('data-sort'))) {
             if (hCell.getAttribute('data-sort') === 'asc') {
-                sort = "desc"
+                sort = "desc";
             }
         }
 

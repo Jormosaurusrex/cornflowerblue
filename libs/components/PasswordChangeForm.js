@@ -1,5 +1,3 @@
-"use strict";
-
 class PasswordChangeForm {
 
     static get DEFAULT_CONFIG() {

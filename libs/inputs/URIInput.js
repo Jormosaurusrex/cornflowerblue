@@ -1,5 +1,3 @@
-"use strict";
-
 class URIInput extends TextInput {
 
     static get DEFAULT_CONFIG() {

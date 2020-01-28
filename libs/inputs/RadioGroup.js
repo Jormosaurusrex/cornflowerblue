@@ -1,5 +1,3 @@
-"use strict";
-
 class RadioGroup extends SelectMenu {
 
     static get DEFAULT_CONFIG() {

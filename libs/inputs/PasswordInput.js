@@ -1,5 +1,3 @@
-"use strict";
-
 class PasswordInput extends TextInput {
 
     static get DEFAULT_CONFIG() {

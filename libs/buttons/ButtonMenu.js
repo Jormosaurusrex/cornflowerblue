@@ -1,5 +1,3 @@
-"use strict";
-
 class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -62,7 +60,7 @@ class ButtonMenu extends SimpleButton {
             li.setAttribute('tabindex', '0');
         }
 
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
+        window.setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);
     }
@@ -121,7 +119,7 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keydown', function(e) {
+            menuitem.addEventListener('keydown', function(e, me, previous, next) {
                 if (e.keyCode === 9) { // Tab
                     me.close();
                 } else if (e.keyCode === 27) { // Escape
@@ -146,7 +144,7 @@ class ButtonMenu extends SimpleButton {
             s.innerHTML = item.label;
             anchor.appendChild(s);
 
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function(e, me, item) {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
                     item.action(e);

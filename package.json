@@ -1,0 +1,31 @@
+{
+  "name": "cornflowerblue",
+  "version": "1.0.0",
+  "description": "A simple UI toolkit",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jormosaurusrex/cornflowerblue.git"
+  },
+  "author": "Brandon Harris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jormosaurusrex/cornflowerblue/issues"
+  },
+  "homepage": "https://github.com/Jormosaurusrex/cornflowerblue#readme",
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-nodeunit": "^2.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0"
+  },
+  "dependencies": {
+    "grunt-contrib-uglify-es": "github:gruntjs/grunt-contrib-uglify#harmony"
+  }
+}

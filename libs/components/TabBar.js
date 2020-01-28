@@ -1,5 +1,3 @@
-"use strict";
-
 class TabBar {
 
     static get DEFAULT_CONFIG() {
@@ -25,8 +23,8 @@ class TabBar {
             action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
                           // This is what will fire if there is no action defined on the tab definition.
             classes: [] //Extra css classes to apply
-        }
-    };
+        };
+    }
 
     /**
      * Define a TabBar
@@ -120,7 +118,7 @@ class TabBar {
             }
             link.appendChild(linktext);
 
-            link.addEventListener('keydown', function (e) {
+            link.addEventListener('keydown', function (e, previous, next, link) {
                 if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
@@ -133,7 +131,7 @@ class TabBar {
                     link.click();
                 }
             });
-            link.addEventListener('click', function (e) {
+            link.addEventListener('click', function (e, me, tabdef) {
                 e.preventDefault();
                 me.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
@@ -165,7 +163,7 @@ class TabBar {
 
 
             if (tabdef.selected) {
-                setTimeout(function () { // Have to wait until we're sure we're in the DOM
+                window.setTimeout(function(me, tabdef) { // Have to wait until we're sure we're in the DOM
                     me.select(tabdef.id);
                 }, 100);
             }

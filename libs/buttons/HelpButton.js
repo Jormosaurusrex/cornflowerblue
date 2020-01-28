@@ -1,5 +1,3 @@
-"use strict";
-
 class HelpButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {

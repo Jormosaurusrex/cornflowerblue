@@ -1,5 +1,3 @@
-"use strict";
-
 class InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -232,7 +230,7 @@ class InputElement {
         if ((this.maxlength) && (this.value.length >= this.maxlength)) {
             this.charactercounter.classList.add('outofbounds');
         } else if ((this.counter !== 'sky')
-            && (this.value.length >= (this.maxlength * .90))) {
+            && (this.value.length >= (this.maxlength * 0.90))) {
             this.charactercounter.classList.remove('outofbounds');
             this.charactercounter.classList.add('danger');
         } else {
@@ -316,7 +314,7 @@ class InputElement {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        if (this.label) { this.container.appendChild(this.labelobj) } ;
+        if (this.label) { this.container.appendChild(this.labelobj); }
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');

@@ -1,5 +1,3 @@
-"use strict";
-
 class SimpleButton {
 
     static get DEFAULT_CONFIG() {

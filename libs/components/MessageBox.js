@@ -1,6 +1,3 @@
-"use strict";
-
-
 class MessageBox {
 
     static get DEFAULT_CONFIG() {

@@ -1,5 +1,3 @@
-"use strict";
-
 class DialogWindow {
 
     static get DEFAULT_CONFIG() {
@@ -153,7 +151,7 @@ class DialogWindow {
                 this.header.appendChild(this.closebutton.button);
             }
         } else if (this.showclose) {
-            console.error("Dialog defines 'showclose' but no title is defined.")
+            console.error("Dialog defines 'showclose' but no title is defined.");
         }
 
         if (this.form) { // it's a SimpleForm

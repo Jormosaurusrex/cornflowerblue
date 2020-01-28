@@ -1,5 +1,3 @@
-"use strict";
-
 class NumberInput extends TextInput {
 
     static get DEFAULT_CONFIG() {

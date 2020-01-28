@@ -1,5 +1,3 @@
-"use strict";
-
 class SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {

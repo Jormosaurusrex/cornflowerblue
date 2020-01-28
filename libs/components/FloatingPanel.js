@@ -1,5 +1,3 @@
-"use strict";
-
 class FloatingPanel {
 
     static get DEFAULT_CONFIG() {
@@ -87,7 +85,6 @@ class FloatingPanel {
 
     /**
      * Build the HTML elements of the Floating Panel
-     * @return {jQuery}
      */
     buildContainer() {
 
@@ -142,7 +139,7 @@ class FloatingPanel {
 
         this.contentbox = document.createElement('div');
         this.contentbox.classList.add('content');
-        if (this.title) { this.contentbox.appendChild(this.titlecontainer) };
+        if (this.title) { this.contentbox.appendChild(this.titlecontainer); }
         this.contentbox.appendChild(this.pcontent);
 
         this.container.appendChild(this.contentbox);

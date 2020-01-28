@@ -1,5 +1,3 @@
-"use strict";
-
 class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -360,7 +358,7 @@ class SelectMenu extends InputElement {
             }
             li.setAttribute('aria-selected', 'true');
             op.setAttribute('aria-checked', 'checked');
-            op.setAttribute('checked', 'checked')
+            op.setAttribute('checked', 'checked');
         }
 
         li.appendChild(op);

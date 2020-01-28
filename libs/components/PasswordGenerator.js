@@ -1,6 +1,3 @@
-"use strict";
-
-
 class PasswordGenerator {
 
     static get DEFAULT_CONFIG() {
@@ -20,7 +17,7 @@ class PasswordGenerator {
             uc: { id: 'uc', label: 'Uppercase', set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
             num: { id: 'num', label: 'Numbers', set: '0-9', chars: '0123456789' },
             punc: { id: 'punc', label: 'Punctuation', set: '#', chars: '![]{}()%&*$#^<>~@|' }
-        }
+        };
     }
 
     /**

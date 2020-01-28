@@ -1,5 +1,3 @@
-"use strict";
-
 class EmailInput extends TextInput {
 
     static get DEFAULT_CONFIG() {

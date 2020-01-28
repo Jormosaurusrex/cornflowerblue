@@ -1,5 +1,3 @@
-"use strict";
-
 class FileInput extends InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -16,7 +14,7 @@ class FileInput extends InputElement {
         return {
             multiple_file_placeholder: 'Select files (multiple accepted)',
             single_file_placeholder: 'Select file'
-        }
+        };
     }
 
     constructor(config) {

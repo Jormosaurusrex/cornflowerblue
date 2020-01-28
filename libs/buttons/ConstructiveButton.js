@@ -1,5 +1,3 @@
-"use strict";
-
 class ConstructiveButton extends SimpleButton {
     constructor(config) {
         if (config.classes) {

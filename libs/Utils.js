@@ -1,5 +1,3 @@
-"use strict";
-
 class Utils {
 
     /* GENERAL METHODS__________________________________________________________________ */
@@ -156,9 +154,9 @@ class Utils {
                 line = `    <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`;
             }
             if ((Array.isArray(obj[k])) && (Utils.arrayEquals(obj[k], obj.constructor.DEFAULT_CONFIG[k]))) {
-                line = `<span class="default">${line}</span>`
+                line = `<span class="default">${line}</span>`;
             } else if (obj[k] === obj.constructor.DEFAULT_CONFIG[k]) {
-                line = `<span class="default">${line}</span>`
+                line = `<span class="default">${line}</span>`;
             }
 
             vlines.push(line);

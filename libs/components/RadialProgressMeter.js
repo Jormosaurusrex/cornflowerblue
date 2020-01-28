@@ -1,4 +1,4 @@
-"use strict";
+
 
 class RadialProgressMeter extends SimpleProgressMeter {
 
@@ -33,7 +33,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         this.calculateSize();
 
         if (!this.strokewidth) {
-            this.strokewidth = this.actualsize * .07;
+            this.strokewidth = this.actualsize * 0.07;
         }
         if (this.style === 'ticks') {
             this.segments = null;
@@ -124,7 +124,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
     /**
      * Build a circle template
      * @param target the class to apply
-     * @return {*|null|undefined|jQuery}
+     * @return {*|null|undefined}
      */
     circleTemplate(target) {
         let c = document.createElement('circle');
@@ -172,7 +172,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         this.setProgress(0); // flatten
 
         // Don't allow the the width animation to fire until it's in the page
-        let animtimer = setTimeout(function() {
+        let animtimer = window.setTimeout(function() {
             me.setProgress(me.value);
         }, 500);
     }
@@ -195,7 +195,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         this.decallayer.classList.add('decals');
         this.decallayer.classList.add(this.numberposition);
         this.decallayer.appendChild(this.badgeobj);
-        if (this.stinger) { this.decallayer.appendChild(this.stingerobj) };
+        if (this.stinger) { this.decallayer.appendChild(this.stingerobj); }
 
     }
 

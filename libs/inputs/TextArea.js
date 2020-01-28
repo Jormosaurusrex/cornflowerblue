@@ -1,5 +1,3 @@
-"use strict";
-
 class TextArea extends InputElement {
 
     static get DEFAULT_CONFIG() {

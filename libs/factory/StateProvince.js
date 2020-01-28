@@ -1,10 +1,8 @@
-"use strict";
-
 class StateProvince {
 
     /**
      * A map of states in US and canada
-     * @return a dictionary
+     * @return {*} a dictionary
      */
     static get STATEMAP() {
         return {
@@ -79,7 +77,7 @@ class StateProvince {
             QC: { id: "QC", name: "Quebec", country: "CA" },
             SK: { id: "SK", name: "Saskatchewan", country: "CA" },
             YT: { id: "YT", name: "Yukon", country: "CA" }
-        }
+        };
     }
 
     /**

@@ -1,5 +1,3 @@
-"use strict";
-
 class InstructionBox {
 
     static get DEFAULT_CONFIG() {

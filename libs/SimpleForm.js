@@ -1,5 +1,3 @@
-"use strict";
-
 class SimpleForm {
 
     static get DEFAULT_CONFIG() {
@@ -106,9 +104,8 @@ class SimpleForm {
 
     /**
      * Submits the form.  Runs the validator first.
-     * @param e the event object, passed to handler
      */
-    submit(e) {
+    submit() {
         const me = this;
 
         if (this.passive) { return; }
@@ -156,7 +153,7 @@ class SimpleForm {
 
         let urlelements = [];
         for (let i of this.elements) {
-            urlelements.push(`${i.name}=${i.value}`)
+            urlelements.push(`${i.name}=${i.value}`);
         }
         const body = urlelements.join('&');
 
@@ -290,7 +287,7 @@ class SimpleForm {
         this.form.appendChild(this.shade);
         this.form.appendChild(this.contentbox);
         if (this.actions.length > 0) { this.form.appendChild(this.actionbox); }
-        if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox) };
+        if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox); }
 
         this.validate();
 

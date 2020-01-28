@@ -1,5 +1,3 @@
-"use strict";
-
 class StateMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {

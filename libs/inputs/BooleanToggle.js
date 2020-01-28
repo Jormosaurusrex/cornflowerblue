@@ -1,5 +1,3 @@
-"use strict";
-
 class BooleanToggle {
 
     static get DEFAULT_CONFIG() {

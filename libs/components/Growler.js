@@ -1,5 +1,3 @@
-"use strict";
-
 class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
@@ -27,7 +25,7 @@ class Growler extends FloatingPanel {
         return new Growler({
             text: text,
             title: title
-        })
+        });
     }
 
     /**
@@ -41,7 +39,7 @@ class Growler extends FloatingPanel {
             title: 'Error',
             icon: 'warn-hex',
             classes: ['error']
-        })
+        });
     }
 
     /**
@@ -55,7 +53,7 @@ class Growler extends FloatingPanel {
             title: 'Warning',
             icon: 'warn-triangle',
             classes: ['warn']
-        })
+        });
     }
 
     /**
@@ -69,7 +67,7 @@ class Growler extends FloatingPanel {
             title: 'Caution',
             icon: 'warn-circle',
             classes: ['caution']
-        })
+        });
     }
 
     /**
@@ -83,13 +81,13 @@ class Growler extends FloatingPanel {
             title: 'Success',
             icon: 'check-circle',
             classes: ['success']
-        })
+        });
     }
 
     /**
      * Builds a growlbox and inserts it into the dom.
      * @param position the position to create it at.
-     * @return {jQuery} the growlbox object
+     * @return HTMLDivElement growlbox object
      */
     static buildGrowlbox(position) {
         let gb = document.createElement('div');
@@ -159,7 +157,6 @@ class Growler extends FloatingPanel {
             this.onopen(this);
         }
     }
-
 
     buildContainer() {
         const me = this;

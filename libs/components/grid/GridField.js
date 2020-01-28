@@ -1,5 +1,3 @@
-"use strict";
-
 class GridField {
 
     static get DEFAULT_CONFIG() {
@@ -11,7 +9,7 @@ class GridField {
             renderer: null, // a function(value, item, cell) {}
             classes: [] // Extra css classes to apply on itself
         };
-    };
+    }
 
     /**
      * Define a GridField
