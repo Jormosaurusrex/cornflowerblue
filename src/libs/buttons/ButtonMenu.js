@@ -119,7 +119,7 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keydown', function(e, me, previous, next) {
+            menuitem.addEventListener('keydown', function(e) {
                 if (e.keyCode === 9) { // Tab
                     me.close();
                 } else if (e.keyCode === 27) { // Escape
@@ -144,7 +144,7 @@ class ButtonMenu extends SimpleButton {
             s.innerHTML = item.label;
             anchor.appendChild(s);
 
-            anchor.addEventListener('click', function(e, me, item) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
                     item.action(e);

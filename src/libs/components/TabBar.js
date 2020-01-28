@@ -118,7 +118,7 @@ class TabBar {
             }
             link.appendChild(linktext);
 
-            link.addEventListener('keydown', function (e, previous, next, link) {
+            link.addEventListener('keydown', function (e) {
                 if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
@@ -131,7 +131,7 @@ class TabBar {
                     link.click();
                 }
             });
-            link.addEventListener('click', function (e, me, tabdef) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 me.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {

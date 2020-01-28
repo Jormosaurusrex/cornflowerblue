@@ -1219,7 +1219,7 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keydown', function(e, me, previous, next) {
+            menuitem.addEventListener('keydown', function(e) {
                 if (e.keyCode === 9) { // Tab
                     me.close();
                 } else if (e.keyCode === 27) { // Escape
@@ -1244,7 +1244,7 @@ class ButtonMenu extends SimpleButton {
             s.innerHTML = item.label;
             anchor.appendChild(s);
 
-            anchor.addEventListener('click', function(e, me, item) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
                     item.action(e);
@@ -5419,7 +5419,7 @@ class TabBar {
             }
             link.appendChild(linktext);
 
-            link.addEventListener('keydown', function (e, previous, next, link) {
+            link.addEventListener('keydown', function (e) {
                 if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
                     e.preventDefault();
                     e.stopPropagation();
@@ -5432,7 +5432,7 @@ class TabBar {
                     link.click();
                 }
             });
-            link.addEventListener('click', function (e, me, tabdef) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 me.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
@@ -5484,7 +5484,7 @@ class TabBar {
 
         if (this.responsive) {
             this.menubutton = new SimpleButton({
-                action: function(e, self) { me.toggle(); },
+                action: function(e, self) { self.toggle(); },
                 icon: this.menuicon,
                 shape: 'square',
                 text: this.menulable,
