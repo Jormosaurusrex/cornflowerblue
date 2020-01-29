@@ -62,7 +62,7 @@
         <script type="text/javascript">
             if (!window.console) { console={}; console.log = function(){}; }
             document.addEventListener("DOMContentLoaded", function(event) {
-                const demo = new CornflowerBlueDemo();
+                new CornflowerBlueDemo();
             });
         </script>
     </head>
@@ -410,9 +410,9 @@
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-dialogs" aria-labelledby="dialogs">
                     <h1>Dialogs</h1>
                     <code class="invoker">new DialogWindow({options});</code>
-                    <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a jQuery object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a jQuery object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
+                    <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
                     <p>If passed a form, the dialog will render the form's <code>header</code>, <code>elements</code>, and <code>actions</code> in a way that compliments the dialog.</p>
-                    <p>If passed a jQuery object with <code>content</code>, no special formatting is applied; the content must be styled on its own. This can be passed a selector (and thus drawing content from the existing DOM), but it will remove that content from wherever it was and destroy it when the window is closed, so use <code>.clone()</code>.</p>
+                    <p>If passed a DOM object with <code>content</code>, no special formatting is applied; the content must be styled on its own. This can be passed a selector (and thus drawing content from the existing DOM), but it will remove that content from wherever it was and destroy it when the window is closed, so use <code>.clone()</code>.</p>
 
                     <div class="demobox" id="inputs-dialogs">
                     </div>
@@ -506,7 +506,7 @@ And drunk the milk of Paradise.</pre>
                         </code>
                     </div>
                 </article>
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-tabsmenus" aria-labeledby="tabsmenus">
+                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-tabsmenus" aria-labeledby="c">
                     <h1>Tabs and Menus</h1>
 
                     <div class="demobox" id="tabsmenus-buttonmenu">
