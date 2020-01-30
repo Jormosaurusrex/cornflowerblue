@@ -25,7 +25,7 @@ class SelectMenu extends InputElement {
 
     /**
      * Return the selected radio input.
-     * @return {jQuery|HTMLElement}
+     * @return {HTMLElement}
      */
     get selected() {
         let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);

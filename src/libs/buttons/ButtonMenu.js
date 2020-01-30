@@ -99,7 +99,7 @@ class ButtonMenu extends SimpleButton {
 
     /**
      * Builds the menu.
-     * @returns {jQuery} jQuery representation
+     * @returns DOM representation
      */
     buildMenu() {
         const me = this;

@@ -27,7 +27,7 @@ class GridField {
 
     /**
      * Builds the header for the .
-     * @returns {jQuery} jQuery representation
+     * @returns a DOM element
      */
     buildHeader() {
 

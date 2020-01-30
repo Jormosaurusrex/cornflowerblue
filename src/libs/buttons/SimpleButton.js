@@ -14,7 +14,7 @@ class SimpleButton {
             hidden: false, // Start hidden or not.
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
-                         // This can be passed a jQuery object
+                         // This can be passed a DOM object
             iconside: 'left', // The side the icon displays on
             secondicon : null, // if present, this icon will be placed on the opposite side of the
                                 // defined 'iconside'.  If this is the only icon defined, it will
@@ -56,7 +56,7 @@ class SimpleButton {
 
     /**
      * Builds the button's DOM.
-     * @returns {jQuery} jQuery representation of the SimpleButton
+     * @returns DOM representation of the SimpleButton
      */
     buildButton() {
         const me = this;

@@ -19,7 +19,7 @@ class SimpleForm {
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
             method: 'get', // Method for the form.  Also used in API calls.
-            header: null, // Stuff to put at the header. This is expected to be a jQuery element
+            header: null, // Stuff to put at the header. This is expected to be a DOM element
 
             passive: false, // Start life in "passive" mode. This will set all form elements to "passive" and hide any controls.  This also shows the "passive" instructions, if any.
 

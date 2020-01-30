@@ -54,7 +54,7 @@ class MessageBox {
     /**
      * Build the specific box.
      * @param type the type of box to create (errors|warnings|results)
-     * @return {*|jQuery}
+     * @return a DOM element
      */
     buildBox(type = 'results') {
         let list,

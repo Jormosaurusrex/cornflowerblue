@@ -105,7 +105,7 @@ class IconFactory {
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
      * @param arialabel the aria label to use
-     * @return {*|jQuery|*} a jquery <span> class.
+     * @return the a span DOM element
      */
     static icon(icon, arialabel) {
         if (icon instanceof Object) { // this is probably a pre-defined icon
@@ -126,7 +126,7 @@ class IconFactory {
      * Gets an icon NOT defined by cornflower blue (like fontawesome, or a different icon font)
      * @param icon the icon.  This can be an array as well, and if so will apply all elements as classes
      * @param arialabel the aria label to use
-     * @return {*|jQuery|*} a jquery <span> class.
+     * @return a span DOM object
      */
     static xicon(icon, arialabel) {
         if (icon instanceof Object) { // this is probably a pre-defined icon

@@ -6,7 +6,7 @@ class DialogWindow {
             form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
             content: '<p />No provided content</p', // This is the content of the dialog
             classes: [],             // apply these classes to the dialog, if any.
-            header: null, // jQuery object, will be used if passed before title.
+            header: null, // DOM object, will be used if passed before title.
             title: null,  // Adds a title to the dialog if present. header must be null.
             trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                            // or a string.  If it's a string, it creates a div at the bottom
@@ -165,7 +165,7 @@ class DialogWindow {
             this.window.classList.add('isform');
             this.window.appendChild(this.contentbox);
 
-        } else if (this.content) { // It's a jQuery object
+        } else if (this.content) { // It's a DOM object
 
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');

@@ -96,7 +96,7 @@ class DataGrid {
 
     /**
      * Builds the DOM.
-     * @returns {jQuery} jQuery representation
+     * @returns the DOM element
      */
     buildContainer() {
 
