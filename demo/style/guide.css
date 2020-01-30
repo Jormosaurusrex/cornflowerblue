@@ -4083,9 +4083,10 @@ nav.tablist-container.responsive button.menuicon {
   }
   nav.tablist-container.responsive ul.tabbar li a {
     width: 100%;
-    height: 4em;
-    min-height: 4em;
-    max-height: 4em;
+    height: 3em;
+    min-height: 3em;
+    max-height: 3em;
+    font-size: 1.5em;
     padding: 0.5em 1em 0.5em 1em;
     justify-content: flex-start;
     display: none;
@@ -4102,15 +4103,15 @@ nav.tablist-container.responsive button.menuicon {
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar {
     height: unset;
-    min-height: 4em;
+    min-height: 3em;
     max-height: 70vh;
     overflow: scroll;
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
     margin: 0;
-    height: 4em;
-    min-height: 4em;
-    max-height: 4em;
+    height: 3em;
+    min-height: 3em;
+    max-height: 3em;
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar li a {
     display: flex;
@@ -4464,6 +4465,11 @@ div.progressbar-container div.simpleprogress.roundcap div.progress {
   border-radius: 1.5em;
 }
 
+:root {
+  --mobile-banner-height: 3em;
+  --banner-height: 10em;
+}
+
 body {
   background-color: var(--grey-darkest);
   font-family: var(--default-font-family);
@@ -4479,37 +4485,59 @@ body {
 }
 
 div#container {
+  position: relative;
   margin-left: auto;
   margin-right: auto;
   min-width: 50%;
   max-width: 75%;
   min-height: 100vh;
-  background-color: transparent;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  position: relative;
+  display: grid;
+  grid-template-rows: var(--banner-height) auto;
+  grid-template-columns: 15em auto;
+  background-color: var(--canvas-color-primary);
+}
+@media (max-width: 599px) {
+  div#container {
+    display: block;
+    margin: 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+div#container div.banner {
+  background-image: url("../image/cfb-banner.jpg");
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  z-index: 500;
+  grid-row: 1;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+@media (max-width: 599px) {
+  div#container div.banner {
+    position: relative;
+    height: var(--mobile-banner-height);
+  }
 }
 div#container nav.tablist-container.demo {
   --tabbar-box-shadow: none;
   --tabbar-tab-background-color: transparent;
   --tabbar-background-color: transparent;
-  flex-grow: 0;
+  grid-row: 2;
+  grid-column: 1;
   padding-top: 2em;
-  width: 10em;
-  min-width: 200px;
   background-image: url("../image/light_grunge.png");
   position: relative;
   z-index: 500;
 }
 @media (max-width: 599px) {
   div#container nav.tablist-container.demo {
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-    position: fixed;
     --tabbar-box-shadow: var(--panel-shadow);
+    position: sticky;
+    top: 0;
+    padding: 0;
   }
   div#container nav.tablist-container.demo li a {
     text-transform: uppercase;
@@ -4526,6 +4554,8 @@ div#container nav.tablist-container.demo {
   }
 }
 div#container div.displaybox {
+  grid-row: 2;
+  grid-column: 2;
   flex-grow: 1;
   background-color: var(--canvas-color-primary);
   padding: 2em;
@@ -4549,17 +4579,15 @@ div#container div.displaybox code.invoker {
 }
 @media (max-width: 599px) {
   div#container div.displaybox {
-    min-width: 100%;
-    max-width: 100%;
-    padding: 5em 1em 2em 1em;
+    overflow: scroll;
+    padding: 2em 1em 2em 1em;
   }
 }
 div#container div.codebox {
-  position: fixed;
+  display: none;
   background-color: var(--canvas-color-secondary);
-  width: 25em;
-  max-width: 25em;
-  min-width: 25em;
+  grid-row: 2;
+  grid-column: 4;
   font-size: 80%;
 }
 div#container div.codebox div.content {
@@ -4582,13 +4610,6 @@ div#container div.codebox div.content span.default span.key {
 @media (max-width: 599px) {
   div#container div.codebox {
     display: none;
-  }
-}
-@media (max-width: 599px) {
-  div#container {
-    min-width: 100%;
-    max-width: 100%;
-    flex-direction: column;
   }
 }
 

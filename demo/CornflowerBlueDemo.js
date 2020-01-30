@@ -175,6 +175,8 @@ class CornflowerBlueDemo {
      */
     constructor() {
         this.body = document.body;
+        this.displaybox = document.getElementById('displaybox');
+
         this.build();
 
         this.body.classList.add('noisy');
@@ -271,7 +273,10 @@ class CornflowerBlueDemo {
             }
         });
 
-        this.container.prepend(this.navigation.container);
+        //referenceNode.parentNode.insertBefore(el, referenceNode);
+        //this.container.prepend(this.navigation.container);
+
+        this.container.insertBefore(this.navigation.container, this.displaybox);
 
         this.codebox = new FloatingPanel({
             title: 'Class',
@@ -1711,6 +1716,9 @@ class CornflowerBlueDemo {
 
     get container() { return this._container; }
     set container(container) { this._container = container; }
+
+    get displaybox() { return this._displaybox; }
+    set displaybox(displaybox) { this._displaybox = displaybox; }
 
     get skipbutton() { return this._skipbutton; }
     set skipbutton(skipbutton) { this._skipbutton = skipbutton; }

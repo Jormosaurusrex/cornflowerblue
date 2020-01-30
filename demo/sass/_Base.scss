@@ -1,4 +1,6 @@
 :root {
+  --mobile-banner-height: 3em;
+  --banner-height: 10em;
 }
 
 body {
@@ -15,34 +17,52 @@ body {
 }
 
 div#container {
+  position: relative;
   margin-left: auto;
   margin-right: auto;
   min-width: 50%;
   max-width: 75%;
   min-height: 100vh; // only set min-height
-  background-color: transparent;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  position: relative;
+  display: grid;
+  grid-template-rows: var(--banner-height) auto;
+  grid-template-columns: 15em auto;
+  background-color: var(--canvas-color-primary);
+  @include for-phone-only {
+    display: block;
+    margin: 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+  div.banner {
+    background-image: url('../image/cfb-banner.jpg');
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    z-index: 500;
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    @include for-phone-only {
+      position: relative;
+      height: var(--mobile-banner-height);
+    }
+  }
   nav.tablist-container.demo {
     --tabbar-box-shadow: none;
     --tabbar-tab-background-color: transparent;
     --tabbar-background-color: transparent;
-    flex-grow: 0;
+    grid-row: 2;
+    grid-column: 1;
     padding-top: 2em;
-    width: 10em;
-    min-width: 200px;
     background-image: url('../image/light_grunge.png');
     position: relative;
     z-index: 500;
     @include for-phone-only {
-      padding: 0;
-      width: 100%;
-      max-width: 100%;
-      min-width: 100%;
-      position: fixed;
       --tabbar-box-shadow: var(--panel-shadow);
+      position: sticky;
+      top: 0;
+      padding: 0;
       li {
         a {
           text-transform: uppercase;
@@ -59,9 +79,10 @@ div#container {
         }
       }
     }
-
   }
   div.displaybox {
+    grid-row: 2;
+    grid-column: 2;
     flex-grow: 1;
     background-color: var(--canvas-color-primary);
     padding: 2em;
@@ -81,17 +102,15 @@ div#container {
       }
     }
     @include for-phone-only {
-      min-width: 100%;
-      max-width: 100%;
-      padding: 5em 1em 2em 1em;
+      overflow: scroll;
+      padding: 2em 1em 2em 1em;
     }
   }
   div.codebox {
-    position: fixed;
+    display: none;
     background-color: var(--canvas-color-secondary);
-    width: 25em;
-    max-width: 25em;
-    min-width: 25em;
+    grid-row: 2;
+    grid-column: 4;
     font-size: 80%;
     div.content {
       padding: .5em;
@@ -116,11 +135,7 @@ div#container {
       display: none;
     }
   }
-  @include for-phone-only {
-    min-width: 100%;
-    max-width: 100%;
-    flex-direction: column;
-  }
+
 }
 
 div.example {
