@@ -182,12 +182,9 @@ class TabBar {
         }
 
         if (this.responsive) {
-            this.menubutton = new SimpleButton({
-                action: function(e, self) { me.toggle(); },
-                icon: this.menuicon,
-                shape: 'square',
+            this.menubutton = new HamburgerButton({
                 text: this.menulable,
-                classes: ['menuicon']
+                toggletarget: me
             });
             this.container.classList.add('responsive');
             this.container.appendChild(this.menubutton.button);
@@ -199,7 +196,7 @@ class TabBar {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     /**
-     * Let us know if the button is open
+     * Let us know if the menu is open
      * @return true if it is!
      */
     get isopen() {
@@ -216,7 +213,6 @@ class TabBar {
         this.open();
     }
 
-
     /**
      * Opens the menu
      */
@@ -231,7 +227,7 @@ class TabBar {
     }
 
     /**
-     * Closes the button
+     * Closes the menu
      */
     close() {
         this.container.removeAttribute('aria-expanded');

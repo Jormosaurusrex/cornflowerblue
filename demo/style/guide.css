@@ -2200,6 +2200,39 @@ button {
   border-radius: var(--button-border-radius);
   box-shadow: var(--button-box-shadow);
 }
+button.hamburger span.magichamburger {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+button.hamburger span.magichamburger span {
+  width: 1em;
+  height: 0.2em;
+  background-color: var(--button-default-text-color);
+  display: block;
+  margin: 0.2em auto;
+  transition: transform 0.3s;
+  border-radius: 0.1em;
+}
+button.hamburger span.magichamburger span:first-child {
+  margin-top: 0;
+}
+button.hamburger span.magichamburger span:last-child {
+  margin-bottom: 0;
+}
+button.hamburger[aria-expanded=true] span.magichamburger span:first-child {
+  width: 1.25em;
+  transform: translateX(0.1em) rotate(45deg);
+  transform-origin: top left;
+}
+button.hamburger[aria-expanded=true] span.magichamburger span:nth-child(2) {
+  opacity: 0;
+}
+button.hamburger[aria-expanded=true] span.magichamburger span:last-child {
+  width: 1.25em;
+  transform: translateX(0.1em) rotate(-45deg);
+  transform-origin: bottom left;
+}
 button span.icon {
   margin: 0 0.3em 0 0;
 }
@@ -4075,7 +4108,6 @@ nav.tablist-container.responsive button.menuicon {
     max-height: unset;
     flex-grow: 1;
     display: inline-block;
-    margin-left: 3.5em;
   }
   nav.tablist-container.responsive ul.tabbar li {
     margin: 0;
