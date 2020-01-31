@@ -4,7 +4,6 @@ button {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-evenly;
-  align-items: center;
   box-sizing: border-box;
   position: relative;
   text-align: center;
@@ -32,14 +31,17 @@ button {
       height: 1em;
       span {
         width: 1em;
-        height: .2em;
+        height: .15em;
         background-color: var(--button-default-text-color);
         display: block;
-        margin: .2em auto;
-        transition: transform 0.3s;
+        margin: 0;
+        transition: transform 0.5s;
         border-radius: .1em;
         &:first-child {
           margin-top: 0;
+        }
+        &:nth-child(2) {
+          margin: .25em auto .25em auto;
         }
         &:last-child {
           margin-bottom: 0;

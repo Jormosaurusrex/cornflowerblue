@@ -48,10 +48,10 @@ div#container {
       height: var(--mobile-banner-height);
     }
   }
-  nav.tablist-container.demo {
-    --tabbar-box-shadow: none;
-    --tabbar-tab-background-color: transparent;
-    --tabbar-background-color: transparent;
+  nav.tablist-container.demo2 {
+    //--tabbar-box-shadow: none;
+    //--tabbar-tab-background-color: transparent;
+    //--tabbar-background-color: transparent;
     grid-row: 2;
     grid-column: 1;
     padding-top: 2em;
@@ -63,6 +63,11 @@ div#container {
       position: sticky;
       top: 0;
       padding: 0;
+      div.responsivebox {
+        div.menutitle {
+          text-transform: uppercase;
+        }
+      }
       li {
         a {
           text-transform: uppercase;

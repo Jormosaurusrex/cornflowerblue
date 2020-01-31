@@ -58,6 +58,10 @@ class TabBar {
         this.selected.setAttribute('aria-selected', 'true');
         this.selected.setAttribute('tabindex', '0');
 
+        if ((this.responsive) && (this.menutitle)) {
+            console.log(`foo ${this.selected.getAttribute('data-tabtext')}`);
+            this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -110,6 +114,7 @@ class TabBar {
             link.setAttribute('role', 'tab');
             link.setAttribute('aria-controls', `t-${tabdef.id}`);
             link.setAttribute('tabindex', '-1');
+            link.setAttribute('data-tabtext', `${tabdef.label}`);
             link.setAttribute('data-tabno', `${order}`);
             link.setAttribute('id', tabdef.id);
             link.setAttribute('data-tabid', tabdef.id);
@@ -161,7 +166,6 @@ class TabBar {
 
             order++;
 
-
             if (tabdef.selected) {
                 window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
                     me.select(tabdef.id);
@@ -182,12 +186,21 @@ class TabBar {
         }
 
         if (this.responsive) {
+            this.responsivebox = document.createElement('div');
+            this.responsivebox.classList.add('responsivebox');
+
             this.menubutton = new HamburgerButton({
-                text: this.menulable,
+                text: this.menulabel,
                 toggletarget: me
             });
+            this.responsivebox.appendChild(this.menubutton.button);
+
+            this.menutitle = document.createElement('div');
+            this.menutitle.classList.add('menutitle');
+            this.responsivebox.appendChild(this.menutitle);
+
             this.container.classList.add('responsive');
-            this.container.appendChild(this.menubutton.button);
+            this.container.appendChild(this.responsivebox);
         }
 
         this.container.appendChild(this.list);
@@ -220,7 +233,7 @@ class TabBar {
         const me = this;
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
-
+        if (this.menubutton) { this.menubutton.open(); }
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);
@@ -231,8 +244,8 @@ class TabBar {
      */
     close() {
         this.container.removeAttribute('aria-expanded');
+        if (this.menubutton) { this.menubutton.close(); }
     }
-
 
     /**
      * Sets an event listener to close the menu if the user clicks outside of it.
@@ -287,17 +300,23 @@ class TabBar {
     get menuicon() { return this.config.menuicon; }
     set menuicon(menuicon) { this.config.menuicon = menuicon; }
 
-    get menulable() { return this.config.menulable; }
-    set menulable(menulable) { this.config.menulable = menulable; }
+    get menulabel() { return this.config.menulabel; }
+    set menulabel(menulabel) { this.config.menulabel = menulabel; }
 
     get menubutton() { return this._menubutton; }
     set menubutton(menubutton) { this._menubutton = menubutton; }
+
+    get menutitle() { return this._menutitle; }
+    set menutitle(menutitle) { this._menutitle = menutitle; }
 
     get navigation() { return this.config.navigation; }
     set navigation(navigation) { this.config.navigation = navigation; }
 
     get responsive() { return this.config.responsive; }
     set responsive(responsive) { this.config.responsive = responsive; }
+
+    get responsivebox() { return this._responsivebox; }
+    set responsivebox(responsivebox) { this._responsivebox = responsivebox; }
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }

@@ -5,6 +5,7 @@ class HamburgerButton extends SimpleButton {
             toggletarget: null, // The menu object to open or close.
             text: "Open Menu",
             shape: 'square',
+            naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,
             action: function(e, self) { self.toggle(); }
         };
