@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.0 - 2020-01-27
+/*! Cornflower Blue - v0.1.0 - 2020-02-01
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 :root {
@@ -502,6 +502,13 @@
   --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
 
+  --tabbar-collapsed-height: 3.5em;
+  --tabbar-collapsed-background-color: var(--tabbar-background-color);
+  --tabbar-collapsed-open-background-color: var(--bright);
+  --tabbar-collapsed-button-color: var(--tabbar-selected-tab-highlight-color);
+  --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
+  --tabbar-collapsed-title-color: var(--grey-meddark);
+
   // Tooltip
   --tooltip-border-radius: var(--border-radius);
   --tooltip-background-color: var(--grey-darkest);
@@ -875,7 +882,6 @@ div.window-container {
     transition: all 0.2s;
     animation-duration: .2s;
     animation-name: cfb-pushup;
-
     h2 {
       background-color: var(--dialog-header-background-color);
       color: var(--dialog-header-text-color);
@@ -893,7 +899,6 @@ div.window-container {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-
       &:after {
         display: none;
       }
@@ -913,7 +918,6 @@ div.window-container {
       div.content {
         margin: 0;
         padding: 0;
-        //padding: .5em 1em .5em 1em;
         form {
           position: relative;
           margin: 0;
@@ -923,8 +927,6 @@ div.window-container {
             position: relative;
             flex-grow: 1;
             overflow: auto;
-            //height: calc(100% - 100px);
-            //min-height: 200px;
             max-height: 30%;
             z-index: 10;
             padding: .5em 1.5em .5em 1.5em;
@@ -942,9 +944,18 @@ div.window-container {
             height: 5em;
             min-height: 5em;
             max-height: 5em;
+            overflow: auto;
           }
         }
       }
+    }
+    @include for-phone-only {
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      height: auto;
+      min-height: unset;
+      max-height: 100vh;
     }
   }
   div.trailer {
@@ -1087,30 +1098,6 @@ div.window-mask {
 .fadeout { animation-name: cfb-fadeout; }
 .popin { animation-name: cfb-popin; }
 .popout { animation-name: cfb-popout; }
-
-@import "Mixins";
-@import "Variables";
-@import "Animations";
-@import "GeneralBehavior";
-@import "Font";
-@import "InputContainers";
-@import "Inputs";
-@import "FileInput";
-@import "SelectMenu";
-@import "Buttons";
-@import "ChecksAndRadios";
-@import "RadioGroup";
-@import "SimpleForm";
-@import "Panels";
-@import "Growler";
-@import "InstructionBox";
-@import "MessageBox";
-@import "DialogWindow";
-@import "TabBar";
-@import "DataGrid";
-@import "PasswordGenerator";
-@import "ProgressMeter";
-
 
 div.datagrid-container {
 
@@ -1779,10 +1766,10 @@ h1 {
   text-transform: var(--headers-h1-text-transform);
   letter-spacing: -.1em;
   display: flex;
-  width: 100%;
   justify-content: flex-start;
   align-items: baseline;
   text-align: left;
+  box-sizing: border-box;
   &:after {
     content: '';
     border-top: .05em solid var(--headers-h1-border-color);
@@ -1797,10 +1784,13 @@ h1 {
     -moz-background-clip: text;
     background-clip: text;
   }
+  @include for-phone-only {
+   font-size: 2em;
+  }
 }
 h2 {
   font-weight: 400;
-  font-size: 1.5em;
+  font-size: 2.5em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
@@ -1815,6 +1805,9 @@ h2 {
     border-top: .05em solid var(--headers-h2-border-color);
     flex: 1 0 2em;
     margin: 0 0 0 .1em;
+  }
+  @include for-phone-only {
+    font-size: 1.5em;
   }
 }
 h3 {
@@ -2056,7 +2049,6 @@ button {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-evenly;
-  align-items: center;
   box-sizing: border-box;
   position: relative;
   text-align: center;
@@ -2077,6 +2069,50 @@ button {
   border: none;
   border-radius: var(--button-border-radius);
   box-shadow: var(--button-box-shadow);
+  &.hamburger {
+    span.magichamburger {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      span {
+        width: 1em;
+        height: .15em;
+        background-color: var(--button-default-text-color);
+        display: block;
+        margin: 0;
+        transition: transform 0.5s;
+        border-radius: .1em;
+        &:first-child {
+          margin-top: 0;
+        }
+        &:nth-child(2) {
+          margin: .25em auto .25em auto;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    &[aria-expanded='true'] {
+      span.magichamburger {
+        span {
+          &:first-child {
+            width: 1.25em;
+            transform: translateX(.1em) rotate(45deg);
+            transform-origin: top left;
+          }
+          &:nth-child(2) {
+            opacity: 0;
+          }
+          &:last-child {
+            width: 1.25em;
+            transform: translateX(.1em) rotate(-45deg);
+            transform-origin: bottom left;
+          }
+        }
+      }
+    }
+  }
   span.icon {
     margin: 0 .3em 0 0;
     &:before {
@@ -3384,84 +3420,139 @@ ul.tabbar {
     }
   }
 }
-nav.tablist-container {
+nav.tablist-container,
+div.tablist-container {
   &.responsive {
     position: relative;
     overflow: visible;
-    button.menuicon {
+    div.responsivebox {
       display: none;
     }
     @include for-phone-only {
+      position: sticky;
+      top: 0;
+      z-index: 500;
       display: flex;
-      background-color: var(--tabbar-background-color);
-      flex-direction: row;
+      background-color: var(--tabbar-collapsed-background-color);
+      flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       vertical-align: top;
       box-shadow: var(--tabbar-box-shadow);
-      button.menuicon {
-        display: inline-block;
-        position: absolute;
-        left: 0;
-        top: 0;
+      div.responsivebox {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: var(--tabbar-collapsed-height);
+        min-height: var(--tabbar-collapsed-height);
+        max-height: var(--tabbar-collapsed-height);
+        width: 100%;
+        background-color: var(--tabbar-collapsed-background-color);
+        button.hamburger {
+          margin: 0;
+          width: var(--tabbar-collapsed-height);
+          height: var(--tabbar-collapsed-height);
+          border-radius: 0;
+          padding: 0;
+          font-size: 100%;
+          box-shadow: none;
+          background-color: transparent;
+          span.magichamburger {
+            width: 2em;
+            height: 2em;
+            span {
+              width: 2em;
+              height: .3em;
+              background-color: var(--tabbar-collapsed-button-color);
+              border-radius: .1em;
+              &:first-child {
+                margin-top: .1em;
+              }
+              &:nth-child(2) {
+                margin: .4em auto .4em auto;
+              }
+              &:last-child {
+                margin-bottom: .1em;
+              }
+            }
+          }
+          &:focus {
+            background-color: var(--tabbar-collapsed-open-menu-color);
+            outline: var(--tabbar-collapsed-button-color) dashed .2em;
+            outline-offset: -.3em;
+            filter: none;
+          }
+          &[aria-expanded='true'] {
+            background-color: var(--tabbar-collapsed-open-menu-color);
+            filter: none;
+            span.magichamburger {
+              span {
+                &:first-child {
+                  width: 2.1em;
+                  transform: translateX(.4em) rotate(45deg);
+                  transform-origin: top left;
+                }
+                &:nth-child(2) {
+                  opacity: 0;
+                }
+                &:last-child {
+                  width: 2.1em;
+                  transform: translateX(.4em) rotate(-45deg);
+                  transform-origin: bottom left;
+                }
+              }
+            }
+          }
+        }
+        div.menutitle {
+          font-size: 1.5em;
+          padding: 0 .5em 0 .5em;
+          color: var(--tabbar-collapsed-title-color);
+        }
       }
       ul.tabbar {
         box-shadow: none;
         flex-direction: column;
         justify-content: flex-start;
         border-radius: 0;
-        height: unset;
-        min-height: unset;
-        max-height: unset;
-        flex-grow: 1;
-        display: inline-block;
-        margin-left: 3.5em;
-        //width: 100%;
+        height: 0;
+        min-height: 0;
+        max-height: 0;
+        background-color: var(--tabbar-collapsed-open-menu-color);
+        width: 100%;
+        transition: all 0.1s;
         li {
           margin: 0;
           width: 100%;
+          display: none;
           a {
             width: 100%;
-            height: 4em;
-            min-height: 4em;
-            max-height: 4em;
-            padding: .5em 1em .5em 1em;
+            height: 2em;
+            min-height: 2em;
+            max-height: 2em;
+            font-size: 1em;
+            padding: .5em 1em .5em 4em;
             justify-content: flex-start;
-            display: none;
             &[aria-selected="true"] {
-              display: flex;
-              box-shadow: none;
-              &:hover,
-              &:active,
-              &:focus {
-                background-color: var(--tabbar-selected-tab-background-color);
-                box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
-                color: var(--tabbar-selected-tab-text-color);
-                text-shadow: var(--tabbar-selected-tab-text-shadow);
-              }
+              box-shadow: inset .5em 0 0 var(--tabbar-selected-tab-highlight-color);
             }
           }
         }
       }
       &[aria-expanded="true"] {
+        min-height: 90vh;
+        max-height: 90vh;
+        div.responsivebox {
+          background-color: var(--tabbar-collapsed-open-background-color);
+        }
         ul.tabbar {
-          height: unset;
-          min-height: 4em;
+          height: auto;
+          min-height: unset;
           max-height: unset;
+          overflow: scroll;
           li {
-            margin: 0;
-            height: 4em;
-            min-height: 4em;
-            max-height: 4em;
-            a {
-              display: flex;
-              padding: .5em 1em .5em 1em;
-              justify-content: flex-start;
-              &[aria-selected="true"] {
-                display: flex;
-                box-shadow: inset 0 -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
-              }
-            }
+            display: block;
           }
         }
       }

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.0 - 2020-01-27
+/*! Cornflower Blue - v0.1.0 - 2020-02-01
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
@@ -559,7 +559,7 @@ class IconFactory {
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
      * @param arialabel the aria label to use
-     * @return {*|jQuery|*} a jquery <span> class.
+     * @return {*}
      */
     static icon(icon, arialabel) {
         if (icon instanceof Object) { // this is probably a pre-defined icon
@@ -580,7 +580,7 @@ class IconFactory {
      * Gets an icon NOT defined by cornflower blue (like fontawesome, or a different icon font)
      * @param icon the icon.  This can be an array as well, and if so will apply all elements as classes
      * @param arialabel the aria label to use
-     * @return {*|jQuery|*} a jquery <span> class.
+     * @return a span DOM object
      */
     static xicon(icon, arialabel) {
         if (icon instanceof Object) { // this is probably a pre-defined icon
@@ -783,7 +783,7 @@ class SimpleButton {
             hidden: false, // Start hidden or not.
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
-                         // This can be passed a jQuery object
+                         // This can be passed a DOM object
             iconside: 'left', // The side the icon displays on
             secondicon : null, // if present, this icon will be placed on the opposite side of the
                                 // defined 'iconside'.  If this is the only icon defined, it will
@@ -825,7 +825,7 @@ class SimpleButton {
 
     /**
      * Builds the button's DOM.
-     * @returns {jQuery} jQuery representation of the SimpleButton
+     * @returns DOM representation of the SimpleButton
      */
     buildButton() {
         const me = this;
@@ -1199,7 +1199,7 @@ class ButtonMenu extends SimpleButton {
 
     /**
      * Builds the menu.
-     * @returns {jQuery} jQuery representation
+     * @returns DOM representation
      */
     buildMenu() {
         const me = this;
@@ -2934,7 +2934,7 @@ class SelectMenu extends InputElement {
 
     /**
      * Return the selected radio input.
-     * @return {jQuery|HTMLElement}
+     * @return {HTMLElement}
      */
     get selected() {
         let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);
@@ -3839,7 +3839,7 @@ class DialogWindow {
             form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
             content: '<p />No provided content</p', // This is the content of the dialog
             classes: [],             // apply these classes to the dialog, if any.
-            header: null, // jQuery object, will be used if passed before title.
+            header: null, // DOM object, will be used if passed before title.
             title: null,  // Adds a title to the dialog if present. header must be null.
             trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                            // or a string.  If it's a string, it creates a div at the bottom
@@ -3998,7 +3998,7 @@ class DialogWindow {
             this.window.classList.add('isform');
             this.window.appendChild(this.contentbox);
 
-        } else if (this.content) { // It's a jQuery object
+        } else if (this.content) { // It's a DOM object
 
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
@@ -4730,7 +4730,7 @@ class MessageBox {
     /**
      * Build the specific box.
      * @param type the type of box to create (errors|warnings|results)
-     * @return {*|jQuery}
+     * @return a DOM element
      */
     buildBox(type = 'results') {
         let list,
@@ -5359,6 +5359,9 @@ class TabBar {
         this.selected.setAttribute('aria-selected', 'true');
         this.selected.setAttribute('tabindex', '0');
 
+        if ((this.responsive) && (this.menutitle)) {
+            this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -5411,6 +5414,7 @@ class TabBar {
             link.setAttribute('role', 'tab');
             link.setAttribute('aria-controls', `t-${tabdef.id}`);
             link.setAttribute('tabindex', '-1');
+            link.setAttribute('data-tabtext', `${tabdef.label}`);
             link.setAttribute('data-tabno', `${order}`);
             link.setAttribute('id', tabdef.id);
             link.setAttribute('data-tabid', tabdef.id);
@@ -5462,7 +5466,6 @@ class TabBar {
 
             order++;
 
-
             if (tabdef.selected) {
                 window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
                     me.select(tabdef.id);
@@ -5470,28 +5473,37 @@ class TabBar {
             }
         }
 
-        this.container = document.createElement('nav');
-        this.container.classList.add('tablist-container');
 
         if (this.navigation) {
+            this.container = document.createElement('nav');
             this.container.setAttribute('role', 'navigation');
             this.container.setAttribute('aria-label', this.arialabel);
+        } else {
+            this.container = document.createElement('div');
         }
+
+        this.container.classList.add('tablist-container');
 
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
 
         if (this.responsive) {
-            this.menubutton = new SimpleButton({
-                action: function(e, self) { self.toggle(); },
-                icon: this.menuicon,
-                shape: 'square',
-                text: this.menulable,
-                classes: ['menuicon']
+            this.responsivebox = document.createElement('div');
+            this.responsivebox.classList.add('responsivebox');
+
+            this.menubutton = new HamburgerButton({
+                text: this.menulabel,
+                toggletarget: me
             });
+            this.responsivebox.appendChild(this.menubutton.button);
+
+            this.menutitle = document.createElement('div');
+            this.menutitle.classList.add('menutitle');
+            this.responsivebox.appendChild(this.menutitle);
+
             this.container.classList.add('responsive');
-            this.container.appendChild(this.menubutton.button);
+            this.container.appendChild(this.responsivebox);
         }
 
         this.container.appendChild(this.list);
@@ -5500,7 +5512,7 @@ class TabBar {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     /**
-     * Let us know if the button is open
+     * Let us know if the menu is open
      * @return true if it is!
      */
     get isopen() {
@@ -5509,6 +5521,9 @@ class TabBar {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
+    /**
+     * Toggle whether or not the menu is open
+     */
     toggle() {
         if (this.isopen) {
             this.close();
@@ -5517,7 +5532,6 @@ class TabBar {
         this.open();
     }
 
-
     /**
      * Opens the menu
      */
@@ -5525,19 +5539,33 @@ class TabBar {
         const me = this;
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
+        if (this.menubutton) { this.menubutton.open(); }
 
+        /*
+        setTimeout(function() { // Have to wait until we're sure we're in the DOM
+            let sel = me.list.querySelector('a[aria-selected="true"]');
+            if (!sel) {
+                let fc = me.list.querySelector('li:first-child');
+                sel = fc.querySelector('a');
+            }
+            if (sel) {
+                me.scrollto(sel);
+                //sel.focus();
+            }
+        }, 100);
+         */
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);
     }
 
     /**
-     * Closes the button
+     * Closes the menu
      */
     close() {
         this.container.removeAttribute('aria-expanded');
+        if (this.menubutton) { this.menubutton.close(); }
     }
-
 
     /**
      * Sets an event listener to close the menu if the user clicks outside of it.
@@ -5592,17 +5620,23 @@ class TabBar {
     get menuicon() { return this.config.menuicon; }
     set menuicon(menuicon) { this.config.menuicon = menuicon; }
 
-    get menulable() { return this.config.menulable; }
-    set menulable(menulable) { this.config.menulable = menulable; }
+    get menulabel() { return this.config.menulabel; }
+    set menulabel(menulabel) { this.config.menulabel = menulabel; }
 
     get menubutton() { return this._menubutton; }
     set menubutton(menubutton) { this._menubutton = menubutton; }
+
+    get menutitle() { return this._menutitle; }
+    set menutitle(menutitle) { this._menutitle = menutitle; }
 
     get navigation() { return this.config.navigation; }
     set navigation(navigation) { this.config.navigation = navigation; }
 
     get responsive() { return this.config.responsive; }
     set responsive(responsive) { this.config.responsive = responsive; }
+
+    get responsivebox() { return this._responsivebox; }
+    set responsivebox(responsivebox) { this._responsivebox = responsivebox; }
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }
@@ -6155,7 +6189,7 @@ class SimpleForm {
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
             method: 'get', // Method for the form.  Also used in API calls.
-            header: null, // Stuff to put at the header. This is expected to be a jQuery element
+            header: null, // Stuff to put at the header. This is expected to be a DOM element
 
             passive: false, // Start life in "passive" mode. This will set all form elements to "passive" and hide any controls.  This also shows the "passive" instructions, if any.
 
