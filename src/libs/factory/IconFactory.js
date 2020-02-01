@@ -105,7 +105,7 @@ class IconFactory {
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
      * @param arialabel the aria label to use
-     * @return the a span DOM element
+     * @return {*}
      */
     static icon(icon, arialabel) {
         if (icon instanceof Object) { // this is probably a pre-defined icon

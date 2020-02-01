@@ -532,9 +532,6 @@ class CornflowerBlueDemo {
                     case 'circle':
                         cfg.shape = 'circle';
                         break;
-                    case 'pill':
-                        cfg.shape = 'pill';
-                        break;
                     default:
                         break;
                 }
@@ -578,7 +575,6 @@ class CornflowerBlueDemo {
         let checkboxes = document.createElement('div');
         checkboxes.classList.add('example');
         checkboxes.classList.add('centered');
-
 
         checkboxes.appendChild(new BooleanToggle({
             label: "Normal"
@@ -1082,7 +1078,6 @@ class CornflowerBlueDemo {
     }
 
     grindMessageBoxes() {
-        const me = this;
 
         let instructions = document.createElement('div');
         instructions.classList.add('example');

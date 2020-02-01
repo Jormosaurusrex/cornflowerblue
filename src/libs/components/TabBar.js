@@ -59,7 +59,6 @@ class TabBar {
         this.selected.setAttribute('tabindex', '0');
 
         if ((this.responsive) && (this.menutitle)) {
-            console.log(`foo ${this.selected.getAttribute('data-tabtext')}`);
             this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
         }
     }
@@ -218,6 +217,9 @@ class TabBar {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
+    /**
+     * Toggle whether or not the menu is open
+     */
     toggle() {
         if (this.isopen) {
             this.close();
@@ -234,6 +236,20 @@ class TabBar {
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
+
+        /*
+        setTimeout(function() { // Have to wait until we're sure we're in the DOM
+            let sel = me.list.querySelector('a[aria-selected="true"]');
+            if (!sel) {
+                let fc = me.list.querySelector('li:first-child');
+                sel = fc.querySelector('a');
+            }
+            if (sel) {
+                me.scrollto(sel);
+                //sel.focus();
+            }
+        }, 100);
+         */
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);

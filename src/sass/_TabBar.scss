@@ -108,8 +108,9 @@ ul.tabbar {
 nav.tablist-container {
   --tabbar-collapsed-height: 3.5em;
   --tabbar-collapsed-background-color: var(--tabbar-background-color);
+  --tabbar-collapsed-open-background-color: var(--bright);
   --tabbar-collapsed-button-color: var(--tabbar-selected-tab-highlight-color);
-  --tabbar-collapsed-open-menu-color: var(--bright);
+  --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
 
   &.responsive {
     position: relative;
@@ -222,27 +223,22 @@ nav.tablist-container {
             font-size: 1em;
             padding: .5em 1em .5em 4em;
             justify-content: flex-start;
-            background-color: transparent;
             &[aria-selected="true"] {
-              display: flex;
-              box-shadow: none;
-              &:hover,
-              &:active,
-              &:focus {
-                background-color: var(--tabbar-collapsed-background-color);
-                box-shadow: none;
-                color: var(--tabbar-collapsed-button-color);
-                text-shadow: var(--tabbar-selected-tab-text-shadow);
-              }
+              box-shadow: inset .5em 0 0 var(--tabbar-selected-tab-highlight-color);
             }
           }
         }
       }
       &[aria-expanded="true"] {
+        min-height: 90vh;
+        max-height: 90vh;
+        div.responsivebox {
+          background-color: var(--tabbar-collapsed-open-background-color);
+        }
         ul.tabbar {
-          height: 70vh;
-          min-height: 70vh;
-          max-height: 70vh;
+          height: auto;
+          min-height: unset;
+          max-height: unset;
           overflow: scroll;
           li {
             display: block;
