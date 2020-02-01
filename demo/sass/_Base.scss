@@ -35,7 +35,7 @@ div#container {
     max-width: 100%;
   }
   div.banner {
-    background-image: url('../image/cfb-banner.jpg');
+    background-image: url('../image/cfb-banner.png');
     background-size: cover;
     background-position: bottom;
     background-repeat: no-repeat;
@@ -43,6 +43,22 @@ div#container {
     grid-row: 1;
     grid-column-start: 1;
     grid-column-end: 3;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    h1.cfbtitle {
+      color: #6495ED;
+      margin: 0 .5em .5em .5em;
+      justify-content: flex-end;
+      text-shadow: var(--text-shadow-heavier);
+      &:after {
+        display: none;
+      }
+      @include for-phone-only {
+        margin: 0 .5em 0 .5em;
+      }
+    }
     @include for-phone-only {
       position: relative;
       height: var(--mobile-banner-height);

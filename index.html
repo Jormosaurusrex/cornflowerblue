@@ -12,7 +12,7 @@
         <meta name="og:title" content="Cornflower Blue" />
         <meta name="og:description" content="A simple Javascript UI toolkit." />
         <meta name="og:type" content="website" />
-        <meta name="og:image" content="demo/image/cfb-banner.jpg" />
+        <meta name="og:image" content="demo/image/cfb-banner.png" />
         <meta name="og:url" content="https://www.gaijin.com/cornflowerblue/" />
         <meta name="og:image:width" content="1280" />
         <meta name="og:image:height" content="640" />
@@ -69,12 +69,12 @@
     </head>
     <body>
         <div class="container" id="container">
-            <div class="banner"></div>
+            <div class="banner"><h1 class="cfbtitle">cornflowerblue</h1></div>
             <div class="displaybox" id="displaybox">
                 <a class="visually-hidden" name="content-start">Content</a>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-intro" aria-labelledby="intro">
-                    <img src="demo/image/cfb-banner.jpg" alt="[cornflower blue]" class="banner-image" />
-                    <h1>Introduction</h1>
+                    <img src="demo/image/cfb-banner.png" alt="[cornflower blue]" class="banner-image" />
+                    <h2>Introduction</h2>
 
                     <h2>My $deity Why</h2>
                     <p>I am constantly writing a lot of small, self-contained websites, many of which require design and form elements. These projects usually don't need gigantic toolkits, so I would end up writing, re-writing, cutting-and-pasting, and re-using elements from earlier projects.  I'm lazy, so I started collecting them.</p>
@@ -87,7 +87,7 @@
                 </article>
 
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-wiki" aria-labelledby="wiki">
-                    <h1>Cornflower Blue</h1>
+                    <h2>Cornflower Blue</h2>
                     <div class="wiki">
                         <figure>
                             <a target="_new" href="https://commons.wikimedia.org/wiki/File:CentaureaCyanus-bloem-kl.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/220px-CentaureaCyanus-bloem-kl.jpg" decoding="async" width="220" height="165" class="thumbimage" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/330px-CentaureaCyanus-bloem-kl.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/440px-CentaureaCyanus-bloem-kl.jpg 2x" data-file-width="1280" data-file-height="960"></a>
@@ -146,14 +146,14 @@
                 </article>
 
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-text" aria-labelledby="text">
-                    <h1>Text</h1>
+                    <h2>Text</h2>
 
                     <p>This is a text style and inheritence playground.  An application of the aesthetic to a <a class="internal" data-tab-target="wiki">wikipedia page</a> is available.</p>
 
                     <div class="demobox" id="headings-all">
 
                         <h2>Headings</h2>
-                        <p>Headings use the same font stack as the body but with differing weights (and adornments, in the case of h1 and h2).  Headings have <code>text-transform: uppercase</code> to differentiate them from  following text.</p>
+                        <p>Headings use the same font stack as the body but with differing weights (and adornments, in the case of h2 and h2).  Headings have <code>text-transform: uppercase</code> to differentiate them from  following text.</p>
                         <h1>Standard h1</h1>
                         <h2>Standard h2</h2>
                         <h3>Standard h3</h3>
@@ -187,7 +187,7 @@
                 </article>
 
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-messageboxes" aria-labelledby="messageboxes">
-                    <h1>Message Boxes</h1>
+                    <h2>Message Boxes</h2>
                     <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
                     <div class="demobox" id="boxes-instructions">
                         <h3>Standard</h3>
@@ -202,7 +202,7 @@
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-buttons" aria-labelledby="buttons">
-                    <h1>Buttons</h1>
+                    <h2>Buttons</h2>
                     <code class="invoker">new SimpleButton({options});</code>
 
                     <p>The basic button class is <code>SimpleButton</code>. They can be set for <code>mute</code> and <code>hot</code> in construction; this will change the button's default state. Any button can be made hot. </p>
@@ -247,7 +247,7 @@
 
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-textareas" aria-labelledby="textareas">
-                    <h1>Text Areas</h1>
+                    <h2>Text Areas</h2>
                     <code class="invoker">new TextArea({options});</code>
                     <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
                     <div class="demobox" id="textareas-standard">
@@ -268,7 +268,7 @@
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-inputs" aria-labelledby="inputs">
-                    <h1>Inputs</h1>
+                    <h2>Inputs</h2>
                     <code class="invoker">new TextInput({options});</code>
                     <p>A <dfn>TextInput</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a <code>TextArea</code> element). All <code>TextInput</code> classes extend <code>InputElement</code>.</p>
                     <div class="demobox" id="inputs-standard">
@@ -326,7 +326,7 @@
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-selects" aria-labelledby="selects">
-                    <h1>Selects</h1>
+                    <h2>Selects</h2>
                     <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
                     <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
                     <p>Under the hood, the <code>SelectMenu</code> is implemented with Radio Buttons so it maintains compatibility.</p>
@@ -359,7 +359,7 @@
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-radiobuttons" aria-labelledby="radiobuttons">
-                    <h1>Radio Buttons</h1>
+                    <h2>Radio Buttons</h2>
                     <code class="invoker">new RadioGroup({options});</code>
                     <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
                     <p>If you have 5 more options, consider using a <code>SelectMenu</code>.  If you only have two options, consider whether a <code>BooleanToggle</code> is a better solution.</p>
@@ -381,7 +381,7 @@
 
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-toggles" aria-labelledby="toggles">
-                    <h1>Checkboxes and Toggles</h1>
+                    <h2>Checkboxes and Toggles</h2>
                     <code class="invoker">new BooleanToggle({options});</code>
 
                     <p>A <dfn>BooleanToggle</dfn> is a switch that can be in one of two states (checked/unchecked, on/off, true/false). It is an implementation of <code>&lt;input type='checkbox' /&gt;</code>.</p>
@@ -397,7 +397,7 @@
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-forms" aria-labelledby="forms">
-                    <h1>Forms</h1>
+                    <h2>Forms</h2>
                     <code class="invoker">new SimpleForm({options});</code>
                     <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
                     <p>Forms are displayed with discrete sections: header, elements, and actions.  The header section will include provided instructions (within an included <code>InstructionBox</code>) and any <code>MessageBox</code> elements generated by the form submission.</p>
@@ -411,7 +411,7 @@
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-dialogs" aria-labelledby="dialogs">
-                    <h1>Dialogs</h1>
+                    <h2>Dialogs</h2>
                     <code class="invoker">new DialogWindow({options});</code>
                     <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
                     <p>If passed a form, the dialog will render the form's <code>header</code>, <code>elements</code>, and <code>actions</code> in a way that compliments the dialog.</p>
@@ -487,7 +487,7 @@ And drunk the milk of Paradise.</pre>
 
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-growlers" aria-labelledby="growlers">
-                    <h1>Growlers</h1>
+                    <h2>Growlers</h2>
 
                     <code class="invoker">new Growler({options});</code>
 
@@ -510,7 +510,7 @@ And drunk the milk of Paradise.</pre>
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-tabsmenus" aria-labeledby="c">
-                    <h1>Tabs and Menus</h1>
+                    <h2>Tabs and Menus</h2>
 
                     <div class="demobox" id="tabsmenus-buttonmenu">
                         <h3>Button Menu</h3>
@@ -526,7 +526,7 @@ And drunk the milk of Paradise.</pre>
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-pwchanger" aria-labeledby="pwchanger">
-                    <h1>Password Changer</h1>
+                    <h2>Password Changer</h2>
 
                     <div class="demobox" id="pwchanger-simple">
                         <h3>Simple</h3>
@@ -536,7 +536,7 @@ And drunk the milk of Paradise.</pre>
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-progressmeter" aria-labeledby="progressmeter">
-                    <h1>Progress Meters</h1>
+                    <h2>Progress Meters</h2>
                     <div class="demobox" id="progressmeter-simple">
                         <h3>Simple</h3>
                         <code class="invoker">new SimpleProgressMeter({options});</code>
@@ -553,13 +553,13 @@ And drunk the milk of Paradise.</pre>
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-fontglyphs" aria-labeledby="fontglyphs">
-                    <h1>Font Glyphs</h1>
+                    <h2>Font Glyphs</h2>
 
                     <div class="demobox" id="glyphs">
                     </div>
                 </article>
                 <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-datagrid" aria-labeledby="datagrid">
-                    <h1>Data Grids</h1>
+                    <h2>Data Grids</h2>
 
                     <div class="demobox" id="datagrid-basic">
                         <h3>Data Grid</h3>

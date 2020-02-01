@@ -172,13 +172,16 @@ class TabBar {
             }
         }
 
-        this.container = document.createElement('nav');
-        this.container.classList.add('tablist-container');
 
         if (this.navigation) {
+            this.container = document.createElement('nav');
             this.container.setAttribute('role', 'navigation');
             this.container.setAttribute('aria-label', this.arialabel);
+        } else {
+            this.container = document.createElement('div');
         }
+
+        this.container.classList.add('tablist-container');
 
         for (let c of this.classes) {
             this.container.classList.add(c);

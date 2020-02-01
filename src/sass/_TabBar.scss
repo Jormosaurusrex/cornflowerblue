@@ -105,13 +105,8 @@ ul.tabbar {
     }
   }
 }
-nav.tablist-container {
-  --tabbar-collapsed-height: 3.5em;
-  --tabbar-collapsed-background-color: var(--tabbar-background-color);
-  --tabbar-collapsed-open-background-color: var(--bright);
-  --tabbar-collapsed-button-color: var(--tabbar-selected-tab-highlight-color);
-  --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
-
+nav.tablist-container,
+div.tablist-container {
   &.responsive {
     position: relative;
     overflow: visible;
@@ -197,7 +192,8 @@ nav.tablist-container {
         }
         div.menutitle {
           font-size: 1.5em;
-          padding-left: .5em;
+          padding: 0 .5em 0 .5em;
+          color: var(--tabbar-collapsed-title-color);
         }
       }
       ul.tabbar {

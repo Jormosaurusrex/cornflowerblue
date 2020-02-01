@@ -52,10 +52,10 @@ h1 {
   text-transform: var(--headers-h1-text-transform);
   letter-spacing: -.1em;
   display: flex;
-  width: 100%;
   justify-content: flex-start;
   align-items: baseline;
   text-align: left;
+  box-sizing: border-box;
   &:after {
     content: '';
     border-top: .05em solid var(--headers-h1-border-color);
@@ -76,7 +76,7 @@ h1 {
 }
 h2 {
   font-weight: 400;
-  font-size: 1.5em;
+  font-size: 2.5em;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
@@ -91,6 +91,9 @@ h2 {
     border-top: .05em solid var(--headers-h2-border-color);
     flex: 1 0 2em;
     margin: 0 0 0 .1em;
+  }
+  @include for-phone-only {
+    font-size: 1.5em;
   }
 }
 h3 {

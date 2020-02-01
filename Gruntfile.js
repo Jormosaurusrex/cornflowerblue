@@ -25,7 +25,6 @@ module.exports = function(grunt) {
                     'src/sass/_PasswordGenerator.scss',
                     'src/sass/_DialogWindow.scss',
                     'src/sass/_Animations.scss',
-                    'src/sass/cornflowerblue.scss',
                     'src/sass/_DataGrid.scss',
                     'src/sass/_SimpleForm.scss',
                     'src/sass/_Inputs.scss',

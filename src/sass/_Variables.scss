@@ -503,6 +503,13 @@
   --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
 
+  --tabbar-collapsed-height: 3.5em;
+  --tabbar-collapsed-background-color: var(--tabbar-background-color);
+  --tabbar-collapsed-open-background-color: var(--bright);
+  --tabbar-collapsed-button-color: var(--tabbar-selected-tab-highlight-color);
+  --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
+  --tabbar-collapsed-title-color: var(--grey-meddark);
+
   // Tooltip
   --tooltip-border-radius: var(--border-radius);
   --tooltip-background-color: var(--grey-darkest);
