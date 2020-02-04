@@ -56,6 +56,7 @@ module.exports = function(grunt) {
                     'src/libs/buttons/ButtonMenu.js',
                     'src/libs/buttons/HelpButton.js',
                     'src/libs/buttons/SkipButton.js',
+                    'src/libs/buttons/HamburgerButton.js',
                     'src/libs/inputs/InputElement.js',
                     'src/libs/inputs/TextInput.js',
                     'src/libs/inputs/BooleanToggle.js',
