@@ -18,33 +18,6 @@ module.exports = function(grunt) {
                 banner: '<%= banner %>',
                 stripBanners: true
             },
-            sass: {
-                src: [
-                    'src/sass/_Variables.scss',
-                    'src/sass/_ChecksAndRadios.scss',
-                    'src/sass/_PasswordGenerator.scss',
-                    'src/sass/_DialogWindow.scss',
-                    'src/sass/_Animations.scss',
-                    'src/sass/_DataGrid.scss',
-                    'src/sass/_SimpleForm.scss',
-                    'src/sass/_Inputs.scss',
-                    'src/sass/_SelectMenu.scss',
-                    'src/sass/_GeneralBehavior.scss',
-                    'src/sass/_Buttons.scss',
-                    'src/sass/_Growler.scss',
-                    'src/sass/_MessageBox.scss',
-                    'src/sass/_Panels.scss',
-                    'src/sass/_FileInput.scss',
-                    'src/sass/_InstructionBox.scss',
-                    'src/sass/_Font.scss',
-                    'src/sass/_Mixins.scss',
-                    'src/sass/_TabBar.scss',
-                    'src/sass/_InputContainers.scss',
-                    'src/sass/_ProgressMeter.scss',
-                    'src/sass/_RadioGroup.scss'
-                ],
-                dest: 'dist/sass/cornflowerblue.scss'
-            },
             dist: {
                 src: [
                     'src/libs/Utils.js',

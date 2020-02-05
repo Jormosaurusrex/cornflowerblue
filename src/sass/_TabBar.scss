@@ -2,7 +2,7 @@ ul.tabbar {
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
   border-radius: var(--tabbar-border-radius);
   z-index: 2;

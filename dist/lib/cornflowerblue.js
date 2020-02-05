@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.0 - 2020-02-03
+/*! Cornflower Blue - v0.1.0 - 2020-02-05
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
