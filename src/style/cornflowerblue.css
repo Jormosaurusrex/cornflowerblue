@@ -2704,11 +2704,17 @@ div.checkbox.rightside input[type=radio] {
   margin-right: 0.5em;
 }
 
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  input[type=checkbox],
+input[type=radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+}
 input[type=checkbox],
 input[type=radio] {
   transition: all 0.2s;
   box-sizing: border-box;
-  -webkit-appearance: none;
   background-color: var(--checkbox-background-color);
   border: 0.2em solid var(--checkbox-border-color);
   border-radius: var(--border-radius);
