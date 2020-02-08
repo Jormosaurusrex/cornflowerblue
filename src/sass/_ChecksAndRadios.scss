@@ -40,7 +40,6 @@ input[type="radio"] {
   border: .2em solid var(--checkbox-border-color);
   border-radius: var(--border-radius);
   display: inline-block;
-
   position: relative;
   cursor: pointer;
   width: var(--checkbox-size);
@@ -79,7 +78,6 @@ input[type="radio"] {
     border-color: var(--checkbox-checked-border-color);
     box-shadow: var(--checkbox-checked-shadow);
     background-color: var(--checkbox-checked-background-color);
-
     &:before,
     &:focus {
       opacity: 1;

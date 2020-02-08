@@ -19,6 +19,7 @@ class TabBar {
             //    icon: null, // an icon identifier, optional
             //    selected: false, // if true, start selected
             //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
+            //    subtabs: null  // an array of tab definitions to indicate subtabs
             // }
             action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
                           // This is what will fire if there is no action defined on the tab definition.
@@ -84,94 +85,8 @@ class TabBar {
         let order = 1;
 
         for (let tabdef of this.tabs) {
-            let icon,
-                linktext,
-                next = order + 1,
-                previous = order - 1;
-
-            if (previous < 1) {
-                previous = 1;
-            }
-            if (next > this.tabs.length) {
-                next = this.tabs.length;
-            }
-
-            if ((!tabdef.label) && (!tabdef.icon)) {
-                console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
-                break;
-            }
-
-            if (tabdef.icon) {
-                icon = IconFactory.icon(tabdef.icon);
-            }
-            if (tabdef.label) {
-                linktext = document.createElement('span');
-                linktext.innerHTML = tabdef.label;
-            }
-
-            let link = document.createElement('a');
-            link.setAttribute('role', 'tab');
-            link.setAttribute('aria-controls', `t-${tabdef.id}`);
-            link.setAttribute('tabindex', '-1');
-            link.setAttribute('data-tabtext', `${tabdef.label}`);
-            link.setAttribute('data-tabno', `${order}`);
-            link.setAttribute('id', tabdef.id);
-            link.setAttribute('data-tabid', tabdef.id);
-            if (icon) {
-                link.appendChild(icon);
-            }
-            link.appendChild(linktext);
-
-            link.addEventListener('keydown', function (e) {
-                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
-                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${next}']`).focus();
-                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
-                    link.click();
-                }
-            });
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                me.select(tabdef.id);
-                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                    tabdef.action(tabdef.id, me);
-                } else if (me.action) {
-                    me.action(tabdef.id, me);
-                }
-            });
-
-            let maplink = document.createElement('li');
-            maplink.setAttribute('role', 'presentation');
-            maplink.appendChild(link);
-            if (tabdef.classes) {
-                for (let c of tabdef.classes) {
-                    maplink.classList.add(c);
-                }
-            }
-
-            this.tabmap[tabdef.id] = maplink;
-
-            if (this.animation) {
-                this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
-                this.tabmap[tabdef.id].classList.add(this.animation);
-            }
-
-            this.list.appendChild(this.tabmap[tabdef.id]);
-
-            order++;
-
-            if (tabdef.selected) {
-                window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
-                    me.select(tabdef.id);
-                }, 100);
-            }
+            order = this.buildTab(tabdef, order);
         }
-
 
         if (this.navigation) {
             this.container = document.createElement('nav');
@@ -206,6 +121,117 @@ class TabBar {
         }
 
         this.container.appendChild(this.list);
+    }
+
+    buildTab(tabdef, order, parent) {
+        const me = this;
+        let icon,
+            linktext,
+            next = order + 1,
+            previous = order - 1;
+
+        if (previous < 1) {
+            previous = 1;
+        }
+        if (next > this.tabs.length) {
+            next = this.tabs.length;
+        }
+
+        if ((!tabdef.label) && (!tabdef.icon)) {
+            console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
+            return null;
+        }
+
+        if (tabdef.icon) {
+            icon = IconFactory.icon(tabdef.icon);
+        }
+        if (tabdef.label) {
+            linktext = document.createElement('span');
+            linktext.innerHTML = tabdef.label;
+        }
+
+        let link = document.createElement('a');
+        link.setAttribute('role', 'tab');
+        link.setAttribute('aria-controls', `t-${tabdef.id}`);
+        link.setAttribute('data-tabtext', `${tabdef.label}`);
+        link.setAttribute('data-tabno', `${order}`);
+        link.setAttribute('id', tabdef.id);
+        link.setAttribute('data-tabid', tabdef.id);
+        if (icon) {
+            link.appendChild(icon);
+        }
+        link.appendChild(linktext);
+
+        let maplink = document.createElement('li');
+        maplink.setAttribute('role', 'presentation');
+        maplink.appendChild(link);
+        if (tabdef.classes) {
+            for (let c of tabdef.classes) {
+                maplink.classList.add(c);
+            }
+        }
+
+        this.tabmap[tabdef.id] = maplink;
+
+        if (this.animation) {
+            this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
+            this.tabmap[tabdef.id].classList.add(this.animation);
+        }
+
+        if (parent) {
+            let clink = parent.querySelector('a');
+            link.setAttribute('data-parent', `${clink.getAttribute('data-tabid')}`);
+            let plist = parent.querySelector('ul');
+            if (!plist) {
+                plist = document.createElement('ul');
+                parent.appendChild(plist);
+            }
+            plist.append(this.tabmap[tabdef.id]); // attach to child list
+        } else {
+            this.list.appendChild(this.tabmap[tabdef.id]); // attach to root list
+        }
+
+        order++;
+        link.setAttribute('tabindex', '-1'); // always set this here
+
+        if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
+            link.classList.add('mastertab');
+            for (let subdef of tabdef.subtabs) {
+                order = this.buildTab(subdef, order, this.tabmap[tabdef.id]);
+            }
+            // XXX SET open/close linking
+        } else {
+            // set link events here.
+            link.addEventListener('keydown', function (e) {
+                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
+                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.list.querySelector(`[data-tabno='${next}']`).focus();
+                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
+                    link.click();
+                }
+            });
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                me.select(tabdef.id);
+                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
+                    tabdef.action(tabdef.id, me);
+                } else if (me.action) {
+                    me.action(tabdef.id, me);
+                }
+            });
+        }
+
+        if (tabdef.selected) {
+            window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
+                me.select(tabdef.id);
+            }, 100);
+        }
+        return order; // send this back.
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */

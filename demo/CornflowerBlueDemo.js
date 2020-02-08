@@ -215,44 +215,86 @@ class CornflowerBlueDemo {
         const me = this;
 
         this.skipbutton = new SkipButton(); // defaults are fine
-
         this.body.prepend(this.skipbutton.button);
 
         this.container = document.getElementById('container');
+
+        let tabs = [
+            { label: 'Intro', id: 'intro' },
+            { label: 'cornflowerblue', id: 'wiki' },
+            { label: 'Font Glyphs', id: 'fontglyphs' },
+            { label: 'Text',  id: 'text' },
+            { label: 'Message Boxes', id: 'messageboxes' },
+            { label: 'Buttons', id: 'buttons' },
+            { label: 'Inputs', id: 'inputs' },
+            { label: 'Text Areas', id: 'textareas' },
+            { label: 'Select', id: 'selects' },
+            { label: 'Radio Buttons', id: 'radiobuttons' },
+            { label: 'Toggles', id: 'toggles' },
+            { label: 'Tabs and Menus', id: 'tabsmenus' },
+            { label: 'Forms', id: 'forms' },
+            { label: 'Dialogs', id: 'dialogs',
+                action: function(tabid, self) {
+                    self.action(tabid, self);
+                    me.dialog = new DialogWindow({
+                        title: "Login",
+                        form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
+                    }).open();
+                }
+            },
+            { label: 'Growlers', id: 'growlers' },
+            { label: 'Password Changer', id: 'pwchanger' },
+            { label: 'Progress Meters', id: 'progressmeter' },
+            { label: 'Data Grid', id: 'datagrid' }
+        ];
+
+        let tabstight = [
+            { label: 'Intro', id: 'intro' },
+            { label: 'cornflowerblue', id: 'wiki' },
+            { label: 'Font Glyphs', id: 'fontglyphs' },
+            { label: 'Text',  id: 'text' },
+            {
+                label: 'Basic Components',
+                id: 'basic',
+                subtabs: [
+                    { label: 'Buttons', id: 'buttons' },
+                    { label: 'Inputs', id: 'inputs' },
+                    { label: 'Select', id: 'selects' },
+                    { label: 'Radio Buttons', id: 'radiobuttons' },
+                    { label: 'Toggles', id: 'toggles' },
+                    { label: 'Text Areas', id: 'textareas' },
+                    { label: 'Message Boxes', id: 'messageboxes' }
+                ]
+            },
+            {
+                label: 'Complex Components',
+                id: 'complex',
+                subtabs: [
+                    { label: 'Tabs and Menus', id: 'tabsmenus' },
+                    { label: 'Forms', id: 'forms' },
+                    { label: 'Dialogs', id: 'dialogs',
+                        action: function(tabid, self) {
+                            self.action(tabid, self);
+                            me.dialog = new DialogWindow({
+                                title: "Login",
+                                form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
+                            }).open();
+                        }
+                    },
+                    { label: 'Growlers', id: 'growlers' },
+                    { label: 'Password Changer', id: 'pwchanger' },
+                    { label: 'Progress Meters', id: 'progressmeter' },
+                    { label: 'Data Grid', id: 'datagrid' }
+                ]
+            },
+        ];
 
         this.navigation = new TabBar({
             vertical: true,
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: [
-                { label: 'Intro', id: 'intro' },
-                { label: 'cornflowerblue', id: 'wiki' },
-                { label: 'Font Glyphs', id: 'fontglyphs' },
-                { label: 'Text',  id: 'text' },
-                { label: 'Message Boxes', id: 'messageboxes' },
-                { label: 'Buttons', id: 'buttons' },
-                { label: 'Inputs', id: 'inputs' },
-                { label: 'Text Areas', id: 'textareas' },
-                { label: 'Select', id: 'selects' },
-                { label: 'Radio Buttons', id: 'radiobuttons' },
-                { label: 'Toggles', id: 'toggles' },
-                { label: 'Tabs and Menus', id: 'tabsmenus' },
-                { label: 'Forms', id: 'forms' },
-                { label: 'Dialogs', id: 'dialogs',
-                    action: function(tabid, self) {
-                        self.action(tabid, self);
-                        me.dialog = new DialogWindow({
-                            title: "Login",
-                            form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
-                        }).open();
-                    }
-                },
-                { label: 'Growlers', id: 'growlers' },
-                { label: 'Password Changer', id: 'pwchanger' },
-                { label: 'Progress Meters', id: 'progressmeter' },
-                { label: 'Data Grid', id: 'datagrid' }
-            ],
+            tabs: tabstight,
             action: function(tab, self) {
                 let tabs = document.getElementsByTagName('article');
                 for (let t of tabs) {
