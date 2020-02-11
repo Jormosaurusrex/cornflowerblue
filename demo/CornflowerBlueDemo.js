@@ -290,7 +290,7 @@ class CornflowerBlueDemo {
         ];
 
         this.navigation = new TabBar({
-            vertical: true,
+            vertical: false,
             classes: ['demo'],
             navigation: true,
             animation: null,

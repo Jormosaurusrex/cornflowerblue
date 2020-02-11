@@ -8,6 +8,8 @@ class TabBar {
             menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
             menulabel: "Toggle Menu", // Default text for the menu
             arialabel: 'Primary', // the aria label to use if this is a navigation
+            submenuicon: 'triangle-down', // icon to indicate submenu
+
             vertical: false, // Vertical or horizontal
             animation: 'popin', // Set to null to disable animations
             tabs: [], // An array of tab definitions
@@ -90,7 +92,7 @@ class TabBar {
 
         if (this.navigation) {
             this.container = document.createElement('nav');
-            this.container.setAttribute('role', 'navigation');
+            this.container.setAttribute('role', 'menubar');
             this.container.setAttribute('aria-label', this.arialabel);
         } else {
             this.container = document.createElement('div');
@@ -125,9 +127,7 @@ class TabBar {
 
     buildTab(tabdef, order, parent) {
         const me = this;
-        let icon,
-            linktext,
-            next = order + 1,
+        let next = order + 1,
             previous = order - 1;
 
         if (previous < 1) {
@@ -142,28 +142,24 @@ class TabBar {
             return null;
         }
 
-        if (tabdef.icon) {
-            icon = IconFactory.icon(tabdef.icon);
-        }
-        if (tabdef.label) {
-            linktext = document.createElement('span');
-            linktext.innerHTML = tabdef.label;
-        }
-
         let link = document.createElement('a');
-        link.setAttribute('role', 'tab');
+        link.setAttribute('role', 'menuitem');
         link.setAttribute('aria-controls', `t-${tabdef.id}`);
         link.setAttribute('data-tabtext', `${tabdef.label}`);
         link.setAttribute('data-tabno', `${order}`);
         link.setAttribute('id', tabdef.id);
         link.setAttribute('data-tabid', tabdef.id);
-        if (icon) {
-            link.appendChild(icon);
+        if (tabdef.icon) {
+            link.appendChild(IconFactory.icon(tabdef.icon));
         }
-        link.appendChild(linktext);
+        if (tabdef.label) {
+            let linktext = document.createElement('span');
+            linktext.innerHTML = tabdef.label;
+            link.appendChild(linktext);
+        }
 
         let maplink = document.createElement('li');
-        maplink.setAttribute('role', 'presentation');
+        maplink.setAttribute('role', 'none');
         maplink.appendChild(link);
         if (tabdef.classes) {
             for (let c of tabdef.classes) {
@@ -184,6 +180,9 @@ class TabBar {
             let plist = parent.querySelector('ul');
             if (!plist) {
                 plist = document.createElement('ul');
+                plist.setAttribute('role', 'menu');
+                plist.setAttribute('aria-label', tabdef.label);
+                plist.classList.add('submenu');
                 parent.appendChild(plist);
             }
             plist.append(this.tabmap[tabdef.id]); // attach to child list
@@ -194,8 +193,15 @@ class TabBar {
         order++;
         link.setAttribute('tabindex', '-1'); // always set this here
 
+        // Is this a master menu item?
+        
         if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
             link.classList.add('mastertab');
+            link.setAttribute('aria-haspopup', true);
+            link.setAttribute('aria-expanded', false);
+            if (this.submenuicon) {
+                link.appendChild(IconFactory.icon(this.submenuicon));
+            }
             for (let subdef of tabdef.subtabs) {
                 order = this.buildTab(subdef, order, this.tabmap[tabdef.id]);
             }
@@ -365,6 +371,9 @@ class TabBar {
 
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }
+
+    get submenuicon() { return this.config.submenuicon; }
+    set submenuicon(submenuicon) { this.config.submenuicon = submenuicon; }
 
     get tabmap() { return this._tabmap; }
     set tabmap(tabmap) { this._tabmap = tabmap; }

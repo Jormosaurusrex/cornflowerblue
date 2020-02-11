@@ -8,7 +8,7 @@ ul.tabbar {
   z-index: 2;
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
   height: 3em;
   min-height: 3em;
@@ -19,6 +19,7 @@ ul.tabbar {
     justify-content: center;
     margin: 0 1em 0 1em;
     padding: 0;
+    position: relative;
     &.mobileonly {
       display: none;
       @include for-phone-only {
@@ -79,6 +80,35 @@ ul.tabbar {
         text-shadow: var(--tabbar-hover-tab-text-shadow);
       }
     }
+    ul.submenu {
+      display: none;
+      z-index: 5001;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 3em;
+      overflow: visible;
+      background-color: var(--light);
+      padding: 0;
+      li {
+        align-items: flex-start;
+        margin: 0;
+        a {
+          align-items: center;
+          justify-content: flex-start;
+          height: 2em;
+          min-height: 2em;
+          max-height: 2em;
+          font-size: 1em;
+          width: 100%;
+        }
+      }
+    }
+    &:focus-within {
+      ul {
+        display: block;
+      }
+    }
   }
   &.vertical {
     flex-direction: column;
@@ -102,11 +132,15 @@ ul.tabbar {
           }
         }
       }
+      ul {
+        display: block;
+      }
     }
   }
 }
 nav.tablist-container,
 div.tablist-container {
+  z-index: 5000;
   &.responsive {
     position: relative;
     overflow: visible;

@@ -3996,7 +3996,7 @@ ul.tabbar {
   z-index: 2;
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
   height: 3em;
   min-height: 3em;
@@ -4008,6 +4008,7 @@ ul.tabbar li {
   justify-content: center;
   margin: 0 1em 0 1em;
   padding: 0;
+  position: relative;
 }
 ul.tabbar li.mobileonly {
   display: none;
@@ -4069,6 +4070,33 @@ ul.tabbar li[aria-selected=true]:hover {
   color: var(--tabbar-hover-tab-text-color);
   text-shadow: var(--tabbar-hover-tab-text-shadow);
 }
+ul.tabbar li ul.submenu {
+  display: none;
+  z-index: 5001;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 3em;
+  overflow: visible;
+  background-color: var(--light);
+  padding: 0;
+}
+ul.tabbar li ul.submenu li {
+  align-items: flex-start;
+  margin: 0;
+}
+ul.tabbar li ul.submenu li a {
+  align-items: center;
+  justify-content: flex-start;
+  height: 2em;
+  min-height: 2em;
+  max-height: 2em;
+  font-size: 1em;
+  width: 100%;
+}
+ul.tabbar li:focus-within ul {
+  display: block;
+}
 ul.tabbar.vertical {
   flex-direction: column;
   justify-content: flex-start;
@@ -4093,7 +4121,14 @@ ul.tabbar.vertical li a:focus {
 ul.tabbar.vertical li a:focus:hover {
   outline-color: var(--ultralight);
 }
+ul.tabbar.vertical li ul {
+  display: block;
+}
 
+nav.tablist-container,
+div.tablist-container {
+  z-index: 5000;
+}
 nav.tablist-container.responsive,
 div.tablist-container.responsive {
   position: relative;

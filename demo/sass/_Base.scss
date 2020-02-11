@@ -27,6 +27,11 @@ div#container {
   grid-template-rows: var(--banner-height) auto;
   grid-template-columns: 15em auto;
   background-color: var(--canvas-color-primary);
+
+  display: flex;
+  flex-direction: column;
+  
+
   @include for-phone-only {
     display: block;
     margin: 0;
