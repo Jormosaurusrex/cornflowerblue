@@ -197,7 +197,6 @@ class CornflowerBlueDemo {
         for (let a of articles) {
             a.setAttribute('aria-hidden', true);
         }
-
         document.getElementById(`t-${tab}`).removeAttribute('aria-hidden');
 
         this.navigation.select(tab);
@@ -207,8 +206,6 @@ class CornflowerBlueDemo {
         } else {
             location.hash = `#${tab}`;
         }
-
-        this.codebox.hide();
     }
 
     build() {
@@ -224,24 +221,43 @@ class CornflowerBlueDemo {
             { label: 'cornflowerblue', id: 'wiki' },
             { label: 'Font Glyphs', id: 'fontglyphs' },
             { label: 'Text',  id: 'text' },
-            { label: 'Message Boxes', id: 'messageboxes' },
             { label: 'Buttons', id: 'buttons' },
             { label: 'Inputs', id: 'inputs' },
             { label: 'Text Areas', id: 'textareas' },
             { label: 'Select', id: 'selects' },
             { label: 'Radio Buttons', id: 'radiobuttons' },
             { label: 'Toggles', id: 'toggles' },
+            { label: 'Message Boxes', id: 'messageboxes' },
             { label: 'Tabs and Menus', id: 'tabsmenus' },
             { label: 'Forms', id: 'forms' },
-            { label: 'Dialogs', id: 'dialogs',
-                action: function(tabid, self) {
-                    self.action(tabid, self);
-                    me.dialog = new DialogWindow({
-                        title: "Login",
-                        form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
-                    }).open();
-                }
-            },
+            { label: 'Dialogs', id: 'dialogs' },
+            { label: 'Growlers', id: 'growlers' },
+            { label: 'Password Changer', id: 'pwchanger' },
+            { label: 'Progress Meters', id: 'progressmeter' },
+            { label: 'Data Grid', id: 'datagrid' }
+        ];
+
+        let newtabs = [
+            { label: 'Intro', id: 'intro' },
+            { label: 'cornflowerblue', id: 'wiki' },
+            { label: 'Text Playground',  id: 'text' },
+            { label: 'Basic Components',  id: 'basiccomponents' },
+            { label: 'Complex Components',  id: 'complexcomponents' },
+            { label: 'Font Glyphs', id: 'fontglyphs' }
+        ];
+        let basictabs = [
+            { label: 'Buttons', id: 'buttons' },
+            { label: 'Inputs', id: 'inputs' },
+            { label: 'Text Areas', id: 'textareas' },
+            { label: 'Select', id: 'selects' },
+            { label: 'Radio Buttons', id: 'radiobuttons' },
+            { label: 'Toggles', id: 'toggles' }
+        ];
+        let complextabs = [
+            { label: 'Message Boxes', id: 'messageboxes' },
+            { label: 'Tabs and Menus', id: 'tabsmenus' },
+            { label: 'Forms', id: 'forms' },
+            { label: 'Dialogs', id: 'dialogs' },
             { label: 'Growlers', id: 'growlers' },
             { label: 'Password Changer', id: 'pwchanger' },
             { label: 'Progress Meters', id: 'progressmeter' },
@@ -294,15 +310,15 @@ class CornflowerBlueDemo {
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: tabstight,
+            tabs: newtabs,
             action: function(tab, self) {
                 let tabs = document.getElementsByTagName('article');
                 for (let t of tabs) {
-                    t.setAttribute('aria-hidden', 'true');
-                    t.style.display = 'none';
+                    t.setAttribute('aria-hidden', true);
                 }
-                document.getElementById(`t-${tab}`).style.display = 'block';
-                document.getElementById(`t-${tab}`).removeAttribute('aria-hidden');
+                let thetab = document.getElementById(`t-${tab}`);
+                thetab.removeAttribute('aria-hidden');
+                console.log(thetab.classList);
 
                 self.select(tab);
 
@@ -311,23 +327,40 @@ class CornflowerBlueDemo {
                 } else {
                     location.hash = `#${tab}`;
                 }
-                me.codebox.hide();
             }
         });
 
-        //referenceNode.parentNode.insertBefore(el, referenceNode);
-        //this.container.prepend(this.navigation.container);
-
         this.container.insertBefore(this.navigation.container, this.displaybox);
 
-        this.codebox = new FloatingPanel({
-            title: 'Class',
-            position: 'top-right',
-            content: document.createElement('div'),
-            classes: ['codebox']
+        // Local Navigations
+        let basictabnav = new TabBar({
+            vertical: true,
+            classes: ['demo'],
+            navigation: false,
+            animation: null,
+            tabs: basictabs,
+            action: function(tab, self) {
+                let sections = document.getElementsByTagName('section');
+            }
         });
 
-        this.container.appendChild(this.codebox.container);
+        document.getElementById('t-basiccomponents').prepend(basictabnav.container);
+
+        let complextabnav = new TabBar({
+            vertical: true,
+            classes: ['demo'],
+            navigation: false,
+            animation: null,
+            tabs: complextabs,
+            action: function(tab, self) {
+                let sections = document.getElementsByTagName('section');
+            }
+        });
+
+        document.getElementById('t-complexcomponents').prepend(complextabnav.container);
+
+
+
 
         this.grindButtons();
         this.grindCheckboxes();
@@ -1730,9 +1763,7 @@ class CornflowerBlueDemo {
      * @param config the config string to write.
      */
     writeConfig(title, config) {
-        this.codebox.title = title;
-        this.codebox.content = config;
-        this.codebox.show();
+        return; // fix later
     }
 
     /**

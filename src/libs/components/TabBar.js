@@ -194,7 +194,7 @@ class TabBar {
         link.setAttribute('tabindex', '-1'); // always set this here
 
         // Is this a master menu item?
-        
+
         if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
             link.classList.add('mastertab');
             link.setAttribute('aria-haspopup', true);
