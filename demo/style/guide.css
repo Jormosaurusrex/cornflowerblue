@@ -1,6 +1,8 @@
 :root {
   --mobile-banner-height: 3em;
   --banner-height: 10em;
+  --contentbox-width: 60em;
+  --content-width: 45em;
 }
 
 body {
@@ -21,13 +23,12 @@ div#container {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  min-width: 50%;
-  max-width: 75%;
+  min-width: var(--contentbox-width);
+  max-width: var(--contentbox-width);
   min-height: 100vh;
   background-color: var(--canvas-color-primary);
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 @media (max-width: 599px) {
   div#container {
@@ -73,46 +74,15 @@ div#container div.banner h1.cfbtitle:after {
 }
 div#container nav {
   position: sticky;
-  top: 4em;
-}
-div#container nav.tablist-container.demo2 {
-  grid-row: 2;
-  grid-column: 1;
-  padding-top: 2em;
-  background-image: url("../image/light_grunge.png");
-  position: relative;
-  z-index: 500;
-}
-@media (max-width: 599px) {
-  div#container nav.tablist-container.demo2 {
-    --tabbar-box-shadow: var(--panel-shadow);
-    position: sticky;
-    top: 0;
-    padding: 0;
-  }
-  div#container nav.tablist-container.demo2 div.responsivebox div.menutitle {
-    text-transform: uppercase;
-  }
-  div#container nav.tablist-container.demo2 li a {
-    text-transform: uppercase;
-  }
-  div#container nav.tablist-container.demo2 li a[aria-selected=true] {
-    box-shadow: none;
-    background-color: transparent;
-    color: var(--tabbar-selected-tab-text-color);
-    text-shadow: var(--tabbar-selected-tab-text-shadow);
-  }
-  div#container nav.tablist-container.demo2 li:hover {
-    background-color: transparent;
-    border-color: transparent;
-  }
+  top: 6em;
 }
 div#container div.displaybox {
   background-color: var(--canvas-color-primary);
   padding: 2em 0 2em 0;
   scroll-snap-type: y mandatory;
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   z-index: 300;
   position: relative;
 }
@@ -134,35 +104,6 @@ div#container div.displaybox code.invoker {
   div#container div.displaybox {
     overflow: scroll;
     padding: 2em 1em 2em 1em;
-  }
-}
-div#container div.codebox {
-  display: none;
-  background-color: var(--canvas-color-secondary);
-  grid-row: 2;
-  grid-column: 4;
-  font-size: 80%;
-}
-div#container div.codebox div.content {
-  padding: 0.5em;
-  overflow: auto;
-  white-space: pre;
-  font-family: var(--fontstack-monospace);
-}
-div#container div.codebox div.content span.key {
-  color: var(--grey-darkest);
-  font-weight: bold;
-}
-div#container div.codebox div.content span.value {
-  color: var(--blue);
-}
-div#container div.codebox div.content span.default span.value,
-div#container div.codebox div.content span.default span.key {
-  color: var(--grey-medium);
-}
-@media (max-width: 599px) {
-  div#container div.codebox {
-    display: none;
   }
 }
 
@@ -239,7 +180,6 @@ table.glyphchart tr td.icon {
 }
 
 article {
-  --content-width: 45em;
   animation-name: cfb-fadein;
   animation-duration: 250ms;
   animation-fill-mode: both;
@@ -251,21 +191,23 @@ article {
 }
 article.withnav {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0;
-  width: unset;
-  max-width: unset;
-  min-width: unset;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
 }
 article.withnav div.tablist-container {
   width: 15em;
   max-width: 15em;
   min-width: 15em;
+  position: fixed;
 }
 article.withnav div.tablist-container ul.tabbar {
   box-shadow: none;
 }
 article.withnav div.sections {
+  align-self: flex-end;
   width: var(--content-width);
   max-width: var(--content-width);
   min-width: var(--content-width);

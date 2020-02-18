@@ -186,9 +186,9 @@
                     </div>
                 </article>
 
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-basiccomponents" aria-labelledby="basiccomponents"class="withnav" >
+                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-basiccomponents" aria-labelledby="basiccomponents" class="withnav" >
                     <div class="sections">
-                        <section>
+                        <section id="s-buttons">
                             <h2>Buttons</h2>
                             <code class="invoker">new SimpleButton({options});</code>
 
@@ -233,7 +233,7 @@
                             </div>
 
                         </section>
-                        <section>
+                        <section id="s-textareas">
                             <h2>Text Areas</h2>
                             <code class="invoker">new TextArea({options});</code>
                             <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
@@ -254,7 +254,7 @@
                                 <p>Disabled <code>TextArea</code> elements behave like disabled TextInputs in nearly all respects.</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-inputs">
                             <h2>Inputs</h2>
                             <code class="invoker">new TextInput({options});</code>
                             <p>A <dfn>TextInput</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a <code>TextArea</code> element). All <code>TextInput</code> classes extend <code>InputElement</code>.</p>
@@ -312,7 +312,7 @@
                                 <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-selects">
                             <h2>Selects</h2>
                             <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
                             <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
@@ -345,7 +345,7 @@
                                 <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-radiobuttons">
                             <h2>Radio Buttons</h2>
                             <code class="invoker">new RadioGroup({options});</code>
                             <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
@@ -367,7 +367,7 @@
                             </div>
 
                         </section>
-                        <section>
+                        <section id="s-toggles">
                             <h2>Checkboxes and Toggles</h2>
                             <code class="invoker">new BooleanToggle({options});</code>
 
@@ -383,25 +383,11 @@
                                 <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
                             </div>
                         </section>
-                        <section>
-                            <h2>Forms</h2>
-                            <code class="invoker">new SimpleForm({options});</code>
-                            <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
-                            <p>Forms are displayed with discrete sections: header, elements, and actions.  The header section will include provided instructions (within an included <code>InstructionBox</code>) and any <code>MessageBox</code> elements generated by the form submission.</p>
-                            <p>Buttons passed with <code>submits: true</code> will submit the form for processing when clicked.  This also will be enabled when the form passes validation.</p>
-                            <div class="demobox" id="forms-standard">
-                                <h3>Standard</h3>
-                            </div>
-                            <div class="demobox" id="forms-passive">
-                                <h3>Profile</h3>
-                                <p>Forms can be made <i>passive</i>, like inputs.  Forms that can be made passive accepts  <code>passiveinstructions</code> and <code>passiveactions</code> parameters, both of which displays when the form is in <i>passive</i> mode.  If either are omitted, no harm and no foul.</p>
-                            </div>
-                        </section>
                     </div>
                 </article>
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-complexcomponents" aria-labelledby="complexcomponents"class="withnav" >
+                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-complexcomponents" aria-labelledby="complexcomponents" class="withnav" >
                     <div class="sections">
-                        <section>
+                        <section id="s-messageboxes">
                             <h2>Message Boxes</h2>
                             <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
                             <div class="demobox" id="boxes-instructions">
@@ -416,7 +402,21 @@
                                 <p>A <code>MessageBox</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain both <code>results</code> and <code>warnings</code> or <code>errors</code> and <code>warnings</code>.</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-forms">
+                            <h2>Forms</h2>
+                            <code class="invoker">new SimpleForm({options});</code>
+                            <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
+                            <p>Forms are displayed with discrete sections: header, elements, and actions.  The header section will include provided instructions (within an included <code>InstructionBox</code>) and any <code>MessageBox</code> elements generated by the form submission.</p>
+                            <p>Buttons passed with <code>submits: true</code> will submit the form for processing when clicked.  This also will be enabled when the form passes validation.</p>
+                            <div class="demobox" id="forms-standard">
+                                <h3>Standard</h3>
+                            </div>
+                            <div class="demobox" id="forms-passive">
+                                <h3>Profile</h3>
+                                <p>Forms can be made <i>passive</i>, like inputs.  Forms that can be made passive accepts  <code>passiveinstructions</code> and <code>passiveactions</code> parameters, both of which displays when the form is in <i>passive</i> mode.  If either are omitted, no harm and no foul.</p>
+                            </div>
+                        </section>
+                        <section id="s-dialogs">
                             <h2>Dialog Boxes</h2>
                             <code class="invoker">new DialogWindow({options});</code>
                             <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
@@ -490,7 +490,7 @@ And drunk the milk of Paradise.</pre>
                                 </div>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-growlers">
                             <h2>Growlers</h2>
 
                             <code class="invoker">new Growler({options});</code>
@@ -513,7 +513,7 @@ And drunk the milk of Paradise.</pre>
                                 </code>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-tabsmenus">
                             <h2>Tabs and Menus</h2>
 
                             <div class="demobox" id="tabsmenus-buttonmenu">
@@ -529,7 +529,7 @@ And drunk the milk of Paradise.</pre>
                                 <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-pwchanger">
                             <h2>Password Changer</h2>
 
                             <div class="demobox" id="pwchanger-simple">
@@ -539,7 +539,7 @@ And drunk the milk of Paradise.</pre>
                                 <p>It includes a <code>PasswordGenerator</code> component, which can be used anywhere else.  The generator can be configured by the user to include various sets of characters in the generation.</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-progressmeter">
                             <h2>Progress Meters</h2>
                             <div class="demobox" id="progressmeter-simple">
                                 <h3>Simple</h3>
@@ -556,7 +556,7 @@ And drunk the milk of Paradise.</pre>
                                 <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
                             </div>
                         </section>
-                        <section>
+                        <section id="s-datagrids">
                             <h2>Data Grids</h2>
 
                             <div class="demobox" id="datagrid-basic">

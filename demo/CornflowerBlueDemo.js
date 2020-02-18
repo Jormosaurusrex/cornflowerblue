@@ -206,6 +206,7 @@ class CornflowerBlueDemo {
         } else {
             location.hash = `#${tab}`;
         }
+        window.scrollTo(0,0);
     }
 
     build() {
@@ -261,7 +262,7 @@ class CornflowerBlueDemo {
             { label: 'Growlers', id: 'growlers' },
             { label: 'Password Changer', id: 'pwchanger' },
             { label: 'Progress Meters', id: 'progressmeter' },
-            { label: 'Data Grid', id: 'datagrid' }
+            { label: 'Data Grid', id: 'datagrids' }
         ];
 
         let tabstight = [
@@ -311,22 +312,8 @@ class CornflowerBlueDemo {
             navigation: true,
             animation: null,
             tabs: newtabs,
-            action: function(tab, self) {
-                let tabs = document.getElementsByTagName('article');
-                for (let t of tabs) {
-                    t.setAttribute('aria-hidden', true);
-                }
-                let thetab = document.getElementById(`t-${tab}`);
-                thetab.removeAttribute('aria-hidden');
-                console.log(thetab.classList);
-
-                self.select(tab);
-
-                if(history.pushState) {
-                    history.pushState(null, null, `#${tab}`);
-                } else {
-                    location.hash = `#${tab}`;
-                }
+            action: function(tab) {
+                me.switchTab(tab);
             }
         });
 
@@ -335,12 +322,17 @@ class CornflowerBlueDemo {
         // Local Navigations
         let basictabnav = new TabBar({
             vertical: true,
-            classes: ['demo'],
+            classes: ['sidenav'],
             navigation: false,
             animation: null,
             tabs: basictabs,
             action: function(tab, self) {
-                let sections = document.getElementsByTagName('section');
+                document.getElementById(`s-${tab}`).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
+
+                self.select(tab);
             }
         });
 
@@ -348,19 +340,19 @@ class CornflowerBlueDemo {
 
         let complextabnav = new TabBar({
             vertical: true,
-            classes: ['demo'],
+            classes: ['sidenav'],
             navigation: false,
             animation: null,
             tabs: complextabs,
             action: function(tab, self) {
-                let sections = document.getElementsByTagName('section');
+                document.getElementById(`s-${tab}`).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                self.select(tab);
             }
         });
 
         document.getElementById('t-complexcomponents').prepend(complextabnav.container);
-
-
-
 
         this.grindButtons();
         this.grindCheckboxes();
