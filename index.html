@@ -1,435 +1,431 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <title>Cornflower Blue</title>
+<head>
+    <title>Cornflower Blue</title>
 
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="description" content="A demo page for Cornflower Blue" />
-        <meta name="author" content="Brandon Harris" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="A demo page for Cornflower Blue" />
+    <meta name="author" content="Brandon Harris" />
 
-        <meta name="og:title" content="Cornflower Blue" />
-        <meta name="og:description" content="A simple Javascript UI toolkit." />
-        <meta name="og:type" content="website" />
-        <meta name="og:image" content="demo/image/cfb-banner.png" />
-        <meta name="og:url" content="https://www.gaijin.com/cornflowerblue/" />
-        <meta name="og:image:width" content="1280" />
-        <meta name="og:image:height" content="640" />
+    <meta name="og:title" content="Cornflower Blue" />
+    <meta name="og:description" content="A simple Javascript UI toolkit." />
+    <meta name="og:type" content="website" />
+    <meta name="og:image" content="demo/image/cfb-banner.png" />
+    <meta name="og:url" content="https://www.gaijin.com/cornflowerblue/" />
+    <meta name="og:image:width" content="1280" />
+    <meta name="og:image:height" content="640" />
 
-        <link rel="apple-touch-icon" sizes="180x180" href="demo/image/favicons/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="demo/image/favicons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="demo/image/favicons/favicon-16x16.png" />
-        <link rel="manifest" href="demo/image/favicons/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="demo/image/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="demo/image/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="demo/image/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="demo/image/favicons/site.webmanifest" />
 
-        <link rel="stylesheet" type="text/css" href="src/style/cornflowerblue.css" />
-        <link rel="stylesheet" type="text/css" href="demo/style/guide.css" />
+    <link rel="stylesheet" type="text/css" href="src/style/cornflowerblue.css" />
+    <link rel="stylesheet" type="text/css" href="demo/style/guide.css" />
 
-        <script type="text/javascript" src="src/libs/factory/IconFactory.js"></script>
-        <script type="text/javascript" src="src/libs/factory/StateProvince.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/SimpleButton.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/ConstructiveButton.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/DestructiveButton.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/ButtonMenu.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/HamburgerButton.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/HelpButton.js"></script>
-        <script type="text/javascript" src="src/libs/buttons/SkipButton.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/InputElement.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/TextInput.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/BooleanToggle.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/NumberInput.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/EmailInput.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/URIInput.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/HiddenField.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/PasswordInput.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/SelectMenu.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/RadioGroup.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/StateMenu.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/TextArea.js"></script>
-        <script type="text/javascript" src="src/libs/inputs/FileInput.js"></script>
-        <script type="text/javascript" src="src/libs/components/DialogWindow.js"></script>
-        <script type="text/javascript" src="src/libs/components/FloatingPanel.js"></script>
-        <script type="text/javascript" src="src/libs/components/Growler.js"></script>
-        <script type="text/javascript" src="src/libs/components/InstructionBox.js"></script>
-        <script type="text/javascript" src="src/libs/components/MessageBox.js"></script>
-        <script type="text/javascript" src="src/libs/components/PasswordGenerator.js"></script>
-        <script type="text/javascript" src="src/libs/components/PasswordChangeForm.js"></script>
-        <script type="text/javascript" src="src/libs/components/TabBar.js"></script>
-        <script type="text/javascript" src="src/libs/components/SimpleProgressMeter.js"></script>
-        <script type="text/javascript" src="src/libs/components/RadialProgressMeter.js"></script>
-        <script type="text/javascript" src="src/libs/components/grid/DataGrid.js"></script>
-        <script type="text/javascript" src="src/libs/SimpleForm.js"></script>
-        <script type="text/javascript" src="src/libs/Utils.js"></script>
-        <script type="text/javascript" src="demo/CornflowerBlueDemo.js"></script>
-        <script type="text/javascript">
-            if (!window.console) { console={}; console.log = function(){}; }
-            document.addEventListener("DOMContentLoaded", function(event) {
-                new CornflowerBlueDemo();
-            });
-        </script>
-    </head>
-    <body>
-        <div class="container" id="container">
-            <div class="banner"><h1 class="cfbtitle">cornflowerblue</h1></div>
-            <div class="displaybox" id="displaybox">
-                <a class="visually-hidden" name="content-start">Content</a>
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-intro" aria-labelledby="intro">
-                    <h2>Introduction</h2>
-                    <p><i>cornflowerblue</i> is an easy-to-use and flexible UI toolkit written in native ES6 Javascript.  It is accessible out of the box.</p>
-                    <h2>My $deity Why</h2>
-                    <p>I am constantly writing a lot of small, self-contained websites, many of which require design and form elements. These projects usually don't need gigantic toolkits, so I would end up writing, re-writing, cutting-and-pasting, and re-using elements from earlier projects.  I'm lazy, so I started collecting them.</p>
-                    <p>Of course, once you start down this dark path, forever will it dominate your destiny. Consume you, it will. It's <em>fun</em> for me; I like exploring the weird edges and thinking about what I think are the "best" behaviors for things.</p>
-                    <p>Why package it up? I want to release some of my <em>other</em> code. If <code>cornflowerblue</code> is a dependency for those projects, it should be solid and reusable.</p>
+    <script type="text/javascript" src="src/libs/factory/IconFactory.js"></script>
+    <script type="text/javascript" src="src/libs/factory/StateProvince.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/SimpleButton.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/ConstructiveButton.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/DestructiveButton.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/ButtonMenu.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/HamburgerButton.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/HelpButton.js"></script>
+    <script type="text/javascript" src="src/libs/buttons/SkipButton.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/InputElement.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/TextInput.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/BooleanToggle.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/NumberInput.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/EmailInput.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/URIInput.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/HiddenField.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/PasswordInput.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/SelectMenu.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/RadioGroup.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/StateMenu.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/TextArea.js"></script>
+    <script type="text/javascript" src="src/libs/inputs/FileInput.js"></script>
+    <script type="text/javascript" src="src/libs/components/DialogWindow.js"></script>
+    <script type="text/javascript" src="src/libs/components/FloatingPanel.js"></script>
+    <script type="text/javascript" src="src/libs/components/Growler.js"></script>
+    <script type="text/javascript" src="src/libs/components/InstructionBox.js"></script>
+    <script type="text/javascript" src="src/libs/components/MessageBox.js"></script>
+    <script type="text/javascript" src="src/libs/components/PasswordGenerator.js"></script>
+    <script type="text/javascript" src="src/libs/components/PasswordChangeForm.js"></script>
+    <script type="text/javascript" src="src/libs/components/TabBar.js"></script>
+    <script type="text/javascript" src="src/libs/components/SimpleProgressMeter.js"></script>
+    <script type="text/javascript" src="src/libs/components/RadialProgressMeter.js"></script>
+    <script type="text/javascript" src="src/libs/components/grid/DataGrid.js"></script>
+    <script type="text/javascript" src="src/libs/SimpleForm.js"></script>
+    <script type="text/javascript" src="src/libs/Utils.js"></script>
+    <script type="text/javascript" src="demo/CornflowerBlueDemo.js"></script>
+    <script type="text/javascript">
+        if (!window.console) { console={}; console.log = function(){}; }
+        document.addEventListener("DOMContentLoaded", function(event) {
+            new CornflowerBlueDemo();
+        });
+    </script>
+</head>
+<body>
+<div class="container" id="container">
+    <div class="banner"><h1 class="cfbtitle">cornflowerblue</h1></div>
+    <div class="displaybox" id="displaybox">
+        <div class="articlebox" id="articlebox">
+        <a class="visually-hidden" name="content-start">Content</a>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-intro" aria-labelledby="intro">
 
-                    <h3>Why "cornflower blue"</h3>
-                    <p>I hate explaining jokes.</p>
+            <h2>Introduction</h2>
+            <p><i>cornflowerblue</i> is an easy-to-use and flexible UI toolkit written in native ES6 Javascript.  It is accessible out of the box.</p>
+            <h2>My $deity Why</h2>
+            <p>I am constantly writing a lot of small, self-contained websites, many of which require design and form elements. These projects usually don't need gigantic toolkits, so I would end up writing, re-writing, cutting-and-pasting, and re-using elements from earlier projects.  I'm lazy, so I started collecting them.</p>
+            <p>Of course, once you start down this dark path, forever will it dominate your destiny. Consume you, it will. It's <em>fun</em> for me; I like exploring the weird edges and thinking about what I think are the "best" behaviors for things.</p>
+            <p>Why package it up? I want to release some of my <em>other</em> code. If <code>cornflowerblue</code> is a dependency for those projects, it should be solid and reusable.</p>
 
-                </article>
+            <h3>Why "cornflower blue"</h3>
+            <p>I hate explaining jokes.</p>
 
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-wiki" aria-labelledby="wiki">
-                    <h2>Cornflower Blue</h2>
-                    <div class="wiki">
-                        <figure>
-                            <a target="_new" href="https://commons.wikimedia.org/wiki/File:CentaureaCyanus-bloem-kl.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/220px-CentaureaCyanus-bloem-kl.jpg" decoding="async" width="220" height="165" class="thumbimage" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/330px-CentaureaCyanus-bloem-kl.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/440px-CentaureaCyanus-bloem-kl.jpg 2x" data-file-width="1280" data-file-height="960"></a>
-                            <figcaption>
-                                A <a target="_new" href="https://en.wikipedia.org/wiki/Cornflower" class="mw-redirect" title="Cornflower">cornflower</a>
-                            </figcaption>
-                        </figure>
-                        <table class="infobox" style="width:22em"><tbody><tr><th colspan="2" style="text-align:center;font-size:125%;font-weight:bold">Cornflower blue (X11)</th></tr><tr><td colspan="2" style="text-align:center;line-height:12px; background-color:#6495ED; border: 0.1px solid #000000">&nbsp;</td></tr>
-                        <tr><th colspan="2" style="text-align:center">Color coordinates</th></tr>
-                        <tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" title="Web colors">Hex triplet</a></th><td>#6495ED</td></tr><tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/SRGB_color_space" class="mw-redirect" title="SRGB color space">sRGB</a><sup><b>B</b></sup>&nbsp;&nbsp;(<a  target="_new" href="https://en.wikipedia.org/wiki/Red" title="Red">r</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Green" title="Green">g</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Blue" title="Blue">b</a>)</th><td>(100, 149, 237)</td></tr><tr><th scope="row"><span class="nowrap"><a  target="_new" href="https://en.wikipedia.org/wiki/CMYK_color_model" title="CMYK color model">CMYK</a><sup><b>H</b></sup> &nbsp; (<a  target="_new" href="https://en.wikipedia.org/wiki/Cyan" title="Cyan">c</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Magenta" title="Magenta">m</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Yellow" title="Yellow">y</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Black" title="Black">k</a>)</span></th><td><span class="nowrap">(59, 37, 0, 0)</span></td></tr><tr><th scope="row"><span class="nowrap"><a  target="_new" href="https://en.wikipedia.org/wiki/HSV_color_space" class="mw-redirect" title="HSV color space">HSV</a> &nbsp; &nbsp; &nbsp; (<a  target="_new" href="https://en.wikipedia.org/wiki/Hue" title="Hue">h</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Saturation_(color_theory)" class="mw-redirect" title="Saturation (color theory)">s</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Brightness" title="Brightness">v</a>)</span></th><td><span class="nowrap">(219deg, 58%, 93%)</span></td></tr><tr><th scope="row">Source</th><td><a  target="_new" href="https://en.wikipedia.org/wiki/Web_colors#X11_color_names" title="Web colors">X11</a></td></tr><tr><td colspan="2" style="text-align:center"><b>B</b>: Normalized to [0-255] (byte)<br><b>H</b>: Normalized to [0-100] (hundred)</td></tr></tbody></table>
-                        <table class="infobox" style="width:22em"><tbody><tr><th colspan="2" style="text-align:center;font-size:125%;font-weight:bold">Cornflower blue (Crayola)</th></tr><tr><td colspan="2" style="text-align:center;line-height:12px; background-color:#93CCEA; border: 0.1px solid #000000">&nbsp;</td></tr><tr><th colspan="2" style="text-align:center">Color coordinates</th></tr><tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" title="Web colors">Hex triplet</a></th><td>#93CCEA</td></tr><tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/SRGB_color_space" class="mw-redirect" title="SRGB color space">sRGB</a><sup><b>B</b></sup>&nbsp;&nbsp;(<a  target="_new" href="https://en.wikipedia.org/wiki/Red" title="Red">r</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Green" title="Green">g</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Blue" title="Blue">b</a>)</th><td>(154, 206, 235)</td></tr><tr><th scope="row"><span class="nowrap"><a  target="_new" href="https://en.wikipedia.org/wiki/HSV_color_space" class="mw-redirect" title="HSV color space">HSV</a> &nbsp; &nbsp; &nbsp; (<a  target="_new" href="https://en.wikipedia.org/wiki/Hue" title="Hue">h</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Saturation_(color_theory)" class="mw-redirect" title="Saturation (color theory)">s</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Brightness" title="Brightness">v</a>)</span></th><td><span class="nowrap">(201deg, 37%, 92%)</span></td></tr><tr><th scope="row">Source</th><td><a  target="_new" href="https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors" title="List of Crayola crayon colors">Crayola</a></td></tr><tr><td colspan="2" style="text-align:center"><b>B</b>: Normalized to [0-255] (byte)<br></td></tr></tbody></table>
-                        <p><b>Cornflower blue</b> is a shade of medium-to-light <a target="_new" href="https://en.wikipedia.org/wiki/Blue" title="">blue</a> containing relatively little <a target="_new" href="https://en.wikipedia.org/wiki/Green" title="">green</a> compared to blue. This hue was one of the favorites of the Dutch painter <a target="_new" href="https://en.wikipedia.org/wiki/Johannes_Vermeer" title="">Johannes Vermeer</a>.<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup></p>
-                        <p>The most valuable blue <a target="_new" href="https://en.wikipedia.org/wiki/Sapphire" title="Sapphire">sapphires</a> are called cornflower blue, having a medium-dark violet-blue tone.<sup id="cite_ref-2" class="reference"><a href="#cite_note-2">[2]</a></sup></p>
-                        <h2>Uses</h2>
-                        <h3>Robert Boyle</h3>
-                        <p><a target="_new" href="https://en.wikipedia.org/wiki/Robert_Boyle" title="Robert Boyle">Robert Boyle</a> reported a blue <a target="_new" href="https://en.wikipedia.org/wiki/Dye" title="Dye">dye</a> produced from the cornflower.<sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup> This was also called <i>Boyle's Blue</i><sup id="cite_ref-4" class="reference"><a href="#cite_note-4">[4]</a></sup> and <i>Cyan Blue</i>.<sup id="cite_ref-5" class="reference"><a href="#cite_note-5">[5]</a></sup> This dye color however, was not widely commercialized.<sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup></p>
-                        <h3>X11</h3>
-                        <p>Cornflower blue is a <a target="_new" href="https://en.wikipedia.org/wiki/X11_color_names" title="X11 color names">defined color</a> in the <a target="_new" href="https://en.wikipedia.org/wiki/X_Window_System" title="X Window System">X Window</a> (X11) color scheme.<sup id="cite_ref-ColorLibraryX11dictionary_7-0" class="reference"><a href="#cite_note-ColorLibraryX11dictionary-7">[7]</a></sup> As such, it is a color available as a <a target="_new" href="https://en.wikipedia.org/wiki/Web_colors#X11_color_names" title="Web colors">named color for webpages</a>.</p>
-                        <h3>HTML</h3>
-                        <p>CornFlowerBlue <span class="colorswatch" style="background-color:#6495ED;" title="#6495ed"> </span> is an <a target="_new" href="https://en.wikipedia.org/wiki/HTML" title="HTML">HTML</a> color name, its <a target="_new" href="https://en.wikipedia.org/wiki/Hexadecimal" title="Hexadecimal">hexadecimal</a> code is #6495ED.<sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup></p>
-                        <h3>Crayola</h3>
-                        <p>Cornflower blue <span class="colorswatch" style="background-color:#93CCEA;" title="#6495ed"> </span> is a <a target="_new" href="https://en.wikipedia.org/wiki/Crayola" title="Crayola">Crayola</a> <a target="_new" href="https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors" title="List of Crayola crayon colors">color</a> with hexadecimal code #93CCEA<sup id="cite_ref-encycolorpedia_93ccea_9-0" class="reference"><a href="#cite_note-encycolorpedia_93ccea-9">[9]</a></sup>. It was originally introduced in 1958, in the box of 48 <a target="_new" href="https://en.wikipedia.org/wiki/Crayon" title="Crayon">crayons</a>. The color is also called light cornflower blue.<sup id="cite_ref-ColorHexa_10-0" class="reference"><a href="#cite_note-ColorHexa-10">[10]</a></sup></p>
-                        <h3>Microsoft XNA</h3>
-                        <p>Cornflower blue is the default clear color used in the <a target="_new" href="https://en.wikipedia.org/wiki/Microsoft_XNA" title="Microsoft XNA">XNA framework</a>.</p>
-                        <h2>In popular culture</h2>
+        </article>
 
-                        <ul>
-                            <li><a target="_new" href="https://en.wikipedia.org/wiki/Chuck_Palahniuk" title="Chuck Palahniuk">Chuck Palahniuk</a> mentions the color at least once in each of his novels. The color also appears in the film adaptation of Palahniuk's <i><a target="_new" href="https://en.wikipedia.org/wiki/Fight_Club_(novel)" title="Fight Club (novel)">Fight Club</a></i>, where it is associated with the Narrator's boss: "It must've been Tuesday. He was wearing his cornflower-blue tie." In a later scene, the Narrator's boss asks, "Can I get the icon in cornflower blue?"</li>
-                            <li>The German popular song "Kornblumenblau" (literally "cornflower blue") humorously glorifies extreme drunkenness, <i>blau</i> being German slang for "drunk" and cornflower blue being an intense shade of the color.<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[11]</a></sup></li>
-                            <li>The expression is used several times in describing the character Helen Watt, a historian in the book <i>The Weight of Ink</i> by <a target="_new" href="https://en.wikipedia.org/wiki/Rachel_Kadish" title="Rachel Kadish">Rachel Kadish</a>.</li>
-                            <li>In an episode of the ninth and final season of <i><a target="_new" href="https://en.wikipedia.org/wiki/How_I_Met_Your_Mother" title="How I Met Your Mother">How I Met Your Mother</a></i>, Barney Stinson is seen contemplating which tie he should wear for his wedding ceremony and is upset that he does not have his cornflower-blue tie which would have brought out his eyes.</li>
-                            <li>In the <i><a target="_new" href="https://en.wikipedia.org/wiki/The_Witcher" title="The Witcher">Witcher</a></i> novel <i><a target="_new" href="https://en.wikipedia.org/wiki/Blood_of_Elves" title="Blood of Elves">Blood of Elves</a></i> by <a target="_new" href="https://en.wikipedia.org/wiki/Andrzej_Sapkowski" title="Andrzej Sapkowski">Andrzej Sapkowski</a>, Enchantress Triss Merigold's eyes are described as "cornflower blue."</li>
-                        </ul>
-                        <h2>See also</h2>
-                        <ul>
-                            <li><a target="_new" href="https://en.wikipedia.org/wiki/List_of_colors" class="mw-redirect" title="List of colors">List of colors</a></li>
-                        </ul>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-wiki" aria-labelledby="wiki">
+            <h2>Cornflower Blue</h2>
+            <div class="wiki">
+                <figure>
+                    <a target="_new" href="https://commons.wikimedia.org/wiki/File:CentaureaCyanus-bloem-kl.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/220px-CentaureaCyanus-bloem-kl.jpg" decoding="async" width="220" height="165" class="thumbimage" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/330px-CentaureaCyanus-bloem-kl.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CentaureaCyanus-bloem-kl.jpg/440px-CentaureaCyanus-bloem-kl.jpg 2x" data-file-width="1280" data-file-height="960"></a>
+                    <figcaption>
+                        A <a target="_new" href="https://en.wikipedia.org/wiki/Cornflower" class="mw-redirect" title="Cornflower">cornflower</a>
+                    </figcaption>
+                </figure>
+                <table class="infobox" style="width:22em"><tbody><tr><th colspan="2" style="text-align:center;font-size:125%;font-weight:bold">Cornflower blue (X11)</th></tr><tr><td colspan="2" style="text-align:center;line-height:12px; background-color:#6495ED; border: 0.1px solid #000000">&nbsp;</td></tr>
+                <tr><th colspan="2" style="text-align:center">Color coordinates</th></tr>
+                <tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" title="Web colors">Hex triplet</a></th><td>#6495ED</td></tr><tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/SRGB_color_space" class="mw-redirect" title="SRGB color space">sRGB</a><sup><b>B</b></sup>&nbsp;&nbsp;(<a  target="_new" href="https://en.wikipedia.org/wiki/Red" title="Red">r</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Green" title="Green">g</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Blue" title="Blue">b</a>)</th><td>(100, 149, 237)</td></tr><tr><th scope="row"><span class="nowrap"><a  target="_new" href="https://en.wikipedia.org/wiki/CMYK_color_model" title="CMYK color model">CMYK</a><sup><b>H</b></sup> &nbsp; (<a  target="_new" href="https://en.wikipedia.org/wiki/Cyan" title="Cyan">c</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Magenta" title="Magenta">m</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Yellow" title="Yellow">y</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Black" title="Black">k</a>)</span></th><td><span class="nowrap">(59, 37, 0, 0)</span></td></tr><tr><th scope="row"><span class="nowrap"><a  target="_new" href="https://en.wikipedia.org/wiki/HSV_color_space" class="mw-redirect" title="HSV color space">HSV</a> &nbsp; &nbsp; &nbsp; (<a  target="_new" href="https://en.wikipedia.org/wiki/Hue" title="Hue">h</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Saturation_(color_theory)" class="mw-redirect" title="Saturation (color theory)">s</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Brightness" title="Brightness">v</a>)</span></th><td><span class="nowrap">(219deg, 58%, 93%)</span></td></tr><tr><th scope="row">Source</th><td><a  target="_new" href="https://en.wikipedia.org/wiki/Web_colors#X11_color_names" title="Web colors">X11</a></td></tr><tr><td colspan="2" style="text-align:center"><b>B</b>: Normalized to [0-255] (byte)<br><b>H</b>: Normalized to [0-100] (hundred)</td></tr></tbody></table>
+                <table class="infobox" style="width:22em"><tbody><tr><th colspan="2" style="text-align:center;font-size:125%;font-weight:bold">Cornflower blue (Crayola)</th></tr><tr><td colspan="2" style="text-align:center;line-height:12px; background-color:#93CCEA; border: 0.1px solid #000000">&nbsp;</td></tr><tr><th colspan="2" style="text-align:center">Color coordinates</th></tr><tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" title="Web colors">Hex triplet</a></th><td>#93CCEA</td></tr><tr><th scope="row"><a  target="_new" href="https://en.wikipedia.org/wiki/SRGB_color_space" class="mw-redirect" title="SRGB color space">sRGB</a><sup><b>B</b></sup>&nbsp;&nbsp;(<a  target="_new" href="https://en.wikipedia.org/wiki/Red" title="Red">r</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Green" title="Green">g</a>,&nbsp;<a  target="_new" href="https://en.wikipedia.org/wiki/Blue" title="Blue">b</a>)</th><td>(154, 206, 235)</td></tr><tr><th scope="row"><span class="nowrap"><a  target="_new" href="https://en.wikipedia.org/wiki/HSV_color_space" class="mw-redirect" title="HSV color space">HSV</a> &nbsp; &nbsp; &nbsp; (<a  target="_new" href="https://en.wikipedia.org/wiki/Hue" title="Hue">h</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Saturation_(color_theory)" class="mw-redirect" title="Saturation (color theory)">s</a>, <a  target="_new" href="https://en.wikipedia.org/wiki/Brightness" title="Brightness">v</a>)</span></th><td><span class="nowrap">(201deg, 37%, 92%)</span></td></tr><tr><th scope="row">Source</th><td><a  target="_new" href="https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors" title="List of Crayola crayon colors">Crayola</a></td></tr><tr><td colspan="2" style="text-align:center"><b>B</b>: Normalized to [0-255] (byte)<br></td></tr></tbody></table>
+                <p><b>Cornflower blue</b> is a shade of medium-to-light <a target="_new" href="https://en.wikipedia.org/wiki/Blue" title="">blue</a> containing relatively little <a target="_new" href="https://en.wikipedia.org/wiki/Green" title="">green</a> compared to blue. This hue was one of the favorites of the Dutch painter <a target="_new" href="https://en.wikipedia.org/wiki/Johannes_Vermeer" title="">Johannes Vermeer</a>.<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup></p>
+                <p>The most valuable blue <a target="_new" href="https://en.wikipedia.org/wiki/Sapphire" title="Sapphire">sapphires</a> are called cornflower blue, having a medium-dark violet-blue tone.<sup id="cite_ref-2" class="reference"><a href="#cite_note-2">[2]</a></sup></p>
+                <h2>Uses</h2>
+                <h3>Robert Boyle</h3>
+                <p><a target="_new" href="https://en.wikipedia.org/wiki/Robert_Boyle" title="Robert Boyle">Robert Boyle</a> reported a blue <a target="_new" href="https://en.wikipedia.org/wiki/Dye" title="Dye">dye</a> produced from the cornflower.<sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup> This was also called <i>Boyle's Blue</i><sup id="cite_ref-4" class="reference"><a href="#cite_note-4">[4]</a></sup> and <i>Cyan Blue</i>.<sup id="cite_ref-5" class="reference"><a href="#cite_note-5">[5]</a></sup> This dye color however, was not widely commercialized.<sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup></p>
+                <h3>X11</h3>
+                <p>Cornflower blue is a <a target="_new" href="https://en.wikipedia.org/wiki/X11_color_names" title="X11 color names">defined color</a> in the <a target="_new" href="https://en.wikipedia.org/wiki/X_Window_System" title="X Window System">X Window</a> (X11) color scheme.<sup id="cite_ref-ColorLibraryX11dictionary_7-0" class="reference"><a href="#cite_note-ColorLibraryX11dictionary-7">[7]</a></sup> As such, it is a color available as a <a target="_new" href="https://en.wikipedia.org/wiki/Web_colors#X11_color_names" title="Web colors">named color for webpages</a>.</p>
+                <h3>HTML</h3>
+                <p>CornFlowerBlue <span class="colorswatch" style="background-color:#6495ED;" title="#6495ed"> </span> is an <a target="_new" href="https://en.wikipedia.org/wiki/HTML" title="HTML">HTML</a> color name, its <a target="_new" href="https://en.wikipedia.org/wiki/Hexadecimal" title="Hexadecimal">hexadecimal</a> code is #6495ED.<sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup></p>
+                <h3>Crayola</h3>
+                <p>Cornflower blue <span class="colorswatch" style="background-color:#93CCEA;" title="#6495ed"> </span> is a <a target="_new" href="https://en.wikipedia.org/wiki/Crayola" title="Crayola">Crayola</a> <a target="_new" href="https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors" title="List of Crayola crayon colors">color</a> with hexadecimal code #93CCEA<sup id="cite_ref-encycolorpedia_93ccea_9-0" class="reference"><a href="#cite_note-encycolorpedia_93ccea-9">[9]</a></sup>. It was originally introduced in 1958, in the box of 48 <a target="_new" href="https://en.wikipedia.org/wiki/Crayon" title="Crayon">crayons</a>. The color is also called light cornflower blue.<sup id="cite_ref-ColorHexa_10-0" class="reference"><a href="#cite_note-ColorHexa-10">[10]</a></sup></p>
+                <h3>Microsoft XNA</h3>
+                <p>Cornflower blue is the default clear color used in the <a target="_new" href="https://en.wikipedia.org/wiki/Microsoft_XNA" title="Microsoft XNA">XNA framework</a>.</p>
+                <h2>In popular culture</h2>
 
-                        <h2>References</h2>
-                        <div class="reflist" style="list-style-type: decimal;">
-                            <ol class="references">
-                                <li id="cite_note-1"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="http://www.hollandhistory.net/dutch_master_painters/jan-vermeer.html">"Jan Vermeer of Delft"</a>. <i>Holland History</i><span class="reference-accessdate">. Retrieved <span class="nowrap">30 December</span> 2016</span>.</cite></span></li>
-                                <li id="cite_note-2"><span class="reference-text"><i>McGraw-Hill Encyclopedia of Science and Technology</i>, ed. Sybil P.. Parker, 1997, McGraw-Hill, <a target="_new" href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a target="_new" href="https://en.wikipedia.org/wiki/Special:BookSources/9780079115041" title="Special:BookSources/9780079115041">9780079115041</a>, <a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?ei=Y2buT_oChvbSAYqKhfsC&amp;id=NJUoAQAAMAAJ&amp;dq=cornflower+blue+sapphire&amp;q=cornflower+#search_anchor">page 30</a></span></li>
-                                <li id="cite_note-3"><span class="reference-text"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i>, Nicholas Eastaugh, Valentine Walsh, Tracey Chaplin, Ruth Siddall, 2004, Routledge, <a target="_new" href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a target="_new" href="https://en.wikipedia.org/wiki/Special:BookSources/9781136373855" title="Special:BookSources/9781136373855">9781136373855</a></span></li>
-                                <li id="cite_note-4"><span class="reference-text"><cite class="citation book"><a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?id=2OH28vpzzMsC&amp;lpg=PT395&amp;dq=cornflower%20blue&amp;pg=PT186#v=onepage&amp;q=cornflower%20blue&amp;f=false"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i></a>.</cite></span></li>
-                                <li id="cite_note-5"><span class="reference-text"><cite class="citation book"><a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?id=2OH28vpzzMsC&amp;lpg=PT395&amp;dq=cornflower%20blue&amp;pg=PT410#v=onepage&amp;q=cornflower%20blue&amp;f=false"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i></a>.</cite></span></li>
-                                <li id="cite_note-6"><span class="reference-text"><cite class="citation book"><a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?id=2OH28vpzzMsC&amp;pg=PT395&amp;dq=cornflower+blue&amp;hl=en&amp;sa=X&amp;ei=ymHuT92UKMn00gGFxd36Ag&amp;redir_esc=y#v=onepage&amp;q=cornflower%20blue&amp;f=false"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i></a>.</cite></span></li>
-                                <li id="cite_note-ColorLibraryX11dictionary-7"><span class="reference-text">Color Library documentation, <a target="_new" rel="nofollow" class="external text" href="http://cpan.uwinnipeg.ca/htdocs/Color-Library/Color/Library/Dictionary/X11.pm.html">Color::Library::Dictionary::X11 - (X11) Colors for the X11 Window System (rgb.txt)</a> <a target="_new" rel="nofollow" class="external text" href="https://archive.is/20130627101547/http://cpan.uwinnipeg.ca/htdocs/Color-Library/Color/Library/Dictionary/X11.pm.html">Archived</a> 2013-06-27 at <a target="_new" href="https://en.wikipedia.org/wiki/Archive.today" title="Archive.today">Archive.today</a> (accessed 2012-06-29)</span></li>
-                                <li id="cite_note-8"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="http://www.html-color-names.com/cornflowerblue.php">"CornFlowerBlue"</a>. <i>html-color-names.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">August 28,</span> 2016</span>.</cite></span></li>
-                                <li id="cite_note-encycolorpedia_93ccea-9"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="https://encycolorpedia.com/93ccea">"Cornflower / #93ccea Hex Color Code Schemes and Paints"</a>. <i>encycolorpedia.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">15 August</span> 2018</span>.</cite></span></li>
-                                <li id="cite_note-ColorHexa-10"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="https://www.colorhexa.com/93ccea">"Light cornflower blue / #93ccea hex color"</a>. <i>ColorHexa</i><span class="reference-accessdate">. Retrieved <span class="nowrap">15 August</span> 2018</span>.</cite></span></li>
-                                <li id="cite_note-11"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="http://www.ingeb.org/Lieder/esgibtke.html">"Kornblumenblau / Es gibt kein Pltzchen auf Erden free midi mp3 download Strand Hotel Sechelt bed breakfast"</a>. <i>Ingeb.org</i><span class="reference-accessdate">. Retrieved <span class="nowrap">20 November</span> 2017</span>.</cite></span></li>
-                            </ol>
-                        </div>
-                    </div>
-                </article>
+                <ul>
+                    <li><a target="_new" href="https://en.wikipedia.org/wiki/Chuck_Palahniuk" title="Chuck Palahniuk">Chuck Palahniuk</a> mentions the color at least once in each of his novels. The color also appears in the film adaptation of Palahniuk's <i><a target="_new" href="https://en.wikipedia.org/wiki/Fight_Club_(novel)" title="Fight Club (novel)">Fight Club</a></i>, where it is associated with the Narrator's boss: "It must've been Tuesday. He was wearing his cornflower-blue tie." In a later scene, the Narrator's boss asks, "Can I get the icon in cornflower blue?"</li>
+                    <li>The German popular song "Kornblumenblau" (literally "cornflower blue") humorously glorifies extreme drunkenness, <i>blau</i> being German slang for "drunk" and cornflower blue being an intense shade of the color.<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[11]</a></sup></li>
+                    <li>The expression is used several times in describing the character Helen Watt, a historian in the book <i>The Weight of Ink</i> by <a target="_new" href="https://en.wikipedia.org/wiki/Rachel_Kadish" title="Rachel Kadish">Rachel Kadish</a>.</li>
+                    <li>In an episode of the ninth and final season of <i><a target="_new" href="https://en.wikipedia.org/wiki/How_I_Met_Your_Mother" title="How I Met Your Mother">How I Met Your Mother</a></i>, Barney Stinson is seen contemplating which tie he should wear for his wedding ceremony and is upset that he does not have his cornflower-blue tie which would have brought out his eyes.</li>
+                    <li>In the <i><a target="_new" href="https://en.wikipedia.org/wiki/The_Witcher" title="The Witcher">Witcher</a></i> novel <i><a target="_new" href="https://en.wikipedia.org/wiki/Blood_of_Elves" title="Blood of Elves">Blood of Elves</a></i> by <a target="_new" href="https://en.wikipedia.org/wiki/Andrzej_Sapkowski" title="Andrzej Sapkowski">Andrzej Sapkowski</a>, Enchantress Triss Merigold's eyes are described as "cornflower blue."</li>
+                </ul>
+                <h2>See also</h2>
+                <ul>
+                    <li><a target="_new" href="https://en.wikipedia.org/wiki/List_of_colors" class="mw-redirect" title="List of colors">List of colors</a></li>
+                </ul>
 
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-text" aria-labelledby="text">
-                    <h2>Text Playground</h2>
+                <h2>References</h2>
+                <div class="reflist" style="list-style-type: decimal;">
+                    <ol class="references">
+                        <li id="cite_note-1"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="http://www.hollandhistory.net/dutch_master_painters/jan-vermeer.html">"Jan Vermeer of Delft"</a>. <i>Holland History</i><span class="reference-accessdate">. Retrieved <span class="nowrap">30 December</span> 2016</span>.</cite></span></li>
+                        <li id="cite_note-2"><span class="reference-text"><i>McGraw-Hill Encyclopedia of Science and Technology</i>, ed. Sybil P.. Parker, 1997, McGraw-Hill, <a target="_new" href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a target="_new" href="https://en.wikipedia.org/wiki/Special:BookSources/9780079115041" title="Special:BookSources/9780079115041">9780079115041</a>, <a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?ei=Y2buT_oChvbSAYqKhfsC&amp;id=NJUoAQAAMAAJ&amp;dq=cornflower+blue+sapphire&amp;q=cornflower+#search_anchor">page 30</a></span></li>
+                        <li id="cite_note-3"><span class="reference-text"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i>, Nicholas Eastaugh, Valentine Walsh, Tracey Chaplin, Ruth Siddall, 2004, Routledge, <a target="_new" href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a target="_new" href="https://en.wikipedia.org/wiki/Special:BookSources/9781136373855" title="Special:BookSources/9781136373855">9781136373855</a></span></li>
+                        <li id="cite_note-4"><span class="reference-text"><cite class="citation book"><a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?id=2OH28vpzzMsC&amp;lpg=PT395&amp;dq=cornflower%20blue&amp;pg=PT186#v=onepage&amp;q=cornflower%20blue&amp;f=false"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i></a>.</cite></span></li>
+                        <li id="cite_note-5"><span class="reference-text"><cite class="citation book"><a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?id=2OH28vpzzMsC&amp;lpg=PT395&amp;dq=cornflower%20blue&amp;pg=PT410#v=onepage&amp;q=cornflower%20blue&amp;f=false"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i></a>.</cite></span></li>
+                        <li id="cite_note-6"><span class="reference-text"><cite class="citation book"><a target="_new" rel="nofollow" class="external text" href="https://books.google.com/books?id=2OH28vpzzMsC&amp;pg=PT395&amp;dq=cornflower+blue&amp;hl=en&amp;sa=X&amp;ei=ymHuT92UKMn00gGFxd36Ag&amp;redir_esc=y#v=onepage&amp;q=cornflower%20blue&amp;f=false"><i>The Pigment Compendium: A Dictionary of Historical Pigments</i></a>.</cite></span></li>
+                        <li id="cite_note-ColorLibraryX11dictionary-7"><span class="reference-text">Color Library documentation, <a target="_new" rel="nofollow" class="external text" href="http://cpan.uwinnipeg.ca/htdocs/Color-Library/Color/Library/Dictionary/X11.pm.html">Color::Library::Dictionary::X11 - (X11) Colors for the X11 Window System (rgb.txt)</a> <a target="_new" rel="nofollow" class="external text" href="https://archive.is/20130627101547/http://cpan.uwinnipeg.ca/htdocs/Color-Library/Color/Library/Dictionary/X11.pm.html">Archived</a> 2013-06-27 at <a target="_new" href="https://en.wikipedia.org/wiki/Archive.today" title="Archive.today">Archive.today</a> (accessed 2012-06-29)</span></li>
+                        <li id="cite_note-8"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="http://www.html-color-names.com/cornflowerblue.php">"CornFlowerBlue"</a>. <i>html-color-names.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">August 28,</span> 2016</span>.</cite></span></li>
+                        <li id="cite_note-encycolorpedia_93ccea-9"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="https://encycolorpedia.com/93ccea">"Cornflower / #93ccea Hex Color Code Schemes and Paints"</a>. <i>encycolorpedia.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">15 August</span> 2018</span>.</cite></span></li>
+                        <li id="cite_note-ColorHexa-10"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="https://www.colorhexa.com/93ccea">"Light cornflower blue / #93ccea hex color"</a>. <i>ColorHexa</i><span class="reference-accessdate">. Retrieved <span class="nowrap">15 August</span> 2018</span>.</cite></span></li>
+                        <li id="cite_note-11"><span class="reference-text"><cite class="citation web"><a target="_new" rel="nofollow" class="external text" href="http://www.ingeb.org/Lieder/esgibtke.html">"Kornblumenblau / Es gibt kein Pltzchen auf Erden free midi mp3 download Strand Hotel Sechelt bed breakfast"</a>. <i>Ingeb.org</i><span class="reference-accessdate">. Retrieved <span class="nowrap">20 November</span> 2017</span>.</cite></span></li>
+                    </ol>
+                </div>
+            </div>
+        </article>
 
-                    <p>This is a text style and inheritence playground.  An application of the aesthetic to a <a class="internal" data-tab-target="wiki">wikipedia page</a> is available.</p>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-text" aria-labelledby="text">
+            <h2>Text</h2>
 
-                    <div class="demobox" id="headings-all">
+            <p>This is a text style and inheritence playground.  An application of the aesthetic to a <a class="internal" data-tab-target="wiki">wikipedia page</a> is available.</p>
 
-                        <h2>Headings</h2>
-                        <p>Headings use the same font stack as the body but with differing weights (and adornments, in the case of h2 and h2).  Headings have <code>text-transform: uppercase</code> to differentiate them from  following text.</p>
-                        <h1>Standard h1</h1>
-                        <h2>Standard h2</h2>
-                        <h3>Standard h3</h3>
-                        <h4>Standard h4</h4>
-                        <h5>Standard h5</h5>
-                        <h6>Standard h6</h6>
+            <div class="demobox" id="headings-all">
 
-                        <h2>Fancy Headings</h2>
-                        <code class="invoker">&lt;h1 class="fancy"&gt;Fancy&lt;h1&gt;</code>
-                        <p>All Headings (h1 through h6) can be given the <code>fancy</code> class.  Fancy Headings are centered and have two lines on either side.  They are not intended for constant use.</p>
-                        <h1 class="fancy">Fancy h1</h1>
-                        <h2 class="fancy">Fancy h2</h2>
-                        <h3 class="fancy">Fancy h3</h3>
-                        <h4 class="fancy">Fancy h4</h4>
-                        <h5 class="fancy">Fancy h5</h5>
-                        <h6 class="fancy">Fancy h6</h6>
+                <h2>Headings</h2>
+                <p>Headings use the same font stack as the body but with differing weights (and adornments, in the case of h2 and h2).  Headings have <code>text-transform: uppercase</code> to differentiate them from  following text.</p>
+                <h1>Standard h1</h1>
+                <h2>Standard h2</h2>
+                <h3>Standard h3</h3>
+                <h4>Standard h4</h4>
+                <h5>Standard h5</h5>
+                <h6>Standard h6</h6>
 
-                        <h2>Text Elements</h2>
+                <h2>Fancy Headings</h2>
+                <code class="invoker">&lt;h1 class="fancy"&gt;Fancy&lt;h1&gt;</code>
+                <p>All Headings (h1 through h6) can be given the <code>fancy</code> class.  Fancy Headings are centered and have two lines on either side.  They are not intended for constant use.</p>
+                <h1 class="fancy">Fancy h1</h1>
+                <h2 class="fancy">Fancy h2</h2>
+                <h3 class="fancy">Fancy h3</h3>
+                <h4 class="fancy">Fancy h4</h4>
+                <h5 class="fancy">Fancy h5</h5>
+                <h6 class="fancy">Fancy h6</h6>
 
-                        <aside>
-                            This is an <em>&lt;aside&gt;</em> tag. Text flows around it.
-                        </aside>
-                        <p class="dropcap">Add the "dropcap" class to a <code>&lt;p&gt;</code> tag to get an accessible drop cap.  Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target="_new" href="http://www.does.not.exist">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
-                        <blockquote>
-                            <p>This is a blockquote.  Text does not flow around it.</p>
-                        </blockquote>
-                        <p>Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
-                        <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
-                        <p>Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</p>
-                    </div>
-                </article>
+                <h2>Text Elements</h2>
 
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-basiccomponents" aria-labelledby="basiccomponents" class="withnav" >
-                    <div class="sections">
-                        <section id="s-buttons">
-                            <h2>Buttons</h2>
-                            <code class="invoker">new SimpleButton({options});</code>
+                <aside>
+                    This is an <em>&lt;aside&gt;</em> tag. Text flows around it.
+                </aside>
+                <p class="dropcap">Add the "dropcap" class to a <code>&lt;p&gt;</code> tag to get an accessible drop cap.  Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. <a target="_new" href="http://www.does.not.exist">Aenean</a> eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
+                <blockquote>
+                    <p>This is a blockquote.  Text does not flow around it.</p>
+                </blockquote>
+                <p>Nullam quis risus eget <a target="_new" href="https://en.wikipedia.org/">urna mollis</a> ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper.</p>
+                <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod.</p>
+                <p>Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</p>
+            </div>
+        </article>
 
-                            <p>The basic button class is <code>SimpleButton</code>. They can be set for <code>mute</code> and <code>hot</code> in construction; this will change the button's default state. Any button can be made hot. </p>
-                            <p>Buttons can take an <code>icon</code> parameter. Icons can be placed on either side with <code>iconside</code> (default is left).</p>
-                            <p>Buttons can also be invoked with <code>ConstructiveButton()</code> (used for actions that move the user forward, such as save events) and <code>DestructiveButton()</code>, which is used for destructive actions, such as "cancel".</p>
-                            <div class="demobox" id="buttons-normal">
-                                <h3>Normal</h3>
-                                <p>Normal buttons have borders and a transparent background in the resting state.</p>
-                            </div>
-                            <div class="demobox" id="buttons-ghost">
-                                <h3>Ghost</h3>
-                                <p>Ghost buttons don't have backgrounds in the resting state.</p>
-                            </div>
-                            <div class="demobox" id="buttons-mute">
-                                <h3>Mute</h3>
-                                <p>Mute buttons don't have borders in the resting state.</p>
-                            </div>
-                            <div class="demobox" id="buttons-link">
-                                <h3>Link</h3>
-                                <p>Buttons with <code>link: true</code> take the behaviors of <code>&lt;a&gt;</code> tags.  This is useful when the functionality of a button needs to be styled as a link.</p>
-                            </div>
-                            <div class="demobox" id="buttons-shaped-pill">
-                                <h3>Shaped: Pill</h3>
-                                <p>Pill shaped buttons can have text or icons.  They can also be ghost or mute.</p>
-                            </div>
-                            <div class="demobox" id="buttons-shaped-square">
-                                <h3>Shaped: Square</h3>
-                                <p>Square shaped buttons only have icons.  They can also be ghost or mute.</p>
-                            </div>
-                            <div class="demobox" id="buttons-shaped-circle">
-                                <h3>Shaped: Circle</h3>
-                                <p>Circle shaped buttons only have icons.  They can also be ghost or mute.</p>
-                            </div>
-                            <div class="demobox" id="buttons-naked">
-                                <h3>Naked</h3>
-                                <p>Buttons with <code>naked: true</code> (or the <code>naked</code> class) have all borders and states reset. This is very similar to <code>link</code> buttons but they retain colors.</p>
-                            </div>
-                            <div class="demobox" id="buttons-sizes">
-                                <h3>Sizes</h3>
-                                <p>Buttons can take a <code>size:</code> attribute.  Possible values are <code>micro</code>, <code>small</code>, <code>medium</code> (default), <code>large</code>, and <code>fill</code> (which grows to fill its container).</p>
-                            </div>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-messageboxes" aria-labelledby="messageboxes">
+            <h2>Message Boxes</h2>
+            <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
+            <div class="demobox" id="boxes-instructions">
+                <h3>Standard</h3>
+                <code class="invoker">new InstructionBox({options});</code>
+                <p>An InstructionBox is used to display instructions or other information to a user that may be useful or required for filling out a form.  A <code>SimpleForm</code> will take instructions as a parameter, so they don't often need to be inserted manually.</p>
+            </div>
+            <div class="demobox" id="boxes-responses">
+                <h3>Form Response</h3>
+                <code class="invoker">new MessageBox({options});</code>
+                <p>When submitted, forms can succeed or fail. In doing so, they can return messages (results, errors, and warnings).  Warnings alone do not prevent a form's success. These messages are returned and displayed automagically when using a <code>SimpleForm</code>, so these shouldn't be invoked alone.</p>
+                <p>A <code>MessageBox</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain both <code>results</code> and <code>warnings</code> or <code>errors</code> and <code>warnings</code>.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-buttons" aria-labelledby="buttons">
+            <h2>Buttons</h2>
+            <code class="invoker">new SimpleButton({options});</code>
 
-                        </section>
-                        <section id="s-textareas">
-                            <h2>Text Areas</h2>
-                            <code class="invoker">new TextArea({options});</code>
-                            <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
-                            <div class="demobox" id="textareas-standard">
-                                <h3>Standard</h3>
-                                <p>The standard TextArea is configured with <code>counter: sky</code>.</p>
-                            </div>
-                            <div class="demobox" id="textareas-mute">
-                                <h3>Mute</h3>
-                                <p>TextAreas can be made <code>mute</code>, though the displayed border changes.</p>
-                            </div>
-                            <div class="demobox" id="textareas-passive">
-                                <h3>Passive</h3>
-                                <p><dfn>TextArea</dfn> elements can also be made passive, like other inputs.</p>
-                            </div>
-                            <div class="demobox" id="textareas-disabled">
-                                <h3>Disabled</h3>
-                                <p>Disabled <code>TextArea</code> elements behave like disabled TextInputs in nearly all respects.</p>
-                            </div>
-                        </section>
-                        <section id="s-inputs">
-                            <h2>Inputs</h2>
-                            <code class="invoker">new TextInput({options});</code>
-                            <p>A <dfn>TextInput</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a <code>TextArea</code> element). All <code>TextInput</code> classes extend <code>InputElement</code>.</p>
-                            <div class="demobox" id="inputs-standard">
-                                <h3>Standard</h3>
-                                <p>TextInputs all inherit many behaviors straight out of the box, such as messages and warnings.  Each supports built-in data validators, and all may be marked essential with <code>required: true</code>.</p>
-                                <p>If given a <code>help</code> parameter (accepts a string), a help button will be included with the <code>label</code>.  It behaves as a tooltip on hover, can be locked open on click, and will automatically appear after a short period of the element retains focus but has no activity.</p>
-                                <p><code>TextInput</code> supports three kinds of character counters, enabled with <code>counter: <i>type</i></code>, were <i>type</i> can be one of 'sky', 'remaining', or 'limit'. This changes the way the counter is worded.</p>
-                            </div>
-                            <div class="demobox" id="inputs-passive">
-                                <h3>Passive</h3>
-                                <p>Inputs can be switched to an "passive" mode, which displays their labels and values but without allowing for interaction or alteration (though they can still be updated programmatically).  This serves a different purpose than <code>disabled</code>.</p>
-                                <p>The passive status can be defined in its construction (with <code>passive: true</code>) or toggled programmatically (with <code>.deactivate()</code>, <code>.activate()</code>, and <code>.toggleActivation()</code>).</p>
-                            </div>
-                            <div class="demobox" id="inputs-mute">
-                                <h3>Mute</h3>
-                                <p>Setting an input to with <code>mute: true</code> will change its display style. The label changes position and top controls disappear (such as character counters) fade until the element obtains focus.</p>
-                            </div>
-                            <div class="demobox" id="inputs-password">
-                                <h3>Password</h3>
-                                <code class="invoker">new PasswordInput({options});</code>
-                                <p>The <dfn>PasswordInput</dfn> element is for redacted content.  By default, these elements include a password visibility toggle. It can be turned off by setting <code>visibilityswitch</code> to false. Set <code>startvisible</code> to true to have it begin with the password unredacted.</p>
-                            </div>
-                            <div class="demobox" id="inputs-file">
-                                <h3>File</h3>
-                                <code class="invoker">new FileInput({options});</code>
-                                <p>The <dfn>FileInput</dfn> element is for uploading files of any type.</p>
-                                <p>By default, it automatically accepts image types, but the <code>accept:</code> parameter will change that.</p>
-                                <p>Including a <code>FileInput</code> element in a <code>SimpleForm</code> will automatically adjust the form's encapsulation type.</p>
-                            </div>
+            <p>The basic button class is <code>SimpleButton</code>. They can be set for <code>mute</code> and <code>hot</code> in construction; this will change the button's default state. Any button can be made hot. </p>
+            <p>Buttons can take an <code>icon</code> parameter. Icons can be placed on either side with <code>iconside</code> (default is left).</p>
+            <p>Buttons can also be invoked with <code>ConstructiveButton()</code> (used for actions that move the user forward, such as save events) and <code>DestructiveButton()</code>, which is used for destructive actions, such as "cancel".</p>
+            <div class="demobox" id="buttons-normal">
+                <h3>Normal</h3>
+                <p>Normal buttons have borders and a transparent background in the resting state.</p>
+            </div>
+            <div class="demobox" id="buttons-ghost">
+                <h3>Ghost</h3>
+                <p>Ghost buttons don't have backgrounds in the resting state.</p>
+            </div>
+            <div class="demobox" id="buttons-mute">
+                <h3>Mute</h3>
+                <p>Mute buttons don't have borders in the resting state.</p>
+            </div>
+            <div class="demobox" id="buttons-link">
+                <h3>Link</h3>
+                <p>Buttons with <code>link: true</code> take the behaviors of <code>&lt;a&gt;</code> tags.  This is useful when the functionality of a button needs to be styled as a link.</p>
+            </div>
+            <div class="demobox" id="buttons-shaped-pill">
+                <h3>Shaped: Pill</h3>
+                <p>Pill shaped buttons can have text or icons.  They can also be ghost or mute.</p>
+            </div>
+            <div class="demobox" id="buttons-shaped-square">
+                <h3>Shaped: Square</h3>
+                <p>Square shaped buttons only have icons.  They can also be ghost or mute.</p>
+            </div>
+            <div class="demobox" id="buttons-shaped-circle">
+                <h3>Shaped: Circle</h3>
+                <p>Circle shaped buttons only have icons.  They can also be ghost or mute.</p>
+            </div>
+            <div class="demobox" id="buttons-naked">
+                <h3>Naked</h3>
+                <p>Buttons with <code>naked: true</code> (or the <code>naked</code> class) have all borders and states reset. This is very similar to <code>link</code> buttons but they retain colors.</p>
+            </div>
+            <div class="demobox" id="buttons-sizes">
+                <h3>Sizes</h3>
+                <p>Buttons can take a <code>size:</code> attribute.  Possible values are <code>micro</code>, <code>small</code>, <code>medium</code> (default), <code>large</code>, and <code>fill</code> (which grows to fill its container).</p>
+            </div>
 
-                            <div class="demobox" id="inputs-number">
-                                <h3>Number</h3>
-                                <code class="invoker">new NumberInput({options});</code>
-                                <p>The input accepts non-numeric values but treats all of them as errors. It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
-                                <p>The input accepts non-numeric values but treats all of them as errors.</p>
-                            </div>
-                            <div class="demobox" id="inputs-email">
-                                <h3>Email</h3>
-                                <code class="invoker">new EmailInput({options});</code>
-                                <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
-                            </div>
-                            <div class="demobox" id="inputs-uri">
-                                <h3>URI</h3>
-                                <code class="invoker">new URIInput({options});</code>
-                                <p>The URI input has a validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
-                            </div>
-                            <div class="demobox" id="inputs-disabled">
-                                <h3>Disabled</h3>
-                                <p>An entire element can be set to be disabled with <code>disabled: true</code>. If the element has been provided with a <code>help</code> entry, it will still be reachable.</p>
-                            </div>
-                            <div class="demobox" id="inputs-hidden">
-                                <h3>Hidden</h3>
-                                <code class="invoker">new HiddenInput({options});</code>
-                                <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
-                            </div>
-                        </section>
-                        <section id="s-selects">
-                            <h2>Selects</h2>
-                            <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
-                            <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
-                            <p>Under the hood, the <code>SelectMenu</code> is implemented with Radio Buttons so it maintains compatibility.</p>
-                            <div class="demobox" id="selects-standard">
-                                <h3>Standard</h3>
-                                <code class="invoker">new SelectMenu({options});</code>
-                                <p>Options for the <code>SelectMenu</code> list are provided with the <code>options:</code> parameter.  This is an array of option definitions, which look like <code>{ label: "Label to show", value: "v" }</code>. Include <code>checked: true</code> to automatically select that option.</p>
-                                <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element. Giving it a <code>prefix</code> will attach that before options when they're selected.</p>
-                                <p>By default, a small search indicator will appear if the user begins typing while the input has focus. Set <code>searchtext</code> to <i>false</i> to disable this.  The display will switch between top and bottom, depending on which direction the menu opens.</p>
-                            </div>
-                            <div class="demobox" id="selects-passive">
-                                <h3>Passive</h3>
-                                <p><dfn>SelectMenu</dfn> elements can also be made passive, like other inputs.</p>
-                            </div>
-                            <div class="demobox" id="selects-mute">
-                                <h3>Mute</h3>
-                                <p><dfn>SelectMenu</dfn> elements can also be made <i>mute</i>, like other inputs.</p>
-                                <p>Note that the label is always in the "focused" position, as <dfn>SelectMenu</dfn> elements always have a value, even if that value is "unset".</p>
-                            </div>
-                            <div class="demobox" id="selects-disabled">
-                                <h3>Disabled</h3>
-                                <p><dfn>SelectMenu</dfn> elements can also be made disabled, like other inputs.</p>
-                            </div>
-                            <div class="demobox" id="selects-state">
-                                <h3>State Menus</h3>
-                                <code class="invoker">new StateMenu({options});</code>
-                                <p>A <code>StateMenu</code> is a pre-purposed <code>SelectMenu</code>.  It supports both the United States and Canada.  By default, all the states are included in the option list, but it can take a <code>filter</code> option to restrict to a single country (values of <code>us</code> or <code>ca</code>).</p>
-                                <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
-                                <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
-                            </div>
-                        </section>
-                        <section id="s-radiobuttons">
-                            <h2>Radio Buttons</h2>
-                            <code class="invoker">new RadioGroup({options});</code>
-                            <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
-                            <p>If you have 5 more options, consider using a <code>SelectMenu</code>.  If you only have two options, consider whether a <code>BooleanToggle</code> is a better solution.</p>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-textareas" aria-labelledby="textareas">
+            <h2>Text Areas</h2>
+            <code class="invoker">new TextArea({options});</code>
+            <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
+            <div class="demobox" id="textareas-standard">
+                <h3>Standard</h3>
+                <p>The standard TextArea is configured with <code>counter: sky</code>.</p>
+            </div>
+            <div class="demobox" id="textareas-mute">
+                <h3>Mute</h3>
+                <p>TextAreas can be made <code>mute</code>, though the displayed border changes.</p>
+            </div>
+            <div class="demobox" id="textareas-passive">
+                <h3>Passive</h3>
+                <p><dfn>TextArea</dfn> elements can also be made passive, like other inputs.</p>
+            </div>
+            <div class="demobox" id="textareas-disabled">
+                <h3>Disabled</h3>
+                <p>Disabled <code>TextArea</code> elements behave like disabled TextInputs in nearly all respects.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-inputs" aria-labelledby="inputs">
+            <h2>Inputs</h2>
+            <code class="invoker">new TextInput({options});</code>
+            <p>A <dfn>TextInput</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a <code>TextArea</code> element). All <code>TextInput</code> classes extend <code>InputElement</code>.</p>
+            <div class="demobox" id="inputs-standard">
+                <h3>Standard</h3>
+                <p>TextInputs all inherit many behaviors straight out of the box, such as messages and warnings.  Each supports built-in data validators, and all may be marked essential with <code>required: true</code>.</p>
+                <p>If given a <code>help</code> parameter (accepts a string), a help button will be included with the <code>label</code>.  It behaves as a tooltip on hover, can be locked open on click, and will automatically appear after a short period of the element retains focus but has no activity.</p>
+                <p><code>TextInput</code> supports three kinds of character counters, enabled with <code>counter: <i>type</i></code>, were <i>type</i> can be one of 'sky', 'remaining', or 'limit'. This changes the way the counter is worded.</p>
+            </div>
+            <div class="demobox" id="inputs-passive">
+                <h3>Passive</h3>
+                <p>Inputs can be switched to an "passive" mode, which displays their labels and values but without allowing for interaction or alteration (though they can still be updated programmatically).  This serves a different purpose than <code>disabled</code>.</p>
+                <p>The passive status can be defined in its construction (with <code>passive: true</code>) or toggled programmatically (with <code>.deactivate()</code>, <code>.activate()</code>, and <code>.toggleActivation()</code>).</p>
+            </div>
+            <div class="demobox" id="inputs-mute">
+                <h3>Mute</h3>
+                <p>Setting an input to with <code>mute: true</code> will change its display style. The label changes position and top controls disappear (such as character counters) fade until the element obtains focus.</p>
+            </div>
+            <div class="demobox" id="inputs-password">
+                <h3>Password</h3>
+                <code class="invoker">new PasswordInput({options});</code>
+                <p>The <dfn>PasswordInput</dfn> element is for redacted content.  By default, these elements include a password visibility toggle. It can be turned off by setting <code>visibilityswitch</code> to false. Set <code>startvisible</code> to true to have it begin with the password unredacted.</p>
+            </div>
+            <div class="demobox" id="inputs-file">
+                <h3>File</h3>
+                <code class="invoker">new FileInput({options});</code>
+                <p>The <dfn>FileInput</dfn> element is for uploading files of any type.</p>
+                <p>By default, it automatically accepts image types, but the <code>accept:</code> parameter will change that.</p>
+                <p>Including a <code>FileInput</code> element in a <code>SimpleForm</code> will automatically adjust the form's encapsulation type.</p>
+            </div>
 
-                            <div class="demobox" id="radiogroups-standard">
-                                <h3>Standard</h3>
-                                <p>The standard mode of a <code>RadioGroup</code> inherits most of the behaviors of other inputs, including the help system.  While they can be marked <code>required</code> (valid only if they start out without a selected entry), there aren't many other errors that this kind of enumeration can create.</p>
-                                <p>There really can't be a <i>mute</i> variant of a <code>RadioGroup</code>.</p>
-                            </div>
-                            <div class="demobox" id="radiogroups-passive">
-                                <h3>Passive</h3>
-                                <p>As with other inputs, a <code>RadioGroup</code> can be made <i>passive</i>.</p>
-                                <p>The passive status can be defined in its construction (with <code>passive: true</code>) or toggled programmatically (with <code>.pacify()</code>, <code>.activate()</code>, and <code>.toggleActivation()</code>).</p>
-                            </div>
-                            <div class="demobox" id="radiogroups-disabled">
-                                <h3>Disabled</h3>
-                                <p><dfn>RadioGroup</dfn> elements can also be made disabled, like other inputs.</p>
-                            </div>
+            <div class="demobox" id="inputs-number">
+                <h3>Number</h3>
+                <code class="invoker">new NumberInput({options});</code>
+                <p>The input accepts non-numeric values but treats all of them as errors. It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
+                <p>The input accepts non-numeric values but treats all of them as errors.</p>
+            </div>
+            <div class="demobox" id="inputs-email">
+                <h3>Email</h3>
+                <code class="invoker">new EmailInput({options});</code>
+                <p>The email input has an email address validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
+            </div>
+            <div class="demobox" id="inputs-uri">
+                <h3>URI</h3>
+                <code class="invoker">new URIInput({options});</code>
+                <p>The URI input has a validator that is enabled by default but can be disabled with <code>forceconstraints: false</code>.</p>
+            </div>
+            <div class="demobox" id="inputs-disabled">
+                <h3>Disabled</h3>
+                <p>An entire element can be set to be disabled with <code>disabled: true</code>. If the element has been provided with a <code>help</code> entry, it will still be reachable.</p>
+            </div>
+            <div class="demobox" id="inputs-hidden">
+                <h3>Hidden</h3>
+                <code class="invoker">new HiddenInput({options});</code>
+                <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-selects" aria-labelledby="selects">
+            <h2>Selects</h2>
+            <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
+            <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
+            <p>Under the hood, the <code>SelectMenu</code> is implemented with Radio Buttons so it maintains compatibility.</p>
+            <div class="demobox" id="selects-standard">
+                <h3>Standard</h3>
+                <code class="invoker">new SelectMenu({options});</code>
+                <p>Options for the <code>SelectMenu</code> list are provided with the <code>options:</code> parameter.  This is an array of option definitions, which look like <code>{ label: "Label to show", value: "v" }</code>. Include <code>checked: true</code> to automatically select that option.</p>
+                <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element. Giving it a <code>prefix</code> will attach that before options when they're selected.</p>
+                <p>By default, a small search indicator will appear if the user begins typing while the input has focus. Set <code>searchtext</code> to <i>false</i> to disable this.  The display will switch between top and bottom, depending on which direction the menu opens.</p>
+            </div>
+            <div class="demobox" id="selects-passive">
+                <h3>Passive</h3>
+                <p><dfn>SelectMenu</dfn> elements can also be made passive, like other inputs.</p>
+            </div>
+            <div class="demobox" id="selects-mute">
+                <h3>Mute</h3>
+                <p><dfn>SelectMenu</dfn> elements can also be made <i>mute</i>, like other inputs.</p>
+                <p>Note that the label is always in the "focused" position, as <dfn>SelectMenu</dfn> elements always have a value, even if that value is "unset".</p>
+            </div>
+            <div class="demobox" id="selects-disabled">
+                <h3>Disabled</h3>
+                <p><dfn>SelectMenu</dfn> elements can also be made disabled, like other inputs.</p>
+            </div>
+            <div class="demobox" id="selects-state">
+                <h3>State Menus</h3>
+                <code class="invoker">new StateMenu({options});</code>
+                <p>A <code>StateMenu</code> is a pre-purposed <code>SelectMenu</code>.  It supports both the United States and Canada.  By default, all the states are included in the option list, but it can take a <code>filter</code> option to restrict to a single country (values of <code>us</code> or <code>ca</code>).</p>
+                <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
+                <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-radiobuttons" aria-labelledby="radiobuttons">
+            <h2>Radio Buttons</h2>
+            <code class="invoker">new RadioGroup({options});</code>
+            <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
+            <p>If you have 5 more options, consider using a <code>SelectMenu</code>.  If you only have two options, consider whether a <code>BooleanToggle</code> is a better solution.</p>
 
-                        </section>
-                        <section id="s-toggles">
-                            <h2>Checkboxes and Toggles</h2>
-                            <code class="invoker">new BooleanToggle({options});</code>
+            <div class="demobox" id="radiogroups-standard">
+                <h3>Standard</h3>
+                <p>The standard mode of a <code>RadioGroup</code> inherits most of the behaviors of other inputs, including the help system.  While they can be marked <code>required</code> (valid only if they start out without a selected entry), there aren't many other errors that this kind of enumeration can create.</p>
+                <p>There really can't be a <i>mute</i> variant of a <code>RadioGroup</code>.</p>
+            </div>
+            <div class="demobox" id="radiogroups-passive">
+                <h3>Passive</h3>
+                <p>As with other inputs, a <code>RadioGroup</code> can be made <i>passive</i>.</p>
+                <p>The passive status can be defined in its construction (with <code>passive: true</code>) or toggled programmatically (with <code>.pacify()</code>, <code>.activate()</code>, and <code>.toggleActivation()</code>).</p>
+            </div>
+            <div class="demobox" id="radiogroups-disabled">
+                <h3>Disabled</h3>
+                <p><dfn>RadioGroup</dfn> elements can also be made disabled, like other inputs.</p>
+            </div>
 
-                            <p>A <dfn>BooleanToggle</dfn> is a switch that can be in one of two states (checked/unchecked, on/off, true/false). It is an implementation of <code>&lt;input type='checkbox' /&gt;</code>.</p>
-                            <p>BooleanToggles can take several display styles.  Some are better suited for specific purposes than others.  For instance, if the <em>state</em> of the value it controls is important, a toggle style might be a better choice than a simple checkbox.</p>
-                            <div class="demobox" id="inputs-checkboxes">
-                                <h3>Default</h3>
-                                <p>Labels can be on either side. The default is right-sided, because the affordances end up in line.</p>
-                            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-toggles" aria-labelledby="toggles">
+            <h2>Checkboxes and Toggles</h2>
+            <code class="invoker">new BooleanToggle({options});</code>
 
-                            <div class="demobox" id="inputs-checkboxes-styled">
-                                <h3>Styled</h3>
-                                <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
-                            </div>
-                        </section>
-                    </div>
-                </article>
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-complexcomponents" aria-labelledby="complexcomponents" class="withnav" >
-                    <div class="sections">
-                        <section id="s-messageboxes">
-                            <h2>Message Boxes</h2>
-                            <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
-                            <div class="demobox" id="boxes-instructions">
-                                <h3>Instructions</h3>
-                                <code class="invoker">new InstructionBox({options});</code>
-                                <p>An InstructionBox is used to display instructions or other information to a user that may be useful or required for filling out a form.  A <code>SimpleForm</code> will take instructions as a parameter, so they don't often need to be inserted manually.</p>
-                            </div>
-                            <div class="demobox" id="boxes-responses">
-                                <h3>Form Response</h3>
-                                <code class="invoker">new MessageBox({options});</code>
-                                <p>When submitted, forms can succeed or fail. In doing so, they can return messages (results, errors, and warnings).  Warnings alone do not prevent a form's success. These messages are returned and displayed automagically when using a <code>SimpleForm</code>, so these shouldn't be invoked alone.</p>
-                                <p>A <code>MessageBox</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain both <code>results</code> and <code>warnings</code> or <code>errors</code> and <code>warnings</code>.</p>
-                            </div>
-                        </section>
-                        <section id="s-forms">
-                            <h2>Forms</h2>
-                            <code class="invoker">new SimpleForm({options});</code>
-                            <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
-                            <p>Forms are displayed with discrete sections: header, elements, and actions.  The header section will include provided instructions (within an included <code>InstructionBox</code>) and any <code>MessageBox</code> elements generated by the form submission.</p>
-                            <p>Buttons passed with <code>submits: true</code> will submit the form for processing when clicked.  This also will be enabled when the form passes validation.</p>
-                            <div class="demobox" id="forms-standard">
-                                <h3>Standard</h3>
-                            </div>
-                            <div class="demobox" id="forms-passive">
-                                <h3>Profile</h3>
-                                <p>Forms can be made <i>passive</i>, like inputs.  Forms that can be made passive accepts  <code>passiveinstructions</code> and <code>passiveactions</code> parameters, both of which displays when the form is in <i>passive</i> mode.  If either are omitted, no harm and no foul.</p>
-                            </div>
-                        </section>
-                        <section id="s-dialogs">
-                            <h2>Dialog Boxes</h2>
-                            <code class="invoker">new DialogWindow({options});</code>
-                            <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
-                            <p>If passed a form, the dialog will render the form's <code>header</code>, <code>elements</code>, and <code>actions</code> in a way that compliments the dialog.</p>
-                            <p>If passed a DOM object with <code>content</code>, no special formatting is applied; the content must be styled on its own. This can be passed a selector (and thus drawing content from the existing DOM), but it will remove that content from wherever it was and destroy it when the window is closed, so use <code>.clone()</code>.</p>
+            <p>A <dfn>BooleanToggle</dfn> is a switch that can be in one of two states (checked/unchecked, on/off, true/false). It is an implementation of <code>&lt;input type='checkbox' /&gt;</code>.</p>
+            <p>BooleanToggles can take several display styles.  Some are better suited for specific purposes than others.  For instance, if the <em>state</em> of the value it controls is important, a toggle style might be a better choice than a simple checkbox.</p>
+            <div class="demobox" id="inputs-checkboxes">
+                <h3>Default</h3>
+                <p>Labels can be on either side. The default is right-sided, because the affordances end up in line.</p>
+            </div>
 
-                            <div class="demobox" id="inputs-dialogs">
-                            </div>
+            <div class="demobox" id="inputs-checkboxes-styled">
+                <h3>Styled</h3>
+                <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-forms" aria-labelledby="forms">
+            <h2>Forms</h2>
+            <code class="invoker">new SimpleForm({options});</code>
+            <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
+            <p>Forms are displayed with discrete sections: header, elements, and actions.  The header section will include provided instructions (within an included <code>InstructionBox</code>) and any <code>MessageBox</code> elements generated by the form submission.</p>
+            <p>Buttons passed with <code>submits: true</code> will submit the form for processing when clicked.  This also will be enabled when the form passes validation.</p>
+            <div class="demobox" id="forms-standard">
+                <h3>Standard</h3>
+            </div>
+            <div class="demobox" id="forms-passive">
+                <h3>Profile</h3>
+                <p>Forms can be made <i>passive</i>, like inputs.  Forms that can be made passive accepts  <code>passiveinstructions</code> and <code>passiveactions</code> parameters, both of which displays when the form is in <i>passive</i> mode.  If either are omitted, no harm and no foul.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-dialogs" aria-labelledby="dialogs">
+            <h2>Dialogs</h2>
+            <code class="invoker">new DialogWindow({options});</code>
+            <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
+            <p>If passed a form, the dialog will render the form's <code>header</code>, <code>elements</code>, and <code>actions</code> in a way that compliments the dialog.</p>
+            <p>If passed a DOM object with <code>content</code>, no special formatting is applied; the content must be styled on its own. This can be passed a selector (and thus drawing content from the existing DOM), but it will remove that content from wherever it was and destroy it when the window is closed, so use <code>.clone()</code>.</p>
 
-                            <div style="display:none">
-                                <div id="khan">
-                                    <h3>Kubla Khan; or, A Vision in a Dream: A Fragment</h3>
-                                    <pre>IN Xanadu did Kubla Khan
+            <div class="demobox" id="inputs-dialogs">
+            </div>
+
+            <div style="display:none">
+                <div id="khan">
+                    <h3>Kubla Khan; or, A Vision in a Dream: A Fragment</h3>
+                    <pre>IN Xanadu did Kubla Khan
   A stately pleasure-dome decree:
   Where Alph, the sacred river, ran
   Through caverns measureless to man
@@ -487,93 +483,93 @@ Weave a circle round him thrice,
 And close your eyes with holy dread,
 For he on honey-dew hath fed,
 And drunk the milk of Paradise.</pre>
-                                </div>
-                            </div>
-                        </section>
-                        <section id="s-growlers">
-                            <h2>Growlers</h2>
-
-                            <code class="invoker">new Growler({options});</code>
-
-                            <p>A <dfn>Growler</dfn> is a short-lived, auto-dismissable notifications that presents a simple payloads.</p>
-                            <p>They can be targeted to open in any one of six positions. They can be configured to show title or text payload individually.  Supplied icons will be included in the title if no payload is provided.</p>
-                            <p>It is possible to set them to require manual dismissal by setting the <code>duration</code> to 0 or -1.</p>
-                            <div class="demobox" id="growlers-positions">
-                                <h3>Positions</h3>
-                            </div>
-                            <div class="demobox" id="growlers-special">
-                                <h3>Special Types</h3>
-                                <p>Growlers can be invoked with shorthand static methods. These growlers are lightweight and pre-configured.</p>
-                                <code class="block">
-                                    Growler.growl('This is a growl message!', 'Growler.growl');<br />
-                                    Growler.success('This is a success message!');<br />
-                                    Growler.error('This is an error message!');<br />
-                                    Growler.warn('This is an warning message!');<br />
-                                    Growler.caution('This is an caution message!');<br />
-                                </code>
-                            </div>
-                        </section>
-                        <section id="s-tabsmenus">
-                            <h2>Tabs and Menus</h2>
-
-                            <div class="demobox" id="tabsmenus-buttonmenu">
-                                <h3>Button Menu</h3>
-                                <code class="invoker">new ButtonMenu({options});</code>
-                                <p>A <dfn>ButtonMenu</dfn> is just that: a <code>SimpleButton</code> that opens a menu.  Accordingly, it accepts all <code>SimpleButton</code> parameters, with the addition of <code>secondicon</code> (for the menu icon) and then an <code>items</code> array for each menu entry.</p>
-                                <p>The <code>items</code> array contains a dictionary of parameters: <code>label</code>, <code>icon</code> (optional), and <code>action</code>, which is a function.</p>
-                            </div>
-                            <div class="demobox" id="tabsmenus-tabbar">
-                                <h3>Tab Bar</h3>
-                                <code class="invoker">new TabBar({options});</code>
-                                <p>A <dfn>TabBar</dfn> is basically a permanently open <code>ButtonMenu</code>. It is mostly intended for navigation.</p>
-                                <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
-                            </div>
-                        </section>
-                        <section id="s-pwchanger">
-                            <h2>Password Changer</h2>
-
-                            <div class="demobox" id="pwchanger-simple">
-                                <h3>Simple</h3>
-                                <code class="invoker">new PasswordChangeForm({options});</code>
-                                <p>A <dfn>PasswordChangeForm</dfn> is a self-contained password manipulation form.  It can be passed an array of values that it will reject as acceptable with the <code>cannotbe:</code> parameter and has a hook for checking passwords against external bad password lists (like NIST) using <code>badpasswordhook:</code>.</p>
-                                <p>It includes a <code>PasswordGenerator</code> component, which can be used anywhere else.  The generator can be configured by the user to include various sets of characters in the generation.</p>
-                            </div>
-                        </section>
-                        <section id="s-progressmeter">
-                            <h2>Progress Meters</h2>
-                            <div class="demobox" id="progressmeter-simple">
-                                <h3>Simple</h3>
-                                <code class="invoker">new SimpleProgressMeter({options});</code>
-                                <p>The <code>SimpleProgressMeter</code> component is designed to display one point of data along a single axis. By default it, it assumes a scale between 0 and 100.</p>
-                                <p>If given <code>previousrank</code> or <code>nextrank</code> parameters, it will grow taller and display them inside of the bar, a long with the scale values (which can be disabled with <code>showcaps: false</code>).</p>
-                                <p>Adding the <code>pillcap</code> class makes the endpoint circular, but this looks weird if the bar is taller.</p>
-                            </div>
-                            <div class="demobox" id="progressmeter-radial">
-                                <h3>Radial</h3>
-                                <code class="invoker">new RadialProgressMeter({options});</code>
-                                <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
-                                <p>Since they are implemented in SVG they cannot be easily sized via css. They take a <code>size</code> parameter which can be a string ('small', 'medium', 'large', 'huge'), values in 'px' or 'em', or a number (which gets interpreted as pixels).  The default is <code>medium</code>.</p>
-                                <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
-                            </div>
-                        </section>
-                        <section id="s-datagrids">
-                            <h2>Data Grids</h2>
-
-                            <div class="demobox" id="datagrid-basic">
-                                <h3>Data Grid</h3>
-                            </div>
-                        </section>
-                    </div>
-                </article>
-
-                <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-fontglyphs" aria-labelledby="fontglyphs">
-                    <h2>Font Glyphs</h2>
-
-                    <div class="demobox" id="glyphs">
-                    </div>
-                </article>
+                </div>
             </div>
-        </div>
-    </body>
+
+
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-growlers" aria-labelledby="growlers">
+            <h2>Growlers</h2>
+
+            <code class="invoker">new Growler({options});</code>
+
+            <p>A <dfn>Growler</dfn> is a short-lived, auto-dismissable notifications that presents a simple payloads.</p>
+            <p>They can be targeted to open in any one of six positions. They can be configured to show title or text payload individually.  Supplied icons will be included in the title if no payload is provided.</p>
+            <p>It is possible to set them to require manual dismissal by setting the <code>duration</code> to 0 or -1.</p>
+            <div class="demobox" id="growlers-positions">
+                <h3>Positions</h3>
+            </div>
+            <div class="demobox" id="growlers-special">
+                <h3>Special Types</h3>
+                <p>Growlers can be invoked with shorthand static methods. These growlers are lightweight and pre-configured.</p>
+                <code class="block">
+                    Growler.growl('This is a growl message!', 'Growler.growl');<br />
+                    Growler.success('This is a success message!');<br />
+                    Growler.error('This is an error message!');<br />
+                    Growler.warn('This is an warning message!');<br />
+                    Growler.caution('This is an caution message!');<br />
+                </code>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-tabsmenus" aria-labeledby="c">
+            <h2>Tabs and Menus</h2>
+
+            <div class="demobox" id="tabsmenus-buttonmenu">
+                <h3>Button Menu</h3>
+                <code class="invoker">new ButtonMenu({options});</code>
+                <p>A <dfn>ButtonMenu</dfn> is just that: a <code>SimpleButton</code> that opens a menu.  Accordingly, it accepts all <code>SimpleButton</code> parameters, with the addition of <code>secondicon</code> (for the menu icon) and then an <code>items</code> array for each menu entry.</p>
+                <p>The <code>items</code> array contains a dictionary of parameters: <code>label</code>, <code>icon</code> (optional), and <code>action</code>, which is a function.</p>
+            </div>
+            <div class="demobox" id="tabsmenus-tabbar">
+                <h3>Tab Bar</h3>
+                <code class="invoker">new TabBar({options});</code>
+                <p>A <dfn>TabBar</dfn> is basically a permanently open <code>ButtonMenu</code>. It is mostly intended for navigation.</p>
+                <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-pwchanger" aria-labeledby="pwchanger">
+            <h2>Password Changer</h2>
+
+            <div class="demobox" id="pwchanger-simple">
+                <h3>Simple</h3>
+                <code class="invoker">new PasswordChangeForm({options});</code>
+                <p>A <dfn>PasswordChangeForm</dfn> is a self-contained password manipulation form.  It can be passed an array of values that it will reject as acceptable with the <code>cannotbe:</code> parameter and has a hook for checking passwords against external bad password lists (like NIST) using <code>badpasswordhook:</code>.</p>
+                <p>It includes a <code>PasswordGenerator</code> component, which can be used anywhere else.  The generator can be configured by the user to include various sets of characters in the generation.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-progressmeter" aria-labeledby="progressmeter">
+            <h2>Progress Meters</h2>
+            <div class="demobox" id="progressmeter-simple">
+                <h3>Simple</h3>
+                <code class="invoker">new SimpleProgressMeter({options});</code>
+                <p>The <code>SimpleProgressMeter</code> component is designed to display one point of data along a single axis. By default it, it assumes a scale between 0 and 100.</p>
+                <p>If given <code>previousrank</code> or <code>nextrank</code> parameters, it will grow taller and display them inside of the bar, a long with the scale values (which can be disabled with <code>showcaps: false</code>).</p>
+                <p>Adding the <code>pillcap</code> class makes the endpoint circular, but this looks weird if the bar is taller.</p>
+            </div>
+            <div class="demobox" id="progressmeter-radial">
+                <h3>Radial</h3>
+                <code class="invoker">new RadialProgressMeter({options});</code>
+                <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
+                <p>Since they are implemented in SVG they cannot be easily sized via css. They take a <code>size</code> parameter which can be a string ('small', 'medium', 'large', 'huge'), values in 'px' or 'em', or a number (which gets interpreted as pixels).  The default is <code>medium</code>.</p>
+                <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-fontglyphs" aria-labeledby="fontglyphs">
+            <h2>Font Glyphs</h2>
+
+            <div class="demobox" id="glyphs">
+            </div>
+        </article>
+        <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-datagrid" aria-labeledby="datagrid">
+            <h2>Data Grids</h2>
+
+            <div class="demobox" id="datagrid-basic">
+                <h3>Data Grid</h3>
+            </div>
+        </article>
+    </div>
+    </div>
+</div>
+</body>
 </html>
 

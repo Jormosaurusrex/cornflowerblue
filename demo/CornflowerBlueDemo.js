@@ -307,49 +307,19 @@ class CornflowerBlueDemo {
         ];
 
         this.navigation = new TabBar({
-            vertical: false,
+            vertical: true,
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: tabstight,
+            tabs: tabs,
             action: function(tab) {
                 me.switchTab(tab);
             }
         });
 
-        this.container.insertBefore(this.navigation.container, this.displaybox);
+        //this.container.insertBefore(this.navigation.container, this.displaybox);
+        this.displaybox.prepend(this.navigation.container);
 
-        /*
-        // Local Navigations
-        let basictabnav = new TabBar({
-            vertical: true,
-            classes: ['sidenav'],
-            navigation: false,
-            animation: null,
-            tabs: basictabs,
-            action: function(tab, self) {
-                window.scrollTo(0, document.getElementById(`s-${tab}`).offsetTop - Utils.getSingleEmInPixels(5));
-                self.select(tab);
-                // XXX TODO get first focusable element
-            }
-        });
-
-        document.getElementById('t-basiccomponents').prepend(basictabnav.container);
-
-        let complextabnav = new TabBar({
-            vertical: true,
-            classes: ['sidenav'],
-            navigation: false,
-            animation: null,
-            tabs: complextabs,
-            action: function(tab, self) {
-                window.scrollTo(0, document.getElementById(`s-${tab}`).offsetTop - Utils.getSingleEmInPixels(5));
-                self.select(tab);
-            }
-        });
-
-        document.getElementById('t-complexcomponents').prepend(complextabnav.container);
-        */
         this.grindButtons();
         this.grindCheckboxes();
         this.grindDataGrids();
