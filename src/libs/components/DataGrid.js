@@ -62,8 +62,8 @@ class DataGrid {
         let elements = Array.from(this.gridbody.childNodes);
 
         elements.sort(function(a, b) {
-            let textA = a.querySelector(`.${field}`).innerHTML;
-            let textB = b.querySelector(`.${field}`).innerHTML;
+            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
+            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
 
             if (sort === 'asc') {
                 if (textA < textB) return -1;
@@ -138,10 +138,15 @@ class DataGrid {
         if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
 
         let cell = document.createElement('th');
-        cell.classList.add(item.type);
         cell.setAttribute('id', `${this.id}-h-c-${item.name}`);
         cell.setAttribute('data-name', item.name);
+        cell.setAttribute('data-datatype', item.type);
+        cell.classList.add(item.type);
         cell.appendChild(div);
+
+        if (item.resize) {
+            cell.classList.add('resize');
+        }
 
         if (this.sortable) {
             cell.setAttribute('tabindex', '0');
@@ -159,6 +164,7 @@ class DataGrid {
     buildGridBody() {
         this.gridbody = document.createElement('tbody');
     }
+
     buildGridHeader() {
         this.gridheader = document.createElement('tr');
         this.gridheader.classList.add('header');
@@ -226,10 +232,15 @@ class DataGrid {
         }
 
         let cell = document.createElement('td');
+        cell.setAttribute('data-name', field.name);
+        cell.setAttribute('data-datatype', field.type);
         cell.classList.add(field.name);
         cell.classList.add(field.type);
         cell.innerHTML = content;
 
+        if (field.resize) {
+            cell.classList.add('resize');
+        }
         if (field.classes) {
             for (let c of field.classes) {
                 cell.classList.add(c);

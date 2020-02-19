@@ -5,8 +5,8 @@ div.datagrid-container {
   --datagrid-header-grid-text-color: var(--grey-darker);
   --datagrid-header-hover-text-shadow: var(--text-shadow);
   --datagrid-header-hover-text-color: var(--hot-text-color);
-  --datagrid-header-hover-background-color: var(--darkblue);
   --datagrid-header-sort-highlight-color: var(--focus-color);
+  --datagrid-header-hover-background-color: var(--focus-color);
 
   --datagrid-grid-color: transparent;
   --datagrid-grid-text-color: var(--grey-darkest);
@@ -36,6 +36,7 @@ div.datagrid-container {
           text-align: left;
           font-weight: normal;
           position: sticky;
+          vertical-align: top;
           top: 0;
           z-index: 10;
           div {
@@ -84,7 +85,7 @@ div.datagrid-container {
           &[data-sort='asc'],
           &[data-sort='desc']{
             div {
-              box-shadow: inset 0px -.3em 0 0 var(--datagrid-header-sort-highlight-color);
+              box-shadow: inset 0px -.2em 0 0 var(--datagrid-header-sort-highlight-color);
               &:before {
                 opacity: 1;
               }
@@ -97,13 +98,6 @@ div.datagrid-container {
               }
             }
           }
-          &.right,
-          &.number {
-            text-align: right;
-          }
-          &.center {
-            text-align: center;
-          }
         }
       }
     }
@@ -113,14 +107,6 @@ div.datagrid-container {
         color: var(--datagrid-grid-text-color);
         td {
           padding: .5em 1.5em .5em 1em;
-          vertical-align: top;
-          &.number,
-          &.time {
-            text-align: right;
-          }
-          &.nowrap {
-            white-space: nowrap;
-          }
           &.italic {
             font-style: oblique;
           }
@@ -133,23 +119,42 @@ div.datagrid-container {
         }
       }
     }
+    th {
+      &.resize {
+        resize: horizontal;
+        overflow: auto;
+      }
+      &.nowrap {
+        white-space: nowrap;
+      }
+      &.right,
+      &.number,
+      &.time {
+        text-align: right;
+      }
+      &.center {
+        text-align: center;
+      }
+    }
     &.selectable {
       tbody {
         tr {
           cursor: pointer;
-          &:focus {
-            outline: var(--datagrid-grid-hover-text-color) dashed .1em;
-            outline-offset: -.3em;
-          }
-          &:hover,
-          &:focus {
+          &:hover {
             background-color: var(--datagrid-grid-hover-background-color);
             color: var(--datagrid-grid-hover-text-color);
             text-shadow: var(--datagrid-grid-hover-text-shadow);
           }
+          &:focus {
+            outline: var(--datagrid-grid-selected-background-color) dashed .1em;
+            outline-offset: -.3em;
+          }
           &[aria-selected=true] {
             background-color: var(--datagrid-grid-selected-background-color);
-            color: var(--datagrid-grid-selected-text-color)
+            color: var(--datagrid-grid-selected-text-color);
+            &:focus {
+              outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+            }
           }
         }
       }

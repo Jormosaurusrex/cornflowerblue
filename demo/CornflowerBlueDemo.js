@@ -660,8 +660,8 @@ class CornflowerBlueDemo {
             selectable: true,
             fields: [
                 { name: "track", label: "Track", width: 1, type: "number", renderer: function(data) { return `${data}.`; } },
-                { name: "title", label: "Title", width: 3, type: "string", classes: ['nowrap', 'italic'] },
-                { name: "writers", label: "Writers", width: 3, type: "stringarray", separator: " &middot; ", classes: ['smaller'] },
+                { name: "title", label: "Title", width: 3, resize: true, type: "string", classes: ['nowrap', 'italic'] },
+                { name: "writers", label: "Writers", width: 3, resize: true, type: "stringarray", separator: " &middot; ", classes: ['smaller'] },
                 { name: "length", label: "Length", width: 1, type: "time" }
             ],
             data: [
