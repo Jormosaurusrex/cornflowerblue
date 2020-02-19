@@ -311,7 +311,7 @@ class CornflowerBlueDemo {
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: newtabs,
+            tabs: tabstight,
             action: function(tab) {
                 me.switchTab(tab);
             }
@@ -319,6 +319,7 @@ class CornflowerBlueDemo {
 
         this.container.insertBefore(this.navigation.container, this.displaybox);
 
+        /*
         // Local Navigations
         let basictabnav = new TabBar({
             vertical: true,
@@ -327,12 +328,9 @@ class CornflowerBlueDemo {
             animation: null,
             tabs: basictabs,
             action: function(tab, self) {
-                document.getElementById(`s-${tab}`).scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest'
-                });
-
+                window.scrollTo(0, document.getElementById(`s-${tab}`).offsetTop - Utils.getSingleEmInPixels(5));
                 self.select(tab);
+                // XXX TODO get first focusable element
             }
         });
 
@@ -345,15 +343,13 @@ class CornflowerBlueDemo {
             animation: null,
             tabs: complextabs,
             action: function(tab, self) {
-                document.getElementById(`s-${tab}`).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                window.scrollTo(0, document.getElementById(`s-${tab}`).offsetTop - Utils.getSingleEmInPixels(5));
                 self.select(tab);
             }
         });
 
         document.getElementById('t-complexcomponents').prepend(complextabnav.container);
-
+        */
         this.grindButtons();
         this.grindCheckboxes();
         this.grindDataGrids();

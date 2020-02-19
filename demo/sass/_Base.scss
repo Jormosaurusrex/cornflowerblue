@@ -11,7 +11,9 @@ body {
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   background-image: url('../image/med_blue_parchment.png');
+  background-attachment: fixed;
 }
+
 #content-jump {
   position: absolute;
   left: 1em;
@@ -20,7 +22,6 @@ body {
 }
 
 div#container {
-  position: relative;
   margin-left: auto;
   margin-right: auto;
   min-width: var(--contentbox-width);
@@ -29,6 +30,7 @@ div#container {
   background-color: var(--canvas-color-primary);
   display: flex;
   flex-direction: column;
+
   @include for-phone-only {
     display: block;
     margin: 0;
