@@ -13,6 +13,9 @@ div.datagrid-container {
   --datagrid-grid-selected-background-color: var(--focus-color);
   --datagrid-grid-selected-text-color: var(--hot-text-color);
 
+  --datagrid-grid-multiselected-selected-background-color: var(--focus-color-quarter);
+  --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
+
   --datagrid-grid-background-color: var(--ultralight);
   --datagrid-grid-alternate-background-color: var(--grey-translucent);
   --datagrid-grid-hover-background-color: var(--focus-color-half);
@@ -21,6 +24,10 @@ div.datagrid-container {
 
   max-height: 80vh;
   overflow: auto;
+
+  div.grid-actions {
+
+  }
   table.grid {
     padding: 0;
     margin: 0;
@@ -68,11 +75,13 @@ div.datagrid-container {
           @include for-hover-only {
             &:hover,
             &.hover {
-              color: var(--datagrid-header-hover-text-color);
-              text-shadow: var(--datagrid-header-hover-text-shadow);
-              background-color: var(--datagrid-header-hover-background-color);
               outline: none;
               text-decoration: underline;
+              &:not(.selector) {
+                color: var(--datagrid-header-hover-text-color);
+                text-shadow: var(--datagrid-header-hover-text-shadow);
+                background-color: var(--datagrid-header-hover-background-color);
+              }
             }
           }
           &:active,
@@ -110,7 +119,7 @@ div.datagrid-container {
         background-color: var(--datagrid-grid-background-color);
         color: var(--datagrid-grid-text-color);
         td {
-          padding: .5em 1.5em .5em 1em;
+          padding: .5em 1em .5em 1em;
           &.italic {
             font-style: oblique;
           }
@@ -123,7 +132,8 @@ div.datagrid-container {
         }
       }
     }
-    th {
+    th,
+    td {
       &.resize {
         resize: horizontal;
         overflow: auto;
@@ -138,6 +148,35 @@ div.datagrid-container {
       }
       &.center {
         text-align: center;
+      }
+      &.selector {
+        transition: all .2s;
+        resize: none;
+        overflow: hidden;
+        text-align: center;
+        vertical-align: middle;
+        //display: none;
+        width: 0;
+        max-width: 0;
+        padding: 0;
+        --checkbox-size: 2em;
+        input {
+          display: none;
+        }
+      }
+    }
+    &.multiselecting {
+      th,
+      td {
+        &.selector {
+          padding: 0 1em 0 1em;
+          width: auto;
+          max-width: unset;
+          display: table-cell;
+          input {
+            display: inline-block;
+          }
+        }
       }
     }
     &.selectable {
@@ -156,10 +195,33 @@ div.datagrid-container {
             outline-offset: -.3em;
           }
           &[aria-selected=true] {
-            background-color: var(--datagrid-grid-selected-background-color);
-            color: var(--datagrid-grid-selected-text-color);
+            background-color: var(--datagrid-grid-multiselected-selected-background-color);
+            color: var(--datagrid-grid-multiselected-selected-text-color);
             &:focus {
               outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+            }
+          }
+        }
+      }
+      &:not(.multiselecting) {
+        tbody {
+          tr {
+            @include for-hover-only {
+              &:hover {
+                background-color: var(--datagrid-grid-hover-background-color);
+                color: var(--datagrid-grid-hover-text-color);
+                text-shadow: var(--datagrid-grid-hover-text-shadow);
+              }
+            }
+            &:focus {
+              outline: var(--datagrid-grid-selected-background-color) dashed .1em;
+            }
+            &[aria-selected=true] {
+              background-color: var(--datagrid-grid-selected-background-color);
+              color: var(--datagrid-grid-selected-text-color);
+              &:focus {
+                outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+              }
             }
           }
         }

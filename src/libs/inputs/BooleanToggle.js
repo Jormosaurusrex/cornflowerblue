@@ -11,7 +11,7 @@ class BooleanToggle {
             disabled: false, // If true, make the checkbox disabled.
             labelside: 'right', // Which side to put the label on.
             style: null, // Default to box
-            onchange: null, // The change handler. Passed (event, self).
+            onchange: null, // The change handler. Passed (self).
             validator: null, // A function to run to test validity. Passed the self; returns true or false.,
             value: null // the value of the checkbox
         };

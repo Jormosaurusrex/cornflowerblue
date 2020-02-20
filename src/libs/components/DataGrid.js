@@ -9,10 +9,18 @@ class DataGrid {
             data: [], // The data to throw into the grid
 
             sortable: true, //  Data columns can be selected
-            selectable: true, //  Data rows can be selected
-            rowclick: function(event, self) {  // What to do when a row is clicked on.
+
+            filterable: true, // Data can be filtered
+            exportable: true, // Data can be exported
+
+            selectable: true, //  Data rows can be selected.
+            selectaction: function(event, self) {  // What to do when a single row is selecte.
                 //console.log("row clicked");
             },
+
+            multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
+            multiactions: [], // Array of button actions to multiselects
+
 
             sorticon: 'chevron-down',
             id: null, // The id
@@ -89,15 +97,51 @@ class DataGrid {
     }
 
     /**
-     * Select a single row
+     * Select a row
      * @param row the row to select
      */
     select(row) {
-        let rows = this.gridbody.querySelectorAll('tr');
-        for (let r of rows) {
-            r.removeAttribute('aria-selected');
+        if (!this.multiselecting) {
+            this.toggleallselect(false);
         }
         row.setAttribute('aria-selected', 'true');
+        row.querySelector('input.selector').checked = true;
+    }
+
+    /**
+     * Deselect a row
+     * @param row the row to deselect
+     */
+    deselect(row) {
+        row.removeAttribute('aria-selected');
+        row.querySelector('input.selector').checked = false;
+    }
+
+    /**
+     * Toggle all/none selection
+     * @param select if true, select all; if false, deselect all.
+     */
+    toggleallselect(select) {
+        let rows = this.gridbody.querySelectorAll('tr');
+        for (let r of rows) {
+            if (select) {
+                this.select(r);
+            } else {
+                this.deselect(r);
+            }
+        }
+    }
+
+    get multiselecting() {
+        return this.grid.classList.contains('multiselecting');
+    }
+
+    selectmodetoggle() {
+        if (this.multiselecting) {
+            this.grid.classList.remove('multiselecting');
+            return;
+        }
+        this.grid.classList.add('multiselecting');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -107,7 +151,7 @@ class DataGrid {
      * @returns the grid container
      */
     buildContainer() {
-
+        const me = this;
         for (let rdata of this.data) {
             this.gridbody.appendChild(this.buildRow(rdata));
         }
@@ -115,6 +159,22 @@ class DataGrid {
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
+
+        if (this.multiselect) {
+            this.gridactions = document.createElement('div');
+            this.gridactions.classList.add('grid-actions');
+            if (this.multiselect) {
+                let multiselectbutton = new SimpleButton({
+                    mute: true,
+                    text: "Bulk Select",
+                    action: function() {
+                        me.selectmodetoggle();
+                    }
+                });
+                this.gridactions.append(multiselectbutton.button);
+            }
+            this.container.append(this.gridactions);
+        }
 
         this.grid.appendChild(this.header);
         this.grid.appendChild(this.gridbody);
@@ -133,13 +193,28 @@ class DataGrid {
         }
     }
 
+
     /**
      * Build the table header
      */
     buildHeader() {
+        const me = this;
+        if (this.multiselect) {
+            this.masterselector = new BooleanToggle({
+                onchange: function(self) {
+                    me.toggleallselect(self.checked);
+                }
+            });
+            let cell = document.createElement('th');
+            cell.classList.add('selector');
+            cell.appendChild(this.masterselector.naked);
+            this.gridheader.appendChild(cell);
+        }
+
         for (let f of this.fields) {
             this.gridheader.appendChild(this.buildHeaderCell(f));
         }
+
         this.header = document.createElement('thead');
         this.header.appendChild(this.gridheader);
     }
@@ -208,8 +283,8 @@ class DataGrid {
             row.setAttribute('tabindex', '1');
             row.addEventListener('click', function(e) {
                 if (me.selectable) { me.select(row); }
-                if ((me.rowclick) && (typeof me.rowclick === 'function')) {
-                    me.rowclick(e, me);
+                if ((me.selectaction) && (typeof me.selectaction === 'function')) {
+                    me.selectaction(e, me);
                 }
             });
             row.addEventListener('keydown', function(e) {
@@ -225,6 +300,22 @@ class DataGrid {
                     row.click();
                 }
             });
+        }
+        if (this.multiselect) {
+            let selector = new BooleanToggle({
+                classes: ['selector'],
+                onchange: function(self) {
+                    if (self.checked) {
+                        console.log('checked this');
+                        return;
+                    }
+                    console.log('checked off this');
+                }
+            });
+            let cell = document.createElement('td');
+            cell.classList.add('selector');
+            cell.appendChild(selector.naked);
+            row.appendChild(cell);
         }
 
         for (let f of this.fields) {
@@ -274,9 +365,6 @@ class DataGrid {
         cell.classList.add(field.type);
         cell.innerHTML = content;
 
-        if (field.resize) {
-            cell.classList.add('resize');
-        }
         if (field.classes) {
             for (let c of field.classes) {
                 cell.classList.add(c);
@@ -331,6 +419,9 @@ class DataGrid {
     }
     set grid(grid) { this._grid = grid; }
 
+    get gridactions() { return this._gridactions; }
+    set gridactions(gridactions) { this._gridactions = gridactions; }
+
     get gridbody() {
         if (!this._gridbody) { this.buildGridBody(); }
         return this._gridbody;
@@ -358,11 +449,20 @@ class DataGrid {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get rowclick() { return this.config.rowclick; }
-    set rowclick(rowclick) { this.config.rowclick = rowclick; }
+    get masterselector() { return this._masterselector; }
+    set masterselector(masterselector) { this._masterselector = masterselector; }
+
+    get multiselect() { return this.config.multiselect; }
+    set multiselect(multiselect) { this.config.multiselect = multiselect; }
+
+    get multiactions() { return this.config.multiactions; }
+    set multiactions(multiactions) { this.config.multiactions = multiactions; }
 
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }
+
+    get selectaction() { return this.config.selectaction; }
+    set selectaction(selectaction) { this.config.selectaction = selectaction; }
 
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
