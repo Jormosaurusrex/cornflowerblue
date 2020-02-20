@@ -12,12 +12,23 @@ class DataGrid {
 
             filterable: true, // Data can be filtered
             exportable: true, // Data can be exported
+            exportbuttontext: "Export",
+            exporticon: "download",
+            exportheaderrow: 'readable', // When exporting a CSV file, should a header row
+                                         // be included?  Possible values:
+                                         // 'readable' : Uses the header labels (human readable)
+                                         // 'data' : Uses the data labels
+                                         // 'no' or null: don't include a header row
+            exportfilename: function() {  // the filename to name the exported data.
+                return 'export.csv';      // This can be a string or a function, but must return a string
+            },
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(event, self) {  // What to do when a single row is selecte.
                 //console.log("row clicked");
             },
 
+            multiselectbuttontext: "Bulk Select",
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiactions: [], // Array of button actions to multiselects
 
@@ -48,6 +59,58 @@ class DataGrid {
     }
 
     /* CORE METHODS_____________________________________________________________________ */
+
+    get exportheaderrow() { return this.config.exportheaderrow; }
+    set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
+
+    export() {
+        let lineDivider = '\r\n', // line divider
+            cellDivider = ',', // cell divider
+            rows = [],
+            fname;
+
+        if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
+            fname = this.exportfilename();
+        } else {
+            fname = this.exportfilename;
+        }
+        // XXX TODO: Don't export hidden fields
+
+        // Include the header row, if required.
+        if ((this.exportheaderrow) && (this.exportheaderrow !== 'no')) {
+            let colTitles = [],
+                colData = [];
+            for (let f of this.fields) {
+                colTitles.push(`\"${f.label}\"`);
+                colData.push(`\"${f.name}\"`);
+            }
+            if (this.exportheaderrow === 'readable') {
+                rows.push(`\"${colTitles.join(cellDivider)}\"`);
+            } else {
+                rows.push(`\"${colData.join(cellDivider)}\"`);
+            }
+        }
+
+        for (let d of this.data) {
+            let cells = [];
+            for (let f of this.fields) { // do mapping by field
+                cells.push(`\"${d[f.name]}\"`);
+            }
+            rows.push(cells.join(cellDivider));
+        }
+
+        let csv = rows.join(lineDivider);
+        console.log(csv);
+        
+        let hiddenElement = document.createElement('a');
+        hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csv)}`);
+        hiddenElement.setAttribute('id', 'downloadLink');
+        hiddenElement.setAttribute('target', '_blank');
+        hiddenElement.setAttribute('download', fname);
+        hiddenElement.click();
+    }
+
+    /* SELECTION METHODS________________________________________________________________ */
 
     /**
      * Sort the table based on a field.
@@ -132,16 +195,21 @@ class DataGrid {
         }
     }
 
-    get multiselecting() {
-        return this.grid.classList.contains('multiselecting');
-    }
-
+    /**
+     * Toggle the select mode
+     */
     selectmodetoggle() {
         if (this.multiselecting) {
             this.grid.classList.remove('multiselecting');
             return;
         }
         this.grid.classList.add('multiselecting');
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get multiselecting() {
+        return this.grid.classList.contains('multiselecting');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -166,19 +234,36 @@ class DataGrid {
             if (this.multiselect) {
                 let multiselectbutton = new SimpleButton({
                     mute: true,
-                    text: "Bulk Select",
+                    text: this.multiselectbuttontext,
                     action: function() {
                         me.selectmodetoggle();
                     }
                 });
                 this.gridactions.append(multiselectbutton.button);
             }
+            if (this.exportable) {
+                let exportbutton  = new SimpleButton({
+                    mute: true,
+                    text: this.exportbuttontext,
+                    icon: this.exporticon,
+                    action: function() {
+                        me.export();
+                    }
+                });
+                this.gridactions.append(exportbutton.button);
+
+            }
             this.container.append(this.gridactions);
         }
 
         this.grid.appendChild(this.header);
         this.grid.appendChild(this.gridbody);
-        this.container.append(this.grid);
+
+        let gridwrapper = document.createElement('div');
+        gridwrapper.classList.add('grid-wrapper');
+        gridwrapper.appendChild(this.grid);
+
+        this.container.append(gridwrapper);
 
     }
 
@@ -192,7 +277,6 @@ class DataGrid {
             this.grid.classList.add('selectable');
         }
     }
-
 
     /**
      * Build the table header
@@ -404,6 +488,18 @@ class DataGrid {
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
 
+    get exportable() { return this.config.exportable; }
+    set exportable(exportable) { this.config.exportable = exportable; }
+
+    get exportbuttontext() { return this.config.exportbuttontext; }
+    set exportbuttontext(exportbuttontext) { this.config.exportbuttontext = exportbuttontext; }
+
+    get exportfilename() { return this.config.exportfilename; }
+    set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
+
+    get exporticon() { return this.config.exporticon; }
+    set exporticon(exporticon) { this.config.exporticon = exporticon; }
+
     get fields() { return this.config.fields; }
     set fields(fields) { this.config.fields = fields; }
 
@@ -454,6 +550,9 @@ class DataGrid {
 
     get multiselect() { return this.config.multiselect; }
     set multiselect(multiselect) { this.config.multiselect = multiselect; }
+
+    get multiselectbuttontext() { return this.config.multiselectbuttontext; }
+    set multiselectbuttontext(multiselectbuttontext) { this.config.multiselectbuttontext = multiselectbuttontext; }
 
     get multiactions() { return this.config.multiactions; }
     set multiactions(multiactions) { this.config.multiactions = multiactions; }

@@ -23,10 +23,18 @@ div.datagrid-container {
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
 
   max-height: 80vh;
-  overflow: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   div.grid-actions {
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  div.grid-wrapper {
+    overflow: auto;
   }
   table.grid {
     padding: 0;

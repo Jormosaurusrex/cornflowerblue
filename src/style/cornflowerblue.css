@@ -4496,6 +4496,17 @@ div.datagrid-container {
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+div.datagrid-container div.grid-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+div.datagrid-container div.grid-wrapper {
   overflow: auto;
 }
 div.datagrid-container table.grid {
