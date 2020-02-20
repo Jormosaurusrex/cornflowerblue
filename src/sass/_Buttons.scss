@@ -91,23 +91,28 @@ button {
     background-color: transparent;
     box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
   }
-  &:hover,
   &:focus,
   &:active,
   &.focus,
-  &.active,
-  &.hover {
+  &.active {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
     background-color: var(--button-default-color);
     outline: none;
     background-image: var(--button-hover-gradient);
   }
-  &:hover,
-  &.hover {
-    text-decoration: underline;
-    box-shadow: var(--button-hover-box-shadow);
-    filter: var(--button-hover-filter);
+  @media(hover: hover) and (pointer: fine) {
+    &:hover,
+    &.hover {
+      color: var(--button-hover-text-color);
+      text-shadow: var(--button-text-shadow);
+      background-color: var(--button-default-color);
+      outline: none;
+      background-image: var(--button-hover-gradient);
+      text-decoration: underline;
+      box-shadow: var(--button-hover-box-shadow);
+      filter: var(--button-hover-filter);
+    }
   }
   &:focus,
   &.focus {
@@ -160,8 +165,6 @@ button {
       color: var(--destructive-color);
       text-shadow: none;
     }
-    &:hover,
-    &.hover,
     &:active,
     &.active,
     &:focus,
@@ -177,10 +180,22 @@ button {
         background-color: var(--destructive-color);
       }
     }
-    &:hover,
-    &.hover {
-      text-decoration: underline;
-      filter: brightness(120%);
+    @media(hover: hover) and (pointer: fine) {
+      &:hover,
+      &.hover {
+        text-decoration: underline;
+        filter: brightness(120%);
+        color: var(--button-hover-text-color);
+        text-shadow: var(--button-text-shadow);
+        background-color: var(--button-default-color);
+        box-shadow: var(--button-hover-box-shadow);
+        &.constructive {
+          background-color: var(--constructive-color);
+        }
+        &.destructive {
+          background-color: var(--destructive-color);
+        }
+      }
     }
     &:active,
     &.active {
@@ -398,15 +413,17 @@ button {
     box-shadow: none;
     margin-right: .5em;
     background: none;
-    &:hover,
     &:focus,
     &:active {
       color: var(--hot-text-color);
       background: none;
     }
-    &:hover {
-      opacity: 1;
-      background: none;
+    @media(hover: hover) and (pointer: fine) {
+      &:hover {
+        opacity: 1;
+        color: var(--hot-text-color);
+        background: none;
+      }
     }
   }
   &.menu {
@@ -435,7 +452,6 @@ button {
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        &:hover,
         &:active,
         &:focus {
           background-color: var(--button-menu-item-hover-background-color);
@@ -443,6 +459,16 @@ button {
           text-shadow: var(--button-menu-item-hover-text-shadow);
           a {
             color: var(--button-menu-item-hover-text-color);
+          }
+        }
+        @media(hover: hover) and (pointer: fine) {
+          &:hover {
+            background-color: var(--button-menu-item-hover-background-color);
+            color: var(--button-menu-item-hover-text-color);
+            text-shadow: var(--button-menu-item-hover-text-shadow);
+            a {
+              color: var(--button-menu-item-hover-text-color);
+            }
           }
         }
         a {
@@ -457,8 +483,11 @@ button {
           justify-content: flex-start;
           align-items: center;
           flex-grow: 1;
-          &:hover,
           &:active {
+            color: var(--button-menu-item-hover-text-color);
+            filter: none;
+          }
+          @media(hover: hover) and (pointer: fine) {
             color: var(--button-menu-item-hover-text-color);
             filter: none;
           }
@@ -506,10 +535,7 @@ button {
     background-image: none;
     height: auto;
     width: auto;
-
     transition: brightness .5s;
-    &:hover,
-    &.hover,
     &:focus,
     &.focus,
     &:active,
@@ -517,6 +543,14 @@ button {
       background-color: transparent;
       background-image: none;
       color: var(--button-default-color);
+    }
+    @media(hover: hover) and (pointer: fine) {
+      &:hover,
+      &.hover {
+        background-color: transparent;
+        background-image: none;
+        color: var(--button-default-color);
+      }
     }
   }
   &.naked {
@@ -526,11 +560,13 @@ button {
     color: var(--link-color);
     text-shadow: var(--link-text-shadow);
     text-decoration: underline;
-    &:hover,
-    &.hover {
-      color: var(--link-color);
-      filter: brightness(120%);
-      text-decoration: underline double;
+    @media(hover: hover) and (pointer: fine) {
+      &:hover,
+      &.hover {
+        color: var(--link-color);
+        filter: brightness(120%);
+        text-decoration: underline double;
+      }
     }
     &:active,
     &.active {

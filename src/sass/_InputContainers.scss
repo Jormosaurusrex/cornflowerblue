@@ -22,8 +22,10 @@ div.textarea-container {
         align-items: center;
         justify-content: center;
         align-content: center;
-        &:hover {
-          opacity: 1;
+        @media(hover: hover) and (pointer: fine) {
+          &:hover {
+            opacity: 1;
+          }
         }
         button {
           span.icon {

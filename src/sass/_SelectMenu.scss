@@ -148,7 +148,6 @@ div.select-container {
       &:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color);
       }
-      &:hover,
       &:focus {
         background-color: var(--selectmenu-menu-item-hover-background-color);
         color: var(--selectmenu-menu-item-hover-text-color);
@@ -160,6 +159,23 @@ div.select-container {
           label {
             &:before {
               color: var(--selectmenu-menu-item-hover-text-color);
+            }
+          }
+        }
+      }
+      @media(hover: hover) and (pointer: fine) {
+        &:hover {
+          background-color: var(--selectmenu-menu-item-hover-background-color);
+          color: var(--selectmenu-menu-item-hover-text-color);
+          label {
+            color: var(--selectmenu-menu-item-hover-text-color);
+            text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
+          }
+          &[aria-selected=true] {
+            label {
+              &:before {
+                color: var(--selectmenu-menu-item-hover-text-color);
+              }
             }
           }
         }

@@ -56,20 +56,24 @@ div.datagrid-container {
               opacity: 0;
             }
           }
-          &:hover,
           &:focus,
           &:active,
           &.focus,
-          &.active,
-          &.hover {
+          &.active {
             color: var(--datagrid-header-hover-text-color);
             text-shadow: var(--datagrid-header-hover-text-shadow);
             background-color: var(--datagrid-header-hover-background-color);
             outline: none;
           }
-          &:hover,
-          &.hover {
-            text-decoration: underline;
+          @media(hover: hover) and (pointer: fine) {
+            &:hover,
+            &.hover {
+              color: var(--datagrid-header-hover-text-color);
+              text-shadow: var(--datagrid-header-hover-text-shadow);
+              background-color: var(--datagrid-header-hover-background-color);
+              outline: none;
+              text-decoration: underline;
+            }
           }
           &:active,
           &.active {
@@ -140,10 +144,12 @@ div.datagrid-container {
       tbody {
         tr {
           cursor: pointer;
-          &:hover {
-            background-color: var(--datagrid-grid-hover-background-color);
-            color: var(--datagrid-grid-hover-text-color);
-            text-shadow: var(--datagrid-grid-hover-text-shadow);
+          @media(hover: hover) and (pointer: fine) {
+            &:hover {
+              background-color: var(--datagrid-grid-hover-background-color);
+              color: var(--datagrid-grid-hover-text-color);
+              text-shadow: var(--datagrid-grid-hover-text-shadow);
+            }
           }
           &:focus {
             outline: var(--datagrid-grid-selected-background-color) dashed .1em;

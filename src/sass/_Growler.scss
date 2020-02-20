@@ -90,7 +90,6 @@ div.growler {
     white-space: nowrap;
     span.text {
       text-shadow: var(--growler-header-text-shadow);
-      //padding: .5em 1em .5em 1em;
     }
     button.closebutton {
       color: var(--growler-header-text-color);
@@ -100,8 +99,10 @@ div.growler {
       top: auto;
       width: unset;
       height: unset;
-      &:hover {
-        text-shadow: var(--growler-header-text-shadow);
+      @media(hover: hover) and (pointer: fine) {
+        &:hover {
+          text-shadow: var(--growler-header-text-shadow);
+        }
       }
     }
   }

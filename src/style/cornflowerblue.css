@@ -1465,9 +1465,11 @@ div.textarea-container div.wrap div.inputcontrol.stepbuttons {
   justify-content: center;
   align-content: center;
 }
-div.input-container div.wrap div.inputcontrol.stepbuttons:hover,
+@media (hover: hover) and (pointer: fine) {
+  div.input-container div.wrap div.inputcontrol.stepbuttons:hover,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons:hover {
-  opacity: 1;
+    opacity: 1;
+  }
 }
 div.input-container div.wrap div.inputcontrol.stepbuttons button span.icon,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons button span.icon {
@@ -1992,14 +1994,25 @@ div.file-container.disabled div.trigger {
   cursor: not-allowed;
   text-shadow: none;
 }
-div.file-container.disabled div.trigger:hover, div.file-container.disabled div.trigger:active, div.file-container.disabled div.trigger:focus {
+div.file-container.disabled div.trigger:active, div.file-container.disabled div.trigger:focus {
   border-color: var(--input-disabled-border-color);
   background-color: var(--input-disabled-background-color);
   color: var(--input-disabled-text-color);
   box-shadow: none;
 }
-div.file-container.disabled div.trigger:hover:before, div.file-container.disabled div.trigger:active:before, div.file-container.disabled div.trigger:focus:before {
+div.file-container.disabled div.trigger:active:before, div.file-container.disabled div.trigger:focus:before {
   color: var(--input-disabled-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.file-container.disabled div.trigger:hover {
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-background-color);
+    color: var(--input-disabled-text-color);
+    box-shadow: none;
+  }
+  div.file-container.disabled div.trigger:hover:before {
+    color: var(--input-disabled-text-color);
+  }
 }
 
 div.select-container {
@@ -2150,16 +2163,29 @@ div.select-container ul.selectmenu li.selected {
 div.select-container ul.selectmenu li:nth-child(even) {
   background-color: var(--selectmenu-menu-alternate-background-color);
 }
-div.select-container ul.selectmenu li:hover, div.select-container ul.selectmenu li:focus {
+div.select-container ul.selectmenu li:focus {
   background-color: var(--selectmenu-menu-item-hover-background-color);
   color: var(--selectmenu-menu-item-hover-text-color);
 }
-div.select-container ul.selectmenu li:hover label, div.select-container ul.selectmenu li:focus label {
+div.select-container ul.selectmenu li:focus label {
   color: var(--selectmenu-menu-item-hover-text-color);
   text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
 }
-div.select-container ul.selectmenu li:hover[aria-selected=true] label:before, div.select-container ul.selectmenu li:focus[aria-selected=true] label:before {
+div.select-container ul.selectmenu li:focus[aria-selected=true] label:before {
   color: var(--selectmenu-menu-item-hover-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.select-container ul.selectmenu li:hover {
+    background-color: var(--selectmenu-menu-item-hover-background-color);
+    color: var(--selectmenu-menu-item-hover-text-color);
+  }
+  div.select-container ul.selectmenu li:hover label {
+    color: var(--selectmenu-menu-item-hover-text-color);
+    text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
+  }
+  div.select-container ul.selectmenu li:hover[aria-selected=true] label:before {
+    color: var(--selectmenu-menu-item-hover-text-color);
+  }
 }
 div.select-container ul.selectmenu.vert {
   bottom: 2.5em;
@@ -2269,17 +2295,24 @@ button.ghost {
   background-color: transparent;
   box-shadow: inset -0.1em -0.1em 0 0 var(--button-default-color), inset 0.1em -0.1em 0 0 var(--button-default-color), inset -0.1em 0.1em 0 0 var(--button-default-color), inset 0.1em 0.1em 0 0 var(--button-default-color);
 }
-button:hover, button:focus, button:active, button.focus, button.active, button.hover {
+button:focus, button:active, button.focus, button.active {
   color: var(--button-hover-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
   outline: none;
   background-image: var(--button-hover-gradient);
 }
-button:hover, button.hover {
-  text-decoration: underline;
-  box-shadow: var(--button-hover-box-shadow);
-  filter: var(--button-hover-filter);
+@media (hover: hover) and (pointer: fine) {
+  button:hover, button.hover {
+    color: var(--button-hover-text-color);
+    text-shadow: var(--button-text-shadow);
+    background-color: var(--button-default-color);
+    outline: none;
+    background-image: var(--button-hover-gradient);
+    text-decoration: underline;
+    box-shadow: var(--button-hover-box-shadow);
+    filter: var(--button-hover-filter);
+  }
 }
 button:focus, button.focus {
   outline: var(--button-default-color) dashed 0.1em;
@@ -2329,21 +2362,33 @@ button.mute.destructive {
   color: var(--destructive-color);
   text-shadow: none;
 }
-button.mute:hover, button.mute.hover, button.mute:active, button.mute.active, button.mute:focus, button.mute.focus {
+button.mute:active, button.mute.active, button.mute:focus, button.mute.focus {
   color: var(--button-hover-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
   box-shadow: var(--button-hover-box-shadow);
 }
-button.mute:hover.constructive, button.mute.hover.constructive, button.mute:active.constructive, button.mute.active.constructive, button.mute:focus.constructive, button.mute.focus.constructive {
+button.mute:active.constructive, button.mute.active.constructive, button.mute:focus.constructive, button.mute.focus.constructive {
   background-color: var(--constructive-color);
 }
-button.mute:hover.destructive, button.mute.hover.destructive, button.mute:active.destructive, button.mute.active.destructive, button.mute:focus.destructive, button.mute.focus.destructive {
+button.mute:active.destructive, button.mute.active.destructive, button.mute:focus.destructive, button.mute.focus.destructive {
   background-color: var(--destructive-color);
 }
-button.mute:hover, button.mute.hover {
-  text-decoration: underline;
-  filter: brightness(120%);
+@media (hover: hover) and (pointer: fine) {
+  button.mute:hover, button.mute.hover {
+    text-decoration: underline;
+    filter: brightness(120%);
+    color: var(--button-hover-text-color);
+    text-shadow: var(--button-text-shadow);
+    background-color: var(--button-default-color);
+    box-shadow: var(--button-hover-box-shadow);
+  }
+  button.mute:hover.constructive, button.mute.hover.constructive {
+    background-color: var(--constructive-color);
+  }
+  button.mute:hover.destructive, button.mute.hover.destructive {
+    background-color: var(--destructive-color);
+  }
 }
 button.mute:active, button.mute.active {
   text-decoration: none;
@@ -2545,13 +2590,16 @@ button.closebutton {
   margin-right: 0.5em;
   background: none;
 }
-button.closebutton:hover, button.closebutton:focus, button.closebutton:active {
+button.closebutton:focus, button.closebutton:active {
   color: var(--hot-text-color);
   background: none;
 }
-button.closebutton:hover {
-  opacity: 1;
-  background: none;
+@media (hover: hover) and (pointer: fine) {
+  button.closebutton:hover {
+    opacity: 1;
+    color: var(--hot-text-color);
+    background: none;
+  }
 }
 button.menu {
   overflow: visible;
@@ -2582,13 +2630,23 @@ button.menu ul li {
   align-items: center;
   justify-content: flex-start;
 }
-button.menu ul li:hover, button.menu ul li:active, button.menu ul li:focus {
+button.menu ul li:active, button.menu ul li:focus {
   background-color: var(--button-menu-item-hover-background-color);
   color: var(--button-menu-item-hover-text-color);
   text-shadow: var(--button-menu-item-hover-text-shadow);
 }
-button.menu ul li:hover a, button.menu ul li:active a, button.menu ul li:focus a {
+button.menu ul li:active a, button.menu ul li:focus a {
   color: var(--button-menu-item-hover-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  button.menu ul li:hover {
+    background-color: var(--button-menu-item-hover-background-color);
+    color: var(--button-menu-item-hover-text-color);
+    text-shadow: var(--button-menu-item-hover-text-shadow);
+  }
+  button.menu ul li:hover a {
+    color: var(--button-menu-item-hover-text-color);
+  }
 }
 button.menu ul li a {
   padding: 0.6em 1em 0.6em 1em;
@@ -2603,9 +2661,15 @@ button.menu ul li a {
   align-items: center;
   flex-grow: 1;
 }
-button.menu ul li a:hover, button.menu ul li a:active {
+button.menu ul li a:active {
   color: var(--button-menu-item-hover-text-color);
   filter: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  button.menu ul li a {
+    color: var(--button-menu-item-hover-text-color);
+    filter: none;
+  }
 }
 button.menu ul li a:focus {
   margin: 0.3em;
@@ -2648,10 +2712,17 @@ button.naked, button.link {
   width: auto;
   transition: brightness 0.5s;
 }
-button.naked:hover, button.naked.hover, button.naked:focus, button.naked.focus, button.naked:active, button.naked.active, button.link:hover, button.link.hover, button.link:focus, button.link.focus, button.link:active, button.link.active {
+button.naked:focus, button.naked.focus, button.naked:active, button.naked.active, button.link:focus, button.link.focus, button.link:active, button.link.active {
   background-color: transparent;
   background-image: none;
   color: var(--button-default-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  button.naked:hover, button.naked.hover, button.link:hover, button.link.hover {
+    background-color: transparent;
+    background-image: none;
+    color: var(--button-default-color);
+  }
 }
 button.naked {
   color: var(--button-default-color);
@@ -2661,10 +2732,12 @@ button.link {
   text-shadow: var(--link-text-shadow);
   text-decoration: underline;
 }
-button.link:hover, button.link.hover {
-  color: var(--link-color);
-  filter: brightness(120%);
-  text-decoration: underline double;
+@media (hover: hover) and (pointer: fine) {
+  button.link:hover, button.link.hover {
+    color: var(--link-color);
+    filter: brightness(120%);
+    text-decoration: underline double;
+  }
 }
 button.link:active, button.link.active {
   color: var(--link-color);
@@ -2780,18 +2853,25 @@ input[type=radio].focus {
   outline-color: var(--grey-medium);
   outline-offset: 0.2em;
 }
-input[type=checkbox]:focus, input[type=checkbox]:active, input[type=checkbox]:hover,
+input[type=checkbox]:focus, input[type=checkbox]:active,
 input[type=radio]:focus,
-input[type=radio]:active,
-input[type=radio]:hover {
+input[type=radio]:active {
   border-color: var(--checkbox-focus-color);
   background-color: var(--checkbox-focus-color);
   box-shadow: var(--hover-box-shadow);
 }
-input[type=checkbox]:hover:before,
+@media (hover: hover) and (pointer: fine) {
+  input[type=checkbox]:hover,
+input[type=radio]:hover {
+    border-color: var(--checkbox-focus-color);
+    background-color: var(--checkbox-focus-color);
+    box-shadow: var(--hover-box-shadow);
+  }
+  input[type=checkbox]:hover:before,
 input[type=radio]:hover:before {
-  display: inline-block;
-  opacity: 0.2;
+    display: inline-block;
+    opacity: 0.2;
+  }
 }
 input[type=checkbox]:focus:checked:before, input[type=checkbox]:hover:checked:before,
 input[type=radio]:focus:checked:before,
@@ -2805,42 +2885,44 @@ input[type=radio].round:before,
 input[type=radio].round:checked:before {
   display: none;
 }
-input[type=checkbox].square:hover, input[type=checkbox].round:hover,
+@media (hover: hover) and (pointer: fine) {
+  input[type=checkbox].square:hover, input[type=checkbox].round:hover,
 input[type=radio].square:hover,
 input[type=radio].round:hover {
-  border-color: var(--checkbox-focus-color);
-  background-color: var(--checkbox-focus-color);
-  box-shadow: var(--hover-box-shadow);
-}
-input[type=checkbox].square:hover:before, input[type=checkbox].round:hover:before,
+    border-color: var(--checkbox-focus-color);
+    background-color: var(--checkbox-focus-color);
+    box-shadow: var(--hover-box-shadow);
+  }
+  input[type=checkbox].square:hover:before, input[type=checkbox].round:hover:before,
 input[type=radio].square:hover:before,
 input[type=radio].round:hover:before {
-  display: none;
-}
-input[type=checkbox].square:hover:after, input[type=checkbox].round:hover:after,
+    display: none;
+  }
+  input[type=checkbox].square:hover:after, input[type=checkbox].round:hover:after,
 input[type=radio].square:hover:after,
 input[type=radio].round:hover:after {
-  display: block;
-  background-color: transparent;
-  border: 0.2em dotted var(--checkbox-toggle-chrome-color);
-}
-input[type=checkbox].square:hover:checked, input[type=checkbox].round:hover:checked,
+    display: block;
+    background-color: transparent;
+    border: 0.2em dotted var(--checkbox-toggle-chrome-color);
+  }
+  input[type=checkbox].square:hover:checked, input[type=checkbox].round:hover:checked,
 input[type=radio].square:hover:checked,
 input[type=radio].round:hover:checked {
-  border-color: var(--checkbox-border-color);
-  box-shadow: var(--checkbox-checked-shadow);
-  background-color: var(--checkbox-focus-color);
-}
-input[type=checkbox].square:hover:checked:before, input[type=checkbox].round:hover:checked:before,
+    border-color: var(--checkbox-border-color);
+    box-shadow: var(--checkbox-checked-shadow);
+    background-color: var(--checkbox-focus-color);
+  }
+  input[type=checkbox].square:hover:checked:before, input[type=checkbox].round:hover:checked:before,
 input[type=radio].square:hover:checked:before,
 input[type=radio].round:hover:checked:before {
-  display: none;
-}
-input[type=checkbox].square:hover:checked:after, input[type=checkbox].round:hover:checked:after,
+    display: none;
+  }
+  input[type=checkbox].square:hover:checked:after, input[type=checkbox].round:hover:checked:after,
 input[type=radio].square:hover:checked:after,
 input[type=radio].round:hover:checked:after {
-  background-color: var(--checkbox-toggle-chrome-hovermark-color);
-  border: 0.5em solid var(--checkbox-toggle-chrome-color);
+    background-color: var(--checkbox-toggle-chrome-hovermark-color);
+    border: 0.5em solid var(--checkbox-toggle-chrome-color);
+  }
 }
 input[type=checkbox].square:checked:after, input[type=checkbox].round:checked:after,
 input[type=radio].square:checked:after,
@@ -2897,27 +2979,29 @@ input[type=radio].switch:after {
   box-shadow: var(--hover-box-shadow);
   transition: all 0.2s;
 }
-input[type=checkbox].toggle:hover, input[type=checkbox].toggle:hover:checked, input[type=checkbox].switch:hover, input[type=checkbox].switch:hover:checked,
+@media (hover: hover) and (pointer: fine) {
+  input[type=checkbox].toggle:hover, input[type=checkbox].toggle:hover:checked, input[type=checkbox].switch:hover, input[type=checkbox].switch:hover:checked,
 input[type=radio].toggle:hover,
 input[type=radio].toggle:hover:checked,
 input[type=radio].switch:hover,
 input[type=radio].switch:hover:checked {
-  box-shadow: var(--checkbox-checked-shadow-hover);
-  border-color: var(--focus-color);
-}
-input[type=checkbox].toggle:hover:before, input[type=checkbox].toggle:hover:checked:before, input[type=checkbox].switch:hover:before, input[type=checkbox].switch:hover:checked:before,
+    box-shadow: var(--checkbox-checked-shadow-hover);
+    border-color: var(--focus-color);
+  }
+  input[type=checkbox].toggle:hover:before, input[type=checkbox].toggle:hover:checked:before, input[type=checkbox].switch:hover:before, input[type=checkbox].switch:hover:checked:before,
 input[type=radio].toggle:hover:before,
 input[type=radio].toggle:hover:checked:before,
 input[type=radio].switch:hover:before,
 input[type=radio].switch:hover:checked:before {
-  display: none;
-}
-input[type=checkbox].toggle:hover:after, input[type=checkbox].toggle:hover:checked:after, input[type=checkbox].switch:hover:after, input[type=checkbox].switch:hover:checked:after,
+    display: none;
+  }
+  input[type=checkbox].toggle:hover:after, input[type=checkbox].toggle:hover:checked:after, input[type=checkbox].switch:hover:after, input[type=checkbox].switch:hover:checked:after,
 input[type=radio].toggle:hover:after,
 input[type=radio].toggle:hover:checked:after,
 input[type=radio].switch:hover:after,
 input[type=radio].switch:hover:checked:after {
-  background-color: var(--checkbox-toggle-chrome-hovermark-color);
+    background-color: var(--checkbox-toggle-chrome-hovermark-color);
+  }
 }
 input[type=checkbox].toggle:checked, input[type=checkbox].switch:checked,
 input[type=radio].toggle:checked,
@@ -2979,11 +3063,9 @@ input[type=checkbox]:checked + label:disabled:checked:after {
   border-color: var(--disabled-highlight-color);
   box-shadow: none;
 }
-input[type=checkbox]:disabled:hover, input[type=checkbox]:disabled:focus, input[type=checkbox]:disabled:active,
-input[type=checkbox] + label:disabled:hover,
+input[type=checkbox]:disabled:focus, input[type=checkbox]:disabled:active,
 input[type=checkbox] + label:disabled:focus,
 input[type=checkbox] + label:disabled:active,
-input[type=checkbox]:checked + label:disabled:hover,
 input[type=checkbox]:checked + label:disabled:focus,
 input[type=checkbox]:checked + label:disabled:active {
   color: var(--disabled-highlight-color) !important;
@@ -2993,15 +3075,11 @@ input[type=checkbox]:checked + label:disabled:active {
   outline: none;
   text-decoration: none;
 }
-input[type=checkbox]:disabled:hover:before, input[type=checkbox]:disabled:hover:after, input[type=checkbox]:disabled:focus:before, input[type=checkbox]:disabled:focus:after, input[type=checkbox]:disabled:active:before, input[type=checkbox]:disabled:active:after,
-input[type=checkbox] + label:disabled:hover:before,
-input[type=checkbox] + label:disabled:hover:after,
+input[type=checkbox]:disabled:focus:before, input[type=checkbox]:disabled:focus:after, input[type=checkbox]:disabled:active:before, input[type=checkbox]:disabled:active:after,
 input[type=checkbox] + label:disabled:focus:before,
 input[type=checkbox] + label:disabled:focus:after,
 input[type=checkbox] + label:disabled:active:before,
 input[type=checkbox] + label:disabled:active:after,
-input[type=checkbox]:checked + label:disabled:hover:before,
-input[type=checkbox]:checked + label:disabled:hover:after,
 input[type=checkbox]:checked + label:disabled:focus:before,
 input[type=checkbox]:checked + label:disabled:focus:after,
 input[type=checkbox]:checked + label:disabled:active:before,
@@ -3009,35 +3087,67 @@ input[type=checkbox]:checked + label:disabled:active:after {
   box-shadow: none !important;
   text-shadow: none !important;
 }
-input[type=checkbox]:disabled:hover:before, input[type=checkbox]:disabled:focus:before, input[type=checkbox]:disabled:active:before,
-input[type=checkbox] + label:disabled:hover:before,
+input[type=checkbox]:disabled:focus:before, input[type=checkbox]:disabled:active:before,
 input[type=checkbox] + label:disabled:focus:before,
 input[type=checkbox] + label:disabled:active:before,
-input[type=checkbox]:checked + label:disabled:hover:before,
 input[type=checkbox]:checked + label:disabled:focus:before,
 input[type=checkbox]:checked + label:disabled:active:before {
   display: none;
 }
-input[type=checkbox]:disabled:hover:checked:before, input[type=checkbox]:disabled:focus:checked:before, input[type=checkbox]:disabled:active:checked:before,
-input[type=checkbox] + label:disabled:hover:checked:before,
+input[type=checkbox]:disabled:focus:checked:before, input[type=checkbox]:disabled:active:checked:before,
 input[type=checkbox] + label:disabled:focus:checked:before,
 input[type=checkbox] + label:disabled:active:checked:before,
-input[type=checkbox]:checked + label:disabled:hover:checked:before,
 input[type=checkbox]:checked + label:disabled:focus:checked:before,
 input[type=checkbox]:checked + label:disabled:active:checked:before {
   display: none;
 }
-input[type=checkbox]:disabled:hover:checked:after, input[type=checkbox]:disabled:focus:checked:after, input[type=checkbox]:disabled:active:checked:after,
-input[type=checkbox] + label:disabled:hover:checked:after,
+input[type=checkbox]:disabled:focus:checked:after, input[type=checkbox]:disabled:active:checked:after,
 input[type=checkbox] + label:disabled:focus:checked:after,
 input[type=checkbox] + label:disabled:active:checked:after,
-input[type=checkbox]:checked + label:disabled:hover:checked:after,
 input[type=checkbox]:checked + label:disabled:focus:checked:after,
 input[type=checkbox]:checked + label:disabled:active:checked:after {
   opacity: 1;
   background-color: var(--disabled-highlight-color);
   border-color: var(--disabled-highlight-color);
   box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  input[type=checkbox]:disabled:hover,
+input[type=checkbox] + label:disabled:hover,
+input[type=checkbox]:checked + label:disabled:hover {
+    color: var(--disabled-highlight-color) !important;
+    background-color: var(--disabled-base-color) !important;
+    border-color: var(--disabled-highlight-color) !important;
+    box-shadow: none;
+    outline: none;
+    text-decoration: none;
+  }
+  input[type=checkbox]:disabled:hover:before, input[type=checkbox]:disabled:hover:after,
+input[type=checkbox] + label:disabled:hover:before,
+input[type=checkbox] + label:disabled:hover:after,
+input[type=checkbox]:checked + label:disabled:hover:before,
+input[type=checkbox]:checked + label:disabled:hover:after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  input[type=checkbox]:disabled:hover:before,
+input[type=checkbox] + label:disabled:hover:before,
+input[type=checkbox]:checked + label:disabled:hover:before {
+    display: none;
+  }
+  input[type=checkbox]:disabled:hover:checked:before,
+input[type=checkbox] + label:disabled:hover:checked:before,
+input[type=checkbox]:checked + label:disabled:hover:checked:before {
+    display: none;
+  }
+  input[type=checkbox]:disabled:hover:checked:after,
+input[type=checkbox] + label:disabled:hover:checked:after,
+input[type=checkbox]:checked + label:disabled:hover:checked:after {
+    opacity: 1;
+    background-color: var(--disabled-highlight-color);
+    border-color: var(--disabled-highlight-color);
+    box-shadow: none;
+  }
 }
 
 input[type=radio] {
@@ -3059,33 +3169,36 @@ input[type=radio]:after {
   top: var(--radio-toggle-offset);
   border: 0.2em solid var(--checkbox-toggle-chrome-color);
 }
-input[type=radio]:checked:after, input[type=radio]:focus:after, input[type=radio]:active:after, input[type=radio]:hover:after {
+input[type=radio]:checked:after, input[type=radio]:focus:after, input[type=radio]:active:after {
   border-radius: 50%;
 }
-input[type=radio]:hover {
-  border-color: var(--checkbox-focus-color);
-  background-color: var(--checkbox-focus-color);
-  box-shadow: var(--hover-box-shadow);
-}
-input[type=radio]:hover:before {
-  display: none;
-}
-input[type=radio]:hover:after {
-  display: block;
-  background-color: transparent;
-  border: 0.2em dotted var(--checkbox-toggle-chrome-color);
-}
-input[type=radio]:hover:checked {
-  border-color: var(--checkbox-border-color);
-  box-shadow: var(--checkbox-checked-shadow);
-  background-color: var(--checkbox-focus-color);
-}
-input[type=radio]:hover:checked:before {
-  display: none;
-}
-input[type=radio]:hover:checked:after {
-  background-color: var(--checkbox-toggle-chrome-hovermark-color);
-  border: 0.4em solid var(--checkbox-toggle-chrome-color);
+@media (hover: hover) and (pointer: fine) {
+  input[type=radio]:hover {
+    border-color: var(--checkbox-focus-color);
+    background-color: var(--checkbox-focus-color);
+    box-shadow: var(--hover-box-shadow);
+  }
+  input[type=radio]:hover:before {
+    display: none;
+  }
+  input[type=radio]:hover:after {
+    border-radius: 50%;
+    display: block;
+    background-color: transparent;
+    border: 0.2em dotted var(--checkbox-toggle-chrome-color);
+  }
+  input[type=radio]:hover:checked {
+    border-color: var(--checkbox-border-color);
+    box-shadow: var(--checkbox-checked-shadow);
+    background-color: var(--checkbox-focus-color);
+  }
+  input[type=radio]:hover:checked:before {
+    display: none;
+  }
+  input[type=radio]:hover:checked:after {
+    background-color: var(--checkbox-toggle-chrome-hovermark-color);
+    border: 0.4em solid var(--checkbox-toggle-chrome-color);
+  }
 }
 input[type=radio]:checked:after {
   display: block;
@@ -3123,11 +3236,50 @@ input[type=radio]:checked + label:disabled:checked:after {
   border-color: var(--disabled-highlight-color);
   box-shadow: none;
 }
-input[type=radio]:disabled:hover, input[type=radio]:disabled:focus, input[type=radio]:disabled:active,
+@media (hover: hover) and (pointer: fine) {
+  input[type=radio]:disabled:hover,
 input[type=radio] + label:disabled:hover,
+input[type=radio]:checked + label:disabled:hover {
+    color: var(--disabled-highlight-color) !important;
+    background-color: var(--disabled-base-color) !important;
+    border-color: var(--disabled-highlight-color) !important;
+    box-shadow: none;
+    outline: none;
+    text-decoration: none;
+  }
+  input[type=radio]:disabled:hover:before, input[type=radio]:disabled:hover:after,
+input[type=radio] + label:disabled:hover:before,
+input[type=radio] + label:disabled:hover:after,
+input[type=radio]:checked + label:disabled:hover:before,
+input[type=radio]:checked + label:disabled:hover:after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  input[type=radio]:disabled:hover:before,
+input[type=radio] + label:disabled:hover:before,
+input[type=radio]:checked + label:disabled:hover:before {
+    opacity: 0;
+  }
+  input[type=radio]:disabled:hover:checked:before,
+input[type=radio] + label:disabled:hover:checked:before,
+input[type=radio]:checked + label:disabled:hover:checked:before {
+    opacity: 1;
+    color: var(--disabled-highlight-color) !important;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  input[type=radio]:disabled:hover:checked:after,
+input[type=radio] + label:disabled:hover:checked:after,
+input[type=radio]:checked + label:disabled:hover:checked:after {
+    opacity: 1;
+    background-color: var(--disabled-highlight-color);
+    border-color: var(--disabled-highlight-color);
+    box-shadow: none;
+  }
+}
+input[type=radio]:disabled:focus, input[type=radio]:disabled:active,
 input[type=radio] + label:disabled:focus,
 input[type=radio] + label:disabled:active,
-input[type=radio]:checked + label:disabled:hover,
 input[type=radio]:checked + label:disabled:focus,
 input[type=radio]:checked + label:disabled:active {
   color: var(--disabled-highlight-color) !important;
@@ -3137,15 +3289,11 @@ input[type=radio]:checked + label:disabled:active {
   outline: none;
   text-decoration: none;
 }
-input[type=radio]:disabled:hover:before, input[type=radio]:disabled:hover:after, input[type=radio]:disabled:focus:before, input[type=radio]:disabled:focus:after, input[type=radio]:disabled:active:before, input[type=radio]:disabled:active:after,
-input[type=radio] + label:disabled:hover:before,
-input[type=radio] + label:disabled:hover:after,
+input[type=radio]:disabled:focus:before, input[type=radio]:disabled:focus:after, input[type=radio]:disabled:active:before, input[type=radio]:disabled:active:after,
 input[type=radio] + label:disabled:focus:before,
 input[type=radio] + label:disabled:focus:after,
 input[type=radio] + label:disabled:active:before,
 input[type=radio] + label:disabled:active:after,
-input[type=radio]:checked + label:disabled:hover:before,
-input[type=radio]:checked + label:disabled:hover:after,
 input[type=radio]:checked + label:disabled:focus:before,
 input[type=radio]:checked + label:disabled:focus:after,
 input[type=radio]:checked + label:disabled:active:before,
@@ -3153,20 +3301,16 @@ input[type=radio]:checked + label:disabled:active:after {
   box-shadow: none !important;
   text-shadow: none !important;
 }
-input[type=radio]:disabled:hover:before, input[type=radio]:disabled:focus:before, input[type=radio]:disabled:active:before,
-input[type=radio] + label:disabled:hover:before,
+input[type=radio]:disabled:focus:before, input[type=radio]:disabled:active:before,
 input[type=radio] + label:disabled:focus:before,
 input[type=radio] + label:disabled:active:before,
-input[type=radio]:checked + label:disabled:hover:before,
 input[type=radio]:checked + label:disabled:focus:before,
 input[type=radio]:checked + label:disabled:active:before {
   opacity: 0;
 }
-input[type=radio]:disabled:hover:checked:before, input[type=radio]:disabled:focus:checked:before, input[type=radio]:disabled:active:checked:before,
-input[type=radio] + label:disabled:hover:checked:before,
+input[type=radio]:disabled:focus:checked:before, input[type=radio]:disabled:active:checked:before,
 input[type=radio] + label:disabled:focus:checked:before,
 input[type=radio] + label:disabled:active:checked:before,
-input[type=radio]:checked + label:disabled:hover:checked:before,
 input[type=radio]:checked + label:disabled:focus:checked:before,
 input[type=radio]:checked + label:disabled:active:checked:before {
   opacity: 1;
@@ -3174,11 +3318,9 @@ input[type=radio]:checked + label:disabled:active:checked:before {
   box-shadow: none;
   text-shadow: none;
 }
-input[type=radio]:disabled:hover:checked:after, input[type=radio]:disabled:focus:checked:after, input[type=radio]:disabled:active:checked:after,
-input[type=radio] + label:disabled:hover:checked:after,
+input[type=radio]:disabled:focus:checked:after, input[type=radio]:disabled:active:checked:after,
 input[type=radio] + label:disabled:focus:checked:after,
 input[type=radio] + label:disabled:active:checked:after,
-input[type=radio]:checked + label:disabled:hover:checked:after,
 input[type=radio]:checked + label:disabled:focus:checked:after,
 input[type=radio]:checked + label:disabled:active:checked:after {
   opacity: 1;
@@ -3222,8 +3364,10 @@ div.radiogroup-container ul.radiogroup li.radio label {
   text-shadow: var(--radio-element-label-text-shadow);
   color: var(--radio-element-label-color);
 }
-div.radiogroup-container ul.radiogroup li.radio label:hover {
-  text-decoration: underline double;
+@media (hover: hover) and (pointer: fine) {
+  div.radiogroup-container ul.radiogroup li.radio label:hover {
+    text-decoration: underline double;
+  }
 }
 div.radiogroup-container ul.radiogroup li.radio label.required:after {
   display: none;
@@ -3497,8 +3641,10 @@ div.growler h3 button.closebutton {
   width: unset;
   height: unset;
 }
-div.growler h3 button.closebutton:hover {
-  text-shadow: var(--growler-header-text-shadow);
+@media (hover: hover) and (pointer: fine) {
+  div.growler h3 button.closebutton:hover {
+    text-shadow: var(--growler-header-text-shadow);
+  }
 }
 div.growler div.payload {
   padding: 1em;
@@ -3597,10 +3743,17 @@ div.panel div.content h3 button.togglebutton {
   border: none;
   font-size: 85%;
 }
-div.panel div.content h3 button.togglebutton:hover, div.panel div.content h3 button.togglebutton:focus, div.panel div.content h3 button.togglebutton:active {
+div.panel div.content h3 button.togglebutton:focus, div.panel div.content h3 button.togglebutton:active {
   opacity: 1;
   background: none;
   box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.panel div.content h3 button.togglebutton:hover {
+    opacity: 1;
+    background: none;
+    box-shadow: none;
+  }
 }
 div.panel div.content div.pcontent {
   transition: all 0.2s;
@@ -3611,8 +3764,13 @@ div.panel[aria-hidden=true] {
 div.panel[aria-expanded=false] button.togglebutton {
   transform: rotate(-90deg);
 }
-div.panel[aria-expanded=false] button.togglebutton:hover, div.panel[aria-expanded=false] button.togglebutton:focus, div.panel[aria-expanded=false] button.togglebutton:active {
+div.panel[aria-expanded=false] button.togglebutton:focus, div.panel[aria-expanded=false] button.togglebutton:active {
   color: var(--panel-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.panel[aria-expanded=false] button.togglebutton:hover {
+    color: var(--panel-text-color);
+  }
 }
 div.panel[aria-expanded=false] div.content h3 {
   margin: 0;
@@ -3620,20 +3778,34 @@ div.panel[aria-expanded=false] div.content h3 {
 div.panel[aria-expanded=false] div.content div.pcontent {
   display: none;
 }
-div.panel[aria-expanded=false]:hover, div.panel[aria-expanded=false]:active, div.panel[aria-expanded=false]:focus {
+div.panel[aria-expanded=false]:active, div.panel[aria-expanded=false]:focus {
   background-color: var(--focus-color);
 }
-div.panel[aria-expanded=false]:hover h3, div.panel[aria-expanded=false]:active h3, div.panel[aria-expanded=false]:focus h3 {
+div.panel[aria-expanded=false]:active h3, div.panel[aria-expanded=false]:focus h3 {
   color: var(--hot-text-color);
 }
-div.panel[aria-expanded=false]:hover button.togglebutton, div.panel[aria-expanded=false]:active button.togglebutton, div.panel[aria-expanded=false]:focus button.togglebutton {
+div.panel[aria-expanded=false]:active button.togglebutton, div.panel[aria-expanded=false]:focus button.togglebutton {
   color: var(--hot-text-color);
 }
-div.panel[aria-expanded=false]:hover button.togglebutton:hover, div.panel[aria-expanded=false]:active button.togglebutton:hover, div.panel[aria-expanded=false]:focus button.togglebutton:hover {
-  color: var(--hot-text-color);
-}
-div.panel[aria-expanded=false]:hover button.togglebutton:focus, div.panel[aria-expanded=false]:active button.togglebutton:focus, div.panel[aria-expanded=false]:focus button.togglebutton:focus {
+div.panel[aria-expanded=false]:active button.togglebutton:focus, div.panel[aria-expanded=false]:focus button.togglebutton:focus {
   outline-color: var(--hot-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.panel[aria-expanded=false]:hover {
+    background-color: var(--focus-color);
+  }
+  div.panel[aria-expanded=false]:hover h3 {
+    color: var(--hot-text-color);
+  }
+  div.panel[aria-expanded=false]:hover button.togglebutton {
+    color: var(--hot-text-color);
+  }
+  div.panel[aria-expanded=false]:hover button.togglebutton:hover {
+    color: var(--hot-text-color);
+  }
+  div.panel[aria-expanded=false]:hover button.togglebutton:focus {
+    outline-color: var(--hot-text-color);
+  }
 }
 div.panel.ghost {
   opacity: 0.5;
@@ -4039,36 +4211,50 @@ ul.tabbar li a[aria-selected=true] {
   color: var(--tabbar-selected-tab-text-color);
   text-shadow: var(--tabbar-selected-tab-text-shadow);
 }
-ul.tabbar li a:hover, ul.tabbar li a:active, ul.tabbar li a:focus {
+ul.tabbar li a:active, ul.tabbar li a:focus {
   color: var(--tabbar-hover-tab-text-color);
   background-color: var(--tabbar-hover-tab-background-color);
   text-shadow: var(--tabbar-hover-tab-text-shadow);
   filter: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  ul.tabbar li a:hover {
+    color: var(--tabbar-hover-tab-text-color);
+    background-color: var(--tabbar-hover-tab-background-color);
+    text-shadow: var(--tabbar-hover-tab-text-shadow);
+    filter: none;
+  }
 }
 ul.tabbar li a:focus {
   outline: var(--hot-text-color) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
-ul.tabbar li a:focus:hover {
-  outline-color: var(--ultralight);
+@media (hover: hover) and (pointer: fine) {
+  ul.tabbar li a:focus:hover {
+    outline-color: var(--ultralight);
+  }
 }
 ul.tabbar li a span.icon {
   margin-right: 0.5em;
 }
-ul.tabbar li:hover {
-  background-color: var(--tabbar-hover-tab-background-color);
-  border-color: var(--tabbar-hover-tab-highlight-color);
-  color: var(--tabbar-hover-tab-text-color);
+@media (hover: hover) and (pointer: fine) {
+  ul.tabbar li:hover {
+    background-color: var(--tabbar-hover-tab-background-color);
+    border-color: var(--tabbar-hover-tab-highlight-color);
+    color: var(--tabbar-hover-tab-text-color);
+  }
 }
 ul.tabbar li[aria-selected=true] {
   box-shadow: inset 0 -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
   color: var(--tabbar-hover-tab-text-color);
   text-shadow: var(--tabbar-selected-tab-text-shadow);
 }
-ul.tabbar li[aria-selected=true]:hover {
-  color: var(--tabbar-hover-tab-text-color);
-  text-shadow: var(--tabbar-hover-tab-text-shadow);
+@media (hover: hover) and (pointer: fine) {
+  ul.tabbar li[aria-selected=true]:hover {
+    color: var(--tabbar-hover-tab-text-color);
+    text-shadow: var(--tabbar-hover-tab-text-shadow);
+  }
 }
 ul.tabbar li ul.submenu {
   display: none;
@@ -4118,8 +4304,10 @@ ul.tabbar.vertical li a:focus {
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
-ul.tabbar.vertical li a:focus:hover {
-  outline-color: var(--ultralight);
+@media (hover: hover) and (pointer: fine) {
+  ul.tabbar.vertical li a:focus:hover {
+    outline-color: var(--ultralight);
+  }
 }
 ul.tabbar.vertical li ul {
   display: block;
@@ -4343,14 +4531,20 @@ div.datagrid-container table.grid thead tr th div:before {
   color: var(--datagrid-header-color);
   opacity: 0;
 }
-div.datagrid-container table.grid thead tr th:hover, div.datagrid-container table.grid thead tr th:focus, div.datagrid-container table.grid thead tr th:active, div.datagrid-container table.grid thead tr th.focus, div.datagrid-container table.grid thead tr th.active, div.datagrid-container table.grid thead tr th.hover {
+div.datagrid-container table.grid thead tr th:focus, div.datagrid-container table.grid thead tr th:active, div.datagrid-container table.grid thead tr th.focus, div.datagrid-container table.grid thead tr th.active {
   color: var(--datagrid-header-hover-text-color);
   text-shadow: var(--datagrid-header-hover-text-shadow);
   background-color: var(--datagrid-header-hover-background-color);
   outline: none;
 }
-div.datagrid-container table.grid thead tr th:hover, div.datagrid-container table.grid thead tr th.hover {
-  text-decoration: underline;
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid thead tr th:hover, div.datagrid-container table.grid thead tr th.hover {
+    color: var(--datagrid-header-hover-text-color);
+    text-shadow: var(--datagrid-header-hover-text-shadow);
+    background-color: var(--datagrid-header-hover-background-color);
+    outline: none;
+    text-decoration: underline;
+  }
 }
 div.datagrid-container table.grid thead tr th:active, div.datagrid-container table.grid thead tr th.active {
   text-decoration: none;
@@ -4402,10 +4596,12 @@ div.datagrid-container table.grid th.center {
 div.datagrid-container table.grid.selectable tbody tr {
   cursor: pointer;
 }
-div.datagrid-container table.grid.selectable tbody tr:hover {
-  background-color: var(--datagrid-grid-hover-background-color);
-  color: var(--datagrid-grid-hover-text-color);
-  text-shadow: var(--datagrid-grid-hover-text-shadow);
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid.selectable tbody tr:hover {
+    background-color: var(--datagrid-grid-hover-background-color);
+    color: var(--datagrid-grid-hover-text-color);
+    text-shadow: var(--datagrid-grid-hover-text-shadow);
+  }
 }
 div.datagrid-container table.grid.selectable tbody tr:focus {
   outline: var(--datagrid-grid-selected-background-color) dashed 0.1em;
@@ -4437,8 +4633,10 @@ div.pwgenerator div.controls button.config {
   padding: 0.5em;
   opacity: 0.5;
 }
-div.pwgenerator div.controls button.config:hover {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  div.pwgenerator div.controls button.config:hover {
+    opacity: 1;
+  }
 }
 div.pwgenerator ul.datasets {
   margin: 0;

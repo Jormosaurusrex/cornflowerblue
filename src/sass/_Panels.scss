@@ -37,12 +37,18 @@ div.panel {
         opacity: 1;
         border: none;
         font-size: 85%;
-        &:hover,
         &:focus,
         &:active {
           opacity: 1;
           background: none;
           box-shadow: none;
+        }
+        @media(hover: hover) and (pointer: fine) {
+          &:hover {
+            opacity: 1;
+            background: none;
+            box-shadow: none;
+          }
         }
       }
     }
@@ -56,10 +62,14 @@ div.panel {
   &[aria-expanded=false] {
     button.togglebutton {
       transform: rotate(-90deg);
-      &:hover,
       &:focus,
       &:active {
         color: var(--panel-text-color);
+      }
+      @media(hover: hover) and (pointer: fine) {
+        &:hover {
+          color: var(--panel-text-color);
+        }
       }
     }
     div.content {
@@ -70,7 +80,6 @@ div.panel {
         display: none;
       }
     }
-    &:hover,
     &:active,
     &:focus {
       background-color: var(--focus-color);
@@ -79,11 +88,25 @@ div.panel {
       }
       button.togglebutton {
         color: var(--hot-text-color);
-        &:hover {
-          color: var(--hot-text-color);
-        }
         &:focus {
           outline-color: var(--hot-text-color);
+        }
+      }
+    }
+    @media(hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: var(--focus-color);
+        h3 {
+          color: var(--hot-text-color);
+        }
+        button.togglebutton {
+          color: var(--hot-text-color);
+          &:hover {
+            color: var(--hot-text-color);
+          }
+          &:focus {
+            outline-color: var(--hot-text-color);
+          }
         }
       }
     }
