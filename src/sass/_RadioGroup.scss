@@ -24,7 +24,7 @@ input[type="radio"] {
       border-radius: 50%;
     }
   }
-  @media(hover: hover) and (pointer: fine) {
+  @include for-hover-only {
     &:hover {
       border-color: var(--checkbox-focus-color);
       background-color: var(--checkbox-focus-color);
@@ -83,7 +83,7 @@ input[type=radio]:checked + label {
       border-color: var(--disabled-highlight-color);
       box-shadow: none;
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover {
         color: var(--disabled-highlight-color) !important;
         background-color: var(--disabled-base-color) !important;
@@ -173,7 +173,7 @@ div.radiogroup-container {
         margin: 0;
         text-shadow: var(--radio-element-label-text-shadow);
         color: var(--radio-element-label-color);
-        @media(hover: hover) and (pointer: fine) {
+        @include for-hover-only {
           &:hover {
             text-decoration: underline double;
           }

@@ -22,7 +22,7 @@ div.textarea-container {
         align-items: center;
         justify-content: center;
         align-content: center;
-        @media(hover: hover) and (pointer: fine) {
+        @include for-hover-only {
           &:hover {
             opacity: 1;
           }

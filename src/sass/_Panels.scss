@@ -43,7 +43,7 @@ div.panel {
           background: none;
           box-shadow: none;
         }
-        @media(hover: hover) and (pointer: fine) {
+        @include for-hover-only {
           &:hover {
             opacity: 1;
             background: none;
@@ -66,7 +66,7 @@ div.panel {
       &:active {
         color: var(--panel-text-color);
       }
-      @media(hover: hover) and (pointer: fine) {
+      @include for-hover-only {
         &:hover {
           color: var(--panel-text-color);
         }
@@ -93,7 +93,7 @@ div.panel {
         }
       }
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover {
         background-color: var(--focus-color);
         h3 {

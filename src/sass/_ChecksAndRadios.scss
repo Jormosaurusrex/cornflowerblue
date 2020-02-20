@@ -100,7 +100,7 @@ input[type="radio"] {
     background-color: var(--checkbox-focus-color);
     box-shadow: var(--hover-box-shadow);
   }
-  @media(hover: hover) and (pointer: fine) {
+  @include for-hover-only {
     &:hover {
       border-color: var(--checkbox-focus-color);
       background-color: var(--checkbox-focus-color);
@@ -125,7 +125,7 @@ input[type="radio"] {
     &:checked:before {
       display: none;
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover {
         border-color: var(--checkbox-focus-color);
         background-color: var(--checkbox-focus-color);
@@ -206,7 +206,7 @@ input[type="radio"] {
       box-shadow: var(--hover-box-shadow);
       transition: all .2s;
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover,
       &:hover:checked {
         box-shadow: var(--checkbox-checked-shadow-hover);
@@ -291,7 +291,7 @@ input[type=checkbox]:checked + label {
         box-shadow: none;
       }
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover {
         color: var(--disabled-highlight-color) !important;
         background-color: var(--disabled-base-color) !important;

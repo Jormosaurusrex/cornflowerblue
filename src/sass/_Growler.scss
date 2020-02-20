@@ -99,7 +99,7 @@ div.growler {
       top: auto;
       width: unset;
       height: unset;
-      @media(hover: hover) and (pointer: fine) {
+      @include for-hover-only {
         &:hover {
           text-shadow: var(--growler-header-text-shadow);
         }

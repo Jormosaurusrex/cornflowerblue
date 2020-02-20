@@ -65,7 +65,7 @@ div.datagrid-container {
             background-color: var(--datagrid-header-hover-background-color);
             outline: none;
           }
-          @media(hover: hover) and (pointer: fine) {
+          @include for-hover-only {
             &:hover,
             &.hover {
               color: var(--datagrid-header-hover-text-color);
@@ -144,7 +144,7 @@ div.datagrid-container {
       tbody {
         tr {
           cursor: pointer;
-          @media(hover: hover) and (pointer: fine) {
+          @include for-hover-only {
             &:hover {
               background-color: var(--datagrid-grid-hover-background-color);
               color: var(--datagrid-grid-hover-text-color);

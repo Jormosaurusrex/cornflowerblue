@@ -93,7 +93,7 @@ div.file-container {
           color: var(--input-disabled-text-color);
         }
       }
-      @media(hover: hover) and (pointer: fine) {
+      @include for-hover-only {
         &:hover {
           border-color: var(--input-disabled-border-color);
           background-color: var(--input-disabled-background-color);

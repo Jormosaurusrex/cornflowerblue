@@ -53,7 +53,7 @@ ul.tabbar {
         text-shadow: var(--tabbar-hover-tab-text-shadow);
         filter: none;
       }
-      @media(hover: hover) and (pointer: fine) {
+      @include for-hover-only {
         &:hover {
           color: var(--tabbar-hover-tab-text-color);
           background-color: var(--tabbar-hover-tab-background-color);
@@ -65,7 +65,7 @@ ul.tabbar {
         outline: var(--hot-text-color) dashed .1em;
         outline-offset: -.3em;
         text-decoration: underline double;
-        @media(hover: hover) and (pointer: fine) {
+        @include for-hover-only {
           &:hover {
             outline-color: var(--ultralight);
           }
@@ -76,7 +76,7 @@ ul.tabbar {
         margin-right: .5em;
       }
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover {
         background-color: var(--tabbar-hover-tab-background-color);
         border-color: var(--tabbar-hover-tab-highlight-color);
@@ -87,7 +87,7 @@ ul.tabbar {
       box-shadow: inset 0 -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
       color: var(--tabbar-hover-tab-text-color);
       text-shadow: var(--tabbar-selected-tab-text-shadow);
-      @media(hover: hover) and (pointer: fine) {
+      @include for-hover-only {
         &:hover {
           color: var(--tabbar-hover-tab-text-color);
           text-shadow: var(--tabbar-hover-tab-text-shadow);
@@ -141,7 +141,7 @@ ul.tabbar {
           outline: var(--ultralight) dashed .1em;
           outline-offset: -.3em;
           text-decoration: underline double;
-          @media(hover: hover) and (pointer: fine) {
+          @include for-hover-only {
             &:hover {
               outline-color: var(--ultralight);
             }

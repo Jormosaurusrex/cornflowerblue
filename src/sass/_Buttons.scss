@@ -101,7 +101,7 @@ button {
     outline: none;
     background-image: var(--button-hover-gradient);
   }
-  @media(hover: hover) and (pointer: fine) {
+  @include for-hover-only {
     &:hover,
     &.hover {
       color: var(--button-hover-text-color);
@@ -180,7 +180,7 @@ button {
         background-color: var(--destructive-color);
       }
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover,
       &.hover {
         text-decoration: underline;
@@ -418,7 +418,7 @@ button {
       color: var(--hot-text-color);
       background: none;
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover {
         opacity: 1;
         color: var(--hot-text-color);
@@ -461,7 +461,7 @@ button {
             color: var(--button-menu-item-hover-text-color);
           }
         }
-        @media(hover: hover) and (pointer: fine) {
+        @include for-hover-only {
           &:hover {
             background-color: var(--button-menu-item-hover-background-color);
             color: var(--button-menu-item-hover-text-color);
@@ -487,7 +487,7 @@ button {
             color: var(--button-menu-item-hover-text-color);
             filter: none;
           }
-          @media(hover: hover) and (pointer: fine) {
+          @include for-hover-only {
             color: var(--button-menu-item-hover-text-color);
             filter: none;
           }
@@ -544,7 +544,7 @@ button {
       background-image: none;
       color: var(--button-default-color);
     }
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover,
       &.hover {
         background-color: transparent;
@@ -560,7 +560,7 @@ button {
     color: var(--link-color);
     text-shadow: var(--link-text-shadow);
     text-decoration: underline;
-    @media(hover: hover) and (pointer: fine) {
+    @include for-hover-only {
       &:hover,
       &.hover {
         color: var(--link-color);

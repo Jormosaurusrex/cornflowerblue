@@ -163,7 +163,7 @@ div.select-container {
           }
         }
       }
-      @media(hover: hover) and (pointer: fine) {
+      @include for-hover-only {
         &:hover {
           background-color: var(--selectmenu-menu-item-hover-background-color);
           color: var(--selectmenu-menu-item-hover-text-color);

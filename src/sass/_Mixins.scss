@@ -13,3 +13,6 @@
 @mixin for-big-desktop-up {
   @media (min-width: 1800px) { @content; }
 }
+@mixin for-hover-only {
+  @media(hover: hover) and (pointer: fine) { @content; }
+}
