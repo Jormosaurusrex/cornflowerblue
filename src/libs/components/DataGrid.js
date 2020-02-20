@@ -41,6 +41,10 @@ class DataGrid {
 
     /* CORE METHODS_____________________________________________________________________ */
 
+    /**
+     * Sort the table based on a field.
+     * @param field the field to sort
+     */
     sortField(field) {
         let sort = "asc";
 
@@ -84,6 +88,10 @@ class DataGrid {
 
     }
 
+    /**
+     * Select a single row
+     * @param row the row to select
+     */
     select(row) {
         let rows = this.gridbody.querySelectorAll('tr');
         for (let r of rows) {
@@ -95,8 +103,8 @@ class DataGrid {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Builds the DOM.
-     * @returns the DOM element
+     * Builds the total DOM.
+     * @returns the grid container
      */
     buildContainer() {
 
@@ -114,6 +122,9 @@ class DataGrid {
 
     }
 
+    /**
+     * Build the actual grid table.
+     */
     buildGrid() {
         this.grid = document.createElement('table');
         this.grid.classList.add('grid');
@@ -122,6 +133,9 @@ class DataGrid {
         }
     }
 
+    /**
+     * Build the table header
+     */
     buildHeader() {
         for (let f of this.fields) {
             this.gridheader.appendChild(this.buildHeaderCell(f));
@@ -130,6 +144,11 @@ class DataGrid {
         this.header.appendChild(this.gridheader);
     }
 
+    /**
+     * Build a single header cell
+     * @param item the field definition dictionary
+     * @return {HTMLTableHeaderCellElement}
+     */
     buildHeaderCell(item) {
         const me = this;
 
@@ -161,15 +180,26 @@ class DataGrid {
         return cell;
     }
 
+    /**
+     * Builds the table body
+     */
     buildGridBody() {
         this.gridbody = document.createElement('tbody');
     }
 
+    /**
+     * Builds the table header row.
+     */
     buildGridHeader() {
         this.gridheader = document.createElement('tr');
         this.gridheader.classList.add('header');
     }
 
+    /**
+     * Build a single row
+     * @param rdata the row data
+     * @return {HTMLTableRowElement}
+     */
     buildRow(rdata) {
         const me = this;
         let row = document.createElement('tr');
@@ -204,6 +234,12 @@ class DataGrid {
         return row;
     }
 
+    /**
+     * Builds a single data cell
+     * @param data the data dictionary
+     * @param field the field definition dictionary
+     * @return {HTMLTableDataCellElement}
+     */
     buildCell(data, field) {
         let content;
         let d = data[field.name];
@@ -250,6 +286,9 @@ class DataGrid {
         return cell;
     }
 
+    /**
+     * Build the footer element
+     */
     buildFooter() {
         this.footer = document.createElement('div');
         this.footer.classList.add('footer');
