@@ -11,6 +11,8 @@ class DataGrid {
             sortable: true, //  Data columns can be selected
 
             filterable: true, // Data can be filtered
+
+
             exportable: true, // Data can be exported
             exportbuttontext: "Export",
             exporticon: "download",
@@ -22,6 +24,7 @@ class DataGrid {
             exportfilename: function() {  // the filename to name the exported data.
                 return 'export.csv';      // This can be a string or a function, but must return a string
             },
+            exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(event, self) {  // What to do when a single row is selecte.
@@ -60,14 +63,25 @@ class DataGrid {
 
     /* CORE METHODS_____________________________________________________________________ */
 
+    get exportbutton() { return this._exportbutton; }
+    set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
+
+    get multiselectbutton() { return this._multiselectbutton; }
+    set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
+
     get exportheaderrow() { return this.config.exportheaderrow; }
     set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
+
+    get exportarrayseparator() { return this.config.exportarrayseparator; }
+    set exportarrayseparator(exportarrayseparator) { this.config.exportarrayseparator = exportarrayseparator; }
 
     export() {
         let lineDivider = '\r\n', // line divider
             cellDivider = ',', // cell divider
             rows = [],
             fname;
+
+        this.exportbutton.disable();
 
         if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
             fname = this.exportfilename();
@@ -81,33 +95,52 @@ class DataGrid {
             let colTitles = [],
                 colData = [];
             for (let f of this.fields) {
-                colTitles.push(`\"${f.label}\"`);
-                colData.push(`\"${f.name}\"`);
+                colTitles.push(`\"${f.label.replace(/"/g,"\\\"")}\"`);
+                colData.push(`\"${f.name.replace(/"/g,"\\\"")}\"`);
             }
             if (this.exportheaderrow === 'readable') {
-                rows.push(`\"${colTitles.join(cellDivider)}\"`);
+                rows.push(`${colTitles.join(cellDivider)}`);
             } else {
-                rows.push(`\"${colData.join(cellDivider)}\"`);
+                rows.push(`${colData.join(cellDivider)}`);
             }
         }
 
         for (let d of this.data) {
             let cells = [];
             for (let f of this.fields) { // do mapping by field
-                cells.push(`\"${d[f.name]}\"`);
+                let val;
+                switch (f.type) {
+                    case 'date':
+                        val = d[f.name].toString().replace(/"/g,"\\\"");
+                        break;
+                    case 'stringarray':
+                        val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
+                        break;
+                    case 'number':
+                    case 'time':
+                        val = d[f.name];
+                        break;
+                    case 'string':
+                    default:
+                        val = d[f.name].replace(/"/g,"\\\"");
+                        break;
+                }
+                cells.push(`\"${val}\"`);
             }
             rows.push(cells.join(cellDivider));
         }
 
         let csv = rows.join(lineDivider);
         console.log(csv);
-        
         let hiddenElement = document.createElement('a');
         hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csv)}`);
         hiddenElement.setAttribute('id', 'downloadLink');
         hiddenElement.setAttribute('target', '_blank');
         hiddenElement.setAttribute('download', fname);
         hiddenElement.click();
+
+        this.exportbutton.enable();
+
     }
 
     /* SELECTION METHODS________________________________________________________________ */
@@ -232,17 +265,17 @@ class DataGrid {
             this.gridactions = document.createElement('div');
             this.gridactions.classList.add('grid-actions');
             if (this.multiselect) {
-                let multiselectbutton = new SimpleButton({
+                this.multiselectbutton = new SimpleButton({
                     mute: true,
                     text: this.multiselectbuttontext,
                     action: function() {
                         me.selectmodetoggle();
                     }
                 });
-                this.gridactions.append(multiselectbutton.button);
+                this.gridactions.append(this.multiselectbutton.button);
             }
             if (this.exportable) {
-                let exportbutton  = new SimpleButton({
+                this.exportbutton  = new SimpleButton({
                     mute: true,
                     text: this.exportbuttontext,
                     icon: this.exporticon,
@@ -250,7 +283,7 @@ class DataGrid {
                         me.export();
                     }
                 });
-                this.gridactions.append(exportbutton.button);
+                this.gridactions.append(this.exportbutton.button);
 
             }
             this.container.append(this.gridactions);
