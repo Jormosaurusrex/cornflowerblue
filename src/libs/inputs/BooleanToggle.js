@@ -62,6 +62,10 @@ class BooleanToggle {
         if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }
 
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
         if (this.labelside === 'right') {
             this.container.classList.add('rightside');
             this.container.appendChild(this.toggle);

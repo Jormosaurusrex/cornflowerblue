@@ -4498,6 +4498,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
+  --datagrid-configurator-columnwidth: 10em;
 }
 
 div.datagrid-container {
@@ -4530,6 +4531,8 @@ div.datagrid-container div.grid-wrapper {
   flex-grow: 2;
 }
 div.datagrid-container table.grid {
+  width: 100%;
+  min-width: 100%;
   padding: 0;
   margin: 0;
   border-spacing: 0;
@@ -4616,6 +4619,10 @@ div.datagrid-container table.grid tbody tr:nth-child(even) {
   background-color: var(--datagrid-grid-alternate-background-color);
 }
 div.datagrid-container table.grid tbody tr.hidden {
+  display: none;
+}
+div.datagrid-container table.grid th.hidden,
+div.datagrid-container table.grid td.hidden {
   display: none;
 }
 div.datagrid-container table.grid th.resize,
@@ -4719,6 +4726,20 @@ div.datagrid-container div.messagebox div.box.warnings div.lbox {
   border-color: transparent;
 }
 
+div.datagrid-configurator {
+  padding: 2em;
+}
+div.datagrid-configurator div.cols {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+div.datagrid-configurator div.cols div.column {
+  max-width: var(--datagrid-configurator-columnwidth);
+  width: var(--datagrid-configurator-columnwidth);
+  min-width: var(--datagrid-configurator-columnwidth);
+}
+
 div.pwgenerator {
   --pwgenerator-background-color: transparent;
   --pwgenerator-checkbox-size: 2em;
@@ -4775,6 +4796,7 @@ div.searchcontrol input {
   width: 0;
   padding: 0;
   border-color: transparent;
+  background-color: transparent;
 }
 div.searchcontrol button {
   margin-left: 0;
@@ -4786,6 +4808,7 @@ div.searchcontrol.open input, div.searchcontrol:focus-within input {
   border-bottom-left-radius: var(--input-border-radius);
   border-right: none;
   padding: var(--input-default-padding);
+  background-color: var(--input-default-background-color);
 }
 div.searchcontrol.open input:focus, div.searchcontrol:focus-within input:focus {
   border-color: var(--input-focused-border-color);
@@ -4794,8 +4817,12 @@ div.searchcontrol.open button, div.searchcontrol:focus-within button {
   border-radius: 0;
   border-top-right-radius: var(--input-border-radius);
   border-bottom-right-radius: var(--input-border-radius);
+  box-shadow: inset -0.1em -0.1em 0 0 var(--button-default-color), inset 0.1em -0.1em 0 0 var(--button-default-color), inset -0.1em 0.1em 0 0 var(--button-default-color), inset 0.1em 0.1em 0 0 var(--button-default-color);
 }
 div.searchcontrol.open button:hover, div.searchcontrol:focus-within button:hover {
+  box-shadow: none;
+}
+div.searchcontrol.open button:focus, div.searchcontrol:focus-within button:focus {
   box-shadow: none;
 }
 div.progressbar-container {

@@ -8,7 +8,11 @@ class DataGrid {
 
             data: [], // The data to throw into the grid
 
-            sortable: true, //  Data columns can be selected
+            sortable: true, //  Data columns can be sorted
+
+            columnconfigurationlabel: 'Columns',
+            columnconfigurationicon: 'gear',
+            columnconfigurationinstructions: 'Select which columns to show in the grid. This does not hide the columns during export.',
 
             searchable: true, // Data can be filtered
             searchbuttontext: 'Search',
@@ -177,6 +181,68 @@ class DataGrid {
 
     }
 
+
+    toggleColumn(f) {
+        if (f.hidden) {
+            this.showColumn(f);
+        } else {
+            this.hideColumn(f);
+        }
+    }
+
+    hideColumn(field) {
+        field.hidden = true;
+        let cols = document.querySelectorAll(`[data-name='${field.name}']`);
+        for (let c of cols) {
+            c.classList.add('hidden');
+        }
+    }
+
+    showColumn(field) {
+        field.hidden = false;
+        let cols = document.querySelectorAll(`[data-name='${field.name}']`);
+        for (let c of cols) {
+            c.classList.remove('hidden');
+        }
+    }
+
+    configurecolumns() {
+        const me = this;
+
+        let container = document.createElement('div');
+        container.classList.add('datagrid-configurator');
+
+        // instructions
+        if (this.columnconfigurationinstructions) {
+            container.append(new InstructionBox({
+                instructions: [this.columnconfigurationinstructions]
+            }).container);
+        }
+
+        let configbox = document.createElement('div');
+        configbox.classList.add('cols');
+
+        for (let f of this.fields) {
+            let cbox = new BooleanToggle({
+                label: f.label,
+                checked: !f.hidden,
+                classes: ['column'],
+                onchange: function() {
+                    me.toggleColumn(f);
+                }
+            });
+            configbox.append(cbox.container);
+        }
+
+        container.append(configbox);
+
+        let dialog = new DialogWindow({
+            title: "Configure Columns",
+            content: container
+        });
+        dialog.open();
+    }
+
     /* SELECTION METHODS________________________________________________________________ */
 
     /**
@@ -289,49 +355,58 @@ class DataGrid {
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
 
-        if ((this.multiselect) || (this.exportable) || (this.searchable)) {
 
-            this.gridactions = document.createElement('div');
-            this.gridactions.classList.add('grid-actions');
+        this.gridactions = document.createElement('div');
+        this.gridactions.classList.add('grid-actions');
 
-            if (this.multiselect) {
-                this.multiselectbutton = new SimpleButton({
-                    mute: true,
-                    text: this.multiselectbuttontext,
-                    classes: ['multiselect'],
-                    action: function() {
-                        me.selectmodetoggle();
-                    }
-                });
-                this.gridactions.append(this.multiselectbutton.button);
-            }
-
-            if (this.searchable) {
-                this.searchcontrol = new SearchControl({
-                    arialabel: 'Search this data',
-                    searchtext: this.searchbuttontext,
-                    action: function(value, searchcontrol) {
-                        me.search(value);
-                    }
-                });
-                this.gridactions.append(this.searchcontrol.container);
-            }
-
-            if (this.exportable) {
-                this.exportbutton  = new SimpleButton({
-                    ghost: true,
-                    text: this.exportbuttontext,
-                    icon: this.exporticon,
-                    classes: ['export'],
-                    action: function() {
-                        me.export();
-                    }
-                });
-                this.gridactions.append(this.exportbutton.button);
-            }
-
-            this.container.append(this.gridactions);
+        if (this.multiselect) {
+            this.multiselectbutton = new SimpleButton({
+                mute: true,
+                text: this.multiselectbuttontext,
+                classes: ['multiselect'],
+                action: function() {
+                    me.selectmodetoggle();
+                }
+            });
+            this.gridactions.append(this.multiselectbutton.button);
         }
+
+        if (this.searchable) {
+            this.searchcontrol = new SearchControl({
+                arialabel: 'Search this data',
+                searchtext: this.searchbuttontext,
+                action: function(value, searchcontrol) {
+                    me.search(value);
+                }
+            });
+            this.gridactions.append(this.searchcontrol.container);
+        }
+
+        this.columnconfigbutton = new SimpleButton({
+            mute: true,
+            text: this.columnconfigurationlabel,
+            icon: this.columnconfigurationicon,
+            action: function() {
+                me.configurecolumns();
+            }
+        });
+        this.gridactions.append(this.columnconfigbutton.button);
+
+        if (this.exportable) {
+            this.exportbutton  = new SimpleButton({
+                mute: true,
+                text: this.exportbuttontext,
+                icon: this.exporticon,
+                classes: ['export'],
+                action: function() {
+                    me.export();
+                }
+            });
+            this.gridactions.append(this.exportbutton.button);
+        }
+
+        this.container.append(this.gridactions);
+
 
         this.grid.appendChild(this.header);
         this.grid.appendChild(this.gridbody);
@@ -349,7 +424,6 @@ class DataGrid {
             });
             this.container.append(this.noresultsbox.container);
         }
-
     }
 
     /**
@@ -563,6 +637,15 @@ class DataGrid {
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
+
+    get columnconfigurationicon() { return this.config.columnconfigurationicon; }
+    set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
+
+    get columnconfigurationinstructions() { return this.config.columnconfigurationinstructions; }
+    set columnconfigurationinstructions(columnconfigurationinstructions) { this.config.columnconfigurationinstructions = columnconfigurationinstructions; }
+
+    get columnconfigurationlabel() { return this.config.columnconfigurationlabel; }
+    set columnconfigurationlabel(columnconfigurationlabel) { this.config.columnconfigurationlabel = columnconfigurationlabel; }
 
     get container() {
         if (!this._container) { this.buildContainer(); }

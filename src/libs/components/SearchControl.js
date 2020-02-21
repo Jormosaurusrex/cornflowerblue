@@ -54,7 +54,7 @@ class SearchControl {
         this.searchbutton = new SimpleButton({
             text: this.searchtext,
             icon: this.searchicon,
-            ghost: true,
+            mute: true,
             action: function(e) {
                 e.preventDefault();
                 if ((me.action) && (typeof me.action === 'function')) {

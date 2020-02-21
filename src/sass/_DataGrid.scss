@@ -24,6 +24,8 @@
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
 
+  --datagrid-configurator-columnwidth: 10em;
+
 }
 div.datagrid-container {
   display: flex;
@@ -55,6 +57,8 @@ div.datagrid-container {
     flex-grow: 2;
   }
   table.grid {
+    width: 100%;
+    min-width: 100%;
     padding: 0;
     margin: 0;
     border-spacing: 0;
@@ -165,6 +169,9 @@ div.datagrid-container {
     }
     th,
     td {
+      &.hidden {
+        display: none;
+      }
       &.resize {
         resize: horizontal;
         overflow: hidden;
@@ -276,6 +283,20 @@ div.datagrid-container {
       div.lbox {
         border-color: transparent;
       }
+    }
+  }
+}
+
+div.datagrid-configurator {
+  padding: 2em;
+  div.cols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    div.column {
+      max-width: var(--datagrid-configurator-columnwidth);
+      width: var(--datagrid-configurator-columnwidth);
+      min-width: var(--datagrid-configurator-columnwidth);
     }
   }
 }
