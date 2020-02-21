@@ -4477,7 +4477,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
   }
 }
 
-div.datagrid-container {
+:root {
   --datagrid-header-background-color: var(--light);
   --datagrid-header-text-color: var(--grey-darkest);
   --datagrid-header-grid-text-color: var(--grey-darker);
@@ -4498,12 +4498,21 @@ div.datagrid-container {
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
-  max-height: 80vh;
-  overflow: hidden;
+}
+
+div.datagrid-container {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  max-height: 80vh;
+  overflow: visible;
+  position: relative;
 }
 div.datagrid-container div.grid-actions {
+  flex-grow: 1;
+  height: 4em;
+  max-height: 4em;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -4516,12 +4525,14 @@ div.datagrid-container div.grid-actions button:first-child {
 }
 div.datagrid-container div.grid-wrapper {
   overflow: auto;
+  width: 100%;
+  height: 100%;
+  flex-grow: 2;
 }
 div.datagrid-container table.grid {
   padding: 0;
   margin: 0;
   border-spacing: 0;
-  width: 100%;
 }
 div.datagrid-container table.grid thead tr th {
   cursor: pointer;

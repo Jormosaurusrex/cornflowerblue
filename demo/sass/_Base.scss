@@ -2,7 +2,7 @@
   --mobile-banner-height: 3em;
   --banner-height: 10em;
   --contentbox-width: 60em;
-  --content-width: 45em;
+  --content-width: 48em;
 }
 
 body {
@@ -116,6 +116,8 @@ div#container {
     div.articlebox {
       padding: 2em;
       width: 100%;
+      min-width: var(--content-width);
+      max-width: var(--content-width);
     }
   }
 }

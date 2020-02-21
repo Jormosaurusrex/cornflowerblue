@@ -1,5 +1,4 @@
-div.datagrid-container {
-
+:root {
   --datagrid-header-background-color: var(--light);
   --datagrid-header-text-color: var(--grey-darkest);
   --datagrid-header-grid-text-color: var(--grey-darker);
@@ -25,13 +24,20 @@ div.datagrid-container {
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
 
-
-  max-height: 80vh;
-  overflow: hidden;
+}
+div.datagrid-container {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  max-height: 80vh;
+  overflow: visible;
+  position: relative;
 
   div.grid-actions {
+    flex-grow: 1;
+    height: 4em;
+    max-height: 4em;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -44,12 +50,14 @@ div.datagrid-container {
   }
   div.grid-wrapper {
     overflow: auto;
+    width: 100%;
+    height: 100%;
+    flex-grow: 2;
   }
   table.grid {
     padding: 0;
     margin: 0;
     border-spacing: 0;
-    width: 100%;
     thead {
       tr {
         th {
