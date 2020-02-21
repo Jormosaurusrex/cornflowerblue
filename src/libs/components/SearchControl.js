@@ -5,7 +5,7 @@ class SearchControl {
             id : null, // the id
             autoexecute: true, // Cause the search's action to execute automatically on focusout
                                // or when there number of seed characters is reached
-            arialabel: null, // The aria-label value. If null, uses 'searchtext'
+            arialabel: 'Enter Search Terms', // The aria-label value.
             maxlength: null, // Value for maxlength.
             searchtext: 'Search',
             searchicon: 'magnify',

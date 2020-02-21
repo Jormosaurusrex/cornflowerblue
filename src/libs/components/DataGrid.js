@@ -10,7 +10,10 @@ class DataGrid {
 
             sortable: true, //  Data columns can be selected
 
-            filterable: true, // Data can be filtered
+            searchable: true, // Data can be filtered
+            searchbuttontext: 'Search',
+            noresultstitle: 'No results',
+            noresultstext: 'No entries were found matching your search terms.',
 
             exportable: true, // Data can be exported
             exportbuttontext: "Export",
@@ -29,11 +32,10 @@ class DataGrid {
             selectaction: function(event, self) {  // What to do when a single row is selecte.
                 //console.log("row clicked");
             },
-            
+
             multiselectbuttontext: "Bulk Select",
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiactions: [], // Array of button actions to multiselects
-
 
             sorticon: 'chevron-down',
             id: null, // The id
@@ -140,8 +142,11 @@ class DataGrid {
     }
 
     search(value) {
+        this.noresultsbox.container.classList.add('hidden');
+
         let rows = Array.from(this.gridbody.childNodes);
 
+        let matches = 0;
         for (let r of rows) {
             let show = false;
 
@@ -162,9 +167,14 @@ class DataGrid {
             }
 
             if (show) {
+                matches++;
                 r.classList.remove('hidden');
             }
         }
+        if (matches <= 0) {
+            this.noresultsbox.container.classList.remove('hidden');
+        }
+
     }
 
     /* SELECTION METHODS________________________________________________________________ */
@@ -279,7 +289,7 @@ class DataGrid {
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
 
-        if ((this.multiselect) || (this.exportable) || (this.filterable)) {
+        if ((this.multiselect) || (this.exportable) || (this.searchable)) {
 
             this.gridactions = document.createElement('div');
             this.gridactions.classList.add('grid-actions');
@@ -296,8 +306,10 @@ class DataGrid {
                 this.gridactions.append(this.multiselectbutton.button);
             }
 
-            if (this.filterable) {
+            if (this.searchable) {
                 this.searchcontrol = new SearchControl({
+                    arialabel: 'Search this data',
+                    searchtext: this.searchbuttontext,
                     action: function(value, searchcontrol) {
                         me.search(value);
                     }
@@ -327,8 +339,16 @@ class DataGrid {
         let gridwrapper = document.createElement('div');
         gridwrapper.classList.add('grid-wrapper');
         gridwrapper.appendChild(this.grid);
-
         this.container.append(gridwrapper);
+
+        if (this.searchable) {
+            this.noresultsbox = new MessageBox({
+                warningstitle: this.noresultstitle,
+                warnings: [this.noresultstext],
+                classes: ['hidden']
+            });
+            this.container.append(this.noresultsbox.container);
+        }
 
     }
 
@@ -577,8 +597,8 @@ class DataGrid {
     get fields() { return this.config.fields; }
     set fields(fields) { this.config.fields = fields; }
 
-    get filterable() { return this.config.filterable; }
-    set filterable(filterable) { this.config.filterable = filterable; }
+    get searchable() { return this.config.searchable; }
+    set searchable(searchable) { this.config.searchable = searchable; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }
@@ -637,8 +657,20 @@ class DataGrid {
     get multiactions() { return this.config.multiactions; }
     set multiactions(multiactions) { this.config.multiactions = multiactions; }
 
+    get noresultsbox() { return this._noresultsbox; }
+    set noresultsbox(noresultsbox) { this._noresultsbox = noresultsbox; }
+
+    get noresultstext() { return this.config.noresultstext; }
+    set noresultstext(noresultstext) { this.config.noresultstext = noresultstext; }
+
+    get noresultstitle() { return this.config.noresultstitle; }
+    set noresultstitle(noresultstitle) { this.config.noresultstitle = noresultstitle; }
+
     get searchcontrol() { return this._searchcontrol; }
     set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
+
+    get searchbuttontext() { return this.config.searchbuttontext; }
+    set searchbuttontext(searchbuttontext) { this.config.searchbuttontext = searchbuttontext; }
 
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }

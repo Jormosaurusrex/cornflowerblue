@@ -4496,6 +4496,8 @@ div.datagrid-container {
   --datagrid-grid-hover-background-color: var(--focus-color-half);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
+  --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
+  --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
   max-height: 80vh;
   overflow: hidden;
   display: flex;
@@ -4511,7 +4513,6 @@ div.datagrid-container div.grid-actions {
 div.datagrid-container div.grid-actions button:first-child {
   align-self: flex-start;
   margin-right: auto;
-  margin-left: 0;
 }
 div.datagrid-container div.grid-wrapper {
   overflow: auto;
@@ -4690,6 +4691,21 @@ div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-
 }
 div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-selected=true]:focus {
   outline: var(--datagrid-grid-selected-text-color) dashed 0.1em;
+}
+div.datagrid-container div.messagebox.hidden {
+  display: none;
+}
+div.datagrid-container div.messagebox div.box.warnings {
+  --color-base: var(--datagrid-searchresults-noresults-color-base);
+  --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
+}
+div.datagrid-container div.messagebox div.box.warnings h4 {
+  display: none;
+  background-color: transparent;
+  color: var(--color-base);
+}
+div.datagrid-container div.messagebox div.box.warnings div.lbox {
+  border-color: transparent;
 }
 
 div.pwgenerator {

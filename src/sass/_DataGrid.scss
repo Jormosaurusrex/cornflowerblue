@@ -22,6 +22,10 @@ div.datagrid-container {
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
 
+  --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
+  --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
+
+
   max-height: 80vh;
   overflow: hidden;
   display: flex;
@@ -36,7 +40,6 @@ div.datagrid-container {
     button:first-child {
       align-self: flex-start;
       margin-right: auto;
-      margin-left: 0;
     }
   }
   div.grid-wrapper {
@@ -246,6 +249,24 @@ div.datagrid-container {
             }
           }
         }
+      }
+    }
+  }
+  div.messagebox {
+
+    &.hidden {
+      display: none;
+    }
+    div.box.warnings {
+      --color-base: var(--datagrid-searchresults-noresults-color-base);
+      --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
+      h4 {
+        display: none;
+        background-color: transparent;
+        color: var(--color-base);
+      }
+      div.lbox {
+        border-color: transparent;
       }
     }
   }
