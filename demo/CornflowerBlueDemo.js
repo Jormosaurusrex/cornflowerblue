@@ -659,11 +659,48 @@ class CornflowerBlueDemo {
         let dg = new DataGrid({
             selectable: true,
             fields: [
-                { name: "track", label: "Track", width: 1, type: "number", renderer: function(data) { return `${data}.`; } },
-                { name: "album", label: "Album", width: 3, resize: true, type: "string", classes: ['nowrap', 'italic'] },
-                { name: "title", label: "Title", width: 3, resize: true, type: "string", classes: ['nowrap', 'italic'] },
-                { name: "writers", label: "Writers", width: 3, resize: true, type: "stringarray", separator: " &middot; ", classes: ['smaller'] },
-                { name: "length", label: "Length", width: 1, type: "time" }
+                {
+                    name: "track",
+                    label: "Track",
+                    width: 1,
+                    type: "number",
+                    description: "The track number of the song.",
+                    renderer: function(data) {
+                        return `${data}.`;
+                    }
+                }, {
+                    name: "album",
+                    label: "Album",
+                    width: 3,
+                    resize: true,
+                    type: "string",
+                    description: "The album the song is on.",
+                    classes: ['nowrap', 'italic']
+                }, {
+                    name: "title",
+                    label: "Title",
+                    width: 3,
+                    resize: true,
+                    type: "string",
+                    description: "The title of the song.",
+                    classes: ['nowrap', 'italic']
+                }, {
+                    name: "writers",
+                    label: "Writers",
+                    width: 3,
+                    resize: true,
+                    type: "stringarray",
+                    separator: " &middot; ",
+                    description: "A list of the song's writers.",
+                    classes: ['smaller']
+                },
+                {
+                    name: "length",
+                    label: "Length",
+                    width: 1,
+                    description: "The time length of the song.",
+                    type: "time"
+                }
             ],
             data: [
                 { track: 1, album: "Led Zeppelin", title: "Good Times Bad Times", writers: ["Page", "Jones", "Bonham"], length: "2:46" },

@@ -182,6 +182,12 @@ class DataGrid {
     }
 
 
+    /* COLUMN METHODS___________________________________________________________________ */
+
+    /**
+     * Toggle a column on or off
+     * @param f
+     */
     toggleColumn(f) {
         if (f.hidden) {
             this.showColumn(f);
@@ -190,6 +196,10 @@ class DataGrid {
         }
     }
 
+    /**
+     * Hide a column from the view.
+     * @param field the field to hide.
+     */
     hideColumn(field) {
         field.hidden = true;
         let cols = document.querySelectorAll(`[data-name='${field.name}']`);
@@ -198,6 +208,10 @@ class DataGrid {
         }
     }
 
+    /**
+     * Show a hidden column in the view.
+     * @param field
+     */
     showColumn(field) {
         field.hidden = false;
         let cols = document.querySelectorAll(`[data-name='${field.name}']`);
@@ -206,6 +220,9 @@ class DataGrid {
         }
     }
 
+    /**
+     * Select which columns to show.
+     */
     configurecolumns() {
         const me = this;
 
@@ -219,10 +236,13 @@ class DataGrid {
             }).container);
         }
 
-        let configbox = document.createElement('div');
-        configbox.classList.add('cols');
+        let ul = document.createElement('ul');
+        ul.classList.add('columns');
 
         for (let f of this.fields) {
+
+            let li = document.createElement('li');
+
             let cbox = new BooleanToggle({
                 label: f.label,
                 checked: !f.hidden,
@@ -231,10 +251,19 @@ class DataGrid {
                     me.toggleColumn(f);
                 }
             });
-            configbox.append(cbox.container);
+            li.appendChild(cbox.container);
+
+            if (f.description) {
+                let desc = document.createElement('div');
+                desc.classList.add('description');
+                desc.innerHTML = f.description;
+                li.appendChild(desc);
+            }
+
+            ul.append(li);
         }
 
-        container.append(configbox);
+        container.append(ul);
 
         let dialog = new DialogWindow({
             title: "Configure Columns",

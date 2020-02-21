@@ -4742,15 +4742,23 @@ div.datagrid-container div.messagebox div.box.warnings div.lbox {
 div.datagrid-configurator {
   padding: 2em;
 }
-div.datagrid-configurator div.cols {
+div.datagrid-configurator ul.columns {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
-div.datagrid-configurator div.cols div.column {
-  max-width: var(--datagrid-configurator-columnwidth);
-  width: var(--datagrid-configurator-columnwidth);
-  min-width: var(--datagrid-configurator-columnwidth);
+div.datagrid-configurator ul.columns li {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-bottom: 1em;
+}
+div.datagrid-configurator ul.columns li div.checkbox {
+  margin: 0;
+}
+div.datagrid-configurator ul.columns li div.description {
+  padding: 0.5em 1em 0.5em 3em;
+  font-size: 80%;
 }
 
 div.pwgenerator {

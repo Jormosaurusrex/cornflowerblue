@@ -297,14 +297,22 @@ div.datagrid-container {
 
 div.datagrid-configurator {
   padding: 2em;
-  div.cols {
+  ul.columns {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    div.column {
-      max-width: var(--datagrid-configurator-columnwidth);
-      width: var(--datagrid-configurator-columnwidth);
-      min-width: var(--datagrid-configurator-columnwidth);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    li {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      margin-bottom: 1em;
+      div.checkbox {
+        margin: 0;
+      }
+      div.description {
+        padding: .5em 1em .5em 3em;
+        font-size: 80%;
+      }
     }
   }
 }
