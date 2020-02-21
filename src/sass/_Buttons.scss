@@ -87,9 +87,10 @@ button {
     }
   }
   &.ghost {
+    --button-border-color: var(--button-default-color);
     color: var(--button-default-color);
     background-color: transparent;
-    box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
+    box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
   }
   &:focus,
   &:active,

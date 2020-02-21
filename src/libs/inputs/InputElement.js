@@ -449,7 +449,9 @@ class InputElement {
         });
         this.input.addEventListener('focusout', function(e) {
 
-            me.passivebox.innerHTML = me.passivetext;
+            if (me.passivebox) {
+                me.passivebox.innerHTML = me.passivetext;
+            }
 
             if (me.helptimer) {
                 clearTimeout(me.helptimer);

@@ -3,6 +3,8 @@ class SearchControl {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
+            autoexecute: true, // Cause the search's action to execute automatically on focusout
+                               // or when there number of seed characters is reached
             arialabel: null, // The aria-label value. If null, uses 'searchtext'
             maxlength: null, // Value for maxlength.
             searchtext: 'Search',
@@ -73,6 +75,9 @@ class SearchControl {
 
     }
 
+    /**
+     * Build the search input
+     */
     buildSearchInput() {
         const me = this;
         this.searchinput = document.createElement('input');
@@ -88,29 +93,40 @@ class SearchControl {
         for (let c of this.classes) {
             this.searchinput.classList.add(c);
         }
-        this.searchinput.addEventListener('keydown', function(e) {
 
-        });
         this.searchinput.addEventListener('keyup', function(e) {
             if (e.keyCode === 9) { // Tab
-                //me.searchbutton.button.focus();
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
             } else if (e.keyCode === 13) { // return or space
                 if ((me.action) && (typeof me.action === 'function')) {
                     me.action(me.value, me);
                 }
-                return;
+            } else {
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
             }
         });
-        this.searchinput.addEventListener('focusin', function(e) {
 
-        });
         this.searchinput.addEventListener('focusout', function(e) {
             if ((me.value) && (me.value.length > 0)) {
                 me.container.classList.add('open');
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
             } else {
                 me.container.classList.remove('open');
             }
         });
+
         this.searchinput.value = this.config.value;
 
     }
@@ -128,8 +144,8 @@ class SearchControl {
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
 
-    get autocomplete() { return this.config.autocomplete; }
-    set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }
+    get autoexecute() { return this.config.autoexecute; }
+    set autoexecute(autoexecute) { this.config.autoexecute = autoexecute; }
 
     get action() { return this.config.action; }
     set action(action) { this.config.action = action; }

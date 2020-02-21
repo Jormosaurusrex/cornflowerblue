@@ -270,7 +270,7 @@ class SelectMenu extends InputElement {
         li.setAttribute('data-menuorder', order);
 
         li.addEventListener('keydown', function(e) {
-            if((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
             } else if (e.keyCode === 9) { // Tab
                 me.close();

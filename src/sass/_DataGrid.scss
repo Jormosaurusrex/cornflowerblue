@@ -30,8 +30,14 @@ div.datagrid-container {
   div.grid-actions {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+    align-content: center;
+    justify-content: flex-end;
+    button:first-child {
+      align-self: flex-start;
+      margin-right: auto;
+      margin-left: 0;
+    }
   }
   div.grid-wrapper {
     overflow: auto;
@@ -140,6 +146,9 @@ div.datagrid-container {
         }
         &:nth-child(even) {
           background-color: var(--datagrid-grid-alternate-background-color);
+        }
+        &.hidden {
+          display: none;
         }
       }
     }

@@ -12,7 +12,6 @@ class DataGrid {
 
             filterable: true, // Data can be filtered
 
-
             exportable: true, // Data can be exported
             exportbuttontext: "Export",
             exporticon: "download",
@@ -30,7 +29,7 @@ class DataGrid {
             selectaction: function(event, self) {  // What to do when a single row is selecte.
                 //console.log("row clicked");
             },
-
+            
             multiselectbuttontext: "Bulk Select",
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiactions: [], // Array of button actions to multiselects
@@ -61,20 +60,17 @@ class DataGrid {
         if (!this.id) { this.id = `grid-${Utils.getUniqueKey(5)}`; }
     }
 
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get multiselecting() {
+        return this.grid.classList.contains('multiselecting');
+    }
+
     /* CORE METHODS_____________________________________________________________________ */
 
-    get exportbutton() { return this._exportbutton; }
-    set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
-
-    get multiselectbutton() { return this._multiselectbutton; }
-    set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
-
-    get exportheaderrow() { return this.config.exportheaderrow; }
-    set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
-
-    get exportarrayseparator() { return this.config.exportarrayseparator; }
-    set exportarrayseparator(exportarrayseparator) { this.config.exportarrayseparator = exportarrayseparator; }
-
+    /**
+     * Export the data in the grid as a CSV
+     */
     export() {
         let lineDivider = '\r\n', // line divider
             cellDivider = ',', // cell divider
@@ -131,7 +127,7 @@ class DataGrid {
         }
 
         let csv = rows.join(lineDivider);
-        console.log(csv);
+
         let hiddenElement = document.createElement('a');
         hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csv)}`);
         hiddenElement.setAttribute('id', 'downloadLink');
@@ -141,6 +137,34 @@ class DataGrid {
 
         this.exportbutton.enable();
 
+    }
+
+    search(value) {
+        let rows = Array.from(this.gridbody.childNodes);
+
+        for (let r of rows) {
+            let show = false;
+
+            r.classList.add('hidden');
+
+            if ((!value) || (value === '')) {
+                show = true;
+            } else {
+                let cells = Array.from(r.childNodes);
+                for (let c of cells) {
+                    if (show) { break; }
+                    if (!c.classList.contains('selector')) {
+                        if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                            show = true;
+                        }
+                    }
+                }
+            }
+
+            if (show) {
+                r.classList.remove('hidden');
+            }
+        }
     }
 
     /* SELECTION METHODS________________________________________________________________ */
@@ -239,12 +263,6 @@ class DataGrid {
         this.grid.classList.add('multiselecting');
     }
 
-    /* PSEUDO GETTERS___________________________________________________________________ */
-
-    get multiselecting() {
-        return this.grid.classList.contains('multiselecting');
-    }
-
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -261,31 +279,45 @@ class DataGrid {
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
 
-        if (this.multiselect) {
+        if ((this.multiselect) || (this.exportable) || (this.filterable)) {
+
             this.gridactions = document.createElement('div');
             this.gridactions.classList.add('grid-actions');
+
             if (this.multiselect) {
                 this.multiselectbutton = new SimpleButton({
                     mute: true,
                     text: this.multiselectbuttontext,
+                    classes: ['multiselect'],
                     action: function() {
                         me.selectmodetoggle();
                     }
                 });
                 this.gridactions.append(this.multiselectbutton.button);
             }
+
+            if (this.filterable) {
+                this.searchcontrol = new SearchControl({
+                    action: function(value, searchcontrol) {
+                        me.search(value);
+                    }
+                });
+                this.gridactions.append(this.searchcontrol.container);
+            }
+
             if (this.exportable) {
                 this.exportbutton  = new SimpleButton({
-                    mute: true,
+                    ghost: true,
                     text: this.exportbuttontext,
                     icon: this.exporticon,
+                    classes: ['export'],
                     action: function() {
                         me.export();
                     }
                 });
                 this.gridactions.append(this.exportbutton.button);
-
             }
+
             this.container.append(this.gridactions);
         }
 
@@ -524,17 +556,29 @@ class DataGrid {
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }
 
+    get exportarrayseparator() { return this.config.exportarrayseparator; }
+    set exportarrayseparator(exportarrayseparator) { this.config.exportarrayseparator = exportarrayseparator; }
+
+    get exportbutton() { return this._exportbutton; }
+    set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
+
     get exportbuttontext() { return this.config.exportbuttontext; }
     set exportbuttontext(exportbuttontext) { this.config.exportbuttontext = exportbuttontext; }
 
     get exportfilename() { return this.config.exportfilename; }
     set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
 
+    get exportheaderrow() { return this.config.exportheaderrow; }
+    set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
+
     get exporticon() { return this.config.exporticon; }
     set exporticon(exporticon) { this.config.exporticon = exporticon; }
 
     get fields() { return this.config.fields; }
     set fields(fields) { this.config.fields = fields; }
+
+    get filterable() { return this.config.filterable; }
+    set filterable(filterable) { this.config.filterable = filterable; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }
@@ -584,11 +628,17 @@ class DataGrid {
     get multiselect() { return this.config.multiselect; }
     set multiselect(multiselect) { this.config.multiselect = multiselect; }
 
+    get multiselectbutton() { return this._multiselectbutton; }
+    set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
+
     get multiselectbuttontext() { return this.config.multiselectbuttontext; }
     set multiselectbuttontext(multiselectbuttontext) { this.config.multiselectbuttontext = multiselectbuttontext; }
 
     get multiactions() { return this.config.multiactions; }
     set multiactions(multiactions) { this.config.multiactions = multiactions; }
+
+    get searchcontrol() { return this._searchcontrol; }
+    set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
 
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }
