@@ -51,6 +51,7 @@ module.exports = function(grunt) {
                     'src/libs/components/PasswordGenerator.js',
                     'src/libs/components/PasswordChangeForm.js',
                     'src/libs/components/TabBar.js',
+                    'src/libs/components/SearchControl.js',
                     'src/libs/components/SimpleProgressMeter.js',
                     'src/libs/components/RadialProgressMeter.js',
                     'src/libs/SimpleForm.js'
