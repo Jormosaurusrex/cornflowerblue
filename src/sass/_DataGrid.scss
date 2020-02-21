@@ -76,7 +76,7 @@ div.datagrid-container {
           top: 0;
           z-index: 10;
           div {
-            padding: .5em 1.5em .5em 1em;
+            padding: .75em 1.5em .75em 1em;
             position: relative;
             white-space:nowrap;
             &:before {
@@ -130,6 +130,7 @@ div.datagrid-container {
               box-shadow: inset 0px -.2em 0 0 var(--datagrid-header-sort-highlight-color);
               &:before {
                 opacity: 1;
+
               }
             }
           }
@@ -184,6 +185,13 @@ div.datagrid-container {
       &.number,
       &.time {
         text-align: right;
+        div {
+          padding: .75em 1em .75em 1.5em;
+          &:before {
+            right: unset;
+            left: 0.5em;
+          }
+        }
       }
       &.center {
         text-align: center;

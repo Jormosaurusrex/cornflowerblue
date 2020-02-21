@@ -300,8 +300,13 @@ class DataGrid {
         if (!this.multiselecting) {
             this.toggleallselect(false);
         }
+
         row.setAttribute('aria-selected', 'true');
         row.querySelector('input.selector').checked = true;
+
+        if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+            this.selectaction(e, this);
+        }
     }
 
     /**
@@ -523,13 +528,15 @@ class DataGrid {
         let row = document.createElement('tr');
 
         if (this.selectable) {
-            row.setAttribute('tabindex', '1');
+
+            row.setAttribute('tabindex', '0');
+
             row.addEventListener('click', function(e) {
-                if (me.selectable) { me.select(row); }
-                if ((me.selectaction) && (typeof me.selectaction === 'function')) {
-                    me.selectaction(e, me);
+                if ((me.selectable) && (!me.multiselecting)) {
+                    me.select(row);
                 }
             });
+
             row.addEventListener('keydown', function(e) {
                 if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
                     e.preventDefault();
@@ -544,15 +551,12 @@ class DataGrid {
                 }
             });
         }
+
         if (this.multiselect) {
             let selector = new BooleanToggle({
                 classes: ['selector'],
                 onchange: function(self) {
-                    if (self.checked) {
-                        console.log('checked this');
-                        return;
-                    }
-                    console.log('checked off this');
+                    console.log(self);
                 }
             });
             let cell = document.createElement('td');

@@ -4550,7 +4550,7 @@ div.datagrid-container table.grid thead tr th {
   z-index: 10;
 }
 div.datagrid-container table.grid thead tr th div {
-  padding: 0.5em 1.5em 0.5em 1em;
+  padding: 0.75em 1.5em 0.75em 1em;
   position: relative;
   white-space: nowrap;
 }
@@ -4640,6 +4640,19 @@ div.datagrid-container table.grid td.right,
 div.datagrid-container table.grid td.number,
 div.datagrid-container table.grid td.time {
   text-align: right;
+}
+div.datagrid-container table.grid th.right div, div.datagrid-container table.grid th.number div, div.datagrid-container table.grid th.time div,
+div.datagrid-container table.grid td.right div,
+div.datagrid-container table.grid td.number div,
+div.datagrid-container table.grid td.time div {
+  padding: 0.75em 1em 0.75em 1.5em;
+}
+div.datagrid-container table.grid th.right div:before, div.datagrid-container table.grid th.number div:before, div.datagrid-container table.grid th.time div:before,
+div.datagrid-container table.grid td.right div:before,
+div.datagrid-container table.grid td.number div:before,
+div.datagrid-container table.grid td.time div:before {
+  right: unset;
+  left: 0.5em;
 }
 div.datagrid-container table.grid th.center,
 div.datagrid-container table.grid td.center {

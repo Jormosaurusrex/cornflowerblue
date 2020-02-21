@@ -67,6 +67,12 @@
         document.addEventListener("DOMContentLoaded", function(event) {
             new CornflowerBlueDemo();
         });
+        document.addEventListener('click', function(e) {
+            e = e || window.event;
+            let target = e.target || e.srcElement,
+                text = target.textContent || target.innerText;
+            console.log(target);
+        }, false);
     </script>
 </head>
 <body>
