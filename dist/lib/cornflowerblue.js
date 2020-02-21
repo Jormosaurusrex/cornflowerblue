@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.0 - 2020-02-07
+/*! Cornflower Blue - v0.1.0 - 2020-02-20
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
@@ -1960,7 +1960,9 @@ class InputElement {
         });
         this.input.addEventListener('focusout', function(e) {
 
-            me.passivebox.innerHTML = me.passivetext;
+            if (me.passivebox) {
+                me.passivebox.innerHTML = me.passivetext;
+            }
 
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
@@ -2284,7 +2286,7 @@ class BooleanToggle {
             disabled: false, // If true, make the checkbox disabled.
             labelside: 'right', // Which side to put the label on.
             style: null, // Default to box
-            onchange: null, // The change handler. Passed (event, self).
+            onchange: null, // The change handler. Passed (self).
             validator: null, // A function to run to test validity. Passed the self; returns true or false.,
             value: null // the value of the checkbox
         };
@@ -3255,7 +3257,7 @@ class SelectMenu extends InputElement {
         li.setAttribute('data-menuorder', order);
 
         li.addEventListener('keydown', function(e) {
-            if((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
             } else if (e.keyCode === 9) { // Tab
                 me.close();
@@ -5385,6 +5387,8 @@ class TabBar {
             menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
             menulabel: "Toggle Menu", // Default text for the menu
             arialabel: 'Primary', // the aria label to use if this is a navigation
+            submenuicon: 'triangle-down', // icon to indicate submenu
+
             vertical: false, // Vertical or horizontal
             animation: 'popin', // Set to null to disable animations
             tabs: [], // An array of tab definitions
@@ -5396,6 +5400,7 @@ class TabBar {
             //    icon: null, // an icon identifier, optional
             //    selected: false, // if true, start selected
             //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
+            //    subtabs: null  // an array of tab definitions to indicate subtabs
             // }
             action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
                           // This is what will fire if there is no action defined on the tab definition.
@@ -5461,98 +5466,12 @@ class TabBar {
         let order = 1;
 
         for (let tabdef of this.tabs) {
-            let icon,
-                linktext,
-                next = order + 1,
-                previous = order - 1;
-
-            if (previous < 1) {
-                previous = 1;
-            }
-            if (next > this.tabs.length) {
-                next = this.tabs.length;
-            }
-
-            if ((!tabdef.label) && (!tabdef.icon)) {
-                console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
-                break;
-            }
-
-            if (tabdef.icon) {
-                icon = IconFactory.icon(tabdef.icon);
-            }
-            if (tabdef.label) {
-                linktext = document.createElement('span');
-                linktext.innerHTML = tabdef.label;
-            }
-
-            let link = document.createElement('a');
-            link.setAttribute('role', 'tab');
-            link.setAttribute('aria-controls', `t-${tabdef.id}`);
-            link.setAttribute('tabindex', '-1');
-            link.setAttribute('data-tabtext', `${tabdef.label}`);
-            link.setAttribute('data-tabno', `${order}`);
-            link.setAttribute('id', tabdef.id);
-            link.setAttribute('data-tabid', tabdef.id);
-            if (icon) {
-                link.appendChild(icon);
-            }
-            link.appendChild(linktext);
-
-            link.addEventListener('keydown', function (e) {
-                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
-                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${next}']`).focus();
-                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
-                    link.click();
-                }
-            });
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                me.select(tabdef.id);
-                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                    tabdef.action(tabdef.id, me);
-                } else if (me.action) {
-                    me.action(tabdef.id, me);
-                }
-            });
-
-            let maplink = document.createElement('li');
-            maplink.setAttribute('role', 'presentation');
-            maplink.appendChild(link);
-            if (tabdef.classes) {
-                for (let c of tabdef.classes) {
-                    maplink.classList.add(c);
-                }
-            }
-
-            this.tabmap[tabdef.id] = maplink;
-
-            if (this.animation) {
-                this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
-                this.tabmap[tabdef.id].classList.add(this.animation);
-            }
-
-            this.list.appendChild(this.tabmap[tabdef.id]);
-
-            order++;
-
-            if (tabdef.selected) {
-                window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
-                    me.select(tabdef.id);
-                }, 100);
-            }
+            order = this.buildTab(tabdef, order);
         }
-
 
         if (this.navigation) {
             this.container = document.createElement('nav');
-            this.container.setAttribute('role', 'navigation');
+            this.container.setAttribute('role', 'menubar');
             this.container.setAttribute('aria-label', this.arialabel);
         } else {
             this.container = document.createElement('div');
@@ -5583,6 +5502,121 @@ class TabBar {
         }
 
         this.container.appendChild(this.list);
+    }
+
+    buildTab(tabdef, order, parent) {
+        const me = this;
+        let next = order + 1,
+            previous = order - 1;
+
+        if (previous < 1) {
+            previous = 1;
+        }
+        if (next > this.tabs.length) {
+            next = this.tabs.length;
+        }
+
+        if ((!tabdef.label) && (!tabdef.icon)) {
+            console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
+            return null;
+        }
+
+        let link = document.createElement('a');
+        link.setAttribute('role', 'menuitem');
+        link.setAttribute('aria-controls', `t-${tabdef.id}`);
+        link.setAttribute('data-tabtext', `${tabdef.label}`);
+        link.setAttribute('data-tabno', `${order}`);
+        link.setAttribute('id', tabdef.id);
+        link.setAttribute('data-tabid', tabdef.id);
+        if (tabdef.icon) {
+            link.appendChild(IconFactory.icon(tabdef.icon));
+        }
+        if (tabdef.label) {
+            let linktext = document.createElement('span');
+            linktext.innerHTML = tabdef.label;
+            link.appendChild(linktext);
+        }
+
+        let maplink = document.createElement('li');
+        maplink.setAttribute('role', 'none');
+        maplink.appendChild(link);
+        if (tabdef.classes) {
+            for (let c of tabdef.classes) {
+                maplink.classList.add(c);
+            }
+        }
+
+        this.tabmap[tabdef.id] = maplink;
+
+        if (this.animation) {
+            this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
+            this.tabmap[tabdef.id].classList.add(this.animation);
+        }
+
+        if (parent) {
+            let clink = parent.querySelector('a');
+            link.setAttribute('data-parent', `${clink.getAttribute('data-tabid')}`);
+            let plist = parent.querySelector('ul');
+            if (!plist) {
+                plist = document.createElement('ul');
+                plist.setAttribute('role', 'menu');
+                plist.setAttribute('aria-label', tabdef.label);
+                plist.classList.add('submenu');
+                parent.appendChild(plist);
+            }
+            plist.append(this.tabmap[tabdef.id]); // attach to child list
+        } else {
+            this.list.appendChild(this.tabmap[tabdef.id]); // attach to root list
+        }
+
+        order++;
+        link.setAttribute('tabindex', '-1'); // always set this here
+
+        // Is this a master menu item?
+
+        if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
+            link.classList.add('mastertab');
+            link.setAttribute('aria-haspopup', true);
+            link.setAttribute('aria-expanded', false);
+            if (this.submenuicon) {
+                link.appendChild(IconFactory.icon(this.submenuicon));
+            }
+            for (let subdef of tabdef.subtabs) {
+                order = this.buildTab(subdef, order, this.tabmap[tabdef.id]);
+            }
+            // XXX SET open/close linking
+        } else {
+            // set link events here.
+            link.addEventListener('keydown', function (e) {
+                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
+                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.list.querySelector(`[data-tabno='${next}']`).focus();
+                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
+                    link.click();
+                }
+            });
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                me.select(tabdef.id);
+                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
+                    tabdef.action(tabdef.id, me);
+                } else if (me.action) {
+                    me.action(tabdef.id, me);
+                }
+            });
+        }
+
+        if (tabdef.selected) {
+            window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
+                me.select(tabdef.id);
+            }, 100);
+        }
+        return order; // send this back.
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -5717,6 +5751,9 @@ class TabBar {
     get selected() { return this._selected; }
     set selected(selected) { this._selected = selected; }
 
+    get submenuicon() { return this.config.submenuicon; }
+    set submenuicon(submenuicon) { this.config.submenuicon = submenuicon; }
+
     get tabmap() { return this._tabmap; }
     set tabmap(tabmap) { this._tabmap = tabmap; }
 
@@ -5728,6 +5765,190 @@ class TabBar {
 
 }
 
+
+class SearchControl {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // the id
+            autoexecute: true, // Cause the search's action to execute automatically on focusout
+                               // or when there number of seed characters is reached
+            arialabel: null, // The aria-label value. If null, uses 'searchtext'
+            maxlength: null, // Value for maxlength.
+            searchtext: 'Search',
+            searchicon: 'magnify',
+            action: function(value, self) { // The search action. Passed the value of the input and the self
+                console.log(`Executing search action: ${value}`);
+            },
+            value: '', // Value to use (pre-population).  Used during construction and then discarded.
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, SearchControl.DEFAULT_CONFIG, config);
+        return this;
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get isopen() { return this.container.classList.contains('open'); }
+
+    get value() { return this.searchinput.value; }
+    set value(value) { this.searchinput.value = value; }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the full searchcontrol container
+     */
+    buildContainer() {
+        const me = this;
+        this.container = document.createElement('div');
+        this.container.classList.add('searchcontrol');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        this.buildSearchInput();
+        this.container.appendChild(this.searchinput);
+
+        this.searchbutton = new SimpleButton({
+            text: this.searchtext,
+            icon: this.searchicon,
+            ghost: true,
+            action: function(e) {
+                e.preventDefault();
+                if ((me.action) && (typeof me.action === 'function')) {
+                    me.action(me.value, me);
+                }
+            }
+        });
+
+        // Open the search input if the user clicks on the button when it's not open
+        this.container.addEventListener('click', function() {
+            if (!me.isopen) {
+                me.searchinput.focus();
+                return;
+            }
+        });
+
+        this.container.appendChild(this.searchbutton.button);
+
+    }
+
+    /**
+     * Build the search input
+     */
+    buildSearchInput() {
+        const me = this;
+        this.searchinput = document.createElement('input');
+
+        this.searchinput.setAttribute('type', 'text');
+        this.searchinput.setAttribute('role', 'textbox');
+        this.searchinput.setAttribute('tabindex', '0');
+
+        if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }
+        if (this.arialabel) { this.searchinput.setAttribute('aria-label', this.arialabel); }
+        if (this.maxlength) { this.searchinput.setAttribute('maxlength', this.maxlength); }
+
+        for (let c of this.classes) {
+            this.searchinput.classList.add(c);
+        }
+
+        this.searchinput.addEventListener('keyup', function(e) {
+            if (e.keyCode === 9) { // Tab
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
+            } else if (e.keyCode === 13) { // return or space
+                if ((me.action) && (typeof me.action === 'function')) {
+                    me.action(me.value, me);
+                }
+            } else {
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
+            }
+        });
+
+        this.searchinput.addEventListener('focusout', function(e) {
+            if ((me.value) && (me.value.length > 0)) {
+                me.container.classList.add('open');
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
+            } else {
+                me.container.classList.remove('open');
+            }
+        });
+
+        this.searchinput.value = this.config.value;
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return Utils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get autoexecute() { return this.config.autoexecute; }
+    set autoexecute(autoexecute) { this.config.autoexecute = autoexecute; }
+
+    get action() { return this.config.action; }
+    set action(action) { this.config.action = action; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get maxlength() { return this.config.maxlength; }
+    set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get placeholder() { return this.config.placeholder; }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
+    get searchinput() { return this._searchinput; }
+    set searchinput(searchinput) { this._searchinput = searchinput; }
+
+    get searchbutton() { return this._searchbutton; }
+    set searchbutton(searchbutton) { this._searchbutton = searchbutton; }
+
+    get searchtext() { return this.config.searchtext; }
+    set searchtext(searchtext) { this.config.searchtext = searchtext; }
+
+    get searchicon() { return this.config.searchicon; }
+    set searchicon(searchicon) { this.config.searchicon = searchicon; }
+
+}
 
 class SimpleProgressMeter {
 
