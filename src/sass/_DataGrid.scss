@@ -328,7 +328,7 @@ div.datagrid-configurator {
     }
   }
   &.filter {
-    div.filter-line {
+    div.filter-lineold {
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
@@ -339,12 +339,22 @@ div.datagrid-configurator {
       div.value {
         padding-left: 6em;
       }
+      button.removefilter {
+        align-self: flex-end;
+      }
       &.unset {
         div.matcher,
         div.value {
           display: none;
         }
       }
+    }
+    div.filter-line {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      border: .1em solid var(--datagrid-filter-border-color);
+
     }
   }
 }

@@ -67,9 +67,12 @@ class DataGrid {
             filtertextisnot: 'does not equal',
             newfiltertext: 'Add filter',
             newfiltericon: 'plus',
-            newfilterunselectedtext: 'Select field',
-            newfilterunselectedmatchtext: 'Select match type',
-            newfilterunselectedvaluetext: 'Select value',
+            newfilterunselectedtext: '(Select field)',
+            newfilterunselectedmatchtext: '(Select match type)',
+            newfilterunselectedvaluetext: '(Select value)',
+            newfiltervaluelabel: 'Filter text',
+            removefiltertext: 'Remove filter',
+            removefiltericon: 'trashcan',
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(event, self) {  // What to do when a single row is selecte.
@@ -347,17 +350,18 @@ class DataGrid {
 
     /* FILTER METHODS___________________________________________________________________ */
 
-    get filtertextis() { return this.config.filtertextis; }
-    set filtertextis(filtertextis) { this.config.filtertextis = filtertextis; }
-
-    get filtertextisnot() { return this.config.filtertextisnot; }
-    set filtertextisnot(filtertextisnot) { this.config.filtertextisnot = filtertextisnot; }
 
     get newfiltericon() { return this.config.newfiltericon; }
     set newfiltericon(newfiltericon) { this.config.newfiltericon = newfiltericon; }
 
     get newfiltertext() { return this.config.newfiltertext; }
     set newfiltertext(newfiltertext) { this.config.newfiltertext = newfiltertext; }
+
+    get filtertextis() { return this.config.filtertextis; }
+    set filtertextis(filtertextis) { this.config.filtertextis = filtertextis; }
+
+    get filtertextisnot() { return this.config.filtertextisnot; }
+    set filtertextisnot(filtertextisnot) { this.config.filtertextisnot = filtertextisnot; }
 
     get newfilterunselectedtext() { return this.config.newfilterunselectedtext; }
     set newfilterunselectedtext(newfilterunselectedtext) { this.config.newfilterunselectedtext = newfilterunselectedtext; }
@@ -367,6 +371,16 @@ class DataGrid {
 
     get newfilterunselectedvaluetext() { return this.config.newfilterunselectedvaluetext; }
     set newfilterunselectedvaluetext(newfilterunselectedvaluetext) { this.config.newfilterunselectedvaluetext = newfilterunselectedvaluetext; }
+
+    get newfiltervaluelabel() { return this.config.newfiltervaluelabel; }
+    set newfiltervaluelabel(newfiltervaluelabel) { this.config.newfiltervaluelabel = newfiltervaluelabel; }
+
+    get removefiltericon() { return this.config.removefiltericon; }
+    set removefiltericon(removefiltericon) { this.config.removefiltericon = removefiltericon; }
+
+    get removefiltertext() { return this.config.removefiltertext; }
+    set removefiltertext(removefiltertext) { this.config.removefiltertext = removefiltertext; }
+
 
     buildFilterBox() {
         const me = this;
@@ -381,8 +395,14 @@ class DataGrid {
         let addFilterButton = new SimpleButton({
             icon: this.newfiltericon,
             text: this.newfiltertext,
+            mute: true,
             action: function() {
-                me.addfilterline(ul);
+                let li = me.addfilterline();
+                ul.appendChild(li);
+                let focusable = li.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable[0]) {
+                    focusable[0].focus();
+                }
             }
         });
 
@@ -390,12 +410,11 @@ class DataGrid {
         return box;
     }
 
-    /**
-     * Adds a blank filter line to the filter editor
-     * @param ul the target list to add it to
-     */
-    addfilterline(ul) {
+
+    addfilterline() {
         const me = this;
+
+        let li = document.createElement('li');
 
         let fline = document.createElement('div');
         fline.classList.add('filter-line');
@@ -455,11 +474,12 @@ class DataGrid {
                             valdiv.appendChild(valsel.container);
                             break;
                         case 'string':
+                        default:
                             let valinput = new TextInput({
-                                name: 'value'
+                                name: 'value',
+                                label: me.newfiltervaluelabel
                             });
                             valdiv.appendChild(valinput.container);
-                        default:
                             break;
                     }
 
@@ -468,16 +488,24 @@ class DataGrid {
             }
         });
         fline.appendChild(colnameselector.container);
-
         fline.append(matchdiv);
-
-
         fline.append(valdiv);
 
-        let li = document.createElement('li');
-        li.appendChild(fline);
-        ul.appendChild(li);
+        let rmFilterButton = new SimpleButton({
+            icon: this.removefiltericon,
+            text: this.removefiltertext,
+            mute: true,
+            classes: ['removefilter'],
+            action: function() {
+                li.parentNode.removeChild(li);
+            }
+        });
 
+        fline.appendChild(rmFilterButton.button);
+
+
+        li.appendChild(fline);
+        return li;
     }
 
     filterconfigurator() {
