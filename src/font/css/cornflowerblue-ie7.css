@@ -105,3 +105,5 @@
 .cfb-flag-notched-angle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x7d;&nbsp;'); }
 .cfb-flag-pointed-angle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x7e;&nbsp;'); }
 .cfb-flag-rectangle-angle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe800;&nbsp;'); }
+.cfb-table { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe801;&nbsp;'); }
+.cfb-filter { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe802;&nbsp;'); }

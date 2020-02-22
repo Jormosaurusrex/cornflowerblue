@@ -94,3 +94,5 @@
 .cfb-flag-notched-angle:before { content: '\7d'; } /* '}' */
 .cfb-flag-pointed-angle:before { content: '\7e'; } /* '~' */
 .cfb-flag-rectangle-angle:before { content: '\e800'; } /* '' */
+.cfb-table:before { content: '\e801'; } /* '' */
+.cfb-filter:before { content: '\e802'; } /* '' */
