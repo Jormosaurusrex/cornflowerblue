@@ -674,6 +674,7 @@ class CornflowerBlueDemo {
                     width: 3,
                     resize: true,
                     type: "string",
+                    filterable: 'enum',
                     description: "The album the song is on.",
                     classes: ['nowrap', 'italic']
                 }, {
@@ -682,6 +683,7 @@ class CornflowerBlueDemo {
                     width: 3,
                     resize: true,
                     type: "string",
+                    filterable: 'string',
                     description: "The title of the song.",
                     classes: ['nowrap', 'italic']
                 }, {

@@ -4752,23 +4752,26 @@ div.datagrid-container div.messagebox div.box.warnings div.lbox {
 div.datagrid-configurator {
   padding: 2em;
 }
-div.datagrid-configurator ul.columns {
+div.datagrid-configurator ul.elements {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
 }
-div.datagrid-configurator ul.columns li {
+div.datagrid-configurator ul.elements li {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   margin-bottom: 1em;
 }
-div.datagrid-configurator ul.columns li div.checkbox {
+div.datagrid-configurator ul.elements li div.description {
+  padding: 0.5em 0 0.5em 0;
+  font-size: 80%;
+}
+div.datagrid-configurator.column ul.elements li div.checkbox {
   margin: 0;
 }
-div.datagrid-configurator ul.columns li div.description {
+div.datagrid-configurator.column ul.elements li div.description {
   padding: 0.5em 1em 0.5em 3em;
-  font-size: 80%;
 }
 
 div.pwgenerator {

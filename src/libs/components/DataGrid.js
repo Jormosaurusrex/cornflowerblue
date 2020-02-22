@@ -22,6 +22,7 @@ class DataGrid {
                     resize: <boolean>,  // Whether or not to allow resizing of the column (default: false)
                     description: <string>>, // A string that describes the data in the column
                     classes: <string array>, // Additional classes to apply to cells of this field
+                    filterable: <null|string|enum> // Is the field filterable? if so, how?
                     renderer: function(data) {  // A function that can be used to
                         return `${data}.`;
                     }
@@ -33,8 +34,9 @@ class DataGrid {
             sortable: true, //  Data columns can be sorted
 
             columnconfigurationlabel: 'Columns',
-            columnconfigurationicon: 'gear',
+            columnconfigurationicon: 'table',
             columnconfigurationinstructions: 'Select which columns to show in the grid. This does not hide the columns during export.',
+            columnconfigurationtitle: 'Configure Columns',
 
             searchable: true, // Data can be filtered
             searchbuttontext: 'Search',
@@ -53,6 +55,18 @@ class DataGrid {
                 return 'export.csv';      // This can be a string or a function, but must return a string
             },
             exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
+
+            filterable: true, // Can the datagrid be filtered?
+                      // No all fields are filtered by default.
+                      // Whether or not a field can be filtered is defined in the field's definition.
+            filterbuttontext: 'Filters',
+            filterbuttonicon: 'filter',
+            filterinstructions: 'Set filters by column. Filters can be defined as "must match" or "cannot match" - inclusive or exclusive.',
+            filtertitle: 'Manage Filters',
+            filtertextis: 'must be',
+            filtertextisnot: 'must not be',
+
+
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(event, self) {  // What to do when a single row is selecte.
@@ -168,6 +182,10 @@ class DataGrid {
 
     }
 
+    /**
+     * Search the grid for the value provided.
+     * @param value
+     */
     search(value) {
         this.noresultsbox.container.classList.add('hidden');
 
@@ -203,7 +221,6 @@ class DataGrid {
         }
 
     }
-
 
     /* COLUMN METHODS___________________________________________________________________ */
 
@@ -243,38 +260,104 @@ class DataGrid {
         }
     }
 
+
+    /* FILTER METHODS___________________________________________________________________ */
+
+    get filtertextis() { return this.config.filtertextis; }
+    set filtertextis(filtertextis) { this.config.filtertextis = filtertextis; }
+
+    get filtertextisnot() { return this.config.filtertextisnot; }
+    set filtertextisnot(filtertextisnot) { this.config.filtertextisnot = filtertextisnot; }
+
+    buildfilter(field) {
+        let fline = document.createElement('div');
+        fline.classList.add('fline');
+
+        let fname = document.createElement('div');
+        fname.classList.add('name');
+        fname.innerHTML = field.label;
+        fline.appendChild(fname);
+
+        let matchessel = new SelectMenu({
+           name: `${field.name}-match`,
+           options: [
+               { label: this.filtertextis, value: 'is', checked: true },
+               { label: this.filtertextisnot, value: 'not', checked: true },
+           ]
+        });
+        fline.appendChild(matchessel.container);
+
+        switch (f.filterable) {
+            case 'enum':
+                break;
+            case 'string':
+                break;
+        }
+
+        return fline;
+    }
+
+
     /**
-     * Select which columns to show.
+     * Dialog creation helper method.
+     * @param type the type of dialog to create
      */
-    configurecolumns() {
+    makedialog(type) {
         const me = this;
+
+        let instructions,
+            title;
+
+        switch(type) {
+            case 'column':
+                instructions = this.columnconfigurationinstructions;
+                title = this.columnconfigurationtitle;
+                break;
+            case 'filter':
+                instructions = this.filterinstructions;
+                title = this.filtertitle;
+                break;
+        }
 
         let container = document.createElement('div');
         container.classList.add('datagrid-configurator');
+        container.classList.add(type);
 
         // instructions
-        if (this.columnconfigurationinstructions) {
+        if (instructions) {
             container.append(new InstructionBox({
-                instructions: [this.columnconfigurationinstructions]
+                instructions: [instructions]
             }).container);
         }
 
         let ul = document.createElement('ul');
-        ul.classList.add('columns');
+        ul.classList.add('elements');
 
         for (let f of this.fields) {
 
+            if ((type === 'filter') && (!f.filterable)) {
+                break;
+            }
+
             let li = document.createElement('li');
 
-            let cbox = new BooleanToggle({
-                label: f.label,
-                checked: !f.hidden,
-                classes: ['column'],
-                onchange: function() {
-                    me.toggleColumn(f);
-                }
-            });
-            li.appendChild(cbox.container);
+            switch(type) {
+                case 'column':
+                    let cbox = new BooleanToggle({
+                        label: f.label,
+                        checked: !f.hidden,
+                        classes: ['column'],
+                        onchange: function() {
+                            me.toggleColumn(f);
+                        }
+                    });
+                    li.appendChild(cbox.container);
+                    break;
+                case 'filter':
+
+                    li.appendChild(this.buildfilter(field));
+                    break;
+            }
 
             if (f.description) {
                 let desc = document.createElement('div');
@@ -289,11 +372,12 @@ class DataGrid {
         container.append(ul);
 
         let dialog = new DialogWindow({
-            title: "Configure Columns",
+            title: title,
             content: container
         });
         dialog.open();
     }
+
 
     /* SELECTION METHODS________________________________________________________________ */
 
@@ -412,7 +496,30 @@ class DataGrid {
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
 
+        this.container.append(this.gridactions);
 
+        this.grid.appendChild(this.header);
+        this.grid.appendChild(this.gridbody);
+
+        let gridwrapper = document.createElement('div');
+        gridwrapper.classList.add('grid-wrapper');
+        gridwrapper.appendChild(this.grid);
+        this.container.append(gridwrapper);
+
+        if (this.searchable) {
+            this.noresultsbox = new MessageBox({
+                warningstitle: this.noresultstitle,
+                warnings: [this.noresultstext],
+                classes: ['hidden']
+            });
+            this.container.append(this.noresultsbox.container);
+        }
+    }
+
+    /**
+     * Build the actions for the grid
+     */
+    buildGridActions() {
         this.gridactions = document.createElement('div');
         this.gridactions.classList.add('grid-actions');
 
@@ -439,12 +546,25 @@ class DataGrid {
             this.gridactions.append(this.searchcontrol.container);
         }
 
+        if (this.filterable) {
+            this.filterbutton  = new SimpleButton({
+                mute: true,
+                text: this.filterbuttontext,
+                icon: this.filtericon,
+                classes: ['export'],
+                action: function() {
+                    me.makedialog('filter');
+                }
+            });
+            this.gridactions.append(this.filterbutton.button);
+        }
+
         this.columnconfigbutton = new SimpleButton({
             mute: true,
             text: this.columnconfigurationlabel,
             icon: this.columnconfigurationicon,
             action: function() {
-                me.configurecolumns();
+                me.makedialog('column');
             }
         });
         this.gridactions.append(this.columnconfigbutton.button);
@@ -460,26 +580,6 @@ class DataGrid {
                 }
             });
             this.gridactions.append(this.exportbutton.button);
-        }
-
-        this.container.append(this.gridactions);
-
-
-        this.grid.appendChild(this.header);
-        this.grid.appendChild(this.gridbody);
-
-        let gridwrapper = document.createElement('div');
-        gridwrapper.classList.add('grid-wrapper');
-        gridwrapper.appendChild(this.grid);
-        this.container.append(gridwrapper);
-
-        if (this.searchable) {
-            this.noresultsbox = new MessageBox({
-                warningstitle: this.noresultstitle,
-                warnings: [this.noresultstext],
-                classes: ['hidden']
-            });
-            this.container.append(this.noresultsbox.container);
         }
     }
 
@@ -691,6 +791,8 @@ class DataGrid {
         this.footer.classList.add('footer');
     }
 
+
+
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
@@ -712,6 +814,9 @@ class DataGrid {
 
     get columnconfigurationlabel() { return this.config.columnconfigurationlabel; }
     set columnconfigurationlabel(columnconfigurationlabel) { this.config.columnconfigurationlabel = columnconfigurationlabel; }
+
+    get columnconfigurationtitle() { return this.config.columnconfigurationtitle; }
+    set columnconfigurationtitle(columnconfigurationtitle) { this.config.columnconfigurationtitle = columnconfigurationtitle; }
 
     get container() {
         if (!this._container) { this.buildContainer(); }
@@ -746,8 +851,23 @@ class DataGrid {
     get fields() { return this.config.fields; }
     set fields(fields) { this.config.fields = fields; }
 
-    get searchable() { return this.config.searchable; }
-    set searchable(searchable) { this.config.searchable = searchable; }
+    get filterable() { return this.config.filterable; }
+    set filterable(filterable) { this.config.filterable = filterable; }
+
+    get filterbutton() { return this._filterbutton; }
+    set filterbutton(filterbutton) { this._filterbutton = filterbutton; }
+
+    get filterbuttonicon() { return this._filterbuttonicon; }
+    set filterbuttonicon(filterbuttonicon) { this._filterbuttonicon = filterbuttonicon; }
+
+    get filterbuttontext() { return this._filterbuttontext; }
+    set filterbuttontext(filterbuttontext) { this._filterbuttontext = filterbuttontext; }
+
+    get filterinstructions() { return this.config.filterinstructions; }
+    set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }
+
+    get filtertitle() { return this.config.filtertitle; }
+    set filtertitle(filtertitle) { this.config.filtertitle = filtertitle; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }
@@ -761,7 +881,10 @@ class DataGrid {
     }
     set grid(grid) { this._grid = grid; }
 
-    get gridactions() { return this._gridactions; }
+    get gridactions() {
+        if (!this._gridactions) { this.buildGridActions(); }
+        return this._gridactions;
+    }
     set gridactions(gridactions) { this._gridactions = gridactions; }
 
     get gridbody() {
@@ -814,6 +937,9 @@ class DataGrid {
 
     get noresultstitle() { return this.config.noresultstitle; }
     set noresultstitle(noresultstitle) { this.config.noresultstitle = noresultstitle; }
+
+    get searchable() { return this.config.searchable; }
+    set searchable(searchable) { this.config.searchable = searchable; }
 
     get searchcontrol() { return this._searchcontrol; }
     set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }

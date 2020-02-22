@@ -16,6 +16,7 @@ class IconFactory {
             'legend',
             'echx',
             'arrow-down',
+            'chat',
             'check-circle-disc',
             'checkmark-circle',
             'chevron-down',
@@ -24,7 +25,6 @@ class IconFactory {
             'chevron-right',
             'chevron-up',
             'double-triangle-vertical',
-            'chat',
             'heart',
             'no',
             'double-triangle-horizontal',
@@ -96,7 +96,9 @@ class IconFactory {
             'flag-rectangle',
             'flag-notched-angle',
             'flag-pointed-angle',
-            'flag-rectangle-angle'
+            'flag-rectangle-angle',
+            'filter',
+            'table'
         ];
     }
 
