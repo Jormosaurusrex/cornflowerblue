@@ -123,6 +123,7 @@ div.select-container {
       align-content: center;
       padding: 0;
       margin: 0;
+      white-space: nowrap;
       input[type="radio"] {
         display: none;
       }
@@ -197,6 +198,21 @@ div.select-container {
   &.mute {
     label {
       opacity: 1;
+    }
+  }
+  &.minimal {
+    display: inline-block;
+    margin: 0 .5em 0 .5em;
+    div.wrap {
+      &:after {
+        display: none;
+      }
+    }
+    div.trigger {
+      padding-right: 2em;
+      &:before {
+        right: .5em;
+      }
     }
   }
   &.disabled {

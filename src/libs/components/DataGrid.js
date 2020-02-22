@@ -63,10 +63,13 @@ class DataGrid {
             filterbuttonicon: 'filter',
             filterinstructions: 'Set filters by column. Filters can be defined as "must match" or "cannot match" - inclusive or exclusive.',
             filtertitle: 'Manage Filters',
-            filtertextis: 'must be',
-            filtertextisnot: 'must not be',
-
-
+            filtertextis: 'equals',
+            filtertextisnot: 'does not equal',
+            newfiltertext: 'Add filter',
+            newfiltericon: 'plus',
+            newfilterunselectedtext: 'Select field',
+            newfilterunselectedmatchtext: 'Select match type',
+            newfilterunselectedvaluetext: 'Select value',
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(event, self) {  // What to do when a single row is selecte.
@@ -108,6 +111,35 @@ class DataGrid {
         return this.grid.classList.contains('multiselecting');
     }
 
+
+    /**
+     * Get all values for a given field key
+     * @param key the data key
+     * @return {[]} and array of values
+     */
+    getvalues(key) {
+        let s = new Set();
+        for (let d of this.data) {
+            s.add(d[key]);
+        }
+        return Array.from(s).sort();
+    }
+
+    /**
+     * Get a field definition
+     * @param fieldid the id of the field.
+     * @return {*}
+     */
+    getfield(fieldid) {
+        let rf;
+        for (let f of this.fields) {
+            if (f.name === fieldid) {
+                rf = f;
+                break;
+            }
+        }
+        return rf;
+    }
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
@@ -260,73 +292,20 @@ class DataGrid {
         }
     }
 
-
-    /* FILTER METHODS___________________________________________________________________ */
-
-    get filtertextis() { return this.config.filtertextis; }
-    set filtertextis(filtertextis) { this.config.filtertextis = filtertextis; }
-
-    get filtertextisnot() { return this.config.filtertextisnot; }
-    set filtertextisnot(filtertextisnot) { this.config.filtertextisnot = filtertextisnot; }
-
-    buildfilter(field) {
-        let fline = document.createElement('div');
-        fline.classList.add('fline');
-
-        let fname = document.createElement('div');
-        fname.classList.add('name');
-        fname.innerHTML = field.label;
-        fline.appendChild(fname);
-
-        let matchessel = new SelectMenu({
-           name: `${field.name}-match`,
-           options: [
-               { label: this.filtertextis, value: 'is', checked: true },
-               { label: this.filtertextisnot, value: 'not', checked: true },
-           ]
-        });
-        fline.appendChild(matchessel.container);
-
-        switch (f.filterable) {
-            case 'enum':
-                break;
-            case 'string':
-                break;
-        }
-
-        return fline;
-    }
-
-
     /**
-     * Dialog creation helper method.
-     * @param type the type of dialog to create
+     * Configure columns for the datagrid
      */
-    makedialog(type) {
+    columnconfigurator() {
         const me = this;
-
-        let instructions,
-            title;
-
-        switch(type) {
-            case 'column':
-                instructions = this.columnconfigurationinstructions;
-                title = this.columnconfigurationtitle;
-                break;
-            case 'filter':
-                instructions = this.filterinstructions;
-                title = this.filtertitle;
-                break;
-        }
 
         let container = document.createElement('div');
         container.classList.add('datagrid-configurator');
-        container.classList.add(type);
+        container.classList.add('column');
 
         // instructions
-        if (instructions) {
+        if (this.columnconfigurationinstructions) {
             container.append(new InstructionBox({
-                instructions: [instructions]
+                instructions: [this.columnconfigurationinstructions]
             }).container);
         }
 
@@ -335,29 +314,17 @@ class DataGrid {
 
         for (let f of this.fields) {
 
-            if ((type === 'filter') && (!f.filterable)) {
-                break;
-            }
-
             let li = document.createElement('li');
 
-            switch(type) {
-                case 'column':
-                    let cbox = new BooleanToggle({
-                        label: f.label,
-                        checked: !f.hidden,
-                        classes: ['column'],
-                        onchange: function() {
-                            me.toggleColumn(f);
-                        }
-                    });
-                    li.appendChild(cbox.container);
-                    break;
-                case 'filter':
-
-                    li.appendChild(this.buildfilter(field));
-                    break;
-            }
+            let cbox = new BooleanToggle({
+                label: f.label,
+                checked: !f.hidden,
+                classes: ['column'],
+                onchange: function() {
+                    me.toggleColumn(f);
+                }
+            });
+            li.appendChild(cbox.container);
 
             if (f.description) {
                 let desc = document.createElement('div');
@@ -372,7 +339,165 @@ class DataGrid {
         container.append(ul);
 
         let dialog = new DialogWindow({
-            title: title,
+            title: this.columnconfigurationtitle,
+            content: container
+        });
+        dialog.open();
+    }
+
+    /* FILTER METHODS___________________________________________________________________ */
+
+    get filtertextis() { return this.config.filtertextis; }
+    set filtertextis(filtertextis) { this.config.filtertextis = filtertextis; }
+
+    get filtertextisnot() { return this.config.filtertextisnot; }
+    set filtertextisnot(filtertextisnot) { this.config.filtertextisnot = filtertextisnot; }
+
+    get newfiltericon() { return this.config.newfiltericon; }
+    set newfiltericon(newfiltericon) { this.config.newfiltericon = newfiltericon; }
+
+    get newfiltertext() { return this.config.newfiltertext; }
+    set newfiltertext(newfiltertext) { this.config.newfiltertext = newfiltertext; }
+
+    get newfilterunselectedtext() { return this.config.newfilterunselectedtext; }
+    set newfilterunselectedtext(newfilterunselectedtext) { this.config.newfilterunselectedtext = newfilterunselectedtext; }
+
+    get newfilterunselectedmatchtext() { return this.config.newfilterunselectedmatchtext; }
+    set newfilterunselectedmatchtext(newfilterunselectedmatchtext) { this.config.newfilterunselectedmatchtext = newfilterunselectedtext; }
+
+    get newfilterunselectedvaluetext() { return this.config.newfilterunselectedvaluetext; }
+    set newfilterunselectedvaluetext(newfilterunselectedvaluetext) { this.config.newfilterunselectedvaluetext = newfilterunselectedvaluetext; }
+
+    buildFilterBox() {
+        const me = this;
+
+        let box = document.createElement('div');
+
+        let ul = document.createElement('ul');
+        ul.classList.add('elements');
+
+        box.appendChild(ul);
+
+        let addFilterButton = new SimpleButton({
+            icon: this.newfiltericon,
+            text: this.newfiltertext,
+            action: function() {
+                me.addfilterline(ul);
+            }
+        });
+
+        box.appendChild(addFilterButton.button);
+        return box;
+    }
+
+    /**
+     * Adds a blank filter line to the filter editor
+     * @param ul the target list to add it to
+     */
+    addfilterline(ul) {
+        const me = this;
+
+        let fline = document.createElement('div');
+        fline.classList.add('filter-line');
+        fline.classList.add('unset');
+
+        let foptions = [];
+        for (let f of this.fields) {
+            if (f.filterable) {
+                foptions.push({
+                    label: f.label,
+                    value: f.name
+                });
+            }
+        }
+
+        let matchdiv = document.createElement('div');
+        matchdiv.classList.add('matcher');
+
+        let valdiv = document.createElement('div');
+        valdiv.classList.add('value');
+
+        let colnameselector = new SelectMenu({
+            options: foptions,
+            unselectedtext: this.newfilterunselectedtext,
+            onchange: function(self) {
+                matchdiv.innerHTML = '';
+                valdiv.innerHTML = '';
+                let field = me.getfield(self.value);
+                if (self.value === '') {
+                    fline.classList.add('unset');
+                } else {
+                    fline.classList.remove('unset');
+                    let matchessel = new SelectMenu({
+                        unselectedtext: me.newfilterunselectedmatchtext,
+                        options: [
+                            { label: me.filtertextis, value: 'is' },
+                            { label: me.filtertextisnot, value: 'not' },
+                        ]
+                    });
+                    matchdiv.appendChild(matchessel.container);
+
+                    switch(field.filterable) {
+                        case 'enum':
+                            // In this case it's a set of fixed options, and we'll get that from the
+                            // values in the grid
+                            let options = [];
+                            for (let v of me.getvalues(field.name)) {
+                                options.push({
+                                    label: v,
+                                    value: v
+                                })
+                            }
+                            let valsel = new SelectMenu({
+                                unselectedtext: me.newfilterunselectedvaluetext,
+                                options: options
+                            });
+                            valdiv.appendChild(valsel.container);
+                            break;
+                        case 'string':
+                            let valinput = new TextInput({
+                                name: 'value'
+                            });
+                            valdiv.appendChild(valinput.container);
+                        default:
+                            break;
+                    }
+
+                }
+
+            }
+        });
+        fline.appendChild(colnameselector.container);
+
+        fline.append(matchdiv);
+
+
+        fline.append(valdiv);
+
+        let li = document.createElement('li');
+        li.appendChild(fline);
+        ul.appendChild(li);
+
+    }
+
+    filterconfigurator() {
+        const me = this;
+
+        let container = document.createElement('div');
+        container.classList.add('datagrid-configurator');
+        container.classList.add('filter');
+
+        // instructions
+        if (this.filterinstructions) {
+            container.append(new InstructionBox({
+                instructions: [this.filterinstructions]
+            }).container);
+        }
+
+        container.append(this.buildFilterBox());
+
+        let dialog = new DialogWindow({
+            title: this.filtertitle,
             content: container
         });
         dialog.open();
@@ -520,6 +645,8 @@ class DataGrid {
      * Build the actions for the grid
      */
     buildGridActions() {
+        const me = this;
+
         this.gridactions = document.createElement('div');
         this.gridactions.classList.add('grid-actions');
 
@@ -550,10 +677,10 @@ class DataGrid {
             this.filterbutton  = new SimpleButton({
                 mute: true,
                 text: this.filterbuttontext,
-                icon: this.filtericon,
-                classes: ['export'],
+                icon: this.filterbuttonicon,
+                classes: ['filter'],
                 action: function() {
-                    me.makedialog('filter');
+                    me.filterconfigurator();
                 }
             });
             this.gridactions.append(this.filterbutton.button);
@@ -564,7 +691,7 @@ class DataGrid {
             text: this.columnconfigurationlabel,
             icon: this.columnconfigurationicon,
             action: function() {
-                me.makedialog('column');
+                me.columnconfigurator();
             }
         });
         this.gridactions.append(this.columnconfigbutton.button);
@@ -712,7 +839,7 @@ class DataGrid {
             let selector = new BooleanToggle({
                 classes: ['selector'],
                 onchange: function(self) {
-                    console.log(self);
+                    //console.log(self);
                 }
             });
             let cell = document.createElement('td');
@@ -857,11 +984,11 @@ class DataGrid {
     get filterbutton() { return this._filterbutton; }
     set filterbutton(filterbutton) { this._filterbutton = filterbutton; }
 
-    get filterbuttonicon() { return this._filterbuttonicon; }
-    set filterbuttonicon(filterbuttonicon) { this._filterbuttonicon = filterbuttonicon; }
+    get filterbuttonicon() { return this.config.filterbuttonicon; }
+    set filterbuttonicon(filterbuttonicon) { this.config.filterbuttonicon = filterbuttonicon; }
 
-    get filterbuttontext() { return this._filterbuttontext; }
-    set filterbuttontext(filterbuttontext) { this._filterbuttontext = filterbuttontext; }
+    get filterbuttontext() { return this.config.filterbuttontext; }
+    set filterbuttontext(filterbuttontext) { this.config.filterbuttontext = filterbuttontext; }
 
     get filterinstructions() { return this.config.filterinstructions; }
     set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }

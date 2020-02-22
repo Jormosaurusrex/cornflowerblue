@@ -5,10 +5,12 @@ class SelectMenu extends InputElement {
             unselectedtext: "(Select)",
             icon: "chevron-down",
             prefix: null, // a prefix to display in the trigger box.
+            minimal: false, // if true, build with the intent that it is part of a larger component.
+                            // this removes things like the search controls and validation boxes.
             searchtext: true, // Show the "searchtext" box.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
-            onchange: null // The change handler. Passed (event, self).
+            onchange: null // The change handler. Passed (self).
         };
     }
 
@@ -194,9 +196,12 @@ class SelectMenu extends InputElement {
         this.container.append(wrap);
 
         this.container.appendChild(this.optionlist);
-        this.container.appendChild(this.passivebox);
-        this.container.appendChild(this.topcontrol);
-        this.container.appendChild(this.messagebox);
+        if (!this.minimal) {
+            this.container.appendChild(this.passivebox);
+            this.container.appendChild(this.topcontrol);
+            this.container.appendChild(this.messagebox);
+        }
+        if (this.minimal) { this.container.classList.add('minimal'); }
 
         this.postContainerScrub();
     }
@@ -218,6 +223,7 @@ class SelectMenu extends InputElement {
         });
         if (this.mute) { this.triggerbox.classList.add('mute'); }
         if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
+
     }
 
     buildOptions() {
@@ -437,6 +443,12 @@ class SelectMenu extends InputElement {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get minimal() { return this.config.minimal; }
+    set minimal(minimal) { this.config.minimal = minimal; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) { this.config.onchange = onchange; }
 
     get optionlist() {
         if (!this._optionlist) { this.buildOptions(); }

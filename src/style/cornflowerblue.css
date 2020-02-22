@@ -2147,6 +2147,7 @@ div.select-container ul.selectmenu li {
   align-content: center;
   padding: 0;
   margin: 0;
+  white-space: nowrap;
 }
 div.select-container ul.selectmenu li input[type=radio] {
   display: none;
@@ -2211,6 +2212,19 @@ div.select-container ul.selectmenu[aria-hidden=true] {
 }
 div.select-container.mute label {
   opacity: 1;
+}
+div.select-container.minimal {
+  display: inline-block;
+  margin: 0 0.5em 0 0.5em;
+}
+div.select-container.minimal div.wrap:after {
+  display: none;
+}
+div.select-container.minimal div.trigger {
+  padding-right: 2em;
+}
+div.select-container.minimal div.trigger:before {
+  right: 0.5em;
 }
 div.select-container.disabled div.trigger:before {
   opacity: 0.5;
@@ -4509,6 +4523,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
   --datagrid-configurator-columnwidth: 10em;
+  --datagrid-filter-border-color: var(--light);
 }
 
 div.datagrid-container {
@@ -4756,22 +4771,41 @@ div.datagrid-configurator ul.elements {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  padding: 0;
 }
 div.datagrid-configurator ul.elements li {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  margin-bottom: 1em;
 }
 div.datagrid-configurator ul.elements li div.description {
   padding: 0.5em 0 0.5em 0;
   font-size: 80%;
+}
+div.datagrid-configurator.column ul.elements li {
+  margin-bottom: 1em;
 }
 div.datagrid-configurator.column ul.elements li div.checkbox {
   margin: 0;
 }
 div.datagrid-configurator.column ul.elements li div.description {
   padding: 0.5em 1em 0.5em 3em;
+}
+div.datagrid-configurator.filter div.filter-line {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  border: 0.1em solid var(--datagrid-filter-border-color);
+}
+div.datagrid-configurator.filter div.filter-line div.matcher {
+  padding-left: 3em;
+}
+div.datagrid-configurator.filter div.filter-line div.value {
+  padding-left: 6em;
+}
+div.datagrid-configurator.filter div.filter-line.unset div.matcher,
+div.datagrid-configurator.filter div.filter-line.unset div.value {
+  display: none;
 }
 
 div.pwgenerator {

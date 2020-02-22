@@ -26,6 +26,8 @@
 
   --datagrid-configurator-columnwidth: 10em;
 
+  --datagrid-filter-border-color: var(--light);
+
 }
 div.datagrid-container {
   display: flex;
@@ -301,11 +303,11 @@ div.datagrid-configurator {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    padding: 0;
     li {
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
-      margin-bottom: 1em;
       div.description {
         padding: .5em 0 .5em 0;
         font-size: 80%;
@@ -315,11 +317,32 @@ div.datagrid-configurator {
   &.column {
     ul.elements {
       li {
+        margin-bottom: 1em;
         div.checkbox {
           margin: 0;
         }
         div.description {
           padding: .5em 1em .5em 3em;
+        }
+      }
+    }
+  }
+  &.filter {
+    div.filter-line {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      border: .1em solid var(--datagrid-filter-border-color);
+      div.matcher {
+        padding-left: 3em;
+      }
+      div.value {
+        padding-left: 6em;
+      }
+      &.unset {
+        div.matcher,
+        div.value {
+          display: none;
         }
       }
     }

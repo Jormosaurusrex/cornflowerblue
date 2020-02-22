@@ -2,18 +2,21 @@ class DialogWindow {
 
     static get DEFAULT_CONFIG() {
        return {
-            id: null,
-            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-            content: '<p />No provided content</p', // This is the content of the dialog
-            classes: [],             // apply these classes to the dialog, if any.
-            header: null, // DOM object, will be used if passed before title.
-            title: null,  // Adds a title to the dialog if present. header must be null.
-            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
-                           // or a string.  If it's a string, it creates a div at the bottom
-                           // with the value of the text.
-            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
-            escapecloses: true, // Allow the window to be closed by the escape key
-            showclose: true  // Show or hide the X button in the corner (requires title != null)
+           id: null,
+           form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+           content: '<p />No provided content</p', // This is the content of the dialog
+           classes: [],             // apply these classes to the dialog, if any.
+           header: null, // DOM object, will be used if passed before title.
+           title: null,  // Adds a title to the dialog if present. header must be null.
+           trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
+                          // or a string.  If it's a string, it creates a div at the bottom
+                          // with the value of the text.
+           closetext: 'Close',
+           closeicon: 'echx',
+           clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+           escapecloses: true, // Allow the window to be closed by the escape key
+           nofocus: false, // If true, do not auto focus anything.
+           showclose: true  // Show or hide the X button in the corner (requires title != null)
         };
     }
 
@@ -25,7 +28,7 @@ class DialogWindow {
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
-        if (!config.id) { config.id = `dialog-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `dialog-${Utils.getUniqueKey(5)}`; }
 
         this.build();
     }
@@ -71,9 +74,11 @@ class DialogWindow {
         };
 
         setTimeout(function() {
-            let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            if (focusable[0]) {
-                focusable[0].focus();
+            if (!me.nofocus) {
+                let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable[0]) {
+                    focusable[0].focus();
+                }
             }
             if (me.escapecloses) {
                 document.addEventListener('keyup', me.escapelistener);
@@ -139,8 +144,8 @@ class DialogWindow {
 
             if (this.showclose) {
                 this.closebutton = new SimpleButton({
-                    icon: 'echx',
-                    text: "Close",
+                    icon: this.closeicon,
+                    text: this.closetext,
                     shape: "square",
                     classes: ["naked", "closebutton"],
                     action: function(e) {
@@ -197,6 +202,12 @@ class DialogWindow {
     get container() { return this._container; }
     set container(container) { this._container = container; }
 
+    get closeicon() { return this.config.closeicon; }
+    set closeicon(closeicon) { this.config.closeicon = closeicon; }
+
+    get closetext() { return this.config.closetext; }
+    set closetext(closetext) { this.config.closetext = closetext; }
+
     get content() { return this.config.content; }
     set content(content) { this.config.content = content; }
 
@@ -220,6 +231,9 @@ class DialogWindow {
 
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }
+
+    get nofocus() { return this.config.nofocus; }
+    set nofocus(nofocus) { this.config.nofocus = nofocus; }
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }

@@ -657,7 +657,6 @@ class CornflowerBlueDemo {
     grindDataGrids() {
 
         let dg = new DataGrid({
-            selectable: true,
             fields: [
                 {
                     name: "track",
