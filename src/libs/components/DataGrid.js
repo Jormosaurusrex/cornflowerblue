@@ -4,7 +4,29 @@ class DataGrid {
 
     static get DEFAULT_CONFIG() {
         return {
-            fields: [], // The data fields for the grid and how they behave.
+            fields: [
+                /*
+                 * An array of field definition dictionaries:
+                 *
+                    name: <string>,  // The variable name for this field (computer readable)
+                    label: <string>, // The human-readable name for the column
+                    width: <number,  // The default width of the column
+                    type: <string>,  // The datatype of the column
+                                     //   - string
+                                     //   - number
+                                     //   - date
+                                     //   - time
+                                     //   - stringarray
+                                     //   - paragraph
+                    separator: <string>, // Used when rendering array values
+                    resize: <boolean>,  // Whether or not to allow resizing of the column (default: false)
+                    description: <string>>, // A string that describes the data in the column
+                    classes: <string array>, // Additional classes to apply to cells of this field
+                    renderer: function(data) {  // A function that can be used to
+                        return `${data}.`;
+                    }
+                */
+            ], // The data fields for the grid and how they behave.
 
             data: [], // The data to throw into the grid
 
@@ -123,6 +145,7 @@ class DataGrid {
                         val = d[f.name];
                         break;
                     case 'string':
+                    case 'paragraph':
                     default:
                         val = d[f.name].replace(/"/g,"\\\"");
                         break;
@@ -498,36 +521,40 @@ class DataGrid {
 
     /**
      * Build a single header cell
-     * @param item the field definition dictionary
+     * @param field the field definition dictionary
      * @return {HTMLTableHeaderCellElement}
      */
-    buildHeaderCell(item) {
+    buildHeaderCell(field) {
         const me = this;
 
         let div = document.createElement('div');
-        div.innerHTML = item.label;
+        div.innerHTML = field.label;
         if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
 
         let cell = document.createElement('th');
-        cell.setAttribute('id', `${this.id}-h-c-${item.name}`);
-        cell.setAttribute('data-name', item.name);
-        cell.setAttribute('data-datatype', item.type);
-        cell.classList.add(item.type);
+        cell.setAttribute('id', `${this.id}-h-c-${field.name}`);
+        cell.setAttribute('data-name', field.name);
+        cell.setAttribute('data-datatype', field.type);
+        cell.classList.add(field.type);
         cell.appendChild(div);
 
-        if (item.resize) {
+        if (field.resize) {
             cell.classList.add('resize');
+        }
+
+        if (field.hidden) {
+            cell.classList.add('hidden');
         }
 
         if (this.sortable) {
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
-                me.sortField(item.name);
+                me.sortField(field.name);
             });
         }
 
-        this.headercells[item.name] = cell;
+        this.headercells[field.name] = cell;
 
         return cell;
     }
@@ -621,6 +648,9 @@ class DataGrid {
                 case 'time':
                     content = d;
                     break;
+                case 'date':
+                    content = d.toString();
+                    break;
                 case 'stringarray':
                     content = d.join(field.separator);
                     break;
@@ -645,6 +675,9 @@ class DataGrid {
             for (let c of field.classes) {
                 cell.classList.add(c);
             }
+        }
+        if (field.hidden) {
+            cell.classList.add('hidden');
         }
 
         return cell;
