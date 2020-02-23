@@ -196,6 +196,7 @@ class SelectMenu extends InputElement {
         this.container.append(wrap);
 
         this.container.appendChild(this.optionlist);
+
         if (!this.minimal) {
             this.container.appendChild(this.passivebox);
             this.container.appendChild(this.topcontrol);
@@ -203,6 +204,16 @@ class SelectMenu extends InputElement {
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
 
+        /*
+        let charsize = 0;
+        for (let opt of this.options) {
+            if (opt.label.length > charsize) { charsize = opt.label.length; }
+        }
+        this.container.style.minWidth = `${charsize + 3}em`;
+        //  this.triggerbox.style.minWidth = `${charsize + 3}em`;
+
+
+         */
         this.postContainerScrub();
     }
 

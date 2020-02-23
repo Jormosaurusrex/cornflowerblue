@@ -328,33 +328,14 @@ div.datagrid-configurator {
     }
   }
   &.filter {
-    div.filter-lineold {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      border: .1em solid var(--datagrid-filter-border-color);
-      div.matcher {
-        padding-left: 3em;
-      }
-      div.value {
-        padding-left: 6em;
-      }
-      button.removefilter {
-        align-self: flex-end;
-      }
-      &.unset {
-        div.matcher,
-        div.value {
-          display: none;
-        }
-      }
-    }
     div.filter-line {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
+      display: grid;
+      align-items: center;
+      grid-template-columns: 30% 30% 30% 10%;
       border: .1em solid var(--datagrid-filter-border-color);
-
+      div.select-container.minimal {
+        display: block;
+      }
     }
   }
 }

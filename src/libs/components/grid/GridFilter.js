@@ -1,74 +1,15 @@
-
-
-class DataGrid {
+class GridFilter {
 
     static get DEFAULT_CONFIG() {
         return {
-            fields: [
-                /*
-                 * An array of field definition dictionaries:
-                 *
-                    name: <string>,  // The variable name for this field (computer readable)
-                    label: <string>, // The human-readable name for the column
-                    width: <number,  // The default width of the column
-                    type: <string>,  // The datatype of the column
-                                     //   - string
-                                     //   - number
-                                     //   - date
-                                     //   - time
-                                     //   - stringarray
-                                     //   - paragraph
-                    separator: <string>, // Used when rendering array values
-                    resize: <boolean>,  // Whether or not to allow resizing of the column (default: false)
-                    description: <string>>, // A string that describes the data in the column
-                    classes: <string array>, // Additional classes to apply to cells of this field
-                    filterable: <null|string|enum> // Is the field filterable? if so, how?
-                    renderer: function(data) {  // A function that can be used to
-                        return `${data}.`;
-                    }
-                */
-            ], // The data fields for the grid and how they behave.
 
-            data: [], // The data to throw into the grid
-
-            sortable: true, //  Data columns can be sorted
-
-            columnconfigurationlabel: 'Columns',
-            columnconfigurationicon: 'table',
-            columnconfigurationinstructions: 'Select which columns to show in the grid. This does not hide the columns during export.',
-            columnconfigurationtitle: 'Configure Columns',
-
-            searchable: true, // Data can be filtered
-            searchbuttontext: 'Search',
-            noresultstitle: 'No results',
-            noresultstext: 'No entries were found matching your search terms.',
-
-            exportable: true, // Data can be exported
-            exportbuttontext: "Export",
-            exporticon: "download",
-            exportheaderrow: 'readable', // When exporting a CSV file, should a header row
-                                         // be included?  Possible values:
-                                         // 'readable' : Uses the header labels (human readable)
-                                         // 'data' : Uses the data labels
-                                         // 'no' or null: don't include a header row
-            exportfilename: function() {  // the filename to name the exported data.
-                return 'export.csv';      // This can be a string or a function, but must return a string
-            },
-            exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
-
-            filterable: true, // Can the datagrid be filtered?
-                      // No all fields are filtered by default.
-                      // Whether or not a field can be filtered is defined in the field's definition.
-            filterbuttontext: 'Filters',
-            filterbuttonicon: 'filter',
-            filterinstructions: 'Set filters by column. Filters can be defined as "must match" or "cannot match" - inclusive or exclusive.',
             filtertitle: 'Manage Filters',
             filtertextis: 'equals',
             filtertextisnot: 'does not equal',
             newfiltertext: 'Add filter',
             newfiltericon: 'plus',
             newfilterunselectedtext: '(Select field)',
-            newfilterunselectedmatchtext: '(Select)',
+            newfilterunselectedmatchtext: '(Select match type)',
             newfilterunselectedvaluetext: '(Select value)',
             newfiltervaluelabel: 'Filter text',
             removefiltertext: 'Remove filter',
@@ -438,7 +379,6 @@ class DataGrid {
 
         let colnameselector = new SelectMenu({
             options: foptions,
-            minimal: true,
             unselectedtext: this.newfilterunselectedtext,
             onchange: function(self) {
                 matchdiv.innerHTML = '';
@@ -449,10 +389,9 @@ class DataGrid {
                 } else {
                     fline.classList.remove('unset');
                     let matchessel = new SelectMenu({
-                        minimal: true,
                         unselectedtext: me.newfilterunselectedmatchtext,
                         options: [
-                            { label: me.filtertextis, value: 'is', checked: true },
+                            { label: me.filtertextis, value: 'is' },
                             { label: me.filtertextisnot, value: 'not' },
                         ]
                     });
@@ -470,7 +409,6 @@ class DataGrid {
                                 })
                             }
                             let valsel = new SelectMenu({
-                                minimal: true,
                                 unselectedtext: me.newfilterunselectedvaluetext,
                                 options: options
                             });
@@ -480,7 +418,7 @@ class DataGrid {
                         default:
                             let valinput = new TextInput({
                                 name: 'value',
-                                placeholder: me.newfiltervaluelabel
+                                label: me.newfiltervaluelabel
                             });
                             valdiv.appendChild(valinput.container);
                             break;
@@ -498,7 +436,6 @@ class DataGrid {
             icon: this.removefiltericon,
             text: this.removefiltertext,
             mute: true,
-            shape: 'square',
             classes: ['removefilter'],
             action: function() {
                 li.parentNode.removeChild(li);
