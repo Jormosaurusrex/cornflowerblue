@@ -67,7 +67,7 @@ input[type="radio"] {
     font-family: "cornflowerblue", serif;
     line-height: 1em;
     content: '\32';
-    font-size: 220%;
+    font-size: 300%;
     position: absolute;
     left: -5%;
     bottom: -10%;
@@ -76,7 +76,6 @@ input[type="radio"] {
   }
   &:checked {
     border-color: var(--checkbox-checked-border-color);
-    box-shadow: var(--checkbox-checked-shadow);
     background-color: var(--checkbox-checked-background-color);
     &:before,
     &:focus {
@@ -89,21 +88,21 @@ input[type="radio"] {
   }
   &:focus,
   &.focus {
-      outline-width: .1em;
+      outline-width: .2em;
       outline-style: dashed;
-      outline-color: var(--grey-medium);
-      outline-offset: .2em;
+      outline-color: var(--focus-color);
+      outline-offset: .3em;
   }
   &:focus,
   &:active{
-    border-color: var(--checkbox-focus-color);
-    background-color: var(--checkbox-focus-color);
+    border-color: var(--checkbox-border-color);
+    background-color: var(--checkbox-focus-color-translucent);
     box-shadow: var(--hover-box-shadow);
   }
   @include for-hover-only {
     &:hover {
       border-color: var(--checkbox-focus-color);
-      background-color: var(--checkbox-focus-color);
+      background-color: var(--checkbox-focus-color-translucent);
       box-shadow: var(--hover-box-shadow);
       &:before {
         display: inline-block;
@@ -125,31 +124,29 @@ input[type="radio"] {
     &:checked:before {
       display: none;
     }
+    &:checked {
+      background-color: var(--checkbox-focus-color);
+    }
     @include for-hover-only {
       &:hover {
-        border-color: var(--checkbox-focus-color);
+        border-color: var(--checkbox-checked-border-color);
         background-color: var(--checkbox-focus-color);
         box-shadow: var(--hover-box-shadow);
-
         &:before {
           display: none;
         }
-
         &:after {
           display: block;
           background-color: transparent;
           border: .2em dotted var(--checkbox-toggle-chrome-color);
         }
-
         &:checked {
           border-color: var(--checkbox-border-color);
           box-shadow: var(--checkbox-checked-shadow);
           background-color: var(--checkbox-focus-color);
-
           &:before {
             display: none;
           }
-
           &:after {
             background-color: var(--checkbox-toggle-chrome-hovermark-color);
             border: .5em solid var(--checkbox-toggle-chrome-color);
@@ -209,13 +206,10 @@ input[type="radio"] {
     @include for-hover-only {
       &:hover,
       &:hover:checked {
-        box-shadow: var(--checkbox-checked-shadow-hover);
         border-color: var(--focus-color);
-
         &:before {
           display: none;
         }
-
         &:after {
           background-color: var(--checkbox-toggle-chrome-hovermark-color);
         }

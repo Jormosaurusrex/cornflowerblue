@@ -110,6 +110,10 @@ class DataGrid {
 
     /* PSEUDO GETTERS___________________________________________________________________ */
 
+    /**
+     * Are we in multi-select mode or not?
+     * @return {boolean}
+     */
     get multiselecting() {
         return this.grid.classList.contains('multiselecting');
     }
@@ -867,7 +871,11 @@ class DataGrid {
             let selector = new BooleanToggle({
                 classes: ['selector'],
                 onchange: function(self) {
-                    //console.log(self);
+                    if (row.getAttribute('aria-selected') === 'true') {
+                        row.removeAttribute('aria-selected');
+                    } else {
+                        row.setAttribute('aria-selected', true);
+                    }
                 }
             });
             let cell = document.createElement('td');
