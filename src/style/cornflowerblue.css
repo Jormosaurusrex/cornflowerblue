@@ -182,6 +182,7 @@
   --button-menu-item-hover-text-color: var(--hot-text-color);
   --button-menu-item-hover-text-shadow: var(--text-shadow);
   --checkbox-size: 2.4em;
+  --checkbox-font-size: 300%;
   --checkbox-toggle-size: 1.6em;
   --checkbox-toggle-offset: 0.2em;
   --checkbox-switch-width: 6em;
@@ -2846,7 +2847,7 @@ input[type=radio]:before {
   font-family: "cornflowerblue", serif;
   line-height: 1em;
   content: "2";
-  font-size: 300%;
+  font-size: var(--checkbox-font-size);
   position: absolute;
   left: -5%;
   bottom: -10%;
@@ -4082,6 +4083,7 @@ div.window-container div.dialog {
   transition: all 0.2s;
   animation-duration: 0.2s;
   animation-name: cfb-pushup;
+  z-index: 2002;
 }
 div.window-container div.dialog h2 {
   background-color: var(--dialog-header-background-color);
@@ -4095,11 +4097,11 @@ div.window-container div.dialog h2 {
   width: 100%;
   border-bottom: 0.1em solid var(--dialog-header-border-color);
   box-shadow: var(--dialog-header-box-shadow);
-  z-index: 20;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  z-index: 2003;
 }
 div.window-container div.dialog h2:after {
   display: none;
@@ -4112,6 +4114,7 @@ div.window-container div.dialog h2 button.closebutton {
 div.window-container div.dialog div.content {
   margin: 0;
   overflow: auto;
+  z-index: 2005;
 }
 div.window-container div.dialog.isform div.content {
   margin: 0;
@@ -4126,10 +4129,10 @@ div.window-container div.dialog.isform div.content form {
 div.window-container div.dialog.isform div.content form div.contentbox {
   position: relative;
   flex-grow: 1;
-  overflow: auto;
   max-height: 30%;
-  z-index: 10;
   padding: 0.5em 1.5em 0.5em 1.5em;
+  overflow: visible;
+  z-index: 10;
 }
 div.window-container div.dialog.isform div.content form div.contentbox div.header,
 div.window-container div.dialog.isform div.content form div.contentbox div.elements {
@@ -4140,11 +4143,11 @@ div.window-container div.dialog.isform div.content form div.actions {
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
-  z-index: 50;
   height: 5em;
   min-height: 5em;
   max-height: 5em;
   overflow: auto;
+  z-index: 9;
 }
 @media (max-width: 599px) {
   div.window-container div.dialog {
@@ -4645,7 +4648,13 @@ div.datagrid-container table.grid tbody tr td.smaller {
 div.datagrid-container table.grid tbody tr:nth-child(even) {
   background-color: var(--datagrid-grid-alternate-background-color);
 }
-div.datagrid-container table.grid tbody tr.hidden {
+div.datagrid-container table.grid tbody tr.hidden, div.datagrid-container table.grid tbody tr.filtered, div.datagrid-container table.grid tbody tr[data-search-hidden=true] {
+  display: none;
+}
+div.datagrid-container table.grid tbody tr[data-matched-filters] {
+  display: table-row;
+}
+div.datagrid-container table.grid tbody tr[data-matched-filters][data-search-hidden=true] {
   display: none;
 }
 div.datagrid-container table.grid th.hidden,
@@ -4696,6 +4705,7 @@ div.datagrid-container table.grid td.selector {
   max-width: 0;
   padding: 0;
   --checkbox-size: 2em;
+  --checkbox-font-size: 200%;
 }
 div.datagrid-container table.grid th.selector input,
 div.datagrid-container table.grid td.selector input {
@@ -4793,16 +4803,6 @@ div.datagrid-configurator.column ul.elements li div.checkbox {
 div.datagrid-configurator.column ul.elements li div.description {
   padding: 0.5em 1em 0.5em 3em;
 }
-div.datagrid-configurator.filter div.filter-line {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 30% 30% 30% 10%;
-  border: 0.1em solid var(--datagrid-filter-border-color);
-}
-div.datagrid-configurator.filter div.filter-line div.select-container.minimal {
-  display: block;
-}
-
 div.pwgenerator {
   --pwgenerator-background-color: transparent;
   --pwgenerator-checkbox-size: 2em;

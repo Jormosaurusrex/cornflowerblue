@@ -35,7 +35,7 @@ class SimpleForm {
                             // are automatically added to this.  Only put elements here that are _outside_
                             // of the form and need to be connected.
             elements: [], // An array of form elements. These are the objects, not the rendered dom.
-            actions: [], // An array of action elements. This are buttons or keywords.
+            actions: [], // An array of action elements. This are typically buttons.
             passiveactions: [], // An array of action elements that appear only when the form is in passive mode. This are buttons or keywords.
             handlercallback: null, // If present, the response from the handler will be passed to this
                                 // instead of the internal callback. Passed self and results

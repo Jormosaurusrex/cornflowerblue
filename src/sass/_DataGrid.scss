@@ -165,8 +165,16 @@ div.datagrid-container {
         &:nth-child(even) {
           background-color: var(--datagrid-grid-alternate-background-color);
         }
-        &.hidden {
+        &.hidden,
+        &.filtered,
+        &[data-search-hidden=true] {
           display: none;
+        }
+        &[data-matched-filters] {
+          display: table-row;
+          &[data-search-hidden=true] {
+            display: none;
+          }
         }
       }
     }
@@ -209,6 +217,7 @@ div.datagrid-container {
         max-width: 0;
         padding: 0;
         --checkbox-size: 2em;
+        --checkbox-font-size: 200%;
         input {
           display: none;
         }
@@ -278,7 +287,6 @@ div.datagrid-container {
     }
   }
   div.messagebox {
-
     &.hidden {
       display: none;
     }
@@ -329,13 +337,7 @@ div.datagrid-configurator {
   }
   &.filter {
     div.filter-line {
-      display: grid;
-      align-items: center;
-      grid-template-columns: 30% 30% 30% 10%;
-      border: .1em solid var(--datagrid-filter-border-color);
-      div.select-container.minimal {
-        display: block;
-      }
+
     }
   }
 }

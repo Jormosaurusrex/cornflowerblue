@@ -61,18 +61,12 @@ class DataGrid {
                       // Whether or not a field can be filtered is defined in the field's definition.
             filterbuttontext: 'Filters',
             filterbuttonicon: 'filter',
-            filterinstructions: 'Set filters by column. Filters can be defined as "must match" or "cannot match" - inclusive or exclusive.',
+            filterinstructions: ['Columns that are filterable are shown below. Set the value of the column to filter it.'],
             filtertitle: 'Manage Filters',
-            filtertextis: 'equals',
-            filtertextisnot: 'does not equal',
-            newfiltertext: 'Add filter',
-            newfiltericon: 'plus',
-            newfilterunselectedtext: '(Select field)',
-            newfilterunselectedmatchtext: '(Select)',
-            newfilterunselectedvaluetext: '(Select value)',
-            newfiltervaluelabel: 'Filter text',
-            removefiltertext: 'Remove filter',
-            removefiltericon: 'trashcan',
+            filterunselectedvaluetext: '(No filter)',
+            filterplaceholder: '(No filter)',
+            applyfilterstext: 'Apply Filters',
+            applyfiltersicon: 'checkmark-circle',
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.
@@ -106,6 +100,7 @@ class DataGrid {
     constructor(config) {
         this.config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
         if (!this.id) { this.id = `grid-${Utils.getUniqueKey(5)}`; }
+        this.activefilters = {};
     }
 
     /* PSEUDO GETTERS___________________________________________________________________ */
@@ -125,6 +120,19 @@ class DataGrid {
      * @return {[]} and array of values
      */
     getvalues(key) {
+        let a = [];
+        for (let d of this.data) {
+            a.push(d[key]);
+        }
+        return a;
+    }
+
+    /**
+     * Get all unique values for a given field key
+     * @param key the data key
+     * @return {[]} and array of values
+     */
+    getuniquevalues(key) {
         let s = new Set();
         for (let d of this.data) {
             s.add(d[key]);
@@ -234,7 +242,7 @@ class DataGrid {
         for (let r of rows) {
             let show = false;
 
-            r.classList.add('hidden');
+            r.setAttribute('data-search-hidden', true,)
 
             if ((!value) || (value === '')) {
                 show = true;
@@ -252,11 +260,58 @@ class DataGrid {
 
             if (show) {
                 matches++;
-                r.classList.remove('hidden');
+                r.removeAttribute('data-search-hidden');
             }
         }
         if (matches <= 0) {
             this.noresultsbox.container.classList.remove('hidden');
+        }
+
+    }
+
+    /**
+     * Sort the table based on a field.
+     * @param field the field to sort
+     */
+    sortfield(field) {
+        let sort = "asc";
+
+        let hCell = this.gridheader.querySelector(`[data-name='${field}']`);
+
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
+                sort = "desc";
+            }
+        }
+
+        let hchildren = this.gridheader.querySelectorAll('th');
+        for (let hc of hchildren) {
+            hc.removeAttribute('data-sort');
+        }
+
+        hCell.setAttribute('data-sort', sort);
+
+        let elements = Array.from(this.gridbody.childNodes);
+
+        elements.sort(function(a, b) {
+            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
+            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
+
+            if (sort === 'asc') {
+                if (textA < textB) return -1;
+                if (textA > textB) return 1;
+            } else {
+                if (textA > textB) return -1;
+                if (textA < textB) return 1;
+            }
+
+            return 0;
+        });
+
+        this.gridbody.innerHTML = "";
+
+        for (let row of elements) {
+            this.gridbody.appendChild(row);
         }
 
     }
@@ -354,240 +409,133 @@ class DataGrid {
 
     /* FILTER METHODS___________________________________________________________________ */
 
+    get activefilters() { return this._activefilters; }
+    set activefilters(activefilters) { this._activefilters = activefilters; }
 
-    get newfiltericon() { return this.config.newfiltericon; }
-    set newfiltericon(newfiltericon) { this.config.newfiltericon = newfiltericon; }
+    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
+    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
 
-    get newfiltertext() { return this.config.newfiltertext; }
-    set newfiltertext(newfiltertext) { this.config.newfiltertext = newfiltertext; }
-
-    get filtertextis() { return this.config.filtertextis; }
-    set filtertextis(filtertextis) { this.config.filtertextis = filtertextis; }
-
-    get filtertextisnot() { return this.config.filtertextisnot; }
-    set filtertextisnot(filtertextisnot) { this.config.filtertextisnot = filtertextisnot; }
-
-    get newfilterunselectedtext() { return this.config.newfilterunselectedtext; }
-    set newfilterunselectedtext(newfilterunselectedtext) { this.config.newfilterunselectedtext = newfilterunselectedtext; }
-
-    get newfilterunselectedmatchtext() { return this.config.newfilterunselectedmatchtext; }
-    set newfilterunselectedmatchtext(newfilterunselectedmatchtext) { this.config.newfilterunselectedmatchtext = newfilterunselectedtext; }
-
-    get newfilterunselectedvaluetext() { return this.config.newfilterunselectedvaluetext; }
-    set newfilterunselectedvaluetext(newfilterunselectedvaluetext) { this.config.newfilterunselectedvaluetext = newfilterunselectedvaluetext; }
-
-    get newfiltervaluelabel() { return this.config.newfiltervaluelabel; }
-    set newfiltervaluelabel(newfiltervaluelabel) { this.config.newfiltervaluelabel = newfiltervaluelabel; }
-
-    get removefiltericon() { return this.config.removefiltericon; }
-    set removefiltericon(removefiltericon) { this.config.removefiltericon = removefiltericon; }
-
-    get removefiltertext() { return this.config.removefiltertext; }
-    set removefiltertext(removefiltertext) { this.config.removefiltertext = removefiltertext; }
+    get filterplaceholder() { return this.config.filterplaceholder; }
+    set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
 
 
-    buildFilterBox() {
+    getFilterLine(f) {
         const me = this;
 
-        let box = document.createElement('div');
+        let element;
 
-        let ul = document.createElement('ul');
-        ul.classList.add('elements');
+        let values = me.getuniquevalues(f.name);
 
-        box.appendChild(ul);
-
-        let addFilterButton = new SimpleButton({
-            icon: this.newfiltericon,
-            text: this.newfiltertext,
-            mute: true,
-            action: function() {
-                let li = me.addfilterline();
-                ul.appendChild(li);
-                let focusable = li.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                if (focusable[0]) {
-                    focusable[0].focus();
+        if (f.filterable === 'enum') {
+            let options = [];
+            for (let v of values) {
+                options.push({
+                    label: v,
+                    value: v
+                })
+            }
+            element = new SelectMenu({
+                label: f.label,
+                unselectedtext: me.filterunselectedvaluetext,
+                options: options,
+                onchange: function(self) {
+                    me.addFilter(f.name, self.value, true);
                 }
-            }
-        });
-
-        box.appendChild(addFilterButton.button);
-        return box;
-    }
-
-
-    addfilterline() {
-        const me = this;
-
-        let li = document.createElement('li');
-
-        let fline = document.createElement('div');
-        fline.classList.add('filter-line');
-        fline.classList.add('unset');
-
-        let foptions = [];
-        for (let f of this.fields) {
-            if (f.filterable) {
-                foptions.push({
-                    label: f.label,
-                    value: f.name
-                });
-            }
+            });
+        } else {
+            element = new TextInput({
+                name: 'value',
+                label: f.label,
+                placeholder: me.filterplaceholder,
+                onkeyup: function(e, self) {
+                    me.addFilter(f.name, self.value, false);
+                }
+            });
         }
-
-        let matchdiv = document.createElement('div');
-        matchdiv.classList.add('matcher');
-
-        let valdiv = document.createElement('div');
-        valdiv.classList.add('value');
-
-        let colnameselector = new SelectMenu({
-            options: foptions,
-            minimal: true,
-            unselectedtext: this.newfilterunselectedtext,
-            onchange: function(self) {
-                matchdiv.innerHTML = '';
-                valdiv.innerHTML = '';
-                let field = me.getfield(self.value);
-                if (self.value === '') {
-                    fline.classList.add('unset');
-                } else {
-                    fline.classList.remove('unset');
-                    let matchessel = new SelectMenu({
-                        minimal: true,
-                        unselectedtext: me.newfilterunselectedmatchtext,
-                        options: [
-                            { label: me.filtertextis, value: 'is', checked: true },
-                            { label: me.filtertextisnot, value: 'not' },
-                        ]
-                    });
-                    matchdiv.appendChild(matchessel.container);
-
-                    switch(field.filterable) {
-                        case 'enum':
-                            // In this case it's a set of fixed options, and we'll get that from the
-                            // values in the grid
-                            let options = [];
-                            for (let v of me.getvalues(field.name)) {
-                                options.push({
-                                    label: v,
-                                    value: v
-                                })
-                            }
-                            let valsel = new SelectMenu({
-                                minimal: true,
-                                unselectedtext: me.newfilterunselectedvaluetext,
-                                options: options
-                            });
-                            valdiv.appendChild(valsel.container);
-                            break;
-                        case 'string':
-                        default:
-                            let valinput = new TextInput({
-                                name: 'value',
-                                placeholder: me.newfiltervaluelabel
-                            });
-                            valdiv.appendChild(valinput.container);
-                            break;
-                    }
-
-                }
-
-            }
-        });
-        fline.appendChild(colnameselector.container);
-        fline.append(matchdiv);
-        fline.append(valdiv);
-
-        let rmFilterButton = new SimpleButton({
-            icon: this.removefiltericon,
-            text: this.removefiltertext,
-            mute: true,
-            shape: 'square',
-            classes: ['removefilter'],
-            action: function() {
-                li.parentNode.removeChild(li);
-            }
-        });
-
-        fline.appendChild(rmFilterButton.button);
-
-
-        li.appendChild(fline);
-        return li;
+        return element;
     }
 
     filterconfigurator() {
-        const me = this;
 
-        let container = document.createElement('div');
-        container.classList.add('datagrid-configurator');
-        container.classList.add('filter');
-
-        // instructions
+        let instructions;
         if (this.filterinstructions) {
-            container.append(new InstructionBox({
-                instructions: [this.filterinstructions]
-            }).container);
+            instructions = {
+                instructions: this.filterinstructions
+            };
         }
 
-        container.append(this.buildFilterBox());
+        let elements = [];
+        for (let f of this.fields) {
+            if (f.filterable) {
+                elements.push(this.getFilterLine(f));
+            }
+        }
+
+        let f = new SimpleForm({
+            instructions: instructions,
+            elements: elements,
+            actions: [
+                new SimpleButton({
+                    text: "Close",
+                    mute: true,
+                    action: function(e, btn) {
+                        if ((btn.form) && (btn.form.dialog)) {
+                            btn.form.dialog.close();
+                        }
+                    }
+                })
+            ]
+        });
 
         let dialog = new DialogWindow({
             title: this.filtertitle,
-            content: container
+            form: f
         });
         dialog.open();
     }
 
+    addFilter(field, value, exact) {
+        if ((!value) || (value === '')) {
+            delete this.activefilters[field];
+        } else {
+            this.activefilters[field] = {
+                field: field,
+                value: value,
+                exact: exact
+            };
+        }
+        this.applyFilters();
+    }
+
+    applyFilters() {
+        let rows = Array.from(this.gridbody.childNodes);
+        for (let r of rows) {
+            let matchedfilters = [];
+            for (let filter of Object.values(this.activefilters)) {
+                let c = r.querySelector(`[data-name='${filter.field}']`);
+                if (filter.exact) {
+                    if (c.innerHTML === filter.value) {
+                        matchedfilters.push(filter.field);
+                    }
+                } else {
+                    if (c.innerHTML.toLowerCase().indexOf(filter.value.toLowerCase()) !== -1) {
+                        matchedfilters.push(filter.field);
+                    }
+                }
+            }
+
+            if (matchedfilters.length > 0) {
+                r.setAttribute('data-matched-filters', matchedfilters.join(','));
+                r.classList.remove('filtered');
+            } else {
+                r.removeAttribute('data-matched-filters');
+                r.classList.add('filtered');
+            }
+        }
+    }
+
 
     /* SELECTION METHODS________________________________________________________________ */
-
-    /**
-     * Sort the table based on a field.
-     * @param field the field to sort
-     */
-    sortField(field) {
-        let sort = "asc";
-
-        let hCell = this.gridheader.querySelector(`[data-name='${field}']`);
-
-        if ((hCell) && (hCell.getAttribute('data-sort'))) {
-            if (hCell.getAttribute('data-sort') === 'asc') {
-                sort = "desc";
-            }
-        }
-
-        let hchildren = this.gridheader.querySelectorAll('th');
-        for (let hc of hchildren) {
-            hc.removeAttribute('data-sort');
-        }
-
-        hCell.setAttribute('data-sort', sort);
-
-        let elements = Array.from(this.gridbody.childNodes);
-
-        elements.sort(function(a, b) {
-            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
-            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
-
-            if (sort === 'asc') {
-                if (textA < textB) return -1;
-                if (textA > textB) return 1;
-            } else {
-                if (textA > textB) return -1;
-                if (textA < textB) return 1;
-            }
-
-            return 0;
-        });
-
-        this.gridbody.innerHTML = "";
-
-        for (let row of elements) {
-            this.gridbody.appendChild(row);
-        }
-
-    }
 
     /**
      * Select a row
@@ -705,6 +653,21 @@ class DataGrid {
             this.gridactions.append(this.searchcontrol.container);
         }
 
+        /*
+        if (this.filterable) {
+            this.filterbutton  = new SimpleButton({
+                mute: true,
+                text: this.filterbuttontext,
+                icon: this.filterbuttonicon,
+                classes: ['filter'],
+                action: function() {
+                    me.filterconfigurator();
+                }
+            });
+            this.gridactions.append(this.filterbutton.button);
+        }
+
+         */
         if (this.filterable) {
             this.filterbutton  = new SimpleButton({
                 mute: true,
@@ -809,7 +772,7 @@ class DataGrid {
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
-                me.sortField(field.name);
+                me.sortfield(field.name);
             });
         }
 
