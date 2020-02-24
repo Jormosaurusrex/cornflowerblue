@@ -75,7 +75,7 @@ class DataGrid {
             removefiltericon: 'trashcan',
 
             selectable: true, //  Data rows can be selected.
-            selectaction: function(event, self) {  // What to do when a single row is selecte.
+            selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
 
@@ -590,15 +590,11 @@ class DataGrid {
      * @param row the row to select
      */
     select(row) {
-        if (!this.multiselecting) {
-            this.toggleallselect(false);
-        }
-
         row.setAttribute('aria-selected', 'true');
         row.querySelector('input.selector').checked = true;
 
         if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-            this.selectaction(e, this);
+            this.selectaction(this);
         }
     }
 
