@@ -2260,6 +2260,15 @@ button {
   border-radius: var(--button-border-radius);
   box-shadow: var(--button-box-shadow);
 }
+button span.icon {
+  margin: 0 0.5em 0 0.5em;
+}
+button span.icon:before {
+  margin: 0;
+}
+button.righticon {
+  flex-direction: row-reverse;
+}
 button.hamburger span.magichamburger {
   display: inline-block;
   width: 1em;
@@ -2296,23 +2305,23 @@ button.hamburger[aria-expanded=true] span.magichamburger span:last-child {
   transform: translateX(0.1em) rotate(-45deg);
   transform-origin: bottom left;
 }
-button span.icon {
-  margin: 0 0.3em 0 0;
+button.closebutton {
+  --button-default-color: var(--hot-text-color);
+  opacity: 0.5;
+  box-shadow: none;
+  margin-right: 0.5em;
+  background: none;
 }
-button span.icon:before {
-  margin: 0;
+button.closebutton:focus, button.closebutton:active {
+  color: var(--hot-text-color);
+  background: none;
 }
-button span.icon.secondicon {
-  margin: 0 0 0 0.3em;
-}
-button.righticon {
-  flex-direction: row-reverse;
-}
-button.righticon span.icon {
-  margin: 0 0 0 0.3em;
-}
-button.righticon span.icon.secondicon {
-  margin: 0 0.3em 0 0;
+@media (hover: hover) and (pointer: fine) {
+  button.closebutton:hover {
+    opacity: 1;
+    color: var(--hot-text-color);
+    background: none;
+  }
 }
 button.ghost {
   --button-border-color: var(--button-default-color);
@@ -2545,11 +2554,7 @@ button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled {
 button.hidden {
   display: none;
 }
-button.help {
-  overflow: visible;
-  display: inline-block;
-}
-button.help div.tooltip {
+button.help div.tooltip, button.tagbutton div.tooltip {
   display: none;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -2570,7 +2575,7 @@ button.help div.tooltip {
   text-shadow: var(--tooltip-text-shadow);
   box-shadow: var(--panel-shadow-light);
 }
-button.help div.tooltip:before {
+button.help div.tooltip:before, button.tagbutton div.tooltip:before {
   content: "";
   width: 0;
   height: 0;
@@ -2581,22 +2586,33 @@ button.help div.tooltip:before {
   border-style: solid;
   border-color: var(--tooltip-background-color) transparent;
 }
-button.help div.tooltip span.tipicon {
+button.help div.tooltip span.tipicon, button.tagbutton div.tooltip span.tipicon {
   font-size: 120%;
   margin-right: 0.5em;
 }
-button.help div.tooltip div.helptext {
+button.help div.tooltip div.helptext, button.tagbutton div.tooltip div.helptext {
   max-width: 33em;
   min-width: 20em;
   white-space: normal;
   line-height: 1.2;
   text-align: left;
 }
-button.help div.tooltip div.helptext a {
+button.help div.tooltip div.helptext a, button.tagbutton div.tooltip div.helptext a {
   color: var(--hot-text-color);
 }
-button.help div.tooltip button.closebutton {
+button.help div.tooltip button.closebutton, button.tagbutton div.tooltip button.closebutton {
   display: none;
+}
+button.help[aria-expanded=true] div.tooltip, button.help.stayopen div.tooltip, button.tagbutton[aria-expanded=true] div.tooltip, button.tagbutton.stayopen div.tooltip {
+  display: flex;
+  animation: cfb-fadein-delay-half 0.2s;
+}
+button.help.stayopen div.tooltip button.closebutton, button.tagbutton.stayopen div.tooltip button.closebutton {
+  display: inline-block;
+}
+button.help {
+  overflow: visible;
+  display: inline-block;
 }
 button.help span.icon {
   margin: 0;
@@ -2608,23 +2624,33 @@ button.help[aria-expanded=true] div.tooltip, button.help.stayopen div.tooltip {
 button.help.stayopen div.tooltip button.closebutton {
   display: inline-block;
 }
-button.closebutton {
-  --button-default-color: var(--hot-text-color);
-  opacity: 0.5;
-  box-shadow: none;
-  margin-right: 0.5em;
-  background: none;
+button.tagbutton {
+  overflow: visible;
+  font-size: 0.8em;
+  padding: 0.2em 1em 0.2em 1em;
 }
-button.closebutton:focus, button.closebutton:active {
-  color: var(--hot-text-color);
-  background: none;
+button.tagbutton span.tagicon {
+  margin-right: 1em;
+  margin-left: 0;
+  border-radius: 50%;
+  color: var(--button-default-color);
+  background-color: var(--button-hover-text-color);
+  padding: 0.2em;
 }
-@media (hover: hover) and (pointer: fine) {
-  button.closebutton:hover {
-    opacity: 1;
-    color: var(--hot-text-color);
-    background: none;
-  }
+button.tagbutton div.tooltip {
+  left: -1em;
+  bottom: 2.5em;
+}
+button.tagbutton div.tooltip:before {
+  left: 1em;
+  bottom: -0.5em;
+}
+button.tagbutton.righticon {
+  padding-right: 0.2em;
+}
+button.tagbutton.righticon span.tagicon {
+  margin-right: 0;
+  margin-left: 1em;
 }
 button.menu {
   overflow: visible;
@@ -4550,7 +4576,20 @@ div.datagrid-container div.grid-actions {
   align-content: center;
   justify-content: flex-end;
 }
-div.datagrid-container div.grid-actions button:first-child {
+div.datagrid-container div.grid-actions :first-child {
+  align-self: flex-start;
+  margin-right: auto;
+}
+div.datagrid-container div.grid-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0.5em 0 0.5em 0;
+}
+div.datagrid-container div.grid-info :first-child {
   align-self: flex-start;
   margin-right: auto;
 }

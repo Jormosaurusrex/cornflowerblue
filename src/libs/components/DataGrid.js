@@ -602,6 +602,7 @@ class DataGrid {
         this.container.setAttribute('id', this.id);
 
         this.container.append(this.gridactions);
+        this.container.append(this.gridinfo);
 
         this.grid.appendChild(this.header);
         this.grid.appendChild(this.gridbody);
@@ -653,21 +654,6 @@ class DataGrid {
             this.gridactions.append(this.searchcontrol.container);
         }
 
-        /*
-        if (this.filterable) {
-            this.filterbutton  = new SimpleButton({
-                mute: true,
-                text: this.filterbuttontext,
-                icon: this.filterbuttonicon,
-                classes: ['filter'],
-                action: function() {
-                    me.filterconfigurator();
-                }
-            });
-            this.gridactions.append(this.filterbutton.button);
-        }
-
-         */
         if (this.filterable) {
             this.filterbutton  = new SimpleButton({
                 mute: true,
@@ -703,6 +689,26 @@ class DataGrid {
             });
             this.gridactions.append(this.exportbutton.button);
         }
+    }
+
+    buildGridInfo() {
+        const me = this;
+
+        this.gridinfo = document.createElement('div');
+        this.gridinfo.classList.add('grid-info');
+
+        let x = new TagButton({
+            text: 'Foobar',
+            help: 'Vestibulum id ligula porta felis euismod semper.'
+        });
+        this.gridinfo.appendChild(x.container);
+
+        let y = new TagButton({
+            text: 'Bazzbar',
+            help: 'Vestibulum id ligula porta felis euismod semper.'
+        });
+        this.gridinfo.appendChild(y.container);
+
     }
 
     /**
@@ -1012,6 +1018,12 @@ class DataGrid {
         return this._gridactions;
     }
     set gridactions(gridactions) { this._gridactions = gridactions; }
+
+    get gridinfo() {
+        if (!this._gridinfo) { this.buildGridInfo(); }
+        return this._gridinfo;
+    }
+    set gridinfo(gridinfo) { this._gridinfo = gridinfo; }
 
     get gridbody() {
         if (!this._gridbody) { this.buildGridBody(); }

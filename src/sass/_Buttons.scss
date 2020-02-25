@@ -24,6 +24,15 @@ button {
   border: none;
   border-radius: var(--button-border-radius);
   box-shadow: var(--button-box-shadow);
+  span.icon {
+    margin: 0 .5em 0 .5em;
+    &:before {
+      margin: 0; // Generates padding issues otherwise
+    }
+  }
+  &.righticon {
+    flex-direction: row-reverse;
+  }
   &.hamburger {
     span.magichamburger {
       display: inline-block;
@@ -68,21 +77,22 @@ button {
       }
     }
   }
-  span.icon {
-    margin: 0 .3em 0 0;
-    &:before {
-      margin: 0; // Generates padding issues otherwise
+  &.closebutton {
+    --button-default-color: var(--hot-text-color);
+    opacity: 0.5;
+    box-shadow: none;
+    margin-right: .5em;
+    background: none;
+    &:focus,
+    &:active {
+      color: var(--hot-text-color);
+      background: none;
     }
-    &.secondicon {
-      margin: 0 0 0 .3em;
-    }
-  }
-  &.righticon {
-    flex-direction: row-reverse;
-    span.icon {
-      margin: 0 0 0 .3em;
-      &.secondicon {
-        margin: 0 .3em 0 0;
+    @include for-hover-only {
+      &:hover {
+        opacity: 1;
+        color: var(--hot-text-color);
+        background: none;
       }
     }
   }
@@ -338,9 +348,8 @@ button {
   &.hidden {
     display: none;
   }
-  &.help {
-    overflow: visible;
-    display: inline-block;
+  &.help,
+  &.tagbutton {
     div.tooltip {
       display: none;
       flex-direction: row;
@@ -390,6 +399,24 @@ button {
         display: none;
       }
     }
+    &[aria-expanded='true'],
+    &.stayopen {
+      div.tooltip {
+        display: flex;
+        animation: cfb-fadein-delay-half .2s;
+      }
+    }
+    &.stayopen {
+      div.tooltip {
+        button.closebutton {
+          display: inline-block;
+        }
+      }
+    }
+  }
+  &.help {
+    overflow: visible;
+    display: inline-block;
     span.icon {
       margin: 0;
     }
@@ -408,22 +435,31 @@ button {
       }
     }
   }
-  &.closebutton {
-    --button-default-color: var(--hot-text-color);
-    opacity: 0.5;
-    box-shadow: none;
-    margin-right: .5em;
-    background: none;
-    &:focus,
-    &:active {
-      color: var(--hot-text-color);
-      background: none;
+  &.tagbutton {
+    overflow: visible;
+    font-size: .8em;
+    padding: .2em 1em .2em 1em;
+    span.tagicon {
+      margin-right: 1em;
+      margin-left: 0;
+      border-radius: 50%;
+      color: var(--button-default-color);
+      background-color: var(--button-hover-text-color);
+      padding: .2em;
     }
-    @include for-hover-only {
-      &:hover {
-        opacity: 1;
-        color: var(--hot-text-color);
-        background: none;
+    div.tooltip {
+      left: -1em;
+      bottom: 2.5em;
+      &:before {
+        left: 1em;
+        bottom: -.5em;
+      }
+    }
+    &.righticon {
+      padding-right: .2em;
+      span.tagicon {
+        margin-right: 0;
+        margin-left: 1em;
       }
     }
   }

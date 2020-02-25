@@ -169,11 +169,7 @@ class Growler extends FloatingPanel {
             this.container.classList.add(c);
         }
 
-        this.closebutton = new SimpleButton({
-            icon: 'echx',
-            text: "Close",
-            shape: "square",
-            classes: ["closebutton"],
+        this.closebutton = new CloseButton({
             action: function(e) {
                 e.preventDefault();
                 me.quickClose();
@@ -222,6 +218,9 @@ class Growler extends FloatingPanel {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get closebutton() { return this._closebutton; }
+    set closebutton(closebutton) { this._closebutton = closebutton; }
 
     get duration() { return this.config.duration; }
     set duration(duration) { this.config.duration = duration; }

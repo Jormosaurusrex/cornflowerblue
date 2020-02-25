@@ -7,6 +7,7 @@ class HelpButton extends SimpleButton {
             hoverout: function(e, self) { self.close(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
+            iconclasses: ['helpicon'],
             help: null // help text to display
         };
     }
@@ -14,8 +15,10 @@ class HelpButton extends SimpleButton {
     constructor(config) {
         config = Object.assign({}, HelpButton.DEFAULT_CONFIG, config);
         if (config.classes) {
-            config.classes.push('naked');
-            config.classes.push('help');
+            if (!config.classes.includes('tagbutton')) {
+                config.classes.push('naked');
+                config.classes.push('help');
+            }
         } else {
             config.classes = ['naked', 'help'];
         }
@@ -66,7 +69,7 @@ class HelpButton extends SimpleButton {
         this.tooltip.setAttribute('aria-hidden', 'true');
         this.tooltip.setAttribute('id', this.id);
 
-        if (this.tipicon) {
+        if ((this.tipicon) && (this.tipicon !== '')) {
             let icon = IconFactory.icon(this.tipicon);
             icon.classList.add('tipicon');
             this.tooltip.appendChild(icon);
@@ -77,11 +80,7 @@ class HelpButton extends SimpleButton {
         this.helptext.setAttribute('id', `${this.id}-tt`);
         this.helptext.innerHTML = this.help;
 
-        this.closebutton = new SimpleButton({
-            icon: 'echx',
-            text: "Close",
-            shape: "square",
-            classes: ["naked", "closebutton"],
+        this.closebutton = new CloseButton({
             action: function(e) {
                 e.preventDefault();
                 e.stopPropagation();

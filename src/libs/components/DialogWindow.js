@@ -11,8 +11,6 @@ class DialogWindow {
            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                           // or a string.  If it's a string, it creates a div at the bottom
                           // with the value of the text.
-           closetext: 'Close',
-           closeicon: 'echx',
            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
            escapecloses: true, // Allow the window to be closed by the escape key
            nofocus: false, // If true, do not auto focus anything.
@@ -143,11 +141,7 @@ class DialogWindow {
             this.window.appendChild(this.header);
 
             if (this.showclose) {
-                this.closebutton = new SimpleButton({
-                    icon: this.closeicon,
-                    text: this.closetext,
-                    shape: "square",
-                    classes: ["naked", "closebutton"],
+                this.closebutton = new CloseButton({
                     action: function(e) {
                         e.preventDefault();
                         me.close();
@@ -201,12 +195,6 @@ class DialogWindow {
 
     get container() { return this._container; }
     set container(container) { this._container = container; }
-
-    get closeicon() { return this.config.closeicon; }
-    set closeicon(closeicon) { this.config.closeicon = closeicon; }
-
-    get closetext() { return this.config.closetext; }
-    set closetext(closetext) { this.config.closetext = closetext; }
 
     get content() { return this.config.content; }
     set content(content) { this.config.content = content; }

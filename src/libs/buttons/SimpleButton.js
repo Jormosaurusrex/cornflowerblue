@@ -15,6 +15,7 @@ class SimpleButton {
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a DOM object
+            iconclasses: [], // Classes to apply to icons
             iconside: 'left', // The side the icon displays on
             secondicon : null, // if present, this icon will be placed on the opposite side of the
                                 // defined 'iconside'.  If this is the only icon defined, it will
@@ -68,8 +69,10 @@ class SimpleButton {
         }
 
         this.button = document.createElement('button');
+
         let icon,
             secondicon;
+
         if (this.icon) {
             icon = IconFactory.icon(this.icon);
         }
@@ -77,8 +80,13 @@ class SimpleButton {
             secondicon = IconFactory.icon(this.secondicon);
             secondicon.classList.add('secondicon');
         }
+        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+            for (let ic of this.iconclasses) {
+                if (icon) { icon.classList.add(ic); }
+                if (secondicon) { secondicon.classList.add(ic); }
+            }
+        }
 
-        // XXX TODO: change to flex order
         if ((this.iconside) && (this.iconside === 'right')) {
             this.button.classList.add('righticon');
         }
@@ -267,6 +275,9 @@ class SimpleButton {
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
+
+    get iconclasses() { return this.config.iconclasses; }
+    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
 
     get iconside() { return this.config.iconside; }
     set iconside(iconside) { this.config.iconside = iconside; }
