@@ -40,6 +40,7 @@ class DataGrid {
 
             searchable: true, // Data can be filtered
             searchbuttontext: 'Search',
+            searchplaceholder: 'Search this data',
             noresultstitle: 'No results',
             noresultstext: 'No entries were found matching your search terms.',
 
@@ -82,6 +83,7 @@ class DataGrid {
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiactions: [], // Array of button actions to multiselects
 
+            texttotal: 'total',
             sorticon: 'chevron-down',
             id: null, // The id
             classes: [] //Extra css classes to apply
@@ -247,7 +249,6 @@ class DataGrid {
         let matches = 0;
         for (let r of rows) {
             let show = false;
-
             r.setAttribute('data-search-hidden', true,);
 
             if ((!value) || (value === '')) {
@@ -269,10 +270,10 @@ class DataGrid {
                 r.removeAttribute('data-search-hidden');
             }
         }
+
         if (matches <= 0) {
             this.noresultsbox.container.classList.remove('hidden');
         }
-
     }
 
     /**
@@ -414,24 +415,6 @@ class DataGrid {
     }
 
     /* FILTER METHODS___________________________________________________________________ */
-
-    get activefilters() { return this._activefilters; }
-    set activefilters(activefilters) { this._activefilters = activefilters; }
-
-    get filterhelpcontaintext() { return this.config.filterhelpcontaintext; }
-    set filterhelpcontaintext(filterhelpcontaintext) { this.config.filterhelpcontaintext = filterhelpcontaintext; }
-
-    get filterhelpexacttext() { return this.config.filterhelpexacttext; }
-    set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
-
-    get filterlabel() { return this.config.filterlabel; }
-    set filterlabel(filterlabel) { this.config.filterlabel = filterlabel; }
-
-    get filterplaceholder() { return this.config.filterplaceholder; }
-    set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
-
-    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
-    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
 
     getFilterLine(f) {
         const me = this;
@@ -728,19 +711,6 @@ class DataGrid {
         }
     }
 
-
-    get itemcount()  { return this._itemcount; }
-    set itemcount(itemcount) { this._itemcount = itemcount; }
-
-    get itemcountbox()  { return this._itemcountbox; }
-    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
-
-    get itemcountlabel()  { return this._itemcountlabel; }
-    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
-
-    get itemcountlabeltext()  { return this.config.itemcountlabeltext; }
-    set itemcountlabeltext(itemcountlabeltext) { this.config.itemcountlabeltext = itemcountlabeltext; }
-
     buildGridInfo() {
         const me = this;
 
@@ -763,7 +733,8 @@ class DataGrid {
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
-                arialabel: 'Search this data',
+                arialabel: this.searchplaceholder,
+                placeholder: this.searchplaceholder,
                 searchtext: this.searchbuttontext,
                 action: function(value, searchcontrol) {
                     me.search(value);
@@ -989,8 +960,6 @@ class DataGrid {
         this.footer.classList.add('footer');
     }
 
-
-
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
@@ -1000,6 +969,9 @@ class DataGrid {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get activefilters() { return this._activefilters; }
+    set activefilters(activefilters) { this._activefilters = activefilters; }
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
@@ -1061,14 +1033,29 @@ class DataGrid {
     get filterbuttontext() { return this.config.filterbuttontext; }
     set filterbuttontext(filterbuttontext) { this.config.filterbuttontext = filterbuttontext; }
 
+    get filterhelpcontaintext() { return this.config.filterhelpcontaintext; }
+    set filterhelpcontaintext(filterhelpcontaintext) { this.config.filterhelpcontaintext = filterhelpcontaintext; }
+
+    get filterhelpexacttext() { return this.config.filterhelpexacttext; }
+    set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
+
     get filterinstructions() { return this.config.filterinstructions; }
     set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }
+
+    get filterlabel() { return this.config.filterlabel; }
+    set filterlabel(filterlabel) { this.config.filterlabel = filterlabel; }
+
+    get filterplaceholder() { return this.config.filterplaceholder; }
+    set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
 
     get filtertitle() { return this.config.filtertitle; }
     set filtertitle(filtertitle) { this.config.filtertitle = filtertitle; }
 
     get filtertags() { return this._filtertags; }
     set filtertags(filtertags) { this._filtertags = filtertags; }
+
+    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
+    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }
@@ -1121,6 +1108,18 @@ class DataGrid {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
+    get itemcount()  { return this._itemcount; }
+    set itemcount(itemcount) { this._itemcount = itemcount; }
+
+    get itemcountbox()  { return this._itemcountbox; }
+    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
+
+    get itemcountlabel()  { return this._itemcountlabel; }
+    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
+
+    get itemcountlabeltext()  { return this.config.itemcountlabeltext; }
+    set itemcountlabeltext(itemcountlabeltext) { this.config.itemcountlabeltext = itemcountlabeltext; }
+
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
 
@@ -1154,6 +1153,9 @@ class DataGrid {
     get searchbuttontext() { return this.config.searchbuttontext; }
     set searchbuttontext(searchbuttontext) { this.config.searchbuttontext = searchbuttontext; }
 
+    get searchplaceholder() { return this.config.searchplaceholder; }
+    set searchplaceholder(searchplaceholder) { this.config.searchplaceholder = searchplaceholder; }
+
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }
 
@@ -1166,4 +1168,6 @@ class DataGrid {
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
 
+    get texttotal() { return this.config.texttotal; }
+    set texttotal(texttotal) { this.config.texttotal = texttotal; }
 }
