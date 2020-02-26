@@ -14,6 +14,8 @@ class SimpleForm {
                            // If a function, passed self, and assumes a callback function.
             url: null, // URL to submit the form to.
             target: null, // Target attribute.  Requires a URL.
+            action: null, // A function to execute on submit that isn't a form handler. Basically this captures
+                            // a return characters
 
             dialog: null, // A SimpleDialog window that this form may be included in.
             enctype: null, // Encapsulation type.
@@ -136,6 +138,8 @@ class SimpleForm {
 
             } else if (this.url) {
                 this.form.submit();
+            } else if (this.action) {
+                this.action();
             } else {
                 console.log(`No handler defined for form ${this.id} :: ${this.name}`);
             }
@@ -272,6 +276,7 @@ class SimpleForm {
         for (let c of this.classes) {
             this.form.classList.add(c);
         }
+
         this.form.addEventListener('submit', function(e) {
             e.preventDefault();
             me.submit();
@@ -286,7 +291,11 @@ class SimpleForm {
 
         this.form.appendChild(this.shade);
         this.form.appendChild(this.contentbox);
-        if (this.actions.length > 0) { this.form.appendChild(this.actionbox); }
+        if (this.actions.length > 0) {
+            this.form.appendChild(this.actionbox);
+        } else {
+            this.form.classList.add('noactions');
+        }
         if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox); }
 
         this.validate();
@@ -433,6 +442,9 @@ class SimpleForm {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get action() { return this.config.action; }
+    set action(action) { this.config.action = action; }
 
     get actionbox() {
         if (!this._actionbox) { this.buildActionBox(); }

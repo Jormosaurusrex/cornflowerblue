@@ -2,8 +2,14 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            focusin: function(e, self) { self.open(); },    // open on focus
+            action: function(e, self) {
+                let focused = (document.activeElement === self.button);
+                if ((focused) && (!self.isopen)) {
+                    self.open();
+                }
+            },
             secondicon: 'triangle-down', // this is passed up as a secondicon
+            menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
             items: [] // list of menu item definitions
                     // {
                     //    label: "Menu Text", // text
@@ -22,7 +28,11 @@ class ButtonMenu extends SimpleButton {
             config.classes = ['menu'];
         }
         super(config);
-        if (!this.menu) { this.buildMenu(); }
+        if (this.menu) {
+            this.processMenu();
+        } else {
+            this.buildMenu();
+        }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -50,14 +60,22 @@ class ButtonMenu extends SimpleButton {
      */
     open() {
         const me = this;
+
         if (this.isopen) { return; }
+
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
-        this.menu.querySelector('li:first-child').focus();
 
-        let items = Array.from(this.menu.querySelector('li'));
-        for (let li of items) {
-            li.setAttribute('tabindex', '0');
+        if ((this.items) && (this.items.length > 0)) {
+            let items = Array.from(this.menu.querySelector('li'));
+            for (let li of items) {
+                li.setAttribute('tabindex', '0');
+            }
+        }
+
+        let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
+        if (focusable) {
+            focusable[0].focus();
         }
 
         window.setTimeout(function() { // Set this after, or else we'll get bouncing.
@@ -72,9 +90,11 @@ class ButtonMenu extends SimpleButton {
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');
 
-        let items = Array.from(this.menu.querySelector('li'));
-        for (let li of items) {
-            li.setAttribute('tabindex', '-1');
+        if ((this.items) && (this.items.length > 0)) {
+            let items = Array.from(this.menu.querySelector('li'));
+            for (let li of items) {
+                li.setAttribute('tabindex', '-1');
+            }
         }
     }
 
@@ -85,8 +105,10 @@ class ButtonMenu extends SimpleButton {
     setCloseListener() {
         const me = this;
         window.addEventListener('click', function(e) {
-            if (e.target === me.menu) {
+            if (me.menu.contains(e.target)) {
                 me.setCloseListener();
+            } else if (me.button.contains(e.target)) {
+                me.toggle();
             } else {
                 me.close();
             }
@@ -161,12 +183,21 @@ class ButtonMenu extends SimpleButton {
         this.button.appendChild(this.menu);
     }
 
+    /**
+     * Applies handlers and classes to a provided menu.
+     */
+    processMenu() {
+        this.menu.setAttribute('aria-hidden', 'true');
+        this.menu.setAttribute('tabindex', '0');
+        this.button.appendChild(this.menu);
+    }
+
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
 
-    get menu() { return this._menu; }
-    set menu(menu) { this._menu = menu; }
+    get menu() { return this.config.menu; }
+    set menu(menu) { this.config.menu = menu; }
 
 }

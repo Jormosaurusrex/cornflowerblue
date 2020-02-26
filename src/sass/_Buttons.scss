@@ -6,7 +6,7 @@ button {
   justify-content: space-evenly;
   box-sizing: border-box;
   position: relative;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   text-decoration: none;
   white-space: nowrap;
@@ -29,11 +29,33 @@ button {
     &:before {
       margin: 0; // Generates padding issues otherwise
     }
+    &.secondicon {
+      margin: 0 0 0 .5em;
+    }
   }
   &.righticon {
     flex-direction: row-reverse;
     span.icon {
       margin: 0 0 0 .5em;
+    }
+  }
+  &.expander {
+    transition: width .2s;
+    span.text,
+    span.secondicon {
+      transition: all .2s;
+      opacity: 0;
+      width: 0;
+    }
+    &:focus,
+    &:hover,
+    &:active,
+    &[aria-expanded='true'] {
+      span.text,
+      span.secondicon {
+        opacity: 1;
+        width: unset;
+      }
     }
   }
   &.hamburger {
@@ -468,8 +490,8 @@ button {
   }
   &.menu {
     overflow: visible;
-    ul {
-      display: none;
+    ul,
+    form {
       flex-direction: column;
       flex-wrap: nowrap;
       list-style-type: none;
@@ -553,6 +575,24 @@ button {
         border-style: solid;
         border-color: var(--button-menu-background-color) transparent;
       }
+      &[aria-hidden='true'] {
+        display: none;
+      }
+    }
+    form {
+      min-width: 20em;
+      div.elements {
+        text-align: unset;
+        div.input-container {
+          margin-top: 0;
+        }
+      }
+      &.noactions {
+        div.header {
+          display: none;
+        }
+      }
+
     }
     &[aria-expanded='true'] {
       color: var(--button-default-text-color);

@@ -2245,7 +2245,7 @@ button {
   justify-content: space-evenly;
   box-sizing: border-box;
   position: relative;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   text-decoration: none;
   white-space: nowrap;
@@ -2270,11 +2270,31 @@ button span.icon {
 button span.icon:before {
   margin: 0;
 }
+button span.icon.secondicon {
+  margin: 0 0 0 0.5em;
+}
 button.righticon {
   flex-direction: row-reverse;
 }
 button.righticon span.icon {
   margin: 0 0 0 0.5em;
+}
+button.expander {
+  transition: width 0.2s;
+}
+button.expander span.text,
+button.expander span.secondicon {
+  transition: all 0.2s;
+  opacity: 0;
+  width: 0;
+}
+button.expander:focus span.text,
+button.expander:focus span.secondicon, button.expander:hover span.text,
+button.expander:hover span.secondicon, button.expander:active span.text,
+button.expander:active span.secondicon, button.expander[aria-expanded=true] span.text,
+button.expander[aria-expanded=true] span.secondicon {
+  opacity: 1;
+  width: unset;
 }
 button.hamburger span.magichamburger {
   display: inline-block;
@@ -2662,8 +2682,8 @@ button.tagbutton.righticon span.tagicon {
 button.menu {
   overflow: visible;
 }
-button.menu ul {
-  display: none;
+button.menu ul,
+button.menu form {
   flex-direction: column;
   flex-wrap: nowrap;
   list-style-type: none;
@@ -2681,32 +2701,40 @@ button.menu ul {
   color: var(--button-menu-item-text-color);
   box-shadow: var(--button-menu-box-shadow);
 }
-button.menu ul li {
+button.menu ul li,
+button.menu form li {
   padding: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 }
-button.menu ul li:active, button.menu ul li:focus {
+button.menu ul li:active, button.menu ul li:focus,
+button.menu form li:active,
+button.menu form li:focus {
   background-color: var(--button-menu-item-hover-background-color);
   color: var(--button-menu-item-hover-text-color);
   text-shadow: var(--button-menu-item-hover-text-shadow);
 }
-button.menu ul li:active a, button.menu ul li:focus a {
+button.menu ul li:active a, button.menu ul li:focus a,
+button.menu form li:active a,
+button.menu form li:focus a {
   color: var(--button-menu-item-hover-text-color);
 }
 @media (hover: hover) and (pointer: fine) {
-  button.menu ul li:hover {
+  button.menu ul li:hover,
+button.menu form li:hover {
     background-color: var(--button-menu-item-hover-background-color);
     color: var(--button-menu-item-hover-text-color);
     text-shadow: var(--button-menu-item-hover-text-shadow);
   }
-  button.menu ul li:hover a {
+  button.menu ul li:hover a,
+button.menu form li:hover a {
     color: var(--button-menu-item-hover-text-color);
   }
 }
-button.menu ul li a {
+button.menu ul li a,
+button.menu form li a {
   padding: 0.6em 1em 0.6em 1em;
   white-space: nowrap;
   background-color: transparent;
@@ -2719,26 +2747,31 @@ button.menu ul li a {
   align-items: center;
   flex-grow: 1;
 }
-button.menu ul li a:active {
+button.menu ul li a:active,
+button.menu form li a:active {
   color: var(--button-menu-item-hover-text-color);
   filter: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  button.menu ul li a {
+  button.menu ul li a,
+button.menu form li a {
     color: var(--button-menu-item-hover-text-color);
     filter: none;
   }
 }
-button.menu ul li a:focus {
+button.menu ul li a:focus,
+button.menu form li a:focus {
   margin: 0.3em;
   outline: var(--hot-text-color) dashed 0.1em;
   outline-offset: 0.2em;
   text-decoration: underline double;
 }
-button.menu ul li a span.icon {
+button.menu ul li a span.icon,
+button.menu form li a span.icon {
   margin-right: 1em;
 }
-button.menu ul:before {
+button.menu ul:before,
+button.menu form:before {
   content: "";
   width: 0;
   height: 0;
@@ -2748,6 +2781,22 @@ button.menu ul:before {
   border-width: 0 0.7em 0.7em 0.7em;
   border-style: solid;
   border-color: var(--button-menu-background-color) transparent;
+}
+button.menu ul[aria-hidden=true],
+button.menu form[aria-hidden=true] {
+  display: none;
+}
+button.menu form {
+  min-width: 20em;
+}
+button.menu form div.elements {
+  text-align: unset;
+}
+button.menu form div.elements div.input-container {
+  margin-top: 0;
+}
+button.menu form.noactions div.header {
+  display: none;
 }
 button.menu[aria-expanded=true] {
   color: var(--button-default-text-color);
@@ -4565,6 +4614,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
 }
 
 div.datagrid-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -4574,6 +4624,8 @@ div.datagrid-container {
   position: relative;
 }
 div.datagrid-container div.grid-actions {
+  position: relative;
+  z-index: 1000;
   flex-grow: 1;
   height: 4em;
   max-height: 4em;
@@ -4585,10 +4637,11 @@ div.datagrid-container div.grid-actions {
   background-color: var(--canvas-color-callout-lightweight);
 }
 div.datagrid-container div.grid-actions button:first-child {
-  align-self: flex-start;
   margin-right: auto;
 }
 div.datagrid-container div.grid-info {
+  position: relative;
+  z-index: 900;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
@@ -4633,6 +4686,8 @@ div.datagrid-container table.grid {
   padding: 0;
   margin: 0;
   border-spacing: 0;
+  position: relative;
+  z-index: 800;
 }
 div.datagrid-container table.grid thead tr th {
   cursor: pointer;

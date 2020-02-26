@@ -491,6 +491,21 @@ class DataGrid {
         dialog.open();
     }
 
+
+    buildFilterMenu() {
+        let elements = [];
+        for (let f of this.fields) {
+            if (f.filterable) {
+                elements.push(this.getFilterLine(f));
+            }
+        }
+        return new SimpleForm({
+            elements: elements,
+            action: function() { }
+        }).container;
+    }
+
+
     addFilter(field, value, exact) {
         if ((!value) || (value === '')) {
             delete this.activefilters[field];
@@ -675,14 +690,12 @@ class DataGrid {
         }
 
         if (this.filterable) {
-            this.filterbutton  = new SimpleButton({
+            this.filterbutton  = new ButtonMenu({
                 mute: true,
                 text: this.filterbuttontext,
                 icon: this.filterbuttonicon,
-                classes: ['filter'],
-                action: function() {
-                    me.filterconfigurator();
-                }
+                classes: ['filter', 'expander2'],
+                menu: this.buildFilterMenu()
             });
             this.gridactions.append(this.filterbutton.button);
         }
