@@ -693,6 +693,20 @@ class DataGrid {
             this.gridactions.append(this.multiselectbutton.button);
         }
 
+        if (this.filterable) {
+            this.filtertags = document.createElement('div');
+            this.filtertags.classList.add('grid-filtertags');
+
+            this.filterbutton  = new ButtonMenu({
+                mute: true,
+                text: this.filterbuttontext,
+                icon: this.filterbuttonicon,
+                classes: ['filter'],
+                menu: this.buildFilterMenu()
+            });
+            this.gridactions.append(this.filterbutton.button);
+        }
+
         this.columnconfigbutton = new SimpleButton({
             mute: true,
             text: this.columnconfigurationlabel,
@@ -754,21 +768,14 @@ class DataGrid {
             this.filtertags = document.createElement('div');
             this.filtertags.classList.add('grid-filtertags');
             this.gridinfo.appendChild(this.filtertags);
-
-            this.filterbutton  = new ButtonMenu({
-                mute: true,
-                text: this.filterbuttontext,
-                icon: this.filterbuttonicon,
-                classes: ['filter', 'expander'],
-                menu: this.buildFilterMenu()
-            });
-            this.gridinfo.append(this.filterbutton.button);
         }
+
         this.actionsbutton  = new SimpleButton({
             mute: true,
+            shape: 'square',
             text: this.actionsbuttontext,
             icon: this.actionsbuttonicon,
-            classes: ['actions', 'expander'],
+            classes: ['actions'],
             action: function() {
                 me.toggleActions();
             }
@@ -1030,6 +1037,9 @@ class DataGrid {
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
+
+    get columnconfigbutton() { return this._columnconfigbutton; }
+    set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
 
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }

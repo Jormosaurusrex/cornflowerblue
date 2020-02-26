@@ -41,7 +41,7 @@ div.datagrid-container {
   overflow: visible;
   div.grid-info {
     position: relative;
-    z-index: 1000;
+    z-index: 900;
     flex-grow: 1;
     display: flex;
     flex-direction: row;
@@ -79,22 +79,9 @@ div.datagrid-container {
         margin: .5em;
       }
     }
-    button.filter {
-      flex-grow: 1;
-    }
     button.actions {
       &[aria-expanded='true'] {
-        &:before {
-          content: "";
-          width: 0;
-          height: 0;
-          position: absolute;
-          right: 1.5em;
-          bottom: -.8em;
-          border-width: 0 1em 1em 1em;
-          border-style: solid;
-          border-color: var(--datagrid-actions-menu-background-color) transparent;
-        }
+
         @include for-hover-only {
           &:hover {
             &:before {
@@ -108,7 +95,7 @@ div.datagrid-container {
   div.grid-actions {
     position: relative;
     transition: all .2s;
-    z-index: 900;
+    z-index: 1000;
     flex-grow: 1;
     height: 4em;
     max-height: 4em;
@@ -126,11 +113,25 @@ div.datagrid-container {
       opacity: 1;
       transition: opacity .3s;
     }
+    &:before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      right: .7em;
+      top: -.7em;
+      border-width: 0 1em 1em 1em;
+      border-style: solid;
+      border-color: var(--datagrid-actions-menu-background-color) transparent;
+    }
     &[aria-hidden='true'] {
       height: 0;
       overflow: hidden;
       button {
         opacity: 0;
+      }
+      &:before {
+        display: none;
       }
     }
   }
