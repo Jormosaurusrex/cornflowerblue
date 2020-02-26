@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.0 - 2020-02-20
+/*! Cornflower Blue - v0.1.0 - 2020-02-26
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
@@ -470,6 +470,7 @@ class IconFactory {
             'legend',
             'echx',
             'arrow-down',
+            'chat',
             'check-circle-disc',
             'checkmark-circle',
             'chevron-down',
@@ -478,7 +479,6 @@ class IconFactory {
             'chevron-right',
             'chevron-up',
             'double-triangle-vertical',
-            'chat',
             'heart',
             'no',
             'double-triangle-horizontal',
@@ -550,7 +550,9 @@ class IconFactory {
             'flag-rectangle',
             'flag-notched-angle',
             'flag-pointed-angle',
-            'flag-rectangle-angle'
+            'flag-rectangle-angle',
+            'filter',
+            'table'
         ];
     }
 
@@ -784,6 +786,7 @@ class SimpleButton {
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a DOM object
+            iconclasses: [], // Classes to apply to icons
             iconside: 'left', // The side the icon displays on
             secondicon : null, // if present, this icon will be placed on the opposite side of the
                                 // defined 'iconside'.  If this is the only icon defined, it will
@@ -837,8 +840,10 @@ class SimpleButton {
         }
 
         this.button = document.createElement('button');
+
         let icon,
             secondicon;
+
         if (this.icon) {
             icon = IconFactory.icon(this.icon);
         }
@@ -846,8 +851,13 @@ class SimpleButton {
             secondicon = IconFactory.icon(this.secondicon);
             secondicon.classList.add('secondicon');
         }
+        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+            for (let ic of this.iconclasses) {
+                if (icon) { icon.classList.add(ic); }
+                if (secondicon) { secondicon.classList.add(ic); }
+            }
+        }
 
-        // XXX TODO: change to flex order
         if ((this.iconside) && (this.iconside === 'right')) {
             this.button.classList.add('righticon');
         }
@@ -1037,6 +1047,9 @@ class SimpleButton {
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
 
+    get iconclasses() { return this.config.iconclasses; }
+    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
+
     get iconside() { return this.config.iconside; }
     set iconside(iconside) { this.config.iconside = iconside; }
 
@@ -1102,8 +1115,14 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            focusin: function(e, self) { self.open(); },    // open on focus
+            action: function(e, self) {
+                let focused = (document.activeElement === self.button);
+                if ((focused) && (!self.isopen)) {
+                    self.open();
+                }
+            },
             secondicon: 'triangle-down', // this is passed up as a secondicon
+            menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
             items: [] // list of menu item definitions
                     // {
                     //    label: "Menu Text", // text
@@ -1122,7 +1141,11 @@ class ButtonMenu extends SimpleButton {
             config.classes = ['menu'];
         }
         super(config);
-        if (!this.menu) { this.buildMenu(); }
+        if (this.menu) {
+            this.processMenu();
+        } else {
+            this.buildMenu();
+        }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -1150,14 +1173,22 @@ class ButtonMenu extends SimpleButton {
      */
     open() {
         const me = this;
+
         if (this.isopen) { return; }
+
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
-        this.menu.querySelector('li:first-child').focus();
 
-        let items = Array.from(this.menu.querySelector('li'));
-        for (let li of items) {
-            li.setAttribute('tabindex', '0');
+        if ((this.items) && (this.items.length > 0)) {
+            let items = Array.from(this.menu.querySelector('li'));
+            for (let li of items) {
+                li.setAttribute('tabindex', '0');
+            }
+        }
+
+        let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
+        if (focusable) {
+            focusable[0].focus();
         }
 
         window.setTimeout(function() { // Set this after, or else we'll get bouncing.
@@ -1172,9 +1203,11 @@ class ButtonMenu extends SimpleButton {
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');
 
-        let items = Array.from(this.menu.querySelector('li'));
-        for (let li of items) {
-            li.setAttribute('tabindex', '-1');
+        if ((this.items) && (this.items.length > 0)) {
+            let items = Array.from(this.menu.querySelector('li'));
+            for (let li of items) {
+                li.setAttribute('tabindex', '-1');
+            }
         }
     }
 
@@ -1185,8 +1218,10 @@ class ButtonMenu extends SimpleButton {
     setCloseListener() {
         const me = this;
         window.addEventListener('click', function(e) {
-            if (e.target === me.menu) {
+            if (me.menu.contains(e.target)) {
                 me.setCloseListener();
+            } else if (me.button.contains(e.target)) {
+                me.toggle();
             } else {
                 me.close();
             }
@@ -1219,7 +1254,7 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keydown', function(e) {
+            menuitem.addEventListener('keyup', function(e) {
                 if (e.keyCode === 9) { // Tab
                     me.close();
                 } else if (e.keyCode === 27) { // Escape
@@ -1261,13 +1296,50 @@ class ButtonMenu extends SimpleButton {
         this.button.appendChild(this.menu);
     }
 
+    /**
+     * Applies handlers and classes to a provided menu.
+     */
+    processMenu() {
+        const me = this;
+        this.menu.setAttribute('aria-hidden', 'true');
+        this.menu.setAttribute('tabindex', '0');
+        this.button.appendChild(this.menu);
+        this.menu.addEventListener('keyup', function(e) {
+
+            if (e.keyCode === 9) { // Tab
+                //me.close();
+            } else if (e.keyCode === 27) { // Escape
+                me.close();
+            }
+        });
+    }
+
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
 
-    get menu() { return this._menu; }
-    set menu(menu) { this._menu = menu; }
+    get menu() { return this.config.menu; }
+    set menu(menu) { this.config.menu = menu; }
+
+}
+
+class CloseButton extends SimpleButton {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            icon: 'echx',
+            text: "Close",
+            shape: "square",
+            iconclasses: ['closeicon'],
+            classes: ["naked", "closebutton"]
+        };
+    }
+
+    constructor(config) {
+        config = Object.assign({}, CloseButton.DEFAULT_CONFIG, config);
+        super(config);
+    }
 
 }
 
@@ -1280,6 +1352,7 @@ class HelpButton extends SimpleButton {
             hoverout: function(e, self) { self.close(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
+            iconclasses: ['helpicon'],
             help: null // help text to display
         };
     }
@@ -1287,15 +1360,16 @@ class HelpButton extends SimpleButton {
     constructor(config) {
         config = Object.assign({}, HelpButton.DEFAULT_CONFIG, config);
         if (config.classes) {
-            config.classes.push('naked');
-            config.classes.push('help');
+            if (!config.classes.includes('tagbutton')) {
+                config.classes.push('naked');
+                config.classes.push('help');
+            }
         } else {
             config.classes = ['naked', 'help'];
         }
         if (!config.id) { // need to generate an id for aria stuff
             config.id = `help-${Utils.getUniqueKey(5)}`;
         }
-
         super(config);
     }
 
@@ -1339,7 +1413,7 @@ class HelpButton extends SimpleButton {
         this.tooltip.setAttribute('aria-hidden', 'true');
         this.tooltip.setAttribute('id', this.id);
 
-        if (this.tipicon) {
+        if ((this.tipicon) && (this.tipicon !== '')) {
             let icon = IconFactory.icon(this.tipicon);
             icon.classList.add('tipicon');
             this.tooltip.appendChild(icon);
@@ -1350,11 +1424,7 @@ class HelpButton extends SimpleButton {
         this.helptext.setAttribute('id', `${this.id}-tt`);
         this.helptext.innerHTML = this.help;
 
-        this.closebutton = new SimpleButton({
-            icon: 'echx',
-            text: "Close",
-            shape: "square",
-            classes: ["naked", "closebutton"],
+        this.closebutton = new CloseButton({
             action: function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1506,6 +1576,35 @@ class HamburgerButton extends SimpleButton {
 
     get toggletarget() { return this.config.toggletarget; }
     set toggletarget(toggletarget) { this.config.toggletarget = toggletarget; }
+
+}
+
+class TagButton extends HelpButton {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            iconside: 'right', // The side the button displays on
+            icon: 'echx',  // icon to use in the button,
+            iconclasses: ['tagicon'],
+            shape: 'pill',
+            size: 'small',
+            //tipicon: '' // hide
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, TagButton.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('tagbutton');
+        } else {
+            config.classes = ['tagbutton'];
+        }
+        super(config);
+    }
 
 }
 
@@ -2337,6 +2436,10 @@ class BooleanToggle {
         if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }
 
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
         if (this.labelside === 'right') {
             this.container.classList.add('rightside');
             this.container.appendChild(this.toggle);
@@ -2992,10 +3095,12 @@ class SelectMenu extends InputElement {
             unselectedtext: "(Select)",
             icon: "chevron-down",
             prefix: null, // a prefix to display in the trigger box.
+            minimal: false, // if true, build with the intent that it is part of a larger component.
+                            // this removes things like the search controls and validation boxes.
             searchtext: true, // Show the "searchtext" box.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
-            onchange: null // The change handler. Passed (event, self).
+            onchange: null // The change handler. Passed (self).
         };
     }
 
@@ -3181,9 +3286,13 @@ class SelectMenu extends InputElement {
         this.container.append(wrap);
 
         this.container.appendChild(this.optionlist);
-        this.container.appendChild(this.passivebox);
-        this.container.appendChild(this.topcontrol);
-        this.container.appendChild(this.messagebox);
+
+        if (!this.minimal) {
+            this.container.appendChild(this.passivebox);
+            this.container.appendChild(this.topcontrol);
+            this.container.appendChild(this.messagebox);
+        }
+        if (this.minimal) { this.container.classList.add('minimal'); }
 
         this.postContainerScrub();
     }
@@ -3205,6 +3314,7 @@ class SelectMenu extends InputElement {
         });
         if (this.mute) { this.triggerbox.classList.add('mute'); }
         if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
+
     }
 
     buildOptions() {
@@ -3293,6 +3403,7 @@ class SelectMenu extends InputElement {
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
+        opLabel.classList.add('cfb-triangle-down');
 
         let op = document.createElement('input');
         op.setAttribute('id', lId);
@@ -3317,13 +3428,6 @@ class SelectMenu extends InputElement {
             } else {
                 me.passivebox.innerHTML = def.label;
             }
-
-            let labels = me.optionlist.querySelectorAll('label');
-            for (let l of labels) {
-                l.classList.remove('cfb-triangle-down');
-            }
-
-            opLabel.classList.add('cfb-triangle-down');
 
             me.close();
 
@@ -3424,6 +3528,12 @@ class SelectMenu extends InputElement {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get minimal() { return this.config.minimal; }
+    set minimal(minimal) { this.config.minimal = minimal; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) { this.config.onchange = onchange; }
 
     get optionlist() {
         if (!this._optionlist) { this.buildOptions(); }
@@ -3913,18 +4023,19 @@ class DialogWindow {
 
     static get DEFAULT_CONFIG() {
        return {
-            id: null,
-            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-            content: '<p />No provided content</p', // This is the content of the dialog
-            classes: [],             // apply these classes to the dialog, if any.
-            header: null, // DOM object, will be used if passed before title.
-            title: null,  // Adds a title to the dialog if present. header must be null.
-            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
-                           // or a string.  If it's a string, it creates a div at the bottom
-                           // with the value of the text.
-            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
-            escapecloses: true, // Allow the window to be closed by the escape key
-            showclose: true  // Show or hide the X button in the corner (requires title != null)
+           id: null,
+           form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+           content: '<p />No provided content</p', // This is the content of the dialog
+           classes: [],             // apply these classes to the dialog, if any.
+           header: null, // DOM object, will be used if passed before title.
+           title: null,  // Adds a title to the dialog if present. header must be null.
+           trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
+                          // or a string.  If it's a string, it creates a div at the bottom
+                          // with the value of the text.
+           clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+           escapecloses: true, // Allow the window to be closed by the escape key
+           nofocus: false, // If true, do not auto focus anything.
+           showclose: true  // Show or hide the X button in the corner (requires title != null)
         };
     }
 
@@ -3936,7 +4047,7 @@ class DialogWindow {
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
-        if (!config.id) { config.id = `dialog-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `dialog-${Utils.getUniqueKey(5)}`; }
 
         this.build();
     }
@@ -3982,9 +4093,11 @@ class DialogWindow {
         };
 
         setTimeout(function() {
-            let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            if (focusable[0]) {
-                focusable[0].focus();
+            if (!me.nofocus) {
+                let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable[0]) {
+                    focusable[0].focus();
+                }
             }
             if (me.escapecloses) {
                 document.addEventListener('keyup', me.escapelistener);
@@ -4049,11 +4162,7 @@ class DialogWindow {
             this.window.appendChild(this.header);
 
             if (this.showclose) {
-                this.closebutton = new SimpleButton({
-                    icon: 'echx',
-                    text: "Close",
-                    shape: "square",
-                    classes: ["naked", "closebutton"],
+                this.closebutton = new CloseButton({
                     action: function(e) {
                         e.preventDefault();
                         me.close();
@@ -4131,6 +4240,9 @@ class DialogWindow {
 
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }
+
+    get nofocus() { return this.config.nofocus; }
+    set nofocus(nofocus) { this.config.nofocus = nofocus; }
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
@@ -4569,11 +4681,7 @@ class Growler extends FloatingPanel {
             this.container.classList.add(c);
         }
 
-        this.closebutton = new SimpleButton({
-            icon: 'echx',
-            text: "Close",
-            shape: "square",
-            classes: ["closebutton"],
+        this.closebutton = new CloseButton({
             action: function(e) {
                 e.preventDefault();
                 me.quickClose();
@@ -4622,6 +4730,9 @@ class Growler extends FloatingPanel {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get closebutton() { return this._closebutton; }
+    set closebutton(closebutton) { this._closebutton = closebutton; }
 
     get duration() { return this.config.duration; }
     set duration(duration) { this.config.duration = duration; }
@@ -5773,7 +5884,7 @@ class SearchControl {
             id : null, // the id
             autoexecute: true, // Cause the search's action to execute automatically on focusout
                                // or when there number of seed characters is reached
-            arialabel: null, // The aria-label value. If null, uses 'searchtext'
+            arialabel: 'Enter Search Terms', // The aria-label value.
             maxlength: null, // Value for maxlength.
             searchtext: 'Search',
             searchicon: 'magnify',
@@ -5822,7 +5933,7 @@ class SearchControl {
         this.searchbutton = new SimpleButton({
             text: this.searchtext,
             icon: this.searchicon,
-            ghost: true,
+            mute: true,
             action: function(e) {
                 e.preventDefault();
                 if ((me.action) && (typeof me.action === 'function')) {
@@ -6481,6 +6592,8 @@ class SimpleForm {
                            // If a function, passed self, and assumes a callback function.
             url: null, // URL to submit the form to.
             target: null, // Target attribute.  Requires a URL.
+            action: null, // A function to execute on submit that isn't a form handler. Basically this captures
+                            // a return characters
 
             dialog: null, // A SimpleDialog window that this form may be included in.
             enctype: null, // Encapsulation type.
@@ -6502,7 +6615,7 @@ class SimpleForm {
                             // are automatically added to this.  Only put elements here that are _outside_
                             // of the form and need to be connected.
             elements: [], // An array of form elements. These are the objects, not the rendered dom.
-            actions: [], // An array of action elements. This are buttons or keywords.
+            actions: [], // An array of action elements. This are typically buttons.
             passiveactions: [], // An array of action elements that appear only when the form is in passive mode. This are buttons or keywords.
             handlercallback: null, // If present, the response from the handler will be passed to this
                                 // instead of the internal callback. Passed self and results
@@ -6603,6 +6716,8 @@ class SimpleForm {
 
             } else if (this.url) {
                 this.form.submit();
+            } else if (this.action) {
+                this.action();
             } else {
                 console.log(`No handler defined for form ${this.id} :: ${this.name}`);
             }
@@ -6739,6 +6854,7 @@ class SimpleForm {
         for (let c of this.classes) {
             this.form.classList.add(c);
         }
+
         this.form.addEventListener('submit', function(e) {
             e.preventDefault();
             me.submit();
@@ -6753,7 +6869,11 @@ class SimpleForm {
 
         this.form.appendChild(this.shade);
         this.form.appendChild(this.contentbox);
-        if (this.actions.length > 0) { this.form.appendChild(this.actionbox); }
+        if (this.actions.length > 0) {
+            this.form.appendChild(this.actionbox);
+        } else {
+            this.form.classList.add('noactions');
+        }
         if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox); }
 
         this.validate();
@@ -6900,6 +7020,9 @@ class SimpleForm {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get action() { return this.config.action; }
+    set action(action) { this.config.action = action; }
 
     get actionbox() {
         if (!this._actionbox) { this.buildActionBox(); }
