@@ -210,14 +210,14 @@ legend {
   position: relative;
   margin-top: 1em;
   margin-bottom: .5em;
-  font-size: 100%;
+  font-size: 1em;
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
   text-transform: var(--label-text-transform);
   button.help {
     color: var(--label-color);
     text-shadow:var(--label-text-shadow);
-    font-size: 100%;
+    font-size: 1em;
     margin: 0 .5em 0 .5em;
     &:hover,
     &:focus,
@@ -242,7 +242,7 @@ pre {
 
 sup {
   vertical-align: super;
-  font-size: 80%;
+  font-size: .8em;
   line-height: 1;
   color: var(--sup-text-color);
   text-shadow: var(--sup-text-shadow);
@@ -320,7 +320,7 @@ code {
   white-space: nowrap;
   &.block {
     display: block;
-    font-size: 90%;
+    font-size: .9em;
     padding: 1.5em;
     overflow: auto;
     white-space: unset;

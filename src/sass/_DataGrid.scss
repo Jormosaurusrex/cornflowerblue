@@ -37,7 +37,6 @@ div.datagrid-container {
   max-height: 80vh;
   overflow: visible;
   position: relative;
-
   div.grid-actions {
     flex-grow: 1;
     height: 4em;
@@ -65,6 +64,8 @@ div.datagrid-container {
     min-height: 3em;
     div.countbox {
       margin-right: auto;
+      white-space: nowrap;
+      padding-right: 1em;
       label {
         display: inline-block;
         margin: .5em;
@@ -93,7 +94,7 @@ div.datagrid-container {
   }
   table.grid {
     width: 100%;
-    min-width: 100%;
+    //min-width: 100%;
     padding: 0;
     margin: 0;
     border-spacing: 0;
@@ -119,7 +120,7 @@ div.datagrid-container {
               right: .5em;
               margin: 0;
               flex-direction: column;
-              font-size: 70%;
+              font-size: .7em;
               justify-content: center;
               align-items: center;
               transition: all .2s;
@@ -190,7 +191,7 @@ div.datagrid-container {
             font-style: oblique;
           }
           &.smaller {
-            font-size: 80%;
+            font-size: .8em;
           }
         }
         &:nth-child(even) {
@@ -242,12 +243,11 @@ div.datagrid-container {
         overflow: hidden;
         text-align: center;
         vertical-align: middle;
-        //display: none;
         width: 0;
         max-width: 0;
         padding: 0;
         --checkbox-size: 2em;
-        --checkbox-font-size: 200%;
+        --checkbox-font-size: 2em;
         input {
           display: none;
         }
@@ -348,7 +348,7 @@ div.datagrid-configurator {
       flex-wrap: nowrap;
       div.description {
         padding: .5em 0 .5em 0;
-        font-size: 80%;
+        font-size: .8em;
       }
     }
   }

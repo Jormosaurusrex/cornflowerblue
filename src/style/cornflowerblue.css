@@ -182,7 +182,7 @@
   --button-menu-item-hover-text-color: var(--hot-text-color);
   --button-menu-item-hover-text-shadow: var(--text-shadow);
   --checkbox-size: 2.4em;
-  --checkbox-font-size: 300%;
+  --checkbox-font-size: 3em;
   --checkbox-toggle-size: 1.6em;
   --checkbox-toggle-offset: 0.2em;
   --checkbox-switch-width: 6em;
@@ -799,7 +799,7 @@ legend {
   position: relative;
   margin-top: 1em;
   margin-bottom: 0.5em;
-  font-size: 100%;
+  font-size: 1em;
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
   text-transform: var(--label-text-transform);
@@ -808,7 +808,7 @@ label button.help,
 legend button.help {
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
-  font-size: 100%;
+  font-size: 1em;
   margin: 0 0.5em 0 0.5em;
 }
 label button.help:hover, label button.help:focus, label button.help:active,
@@ -835,7 +835,7 @@ pre {
 
 sup {
   vertical-align: super;
-  font-size: 80%;
+  font-size: 0.8em;
   line-height: 1;
   color: var(--sup-text-color);
   text-shadow: var(--sup-text-shadow);
@@ -913,7 +913,7 @@ code {
 }
 code.block {
   display: block;
-  font-size: 90%;
+  font-size: 0.9em;
   padding: 1.5em;
   overflow: auto;
   white-space: unset;
@@ -1537,7 +1537,7 @@ div.textarea-container div.charcounter,
 div.textarea-container div.searchdisplay {
   color: var(--input-subline-text-color);
   display: block;
-  font-size: 85%;
+  font-size: 8.5em;
   font-style: oblique;
   text-align: right;
 }
@@ -1556,7 +1556,7 @@ div.textarea-container div.searchdisplay.outofbounds {
 div.input-container ul.messagebox,
 div.textarea-container ul.messagebox {
   transition: all 0.2s;
-  font-size: 90%;
+  font-size: 0.9em;
   margin: 0;
   height: auto;
   padding: 0.5em 1em 0.5em 2em;
@@ -1587,7 +1587,6 @@ div.textarea-container div.passivebox {
   padding: var(--input-default-padding);
   vertical-align: middle;
   color: var(--input-passivebox-text-color);
-  font-size: 105%;
   width: 100%;
   opacity: 0;
   display: none;
@@ -1620,7 +1619,7 @@ div.input-container.required label:after,
 div.textarea-container.required label:after {
   color: var(--label-required-marker-color);
   content: attr(data-required-text);
-  font-size: 75%;
+  font-size: 0.75em;
   margin-left: 0.5em;
 }
 div.input-container.valid div.wrap:after,
@@ -1948,7 +1947,7 @@ div.file-container div.trigger {
   font-family: inherit;
   width: 100%;
   margin: 0;
-  font-size: 105%;
+  font-size: 1em;
   background-color: var(--input-default-background-color);
   border: 0.1em solid var(--input-default-border-color);
   padding: 0.5em 1em 0.5em 1.5em;
@@ -2062,7 +2061,7 @@ div.select-container div.trigger {
   font-family: inherit;
   width: 100%;
   margin: 0;
-  font-size: 105%;
+  font-size: 1em;
   background-color: var(--input-default-background-color);
   border: 0.1em solid var(--input-default-border-color);
   padding: 0.5em 1em 0.5em 1.5em;
@@ -2254,7 +2253,7 @@ button {
   padding: 0.6em 1em 0.6em 1em;
   font-family: var(--button-font-family);
   font-weight: normal;
-  font-size: 100%;
+  font-size: 1em;
   line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
@@ -2491,7 +2490,7 @@ button.square, button.circle {
   padding: 0.5em;
   width: 2em;
   height: 2em;
-  font-size: 120%;
+  font-size: 1.2em;
   line-height: 1;
   display: flex;
   justify-content: center;
@@ -2525,27 +2524,27 @@ button.circle:disabled {
   border: none;
 }
 button.micro {
-  font-size: 60%;
+  font-size: 0.6em;
 }
 button.small {
-  font-size: 80%;
+  font-size: 0.8em;
 }
 button.large {
-  font-size: 120%;
+  font-size: 1.2em;
 }
 @media (max-width: 599px) {
   button.large {
-    font-size: 100%;
+    font-size: 1em;
   }
 }
 button.fill {
-  font-size: 120%;
+  font-size: 1.2em;
   width: 100%;
   height: 100%;
 }
 @media (max-width: 599px) {
   button.fill {
-    font-size: 100%;
+    font-size: 1em;
   }
 }
 button.pill {
@@ -2595,7 +2594,7 @@ button.help div.tooltip:before, button.tagbutton div.tooltip:before {
   border-color: var(--tooltip-background-color) transparent;
 }
 button.help div.tooltip span.tipicon, button.tagbutton div.tooltip span.tipicon {
-  font-size: 120%;
+  font-size: 1.2em;
   margin-right: 0.5em;
 }
 button.help div.tooltip div.helptext, button.tagbutton div.tooltip div.helptext {
@@ -3473,7 +3472,7 @@ div.shade span.icon:before {
 }
 div.shade div.spinnertext {
   color: var(--form-shade-text-color);
-  font-size: 200%;
+  font-size: 2em;
   text-shadow: var(--form-shade-text-shadow);
 }
 
@@ -3673,7 +3672,7 @@ div.growler button.closebutton {
   padding: 0;
   color: var(--growler-text-color);
   text-shadow: var(--growler-text-shadow);
-  font-size: 100%;
+  font-size: 1em;
 }
 div.growler button.closebutton:active, div.growler button.closebutton:focus, div.growler button.closebutton:hover {
   opacity: 1;
@@ -3729,7 +3728,7 @@ div.growler div.payload span.icon.i {
   text-shadow: var(--growler-text-shadow);
 }
 div.growler div.payload div.text {
-  font-size: 110%;
+  font-size: 1.1em;
   padding: 0 0 0 0.5em;
 }
 div.growler.error {
@@ -3803,7 +3802,7 @@ div.panel div.content h3 button.togglebutton {
   height: 1em;
   opacity: 1;
   border: none;
-  font-size: 85%;
+  font-size: 0.85em;
 }
 div.panel div.content h3 button.togglebutton:focus, div.panel div.content h3 button.togglebutton:active {
   opacity: 1;
@@ -4125,7 +4124,7 @@ div.window-container div.dialog h2 {
   text-shadow: var(--dialog-header-text-shadow);
   margin: 0;
   font-weight: normal;
-  font-size: 150%;
+  font-size: 1.5em;
   padding: 0.5em 1em 0.5em 1.5em;
   position: relative;
   width: 100%;
@@ -4198,7 +4197,7 @@ div.window-container div.trailer {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 200%;
+  font-size: 2em;
   width: 100%;
   color: var(--white-half);
   pointer-events: auto;
@@ -4266,7 +4265,7 @@ ul.tabbar li a {
   align-items: center;
   justify-content: center;
   flex-grow: 1;
-  font-size: 110%;
+  font-size: 1.1em;
   transition: all 0.1s linear;
 }
 ul.tabbar li a[aria-selected=true] {
@@ -4423,7 +4422,7 @@ div.tablist-container.responsive div.responsivebox button.hamburger {
     height: var(--tabbar-collapsed-height);
     border-radius: 0;
     padding: 0;
-    font-size: 100%;
+    font-size: 1em;
     box-shadow: none;
     background-color: transparent;
   }
@@ -4602,6 +4601,8 @@ div.datagrid-container div.grid-info {
 }
 div.datagrid-container div.grid-info div.countbox {
   margin-right: auto;
+  white-space: nowrap;
+  padding-right: 1em;
 }
 div.datagrid-container div.grid-info div.countbox label {
   display: inline-block;
@@ -4629,7 +4630,6 @@ div.datagrid-container div.grid-wrapper {
 }
 div.datagrid-container table.grid {
   width: 100%;
-  min-width: 100%;
   padding: 0;
   margin: 0;
   border-spacing: 0;
@@ -4656,7 +4656,7 @@ div.datagrid-container table.grid thead tr th div:before {
   right: 0.5em;
   margin: 0;
   flex-direction: column;
-  font-size: 70%;
+  font-size: 0.7em;
   justify-content: center;
   align-items: center;
   transition: all 0.2s;
@@ -4710,7 +4710,7 @@ div.datagrid-container table.grid tbody tr td.italic {
   font-style: oblique;
 }
 div.datagrid-container table.grid tbody tr td.smaller {
-  font-size: 80%;
+  font-size: 0.8em;
 }
 div.datagrid-container table.grid tbody tr:nth-child(even) {
   background-color: var(--datagrid-grid-alternate-background-color);
@@ -4769,7 +4769,7 @@ div.datagrid-container table.grid td.selector {
   max-width: 0;
   padding: 0;
   --checkbox-size: 2em;
-  --checkbox-font-size: 200%;
+  --checkbox-font-size: 2em;
 }
 div.datagrid-container table.grid th.selector input,
 div.datagrid-container table.grid td.selector input {
@@ -4856,7 +4856,7 @@ div.datagrid-configurator ul.elements li {
 }
 div.datagrid-configurator ul.elements li div.description {
   padding: 0.5em 0 0.5em 0;
-  font-size: 80%;
+  font-size: 0.8em;
 }
 div.datagrid-configurator.column ul.elements li {
   margin-bottom: 1em;
@@ -4897,7 +4897,7 @@ div.pwgenerator ul.datasets {
   display: flex;
 }
 div.pwgenerator ul.datasets li {
-  font-size: 75%;
+  font-size: 0.75em;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -4983,19 +4983,19 @@ div.progressbar-container .decals div.next {
   text-align: right;
 }
 div.progressbar-container.tiny .decals {
-  font-size: 50%;
+  font-size: 0.5em;
 }
 div.progressbar-container.small .decals {
-  font-size: 50%;
+  font-size: 0.5em;
 }
 div.progressbar-container.medium .decals {
-  font-size: 100%;
+  font-size: 1em;
 }
 div.progressbar-container.large .decals {
-  font-size: 200%;
+  font-size: 2em;
 }
 div.progressbar-container.huge .decals {
-  font-size: 400%;
+  font-size: 4em;
 }
 div.progressbar-container div.circlewrap {
   position: relative;
@@ -5049,10 +5049,10 @@ div.progressbar-container div.circlewrap div.decals div.stinger {
 }
 div.progressbar-container div.circlewrap div.decals div.badge {
   font-weight: normal;
-  font-size: 200%;
+  font-size: 2em;
 }
 div.progressbar-container div.circlewrap div.decals div.badge sup {
-  font-size: 50%;
+  font-size: 0.5em;
 }
 div.progressbar-container div.circlewrap div.decals div.stinger {
   font-weight: 100;

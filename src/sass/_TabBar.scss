@@ -38,7 +38,7 @@ ul.tabbar {
       align-items: center;
       justify-content: center;
       flex-grow: 1;
-      font-size: 110%;
+      font-size: 1.1em;
       transition: all .1s linear;
       &[aria-selected="true"] {
         background-color: var(--tabbar-selected-tab-background-color);
@@ -190,7 +190,7 @@ div.tablist-container {
           height: var(--tabbar-collapsed-height);
           border-radius: 0;
           padding: 0;
-          font-size: 100%;
+          font-size: 1em;
           box-shadow: none;
           background-color: transparent;
           span.magichamburger {

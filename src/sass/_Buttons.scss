@@ -14,7 +14,7 @@ button {
   padding: .6em 1em .6em 1em;
   font-family: var(--button-font-family);
   font-weight: normal;
-  font-size: 100%;
+  font-size: 1em;
   line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
@@ -278,7 +278,7 @@ button {
     padding: .5em;
     width: 2em;
     height: 2em;
-    font-size: 120%;
+    font-size: 1.2em;
     line-height: 1;
     display: flex;
     justify-content: center;
@@ -315,23 +315,23 @@ button {
     }
   }
   &.micro {
-    font-size: 60%;
+    font-size: .6em;
   }
   &.small {
-    font-size: 80%;
+    font-size: .8em;
   }
   &.large {
-    font-size: 120%;
+    font-size: 1.2em;
     @include for-phone-only {
-      font-size: 100%;
+      font-size: 1em;
     }
   }
   &.fill {
-    font-size: 120%;
+    font-size: 1.2em;
     width: 100%;
     height: 100%;
     @include for-phone-only {
-      font-size: 100%;
+      font-size: 1em;
     }
   }
   &.pill {
@@ -385,7 +385,7 @@ button {
         border-color: var(--tooltip-background-color) transparent;
       }
       span.tipicon {
-        font-size: 120%;
+        font-size: 1.2em;
         margin-right: .5em;
       }
       div.helptext {

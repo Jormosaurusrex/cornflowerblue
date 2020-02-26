@@ -31,27 +31,27 @@ div.progressbar-container {
   }
   &.tiny {
     .decals {
-      font-size: 50%;
+      font-size: .5em;
     }
   }
   &.small {
     .decals {
-      font-size: 50%;
+      font-size: .5em;
     }
   }
   &.medium {
     .decals {
-      font-size: 100%;
+      font-size: 1em;
     }
   }
   &.large {
     .decals {
-      font-size: 200%;
+      font-size: 2em;
     }
   }
   &.huge {
     .decals {
-      font-size: 400%;
+      font-size: 4em;
     }
   }
   div.circlewrap {
@@ -110,9 +110,9 @@ div.progressbar-container {
       }
       div.badge {
         font-weight: normal;
-        font-size: 200%;
+        font-size: 2em;
         sup {
-          font-size: 50%;
+          font-size: .5em;
         }
       }
       div.stinger {

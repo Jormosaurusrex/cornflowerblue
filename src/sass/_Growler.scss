@@ -69,7 +69,7 @@ div.growler {
     padding: 0;
     color: var(--growler-text-color);
     text-shadow: var(--growler-text-shadow);
-    font-size: 100%;
+    font-size: 1em;
     &:active,
     &:focus,
     &:hover {
@@ -126,7 +126,7 @@ div.growler {
       text-shadow: var(--growler-text-shadow);
     }
     div.text {
-      font-size: 110%;
+      font-size: 1.1em;
       padding: 0 0 0 .5em;
     }
   }

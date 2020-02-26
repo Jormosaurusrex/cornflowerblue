@@ -50,7 +50,7 @@ div.window-container {
       text-shadow: var(--dialog-header-text-shadow);
       margin: 0;
       font-weight: normal;
-      font-size: 150%;
+      font-size: 1.5em;
       padding: .5em 1em .5em 1.5em;
       position: relative;
       width: 100%;
@@ -127,7 +127,7 @@ div.window-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 200%;
+    font-size: 2em;
     width: 100%;
     color: var(--white-half);
     pointer-events: auto;
