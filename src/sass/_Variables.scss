@@ -343,6 +343,16 @@
   --input-default-padding: .5em 1em .5em 1.5em;
   --input-border-radius: .1em;
 
+  --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
+  --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
+
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--focus-color);
+
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-default-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--focus-color);
+
+
   --input-default-background-color: var(--grey-translucent);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);

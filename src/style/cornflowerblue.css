@@ -276,6 +276,12 @@
   --hr-border-color: var(--grey-medium);
   --input-default-padding: .5em 1em .5em 1.5em;
   --input-border-radius: .1em;
+  --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
+  --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--focus-color);
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-default-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--focus-color);
   --input-default-background-color: var(--grey-translucent);
   --input-default-border-color: var(--standard-color);
   --input-default-text-color: var(--grey-darker);
@@ -1802,11 +1808,12 @@ textarea {
   font-family: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
-  font-size: 105%;
+  font-size: 1em;
   width: 100%;
   background-color: var(--input-default-background-color);
   margin: 0;
-  border: 0.1em solid var(--input-default-border-color);
+  border: none;
+  box-shadow: var(--input-border-box-shadow);
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
   color: var(--input-default-text-color);
@@ -1850,7 +1857,7 @@ input[type=password]:focus,
 textarea:focus {
   border-color: var(--input-focused-border-color);
   background-color: var(--input-focused-background-color);
-  box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
+  box-shadow: var(--input-focus-box-shadow);
 }
 input[type=text]:focus::placeholder,
 input[type=number]:focus::placeholder,
@@ -1863,9 +1870,7 @@ input[type=number].mute,
 input[type=password].mute,
 textarea.mute {
   background-color: var(--input-mute-background-color);
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  box-shadow: var(--input-mute-box-shadow);
   padding: 0.5em 1em 0.5em 1.5em;
 }
 input[type=text].mute::placeholder,
@@ -1882,7 +1887,7 @@ input[type=password].mute:focus,
 textarea.mute:focus {
   border-bottom-color: var(--focus-color);
   background-color: var(--input-focused-background-color);
-  box-shadow: inset 0px -0.2em 0 0 var(--focus-color);
+  box-shadow: var(--input-mute-focus-box-shadow);
 }
 input[type=text].mute:focus::placeholder,
 input[type=number].mute:focus::placeholder,
@@ -1894,6 +1899,7 @@ input[type=text].mute:disabled,
 input[type=number].mute:disabled,
 input[type=password].mute:disabled,
 textarea.mute:disabled {
+  --input-default-border-color: var(--input-disabled-placeholder-color);
   background-color: var(--input-mute-disabled-background-color);
 }
 input[type=text].mute:disabled::placeholder,
@@ -1915,12 +1921,11 @@ textarea:before {
 }
 textarea.mute {
   padding: 1em 1em 1em 2em;
-  border-left: 0.1em solid var(--input-default-border-color);
+  box-shadow: var(--input-mute-textarea-box-shadow);
   border-bottom: none;
 }
 textarea.mute:focus {
-  border-left-color: var(--focus-color);
-  box-shadow: inset 0.5em 0 0 var(--focus-color);
+  box-shadow: var(--input-mute-focus-textarea-box-shadow);
 }
 
 input[type=file] {
@@ -2261,13 +2266,16 @@ button {
   box-shadow: var(--button-box-shadow);
 }
 button span.icon {
-  margin: 0 0.5em 0 0.5em;
+  margin: 0 0.5em 0 0;
 }
 button span.icon:before {
   margin: 0;
 }
 button.righticon {
   flex-direction: row-reverse;
+}
+button.righticon span.icon {
+  margin: 0 0 0 0.5em;
 }
 button.hamburger span.magichamburger {
   display: inline-block;
@@ -4575,8 +4583,9 @@ div.datagrid-container div.grid-actions {
   align-items: flex-end;
   align-content: center;
   justify-content: flex-end;
+  background-color: var(--canvas-color-callout-lightweight);
 }
-div.datagrid-container div.grid-actions :first-child {
+div.datagrid-container div.grid-actions button:first-child {
   align-self: flex-start;
   margin-right: auto;
 }
@@ -4585,13 +4594,32 @@ div.datagrid-container div.grid-info {
   display: flex;
   flex-direction: row;
   align-content: center;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
-  padding: 0.5em 0 0.5em 0;
+  padding: 0;
+  height: 3em;
+  min-height: 3em;
 }
-div.datagrid-container div.grid-info :first-child {
-  align-self: flex-start;
+div.datagrid-container div.grid-info div.countbox {
   margin-right: auto;
+}
+div.datagrid-container div.grid-info div.countbox label {
+  display: inline-block;
+  margin: 0.5em;
+}
+div.datagrid-container div.grid-info div.grid-filtertags {
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+div.datagrid-container div.grid-info div.grid-filtertags label {
+  margin: 0.5em;
+}
+div.datagrid-container div.grid-info div.grid-filtertags button.tagbutton {
+  margin: 0.5em;
 }
 div.datagrid-container div.grid-wrapper {
   overflow: auto;
@@ -4689,9 +4717,6 @@ div.datagrid-container table.grid tbody tr:nth-child(even) {
 }
 div.datagrid-container table.grid tbody tr.hidden, div.datagrid-container table.grid tbody tr.filtered, div.datagrid-container table.grid tbody tr[data-search-hidden=true] {
   display: none;
-}
-div.datagrid-container table.grid tbody tr[data-matched-filters] {
-  display: table-row;
 }
 div.datagrid-container table.grid tbody tr[data-matched-filters][data-search-hidden=true] {
   display: none;
@@ -4890,35 +4915,29 @@ div.searchcontrol {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: stretch;
   --button-default-color: var(--input-default-border-color);
 }
 div.searchcontrol input {
-  height: 2.1em;
   width: 0;
-  padding: 0;
-  border-color: transparent;
+  padding: 0.6em 0 0.6em 0;
+  font-size: 1em;
+  border: none;
   background-color: transparent;
+  box-shadow: none;
 }
 div.searchcontrol button {
-  margin-left: 0;
+  margin: 0;
 }
 div.searchcontrol.open input, div.searchcontrol:focus-within input {
+  --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
   width: auto;
-  border-radius: 0;
-  border-top-left-radius: var(--input-border-radius);
-  border-bottom-left-radius: var(--input-border-radius);
-  border-right: none;
+  border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
   padding: var(--input-default-padding);
   background-color: var(--input-default-background-color);
 }
-div.searchcontrol.open input:focus, div.searchcontrol:focus-within input:focus {
-  border-color: var(--input-focused-border-color);
-}
 div.searchcontrol.open button, div.searchcontrol:focus-within button {
-  border-radius: 0;
-  border-top-right-radius: var(--input-border-radius);
-  border-bottom-right-radius: var(--input-border-radius);
+  border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
   box-shadow: inset -0.1em -0.1em 0 0 var(--button-default-color), inset 0.1em -0.1em 0 0 var(--button-default-color), inset -0.1em 0.1em 0 0 var(--button-default-color), inset 0.1em 0.1em 0 0 var(--button-default-color);
 }
 div.searchcontrol.open button:hover, div.searchcontrol:focus-within button:hover {

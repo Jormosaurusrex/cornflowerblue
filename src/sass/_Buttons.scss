@@ -25,13 +25,16 @@ button {
   border-radius: var(--button-border-radius);
   box-shadow: var(--button-box-shadow);
   span.icon {
-    margin: 0 .5em 0 .5em;
+    margin: 0 .5em 0 0;
     &:before {
       margin: 0; // Generates padding issues otherwise
     }
   }
   &.righticon {
     flex-direction: row-reverse;
+    span.icon {
+      margin: 0 0 0 .5em;
+    }
   }
   &.hamburger {
     span.magichamburger {

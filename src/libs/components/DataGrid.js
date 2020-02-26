@@ -43,6 +43,8 @@ class DataGrid {
             noresultstitle: 'No results',
             noresultstext: 'No entries were found matching your search terms.',
 
+            itemcountlabeltext: 'Items:',
+
             exportable: true, // Data can be exported
             exportbuttontext: "Export",
             exporticon: "download",
@@ -62,9 +64,12 @@ class DataGrid {
             filterbuttontext: 'Filters',
             filterbuttonicon: 'filter',
             filterinstructions: ['Columns that are filterable are shown below. Set the value of the column to filter it.'],
+            filterlabel: 'Filters:',
             filtertitle: 'Manage Filters',
             filterunselectedvaluetext: '(No filter)',
             filterplaceholder: '(No filter)',
+            filterhelpexacttext: 'Match exactly:',
+            filterhelpcontaintext: 'Matches contain:',
             applyfilterstext: 'Apply Filters',
             applyfiltersicon: 'checkmark-circle',
 
@@ -155,6 +160,7 @@ class DataGrid {
         }
         return rf;
     }
+
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
@@ -242,7 +248,7 @@ class DataGrid {
         for (let r of rows) {
             let show = false;
 
-            r.setAttribute('data-search-hidden', true,)
+            r.setAttribute('data-search-hidden', true,);
 
             if ((!value) || (value === '')) {
                 show = true;
@@ -412,12 +418,20 @@ class DataGrid {
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
 
-    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
-    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
+    get filterhelpcontaintext() { return this.config.filterhelpcontaintext; }
+    set filterhelpcontaintext(filterhelpcontaintext) { this.config.filterhelpcontaintext = filterhelpcontaintext; }
+
+    get filterhelpexacttext() { return this.config.filterhelpexacttext; }
+    set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
+
+    get filterlabel() { return this.config.filterlabel; }
+    set filterlabel(filterlabel) { this.config.filterlabel = filterlabel; }
 
     get filterplaceholder() { return this.config.filterplaceholder; }
     set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
 
+    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
+    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
 
     getFilterLine(f) {
         const me = this;
@@ -507,33 +521,67 @@ class DataGrid {
         this.applyFilters();
     }
 
-    applyFilters() {
-        let rows = Array.from(this.gridbody.childNodes);
-        for (let r of rows) {
-            let matchedfilters = [];
-            for (let filter of Object.values(this.activefilters)) {
-                let c = r.querySelector(`[data-name='${filter.field}']`);
-                if (filter.exact) {
-                    if (c.innerHTML === filter.value) {
-                        matchedfilters.push(filter.field);
-                    }
-                } else {
-                    if (c.innerHTML.toLowerCase().indexOf(filter.value.toLowerCase()) !== -1) {
-                        matchedfilters.push(filter.field);
-                    }
-                }
-            }
+    removeFilter(f) {
+        delete this.activefilters[f.field];
+        this.applyFilters();
+    }
 
-            if (matchedfilters.length > 0) {
-                r.setAttribute('data-matched-filters', matchedfilters.join(','));
-                r.classList.remove('filtered');
-            } else {
-                r.removeAttribute('data-matched-filters');
-                r.classList.add('filtered');
+    applyFilters() {
+        const me = this;
+        let rows = Array.from(this.gridbody.childNodes);
+
+        this.filtertags.innerHTML = '';
+        if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            let label = document.createElement('label');
+            label.innerHTML = this.filterlabel;
+            this.filtertags.appendChild(label);
+
+            for (let f of Object.values(this.activefilters)) {
+                f.tagbutton = new TagButton({
+                    text: this.getfield(f.field).label,
+                    help: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
+                    action: function() {
+                        me.removeFilter(f);
+                    }
+                });
+                this.filtertags.appendChild(f.tagbutton.button);
+            }
+        }
+
+        for (let r of rows) {
+            r.removeAttribute('data-matched-filters');
+            r.classList.remove('filtered');
+
+            if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+                let matchedfilters = [];
+
+                for (let filter of Object.values(this.activefilters)) {
+
+                    let c = r.querySelector(`[data-name='${filter.field}']`);
+                    if (filter.exact) {
+                        if (c.innerHTML === filter.value) {
+                            matchedfilters.push(filter.field);
+                        } else {
+                            r.classList.add('filtered');
+                        }
+                    } else {
+                        if (c.innerHTML.toLowerCase().indexOf(filter.value.toLowerCase()) !== -1) {
+                            matchedfilters.push(filter.field);
+                        } else {
+                            r.classList.add('filtered');
+                        }
+                    }
+
+                }
+
+                if (matchedfilters.length > 0) {
+                    r.setAttribute('data-matched-filters', matchedfilters.join(','));
+                } else {
+                    r.removeAttribute('data-matched-filters');
+                }
             }
         }
     }
-
 
     /* SELECTION METHODS________________________________________________________________ */
 
@@ -643,17 +691,6 @@ class DataGrid {
             this.gridactions.append(this.multiselectbutton.button);
         }
 
-        if (this.searchable) {
-            this.searchcontrol = new SearchControl({
-                arialabel: 'Search this data',
-                searchtext: this.searchbuttontext,
-                action: function(value, searchcontrol) {
-                    me.search(value);
-                }
-            });
-            this.gridactions.append(this.searchcontrol.container);
-        }
-
         if (this.filterable) {
             this.filterbutton  = new SimpleButton({
                 mute: true,
@@ -691,24 +728,53 @@ class DataGrid {
         }
     }
 
+
+    get itemcount()  { return this._itemcount; }
+    set itemcount(itemcount) { this._itemcount = itemcount; }
+
+    get itemcountbox()  { return this._itemcountbox; }
+    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
+
+    get itemcountlabel()  { return this._itemcountlabel; }
+    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
+
+    get itemcountlabeltext()  { return this.config.itemcountlabeltext; }
+    set itemcountlabeltext(itemcountlabeltext) { this.config.itemcountlabeltext = itemcountlabeltext; }
+
     buildGridInfo() {
         const me = this;
 
         this.gridinfo = document.createElement('div');
         this.gridinfo.classList.add('grid-info');
 
-        let x = new TagButton({
-            text: 'Foobar',
-            help: 'Vestibulum id ligula porta felis euismod semper.'
-        });
-        this.gridinfo.appendChild(x.container);
+        this.itemcountlabel = document.createElement('label');
+        this.itemcountlabel.innerHTML = this.itemcountlabeltext;
 
-        let y = new TagButton({
-            text: 'Bazzbar',
-            help: 'Vestibulum id ligula porta felis euismod semper.'
-        });
-        this.gridinfo.appendChild(y.container);
+        this.itemcount = document.createElement('span');
+        this.itemcount.classList.add('itemcount');
+        this.itemcount.innerHTML = this.data.length;
 
+        this.itemcountbox = document.createElement('div');
+        this.itemcountbox.classList.add('countbox');
+        this.itemcountbox.appendChild(this.itemcountlabel);
+        this.itemcountbox.appendChild(this.itemcount);
+
+        this.gridinfo.appendChild(this.itemcountbox);
+
+        if (this.searchable) {
+            this.searchcontrol = new SearchControl({
+                arialabel: 'Search this data',
+                searchtext: this.searchbuttontext,
+                action: function(value, searchcontrol) {
+                    me.search(value);
+                }
+            });
+            this.gridinfo.append(this.searchcontrol.container);
+        }
+
+        this.filtertags = document.createElement('div');
+        this.filtertags.classList.add('grid-filtertags');
+        this.gridinfo.appendChild(this.filtertags);
     }
 
     /**
@@ -1000,6 +1066,9 @@ class DataGrid {
 
     get filtertitle() { return this.config.filtertitle; }
     set filtertitle(filtertitle) { this.config.filtertitle = filtertitle; }
+
+    get filtertags() { return this._filtertags; }
+    set filtertags(filtertags) { this._filtertags = filtertags; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }

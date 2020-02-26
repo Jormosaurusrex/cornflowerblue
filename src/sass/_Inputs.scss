@@ -10,11 +10,12 @@ textarea {
   font-family: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
-  font-size: 105%;
+  font-size: 1em;
   width: 100%;
   background-color: var(--input-default-background-color);
   margin: 0;
-  border: .1em solid var(--input-default-border-color);
+  border: none;
+  box-shadow: var(--input-border-box-shadow);
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
   color: var(--input-default-text-color);
@@ -45,16 +46,14 @@ textarea {
   &:focus {
     border-color: var(--input-focused-border-color);
     background-color: var(--input-focused-background-color);
-    box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+    box-shadow: var(--input-focus-box-shadow);
     &::placeholder {
       opacity: 0.3;
     }
   }
   &.mute {
     background-color: var(--input-mute-background-color);
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    box-shadow: var(--input-mute-box-shadow);
     padding: .5em 1em .5em 1.5em;
     &::placeholder {
       color: var(--label-color);
@@ -64,12 +63,13 @@ textarea {
     &:focus {
       border-bottom-color: var(--focus-color);
       background-color: var(--input-focused-background-color);
-      box-shadow: inset 0px -.2em 0 0 var(--focus-color);
+      box-shadow: var(--input-mute-focus-box-shadow);
       &::placeholder {
         opacity: 0;
       }
     }
     &:disabled {
+      --input-default-border-color: var(--input-disabled-placeholder-color);
       background-color: var(--input-mute-disabled-background-color);
       &::placeholder {
         color: var(--input-disabled-placeholder-color);
@@ -88,11 +88,10 @@ textarea {
   }
   &.mute {
     padding: 1em 1em 1em 2em;
-    border-left: .1em solid var(--input-default-border-color);
+    box-shadow: var(--input-mute-textarea-box-shadow);
     border-bottom: none;
     &:focus {
-      border-left-color: var(--focus-color);
-      box-shadow: inset .5em 0 0 var(--focus-color);
+      box-shadow: var(--input-mute-focus-textarea-box-shadow);
     }
   }
 }

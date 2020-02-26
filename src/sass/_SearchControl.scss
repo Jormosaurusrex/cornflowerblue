@@ -2,36 +2,30 @@ div.searchcontrol {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: stretch;
   --button-default-color: var(--input-default-border-color);
   input {
-    height: 2.1em;
     width: 0;
-    padding: 0;
-    border-color: transparent;
+    padding: .6em 0 .6em 0;
+    font-size: 1em;
+    border: none;
     background-color: transparent;
+    box-shadow: none;
   }
   button {
-    margin-left: 0;
+    margin: 0;
   }
   &.open,
   &:focus-within {
     input {
+      --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
       width: auto;
-      border-radius: 0;
-      border-top-left-radius: var(--input-border-radius);
-      border-bottom-left-radius: var(--input-border-radius);
-      border-right: none;
+      border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
       padding: var(--input-default-padding);
       background-color: var(--input-default-background-color);
-      &:focus {
-        border-color: var(--input-focused-border-color);
-      }
     }
     button {
-      border-radius: 0;
-      border-top-right-radius: var(--input-border-radius);
-      border-bottom-right-radius: var(--input-border-radius);
+      border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
       box-shadow: inset -.1em -.1em 0 0 var(--button-default-color), inset .1em -.1em 0 0 var(--button-default-color), inset -.1em .1em 0 0 var(--button-default-color), inset .1em .1em 0 0 var(--button-default-color);
       &:hover {
         box-shadow: none;

@@ -25,7 +25,6 @@ class HelpButton extends SimpleButton {
         if (!config.id) { // need to generate an id for aria stuff
             config.id = `help-${Utils.getUniqueKey(5)}`;
         }
-
         super(config);
     }
 

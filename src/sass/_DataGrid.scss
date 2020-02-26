@@ -47,7 +47,8 @@ div.datagrid-container {
     align-items: flex-end;
     align-content: center;
     justify-content: flex-end;
-    :first-child {
+    background-color: var(--canvas-color-callout-lightweight);
+    button:first-child {
       align-self: flex-start;
       margin-right: auto;
     }
@@ -57,12 +58,31 @@ div.datagrid-container {
     display: flex;
     flex-direction: row;
     align-content: center;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-end;
-    padding: .5em 0 .5em 0;
-    :first-child {
-      align-self: flex-start;
+    padding: 0;
+    height: 3em;
+    min-height: 3em;
+    div.countbox {
       margin-right: auto;
+      label {
+        display: inline-block;
+        margin: .5em;
+      }
+    }
+    div.grid-filtertags {
+      width: 40%;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
+      label {
+        margin: .5em;
+      }
+      button.tagbutton {
+        margin: .5em;
+      }
     }
   }
   div.grid-wrapper {
@@ -165,8 +185,6 @@ div.datagrid-container {
         color: var(--datagrid-grid-text-color);
         td {
           padding: .5em 1em .5em 1em;
-          //overflow: hidden;
-          //text-overflow: ellipsis;
           white-space: nowrap;
           &.italic {
             font-style: oblique;
@@ -184,7 +202,6 @@ div.datagrid-container {
           display: none;
         }
         &[data-matched-filters] {
-          display: table-row;
           &[data-search-hidden=true] {
             display: none;
           }
