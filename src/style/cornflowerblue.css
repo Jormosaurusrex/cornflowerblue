@@ -2173,7 +2173,7 @@ div.select-container ul.selectmenu li input[type=radio] {
 }
 div.select-container ul.selectmenu li label {
   display: inline-block;
-  padding: 1em 1em 1em 1.5em;
+  padding: 0.5em 1em 0.5em 1.5em;
   margin: 0;
   text-shadow: none;
   width: 100%;
@@ -2182,13 +2182,22 @@ div.select-container ul.selectmenu li label {
 div.select-container ul.selectmenu li label:after {
   display: none;
 }
+div.select-container ul.selectmenu li label:before {
+  display: none;
+}
 div.select-container ul.selectmenu li:focus {
   outline: var(--selectmenu-menu-background-color) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
-div.select-container ul.selectmenu li.selected {
+div.select-container ul.selectmenu li[aria-selected=true] {
   box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
+}
+div.select-container ul.selectmenu li[aria-selected=true] label {
+  padding: 0.5em 1em 0.5em 0.1em;
+}
+div.select-container ul.selectmenu li[aria-selected=true] label:before {
+  display: inline-block;
 }
 div.select-container ul.selectmenu li:nth-child(even) {
   background-color: var(--selectmenu-menu-alternate-background-color);

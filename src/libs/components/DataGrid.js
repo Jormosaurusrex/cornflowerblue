@@ -169,6 +169,33 @@ class DataGrid {
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
+     * Toggle visibility of the actions panel
+     */
+    toggleActions() {
+        if (this.gridactions.getAttribute('aria-hidden') === 'true') {
+            this.openActions();
+        } else {
+            this.closeActions();
+        }
+    }
+
+    /**
+     * Open the actions panel
+     */
+    openActions() {
+        this.gridactions.removeAttribute('aria-hidden');
+        this.actionsbutton.button.setAttribute('aria-expanded', true);
+    }
+
+    /**
+     * Close the actions panel
+     */
+    closeActions() {
+        this.gridactions.setAttribute('aria-hidden', true);
+        this.actionsbutton.button.removeAttribute('aria-expanded');
+    }
+
+    /**
      * Export the data in the grid as a CSV
      */
     export() {
@@ -731,6 +758,9 @@ class DataGrid {
         }
     }
 
+    /**
+     * Build the grid info panel
+     */
     buildGridInfo() {
         const me = this;
 
@@ -763,7 +793,6 @@ class DataGrid {
             this.gridinfo.append(this.searchcontrol.container);
         }
 
-
         if (this.filterable) {
             this.filtertags = document.createElement('div');
             this.filtertags.classList.add('grid-filtertags');
@@ -781,24 +810,6 @@ class DataGrid {
             }
         });
         this.gridinfo.append(this.actionsbutton.button);
-    }
-
-    toggleActions() {
-        if (this.gridactions.getAttribute('aria-hidden') === 'true') {
-            this.openActions();
-        } else {
-            this.closeActions();
-        }
-    }
-
-    openActions() {
-        this.gridactions.removeAttribute('aria-hidden');
-        this.actionsbutton.button.setAttribute('aria-expanded', true);
-    }
-
-    closeActions() {
-        this.gridactions.setAttribute('aria-hidden', true);
-        this.actionsbutton.button.removeAttribute('aria-expanded');
     }
 
     /**

@@ -129,12 +129,15 @@ div.select-container {
       }
       label {
         display: inline-block;
-        padding: 1em 1em 1em 1.5em;
+        padding: .5em 1em .5em 1.5em;
         margin: 0;
         text-shadow: none;
         width: 100%;
         min-width: 100%;
         &:after {
+          display: none;
+        }
+        &:before {
           display: none;
         }
       }
@@ -143,8 +146,14 @@ div.select-container {
         outline-offset: -.3em;
         text-decoration: underline double;
       }
-      &.selected {
+      &[aria-selected=true] {
         box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+        label {
+          padding: .5em 1em .5em .1em;
+          &:before {
+            display: inline-block;
+          }
+        }
       }
       &:nth-child(even) {
         background-color: var(--selectmenu-menu-alternate-background-color);

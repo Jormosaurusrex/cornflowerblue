@@ -313,6 +313,7 @@ class SelectMenu extends InputElement {
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
+        opLabel.classList.add('cfb-triangle-down');
 
         let op = document.createElement('input');
         op.setAttribute('id', lId);
@@ -337,13 +338,6 @@ class SelectMenu extends InputElement {
             } else {
                 me.passivebox.innerHTML = def.label;
             }
-
-            let labels = me.optionlist.querySelectorAll('label');
-            for (let l of labels) {
-                l.classList.remove('cfb-triangle-down');
-            }
-
-            opLabel.classList.add('cfb-triangle-down');
 
             me.close();
 
