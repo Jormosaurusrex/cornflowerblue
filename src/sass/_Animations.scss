@@ -75,7 +75,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes cfb-pushup {
   0% {
     transform: scale(.5);
@@ -110,3 +109,14 @@
 .fadeout { animation-name: cfb-fadeout; }
 .popin { animation-name: cfb-popin; }
 .popout { animation-name: cfb-popout; }
+
+@keyframes cfb-expando-button {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+    width: auto;
+  }
+}

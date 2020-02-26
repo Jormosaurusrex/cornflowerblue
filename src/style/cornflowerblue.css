@@ -4,6 +4,9 @@
  */
 :root {
   --cornflowerblue: rgb(100, 149, 237);
+  --cornflowerblue-half: rgb(176, 192, 227);
+  --cornflowerblue-quarter: rgb(212, 219, 239);
+  --cornflowerblue-translucent: rgb(236, 238, 248);
   --darkblue: rgb(0, 84, 166);
   --blue: var(--cornflowerblue);
   --red: rgb(145, 0, 0);
@@ -90,13 +93,15 @@
   --panel-shadow-light-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --interior-shadow-inverse: 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --interior-shadows-inside-dark: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
+  --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
   --wide-measure: 40em;
   --thin-measure: 25em;
   --body-background-color: var(--grey-darkest);
   --canvas-color-primary: var(--ultralight);
   --canvas-color-secondary: var(--morelight);
   --canvas-color-tertiary: var(--light);
+  --canvas-color-colored: var(--cornflowerblue-translucent);
   --canvas-color-callout-lightweight: var(--blue-translucent);
   --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
@@ -572,6 +577,16 @@
   animation-name: cfb-popout;
 }
 
+@keyframes cfb-expando-button {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+    width: auto;
+  }
+}
 * {
   padding: 0;
   margin: 0;
@@ -2285,16 +2300,25 @@ button.expander {
 button.expander span.text,
 button.expander span.secondicon {
   transition: all 0.2s;
-  opacity: 0;
+  opacity: 1;
   width: 0;
+  overflow: hidden;
 }
 button.expander:focus span.text,
-button.expander:focus span.secondicon, button.expander:hover span.text,
-button.expander:hover span.secondicon, button.expander:active span.text,
+button.expander:focus span.secondicon, button.expander:active span.text,
 button.expander:active span.secondicon, button.expander[aria-expanded=true] span.text,
 button.expander[aria-expanded=true] span.secondicon {
+  animation: cfb-expando-button 0.2s;
   opacity: 1;
-  width: unset;
+  width: auto;
+}
+@media (hover: hover) and (pointer: fine) {
+  button.expander:hover span.text,
+button.expander:hover span.secondicon {
+    animation: cfb-expando-button 0.2s;
+    opacity: 1;
+    width: auto;
+  }
 }
 button.hamburger span.magichamburger {
   display: inline-block;
@@ -4611,6 +4635,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
   --datagrid-configurator-columnwidth: 10em;
   --datagrid-filter-border-color: var(--light);
+  --datagrid-actions-menu-background-color: var(--cornflowerblue-translucent);
 }
 
 div.datagrid-container {
@@ -4621,38 +4646,21 @@ div.datagrid-container {
   justify-content: space-between;
   max-height: 80vh;
   overflow: visible;
-  position: relative;
-}
-div.datagrid-container div.grid-actions {
-  position: relative;
-  z-index: 1000;
-  flex-grow: 1;
-  height: 4em;
-  max-height: 4em;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  align-content: center;
-  justify-content: flex-end;
-  background-color: var(--canvas-color-callout-lightweight);
-}
-div.datagrid-container div.grid-actions button:first-child {
-  margin-right: auto;
 }
 div.datagrid-container div.grid-info {
   position: relative;
-  z-index: 900;
+  z-index: 1000;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
   align-content: center;
   align-items: center;
-  justify-content: flex-end;
   padding: 0;
   height: 3em;
   min-height: 3em;
 }
 div.datagrid-container div.grid-info div.countbox {
+  flex-grow: 1;
   margin-right: auto;
   white-space: nowrap;
   padding-right: 1em;
@@ -4661,7 +4669,12 @@ div.datagrid-container div.grid-info div.countbox label {
   display: inline-block;
   margin: 0.5em;
 }
+div.datagrid-container div.grid-info div.searchcontrol {
+  flex-grow: 1;
+}
 div.datagrid-container div.grid-info div.grid-filtertags {
+  flex-shrink: 1;
+  flex-grow: 2;
   width: 40%;
   display: flex;
   flex-direction: row;
@@ -4674,6 +4687,54 @@ div.datagrid-container div.grid-info div.grid-filtertags label {
 }
 div.datagrid-container div.grid-info div.grid-filtertags button.tagbutton {
   margin: 0.5em;
+}
+div.datagrid-container div.grid-info button.filter {
+  flex-grow: 1;
+}
+div.datagrid-container div.grid-info button.actions[aria-expanded=true]:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 1.5em;
+  bottom: -0.8em;
+  border-width: 0 1em 1em 1em;
+  border-style: solid;
+  border-color: var(--datagrid-actions-menu-background-color) transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container div.grid-info button.actions[aria-expanded=true]:hover:before {
+    filter: brightness(85%);
+  }
+}
+div.datagrid-container div.grid-actions {
+  position: relative;
+  transition: all 0.2s;
+  z-index: 900;
+  flex-grow: 1;
+  height: 4em;
+  max-height: 4em;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  align-content: center;
+  justify-content: flex-end;
+  background-color: var(--datagrid-actions-menu-background-color);
+  box-shadow: var(--interior-shadows-inside);
+}
+div.datagrid-container div.grid-actions button:first-child {
+  margin-right: auto;
+}
+div.datagrid-container div.grid-actions button {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+div.datagrid-container div.grid-actions[aria-hidden=true] {
+  height: 0;
+  overflow: hidden;
+}
+div.datagrid-container div.grid-actions[aria-hidden=true] button {
+  opacity: 0;
 }
 div.datagrid-container div.grid-wrapper {
   overflow: auto;

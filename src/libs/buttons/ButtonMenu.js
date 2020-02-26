@@ -141,7 +141,7 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keydown', function(e) {
+            menuitem.addEventListener('keyup', function(e) {
                 if (e.keyCode === 9) { // Tab
                     me.close();
                 } else if (e.keyCode === 27) { // Escape
@@ -187,9 +187,18 @@ class ButtonMenu extends SimpleButton {
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
+        const me = this;
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         this.button.appendChild(this.menu);
+        this.menu.addEventListener('keyup', function(e) {
+
+            if (e.keyCode === 9) { // Tab
+                //me.close();
+            } else if (e.keyCode === 27) { // Escape
+                me.close();
+            }
+        });
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

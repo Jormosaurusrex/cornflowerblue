@@ -74,6 +74,9 @@ class DataGrid {
             applyfilterstext: 'Apply Filters',
             applyfiltersicon: 'checkmark-circle',
 
+            actionsbuttontext: 'Actions',
+            actionsbuttonicon: 'menu',
+
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
@@ -647,8 +650,8 @@ class DataGrid {
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
 
-        this.container.append(this.gridactions);
         this.container.append(this.gridinfo);
+        this.container.append(this.gridactions);
 
         this.grid.appendChild(this.header);
         this.grid.appendChild(this.gridbody);
@@ -676,6 +679,7 @@ class DataGrid {
 
         this.gridactions = document.createElement('div');
         this.gridactions.classList.add('grid-actions');
+        this.gridactions.setAttribute('aria-hidden', 'true');
 
         if (this.multiselect) {
             this.multiselectbutton = new SimpleButton({
@@ -687,17 +691,6 @@ class DataGrid {
                 }
             });
             this.gridactions.append(this.multiselectbutton.button);
-        }
-
-        if (this.filterable) {
-            this.filterbutton  = new ButtonMenu({
-                mute: true,
-                text: this.filterbuttontext,
-                icon: this.filterbuttonicon,
-                classes: ['filter', 'expander2'],
-                menu: this.buildFilterMenu()
-            });
-            this.gridactions.append(this.filterbutton.button);
         }
 
         this.columnconfigbutton = new SimpleButton({
@@ -756,9 +749,49 @@ class DataGrid {
             this.gridinfo.append(this.searchcontrol.container);
         }
 
-        this.filtertags = document.createElement('div');
-        this.filtertags.classList.add('grid-filtertags');
-        this.gridinfo.appendChild(this.filtertags);
+
+        if (this.filterable) {
+            this.filtertags = document.createElement('div');
+            this.filtertags.classList.add('grid-filtertags');
+            this.gridinfo.appendChild(this.filtertags);
+
+            this.filterbutton  = new ButtonMenu({
+                mute: true,
+                text: this.filterbuttontext,
+                icon: this.filterbuttonicon,
+                classes: ['filter', 'expander'],
+                menu: this.buildFilterMenu()
+            });
+            this.gridinfo.append(this.filterbutton.button);
+        }
+        this.actionsbutton  = new SimpleButton({
+            mute: true,
+            text: this.actionsbuttontext,
+            icon: this.actionsbuttonicon,
+            classes: ['actions', 'expander'],
+            action: function() {
+                me.toggleActions();
+            }
+        });
+        this.gridinfo.append(this.actionsbutton.button);
+    }
+
+    toggleActions() {
+        if (this.gridactions.getAttribute('aria-hidden') === 'true') {
+            this.openActions();
+        } else {
+            this.closeActions();
+        }
+    }
+
+    openActions() {
+        this.gridactions.removeAttribute('aria-hidden');
+        this.actionsbutton.button.setAttribute('aria-expanded', true);
+    }
+
+    closeActions() {
+        this.gridactions.setAttribute('aria-hidden', true);
+        this.actionsbutton.button.removeAttribute('aria-expanded');
     }
 
     /**
@@ -982,6 +1015,15 @@ class DataGrid {
     toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actionsbutton() { return this._actionsbutton; }
+    set actionsbutton(actionsbutton) { this._actionsbutton = actionsbutton; }
+
+    get actionsbuttonicon() { return this.config.actionsbuttonicon; }
+    set actionsbuttonicon(actionsbuttonicon) { this.config.actionsbuttonicon = actionsbuttonicon; }
+
+    get actionsbuttontext() { return this.config.actionsbuttontext; }
+    set actionsbuttontext(actionsbuttontext) { this.config.actionsbuttontext = actionsbuttontext; }
 
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }

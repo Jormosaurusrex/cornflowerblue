@@ -44,17 +44,28 @@ button {
     span.text,
     span.secondicon {
       transition: all .2s;
-      opacity: 0;
+      opacity: 1;
       width: 0;
+      overflow: hidden;
     }
     &:focus,
-    &:hover,
     &:active,
     &[aria-expanded='true'] {
       span.text,
       span.secondicon {
+        animation: cfb-expando-button .2s;
         opacity: 1;
-        width: unset;
+        width: auto;
+      }
+    }
+    @include for-hover-only {
+      &:hover {
+        span.text,
+        span.secondicon {
+          animation: cfb-expando-button .2s;
+          opacity: 1;
+          width: auto;
+        }
       }
     }
   }
