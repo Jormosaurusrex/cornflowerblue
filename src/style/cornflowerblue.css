@@ -2763,11 +2763,6 @@ button.link:disabled {
 button.menu {
   overflow: visible;
 }
-button.menu.square ul,
-button.menu.square form, button.menu.circle ul,
-button.menu.circle form {
-  font-size: 1em;
-}
 button.menu ul,
 button.menu form {
   flex-direction: column;
@@ -2883,6 +2878,16 @@ button.menu form div.elements div.select-container ul.selectmenu {
 }
 button.menu form.noactions div.header {
   display: none;
+}
+button.menu.square ul,
+button.menu.square form, button.menu.circle ul,
+button.menu.circle form {
+  font-size: 1em;
+}
+button.menu.square ul:before,
+button.menu.square form:before, button.menu.circle ul:before,
+button.menu.circle form:before {
+  right: 0.25em;
 }
 button.menu[aria-expanded=true] {
   color: var(--button-default-text-color);

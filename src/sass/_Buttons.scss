@@ -557,13 +557,7 @@ button {
   }
   &.menu {
     overflow: visible;
-    &.square,
-    &.circle {
-      ul,
-      form {
-        font-size: 1em;
-      }
-    }
+
     ul,
     form {
       flex-direction: column;
@@ -667,6 +661,16 @@ button {
       &.noactions {
         div.header {
           display: none;
+        }
+      }
+    }
+    &.square,
+    &.circle {
+      ul,
+      form {
+        font-size: 1em;
+        &:before {
+          right: .25em;
         }
       }
     }
