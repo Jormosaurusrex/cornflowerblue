@@ -311,7 +311,6 @@ button {
     padding: .5em;
     width: 2em;
     height: 2em;
-    font-size: 1.2em;
     line-height: 1;
     display: flex;
     justify-content: center;
@@ -319,6 +318,7 @@ button {
     flex-direction: column;
     span.icon {
       margin: 0;
+      font-size: 1.2em;
     }
     span.secondicon,
     span.text {
@@ -499,8 +499,71 @@ button {
       }
     }
   }
+  &.naked,
+  &.link {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    background-image: none;
+    height: auto;
+    width: auto;
+    transition: brightness .5s;
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: transparent;
+      background-image: none;
+      color: var(--button-default-color);
+    }
+    @include for-hover-only {
+      &:hover,
+      &.hover {
+        background-color: transparent;
+        background-image: none;
+        color: var(--button-default-color);
+      }
+    }
+  }
+  &.naked {
+    color: var(--button-default-color);
+  }
+  &.link {
+    color: var(--link-color);
+    text-shadow: var(--link-text-shadow);
+    text-decoration: underline;
+    @include for-hover-only {
+      &:hover,
+      &.hover {
+        color: var(--link-color);
+        filter: brightness(120%);
+        text-decoration: underline double;
+      }
+    }
+    &:active,
+    &.active {
+      color: var(--link-color);
+    }
+    &:focus,
+    &.focus {
+      color: var(--link-color);
+      text-decoration: underline double;
+    }
+    &:disabled {
+      color: var(--button-disabled-text-color);
+      text-shadow: none;
+    }
+  }
   &.menu {
     overflow: visible;
+    &.square,
+    &.circle {
+      ul,
+      form {
+        font-size: 1em;
+      }
+    }
     ul,
     form {
       flex-direction: column;
@@ -548,6 +611,7 @@ button {
           padding: 0.6em 1em 0.6em 1em;
           white-space: nowrap;
           background-color: transparent;
+          font-size: 1em;
           color: var(--button-menu-item-text-color);
           text-shadow: var(--button-menu-item-text-shadow);
           cursor: pointer;
@@ -557,10 +621,6 @@ button {
           align-items: center;
           flex-grow: 1;
           &:active {
-            color: var(--button-menu-item-hover-text-color);
-            filter: none;
-          }
-          @include for-hover-only {
             color: var(--button-menu-item-hover-text-color);
             filter: none;
           }
@@ -622,62 +682,7 @@ button {
       }
     }
   }
-  &.naked,
-  &.link {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    box-shadow: none;
-    background-image: none;
-    height: auto;
-    width: auto;
-    transition: brightness .5s;
-    &:focus,
-    &.focus,
-    &:active,
-    &.active {
-      background-color: transparent;
-      background-image: none;
-      color: var(--button-default-color);
-    }
-    @include for-hover-only {
-      &:hover,
-      &.hover {
-        background-color: transparent;
-        background-image: none;
-        color: var(--button-default-color);
-      }
-    }
-  }
-  &.naked {
-    color: var(--button-default-color);
-  }
-  &.link {
-    color: var(--link-color);
-    text-shadow: var(--link-text-shadow);
-    text-decoration: underline;
-    @include for-hover-only {
-      &:hover,
-      &.hover {
-        color: var(--link-color);
-        filter: brightness(120%);
-        text-decoration: underline double;
-      }
-    }
-    &:active,
-    &.active {
-      color: var(--link-color);
-    }
-    &:focus,
-    &.focus {
-      color: var(--link-color);
-      text-decoration: underline double;
-    }
-    &:disabled {
-      color: var(--button-disabled-text-color);
-      text-shadow: none;
-    }
-  }
+
 }
 
 

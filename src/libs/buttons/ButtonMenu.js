@@ -74,7 +74,7 @@ class ButtonMenu extends SimpleButton {
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        if (focusable) {
+        if ((focusable) && (focusable.length > 0)) {
             focusable[0].focus();
         }
 
@@ -98,15 +98,16 @@ class ButtonMenu extends SimpleButton {
         }
     }
 
-
     /**
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
         const me = this;
         window.addEventListener('click', function(e) {
-            if (me.menu.contains(e.target)) {
+            if ((me.menu.contains(e.target)) && (me.menu.tagName.toLowerCase() === 'form')) {
                 me.setCloseListener();
+            } else if (me.menu.contains(e.target)) {
+                me.close();
             } else if (me.button.contains(e.target)) {
                 me.toggle();
             } else {
