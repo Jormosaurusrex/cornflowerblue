@@ -4,6 +4,8 @@ class DialogWindow {
        return {
            id: null,
            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+           actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
+                            // Possible keywords:  closebutton, cancelbutton
            content: '<p />No provided content</p', // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
@@ -14,6 +16,8 @@ class DialogWindow {
            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
            escapecloses: true, // Allow the window to be closed by the escape key
            nofocus: false, // If true, do not auto focus anything.
+           canceltext: 'Cancel',
+           closetext: 'Close', // Text for the closebutton, if any
            showclose: true  // Show or hide the X button in the corner (requires title != null)
         };
     }
@@ -104,8 +108,6 @@ class DialogWindow {
     escape(e, self) {
         console.log(e.key);
         if (e.key === 'Escape') {
-            console.log("asdfadssadfasdfasdads");
-            console.log(self);
             self.close();
         }
     }
@@ -171,6 +173,38 @@ class DialogWindow {
             this.contentbox.appendChild(this.content);
 
             this.window.appendChild(this.contentbox);
+
+            if ((this.actions) && (this.actions.length > 0)) {
+                this.actionbox = document.createElement('div');
+                this.actionbox.classList.add('actions');
+                for (let a of this.actions) {
+                    if (typeof a === 'string') { // it's a keyword
+                        switch(a) {
+                            case 'closebutton':
+                                this.actionbox.appendChild(new SimpleButton({
+                                    text: this.closetext,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }).container);
+                                break;
+                            case 'cancelbutton':
+                                this.actionbox.appendChild(new DestructiveButton({
+                                    text: this.canceltext,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }).container);
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        this.actionbox.appendChild(a.container);
+                    }
+                }
+                this.window.appendChild(this.actionbox);
+            }
         }
     }
 
@@ -184,6 +218,15 @@ class DialogWindow {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get actionbox() { return this._actionbox; }
+    set actionbox(actionbox) { this._actionbox = actionbox; }
+
+    get actions() { return this.config.actions; }
+    set actions(actions) { this.config.actions = actions; }
+
+    get canceltext() { return this.config.canceltext; }
+    set canceltext(canceltext) { this.config.canceltext = canceltext; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -192,6 +235,9 @@ class DialogWindow {
 
     get closebutton() { return this._closebutton; }
     set closebutton(closebutton) { this._closebutton = closebutton; }
+
+    get closetext() { return this.config.closetext; }
+    set closetext(closetext) { this.config.closetext = closetext; }
 
     get container() { return this._container; }
     set container(container) { this._container = container; }
