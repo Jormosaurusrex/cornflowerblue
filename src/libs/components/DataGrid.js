@@ -445,7 +445,8 @@ class DataGrid {
 
         let dialog = new DialogWindow({
             title: this.columnconfigurationtitle,
-            content: container
+            content: container,
+            actions: ["closebutton"]
         });
         dialog.open();
     }

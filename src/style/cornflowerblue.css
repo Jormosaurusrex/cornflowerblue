@@ -4237,6 +4237,46 @@ div.window-container div.dialog div.content {
   overflow: auto;
   z-index: 2005;
 }
+div.window-container div.dialog div.actions {
+  position: relative;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: center;
+  justify-content: space-between;
+  height: 5em;
+  min-height: 5em;
+  max-height: 5em;
+  overflow: auto;
+  z-index: 9;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+  background-color: var(--form-actions-background-color);
+  border-top: 0.1em solid var(--form-actions-border-color);
+}
+div.window-container div.dialog div.actions button {
+  margin-right: 1em;
+}
+div.window-container div.dialog div.actions button.fill {
+  margin: 0;
+}
+div.window-container div.dialog div.actions button:first-child {
+  margin-left: 0;
+}
+div.window-container div.dialog div.actions button:last-child:not(:only-of-type) {
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: 1em;
+}
+div.window-container div.dialog div.actions button:last-child:not(:only-of-type):first-child {
+  margin-left: 0;
+}
+div.window-container div.dialog div.actions button:last-child:not(:only-of-type):last-child:not(:only-of-type) {
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: 1em;
+}
 div.window-container div.dialog.isform div.content {
   margin: 0;
   padding: 0;
