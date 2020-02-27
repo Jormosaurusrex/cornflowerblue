@@ -11,6 +11,7 @@ class DataGrid {
                     name: <string>,  // The variable name for this field (computer readable)
                     label: <string>, // The human-readable name for the column
                     width: <number,  // The default width of the column
+                    hidden: <boolean>, // Is the column hidden or not.
                     type: <string>,  // The datatype of the column
                                      //   - string
                                      //   - number
@@ -37,6 +38,8 @@ class DataGrid {
             columnconfigurationicon: 'table',
             columnconfigurationinstructions: 'Select which columns to show in the grid. This does not hide the columns during export.',
             columnconfigurationtitle: 'Configure Columns',
+
+            savestate: true, // attempt to save the grid's state
 
             searchable: true, // Data can be filtered
             searchbuttontext: 'Search',
@@ -65,7 +68,7 @@ class DataGrid {
             filterbuttontext: 'Filters',
             filterbuttonicon: 'filter',
             filterinstructions: ['Columns that are filterable are shown below. Set the value of the column to filter it.'],
-            filterlabel: 'Filters:',
+            filterlabel: 'Active Filters:',
             filtertitle: 'Manage Filters',
             filterunselectedvaluetext: '(No filter)',
             filterplaceholder: '(No filter)',
@@ -93,24 +96,20 @@ class DataGrid {
         };
     }
 
-    static get BLANK_STATE() {
-        return {
-            selected: null, // Holds the identifier for the selected item
-            sortfield: null, // a string, holds the a field name
-            sortdirection: null, // a string, asc or desc
-            filter: null, // a string/filter name
-            fields: {} // A dictionary that holds field configuration
-        };
-    }
-
     /**
      * Define a DataGrid
      * @param config a dictionary object
      */
     constructor(config) {
         this.config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `grid-${Utils.getUniqueKey(5)}`; }
+        if (this.id) {
+            this.savekey = `grid-${this.id}`;
+        } else {
+            this.id = `grid-${Utils.getUniqueKey(5)}`;
+        }
         this.activefilters = {};
+        this.loadstate();
+        console.log(this.state);
     }
 
     /* PSEUDO GETTERS___________________________________________________________________ */
@@ -123,6 +122,13 @@ class DataGrid {
         return this.grid.classList.contains('multiselecting');
     }
 
+    /**
+     * Test if the grid can be persisted.
+     * @return {boolean}
+     */
+    get ispersistable() {
+        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+    }
 
     /**
      * Get all values for a given field key
@@ -365,6 +371,7 @@ class DataGrid {
         } else {
             this.hideColumn(f);
         }
+        this.persist();
     }
 
     /**
@@ -373,7 +380,7 @@ class DataGrid {
      */
     hideColumn(field) {
         field.hidden = true;
-        let cols = document.querySelectorAll(`[data-name='${field.name}']`);
+        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
         for (let c of cols) {
             c.classList.add('hidden');
         }
@@ -385,7 +392,7 @@ class DataGrid {
      */
     showColumn(field) {
         field.hidden = false;
-        let cols = document.querySelectorAll(`[data-name='${field.name}']`);
+        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
         for (let c of cols) {
             c.classList.remove('hidden');
         }
@@ -442,6 +449,65 @@ class DataGrid {
             content: container
         });
         dialog.open();
+    }
+
+    /* PERSISTENCE METHODS______________________________________________________________ */
+
+    persist() {
+        if (!this.ispersistable) {
+            return;
+        }
+        this.state = this.grindstate(); // get a current copy of it.
+        localStorage.setItem(this.savekey, JSON.stringify(this.state));
+    }
+
+    loadstate() {
+        if (this.ispersistable) {
+            this.state = JSON.parse(localStorage.getItem(this.savekey));
+        }
+        if (!this.state) {
+            this.state = this.grindstate(); // this will be the default
+        }
+    }
+
+    applystate() {
+        if (!this.state) { return; }
+        if (this.state.fields) {
+            for (let f of Object.values(this.state.fields)) {
+                if (f.hidden) {
+                    this.hideColumn(this.getfield(f.name));
+                } else {
+                    this.showColumn(this.getfield(f.name));
+                }
+            }
+        }
+        if (this.state.filters) {
+            this.activefilters = this.state.filters;
+        }
+        this.applyFilters();
+    }
+
+    /**
+     * Figures out the state of the grid and generates the state object
+     */
+    grindstate() {
+        let state = {
+            fields: {},
+            filters: {},
+            search: null
+        };
+
+        for (let f of this.fields) {
+            if (f.hidden === undefined) { f.hidden = false; }
+            state.fields[f.name] = {
+                name: f.name,
+                hidden: f.hidden
+            };
+        }
+        for (let af of (Object.values(this.activefilters))) {
+            state.filters[af.field] = af;
+        }
+        return state;
     }
 
     /* FILTER METHODS___________________________________________________________________ */
@@ -521,7 +587,6 @@ class DataGrid {
         dialog.open();
     }
 
-
     buildFilterMenu() {
         let elements = [];
         for (let f of this.fields) {
@@ -535,7 +600,6 @@ class DataGrid {
         }).container;
     }
 
-
     addFilter(field, value, exact) {
         if ((!value) || (value === '')) {
             delete this.activefilters[field];
@@ -546,11 +610,15 @@ class DataGrid {
                 exact: exact
             };
         }
+        this.persist();
         this.applyFilters();
     }
 
     removeFilter(f) {
+        console.log(this.activefilters);
         delete this.activefilters[f.field];
+        this.persist();
+        console.log(this.activefilters);
         this.applyFilters();
     }
 
@@ -559,11 +627,9 @@ class DataGrid {
         let rows = Array.from(this.gridbody.childNodes);
 
         this.filtertags.innerHTML = '';
-        if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
-            let label = document.createElement('label');
-            label.innerHTML = this.filterlabel;
-            this.filtertags.appendChild(label);
 
+        if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            this.filterinfo.setAttribute('aria-expanded', true);
             for (let f of Object.values(this.activefilters)) {
                 f.tagbutton = new TagButton({
                     text: this.getfield(f.field).label,
@@ -574,6 +640,8 @@ class DataGrid {
                 });
                 this.filtertags.appendChild(f.tagbutton.button);
             }
+        } else {
+            this.filterinfo.removeAttribute('aria-expanded');
         }
 
         for (let r of rows) {
@@ -669,6 +737,7 @@ class DataGrid {
      */
     buildContainer() {
         const me = this;
+
         for (let rdata of this.data) {
             this.gridbody.appendChild(this.buildRow(rdata));
         }
@@ -679,6 +748,9 @@ class DataGrid {
 
         this.container.append(this.gridinfo);
         this.container.append(this.gridactions);
+        if (this.filterable) {
+            this.container.append(this.filterinfo);
+        }
 
         this.grid.appendChild(this.header);
         this.grid.appendChild(this.gridbody);
@@ -696,6 +768,11 @@ class DataGrid {
             });
             this.container.append(this.noresultsbox.container);
         }
+
+        setTimeout(function() { // Have to wait until we're sure we're in the DOM
+            me.applystate();
+        }, 100);
+
     }
 
     /**
@@ -718,20 +795,6 @@ class DataGrid {
                 }
             });
             this.gridactions.append(this.multiselectbutton.button);
-        }
-
-        if (this.filterable) {
-            this.filtertags = document.createElement('div');
-            this.filtertags.classList.add('grid-filtertags');
-
-            this.filterbutton  = new ButtonMenu({
-                mute: true,
-                text: this.filterbuttontext,
-                icon: this.filterbuttonicon,
-                classes: ['filter'],
-                menu: this.buildFilterMenu()
-            });
-            this.gridactions.append(this.filterbutton.button);
         }
 
         this.columnconfigbutton = new SimpleButton({
@@ -759,7 +822,25 @@ class DataGrid {
     }
 
     /**
-     * Build the grid info panel
+     * Build the grid filters bit
+     */
+    buildFilterInfo() {
+
+        this.filterinfo = document.createElement('div');
+        this.filterinfo.classList.add('grid-filterinfo');
+
+        let label = document.createElement('label');
+        label.innerHTML = this.filterlabel;
+        this.filterinfo.appendChild(label);
+
+        this.filtertags = document.createElement('div');
+        this.filtertags.classList.add('grid-filtertags');
+
+        this.filterinfo.appendChild(this.filtertags);
+    }
+
+    /**
+     * Build the grid info bit
      */
     buildGridInfo() {
         const me = this;
@@ -794,9 +875,14 @@ class DataGrid {
         }
 
         if (this.filterable) {
-            this.filtertags = document.createElement('div');
-            this.filtertags.classList.add('grid-filtertags');
-            this.gridinfo.appendChild(this.filtertags);
+            this.filterbutton  = new ButtonMenu({
+                mute: true,
+                text: this.filterbuttontext,
+                icon: this.filterbuttonicon,
+                classes: ['filter'],
+                menu: this.buildFilterMenu()
+            });
+            this.gridinfo.append(this.filterbutton.button);
         }
 
         this.actionsbutton  = new SimpleButton({
@@ -809,6 +895,7 @@ class DataGrid {
                 me.toggleActions();
             }
         });
+
         this.gridinfo.append(this.actionsbutton.button);
     }
 
@@ -1115,6 +1202,12 @@ class DataGrid {
     get filterhelpexacttext() { return this.config.filterhelpexacttext; }
     set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
 
+    get filterinfo() {
+        if (!this._filterinfo) { this.buildFilterInfo(); }
+        return this._filterinfo;
+    }
+    set filterinfo(filterinfo) { this._filterinfo = filterinfo; }
+
     get filterinstructions() { return this.config.filterinstructions; }
     set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }
 
@@ -1220,6 +1313,12 @@ class DataGrid {
     get noresultstitle() { return this.config.noresultstitle; }
     set noresultstitle(noresultstitle) { this.config.noresultstitle = noresultstitle; }
 
+    get savekey() { return this._savekey; }
+    set savekey(savekey) { this._savekey = savekey; }
+
+    get savestate() { return this.config.savestate; }
+    set savestate(savestate) { this.config.savestate = savestate; }
+
     get searchable() { return this.config.searchable; }
     set searchable(searchable) { this.config.searchable = searchable; }
 
@@ -1244,6 +1343,7 @@ class DataGrid {
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
 
-    get texttotal() { return this.config.texttotal; }
-    set texttotal(texttotal) { this.config.texttotal = texttotal; }
+    get state() { return this._state; }
+    set state(state) { this._state = state; }
+
 }

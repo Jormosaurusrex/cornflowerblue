@@ -597,13 +597,18 @@ button {
         div.input-container {
           margin-top: 0;
         }
+        div.select-container {
+          margin-top: 0;
+          ul.selectmenu {
+            top: unset;
+          }
+        }
       }
       &.noactions {
         div.header {
           display: none;
         }
       }
-
     }
     &[aria-expanded='true'] {
       color: var(--button-default-text-color);

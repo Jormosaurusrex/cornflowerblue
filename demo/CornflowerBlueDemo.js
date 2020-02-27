@@ -657,6 +657,7 @@ class CornflowerBlueDemo {
     grindDataGrids() {
 
         let dg = new DataGrid({
+            id: 'cfb-demo-grid-',
             fields: [
                 {
                     name: "track",

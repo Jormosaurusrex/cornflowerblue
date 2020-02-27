@@ -2828,6 +2828,12 @@ button.menu form div.elements {
 button.menu form div.elements div.input-container {
   margin-top: 0;
 }
+button.menu form div.elements div.select-container {
+  margin-top: 0;
+}
+button.menu form div.elements div.select-container ul.selectmenu {
+  top: unset;
+}
 button.menu form.noactions div.header {
   display: none;
 }
@@ -4645,6 +4651,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
   --datagrid-configurator-columnwidth: 10em;
   --datagrid-filter-border-color: var(--light);
   --datagrid-actions-menu-background-color: var(--cornflowerblue-translucent);
+  --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
 }
 
 div.datagrid-container {
@@ -4656,64 +4663,38 @@ div.datagrid-container {
   max-height: 80vh;
   overflow: visible;
 }
-div.datagrid-container div.grid-info {
+div.datagrid-container div.grid-info,
+div.datagrid-container div.grid-actions,
+div.datagrid-container div.grid-filterinfo {
   position: relative;
-  z-index: 900;
-  flex-grow: 1;
   display: flex;
   flex-direction: row;
   align-content: center;
   align-items: center;
   padding: 0;
+  justify-content: flex-end;
+}
+div.datagrid-container div.grid-info {
+  z-index: 900;
+  flex-grow: 1;
   height: 3em;
   min-height: 3em;
 }
 div.datagrid-container div.grid-info div.countbox {
-  flex-grow: 1;
   margin-right: auto;
   white-space: nowrap;
   padding-right: 1em;
 }
 div.datagrid-container div.grid-info div.countbox label {
   display: inline-block;
-  margin: 0.5em;
-}
-div.datagrid-container div.grid-info div.searchcontrol {
-  flex-grow: 1;
-}
-div.datagrid-container div.grid-info div.grid-filtertags {
-  flex-shrink: 1;
-  flex-grow: 2;
-  width: 40%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-div.datagrid-container div.grid-info div.grid-filtertags label {
-  margin: 0.5em;
-}
-div.datagrid-container div.grid-info div.grid-filtertags button.tagbutton {
-  margin: 0.5em;
-}
-@media (hover: hover) and (pointer: fine) {
-  div.datagrid-container div.grid-info button.actions[aria-expanded=true]:hover:before {
-    filter: brightness(85%);
-  }
+  margin: 0 0.5em 0 0;
 }
 div.datagrid-container div.grid-actions {
-  position: relative;
   transition: all 0.2s;
   z-index: 1000;
   flex-grow: 1;
   height: 4em;
   max-height: 4em;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  align-content: center;
-  justify-content: flex-end;
   background-color: var(--datagrid-actions-menu-background-color);
   box-shadow: var(--interior-shadows-inside);
 }
@@ -4744,6 +4725,27 @@ div.datagrid-container div.grid-actions[aria-hidden=true] button {
 }
 div.datagrid-container div.grid-actions[aria-hidden=true]:before {
   display: none;
+}
+div.datagrid-container div.grid-filterinfo {
+  display: none;
+  background-color: var(--datagrid-filterinfo-background-color);
+}
+div.datagrid-container div.grid-filterinfo label {
+  margin: 0 0.5em 0 0;
+}
+div.datagrid-container div.grid-filterinfo div.grid-filtertags {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+div.datagrid-container div.grid-filterinfo div.grid-filtertags button.tagbutton {
+  margin: 0.5em;
+}
+div.datagrid-container div.grid-filterinfo[aria-expanded=true] {
+  display: flex;
 }
 div.datagrid-container div.grid-wrapper {
   overflow: auto;
