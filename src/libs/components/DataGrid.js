@@ -4,33 +4,36 @@ class DataGrid {
 
     static get DEFAULT_CONFIG() {
         return {
-            fields: [
+            fields: [  // The data fields for the grid and how they behave.
                 /*
                  * An array of field definition dictionaries:
                  *
-                    name: <string>,  // The variable name for this field (computer readable)
-                    label: <string>, // The human-readable name for the column
-                    width: <number,  // The default width of the column
+                    name: <string>,    // The variable name for this field (computer readable)
+                    label: <string>,   // The human-readable name for the column
+                    width: <number,    // The default width of the column
                     hidden: <boolean>, // Is the column hidden or not.
-                    type: <string>,  // The datatype of the column
-                                     //   - string
-                                     //   - number
-                                     //   - date
-                                     //   - time
-                                     //   - stringarray
-                                     //   - paragraph
+                    type: <string>,    // The datatype of the column
+                                       //   - string
+                                       //   - number
+                                       //   - date
+                                       //   - time
+                                       //   - stringarray
+                                       //   - paragraph
                     separator: <string>, // Used when rendering array values
-                    resize: <boolean>,  // Whether or not to allow resizing of the column (default: false)
-                    description: <string>>, // A string that describes the data in the column
+                    resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
+                    description: <string>>,  // A string that describes the data in the column
                     classes: <string array>, // Additional classes to apply to cells of this field
                     filterable: <null|string|enum> // Is the field filterable? if so, how?
-                    renderer: function(data) {  // A function that can be used to
+                    renderer: function(data) {     // A function that can be used to
                         return `${data}.`;
                     }
                 */
-            ], // The data fields for the grid and how they behave.
+            ],
 
             data: [], // The data to throw into the grid
+
+            id: null, // The id. An ID is required to save a grid's state.
+            savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
 
             sortable: true, //  Data columns can be sorted
 
@@ -38,8 +41,6 @@ class DataGrid {
             columnconfigurationicon: 'table',
             columnconfigurationinstructions: 'Select which columns to show in the grid. This does not hide the columns during export.',
             columnconfigurationtitle: 'Configure Columns',
-
-            savestate: true, // attempt to save the grid's state
 
             searchable: true, // Data can be filtered
             searchbuttontext: 'Search',
@@ -57,8 +58,8 @@ class DataGrid {
                                          // 'readable' : Uses the header labels (human readable)
                                          // 'data' : Uses the data labels
                                          // 'no' or null: don't include a header row
-            exportfilename: function() {  // the filename to name the exported data.
-                return 'export.csv';      // This can be a string or a function, but must return a string
+            exportfilename: function() { // the filename to name the exported data.
+                return 'export.csv';     // This can be a string or a function, but must return a string
             },
             exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
 
@@ -91,7 +92,6 @@ class DataGrid {
 
             texttotal: 'total',
             sorticon: 'chevron-down',
-            id: null, // The id
             classes: [] //Extra css classes to apply
         };
     }
@@ -109,7 +109,6 @@ class DataGrid {
         }
         this.activefilters = {};
         this.loadstate();
-        console.log(this.state);
     }
 
     /* PSEUDO GETTERS___________________________________________________________________ */
@@ -453,6 +452,9 @@ class DataGrid {
 
     /* PERSISTENCE METHODS______________________________________________________________ */
 
+    /**
+     * Persist the grid state
+     */
     persist() {
         if (!this.ispersistable) {
             return;
@@ -461,6 +463,9 @@ class DataGrid {
         localStorage.setItem(this.savekey, JSON.stringify(this.state));
     }
 
+    /**
+     * Load a saved state from local storage
+     */
     loadstate() {
         if (this.ispersistable) {
             this.state = JSON.parse(localStorage.getItem(this.savekey));
@@ -470,6 +475,9 @@ class DataGrid {
         }
     }
 
+    /**
+     * Apply the saved state to the grid
+     */
     applystate() {
         if (!this.state) { return; }
         if (this.state.fields) {
@@ -600,6 +608,12 @@ class DataGrid {
         }).container;
     }
 
+    /**
+     * Add a filter to the active filters
+     * @param field the field to affect
+     * @param value the value of the field to match
+     * @param exact whether or not to be an exact match
+     */
     addFilter(field, value, exact) {
         if ((!value) || (value === '')) {
             delete this.activefilters[field];
@@ -614,14 +628,19 @@ class DataGrid {
         this.applyFilters();
     }
 
+    /**
+     * Remove a filter from the active filter list
+     * @param f the filter to drop
+     */
     removeFilter(f) {
-        console.log(this.activefilters);
         delete this.activefilters[f.field];
         this.persist();
-        console.log(this.activefilters);
         this.applyFilters();
     }
 
+    /**
+     * Apply all filters
+     */
     applyFilters() {
         const me = this;
         let rows = Array.from(this.gridbody.childNodes);
