@@ -2543,7 +2543,6 @@ button.square, button.circle {
   padding: 0.5em;
   width: 2em;
   height: 2em;
-  font-size: 1.2em;
   line-height: 1;
   display: flex;
   justify-content: center;
@@ -2552,6 +2551,7 @@ button.square, button.circle {
 }
 button.square span.icon, button.circle span.icon {
   margin: 0;
+  font-size: 1.2em;
 }
 button.square span.secondicon,
 button.square span.text, button.circle span.secondicon,
@@ -2712,8 +2712,61 @@ button.tagbutton.righticon span.tagicon {
   margin-right: 0;
   margin-left: 1em;
 }
+button.naked, button.link {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+  background-image: none;
+  height: auto;
+  width: auto;
+  transition: brightness 0.5s;
+}
+button.naked:focus, button.naked.focus, button.naked:active, button.naked.active, button.link:focus, button.link.focus, button.link:active, button.link.active {
+  background-color: transparent;
+  background-image: none;
+  color: var(--button-default-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  button.naked:hover, button.naked.hover, button.link:hover, button.link.hover {
+    background-color: transparent;
+    background-image: none;
+    color: var(--button-default-color);
+  }
+}
+button.naked {
+  color: var(--button-default-color);
+}
+button.link {
+  color: var(--link-color);
+  text-shadow: var(--link-text-shadow);
+  text-decoration: underline;
+}
+@media (hover: hover) and (pointer: fine) {
+  button.link:hover, button.link.hover {
+    color: var(--link-color);
+    filter: brightness(120%);
+    text-decoration: underline double;
+  }
+}
+button.link:active, button.link.active {
+  color: var(--link-color);
+}
+button.link:focus, button.link.focus {
+  color: var(--link-color);
+  text-decoration: underline double;
+}
+button.link:disabled {
+  color: var(--button-disabled-text-color);
+  text-shadow: none;
+}
 button.menu {
   overflow: visible;
+}
+button.menu.square ul,
+button.menu.square form, button.menu.circle ul,
+button.menu.circle form {
+  font-size: 1em;
 }
 button.menu ul,
 button.menu form {
@@ -2771,6 +2824,7 @@ button.menu form li a {
   padding: 0.6em 1em 0.6em 1em;
   white-space: nowrap;
   background-color: transparent;
+  font-size: 1em;
   color: var(--button-menu-item-text-color);
   text-shadow: var(--button-menu-item-text-shadow);
   cursor: pointer;
@@ -2784,13 +2838,6 @@ button.menu ul li a:active,
 button.menu form li a:active {
   color: var(--button-menu-item-hover-text-color);
   filter: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  button.menu ul li a,
-button.menu form li a {
-    color: var(--button-menu-item-hover-text-color);
-    filter: none;
-  }
 }
 button.menu ul li a:focus,
 button.menu form li a:focus {
@@ -2847,54 +2894,6 @@ button.menu[aria-expanded=true] {
 }
 button.menu[aria-expanded=true] ul {
   display: flex;
-}
-button.naked, button.link {
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  box-shadow: none;
-  background-image: none;
-  height: auto;
-  width: auto;
-  transition: brightness 0.5s;
-}
-button.naked:focus, button.naked.focus, button.naked:active, button.naked.active, button.link:focus, button.link.focus, button.link:active, button.link.active {
-  background-color: transparent;
-  background-image: none;
-  color: var(--button-default-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  button.naked:hover, button.naked.hover, button.link:hover, button.link.hover {
-    background-color: transparent;
-    background-image: none;
-    color: var(--button-default-color);
-  }
-}
-button.naked {
-  color: var(--button-default-color);
-}
-button.link {
-  color: var(--link-color);
-  text-shadow: var(--link-text-shadow);
-  text-decoration: underline;
-}
-@media (hover: hover) and (pointer: fine) {
-  button.link:hover, button.link.hover {
-    color: var(--link-color);
-    filter: brightness(120%);
-    text-decoration: underline double;
-  }
-}
-button.link:active, button.link.active {
-  color: var(--link-color);
-}
-button.link:focus, button.link.focus {
-  color: var(--link-color);
-  text-decoration: underline double;
-}
-button.link:disabled {
-  color: var(--button-disabled-text-color);
-  text-shadow: none;
 }
 
 div.checkbox {
@@ -4728,43 +4727,6 @@ div.datagrid-container div.grid-info div.countbox {
 div.datagrid-container div.grid-info div.countbox label {
   display: inline-block;
   margin: 0 0.5em 0 0;
-}
-div.datagrid-container div.grid-actions {
-  transition: all 0.2s;
-  z-index: 1000;
-  flex-grow: 1;
-  height: 4em;
-  max-height: 4em;
-  background-color: var(--datagrid-actions-menu-background-color);
-  box-shadow: var(--interior-shadows-inside);
-}
-div.datagrid-container div.grid-actions button:first-child {
-  margin-right: auto;
-}
-div.datagrid-container div.grid-actions button {
-  opacity: 1;
-  transition: opacity 0.3s;
-}
-div.datagrid-container div.grid-actions:before {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  right: 0.7em;
-  top: -0.7em;
-  border-width: 0 1em 1em 1em;
-  border-style: solid;
-  border-color: var(--datagrid-actions-menu-background-color) transparent;
-}
-div.datagrid-container div.grid-actions[aria-hidden=true] {
-  height: 0;
-  overflow: hidden;
-}
-div.datagrid-container div.grid-actions[aria-hidden=true] button {
-  opacity: 0;
-}
-div.datagrid-container div.grid-actions[aria-hidden=true]:before {
-  display: none;
 }
 div.datagrid-container div.grid-filterinfo {
   display: none;

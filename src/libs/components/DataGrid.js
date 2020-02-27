@@ -88,7 +88,8 @@ class DataGrid {
 
             multiselectbuttontext: "Bulk Select",
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
-            multiactions: [], // Array of button actions to multiselects
+            multiselectactions: [], // Array of button actions to multiselects
+            multiselecticon: 'checkmark',
 
             texttotal: 'total',
             sorticon: 'chevron-down',
@@ -174,33 +175,6 @@ class DataGrid {
     /* CORE METHODS_____________________________________________________________________ */
 
     /**
-     * Toggle visibility of the actions panel
-     */
-    toggleActions() {
-        if (this.gridactions.getAttribute('aria-hidden') === 'true') {
-            this.openActions();
-        } else {
-            this.closeActions();
-        }
-    }
-
-    /**
-     * Open the actions panel
-     */
-    openActions() {
-        this.gridactions.removeAttribute('aria-hidden');
-        this.actionsbutton.button.setAttribute('aria-expanded', true);
-    }
-
-    /**
-     * Close the actions panel
-     */
-    closeActions() {
-        this.gridactions.setAttribute('aria-hidden', true);
-        this.actionsbutton.button.removeAttribute('aria-expanded');
-    }
-
-    /**
      * Export the data in the grid as a CSV
      */
     export() {
@@ -209,7 +183,9 @@ class DataGrid {
             rows = [],
             fname;
 
-        this.exportbutton.disable();
+        if (this.expoortbutton) {
+            this.exportbutton.disable();
+        }
 
         if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
             fname = this.exportfilename();
@@ -268,8 +244,9 @@ class DataGrid {
         hiddenElement.setAttribute('download', fname);
         hiddenElement.click();
 
-        this.exportbutton.enable();
-
+        if (this.exportbutton) {
+            this.exportbutton.enable();
+        }
     }
 
     /**
@@ -745,7 +722,6 @@ class DataGrid {
         this.container.setAttribute('id', this.id);
 
         this.container.append(this.gridinfo);
-        this.container.append(this.gridactions);
         if (this.filterable) {
             this.container.append(this.filterinfo);
         }
@@ -771,52 +747,6 @@ class DataGrid {
             me.applystate();
         }, 100);
 
-    }
-
-    /**
-     * Build the actions for the grid
-     */
-    buildGridActions() {
-        const me = this;
-
-        this.gridactions = document.createElement('div');
-        this.gridactions.classList.add('grid-actions');
-        this.gridactions.setAttribute('aria-hidden', 'true');
-
-        if (this.multiselect) {
-            this.multiselectbutton = new SimpleButton({
-                mute: true,
-                text: this.multiselectbuttontext,
-                classes: ['multiselect'],
-                action: function() {
-                    me.selectmodetoggle();
-                }
-            });
-            this.gridactions.append(this.multiselectbutton.button);
-        }
-
-        this.columnconfigbutton = new SimpleButton({
-            mute: true,
-            text: this.columnconfigurationlabel,
-            icon: this.columnconfigurationicon,
-            action: function() {
-                me.configurator('column');
-            }
-        });
-        this.gridactions.append(this.columnconfigbutton.button);
-
-        if (this.exportable) {
-            this.exportbutton  = new SimpleButton({
-                mute: true,
-                text: this.exportbuttontext,
-                icon: this.exporticon,
-                classes: ['export'],
-                action: function() {
-                    me.export();
-                }
-            });
-            this.gridactions.append(this.exportbutton.button);
-        }
     }
 
     /**
@@ -885,15 +815,41 @@ class DataGrid {
             this.gridinfo.append(this.filterbutton.button);
         }
 
-        this.actionsbutton  = new SimpleButton({
+        let items = [];
+        if (this.multiselect) {
+            items.push({
+                label: this.multiselectbuttontext,
+                icon: this.multiselecticon,
+                action: function() {
+                    me.selectmodetoggle();
+                }
+            });
+        }
+        items.push({
+            label: this.columnconfigurationlabel,
+            icon: this.columnconfigurationicon,
+            action: function() {
+                me.configurator('column');
+            }
+        });
+        if (this.exportable) {
+            items.push({
+                label: this.exportbuttontext,
+                icon: this.exporticon,
+                action: function() {
+                    me.export();
+                }
+            });
+        }
+
+        this.actionsbutton  = new ButtonMenu({
             mute: true,
             shape: 'square',
+            secondicon: null,
             text: this.actionsbuttontext,
             icon: this.actionsbuttonicon,
             classes: ['actions'],
-            action: function() {
-                me.toggleActions();
-            }
+            items: items
         });
 
         this.gridinfo.append(this.actionsbutton.button);
@@ -1238,12 +1194,6 @@ class DataGrid {
     }
     set grid(grid) { this._grid = grid; }
 
-    get gridactions() {
-        if (!this._gridactions) { this.buildGridActions(); }
-        return this._gridactions;
-    }
-    set gridactions(gridactions) { this._gridactions = gridactions; }
-
     get gridinfo() {
         if (!this._gridinfo) { this.buildGridInfo(); }
         return this._gridinfo;
@@ -1301,8 +1251,11 @@ class DataGrid {
     get multiselectbuttontext() { return this.config.multiselectbuttontext; }
     set multiselectbuttontext(multiselectbuttontext) { this.config.multiselectbuttontext = multiselectbuttontext; }
 
-    get multiactions() { return this.config.multiactions; }
-    set multiactions(multiactions) { this.config.multiactions = multiactions; }
+    get multiselecticon() { return this.config.multiselecticon; }
+    set multiselecticon(multiselecticon) { this.config.multiselecticon = multiselecticon; }
+
+    get multiselectactions() { return this.config.multiselectactions; }
+    set multiselectactions(multiselectactions) { this.config.multiselectactions = multiselectactions; }
 
     get noresultsbox() { return this._noresultsbox; }
     set noresultsbox(noresultsbox) { this._noresultsbox = noresultsbox; }
