@@ -39,7 +39,7 @@ class DataGrid {
 
             columnconfigurationlabel: 'Columns',
             columnconfigurationicon: 'table',
-            columnconfigurationinstructions: 'Select which columns to show in the grid. This does not hide the columns during export.',
+            columnconfigurationinstructions: ['Select which columns to show in the grid. This does not hide the columns during export.'],
             columnconfigurationtitle: 'Configure Columns',
 
             searchable: true, // Data can be filtered
@@ -358,6 +358,85 @@ class DataGrid {
 
     }
 
+    /**
+     * Opens a configuration dialog.
+     * @param type the type of dialog configurator
+     */
+    configurator(type) {
+        const me = this;
+
+        let container = document.createElement('div');
+        container.classList.add('datagrid-configurator');
+        container.classList.add('column');
+
+        let instructions,
+            title,
+            content;
+
+        switch(type) {
+            case 'column':
+                instructions = this.columnconfigurationinstructions;
+                title = this.columnconfigurationtitle;
+
+                content = document.createElement('ul');
+                content.classList.add('elements');
+                for (let f of this.fields) {
+                    let li = document.createElement('li');
+
+                    let cbox = new BooleanToggle({
+                        label: f.label,
+                        checked: !f.hidden,
+                        classes: ['column'],
+                        onchange: function() {
+                            me.toggleColumn(f);
+                        }
+                    });
+                    li.appendChild(cbox.container);
+
+                    if (f.description) {
+                        let desc = document.createElement('div');
+                        desc.classList.add('description');
+                        desc.innerHTML = f.description;
+                        li.appendChild(desc);
+                    }
+                    content.appendChild(li);
+                }
+                break;
+            case 'filter':
+                instructions = this.filterinstructions;
+                title = this.filtertitle;
+
+                content = document.createElement('ul');
+                content.classList.add('elements');
+                for (let f of this.fields) {
+                    if (f.filterable) {
+                        let li = document.createElement('li');
+                        li.appendChild(this.getFilterLine(f).container);
+                        content.appendChild(li);
+                    }
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        // instructions
+        if (instructions) {
+            container.append(new InstructionBox({
+                instructions: instructions
+            }).container);
+        }
+        container.append(content);
+
+        let dialog = new DialogWindow({
+            title: title,
+            content: container,
+            actions: ["closebutton"]
+        });
+        dialog.open();
+    }
+
     /* COLUMN METHODS___________________________________________________________________ */
 
     /**
@@ -395,60 +474,6 @@ class DataGrid {
         for (let c of cols) {
             c.classList.remove('hidden');
         }
-    }
-
-    /**
-     * Configure columns for the datagrid
-     */
-    columnconfigurator() {
-        const me = this;
-
-        let container = document.createElement('div');
-        container.classList.add('datagrid-configurator');
-        container.classList.add('column');
-
-        // instructions
-        if (this.columnconfigurationinstructions) {
-            container.append(new InstructionBox({
-                instructions: [this.columnconfigurationinstructions]
-            }).container);
-        }
-
-        let ul = document.createElement('ul');
-        ul.classList.add('elements');
-
-        for (let f of this.fields) {
-
-            let li = document.createElement('li');
-
-            let cbox = new BooleanToggle({
-                label: f.label,
-                checked: !f.hidden,
-                classes: ['column'],
-                onchange: function() {
-                    me.toggleColumn(f);
-                }
-            });
-            li.appendChild(cbox.container);
-
-            if (f.description) {
-                let desc = document.createElement('div');
-                desc.classList.add('description');
-                desc.innerHTML = f.description;
-                li.appendChild(desc);
-            }
-
-            ul.append(li);
-        }
-
-        container.append(ul);
-
-        let dialog = new DialogWindow({
-            title: this.columnconfigurationtitle,
-            content: container,
-            actions: ["closebutton"]
-        });
-        dialog.open();
     }
 
     /* PERSISTENCE METHODS______________________________________________________________ */
@@ -521,6 +546,11 @@ class DataGrid {
 
     /* FILTER METHODS___________________________________________________________________ */
 
+    /**
+     * Builds the filter manipulation controls
+     * @param f the field
+     * @return {TextInput|SelectMenu}
+     */
     getFilterLine(f) {
         const me = this;
 
@@ -555,58 +585,6 @@ class DataGrid {
             });
         }
         return element;
-    }
-
-    filterconfigurator() {
-
-        let instructions;
-        if (this.filterinstructions) {
-            instructions = {
-                instructions: this.filterinstructions
-            };
-        }
-
-        let elements = [];
-        for (let f of this.fields) {
-            if (f.filterable) {
-                elements.push(this.getFilterLine(f));
-            }
-        }
-
-        let f = new SimpleForm({
-            instructions: instructions,
-            elements: elements,
-            actions: [
-                new SimpleButton({
-                    text: "Close",
-                    mute: true,
-                    action: function(e, btn) {
-                        if ((btn.form) && (btn.form.dialog)) {
-                            btn.form.dialog.close();
-                        }
-                    }
-                })
-            ]
-        });
-
-        let dialog = new DialogWindow({
-            title: this.filtertitle,
-            form: f
-        });
-        dialog.open();
-    }
-
-    buildFilterMenu() {
-        let elements = [];
-        for (let f of this.fields) {
-            if (f.filterable) {
-                elements.push(this.getFilterLine(f));
-            }
-        }
-        return new SimpleForm({
-            elements: elements,
-            action: function() { }
-        }).container;
     }
 
     /**
@@ -822,7 +800,7 @@ class DataGrid {
             text: this.columnconfigurationlabel,
             icon: this.columnconfigurationicon,
             action: function() {
-                me.columnconfigurator();
+                me.configurator('column');
             }
         });
         this.gridactions.append(this.columnconfigbutton.button);
@@ -895,12 +873,14 @@ class DataGrid {
         }
 
         if (this.filterable) {
-            this.filterbutton  = new ButtonMenu({
+            this.filterbutton  = new SimpleButton({
                 mute: true,
                 text: this.filterbuttontext,
                 icon: this.filterbuttonicon,
                 classes: ['filter'],
-                menu: this.buildFilterMenu()
+                action: function() {
+                    me.configurator('filter');
+                }
             });
             this.gridinfo.append(this.filterbutton.button);
         }
