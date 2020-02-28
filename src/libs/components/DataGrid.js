@@ -1,5 +1,3 @@
-
-
 class DataGrid {
 
     static get DEFAULT_CONFIG() {

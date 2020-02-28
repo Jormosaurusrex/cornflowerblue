@@ -104,7 +104,8 @@ class ButtonMenu extends SimpleButton {
     setCloseListener() {
         const me = this;
         window.addEventListener('click', function(e) {
-            if ((me.menu.contains(e.target)) && (me.menu.tagName.toLowerCase() === 'form')) {
+            let tag = me.menu.tagName.toLowerCase();
+            if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 me.setCloseListener();
             } else if (me.menu.contains(e.target)) {
                 me.close();
@@ -189,14 +190,12 @@ class ButtonMenu extends SimpleButton {
      */
     processMenu() {
         const me = this;
-        this.menu.setAttribute('aria-hidden', 'true');
+        //this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
+        this.menu.classList.add('menu');
         this.button.appendChild(this.menu);
         this.menu.addEventListener('keyup', function(e) {
-
-            if (e.keyCode === 9) { // Tab
-                //me.close();
-            } else if (e.keyCode === 27) { // Escape
+            if (e.keyCode === 27) { // Escape
                 me.close();
             }
         });

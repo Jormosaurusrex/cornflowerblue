@@ -219,7 +219,8 @@
 
   // Button menu elements
   --button-menu-box-shadow: var(--panel-shadow);
-  --button-menu-background-color: var(--ultralight);
+  --button-menu-background-color: var(--canvas-color-primary);
+  --button-menu-border-color: var(--canvas-color-primary);
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);

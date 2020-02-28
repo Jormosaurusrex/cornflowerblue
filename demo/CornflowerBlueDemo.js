@@ -1126,7 +1126,6 @@ class CornflowerBlueDemo {
         }).container);
         document.getElementById('inputs-mute').appendChild(mute);
 
-
         let password = document.createElement('div');
         password.classList.add('example');
         password.classList.add('vert');
@@ -1140,6 +1139,16 @@ class CornflowerBlueDemo {
             placeholder: "Enter your password."
         }).container);
         document.getElementById('inputs-password').appendChild(password);
+
+        let dateinput = document.createElement('div');
+        dateinput.classList.add('example');
+        dateinput.classList.add('vert');
+        dateinput.appendChild(new DateInput({
+            label: "Date",
+            value: '1972-11-28',
+            placeholder: "Select a date"
+        }).container);
+        document.getElementById('inputs-date').appendChild(dateinput);
 
         let email = document.createElement('div');
         email.classList.add('example');

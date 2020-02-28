@@ -180,7 +180,8 @@
   --button-disabled-color: var(--disabled-base-color);
   --button-disabled-text-color: var(--disabled-highlight-color);
   --button-menu-box-shadow: var(--panel-shadow);
-  --button-menu-background-color: var(--ultralight);
+  --button-menu-background-color: var(--canvas-color-primary);
+  --button-menu-border-color: var(--canvas-color-primary);
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);
@@ -1482,11 +1483,11 @@ div.textarea-container div.wrap div.inputcontrol {
   top: 0;
   bottom: 0;
 }
-div.input-container div.wrap div.inputcontrol.stepbuttons,
-div.textarea-container div.wrap div.inputcontrol.stepbuttons {
+div.input-container div.wrap div.inputcontrol.stepbuttons, div.input-container div.wrap div.inputcontrol.calbutton,
+div.textarea-container div.wrap div.inputcontrol.stepbuttons,
+div.textarea-container div.wrap div.inputcontrol.calbutton {
   --button-default-color: var(--standard-color);
   display: flex;
-  opacity: 0.25;
   top: 0.2em;
   bottom: 0.2em;
   right: 3.5em;
@@ -1497,14 +1498,34 @@ div.textarea-container div.wrap div.inputcontrol.stepbuttons {
   align-content: center;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.input-container div.wrap div.inputcontrol.stepbuttons:hover,
-div.textarea-container div.wrap div.inputcontrol.stepbuttons:hover {
+  div.input-container div.wrap div.inputcontrol.stepbuttons:hover, div.input-container div.wrap div.inputcontrol.calbutton:hover,
+div.textarea-container div.wrap div.inputcontrol.stepbuttons:hover,
+div.textarea-container div.wrap div.inputcontrol.calbutton:hover {
     opacity: 1;
+    filter: none;
   }
 }
-div.input-container div.wrap div.inputcontrol.stepbuttons button span.icon,
-div.textarea-container div.wrap div.inputcontrol.stepbuttons button span.icon {
+div.input-container div.wrap div.inputcontrol.stepbuttons button span.icon, div.input-container div.wrap div.inputcontrol.calbutton button span.icon,
+div.textarea-container div.wrap div.inputcontrol.stepbuttons button span.icon,
+div.textarea-container div.wrap div.inputcontrol.calbutton button span.icon {
   margin: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.input-container div.wrap div.inputcontrol.stepbuttons button:hover, div.input-container div.wrap div.inputcontrol.calbutton button:hover,
+div.textarea-container div.wrap div.inputcontrol.stepbuttons button:hover,
+div.textarea-container div.wrap div.inputcontrol.calbutton button:hover {
+    filter: none;
+  }
+}
+div.input-container div.wrap div.inputcontrol.stepbuttons button .menu, div.input-container div.wrap div.inputcontrol.calbutton button .menu,
+div.textarea-container div.wrap div.inputcontrol.stepbuttons button .menu,
+div.textarea-container div.wrap div.inputcontrol.calbutton button .menu {
+  top: 1.5em;
+  right: -0.5em;
+}
+div.input-container div.wrap:focus-within div.inputcontrol,
+div.textarea-container div.wrap:focus-within div.inputcontrol {
+  opacity: 1;
 }
 div.input-container div.wrap:after,
 div.textarea-container div.wrap:after {
@@ -1552,7 +1573,7 @@ div.textarea-container div.charcounter,
 div.textarea-container div.searchdisplay {
   color: var(--input-subline-text-color);
   display: block;
-  font-size: 8.5em;
+  font-size: 0.85em;
   font-style: oblique;
   text-align: right;
 }
@@ -2763,59 +2784,70 @@ button.link:disabled {
 button.menu {
   overflow: visible;
 }
-button.menu ul,
-button.menu form {
+button.menu ul.menu,
+button.menu div.menu,
+button.menu form.menu {
   flex-direction: column;
   flex-wrap: nowrap;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
   position: absolute;
   right: 0;
   top: 2.5em;
+  margin: 0;
+  padding: 0;
   min-width: 50%;
   overflow: visible;
   z-index: 220;
   border-radius: var(--button-border-radius);
-  border: 0.1em solid var(--button-menu-background-color);
+  border: 0.1em solid var(--button-menu-border-color);
   background-color: var(--button-menu-background-color);
   color: var(--button-menu-item-text-color);
   box-shadow: var(--button-menu-box-shadow);
 }
-button.menu ul li,
-button.menu form li {
+button.menu ul.menu:before,
+button.menu div.menu:before,
+button.menu form.menu:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 0.7em;
+  top: -0.8em;
+  border-width: 0 0.7em 0.7em 0.7em;
+  border-style: solid;
+  border-color: var(--button-menu-border-color) transparent;
+}
+button.menu ul.menu[aria-hidden=true],
+button.menu div.menu[aria-hidden=true],
+button.menu form.menu[aria-hidden=true] {
+  display: none;
+}
+button.menu ul.menu li {
   padding: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 }
-button.menu ul li:active, button.menu ul li:focus,
-button.menu form li:active,
-button.menu form li:focus {
+button.menu ul.menu li:active, button.menu ul.menu li:focus {
   background-color: var(--button-menu-item-hover-background-color);
   color: var(--button-menu-item-hover-text-color);
   text-shadow: var(--button-menu-item-hover-text-shadow);
 }
-button.menu ul li:active a, button.menu ul li:focus a,
-button.menu form li:active a,
-button.menu form li:focus a {
+button.menu ul.menu li:active a, button.menu ul.menu li:focus a {
   color: var(--button-menu-item-hover-text-color);
 }
 @media (hover: hover) and (pointer: fine) {
-  button.menu ul li:hover,
-button.menu form li:hover {
+  button.menu ul.menu li:hover {
     background-color: var(--button-menu-item-hover-background-color);
     color: var(--button-menu-item-hover-text-color);
     text-shadow: var(--button-menu-item-hover-text-shadow);
   }
-  button.menu ul li:hover a,
-button.menu form li:hover a {
+  button.menu ul.menu li:hover a {
     color: var(--button-menu-item-hover-text-color);
   }
 }
-button.menu ul li a,
-button.menu form li a {
+button.menu ul.menu li a {
   padding: 0.6em 1em 0.6em 1em;
   white-space: nowrap;
   background-color: transparent;
@@ -2829,64 +2861,49 @@ button.menu form li a {
   align-items: center;
   flex-grow: 1;
 }
-button.menu ul li a:active,
-button.menu form li a:active {
+button.menu ul.menu li a:active {
   color: var(--button-menu-item-hover-text-color);
   filter: none;
 }
-button.menu ul li a:focus,
-button.menu form li a:focus {
+button.menu ul.menu li a:focus {
   margin: 0.3em;
   outline: var(--hot-text-color) dashed 0.1em;
   outline-offset: 0.2em;
   text-decoration: underline double;
 }
-button.menu ul li a span.icon,
-button.menu form li a span.icon {
+button.menu ul.menu li a span.icon {
   margin-right: 1em;
 }
-button.menu ul:before,
-button.menu form:before {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  right: 0.7em;
-  top: -0.8em;
-  border-width: 0 0.7em 0.7em 0.7em;
-  border-style: solid;
-  border-color: var(--button-menu-background-color) transparent;
-}
-button.menu ul[aria-hidden=true],
-button.menu form[aria-hidden=true] {
-  display: none;
-}
-button.menu form {
+button.menu form.menu {
   min-width: 20em;
 }
-button.menu form div.elements {
+button.menu form.menu div.elements {
   text-align: unset;
 }
-button.menu form div.elements div.input-container {
+button.menu form.menu div.elements div.input-container {
   margin-top: 0;
 }
-button.menu form div.elements div.select-container {
+button.menu form.menu div.elements div.select-container {
   margin-top: 0;
 }
-button.menu form div.elements div.select-container ul.selectmenu {
+button.menu form.menu div.elements div.select-container ul.selectmenu {
   top: unset;
 }
-button.menu form.noactions div.header {
+button.menu form.menu.noactions div.header {
   display: none;
 }
-button.menu.square ul,
-button.menu.square form, button.menu.circle ul,
-button.menu.circle form {
+button.menu.square ul.menu,
+button.menu.square form.menu,
+button.menu.square div.menu, button.menu.circle ul.menu,
+button.menu.circle form.menu,
+button.menu.circle div.menu {
   font-size: 1em;
 }
-button.menu.square ul:before,
-button.menu.square form:before, button.menu.circle ul:before,
-button.menu.circle form:before {
+button.menu.square ul.menu:before,
+button.menu.square form.menu:before,
+button.menu.square div.menu:before, button.menu.circle ul.menu:before,
+button.menu.circle form.menu:before,
+button.menu.circle div.menu:before {
   right: 0.25em;
 }
 button.menu[aria-expanded=true] {
@@ -2897,7 +2914,7 @@ button.menu[aria-expanded=true] {
   outline: none;
   text-decoration: none;
 }
-button.menu[aria-expanded=true] ul {
+button.menu[aria-expanded=true] ul.menu {
   display: flex;
 }
 
@@ -4669,6 +4686,123 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar {
 div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
     display: block;
   }
+}
+
+div.datepicker {
+  --datepicker-cell-dimensions: 2.5em;
+  --datepicker-header-color: var(--grey-darkest);
+  --datepicker-background-color: var(--canvas-color-primary);
+  --datepicker-month-header-background-color: var(--canvas-color-tertiary);
+  --datepicker-month-header-text-color: var(--grey-darkest);
+  --datepicker-day-today-background-color: var(--blue);
+  --datepicker-day-today-text-color: var(--ultralight);
+  --datepicker-day-background-color: var(--canvas-color-secondary);
+  --datepicker-day-text-color: var(--blue);
+  --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
+  --datepicker-day-currentmonth-text-color: var(--blue);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  background-color: var(--canvas-color-callout-lightweight);
+  z-index: 4000;
+  margin: 1em;
+}
+div.datepicker.menu {
+  padding: 1em;
+}
+div.datepicker div.monthbox {
+  padding: 0.5em;
+}
+div.datepicker div.monthbox div.month {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+div.datepicker div.monthbox div.month div.datepicker-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.5em;
+}
+div.datepicker div.monthbox div.month div.datepicker-header div.name {
+  text-transform: uppercase;
+  color: var(--datepicker-header-color);
+}
+div.datepicker div.monthbox div.month div.datepicker-header button {
+  margin: 0;
+}
+div.datepicker div.monthbox div.month table.month {
+  border-collapse: collapse;
+}
+div.datepicker div.monthbox div.month table.month thead tr {
+  background-color: var(--datepicker-month-header-background-color);
+}
+div.datepicker div.monthbox div.month table.month th,
+div.datepicker div.monthbox div.month table.month td {
+  width: var(--datepicker-cell-dimensions);
+  min-width: var(--datepicker-cell-dimensions);
+  max-width: var(--datepicker-cell-dimensions);
+  height: var(--datepicker-cell-dimensions);
+  min-height: var(--datepicker-cell-dimensions);
+  max-height: var(--datepicker-cell-dimensions);
+  text-align: center;
+  padding: 0;
+  font-size: 0.8em;
+}
+div.datepicker div.monthbox div.month table.month th {
+  color: var(--datepicker-month-header-text-color);
+}
+div.datepicker div.monthbox div.month table.month td a {
+  --link-color: var(--datepicker-day-text-color);
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--datepicker-day-background-color);
+}
+div.datepicker div.monthbox div.month table.month td a.cmonth {
+  --link-color: var(--datepicker-day-currentmonth-text-color);
+  background-color: var(--canvas-color-callout-lightweight);
+}
+div.datepicker div.monthbox div.month table.month td a.today {
+  --link-color: var(--datepicker-day-today-text-color);
+  background-color: var(--datepicker-day-today-background-color);
+}
+div.datepicker div.monthbox div.month table.month td a.past {
+  opacity: 0.5;
+}
+div.datepicker div.monthbox div.month table.month td a[aria-selected=true] {
+  border: 0.2em solid var(--focus-color);
+  --link-color: var(--focus-color);
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datepicker div.monthbox div.month table.month td a:hover {
+    color: var(--hot-text-color);
+    background-color: var(--focus-color);
+    filter: none;
+  }
+  div.datepicker div.monthbox div.month table.month td a:hover.past {
+    opacity: 1;
+  }
+}
+div.datepicker div.monthbox div.month table.month td a:active div.datepicker div.monthbox div.month table.month td a:focus {
+  color: var(--hot-text-color);
+  background-color: var(--focus-color);
+}
+div.datepicker div.monthbox div.month table.month td a:active div.datepicker div.monthbox div.month table.month td a:focus.past {
+  opacity: 1;
+}
+div.datepicker div.monthbox div.month table.month td a:disabled {
+  color: var(--button-disabled-text-color);
+  text-shadow: none;
 }
 
 :root {

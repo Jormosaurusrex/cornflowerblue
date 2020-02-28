@@ -100,7 +100,7 @@ class SimpleButton {
             this.button.appendChild(secondicon);
         }
 
-        this.button.setAttribute('aria-label', this.text);
+        if (this.text) { this.button.setAttribute('aria-label', this.text); }
         this.button.setAttribute('id', this.id);
         this.button.setAttribute('role', 'button');
         this.button.setAttribute('type', (this.submits ? 'submit' : 'button'));
