@@ -27,6 +27,7 @@
 
         <script type="text/javascript" src="src/libs/factory/IconFactory.js"></script>
         <script type="text/javascript" src="src/libs/factory/StateProvince.js"></script>
+        <script type="text/javascript" src="src/libs/factory/CountryCodes.js"></script>
         <script type="text/javascript" src="src/libs/buttons/SimpleButton.js"></script>
         <script type="text/javascript" src="src/libs/buttons/ConstructiveButton.js"></script>
         <script type="text/javascript" src="src/libs/buttons/DestructiveButton.js"></script>
@@ -49,6 +50,7 @@
         <script type="text/javascript" src="src/libs/inputs/SelectMenu.js"></script>
         <script type="text/javascript" src="src/libs/inputs/RadioGroup.js"></script>
         <script type="text/javascript" src="src/libs/inputs/StateMenu.js"></script>
+        <script type="text/javascript" src="src/libs/inputs/CountryMenu.js"></script>
         <script type="text/javascript" src="src/libs/inputs/TextArea.js"></script>
         <script type="text/javascript" src="src/libs/inputs/FileInput.js"></script>
         <script type="text/javascript" src="src/libs/components/DialogWindow.js"></script>
@@ -366,7 +368,12 @@
                             <code class="invoker">new StateMenu({options});</code>
                             <p>A <code>StateMenu</code> is a pre-purposed <code>SelectMenu</code>.  It supports both the United States and Canada.  By default, all the states are included in the option list, but it can take a <code>filter</code> option to restrict to a single country (values of <code>us</code> or <code>ca</code>).</p>
                             <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
-                            <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
+                        </div>
+                        <div class="demobox" id="selects-country">
+                            <h3 role="heading" aria-level="3">Country Menus</h3>
+                            <code class="invoker">new CountryMenu({options});</code>
+                            <p>A <code>CountryMenu</code> is a pre-purposed <code>SelectMenu</code>.</p>
+                            <p>By default, the value provided by the menu will be the capitalized 2 letter code for the country. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
                         </div>
                     </article>
                     <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-radiobuttons" aria-labelledby="radiobuttons">

@@ -674,7 +674,7 @@ class CornflowerBlueDemo {
                     width: 3,
                     resize: true,
                     type: "string",
-                    filterable: 'enum',
+                    filterable: 'string',
                     description: "The album the song is on.",
                     classes: ['nowrap', 'italic']
                 }, {
@@ -697,6 +697,7 @@ class CornflowerBlueDemo {
                     label: "Writers",
                     width: 3,
                     resize: true,
+                    filterable: 'string',
                     type: "stringarray",
                     separator: " &middot; ",
                     description: "A list of the song's writers.",
@@ -705,6 +706,7 @@ class CornflowerBlueDemo {
                     name: "label",
                     label: "Label",
                     width: 1,
+                    filterable: 'enum',
                     description: "The record label the album was released by.",
                     type: "string"
                 }, {
@@ -1169,7 +1171,6 @@ class CornflowerBlueDemo {
         }).container);
         document.getElementById('inputs-email').appendChild(email);
 
-
         let uri = document.createElement('div');
         uri.classList.add('example');
         uri.classList.add('vert');
@@ -1475,10 +1476,18 @@ class CornflowerBlueDemo {
         let state = document.createElement('div');
         state.classList.add('example');
         state.classList.add('vert');
-        state.appendChild( new StateMenu({
+        state.appendChild(new StateMenu({
             value: 'WV'
         }).container);
         document.getElementById('selects-state').appendChild(state);
+
+        let country = document.createElement('div');
+        country.classList.add('example');
+        country.classList.add('vert');
+        country.appendChild( new CountryMenu({
+            value: 'FM'
+        }).container);
+        document.getElementById('selects-country').appendChild(country);
 
         let standard = document.createElement('div');
         standard.classList.add('example');

@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         // Metadata.
         meta: {
-            version: '0.1.0'
+            version: '0.1.1'
         },
         banner: '/*! Cornflower Blue - v<%= meta.version %> - ' +
             '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -23,6 +23,7 @@ module.exports = function(grunt) {
                     'src/libs/Utils.js',
                     'src/libs/factory/IconFactory.js',
                     'src/libs/factory/StateProvince.js',
+                    'src/libs/factory/CountryCodes.js',
                     'src/libs/buttons/SimpleButton.js',
                     'src/libs/buttons/ConstructiveButton.js',
                     'src/libs/buttons/DestructiveButton.js',
@@ -45,6 +46,7 @@ module.exports = function(grunt) {
                     'src/libs/inputs/SelectMenu.js',
                     'src/libs/inputs/RadioGroup.js',
                     'src/libs/inputs/StateMenu.js',
+                    'src/libs/inputs/CountryMenu.js',
                     'src/libs/inputs/TextArea.js',
                     'src/libs/inputs/FileInput.js',
                     'src/libs/components/DialogWindow.js',
