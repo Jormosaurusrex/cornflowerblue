@@ -2,6 +2,24 @@ class Utils {
 
     /* GENERAL METHODS__________________________________________________________________ */
 
+
+    /**
+     * Change the timezone on a date.
+     * @param date the original date to change
+     * @param tz the timezone to change it to
+     * @param locale (optional) a locale (default 'en-US')
+     * @return {Date}
+     */
+    static setTimeZone(date, tz, locale='en-US') {
+        let invdate = new Date(date.toLocaleString(locale, {
+            timeZone: tz
+        }));
+        console.log(date);
+        console.log(invdate);
+        let diff = date.getTime() - invdate.getTime();
+        return new Date(date.getTime() + diff);
+    }
+
     /**
      * Get the value of a specific cookie.
      * @param name the name of the cookie
