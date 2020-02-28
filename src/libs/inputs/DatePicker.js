@@ -5,6 +5,9 @@ class DatePicker {
             dateicon: 'calendar',
             startdate: null,
             value: null,
+            timezone: 'GMT',
+            basetime: '12:00:00', // Time to set dates on
+            locale: 'en-US',
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             onselect: null, // A function to be called on selection. Passed the date selected, as a string.
@@ -53,12 +56,12 @@ class DatePicker {
         // XXX there has to be a better way to do this.
 
         let now = new Date();
-        let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} 12:00:00`);
+        let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
 
         if (!startDate) {
             startDate = today;
         } else if (typeof startDate === 'string') {
-            startDate = new Date(`${startDate} 12:00:00`);
+            startDate = new Date(`${startDate} ${this.basetime}`);
             this.value = startDate;
             this.startdate = startDate;
         }
@@ -146,17 +149,17 @@ class DatePicker {
                     link.innerHTML = dayOfMonth;
                     link.classList.add('cmonth');
                     link.setAttribute('data-day', `${startDate.getFullYear()}-${(startDate.getMonth() + 1)}-${dayOfMonth}`);
-                    thisDay = new Date(`${startDate.getFullYear()}-${(startDate.getMonth() +1)}-${dayOfMonth} 12:00:00`);
+                    thisDay = new Date(`${startDate.getFullYear()}-${(startDate.getMonth() +1)}-${dayOfMonth} ${this.basetime}`);
                     dayOfMonth++;
                 } else if ((cellCount < startDay)) {
                     // before the startDay, so last month
                     link.innerHTML = dayOfPreviousMonth;
-                    thisDay = new Date(`${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth} 12:00:00`);
+                    thisDay = new Date(`${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth} ${this.basetime}`);
                     link.setAttribute('data-day', `${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth}`);
                     dayOfPreviousMonth++;
                 } else {
                     // after this month, so next month
-                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} 12:00:00`);
+                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} ${this.basetime}`);
                     link.innerHTML = dayOfNextMonth;
                     link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
                     dayOfNextMonth++;
@@ -243,8 +246,8 @@ class DatePicker {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
+    get basetime() { return this.config.basetime; }
+    set basetime(basetime) { this.config.basetime = basetime; }
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
@@ -257,6 +260,12 @@ class DatePicker {
 
     get dateicon() { return this.config.dateicon; }
     set dateicon(dateicon) { this.config.dateicon = dateicon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get locale() { return this.config.locale; }
+    set locale(locale) { this.config.locale = locale; }
 
     get monthbox() {
         if (!this._monthbox) { this.buildMonthBox(); }
@@ -272,6 +281,9 @@ class DatePicker {
 
     get startdate() { return this.config.startdate; }
     set startdate(startdate) { this.config.startdate = startdate; }
+
+    get timezone() { return this.config.timezone; }
+    set timezone(timezone) { this.config.timezone = timezone; }
 
     get weekdays() { return this.config.weekdays; }
     set weekdays(weekdays) { this.config.weekdays = weekdays; }

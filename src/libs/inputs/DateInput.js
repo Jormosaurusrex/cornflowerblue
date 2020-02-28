@@ -2,6 +2,8 @@ class DateInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
+            basetime: '12:00:00', // Time to set dates on
+            timezone: 'GMT',
             type: 'date',
             forceconstraints: true,
             dateicon: 'calendar'
@@ -14,8 +16,7 @@ class DateInput extends TextInput {
      * @returns {boolean} true or false, depending
      */
     static isValid(date) {
-        let d = new Date(`${date} 12:00:00`);
-        console.log(d);
+        let d = new Date(date);
         return d instanceof Date && !isNaN(d);
     }
 
@@ -52,7 +53,8 @@ class DateInput extends TextInput {
             return;
         }
         this.datedisplay.classList.remove('hidden');
-        this.datedisplay.innerHTML = new Date(`${this.value} 12:00:00`).toString();
+        let d = new Date(`${this.value} ${this.basetime} GMT`);
+        this.datedisplay.innerHTML = d.toUTCString();
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -112,6 +114,9 @@ class DateInput extends TextInput {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get basetime() { return this.config.basetime; }
+    set basetime(basetime) { this.config.basetime = basetime; }
+
     get calbutton() {
         if (!this._calbutton) { this.buildCalendarButton(); }
         return this._calbutton;
@@ -129,6 +134,9 @@ class DateInput extends TextInput {
 
     get datepicker() { return this._datepicker; }
     set datepicker(datepicker) { this._datepicker = datepicker; }
+
+    get timezone() { return this.config.timezone; }
+    set timezone(timezone) { this.config.timezone = timezone; }
 
     get triggerbutton() { return this._triggerbutton; }
     set triggerbutton(triggerbutton) { this._triggerbutton = triggerbutton; }
