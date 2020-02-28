@@ -3,8 +3,19 @@ class DateInput extends TextInput {
     static get DEFAULT_CONFIG() {
         return {
             type: 'date',
+            forceconstraints: true,
             dateicon: 'calendar'
         };
+    }
+
+    /**
+     * Tests whether or the value is a valid date.
+     * @param date The date to check
+     * @returns {boolean} true or false, depending
+     */
+    static isValid(date) {
+        let d = new Date(`${date} 12:00:00`);
+        return d instanceof Date && !isNaN(d);
     }
 
     constructor(config) {
@@ -19,6 +30,17 @@ class DateInput extends TextInput {
 
     /* CORE METHODS_____________________________________________________________________ */
 
+    calculatePlaceholder() {
+        return 'YYYY-MM-DD';
+    }
+
+    localValidator() {
+        if ((this.value) && (this.forceconstraints)) {
+            if (!DateInput.isValid(this.value)) {
+                this.errors.push("This is an invalid date.");
+            }
+        }
+    }
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**

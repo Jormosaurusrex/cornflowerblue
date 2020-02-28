@@ -50,7 +50,6 @@ class DatePicker {
     renderMonth(startDate) {
         const me = this;
 
-
         // XXX there has to be a better way to do this.
 
         let now = new Date();
@@ -166,7 +165,6 @@ class DatePicker {
                     me.select(link);
                 });
                 link.addEventListener('keydown', function(e) {
-                    console.log(e.keyCode);
 
                     let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
                     let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
