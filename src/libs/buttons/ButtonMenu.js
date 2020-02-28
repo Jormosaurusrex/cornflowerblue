@@ -49,6 +49,7 @@ class ButtonMenu extends SimpleButton {
     /* CONTROL METHODS__________________________________________________________________ */
 
     toggle() {
+        console.log(`toggle: ${this.isopen}`);
         if (this.isopen) {
             this.close();
             return;

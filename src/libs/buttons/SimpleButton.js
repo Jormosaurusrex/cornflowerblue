@@ -151,7 +151,6 @@ class SimpleButton {
         }
         if (this.shape) { this.button.classList.add(this.shape); }
 
-
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', function (e) {
                 if (!me.disabled) {

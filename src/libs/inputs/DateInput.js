@@ -15,18 +15,20 @@ class DateInput extends TextInput {
      */
     static isValid(date) {
         let d = new Date(`${date} 12:00:00`);
+        console.log(d);
         return d instanceof Date && !isNaN(d);
     }
 
     constructor(config) {
         config = Object.assign({}, DateInput.DEFAULT_CONFIG, config);
-
         super(config);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     get inputcontrol() { return this.calbutton; }
+
+    get topcontrol() { return this.datedisplay; }
 
     /* CORE METHODS_____________________________________________________________________ */
 
@@ -40,7 +42,19 @@ class DateInput extends TextInput {
                 this.errors.push("This is an invalid date.");
             }
         }
+        this.updateDateDisplay();
     }
+
+    updateDateDisplay() {
+        if ((!this.value) || (this.value === '')) {
+            this.datedisplay.classList.add('hidden');
+            this.datedisplay.innerHTML = '';
+            return;
+        }
+        this.datedisplay.classList.remove('hidden');
+        this.datedisplay.innerHTML = new Date(`${this.value} 12:00:00`).toString();
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -53,8 +67,8 @@ class DateInput extends TextInput {
             onselect: function(value) {
                 me.value = value;
                 me.triggerbutton.close();
-                console.log('focusing');
                 me.input.focus();
+                me.validate();
             }
         });
 
@@ -66,10 +80,12 @@ class DateInput extends TextInput {
             action: function(e, self) {
                 if (self.isopen) {
                     self.close();
+                    me.input.focus();
                 } else {
-                    me.datepicker.renderMonth(me.value);
                     self.open();
                 }
+                me.datepicker.renderMonth(me.value);
+                e.stopPropagation();
             },
         });
 
@@ -84,6 +100,16 @@ class DateInput extends TextInput {
 
     }
 
+    /**
+     * Draws the date text display.
+     */
+    buildDateDisplay() {
+        this.datedisplay = document.createElement('div');
+        this.datedisplay.classList.add('datedisplay');
+        this.datedisplay.classList.add('topcontrol');
+        this.updateDateDisplay();
+    }
+
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get calbutton() {
@@ -91,6 +117,12 @@ class DateInput extends TextInput {
         return this._calbutton;
     }
     set calbutton(calbutton) { this._calbutton = calbutton; }
+
+    get datedisplay() {
+        if (!this._datedisplay) { this.buildDateDisplay(); }
+        return this._datedisplay;
+    }
+    set datedisplay(datedisplay) { this._datedisplay = datedisplay; }
 
     get dateicon() { return this.config.dateicon; }
     set dateicon(dateicon) { this.config.dateicon = dateicon; }

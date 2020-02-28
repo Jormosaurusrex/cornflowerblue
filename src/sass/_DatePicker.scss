@@ -31,7 +31,7 @@ div.datepicker {
       div.datepicker-header {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-content: center;
         align-items: center;
         flex-wrap: nowrap;
@@ -39,6 +39,7 @@ div.datepicker {
         div.name {
           text-transform: uppercase;
           color: var(--datepicker-header-color);
+          margin-right: auto;
         }
         button{
           margin: 0;

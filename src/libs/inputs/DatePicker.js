@@ -84,7 +84,8 @@ class DatePicker {
             mute: true,
             size: 'small',
             icon: 'triangle-left',
-            action: function() {
+            action: function(e) {
+                e.preventDefault();
                 me.renderMonth(previousMonth);
             }
         });
@@ -94,7 +95,8 @@ class DatePicker {
             mute: true,
             size: 'small',
             icon: 'triangle-right',
-            action: function() {
+            action: function(e) {
+                e.preventDefault();
                 me.renderMonth(nextMonth);
             }
         });
@@ -103,8 +105,8 @@ class DatePicker {
         mname.classList.add('name');
         mname.innerHTML = `${this.getMonthName(startDate.getMonth())}, ${startDate.getFullYear()}`;
 
-        header.appendChild(pMonthButton.button);
         header.appendChild(mname);
+        header.appendChild(pMonthButton.button);
         header.appendChild(nMonthButton.button);
 
         month.appendChild(header);

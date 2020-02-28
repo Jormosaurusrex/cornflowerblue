@@ -1569,8 +1569,10 @@ div.textarea-container div.topcontrol {
 }
 div.input-container div.charcounter,
 div.input-container div.searchdisplay,
+div.input-container div.datedisplay,
 div.textarea-container div.charcounter,
-div.textarea-container div.searchdisplay {
+div.textarea-container div.searchdisplay,
+div.textarea-container div.datedisplay {
   color: var(--input-subline-text-color);
   display: block;
   font-size: 0.85em;
@@ -1579,14 +1581,18 @@ div.textarea-container div.searchdisplay {
 }
 div.input-container div.charcounter.danger,
 div.input-container div.searchdisplay.danger,
+div.input-container div.datedisplay.danger,
 div.textarea-container div.charcounter.danger,
-div.textarea-container div.searchdisplay.danger {
+div.textarea-container div.searchdisplay.danger,
+div.textarea-container div.datedisplay.danger {
   color: var(--input-subline-warning-text-color);
 }
 div.input-container div.charcounter.outofbounds,
 div.input-container div.searchdisplay.outofbounds,
+div.input-container div.datedisplay.outofbounds,
 div.textarea-container div.charcounter.outofbounds,
-div.textarea-container div.searchdisplay.outofbounds {
+div.textarea-container div.searchdisplay.outofbounds,
+div.textarea-container div.datedisplay.outofbounds {
   color: var(--input-subline-error-text-color);
 }
 div.input-container ul.messagebox,
@@ -4769,7 +4775,7 @@ div.datepicker div.monthbox div.month {
 div.datepicker div.monthbox div.month div.datepicker-header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-content: center;
   align-items: center;
   flex-wrap: nowrap;
@@ -4778,6 +4784,7 @@ div.datepicker div.monthbox div.month div.datepicker-header {
 div.datepicker div.monthbox div.month div.datepicker-header div.name {
   text-transform: uppercase;
   color: var(--datepicker-header-color);
+  margin-right: auto;
 }
 div.datepicker div.monthbox div.month div.datepicker-header button {
   margin: 0;
