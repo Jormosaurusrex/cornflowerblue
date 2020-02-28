@@ -21,25 +21,20 @@ class DateInput extends TextInput {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    openPicker() {
-
-    }
-
-    // XXX TODO: break out into its own component
-    buildDatePicker() {
-        const me = this;
-        this.datepicker = new DatePicker({
-            onselect: function(value) {
-                me.value = value;
-            }
-        });
-    }
-
     /**
-     * Build the calendar button
+     * Build the calendar button and attach the DatePicker
      */
     buildCalendarButton() {
         const me = this;
+
+        this.datepicker = new DatePicker({
+            onselect: function(value) {
+                me.value = value;
+                me.triggerbutton.close();
+                console.log('focusing');
+                me.input.focus();
+            }
+        });
 
         this.triggerbutton = new ButtonMenu({
             classes: ['naked'],
@@ -47,8 +42,12 @@ class DateInput extends TextInput {
             icon: this.dateicon,
             menu: this.datepicker.container,
             action: function(e, self) {
-                self.toggle();
-                me.datepicker.renderMonth(me.value);
+                if (self.isopen) {
+                    self.close();
+                } else {
+                    me.datepicker.renderMonth(me.value);
+                    self.open();
+                }
             },
         });
 
@@ -74,10 +73,7 @@ class DateInput extends TextInput {
     get dateicon() { return this.config.dateicon; }
     set dateicon(dateicon) { this.config.dateicon = dateicon; }
 
-    get datepicker() {
-        if (!this._datepicker) { this.buildDatePicker(); }
-        return this._datepicker;
-    }
+    get datepicker() { return this._datepicker; }
     set datepicker(datepicker) { this._datepicker = datepicker; }
 
     get triggerbutton() { return this._triggerbutton; }

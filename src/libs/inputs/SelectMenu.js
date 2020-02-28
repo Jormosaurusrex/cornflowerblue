@@ -276,7 +276,7 @@ class SelectMenu extends InputElement {
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
 
-        li.addEventListener('keydown', function(e) {
+        li.addEventListener('keyup', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
             } else if (e.keyCode === 9) { // Tab
@@ -302,6 +302,7 @@ class SelectMenu extends InputElement {
                 me.runKeySearch(e.key);
             }
         });
+
         li.addEventListener('click', function() {
             let opts = me.optionlist.querySelectorAll('li');
             for (let o of opts) {

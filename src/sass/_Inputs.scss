@@ -43,7 +43,8 @@ textarea {
     cursor: not-allowed;
     text-shadow:none;
   }
-  &:focus {
+  &:focus,
+  &:focus-within {
     border-color: var(--input-focused-border-color);
     background-color: var(--input-focused-background-color);
     box-shadow: var(--input-focus-box-shadow);

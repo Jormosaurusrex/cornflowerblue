@@ -35,7 +35,9 @@ class DatePicker {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-
+        this.container.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
         this.container.appendChild(this.monthbox);
     }
 
@@ -54,13 +56,12 @@ class DatePicker {
         let now = new Date();
         let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} 12:00:00`);
 
-        console.log(`startDate: ${startDate}`);
-        console.log(`today: ${today}`);
-
         if (!startDate) {
             startDate = today;
         } else if (typeof startDate === 'string') {
             startDate = new Date(`${startDate} 12:00:00`);
+            this.value = startDate;
+            this.startdate = startDate;
         }
 
         let startDay = new Date(startDate.getFullYear(), startDate.getMonth()).getDay();
@@ -137,43 +138,77 @@ class DatePicker {
                     link = document.createElement('a'),
                     thisDay;
 
+                link.setAttribute('data-cellno', cellCount);
+
                 if ((cellCount >= startDay) && (dayOfMonth <= daysInMonth)) {
                     // startDay or into the future until the end of the month
                     link.innerHTML = dayOfMonth;
-                    link.setAttribute('data-day', `${startDate.getFullYear()}-${(startDate.getMonth() + 1)}-${dayOfMonth}`);
                     link.classList.add('cmonth');
-                    thisDay = new Date(`${startDate.getFullYear()}-${startDate.getMonth()}-${dayOfMonth} 12:00:00`);
+                    link.setAttribute('data-day', `${startDate.getFullYear()}-${(startDate.getMonth() + 1)}-${dayOfMonth}`);
+                    thisDay = new Date(`${startDate.getFullYear()}-${(startDate.getMonth() +1)}-${dayOfMonth} 12:00:00`);
                     dayOfMonth++;
                 } else if ((cellCount < startDay)) {
                     // before the startDay, so last month
                     link.innerHTML = dayOfPreviousMonth;
-                    thisDay = new Date(`${previousMonth.getFullYear()}-${previousMonth.getMonth()}-${dayOfPreviousMonth} 12:00:00`);
+                    thisDay = new Date(`${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth} 12:00:00`);
                     link.setAttribute('data-day', `${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth}`);
                     dayOfPreviousMonth++;
                 } else {
                     // after this month, so next month
-                    thisDay = new Date(`${nextMonth.getFullYear()}-${nextMonth.getMonth()}-${dayOfNextMonth} 12:00:00`);
+                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} 12:00:00`);
                     link.innerHTML = dayOfNextMonth;
-                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +1)}-${dayOfNextMonth}`);
+                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
                     dayOfNextMonth++;
                 }
 
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     me.select(link);
+                });
+                link.addEventListener('keydown', function(e) {
+                    console.log(e.keyCode);
+
+                    let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
+                    let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
+
+                    switch (e.keyCode) {
+                        case 37: // Left Arrow
+                        case 38:  // Up Arrow
+                            let p = tbody.querySelector(`[data-cellno='${pcell}'`);
+                            if (p) {
+                                p.focus();
+                            }
+                            e.stopPropagation();
+                            break;
+                        case 39: // Right Arrow
+                        case 40: // Down Arrow
+                            let n = tbody.querySelector(`[data-cellno='${ncell}'`);
+                            if (n) {
+                                n.focus();
+                            }
+                            e.stopPropagation();
+                            break;
+                        case 13: // Return
+                        case 32: // Space
+                            me.select(link);
+                            e.stopPropagation();
+                            break;
+                        default:
+                            break;
+                    }
+                    return false;
                 });
 
                 link.setAttribute('aria-label', link.getAttribute('data-day'));
                 link.setAttribute('tabindex', 0);
 
-                if (this.isBefore(thisDay, today)) {
-                    link.classList.add('past');
-                } else if (this.isAfter(thisDay, today)) {
-                    link.classList.add('future');
-                } else {
+                if (thisDay.getTime() === today.getTime()) {
                     link.classList.add('today');
+                } else if (thisDay.getTime() < today.getTime()) {
+                    link.classList.add('past');
+                } else if (thisDay.getTime() > today.getTime()) {
+                    link.classList.add('future');
                 }
-
-                console.log(`startDate: ${startDate} :: thisDay: ${thisDay}`);
 
                 if ((this.value) && (
                     (this.startdate.getFullYear() === thisDay.getFullYear()) &&
@@ -198,16 +233,7 @@ class DatePicker {
         this.monthbox.appendChild(month);
     }
 
-    isBefore(dayOne, dayTwo) {
-        return new Date(dayOne) < new Date(dayTwo);
-    }
-
-    isAfter(dayOne, dayTwo) {
-        return new Date(dayOne) > new Date(dayTwo);
-    }
-
     select(link) {
-        console.log(`select: ${link.getAttribute('data-day')}`);
         this.startdate = new Date(link.getAttribute('data-day'));
         if ((this.onselect) && (typeof this.onselect === 'function')) {
             this.onselect(link.getAttribute('data-day'));

@@ -1775,22 +1775,62 @@ div.input-container.disabled label,
 div.textarea-container.disabled label {
   text-shadow: none;
 }
-div.input-container.active label,
-div.textarea-container.active label {
+div.input-container.active label, div.input-container:focus-within label,
+div.textarea-container.active label,
+div.textarea-container:focus-within label {
   color: var(--focus-color);
 }
-div.input-container.active div.wrap:after,
-div.textarea-container.active div.wrap:after {
+div.input-container.active div.wrap:after, div.input-container:focus-within div.wrap:after,
+div.textarea-container.active div.wrap:after,
+div.textarea-container:focus-within div.wrap:after {
   opacity: 0;
 }
-div.input-container.active div.wrap div.stepbuttons,
-div.textarea-container.active div.wrap div.stepbuttons {
+div.input-container.active div.wrap div.stepbuttons, div.input-container:focus-within div.wrap div.stepbuttons,
+div.textarea-container.active div.wrap div.stepbuttons,
+div.textarea-container:focus-within div.wrap div.stepbuttons {
   opacity: 1;
 }
-div.input-container.active div.wrap div.topcontrol,
-div.textarea-container.active div.wrap div.topcontrol {
+div.input-container.active div.wrap div.topcontrol, div.input-container:focus-within div.wrap div.topcontrol,
+div.textarea-container.active div.wrap div.topcontrol,
+div.textarea-container:focus-within div.wrap div.topcontrol {
   opacity: 1;
   top: 0.3em;
+}
+div.input-container.active input[type=text],
+div.input-container.active input[type=number],
+div.input-container.active input[type=password],
+div.input-container.active textarea, div.input-container:focus-within input[type=text],
+div.input-container:focus-within input[type=number],
+div.input-container:focus-within input[type=password],
+div.input-container:focus-within textarea,
+div.textarea-container.active input[type=text],
+div.textarea-container.active input[type=number],
+div.textarea-container.active input[type=password],
+div.textarea-container.active textarea,
+div.textarea-container:focus-within input[type=text],
+div.textarea-container:focus-within input[type=number],
+div.textarea-container:focus-within input[type=password],
+div.textarea-container:focus-within textarea {
+  border-color: var(--input-focused-border-color);
+  background-color: var(--input-focused-background-color);
+  box-shadow: var(--input-focus-box-shadow);
+}
+div.input-container.active input[type=text]::placeholder,
+div.input-container.active input[type=number]::placeholder,
+div.input-container.active input[type=password]::placeholder,
+div.input-container.active textarea::placeholder, div.input-container:focus-within input[type=text]::placeholder,
+div.input-container:focus-within input[type=number]::placeholder,
+div.input-container:focus-within input[type=password]::placeholder,
+div.input-container:focus-within textarea::placeholder,
+div.textarea-container.active input[type=text]::placeholder,
+div.textarea-container.active input[type=number]::placeholder,
+div.textarea-container.active input[type=password]::placeholder,
+div.textarea-container.active textarea::placeholder,
+div.textarea-container:focus-within input[type=text]::placeholder,
+div.textarea-container:focus-within input[type=number]::placeholder,
+div.textarea-container:focus-within input[type=password]::placeholder,
+div.textarea-container:focus-within textarea::placeholder {
+  opacity: 0.3;
 }
 div.input-container.passive label,
 div.textarea-container.passive label {
@@ -1886,18 +1926,24 @@ textarea:disabled {
   cursor: not-allowed;
   text-shadow: none;
 }
-input[type=text]:focus,
+input[type=text]:focus, input[type=text]:focus-within,
 input[type=number]:focus,
+input[type=number]:focus-within,
 input[type=password]:focus,
-textarea:focus {
+input[type=password]:focus-within,
+textarea:focus,
+textarea:focus-within {
   border-color: var(--input-focused-border-color);
   background-color: var(--input-focused-background-color);
   box-shadow: var(--input-focus-box-shadow);
 }
-input[type=text]:focus::placeholder,
+input[type=text]:focus::placeholder, input[type=text]:focus-within::placeholder,
 input[type=number]:focus::placeholder,
+input[type=number]:focus-within::placeholder,
 input[type=password]:focus::placeholder,
-textarea:focus::placeholder {
+input[type=password]:focus-within::placeholder,
+textarea:focus::placeholder,
+textarea:focus-within::placeholder {
   opacity: 0.3;
 }
 input[type=text].mute,
@@ -4690,12 +4736,13 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
 
 div.datepicker {
   --datepicker-cell-dimensions: 2.5em;
-  --datepicker-header-color: var(--grey-darkest);
+  --datepicker-header-color: var(--blue);
   --datepicker-background-color: var(--canvas-color-primary);
   --datepicker-month-header-background-color: var(--canvas-color-tertiary);
   --datepicker-month-header-text-color: var(--grey-darkest);
   --datepicker-day-today-background-color: var(--blue);
   --datepicker-day-today-text-color: var(--ultralight);
+  --datepicker-day-past-text-color: var(--grey-medium);
   --datepicker-day-background-color: var(--canvas-color-secondary);
   --datepicker-day-text-color: var(--blue);
   --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
@@ -4735,11 +4782,8 @@ div.datepicker div.monthbox div.month div.datepicker-header div.name {
 div.datepicker div.monthbox div.month div.datepicker-header button {
   margin: 0;
 }
-div.datepicker div.monthbox div.month table.month {
-  border-collapse: collapse;
-}
 div.datepicker div.monthbox div.month table.month thead tr {
-  background-color: var(--datepicker-month-header-background-color);
+  border-bottom: 0.2em solid red;
 }
 div.datepicker div.monthbox div.month table.month th,
 div.datepicker div.monthbox div.month table.month td {
@@ -4774,14 +4818,19 @@ div.datepicker div.monthbox div.month table.month td a.cmonth {
 div.datepicker div.monthbox div.month table.month td a.today {
   --link-color: var(--datepicker-day-today-text-color);
   background-color: var(--datepicker-day-today-background-color);
+  font-weight: bold;
 }
 div.datepicker div.monthbox div.month table.month td a.past {
-  opacity: 0.5;
+  --link-color: var(--datepicker-day-past-text-color);
 }
 div.datepicker div.monthbox div.month table.month td a[aria-selected=true] {
   border: 0.2em solid var(--focus-color);
   --link-color: var(--focus-color);
   opacity: 1;
+  font-weight: bold;
+}
+div.datepicker div.monthbox div.month table.month td a.future {
+  font-weight: bold;
 }
 @media (hover: hover) and (pointer: fine) {
   div.datepicker div.monthbox div.month table.month td a:hover {
@@ -4793,12 +4842,12 @@ div.datepicker div.monthbox div.month table.month td a[aria-selected=true] {
     opacity: 1;
   }
 }
-div.datepicker div.monthbox div.month table.month td a:active div.datepicker div.monthbox div.month table.month td a:focus {
+div.datepicker div.monthbox div.month table.month td a:active, div.datepicker div.monthbox div.month table.month td a:focus {
+  opacity: 1;
   color: var(--hot-text-color);
   background-color: var(--focus-color);
-}
-div.datepicker div.monthbox div.month table.month td a:active div.datepicker div.monthbox div.month table.month td a:focus.past {
-  opacity: 1;
+  outline: var(--hot-text-color) dashed 0.1em;
+  outline-offset: -0.3em;
 }
 div.datepicker div.monthbox div.month table.month td a:disabled {
   color: var(--button-disabled-text-color);

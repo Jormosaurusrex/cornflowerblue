@@ -263,7 +263,8 @@ div.textarea-container {
       text-shadow: none;
     }
   }
-  &.active {
+  &.active,
+  &:focus-within {
     label {
       color: var(--focus-color);
     }
@@ -279,7 +280,19 @@ div.textarea-container {
         top: .3em;
       }
     }
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    textarea {
+      border-color: var(--input-focused-border-color);
+      background-color: var(--input-focused-background-color);
+      box-shadow: var(--input-focus-box-shadow);
+      &::placeholder {
+        opacity: 0.3;
+      }
+    }
   }
+
   &.passive {
     label {
       opacity: 1;

@@ -1,11 +1,12 @@
 div.datepicker {
   --datepicker-cell-dimensions: 2.5em;
-  --datepicker-header-color: var(--grey-darkest);
+  --datepicker-header-color: var(--blue);
   --datepicker-background-color: var(--canvas-color-primary);
   --datepicker-month-header-background-color: var(--canvas-color-tertiary);
   --datepicker-month-header-text-color: var(--grey-darkest);
   --datepicker-day-today-background-color: var(--blue);
   --datepicker-day-today-text-color: var(--ultralight);
+  --datepicker-day-past-text-color: var(--grey-medium);
   --datepicker-day-background-color: var(--canvas-color-secondary);
   --datepicker-day-text-color: var(--blue);
   --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
@@ -44,10 +45,11 @@ div.datepicker {
         }
       }
       table.month {
-        border-collapse: collapse;
+        //border-collapse: collapse;
         thead {
           tr {
-            background-color: var(--datepicker-month-header-background-color);
+            //background-color: var(--datepicker-month-header-background-color);
+            border-bottom: .2em solid red;
           }
         }
         th,
@@ -83,17 +85,20 @@ div.datepicker {
             &.today {
               --link-color: var(--datepicker-day-today-text-color);
               background-color: var(--datepicker-day-today-background-color);
+              font-weight: bold;
             }
             &.past {
-              opacity: .5;
+              //opacity: .5;
+              --link-color: var(--datepicker-day-past-text-color);
             }
             &[aria-selected='true'] {
               border: .2em solid var(--focus-color);
               --link-color: var(--focus-color);
               opacity: 1;
+              font-weight: bold;
             }
             &.future {
-
+              font-weight: bold;
             }
             @include for-hover-only {
               &:hover {
@@ -105,13 +110,13 @@ div.datepicker {
                 }
               }
             }
-            &:active
+            &:active,
             &:focus {
+              opacity: 1;
               color: var(--hot-text-color);
               background-color: var(--focus-color);
-              &.past {
-                opacity: 1;
-              }
+              outline: var(--hot-text-color) dashed .1em;
+              outline-offset: -.3em;
             }
             &:disabled {
               color: var(--button-disabled-text-color);

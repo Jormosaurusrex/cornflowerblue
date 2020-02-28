@@ -9,14 +9,15 @@ class ButtonMenu extends SimpleButton {
                 }
             },
             secondicon: 'triangle-down', // this is passed up as a secondicon
+            autoclose: true, // don't close on outside clicks
             menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
-            items: [] // list of menu item definitions
-                    // {
-                    //    label: "Menu Text", // text
-                    //    tooltip: null, // Tooltip text
-                    //    icon: null, // Icon to use, if any
-                    //    action: function() { } // what to do when the tab is clicked.
-                    // }
+            items: []   // list of menu item definitions
+                        // {
+                        //    label: "Menu Text", // text
+                        //    tooltip: null, // Tooltip text
+                        //    icon: null, // Icon to use, if any
+                        //    action: function() { } // what to do when the tab is clicked.
+                        // }
         };
     }
 
@@ -78,9 +79,11 @@ class ButtonMenu extends SimpleButton {
             focusable[0].focus();
         }
 
-        window.setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
-        }, 200);
+        if (this.autoclose) {
+            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
+                me.setCloseListener();
+            }, 200);
+        }
     }
 
     /**
@@ -128,6 +131,7 @@ class ButtonMenu extends SimpleButton {
     buildMenu() {
         const me = this;
         this.menu = document.createElement('ul');
+        this.menu.classList.add('menu');
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         let order = 1;
@@ -190,7 +194,7 @@ class ButtonMenu extends SimpleButton {
      */
     processMenu() {
         const me = this;
-        //this.menu.setAttribute('aria-hidden', 'true');
+        this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         this.menu.classList.add('menu');
         this.button.appendChild(this.menu);
@@ -202,6 +206,9 @@ class ButtonMenu extends SimpleButton {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get autoclose() { return this.config.autoclose; }
+    set autoclose(autoclose) { this.config.autoclose = autoclose; }
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }

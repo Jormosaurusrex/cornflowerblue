@@ -1145,6 +1145,16 @@ class CornflowerBlueDemo {
         dateinput.classList.add('vert');
         dateinput.appendChild(new DateInput({
             label: "Date",
+            placeholder: "Select a date"
+        }).container);
+        dateinput.appendChild(new DateInput({
+            label: "Date",
+            value: '1972-11-28',
+            placeholder: "Select a date"
+        }).container);
+        dateinput.appendChild(new DateInput({
+            label: "Mute Date",
+            mute: true,
             value: '1972-11-28',
             placeholder: "Select a date"
         }).container);
