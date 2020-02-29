@@ -657,7 +657,8 @@ class CornflowerBlueDemo {
     grindDataGrids() {
 
         let dg = new DataGrid({
-            id: 'cfb-demo-grid-',
+            id: 'cfb-demo-grid-lz',
+            title: 'Songs by Led Zeppelin',
             fields: [
                 {
                     name: "track",

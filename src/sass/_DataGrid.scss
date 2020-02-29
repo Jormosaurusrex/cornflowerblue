@@ -1,4 +1,7 @@
 :root {
+
+
+
   --datagrid-header-background-color: var(--light);
   --datagrid-header-text-color: var(--grey-darkest);
   --datagrid-header-grid-text-color: var(--grey-darker);
@@ -40,6 +43,18 @@ div.datagrid-container {
   justify-content: space-between;
   max-height: 80vh;
   overflow: visible;
+  div.titlebox {
+    --datagrid-title-background-color: var(--darkblue);
+    --datagrid-title-text-color: var(--ultralight);
+
+    background-color: var(--datagrid-title-background-color);
+    color: var(--datagrid-title-text-color);
+    padding: 1em;
+    h3 {
+      color: var(--datagrid-title-text-color);
+      margin: 0;
+    }
+  }
   div.grid-info,
   div.grid-actions,
   div.grid-filterinfo {
@@ -48,7 +63,7 @@ div.datagrid-container {
     flex-direction: row;
     align-content: center;
     align-items: center;
-    padding: 0;
+    padding: 0 1em 0 1em;
     justify-content: flex-end;
   }
   div.grid-info {
@@ -64,6 +79,9 @@ div.datagrid-container {
         display: inline-block;
         margin: 0 .5em 0 0;
       }
+    }
+    button:last-child {
+      margin-right: 0;
     }
   }
   div.grid-filterinfo {

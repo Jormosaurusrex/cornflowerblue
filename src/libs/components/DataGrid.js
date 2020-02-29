@@ -2,6 +2,10 @@ class DataGrid {
 
     static get DEFAULT_CONFIG() {
         return {
+            title: null, // the title for the grid
+            id: null, // The id. An id is required to save a grid's state.
+            sortable: true, //  Data columns can be sorted
+
             fields: [  // The data fields for the grid and how they behave.
                 /*
                  * An array of field definition dictionaries:
@@ -27,13 +31,9 @@ class DataGrid {
                     }
                 */
             ],
-
             data: [], // The data to throw into the grid
 
-            id: null, // The id. An ID is required to save a grid's state.
             savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
-
-            sortable: true, //  Data columns can be sorted
 
             columnconfigurationlabel: 'Columns',
             columnconfigurationicon: 'table',
@@ -56,7 +56,10 @@ class DataGrid {
                                          // 'readable' : Uses the header labels (human readable)
                                          // 'data' : Uses the data labels
                                          // 'no' or null: don't include a header row
-            exportfilename: function() { // the filename to name the exported data.
+            exportfilename: function(self) { // the filename to name the exported data.
+                if (self.title) {
+                    return `${self.title}-export.csv`;
+                }
                 return 'export.csv';     // This can be a string or a function, but must return a string
             },
             exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
@@ -186,7 +189,7 @@ class DataGrid {
         }
 
         if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
-            fname = this.exportfilename();
+            fname = this.exportfilename(this);
         } else {
             fname = this.exportfilename;
         }
@@ -293,7 +296,7 @@ class DataGrid {
     sortfield(field) {
         let sort = "asc";
 
-        let hCell = this.gridheader.querySelector(`[data-name='${field}']`);
+        let hCell = this.thead.querySelector(`[data-name='${field}']`);
 
         if ((hCell) && (hCell.getAttribute('data-sort'))) {
             if (hCell.getAttribute('data-sort') === 'asc') {
@@ -301,7 +304,7 @@ class DataGrid {
             }
         }
 
-        let hchildren = this.gridheader.querySelectorAll('th');
+        let hchildren = this.thead.querySelectorAll('th');
         for (let hc of hchildren) {
             hc.removeAttribute('data-sort');
         }
@@ -627,6 +630,7 @@ class DataGrid {
                 for (let filter of Object.values(this.activefilters)) {
 
                     let c = r.querySelector(`[data-name='${filter.field}']`);
+
                     if (filter.exact) {
                         if (c.innerHTML === filter.value) {
                             matchedfilters.push(filter.field);
@@ -719,18 +723,22 @@ class DataGrid {
         this.container.classList.add('datagrid-container');
         this.container.setAttribute('id', this.id);
 
+        if (this.title) {
+            this.container.append(this.titlebox);
+        }
+
         this.container.append(this.gridinfo);
         if (this.filterable) {
             this.container.append(this.filterinfo);
         }
 
-        this.grid.appendChild(this.header);
+        this.grid.appendChild(this.thead);
         this.grid.appendChild(this.gridbody);
 
-        let gridwrapper = document.createElement('div');
-        gridwrapper.classList.add('grid-wrapper');
-        gridwrapper.appendChild(this.grid);
-        this.container.append(gridwrapper);
+        this.gridwrapper = document.createElement('div');
+        this.gridwrapper.classList.add('grid-wrapper');
+        this.gridwrapper.appendChild(this.grid);
+        this.container.append(this.gridwrapper);
 
         if (this.searchable) {
             this.noresultsbox = new MessageBox({
@@ -745,6 +753,16 @@ class DataGrid {
             me.applystate();
         }, 100);
 
+    }
+
+    buildTitleBox() {
+        this.titlebox = document.createElement('div');
+        this.titlebox.classList.add('titlebox');
+
+        this.header = document.createElement('h3');
+        this.header.innerHTML = this.title;
+
+        this.titlebox.appendChild(this.header);
     }
 
     /**
@@ -867,7 +885,7 @@ class DataGrid {
     /**
      * Build the table header
      */
-    buildHeader() {
+    buildTableHead() {
         const me = this;
         if (this.multiselect) {
             this.masterselector = new BooleanToggle({
@@ -885,8 +903,8 @@ class DataGrid {
             this.gridheader.appendChild(this.buildHeaderCell(f));
         }
 
-        this.header = document.createElement('thead');
-        this.header.appendChild(this.gridheader);
+        this.thead = document.createElement('thead');
+        this.thead.appendChild(this.gridheader);
     }
 
     /**
@@ -1210,10 +1228,10 @@ class DataGrid {
     }
     set gridheader(gridheader) { this._gridheader = gridheader; }
 
-    get header() {
-        if (!this._header) { this.buildHeader(); }
-        return this._header;
-    }
+    get gridwrapper() { return this._gridwrapper; }
+    set gridwrapper(gridwrapper) { this._gridwrapper = gridwrapper; }
+
+    get header() { return this._header; }
     set header(header) { this._header = header; }
 
     get headercells() {
@@ -1296,5 +1314,20 @@ class DataGrid {
 
     get state() { return this._state; }
     set state(state) { this._state = state; }
+
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
+
+    get titlebox() {
+        if (!this._titlebox) { this.buildTitleBox(); }
+        return this._titlebox;
+    }
+    set titlebox(titlebox) { this._titlebox = titlebox; }
+
+    get thead() {
+        if (!this._thead) { this.buildTableHead(); }
+        return this._thead;
+    }
+    set thead(thead) { this._thead = thead; }
 
 }
