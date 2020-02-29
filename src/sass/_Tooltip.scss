@@ -1,0 +1,60 @@
+div.tooltip {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
+  list-style-type: none;
+  margin: 0;
+  padding: .5em;
+  position: absolute;
+  left: -1em;
+  bottom: 1.5em;
+  overflow: visible;
+  z-index: 220;
+  border-radius: var(--tooltip-border-radius);
+  background-color: var(--tooltip-background-color);
+  color: var(--tooltip-text-color);
+  text-shadow: var(--tooltip-text-shadow);
+  box-shadow: var(--panel-shadow-light);
+  &[aria-hidden='true'] {
+    display: none;
+  }
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 1em;
+    bottom: -.5em;
+    border-width: .5em .5em 0 .5em;
+    border-style: solid;
+    border-color: var(--tooltip-background-color) transparent;
+  }
+  span.tipicon {
+    font-size: 1.2em;
+    margin-right: .5em;
+  }
+  div.tiptext {
+    max-width: 33em;
+    min-width: 15em;
+    white-space: normal;
+    line-height: 1.2;
+    text-align: left;
+    font-size: 1.2em;
+    a {
+      color: var(--hot-text-color);
+    }
+  }
+  button.closebutton {
+    display: none;
+  }
+  &.stayopen {
+    display: flex;
+    animation: cfb-fadein-delay-half .2s;
+    button.closebutton {
+      display: inline-block;
+    }
+  }
+}

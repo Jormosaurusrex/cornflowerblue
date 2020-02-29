@@ -2717,62 +2717,6 @@ button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled {
 button.hidden {
   display: none;
 }
-button.help div.tooltip, button.tagbutton div.tooltip {
-  display: none;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-content: flex-start;
-  list-style-type: none;
-  margin: 0;
-  padding: 0.5em;
-  position: absolute;
-  left: -1em;
-  bottom: 1.5em;
-  overflow: visible;
-  z-index: 220;
-  border-radius: var(--tooltip-border-radius);
-  background-color: var(--tooltip-background-color);
-  color: var(--tooltip-text-color);
-  text-shadow: var(--tooltip-text-shadow);
-  box-shadow: var(--panel-shadow-light);
-}
-button.help div.tooltip:before, button.tagbutton div.tooltip:before {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  left: 1em;
-  bottom: -0.5em;
-  border-width: 0.5em 0.5em 0 0.5em;
-  border-style: solid;
-  border-color: var(--tooltip-background-color) transparent;
-}
-button.help div.tooltip span.tipicon, button.tagbutton div.tooltip span.tipicon {
-  font-size: 1.2em;
-  margin-right: 0.5em;
-}
-button.help div.tooltip div.helptext, button.tagbutton div.tooltip div.helptext {
-  max-width: 33em;
-  min-width: 20em;
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-}
-button.help div.tooltip div.helptext a, button.tagbutton div.tooltip div.helptext a {
-  color: var(--hot-text-color);
-}
-button.help div.tooltip button.closebutton, button.tagbutton div.tooltip button.closebutton {
-  display: none;
-}
-button.help[aria-expanded=true] div.tooltip, button.help.stayopen div.tooltip, button.tagbutton[aria-expanded=true] div.tooltip, button.tagbutton.stayopen div.tooltip {
-  display: flex;
-  animation: cfb-fadein-delay-half 0.2s;
-}
-button.help[aria-expanded=true] div.tooltip button.closebutton, button.help.stayopen div.tooltip button.closebutton, button.tagbutton[aria-expanded=true] div.tooltip button.closebutton, button.tagbutton.stayopen div.tooltip button.closebutton {
-  display: inline-block;
-}
 button.closebutton, button.togglebutton {
   --button-default-color: var(--hot-text-color);
   opacity: 0.5;
@@ -4045,6 +3989,67 @@ div.panel.bottom-center {
   left: 1em;
   margin-left: auto;
   margin-right: auto;
+}
+
+div.tooltip {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5em;
+  position: absolute;
+  left: -1em;
+  bottom: 1.5em;
+  overflow: visible;
+  z-index: 220;
+  border-radius: var(--tooltip-border-radius);
+  background-color: var(--tooltip-background-color);
+  color: var(--tooltip-text-color);
+  text-shadow: var(--tooltip-text-shadow);
+  box-shadow: var(--panel-shadow-light);
+}
+div.tooltip[aria-hidden=true] {
+  display: none;
+}
+div.tooltip:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 1em;
+  bottom: -0.5em;
+  border-width: 0.5em 0.5em 0 0.5em;
+  border-style: solid;
+  border-color: var(--tooltip-background-color) transparent;
+}
+div.tooltip span.tipicon {
+  font-size: 1.2em;
+  margin-right: 0.5em;
+}
+div.tooltip div.tiptext {
+  max-width: 33em;
+  min-width: 15em;
+  white-space: normal;
+  line-height: 1.2;
+  text-align: left;
+  font-size: 1.2em;
+}
+div.tooltip div.tiptext a {
+  color: var(--hot-text-color);
+}
+div.tooltip button.closebutton {
+  display: none;
+}
+div.tooltip.stayopen {
+  display: flex;
+  animation: cfb-fadein-delay-half 0.2s;
+}
+div.tooltip.stayopen button.closebutton {
+  display: inline-block;
 }
 
 div.instructions {

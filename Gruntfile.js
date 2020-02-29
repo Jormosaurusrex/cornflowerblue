@@ -25,6 +25,7 @@ module.exports = function(grunt) {
                     'src/libs/factory/StateProvince.js',
                     'src/libs/factory/CountryCodes.js',
                     'src/libs/factory/TimezoneDB.js',
+                    'src/libs/components/ToolTip.js',
                     'src/libs/buttons/SimpleButton.js',
                     'src/libs/buttons/ConstructiveButton.js',
                     'src/libs/buttons/DestructiveButton.js',

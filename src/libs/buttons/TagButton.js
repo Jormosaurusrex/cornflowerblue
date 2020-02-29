@@ -6,8 +6,7 @@ class TagButton extends HelpButton {
             icon: 'echx',  // icon to use in the button,
             iconclasses: ['tagicon'],
             shape: 'pill',
-            size: 'small',
-            //tipicon: '' // hide
+            size: 'small'
         };
     }
 
