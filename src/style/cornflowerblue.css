@@ -2438,19 +2438,19 @@ button.hamburger[aria-expanded=true] span.magichamburger span:last-child {
   transform: translateX(0.1em) rotate(-45deg);
   transform-origin: bottom left;
 }
-button.closebutton {
+button.closebutton, button.togglebutton {
   --button-default-color: var(--hot-text-color);
   opacity: 0.5;
   box-shadow: none;
   margin-right: 0.5em;
   background: none;
 }
-button.closebutton:focus, button.closebutton:active {
+button.closebutton:focus, button.closebutton:active, button.togglebutton:focus, button.togglebutton:active {
   color: var(--hot-text-color);
   background: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  button.closebutton:hover {
+  button.closebutton:hover, button.togglebutton:hover {
     opacity: 1;
     color: var(--hot-text-color);
     background: none;
@@ -3932,26 +3932,21 @@ div.panel {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-start;
 }
-div.panel div.content {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: stretch;
-}
-div.panel div.content h3 {
-  margin: 0 0.5em 0.5em 0;
-  cursor: pointer;
-  border-bottom: 0.1em var(--panel-text-color);
-  text-transform: unset;
-  white-space: nowrap;
+div.panel div.titlebox {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  padding: 1em;
 }
-div.panel div.content h3 button.togglebutton {
-  --button-default-color: var(--panel-text-color);
+div.panel div.titlebox h3 {
+  margin: 0;
+  cursor: pointer;
+  border-bottom: 0.1em var(--panel-text-color);
+  color: var(--panel-text-color);
+}
+div.panel div.titlebox h3 button.togglebutton {
   --button-default-color: var(--panel-text-color);
   margin: 0 0.5em 0 0;
   box-shadow: none;
@@ -3961,22 +3956,43 @@ div.panel div.content h3 button.togglebutton {
   border: none;
   font-size: 0.85em;
 }
-div.panel div.content h3 button.togglebutton:focus, div.panel div.content h3 button.togglebutton:active {
+div.panel div.titlebox h3 button.togglebutton:focus, div.panel div.titlebox h3 button.togglebutton:active {
   opacity: 1;
   background: none;
   box-shadow: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.panel div.content h3 button.togglebutton:hover {
+  div.panel div.titlebox h3 button.togglebutton:hover {
     opacity: 1;
     background: none;
     box-shadow: none;
   }
 }
-div.panel div.content div.pcontent {
+div.panel div.content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
   transition: all 0.2s;
 }
 div.panel[aria-hidden=true] {
+  display: none;
+}
+div.panel[aria-expanded=false] div.titlebox h3 {
+  margin: 0;
+}
+div.panel[aria-expanded=false] div.titlebox button.closebutton {
+  transform: rotate(-90deg);
+}
+div.panel[aria-expanded=false] div.titlebox button.closebutton:focus, div.panel[aria-expanded=false] div.titlebox button.closebutton:active {
+  color: var(--panel-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.panel[aria-expanded=false] div.titlebox button.closebutton:hover {
+    color: var(--panel-text-color);
+  }
+}
+div.panel[aria-expanded=false] div.content {
   display: none;
 }
 div.panel.floating {
@@ -3984,52 +4000,6 @@ div.panel.floating {
   z-index: 1000;
   border-radius: var(--panel-border-radius);
   box-shadow: var(--panel-box-shadow);
-}
-div.panel[aria-expanded=false] button.togglebutton {
-  transform: rotate(-90deg);
-}
-div.panel[aria-expanded=false] button.togglebutton:focus, div.panel[aria-expanded=false] button.togglebutton:active {
-  color: var(--panel-text-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  div.panel[aria-expanded=false] button.togglebutton:hover {
-    color: var(--panel-text-color);
-  }
-}
-div.panel[aria-expanded=false] div.content h3 {
-  margin: 0;
-}
-div.panel[aria-expanded=false] div.content div.pcontent {
-  display: none;
-}
-div.panel[aria-expanded=false]:active, div.panel[aria-expanded=false]:focus {
-  background-color: var(--focus-color);
-}
-div.panel[aria-expanded=false]:active h3, div.panel[aria-expanded=false]:focus h3 {
-  color: var(--hot-text-color);
-}
-div.panel[aria-expanded=false]:active button.togglebutton, div.panel[aria-expanded=false]:focus button.togglebutton {
-  color: var(--hot-text-color);
-}
-div.panel[aria-expanded=false]:active button.togglebutton:focus, div.panel[aria-expanded=false]:focus button.togglebutton:focus {
-  outline-color: var(--hot-text-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  div.panel[aria-expanded=false]:hover {
-    background-color: var(--focus-color);
-  }
-  div.panel[aria-expanded=false]:hover h3 {
-    color: var(--hot-text-color);
-  }
-  div.panel[aria-expanded=false]:hover button.togglebutton {
-    color: var(--hot-text-color);
-  }
-  div.panel[aria-expanded=false]:hover button.togglebutton:hover {
-    color: var(--hot-text-color);
-  }
-  div.panel[aria-expanded=false]:hover button.togglebutton:focus {
-    outline-color: var(--hot-text-color);
-  }
 }
 div.panel.ghost {
   opacity: 0.5;
@@ -4864,6 +4834,7 @@ div.datepicker div.monthbox div.month table.month td a:disabled {
 }
 
 :root {
+  --datagrid-background-color: var(--ultralight);
   --datagrid-header-background-color: var(--light);
   --datagrid-header-text-color: var(--grey-darkest);
   --datagrid-header-grid-text-color: var(--grey-darker);
@@ -4898,20 +4869,16 @@ div.datagrid-container {
   justify-content: space-between;
   max-height: 80vh;
   overflow: visible;
+  padding: 0;
+  background-color: var(--datagrid-background-color);
 }
 div.datagrid-container div.titlebox {
   --datagrid-title-background-color: var(--darkblue);
   --datagrid-title-text-color: var(--ultralight);
+  --panel-text-color: var(--datagrid-title-text-color);
   background-color: var(--datagrid-title-background-color);
-  color: var(--datagrid-title-text-color);
-  padding: 1em;
-}
-div.datagrid-container div.titlebox h3 {
-  color: var(--datagrid-title-text-color);
-  margin: 0;
 }
 div.datagrid-container div.grid-info,
-div.datagrid-container div.grid-actions,
 div.datagrid-container div.grid-filterinfo {
   position: relative;
   display: flex;
@@ -5178,6 +5145,13 @@ div.datagrid-container div.messagebox div.box.warnings h4 {
 }
 div.datagrid-container div.messagebox div.box.warnings div.lbox {
   border-color: transparent;
+}
+div.datagrid-container[aria-expanded=false] div.grid-info,
+div.datagrid-container[aria-expanded=false] div.grid-actions,
+div.datagrid-container[aria-expanded=false] div.grid-filterinfo,
+div.datagrid-container[aria-expanded=false] div.grid-wrapper,
+div.datagrid-container[aria-expanded=false] div.messagebox {
+  display: none;
 }
 
 div.datagrid-configurator {

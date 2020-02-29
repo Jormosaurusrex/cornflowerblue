@@ -37,6 +37,7 @@ class Accordion {
      * Toggle panel minimization
      */
     toggleClose() {
+        console.log(`toggleclose: ${this.minimized}`);
         if (this.minimized) {
             this.open();
             return;
@@ -48,9 +49,8 @@ class Accordion {
      * Unminimize the panel
      */
     open() {
-        this.container.setAttribute('aria-expanded', 'true');
-        this.pcontent.setAttribute('aria-hidden', 'false');
         this.minimized = false;
+        this.container.setAttribute('aria-expanded', 'true');
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
@@ -61,7 +61,6 @@ class Accordion {
      */
     close() {
         this.container.setAttribute('aria-expanded', 'false');
-        this.pcontent.setAttribute('aria-hidden', 'true');
         this.minimized = true;
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
@@ -85,68 +84,62 @@ class Accordion {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
+     * Build the title box section.
+     */
+    buildTitleBox() {
+        const me = this;
+        this.titlebox = document.createElement('div');
+        this.titlebox.classList.add('titlebox');
+        this.titlebox.addEventListener('click', function(e) {
+            e.preventDefault();
+            me.toggleClose();
+        });
+
+        this.header = document.createElement('h3');
+        this.header.innerHTML = this.title;
+        this.titlebox.appendChild(this.header);
+
+        if (this.togglecontrol) {
+            this.togglebutton = new CloseButton({
+                icon: this.closeicon,
+                text: this.closetext,
+                iconclasses: ['togglebutton'],
+                action: function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.toggleClose();
+                }
+            });
+            this.titlebox.appendChild(this.togglebutton.button);
+        }
+    }
+
+    /**
      * Build the HTML elements of the Floating Panel
      */
     buildContainer() {
 
-        const me = this;
-
         this.container = document.createElement('div');
         this.container.classList.add('panel');
+        this.container.setAttribute('aria-expanded', 'true');
 
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
 
-        if (this.togglecontrol) {
-            this.togglebutton = new SimpleButton({
-                icon: this.closeicon,
-                text: this.closetext,
-                naked: true,
-                shape: "square",
-                classes: ["togglebutton"],
-                action: function(e) {
-                    e.preventDefault();
-                }
-            });
-        }
-
-        if (this.title) {
-            this.titlecontainer = document.createElement('h3');
-            this.titlecontainer.addEventListener('click', function(e) {
-                e.preventDefault();
-                me.toggleClose();
-            });
-            if (this.togglecontrol) {
-                this.titlecontainer.appendChild(this.togglebutton.button);
-            }
-            this.titleactual = document.createElement('span');
-            this.titleactual.classList.add('text');
-            this.titleactual.innerHTML = this.title;
-            this.titlecontainer.appendChild(this.titleactual);
-        } else {
-            if (this.togglecontrol) {
-                this.container.appendChild(this.togglebutton.button);
-            }
-        }
-
-        this.pcontent = document.createElement('div');
-        this.pcontent.classList.add('pcontent');
-        if (this.content) {
-            this.pcontent.appendChild(this.content);
-        }
+        this.container.append(this.titlebox);
 
         this.contentbox = document.createElement('div');
         this.contentbox.classList.add('content');
-        if (this.title) { this.contentbox.appendChild(this.titlecontainer); }
-        this.contentbox.appendChild(this.pcontent);
+        if (this.content) {
+            this.contentbox.appendChild(this.content);
+        }
 
         this.container.appendChild(this.contentbox);
 
-        if (this.minimized) {
-            this.close();
-        } else {
-            this.open();
+        if (this.minimized) { // don't call close() to avoid the callbacks.
+            this.container.setAttribute('aria-expanded', 'false');
+            this.minimized = true;
         }
 
         if (this.hidden) { this.hide(); }
@@ -157,9 +150,9 @@ class Accordion {
      * @param content the content to place
      */
     replace(content) {
+        this.content.parentNode.removeChild(this.content);
         this.content = content;
-        this.pcontent.innerHTML = "";
-        this.pcontent.appendChild(this.content);
+        this.container.appendChild(this.content);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -202,14 +195,17 @@ class Accordion {
     get contentbox() { return this._contentbox; }
     set contentbox(contentbox) { this._contentbox = contentbox; }
 
+    get header() { return this._header; }
+    set header(header) { this._header = header; }
+
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get minimized() { return this._minimized; }
-    set minimized(minimized) { this._minimized = minimized; }
+    get minimized() { return this.config.minimized; }
+    set minimized(minimized) { this.config.minimized = minimized; }
 
     get onclose() { return this.config.onclose; }
     set onclose(onclose) {
@@ -244,6 +240,12 @@ class Accordion {
 
     get titleactual() { return this._titleactual; }
     set titleactual(titleactual) { this._titleactual = titleactual; }
+
+    get titlebox() {
+        if (!this._titlebox) { this.buildTitleBox(); }
+        return this._titlebox;
+    }
+    set titlebox(titlebox) { this._titlebox = titlebox; }
 
     get titlecontainer() { return this._titlecontainer; }
     set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }

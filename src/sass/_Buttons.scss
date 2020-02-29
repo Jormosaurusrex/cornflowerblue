@@ -113,7 +113,8 @@ button {
       }
     }
   }
-  &.closebutton {
+  &.closebutton,
+  &.togglebutton {
     --button-default-color: var(--hot-text-color);
     opacity: 0.5;
     box-shadow: none;

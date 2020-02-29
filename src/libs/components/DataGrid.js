@@ -1,4 +1,4 @@
-class DataGrid {
+class DataGrid extends Accordion {
 
     static get DEFAULT_CONFIG() {
         return {
@@ -103,12 +103,15 @@ class DataGrid {
      * @param config a dictionary object
      */
     constructor(config) {
-        this.config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
+        config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
+        super(config);
+
         if (this.id) {
             this.savekey = `grid-${this.id}`;
         } else {
             this.id = `grid-${Utils.getUniqueKey(5)}`;
         }
+
         this.activefilters = {};
         this.loadstate();
     }
@@ -721,13 +724,16 @@ class DataGrid {
 
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
+        this.container.classList.add('panel');
         this.container.setAttribute('id', this.id);
+        this.container.setAttribute('aria-expanded', 'true');
 
         if (this.title) {
             this.container.append(this.titlebox);
         }
 
         this.container.append(this.gridinfo);
+
         if (this.filterable) {
             this.container.append(this.filterinfo);
         }
@@ -749,20 +755,17 @@ class DataGrid {
             this.container.append(this.noresultsbox.container);
         }
 
+        if (this.minimized) { // don't call close() to avoid the callbacks.
+            this.container.setAttribute('aria-expanded', 'false');
+            this.minimized = true;
+        }
+
+        if (this.hidden) { this.hide(); }
+
         setTimeout(function() { // Have to wait until we're sure we're in the DOM
             me.applystate();
         }, 100);
 
-    }
-
-    buildTitleBox() {
-        this.titlebox = document.createElement('div');
-        this.titlebox.classList.add('titlebox');
-
-        this.header = document.createElement('h3');
-        this.header.innerHTML = this.title;
-
-        this.titlebox.appendChild(this.header);
     }
 
     /**
@@ -1085,11 +1088,6 @@ class DataGrid {
 
     /* UTILITY METHODS__________________________________________________________________ */
 
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return Utils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
@@ -1105,9 +1103,6 @@ class DataGrid {
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
 
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
 
@@ -1122,12 +1117,6 @@ class DataGrid {
 
     get columnconfigurationtitle() { return this.config.columnconfigurationtitle; }
     set columnconfigurationtitle(columnconfigurationtitle) { this.config.columnconfigurationtitle = columnconfigurationtitle; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
@@ -1231,9 +1220,6 @@ class DataGrid {
     get gridwrapper() { return this._gridwrapper; }
     set gridwrapper(gridwrapper) { this._gridwrapper = gridwrapper; }
 
-    get header() { return this._header; }
-    set header(header) { this._header = header; }
-
     get headercells() {
         if (!this._headercells) { this._headercells = {} ; }
         return this._headercells;
@@ -1314,15 +1300,6 @@ class DataGrid {
 
     get state() { return this._state; }
     set state(state) { this._state = state; }
-
-    get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
-
-    get titlebox() {
-        if (!this._titlebox) { this.buildTitleBox(); }
-        return this._titlebox;
-    }
-    set titlebox(titlebox) { this._titlebox = titlebox; }
 
     get thead() {
         if (!this._thead) { this.buildTableHead(); }
