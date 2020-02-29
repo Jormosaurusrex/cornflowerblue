@@ -1,8 +1,4 @@
 div.panel {
-  position: absolute;
-  z-index: 1000;
-  border-radius: var(--panel-border-radius);
-  box-shadow: var(--panel-box-shadow);
   transition: all .2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
   color: var(--panel-text-color);
@@ -58,6 +54,12 @@ div.panel {
   }
   &[aria-hidden=true] {
     display: none;
+  }
+  &.floating {
+    position: absolute;
+    z-index: 1000;
+    border-radius: var(--panel-border-radius);
+    box-shadow: var(--panel-box-shadow);
   }
   &[aria-expanded=false] {
     button.togglebutton {

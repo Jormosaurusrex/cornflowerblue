@@ -3923,10 +3923,6 @@ div.growler.success div.payload {
 }
 
 div.panel {
-  position: absolute;
-  z-index: 1000;
-  border-radius: var(--panel-border-radius);
-  box-shadow: var(--panel-box-shadow);
   transition: all 0.2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
   color: var(--panel-text-color);
@@ -3982,6 +3978,12 @@ div.panel div.content div.pcontent {
 }
 div.panel[aria-hidden=true] {
   display: none;
+}
+div.panel.floating {
+  position: absolute;
+  z-index: 1000;
+  border-radius: var(--panel-border-radius);
+  box-shadow: var(--panel-box-shadow);
 }
 div.panel[aria-expanded=false] button.togglebutton {
   transform: rotate(-90deg);
@@ -4897,6 +4899,17 @@ div.datagrid-container {
   max-height: 80vh;
   overflow: visible;
 }
+div.datagrid-container div.titlebox {
+  --datagrid-title-background-color: var(--darkblue);
+  --datagrid-title-text-color: var(--ultralight);
+  background-color: var(--datagrid-title-background-color);
+  color: var(--datagrid-title-text-color);
+  padding: 1em;
+}
+div.datagrid-container div.titlebox h3 {
+  color: var(--datagrid-title-text-color);
+  margin: 0;
+}
 div.datagrid-container div.grid-info,
 div.datagrid-container div.grid-actions,
 div.datagrid-container div.grid-filterinfo {
@@ -4905,7 +4918,7 @@ div.datagrid-container div.grid-filterinfo {
   flex-direction: row;
   align-content: center;
   align-items: center;
-  padding: 0;
+  padding: 0 1em 0 1em;
   justify-content: flex-end;
 }
 div.datagrid-container div.grid-info {
@@ -4922,6 +4935,9 @@ div.datagrid-container div.grid-info div.countbox {
 div.datagrid-container div.grid-info div.countbox label {
   display: inline-block;
   margin: 0 0.5em 0 0;
+}
+div.datagrid-container div.grid-info button:last-child {
+  margin-right: 0;
 }
 div.datagrid-container div.grid-filterinfo {
   display: none;
