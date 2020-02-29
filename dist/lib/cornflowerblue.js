@@ -1,9 +1,27 @@
-/*! Cornflower Blue - v0.1.0 - 2020-02-26
+/*! Cornflower Blue - v0.1.1 - 2020-02-29
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
 
     /* GENERAL METHODS__________________________________________________________________ */
+
+
+    /**
+     * Change the timezone on a date.
+     * @param date the original date to change
+     * @param tz the timezone to change it to
+     * @param locale (optional) a locale (default 'en-US')
+     * @return {Date}
+     */
+    static setTimeZone(date, tz, locale='en-US') {
+        let invdate = new Date(date.toLocaleString(locale, {
+            timeZone: tz
+        }));
+        console.log(date);
+        console.log(invdate);
+        let diff = date.getTime() - invdate.getTime();
+        return new Date(date.getTime() + diff);
+    }
 
     /**
      * Get the value of a specific cookie.
@@ -769,12 +787,761 @@ class StateProvince {
     }
 
 }
+class CountryCodes {
+
+
+    static get MAP() {
+        return {
+            AF: { code: "AF", country: "Afghanistan" },
+            AX: { code: "AX", country: "Åland Islands" },
+            AL: { code: "AL", country: "Albania" },
+            DZ: { code: "DZ", country: "Algeria" },
+            AS: { code: "AS", country: "American Samoa" },
+            AD: { code: "AD", country: "Andorra" },
+            AO: { code: "AO", country: "Angola" },
+            AI: { code: "AI", country: "Anguilla" },
+            AQ: { code: "AQ", country: "Antarctica" },
+            AG: { code: "AG", country: "Antigua and Barbuda" },
+            AR: { code: "AR", country: "Argentina" },
+            AM: { code: "AM", country: "Armenia" },
+            AW: { code: "AW", country: "Aruba" },
+            AU: { code: "AU", country: "Australia" },
+            AT: { code: "AT", country: "Austria" },
+            AZ: { code: "AZ", country: "Azerbaijan" },
+            BS: { code: "BS", country: "Bahamas" },
+            BH: { code: "BH", country: "Bahrain" },
+            BD: { code: "BD", country: "Bangladesh" },
+            BB: { code: "BB", country: "Barbados" },
+            BY: { code: "BY", country: "Belarus" },
+            BE: { code: "BE", country: "Belgium" },
+            BZ: { code: "BZ", country: "Belize" },
+            BJ: { code: "BJ", country: "Benin" },
+            BM: { code: "BM", country: "Bermuda" },
+            BT: { code: "BT", country: "Bhutan" },
+            BO: { code: "BO", country: "Bolivia, Plurinational State of" },
+            BQ: { code: "BQ", country: "Bonaire, Sint Eustatius and Saba" },
+            BA: { code: "BA", country: "Bosnia and Herzegovina" },
+            BW: { code: "BW", country: "Botswana" },
+            BV: { code: "BV", country: "Bouvet Island" },
+            BR: { code: "BR", country: "Brazil" },
+            IO: { code: "IO", country: "British Indian Ocean Territory" },
+            BN: { code: "BN", country: "Brunei Darussalam" },
+            BG: { code: "BG", country: "Bulgaria" },
+            BF: { code: "BF", country: "Burkina Faso" },
+            BI: { code: "BI", country: "Burundi" },
+            KH: { code: "KH", country: "Cambodia" },
+            CM: { code: "CM", country: "Cameroon" },
+            CA: { code: "CA", country: "Canada" },
+            CV: { code: "CV", country: "Cape Verde" },
+            KY: { code: "KY", country: "Cayman Islands" },
+            CF: { code: "CF", country: "Central African Republic" },
+            TD: { code: "TD", country: "Chad" },
+            CL: { code: "CL", country: "Chile" },
+            CN: { code: "CN", country: "China" },
+            CX: { code: "CX", country: "Christmas Island" },
+            CC: { code: "CC", country: "Cocos (Keeling) Islands" },
+            CO: { code: "CO", country: "Colombia" },
+            KM: { code: "KM", country: "Comoros" },
+            CG: { code: "CG", country: "Congo" },
+            CD: { code: "CD", country: "Congo, the Democratic Republic of the" },
+            CK: { code: "CK", country: "Cook Islands" },
+            CR: { code: "CR", country: "Costa Rica" },
+            CI: { code: "CI", country: "Côte d'Ivoire" },
+            HR: { code: "HR", country: "Croatia" },
+            CU: { code: "CU", country: "Cuba" },
+            CW: { code: "CW", country: "Curaçao" },
+            CY: { code: "CY", country: "Cyprus" },
+            CZ: { code: "CZ", country: "Czech Republic" },
+            DK: { code: "DK", country: "Denmark" },
+            DJ: { code: "DJ", country: "Djibouti" },
+            DM: { code: "DM", country: "Dominica" },
+            DO: { code: "DO", country: "Dominican Republic" },
+            EC: { code: "EC", country: "Ecuador" },
+            EG: { code: "EG", country: "Egypt" },
+            SV: { code: "SV", country: "El Salvador" },
+            GQ: { code: "GQ", country: "Equatorial Guinea" },
+            ER: { code: "ER", country: "Eritrea" },
+            EE: { code: "EE", country: "Estonia" },
+            ET: { code: "ET", country: "Ethiopia" },
+            FK: { code: "FK", country: "Falkland Islands (Malvinas)" },
+            FO: { code: "FO", country: "Faroe Islands" },
+            FJ: { code: "FJ", country: "Fiji" },
+            FI: { code: "FI", country: "Finland" },
+            FR: { code: "FR", country: "France" },
+            GF: { code: "GF", country: "French Guiana" },
+            PF: { code: "PF", country: "French Polynesia" },
+            TF: { code: "TF", country: "French Southern Territories" },
+            GA: { code: "GA", country: "Gabon" },
+            GM: { code: "GM", country: "Gambia" },
+            GE: { code: "GE", country: "Georgia" },
+            DE: { code: "DE", country: "Germany" },
+            GH: { code: "GH", country: "Ghana" },
+            GI: { code: "GI", country: "Gibraltar" },
+            GR: { code: "GR", country: "Greece" },
+            GL: { code: "GL", country: "Greenland" },
+            GD: { code: "GD", country: "Grenada" },
+            GP: { code: "GP", country: "Guadeloupe" },
+            GU: { code: "GU", country: "Guam" },
+            GT: { code: "GT", country: "Guatemala" },
+            GG: { code: "GG", country: "Guernsey" },
+            GN: { code: "GN", country: "Guinea" },
+            GW: { code: "GW", country: "Guinea-Bissau" },
+            GY: { code: "GY", country: "Guyana" },
+            HT: { code: "HT", country: "Haiti" },
+            HM: { code: "HM", country: "Heard Island and McDonald Islands" },
+            VA: { code: "VA", country: "Holy See (Vatican City State)" },
+            HN: { code: "HN", country: "Honduras" },
+            HK: { code: "HK", country: "Hong Kong" },
+            HU: { code: "HU", country: "Hungary" },
+            IS: { code: "IS", country: "Iceland" },
+            IN: { code: "IN", country: "India" },
+            ID: { code: "ID", country: "Indonesia" },
+            IR: { code: "IR", country: "Iran, Islamic Republic of" },
+            IQ: { code: "IQ", country: "Iraq" },
+            IE: { code: "IE", country: "Ireland" },
+            IM: { code: "IM", country: "Isle of Man" },
+            IL: { code: "IL", country: "Israel" },
+            IT: { code: "IT", country: "Italy" },
+            JM: { code: "JM", country: "Jamaica" },
+            JP: { code: "JP", country: "Japan" },
+            JE: { code: "JE", country: "Jersey" },
+            JO: { code: "JO", country: "Jordan" },
+            KZ: { code: "KZ", country: "Kazakhstan" },
+            KE: { code: "KE", country: "Kenya" },
+            KI: { code: "KI", country: "Kiribati" },
+            KP: { code: "KP", country: "Korea, Democratic People's Republic of" },
+            KR: { code: "KR", country: "Korea, Republic of" },
+            KW: { code: "KW", country: "Kuwait" },
+            KG: { code: "KG", country: "Kyrgyzstan" },
+            LA: { code: "LA", country: "Lao People's Democratic Republic" },
+            LV: { code: "LV", country: "Latvia" },
+            LB: { code: "LB", country: "Lebanon" },
+            LS: { code: "LS", country: "Lesotho" },
+            LR: { code: "LR", country: "Liberia" },
+            LY: { code: "LY", country: "Libya" },
+            LI: { code: "LI", country: "Liechtenstein" },
+            LT: { code: "LT", country: "Lithuania" },
+            LU: { code: "LU", country: "Luxembourg" },
+            MO: { code: "MO", country: "Macao" },
+            MK: { code: "MK", country: "Macedonia, the Former Yugoslav Republic of" },
+            MG: { code: "MG", country: "Madagascar" },
+            MW: { code: "MW", country: "Malawi" },
+            MY: { code: "MY", country: "Malaysia" },
+            MV: { code: "MV", country: "Maldives" },
+            ML: { code: "ML", country: "Mali" },
+            MT: { code: "MT", country: "Malta" },
+            MH: { code: "MH", country: "Marshall Islands" },
+            MQ: { code: "MQ", country: "Martinique" },
+            MR: { code: "MR", country: "Mauritania" },
+            MU: { code: "MU", country: "Mauritius" },
+            YT: { code: "YT", country: "Mayotte" },
+            MX: { code: "MX", country: "Mexico" },
+            FM: { code: "FM", country: "Micronesia, Federated States of" },
+            MD: { code: "MD", country: "Moldova, Republic of" },
+            MC: { code: "MC", country: "Monaco" },
+            MN: { code: "MN", country: "Mongolia" },
+            ME: { code: "ME", country: "Montenegro" },
+            MS: { code: "MS", country: "Montserrat" },
+            MA: { code: "MA", country: "Morocco" },
+            MZ: { code: "MZ", country: "Mozambique" },
+            MM: { code: "MM", country: "Myanmar" },
+            NA: { code: "NA", country: "Namibia" },
+            NR: { code: "NR", country: "Nauru" },
+            NP: { code: "NP", country: "Nepal" },
+            NL: { code: "NL", country: "Netherlands" },
+            NC: { code: "NC", country: "New Caledonia" },
+            NZ: { code: "NZ", country: "New Zealand" },
+            NI: { code: "NI", country: "Nicaragua" },
+            NE: { code: "NE", country: "Niger" },
+            NG: { code: "NG", country: "Nigeria" },
+            NU: { code: "NU", country: "Niue" },
+            NF: { code: "NF", country: "Norfolk Island" },
+            MP: { code: "MP", country: "Northern Mariana Islands" },
+            NO: { code: "NO", country: "Norway" },
+            OM: { code: "OM", country: "Oman" },
+            PK: { code: "PK", country: "Pakistan" },
+            PW: { code: "PW", country: "Palau" },
+            PS: { code: "PS", country: "Palestine, State of" },
+            PA: { code: "PA", country: "Panama" },
+            PG: { code: "PG", country: "Papua New Guinea" },
+            PY: { code: "PY", country: "Paraguay" },
+            PE: { code: "PE", country: "Peru" },
+            PH: { code: "PH", country: "Philippines" },
+            PN: { code: "PN", country: "Pitcairn" },
+            PL: { code: "PL", country: "Poland" },
+            PT: { code: "PT", country: "Portugal" },
+            PR: { code: "PR", country: "Puerto Rico" },
+            QA: { code: "QA", country: "Qatar" },
+            RE: { code: "RE", country: "Réunion" },
+            RO: { code: "RO", country: "Romania" },
+            RU: { code: "RU", country: "Russian Federation" },
+            RW: { code: "RW", country: "Rwanda" },
+            BL: { code: "BL", country: "Saint Barthélemy" },
+            SH: { code: "SH", country: "Saint Helena, Ascension and Tristan da Cunha" },
+            KN: { code: "KN", country: "Saint Kitts and Nevis" },
+            LC: { code: "LC", country: "Saint Lucia" },
+            MF: { code: "MF", country: "Saint Martin (French part)" },
+            PM: { code: "PM", country: "Saint Pierre and Miquelon" },
+            VC: { code: "VC", country: "Saint Vincent and the Grenadines" },
+            WS: { code: "WS", country: "Samoa" },
+            SM: { code: "SM", country: "San Marino" },
+            ST: { code: "ST", country: "Sao Tome and Principe" },
+            SA: { code: "SA", country: "Saudi Arabia" },
+            SN: { code: "SN", country: "Senegal" },
+            RS: { code: "RS", country: "Serbia" },
+            SC: { code: "SC", country: "Seychelles" },
+            SL: { code: "SL", country: "Sierra Leone" },
+            SG: { code: "SG", country: "Singapore" },
+            SX: { code: "SX", country: "Sint Maarten (Dutch part)" },
+            SK: { code: "SK", country: "Slovakia" },
+            SI: { code: "SI", country: "Slovenia" },
+            SB: { code: "SB", country: "Solomon Islands" },
+            SO: { code: "SO", country: "Somalia" },
+            ZA: { code: "ZA", country: "South Africa" },
+            GS: { code: "GS", country: "South Georgia and the South Sandwich Islands" },
+            SS: { code: "SS", country: "South Sudan" },
+            ES: { code: "ES", country: "Spain" },
+            LK: { code: "LK", country: "Sri Lanka" },
+            SD: { code: "SD", country: "Sudan" },
+            SR: { code: "SR", country: "Suriname" },
+            SJ: { code: "SJ", country: "Svalbard and Jan Mayen" },
+            SZ: { code: "SZ", country: "Swaziland" },
+            SE: { code: "SE", country: "Sweden" },
+            CH: { code: "CH", country: "Switzerland" },
+            SY: { code: "SY", country: "Syrian Arab Republic" },
+            TW: { code: "TW", country: "Taiwan, Province of China" },
+            TJ: { code: "TJ", country: "Tajikistan" },
+            TZ: { code: "TZ", country: "Tanzania, United Republic of" },
+            TH: { code: "TH", country: "Thailand" },
+            TL: { code: "TL", country: "Timor-Leste" },
+            TG: { code: "TG", country: "Togo" },
+            TK: { code: "TK", country: "Tokelau" },
+            TO: { code: "TO", country: "Tonga" },
+            TT: { code: "TT", country: "Trinidad and Tobago" },
+            TN: { code: "TN", country: "Tunisia" },
+            TR: { code: "TR", country: "Turkey" },
+            TM: { code: "TM", country: "Turkmenistan" },
+            TC: { code: "TC", country: "Turks and Caicos Islands" },
+            TV: { code: "TV", country: "Tuvalu" },
+            UG: { code: "UG", country: "Uganda" },
+            UA: { code: "UA", country: "Ukraine" },
+            AE: { code: "AE", country: "United Arab Emirates" },
+            GB: { code: "GB", country: "United Kingdom" },
+            US: { code: "US", country: "United States" },
+            UM: { code: "UM", country: "United States Minor Outlying Islands" },
+            UY: { code: "UY", country: "Uruguay" },
+            UZ: { code: "UZ", country: "Uzbekistan" },
+            VU: { code: "VU", country: "Vanuatu" },
+            VE: { code: "VE", country: "Venezuela, Bolivarian Republic of" },
+            VN: { code: "VN", country: "Viet Nam" },
+            VG: { code: "VG", country: "Virgin Islands, British" },
+            VI: { code: "VI", country: "Virgin Islands, U.S." },
+            WF: { code: "WF", country: "Wallis and Futuna" },
+            EH: { code: "EH", country: "Western Sahara" },
+            YE: { code: "YE", country: "Yemen" },
+            ZM: { code: "ZM", country: "Zambia" },
+            ZW: { code: "ZW", country: "Zimbabwe" }
+        }
+    }
+
+    /**
+     * Get a specific country by the code
+     * @param code the code to get
+     * @return {*} the country definition, or null
+     */
+    static get(code) {
+        return CountryCodes.MAP[code];
+    }
+
+    /**
+     * Get a list of countries
+     * @return {Array} an array of country object definitions
+     */
+    static list() {
+        let list = [];
+        for (let c of Object.values(CountryCodes.MAP)) {
+            list.push(c);
+        }
+        list.sort(function(a,b){
+            if (a.country > b.country) { return 1 }
+            if (a.country < b.country) { return -1 }
+            return 0;
+        });
+        return list;
+    }
+
+}
+class TimezoneDB {
+
+
+    /**
+     * Get the dictionary of the timezones.
+     * @return a dictionary.
+     */
+    static get MAP() {
+        return {
+            "Asia/Kabul": { id: "Asia/Kabul", countrycode: "AF", country: "Afghanistan", tz: "Asia/Kabul", offset: "UTC +04:30" },
+            "Europe/Tirane": { id: "Europe/Tirane", countrycode: "AL", country: "Albania", tz: "Europe/Tirane", offset: "UTC +01:00" },
+            "Africa/Algiers": { id: "Africa/Algiers", countrycode: "DZ", country: "Algeria", tz: "Africa/Algiers", offset: "UTC +01:00" },
+            "Pacific/Pago_Pago": { id: "Pacific/Pago_Pago", countrycode: "AS", country: "American Samoa", tz: "Pacific/Pago_Pago", offset: "UTC -11:00" },
+            "Europe/Andorra": { id: "Europe/Andorra", countrycode: "AD", country: "Andorra", tz: "Europe/Andorra", offset: "UTC +01:00" },
+            "Africa/Luanda": { id: "Africa/Luanda", countrycode: "AO", country: "Angola", tz: "Africa/Luanda", offset: "UTC +01:00" },
+            "America/Anguilla": { id: "America/Anguilla", countrycode: "AI", country: "Anguilla", tz: "America/Anguilla", offset: "UTC -04:00" },
+            "Antarctica/Casey": { id: "Antarctica/Casey", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Casey", offset: "UTC +08:00" },
+            "Antarctica/Davis": { id: "Antarctica/Davis", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Davis", offset: "UTC +07:00" },
+            "Antarctica/DumontDUrville": { id: "Antarctica/DumontDUrville", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/DumontDUrville", offset: "UTC +10:00" },
+            "Antarctica/Mawson": { id: "Antarctica/Mawson", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Mawson", offset: "UTC +05:00" },
+            "Antarctica/McMurdo": { id: "Antarctica/McMurdo", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/McMurdo", offset: "UTC +13:00" },
+            "Antarctica/Palmer": { id: "Antarctica/Palmer", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Palmer", offset: "UTC -03:00" },
+            "Antarctica/Rothera": { id: "Antarctica/Rothera", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Rothera", offset: "UTC -03:00" },
+            "Antarctica/Syowa": { id: "Antarctica/Syowa", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Syowa", offset: "UTC +03:00" },
+            "Antarctica/Troll": { id: "Antarctica/Troll", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Troll", offset: "UTC" },
+            "Antarctica/Vostok": { id: "Antarctica/Vostok", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Vostok", offset: "UTC +06:00" },
+            "America/Antigua": { id: "America/Antigua", countrycode: "AG", country: "Antigua and Barbuda", tz: "America/Antigua", offset: "UTC -04:00" },
+            "America/Argentina/Buenos_Aires": { id: "America/Argentina/Buenos_Aires", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Buenos_Aires", offset: "UTC -03:00" },
+            "America/Argentina/Catamarca": { id: "America/Argentina/Catamarca", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Catamarca", offset: "UTC -03:00" },
+            "America/Argentina/Cordoba": { id: "America/Argentina/Cordoba", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Cordoba", offset: "UTC -03:00" },
+            "America/Argentina/Jujuy": { id: "America/Argentina/Jujuy", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Jujuy", offset: "UTC -03:00" },
+            "America/Argentina/La_Rioja": { id: "America/Argentina/La_Rioja", countrycode: "AR", country: "Argentina", tz: "America/Argentina/La_Rioja", offset: "UTC -03:00" },
+            "America/Argentina/Mendoza": { id: "America/Argentina/Mendoza", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Mendoza", offset: "UTC -03:00" },
+            "America/Argentina/Rio_Gallegos": { id: "America/Argentina/Rio_Gallegos", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Rio_Gallegos", offset: "UTC -03:00" },
+            "America/Argentina/Salta": { id: "America/Argentina/Salta", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Salta", offset: "UTC -03:00" },
+            "America/Argentina/San_Juan": { id: "America/Argentina/San_Juan", countrycode: "AR", country: "Argentina", tz: "America/Argentina/San_Juan", offset: "UTC -03:00" },
+            "America/Argentina/San_Luis": { id: "America/Argentina/San_Luis", countrycode: "AR", country: "Argentina", tz: "America/Argentina/San_Luis", offset: "UTC -03:00" },
+            "America/Argentina/Tucuman": { id: "America/Argentina/Tucuman", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Tucuman", offset: "UTC -03:00" },
+            "America/Argentina/Ushuaia": { id: "America/Argentina/Ushuaia", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Ushuaia", offset: "UTC -03:00" },
+            "Asia/Yerevan": { id: "Asia/Yerevan", countrycode: "AM", country: "Armenia", tz: "Asia/Yerevan", offset: "UTC +04:00" },
+            "America/Aruba": { id: "America/Aruba", countrycode: "AW", country: "Aruba", tz: "America/Aruba", offset: "UTC -04:00" },
+            "Antarctica/Macquarie": { id: "Antarctica/Macquarie", countrycode: "AU", country: "Australia", tz: "Antarctica/Macquarie", offset: "UTC +11:00" },
+            "Australia/Adelaide": { id: "Australia/Adelaide", countrycode: "AU", country: "Australia", tz: "Australia/Adelaide", offset: "UTC +10:30" },
+            "Australia/Brisbane": { id: "Australia/Brisbane", countrycode: "AU", country: "Australia", tz: "Australia/Brisbane", offset: "UTC +10:00" },
+            "Australia/Broken_Hill": { id: "Australia/Broken_Hill", countrycode: "AU", country: "Australia", tz: "Australia/Broken_Hill", offset: "UTC +10:30" },
+            "Australia/Currie": { id: "Australia/Currie", countrycode: "AU", country: "Australia", tz: "Australia/Currie", offset: "UTC +11:00" },
+            "Australia/Darwin": { id: "Australia/Darwin", countrycode: "AU", country: "Australia", tz: "Australia/Darwin", offset: "UTC +09:30" },
+            "Australia/Eucla": { id: "Australia/Eucla", countrycode: "AU", country: "Australia", tz: "Australia/Eucla", offset: "UTC +08:45" },
+            "Australia/Hobart": { id: "Australia/Hobart", countrycode: "AU", country: "Australia", tz: "Australia/Hobart", offset: "UTC +11:00" },
+            "Australia/Lindeman": { id: "Australia/Lindeman", countrycode: "AU", country: "Australia", tz: "Australia/Lindeman", offset: "UTC +10:00" },
+            "Australia/Lord_Howe": { id: "Australia/Lord_Howe", countrycode: "AU", country: "Australia", tz: "Australia/Lord_Howe", offset: "UTC +11:00" },
+            "Australia/Melbourne": { id: "Australia/Melbourne", countrycode: "AU", country: "Australia", tz: "Australia/Melbourne", offset: "UTC +11:00" },
+            "Australia/Perth": { id: "Australia/Perth", countrycode: "AU", country: "Australia", tz: "Australia/Perth", offset: "UTC +08:00" },
+            "Australia/Sydney": { id: "Australia/Sydney", countrycode: "AU", country: "Australia", tz: "Australia/Sydney", offset: "UTC +11:00" },
+            "Europe/Vienna": { id: "Europe/Vienna", countrycode: "AT", country: "Austria", tz: "Europe/Vienna", offset: "UTC +01:00" },
+            "Asia/Baku": { id: "Asia/Baku", countrycode: "AZ", country: "Azerbaijan", tz: "Asia/Baku", offset: "UTC +04:00" },
+            "America/Nassau": { id: "America/Nassau", countrycode: "BS", country: "Bahamas", tz: "America/Nassau", offset: "UTC -05:00" },
+            "Asia/Bahrain": { id: "Asia/Bahrain", countrycode: "BH", country: "Bahrain", tz: "Asia/Bahrain", offset: "UTC +03:00" },
+            "Asia/Dhaka": { id: "Asia/Dhaka", countrycode: "BD", country: "Bangladesh", tz: "Asia/Dhaka", offset: "UTC +06:00" },
+            "America/Barbados": { id: "America/Barbados", countrycode: "BB", country: "Barbados", tz: "America/Barbados", offset: "UTC -04:00" },
+            "Europe/Minsk": { id: "Europe/Minsk", countrycode: "BY", country: "Belarus", tz: "Europe/Minsk", offset: "UTC +03:00" },
+            "Europe/Brussels": { id: "Europe/Brussels", countrycode: "BE", country: "Belgium", tz: "Europe/Brussels", offset: "UTC +01:00" },
+            "America/Belize": { id: "America/Belize", countrycode: "BZ", country: "Belize", tz: "America/Belize", offset: "UTC -06:00" },
+            "Africa/Porto-Novo": { id: "Africa/Porto-Novo", countrycode: "BJ", country: "Benin", tz: "Africa/Porto-Novo", offset: "UTC +01:00" },
+            "Atlantic/Bermuda": { id: "Atlantic/Bermuda", countrycode: "BM", country: "Bermuda", tz: "Atlantic/Bermuda", offset: "UTC -04:00" },
+            "Asia/Thimphu": { id: "Asia/Thimphu", countrycode: "BT", country: "Bhutan", tz: "Asia/Thimphu", offset: "UTC +06:00" },
+            "America/La_Paz": { id: "America/La_Paz", countrycode: "BO", country: "Bolivia, Plurinational State of", tz: "America/La_Paz", offset: "UTC -04:00" },
+            "America/Kralendijk": { id: "America/Kralendijk", countrycode: "BQ", country: "Bonaire, Sint Eustatius and Saba", tz: "America/Kralendijk", offset: "UTC -04:00" },
+            "Europe/Sarajevo": { id: "Europe/Sarajevo", countrycode: "BA", country: "Bosnia and Herzegovina", tz: "Europe/Sarajevo", offset: "UTC +01:00" },
+            "Africa/Gaborone": { id: "Africa/Gaborone", countrycode: "BW", country: "Botswana", tz: "Africa/Gaborone", offset: "UTC +02:00" },
+            "America/Araguaina": { id: "America/Araguaina", countrycode: "BR", country: "Brazil", tz: "America/Araguaina", offset: "UTC -03:00" },
+            "America/Bahia": { id: "America/Bahia", countrycode: "BR", country: "Brazil", tz: "America/Bahia", offset: "UTC -03:00" },
+            "America/Belem": { id: "America/Belem", countrycode: "BR", country: "Brazil", tz: "America/Belem", offset: "UTC -03:00" },
+            "America/Boa_Vista": { id: "America/Boa_Vista", countrycode: "BR", country: "Brazil", tz: "America/Boa_Vista", offset: "UTC -04:00" },
+            "America/Campo_Grande": { id: "America/Campo_Grande", countrycode: "BR", country: "Brazil", tz: "America/Campo_Grande", offset: "UTC -04:00" },
+            "America/Cuiaba": { id: "America/Cuiaba", countrycode: "BR", country: "Brazil", tz: "America/Cuiaba", offset: "UTC -04:00" },
+            "America/Eirunepe": { id: "America/Eirunepe", countrycode: "BR", country: "Brazil", tz: "America/Eirunepe", offset: "UTC -05:00" },
+            "America/Fortaleza": { id: "America/Fortaleza", countrycode: "BR", country: "Brazil", tz: "America/Fortaleza", offset: "UTC -03:00" },
+            "America/Maceio": { id: "America/Maceio", countrycode: "BR", country: "Brazil", tz: "America/Maceio", offset: "UTC -03:00" },
+            "America/Manaus": { id: "America/Manaus", countrycode: "BR", country: "Brazil", tz: "America/Manaus", offset: "UTC -04:00" },
+            "America/Noronha": { id: "America/Noronha", countrycode: "BR", country: "Brazil", tz: "America/Noronha", offset: "UTC -02:00" },
+            "America/Porto_Velho": { id: "America/Porto_Velho", countrycode: "BR", country: "Brazil", tz: "America/Porto_Velho", offset: "UTC -04:00" },
+            "America/Recife": { id: "America/Recife", countrycode: "BR", country: "Brazil", tz: "America/Recife", offset: "UTC -03:00" },
+            "America/Rio_Branco": { id: "America/Rio_Branco", countrycode: "BR", country: "Brazil", tz: "America/Rio_Branco", offset: "UTC -05:00" },
+            "America/Santarem": { id: "America/Santarem", countrycode: "BR", country: "Brazil", tz: "America/Santarem", offset: "UTC -03:00" },
+            "America/Sao_Paulo": { id: "America/Sao_Paulo", countrycode: "BR", country: "Brazil", tz: "America/Sao_Paulo", offset: "UTC -03:00" },
+            "Indian/Chagos": { id: "Indian/Chagos", countrycode: "IO", country: "British Indian Ocean Territory", tz: "Indian/Chagos", offset: "UTC +06:00" },
+            "Asia/Brunei": { id: "Asia/Brunei", countrycode: "BN", country: "Brunei Darussalam", tz: "Asia/Brunei", offset: "UTC +08:00" },
+            "Europe/Sofia": { id: "Europe/Sofia", countrycode: "BG", country: "Bulgaria", tz: "Europe/Sofia", offset: "UTC +02:00" },
+            "Africa/Ouagadougou": { id: "Africa/Ouagadougou", countrycode: "BF", country: "Burkina Faso", tz: "Africa/Ouagadougou", offset: "UTC" },
+            "Africa/Bujumbura": { id: "Africa/Bujumbura", countrycode: "BI", country: "Burundi", tz: "Africa/Bujumbura", offset: "UTC +02:00" },
+            "Asia/Phnom_Penh": { id: "Asia/Phnom_Penh", countrycode: "KH", country: "Cambodia", tz: "Asia/Phnom_Penh", offset: "UTC +07:00" },
+            "Africa/Douala": { id: "Africa/Douala", countrycode: "CM", country: "Cameroon", tz: "Africa/Douala", offset: "UTC +01:00" },
+            "America/Atikokan": { id: "America/Atikokan", countrycode: "CA", country: "Canada", tz: "America/Atikokan", offset: "UTC -05:00" },
+            "America/Blanc-Sablon": { id: "America/Blanc-Sablon", countrycode: "CA", country: "Canada", tz: "America/Blanc-Sablon", offset: "UTC -04:00" },
+            "America/Cambridge_Bay": { id: "America/Cambridge_Bay", countrycode: "CA", country: "Canada", tz: "America/Cambridge_Bay", offset: "UTC -07:00" },
+            "America/Creston": { id: "America/Creston", countrycode: "CA", country: "Canada", tz: "America/Creston", offset: "UTC -07:00" },
+            "America/Dawson": { id: "America/Dawson", countrycode: "CA", country: "Canada", tz: "America/Dawson", offset: "UTC -08:00" },
+            "America/Dawson_Creek": { id: "America/Dawson_Creek", countrycode: "CA", country: "Canada", tz: "America/Dawson_Creek", offset: "UTC -07:00" },
+            "America/Edmonton": { id: "America/Edmonton", countrycode: "CA", country: "Canada", tz: "America/Edmonton", offset: "UTC -07:00" },
+            "America/Fort_Nelson": { id: "America/Fort_Nelson", countrycode: "CA", country: "Canada", tz: "America/Fort_Nelson", offset: "UTC -07:00" },
+            "America/Glace_Bay": { id: "America/Glace_Bay", countrycode: "CA", country: "Canada", tz: "America/Glace_Bay", offset: "UTC -04:00" },
+            "America/Goose_Bay": { id: "America/Goose_Bay", countrycode: "CA", country: "Canada", tz: "America/Goose_Bay", offset: "UTC -04:00" },
+            "America/Halifax": { id: "America/Halifax", countrycode: "CA", country: "Canada", tz: "America/Halifax", offset: "UTC -04:00" },
+            "America/Inuvik": { id: "America/Inuvik", countrycode: "CA", country: "Canada", tz: "America/Inuvik", offset: "UTC -07:00" },
+            "America/Iqaluit": { id: "America/Iqaluit", countrycode: "CA", country: "Canada", tz: "America/Iqaluit", offset: "UTC -05:00" },
+            "America/Moncton": { id: "America/Moncton", countrycode: "CA", country: "Canada", tz: "America/Moncton", offset: "UTC -04:00" },
+            "America/Nipigon": { id: "America/Nipigon", countrycode: "CA", country: "Canada", tz: "America/Nipigon", offset: "UTC -05:00" },
+            "America/Pangnirtung": { id: "America/Pangnirtung", countrycode: "CA", country: "Canada", tz: "America/Pangnirtung", offset: "UTC -05:00" },
+            "America/Rainy_River": { id: "America/Rainy_River", countrycode: "CA", country: "Canada", tz: "America/Rainy_River", offset: "UTC -06:00" },
+            "America/Rankin_Inlet": { id: "America/Rankin_Inlet", countrycode: "CA", country: "Canada", tz: "America/Rankin_Inlet", offset: "UTC -06:00" },
+            "America/Regina": { id: "America/Regina", countrycode: "CA", country: "Canada", tz: "America/Regina", offset: "UTC -06:00" },
+            "America/Resolute": { id: "America/Resolute", countrycode: "CA", country: "Canada", tz: "America/Resolute", offset: "UTC -06:00" },
+            "America/St_Johns": { id: "America/St_Johns", countrycode: "CA", country: "Canada", tz: "America/St_Johns", offset: "UTC -03:30" },
+            "America/Swift_Current": { id: "America/Swift_Current", countrycode: "CA", country: "Canada", tz: "America/Swift_Current", offset: "UTC -06:00" },
+            "America/Thunder_Bay": { id: "America/Thunder_Bay", countrycode: "CA", country: "Canada", tz: "America/Thunder_Bay", offset: "UTC -05:00" },
+            "America/Toronto": { id: "America/Toronto", countrycode: "CA", country: "Canada", tz: "America/Toronto", offset: "UTC -05:00" },
+            "America/Vancouver": { id: "America/Vancouver", countrycode: "CA", country: "Canada", tz: "America/Vancouver", offset: "UTC -08:00" },
+            "America/Whitehorse": { id: "America/Whitehorse", countrycode: "CA", country: "Canada", tz: "America/Whitehorse", offset: "UTC -08:00" },
+            "America/Winnipeg": { id: "America/Winnipeg", countrycode: "CA", country: "Canada", tz: "America/Winnipeg", offset: "UTC -06:00" },
+            "America/Yellowknife": { id: "America/Yellowknife", countrycode: "CA", country: "Canada", tz: "America/Yellowknife", offset: "UTC -07:00" },
+            "Atlantic/Cape_Verde": { id: "Atlantic/Cape_Verde", countrycode: "CV", country: "Cape Verde", tz: "Atlantic/Cape_Verde", offset: "UTC -01:00" },
+            "America/Cayman": { id: "America/Cayman", countrycode: "KY", country: "Cayman Islands", tz: "America/Cayman", offset: "UTC -05:00" },
+            "Africa/Bangui": { id: "Africa/Bangui", countrycode: "CF", country: "Central African Republic", tz: "Africa/Bangui", offset: "UTC +01:00" },
+            "Africa/Ndjamena": { id: "Africa/Ndjamena", countrycode: "TD", country: "Chad", tz: "Africa/Ndjamena", offset: "UTC +01:00" },
+            "America/Punta_Arenas": { id: "America/Punta_Arenas", countrycode: "CL", country: "Chile", tz: "America/Punta_Arenas", offset: "UTC -03:00" },
+            "America/Santiago": { id: "America/Santiago", countrycode: "CL", country: "Chile", tz: "America/Santiago", offset: "UTC -03:00" },
+            "Pacific/Easter": { id: "Pacific/Easter", countrycode: "CL", country: "Chile", tz: "Pacific/Easter", offset: "UTC -05:00" },
+            "Asia/Shanghai": { id: "Asia/Shanghai", countrycode: "CN", country: "China", tz: "Asia/Shanghai", offset: "UTC +08:00" },
+            "Asia/Urumqi": { id: "Asia/Urumqi", countrycode: "CN", country: "China", tz: "Asia/Urumqi", offset: "UTC +06:00" },
+            "Indian/Christmas": { id: "Indian/Christmas", countrycode: "CX", country: "Christmas Island", tz: "Indian/Christmas", offset: "UTC +07:00" },
+            "Indian/Cocos": { id: "Indian/Cocos", countrycode: "CC", country: "Cocos (Keeling) Islands", tz: "Indian/Cocos", offset: "UTC +06:30" },
+            "America/Bogota": { id: "America/Bogota", countrycode: "CO", country: "Colombia", tz: "America/Bogota", offset: "UTC -05:00" },
+            "Indian/Comoro": { id: "Indian/Comoro", countrycode: "KM", country: "Comoros", tz: "Indian/Comoro", offset: "UTC +03:00" },
+            "Africa/Brazzaville": { id: "Africa/Brazzaville", countrycode: "CG", country: "Congo", tz: "Africa/Brazzaville", offset: "UTC +01:00" },
+            "Africa/Kinshasa": { id: "Africa/Kinshasa", countrycode: "CD", country: "Congo, the Democratic Republic of the", tz: "Africa/Kinshasa", offset: "UTC +01:00" },
+            "Africa/Lubumbashi": { id: "Africa/Lubumbashi", countrycode: "CD", country: "Congo, the Democratic Republic of the", tz: "Africa/Lubumbashi", offset: "UTC +02:00" },
+            "Pacific/Rarotonga": { id: "Pacific/Rarotonga", countrycode: "CK", country: "Cook Islands", tz: "Pacific/Rarotonga", offset: "UTC -10:00" },
+            "America/Costa_Rica": { id: "America/Costa_Rica", countrycode: "CR", country: "Costa Rica", tz: "America/Costa_Rica", offset: "UTC -06:00" },
+            "Europe/Zagreb": { id: "Europe/Zagreb", countrycode: "HR", country: "Croatia", tz: "Europe/Zagreb", offset: "UTC +01:00" },
+            "America/Havana": { id: "America/Havana", countrycode: "CU", country: "Cuba", tz: "America/Havana", offset: "UTC -05:00" },
+            "America/Curacao": { id: "America/Curacao", countrycode: "CW", country: "Curaçao", tz: "America/Curacao", offset: "UTC -04:00" },
+            "Asia/Famagusta": { id: "Asia/Famagusta", countrycode: "CY", country: "Cyprus", tz: "Asia/Famagusta", offset: "UTC +02:00" },
+            "Asia/Nicosia": { id: "Asia/Nicosia", countrycode: "CY", country: "Cyprus", tz: "Asia/Nicosia", offset: "UTC +02:00" },
+            "Europe/Prague": { id: "Europe/Prague", countrycode: "CZ", country: "Czech Republic", tz: "Europe/Prague", offset: "UTC +01:00" },
+            "Africa/Abidjan": { id: "Africa/Abidjan", countrycode: "CI", country: "Côte d'Ivoire", tz: "Africa/Abidjan", offset: "UTC" },
+            "Europe/Copenhagen": { id: "Europe/Copenhagen", countrycode: "DK", country: "Denmark", tz: "Europe/Copenhagen", offset: "UTC +01:00" },
+            "Africa/Djibouti": { id: "Africa/Djibouti", countrycode: "DJ", country: "Djibouti", tz: "Africa/Djibouti", offset: "UTC +03:00" },
+            "America/Dominica": { id: "America/Dominica", countrycode: "DM", country: "Dominica", tz: "America/Dominica", offset: "UTC -04:00" },
+            "America/Santo_Domingo": { id: "America/Santo_Domingo", countrycode: "DO", country: "Dominican Republic", tz: "America/Santo_Domingo", offset: "UTC -04:00" },
+            "America/Guayaquil": { id: "America/Guayaquil", countrycode: "EC", country: "Ecuador", tz: "America/Guayaquil", offset: "UTC -05:00" },
+            "Pacific/Galapagos": { id: "Pacific/Galapagos", countrycode: "EC", country: "Ecuador", tz: "Pacific/Galapagos", offset: "UTC -06:00" },
+            "Africa/Cairo": { id: "Africa/Cairo", countrycode: "EG", country: "Egypt", tz: "Africa/Cairo", offset: "UTC +02:00" },
+            "America/El_Salvador": { id: "America/El_Salvador", countrycode: "SV", country: "El Salvador", tz: "America/El_Salvador", offset: "UTC -06:00" },
+            "Africa/Malabo": { id: "Africa/Malabo", countrycode: "GQ", country: "Equatorial Guinea", tz: "Africa/Malabo", offset: "UTC +01:00" },
+            "Africa/Asmara": { id: "Africa/Asmara", countrycode: "ER", country: "Eritrea", tz: "Africa/Asmara", offset: "UTC +03:00" },
+            "Europe/Tallinn": { id: "Europe/Tallinn", countrycode: "EE", country: "Estonia", tz: "Europe/Tallinn", offset: "UTC +02:00" },
+            "Africa/Addis_Ababa": { id: "Africa/Addis_Ababa", countrycode: "ET", country: "Ethiopia", tz: "Africa/Addis_Ababa", offset: "UTC +03:00" },
+            "Atlantic/Stanley": { id: "Atlantic/Stanley", countrycode: "FK", country: "Falkland Islands (Malvinas)", tz: "Atlantic/Stanley", offset: "UTC -03:00" },
+            "Atlantic/Faroe": { id: "Atlantic/Faroe", countrycode: "FO", country: "Faroe Islands", tz: "Atlantic/Faroe", offset: "UTC" },
+            "Pacific/Fiji": { id: "Pacific/Fiji", countrycode: "FJ", country: "Fiji", tz: "Pacific/Fiji", offset: "UTC +12:00" },
+            "Europe/Helsinki": { id: "Europe/Helsinki", countrycode: "FI", country: "Finland", tz: "Europe/Helsinki", offset: "UTC +02:00" },
+            "Europe/Paris": { id: "Europe/Paris", countrycode: "FR", country: "France", tz: "Europe/Paris", offset: "UTC +01:00" },
+            "America/Cayenne": { id: "America/Cayenne", countrycode: "GF", country: "French Guiana", tz: "America/Cayenne", offset: "UTC -03:00" },
+            "Pacific/Gambier": { id: "Pacific/Gambier", countrycode: "PF", country: "French Polynesia", tz: "Pacific/Gambier", offset: "UTC -09:00" },
+            "Pacific/Marquesas": { id: "Pacific/Marquesas", countrycode: "PF", country: "French Polynesia", tz: "Pacific/Marquesas", offset: "UTC -09:30" },
+            "Pacific/Tahiti": { id: "Pacific/Tahiti", countrycode: "PF", country: "French Polynesia", tz: "Pacific/Tahiti", offset: "UTC -10:00" },
+            "Indian/Kerguelen": { id: "Indian/Kerguelen", countrycode: "TF", country: "French Southern Territories", tz: "Indian/Kerguelen", offset: "UTC +05:00" },
+            "Africa/Libreville": { id: "Africa/Libreville", countrycode: "GA", country: "Gabon", tz: "Africa/Libreville", offset: "UTC +01:00" },
+            "Africa/Banjul": { id: "Africa/Banjul", countrycode: "GM", country: "Gambia", tz: "Africa/Banjul", offset: "UTC" },
+            "Asia/Tbilisi": { id: "Asia/Tbilisi", countrycode: "GE", country: "Georgia", tz: "Asia/Tbilisi", offset: "UTC +04:00" },
+            "Europe/Berlin": { id: "Europe/Berlin", countrycode: "DE", country: "Germany", tz: "Europe/Berlin", offset: "UTC +01:00" },
+            "Europe/Busingen": { id: "Europe/Busingen", countrycode: "DE", country: "Germany", tz: "Europe/Busingen", offset: "UTC +01:00" },
+            "Africa/Accra": { id: "Africa/Accra", countrycode: "GH", country: "Ghana", tz: "Africa/Accra", offset: "UTC" },
+            "Europe/Gibraltar": { id: "Europe/Gibraltar", countrycode: "GI", country: "Gibraltar", tz: "Europe/Gibraltar", offset: "UTC +01:00" },
+            "Europe/Athens": { id: "Europe/Athens", countrycode: "GR", country: "Greece", tz: "Europe/Athens", offset: "UTC +02:00" },
+            "America/Danmarkshavn": { id: "America/Danmarkshavn", countrycode: "GL", country: "Greenland", tz: "America/Danmarkshavn", offset: "UTC" },
+            "America/Godthab": { id: "America/Godthab", countrycode: "GL", country: "Greenland", tz: "America/Godthab", offset: "UTC -03:00" },
+            "America/Scoresbysund": { id: "America/Scoresbysund", countrycode: "GL", country: "Greenland", tz: "America/Scoresbysund", offset: "UTC -01:00" },
+            "America/Thule": { id: "America/Thule", countrycode: "GL", country: "Greenland", tz: "America/Thule", offset: "UTC -04:00" },
+            "America/Grenada": { id: "America/Grenada", countrycode: "GD", country: "Grenada", tz: "America/Grenada", offset: "UTC -04:00" },
+            "America/Guadeloupe": { id: "America/Guadeloupe", countrycode: "GP", country: "Guadeloupe", tz: "America/Guadeloupe", offset: "UTC -04:00" },
+            "Pacific/Guam": { id: "Pacific/Guam", countrycode: "GU", country: "Guam", tz: "Pacific/Guam", offset: "UTC +10:00" },
+            "America/Guatemala": { id: "America/Guatemala", countrycode: "GT", country: "Guatemala", tz: "America/Guatemala", offset: "UTC -06:00" },
+            "Europe/Guernsey": { id: "Europe/Guernsey", countrycode: "GG", country: "Guernsey", tz: "Europe/Guernsey", offset: "UTC" },
+            "Africa/Conakry": { id: "Africa/Conakry", countrycode: "GN", country: "Guinea", tz: "Africa/Conakry", offset: "UTC" },
+            "Africa/Bissau": { id: "Africa/Bissau", countrycode: "GW", country: "Guinea-Bissau", tz: "Africa/Bissau", offset: "UTC" },
+            "America/Guyana": { id: "America/Guyana", countrycode: "GY", country: "Guyana", tz: "America/Guyana", offset: "UTC -04:00" },
+            "America/Port-au-Prince": { id: "America/Port-au-Prince", countrycode: "HT", country: "Haiti", tz: "America/Port-au-Prince", offset: "UTC -05:00" },
+            "Europe/Vatican": { id: "Europe/Vatican", countrycode: "VA", country: "Holy See (Vatican City State)", tz: "Europe/Vatican", offset: "UTC +01:00" },
+            "America/Tegucigalpa": { id: "America/Tegucigalpa", countrycode: "HN", country: "Honduras", tz: "America/Tegucigalpa", offset: "UTC -06:00" },
+            "Asia/Hong_Kong": { id: "Asia/Hong_Kong", countrycode: "HK", country: "Hong Kong", tz: "Asia/Hong_Kong", offset: "UTC +08:00" },
+            "Europe/Budapest": { id: "Europe/Budapest", countrycode: "HU", country: "Hungary", tz: "Europe/Budapest", offset: "UTC +01:00" },
+            "Atlantic/Reykjavik": { id: "Atlantic/Reykjavik", countrycode: "IS", country: "Iceland", tz: "Atlantic/Reykjavik", offset: "UTC" },
+            "Asia/Kolkata": { id: "Asia/Kolkata", countrycode: "IN", country: "India", tz: "Asia/Kolkata", offset: "UTC +05:30" },
+            "Asia/Jakarta": { id: "Asia/Jakarta", countrycode: "ID", country: "Indonesia", tz: "Asia/Jakarta", offset: "UTC +07:00" },
+            "Asia/Jayapura": { id: "Asia/Jayapura", countrycode: "ID", country: "Indonesia", tz: "Asia/Jayapura", offset: "UTC +09:00" },
+            "Asia/Makassar": { id: "Asia/Makassar", countrycode: "ID", country: "Indonesia", tz: "Asia/Makassar", offset: "UTC +08:00" },
+            "Asia/Pontianak": { id: "Asia/Pontianak", countrycode: "ID", country: "Indonesia", tz: "Asia/Pontianak", offset: "UTC +07:00" },
+            "Asia/Tehran": { id: "Asia/Tehran", countrycode: "IR", country: "Iran, Islamic Republic of", tz: "Asia/Tehran", offset: "UTC +03:30" },
+            "Asia/Baghdad": { id: "Asia/Baghdad", countrycode: "IQ", country: "Iraq", tz: "Asia/Baghdad", offset: "UTC +03:00" },
+            "Europe/Dublin": { id: "Europe/Dublin", countrycode: "IE", country: "Ireland", tz: "Europe/Dublin", offset: "UTC" },
+            "Europe/Isle_of_Man": { id: "Europe/Isle_of_Man", countrycode: "IM", country: "Isle of Man", tz: "Europe/Isle_of_Man", offset: "UTC" },
+            "Asia/Jerusalem": { id: "Asia/Jerusalem", countrycode: "IL", country: "Israel", tz: "Asia/Jerusalem", offset: "UTC +02:00" },
+            "Europe/Rome": { id: "Europe/Rome", countrycode: "IT", country: "Italy", tz: "Europe/Rome", offset: "UTC +01:00" },
+            "America/Jamaica": { id: "America/Jamaica", countrycode: "JM", country: "Jamaica", tz: "America/Jamaica", offset: "UTC -05:00" },
+            "Asia/Tokyo": { id: "Asia/Tokyo", countrycode: "JP", country: "Japan", tz: "Asia/Tokyo", offset: "UTC +09:00" },
+            "Europe/Jersey": { id: "Europe/Jersey", countrycode: "JE", country: "Jersey", tz: "Europe/Jersey", offset: "UTC" },
+            "Asia/Amman": { id: "Asia/Amman", countrycode: "JO", country: "Jordan", tz: "Asia/Amman", offset: "UTC +02:00" },
+            "Asia/Almaty": { id: "Asia/Almaty", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Almaty", offset: "UTC +06:00" },
+            "Asia/Aqtau": { id: "Asia/Aqtau", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Aqtau", offset: "UTC +05:00" },
+            "Asia/Aqtobe": { id: "Asia/Aqtobe", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Aqtobe", offset: "UTC +05:00" },
+            "Asia/Atyrau": { id: "Asia/Atyrau", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Atyrau", offset: "UTC +05:00" },
+            "Asia/Oral": { id: "Asia/Oral", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Oral", offset: "UTC +05:00" },
+            "Asia/Qostanay": { id: "Asia/Qostanay", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Qostanay", offset: "UTC +06:00" },
+            "Asia/Qyzylorda": { id: "Asia/Qyzylorda", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Qyzylorda", offset: "UTC +05:00" },
+            "Africa/Nairobi": { id: "Africa/Nairobi", countrycode: "KE", country: "Kenya", tz: "Africa/Nairobi", offset: "UTC +03:00" },
+            "Pacific/Enderbury": { id: "Pacific/Enderbury", countrycode: "KI", country: "Kiribati", tz: "Pacific/Enderbury", offset: "UTC +13:00" },
+            "Pacific/Kiritimati": { id: "Pacific/Kiritimati", countrycode: "KI", country: "Kiribati", tz: "Pacific/Kiritimati", offset: "UTC +14:00" },
+            "Pacific/Tarawa": { id: "Pacific/Tarawa", countrycode: "KI", country: "Kiribati", tz: "Pacific/Tarawa", offset: "UTC +12:00" },
+            "Asia/Pyongyang": { id: "Asia/Pyongyang", countrycode: "KP", country: "Korea, Democratic People's Republic of", tz: "Asia/Pyongyang", offset: "UTC +09:00" },
+            "Asia/Seoul": { id: "Asia/Seoul", countrycode: "KR", country: "Korea, Republic of", tz: "Asia/Seoul", offset: "UTC +09:00" },
+            "Asia/Kuwait": { id: "Asia/Kuwait", countrycode: "KW", country: "Kuwait", tz: "Asia/Kuwait", offset: "UTC +03:00" },
+            "Asia/Bishkek": { id: "Asia/Bishkek", countrycode: "KG", country: "Kyrgyzstan", tz: "Asia/Bishkek", offset: "UTC +06:00" },
+            "Asia/Vientiane": { id: "Asia/Vientiane", countrycode: "LA", country: "Lao People's Democratic Republic", tz: "Asia/Vientiane", offset: "UTC +07:00" },
+            "Europe/Riga": { id: "Europe/Riga", countrycode: "LV", country: "Latvia", tz: "Europe/Riga", offset: "UTC +02:00" },
+            "Asia/Beirut": { id: "Asia/Beirut", countrycode: "LB", country: "Lebanon", tz: "Asia/Beirut", offset: "UTC +02:00" },
+            "Africa/Maseru": { id: "Africa/Maseru", countrycode: "LS", country: "Lesotho", tz: "Africa/Maseru", offset: "UTC +02:00" },
+            "Africa/Monrovia": { id: "Africa/Monrovia", countrycode: "LR", country: "Liberia", tz: "Africa/Monrovia", offset: "UTC" },
+            "Africa/Tripoli": { id: "Africa/Tripoli", countrycode: "LY", country: "Libya", tz: "Africa/Tripoli", offset: "UTC +02:00" },
+            "Europe/Vaduz": { id: "Europe/Vaduz", countrycode: "LI", country: "Liechtenstein", tz: "Europe/Vaduz", offset: "UTC +01:00" },
+            "Europe/Vilnius": { id: "Europe/Vilnius", countrycode: "LT", country: "Lithuania", tz: "Europe/Vilnius", offset: "UTC +02:00" },
+            "Europe/Luxembourg": { id: "Europe/Luxembourg", countrycode: "LU", country: "Luxembourg", tz: "Europe/Luxembourg", offset: "UTC +01:00" },
+            "Asia/Macau": { id: "Asia/Macau", countrycode: "MO", country: "Macao", tz: "Asia/Macau", offset: "UTC +08:00" },
+            "Europe/Skopje": { id: "Europe/Skopje", countrycode: "MK", country: "Macedonia, the Former Yugoslav Republic of", tz: "Europe/Skopje", offset: "UTC +01:00" },
+            "Indian/Antananarivo": { id: "Indian/Antananarivo", countrycode: "MG", country: "Madagascar", tz: "Indian/Antananarivo", offset: "UTC +03:00" },
+            "Africa/Blantyre": { id: "Africa/Blantyre", countrycode: "MW", country: "Malawi", tz: "Africa/Blantyre", offset: "UTC +02:00" },
+            "Asia/Kuala_Lumpur": { id: "Asia/Kuala_Lumpur", countrycode: "MY", country: "Malaysia", tz: "Asia/Kuala_Lumpur", offset: "UTC +08:00" },
+            "Asia/Kuching": { id: "Asia/Kuching", countrycode: "MY", country: "Malaysia", tz: "Asia/Kuching", offset: "UTC +08:00" },
+            "Indian/Maldives": { id: "Indian/Maldives", countrycode: "MV", country: "Maldives", tz: "Indian/Maldives", offset: "UTC +05:00" },
+            "Africa/Bamako": { id: "Africa/Bamako", countrycode: "ML", country: "Mali", tz: "Africa/Bamako", offset: "UTC" },
+            "Europe/Malta": { id: "Europe/Malta", countrycode: "MT", country: "Malta", tz: "Europe/Malta", offset: "UTC +01:00" },
+            "Pacific/Kwajalein": { id: "Pacific/Kwajalein", countrycode: "MH", country: "Marshall Islands", tz: "Pacific/Kwajalein", offset: "UTC +12:00" },
+            "Pacific/Majuro": { id: "Pacific/Majuro", countrycode: "MH", country: "Marshall Islands", tz: "Pacific/Majuro", offset: "UTC +12:00" },
+            "America/Martinique": { id: "America/Martinique", countrycode: "MQ", country: "Martinique", tz: "America/Martinique", offset: "UTC -04:00" },
+            "Africa/Nouakchott": { id: "Africa/Nouakchott", countrycode: "MR", country: "Mauritania", tz: "Africa/Nouakchott", offset: "UTC" },
+            "Indian/Mauritius": { id: "Indian/Mauritius", countrycode: "MU", country: "Mauritius", tz: "Indian/Mauritius", offset: "UTC +04:00" },
+            "Indian/Mayotte": { id: "Indian/Mayotte", countrycode: "YT", country: "Mayotte", tz: "Indian/Mayotte", offset: "UTC +03:00" },
+            "America/Bahia_Banderas": { id: "America/Bahia_Banderas", countrycode: "MX", country: "Mexico", tz: "America/Bahia_Banderas", offset: "UTC -06:00" },
+            "America/Cancun": { id: "America/Cancun", countrycode: "MX", country: "Mexico", tz: "America/Cancun", offset: "UTC -05:00" },
+            "America/Chihuahua": { id: "America/Chihuahua", countrycode: "MX", country: "Mexico", tz: "America/Chihuahua", offset: "UTC -07:00" },
+            "America/Hermosillo": { id: "America/Hermosillo", countrycode: "MX", country: "Mexico", tz: "America/Hermosillo", offset: "UTC -07:00" },
+            "America/Matamoros": { id: "America/Matamoros", countrycode: "MX", country: "Mexico", tz: "America/Matamoros", offset: "UTC -06:00" },
+            "America/Mazatlan": { id: "America/Mazatlan", countrycode: "MX", country: "Mexico", tz: "America/Mazatlan", offset: "UTC -07:00" },
+            "America/Merida": { id: "America/Merida", countrycode: "MX", country: "Mexico", tz: "America/Merida", offset: "UTC -06:00" },
+            "America/Mexico_City": { id: "America/Mexico_City", countrycode: "MX", country: "Mexico", tz: "America/Mexico_City", offset: "UTC -06:00" },
+            "America/Monterrey": { id: "America/Monterrey", countrycode: "MX", country: "Mexico", tz: "America/Monterrey", offset: "UTC -06:00" },
+            "America/Ojinaga": { id: "America/Ojinaga", countrycode: "MX", country: "Mexico", tz: "America/Ojinaga", offset: "UTC -07:00" },
+            "America/Tijuana": { id: "America/Tijuana", countrycode: "MX", country: "Mexico", tz: "America/Tijuana", offset: "UTC -08:00" },
+            "Pacific/Chuuk": { id: "Pacific/Chuuk", countrycode: "FM", country: "Micronesia, Federated States of", tz: "Pacific/Chuuk", offset: "UTC +10:00" },
+            "Pacific/Kosrae": { id: "Pacific/Kosrae", countrycode: "FM", country: "Micronesia, Federated States of", tz: "Pacific/Kosrae", offset: "UTC +11:00" },
+            "Pacific/Pohnpei": { id: "Pacific/Pohnpei", countrycode: "FM", country: "Micronesia, Federated States of", tz: "Pacific/Pohnpei", offset: "UTC +11:00" },
+            "Europe/Chisinau": { id: "Europe/Chisinau", countrycode: "MD", country: "Moldova, Republic of", tz: "Europe/Chisinau", offset: "UTC +02:00" },
+            "Europe/Monaco": { id: "Europe/Monaco", countrycode: "MC", country: "Monaco", tz: "Europe/Monaco", offset: "UTC +01:00" },
+            "Asia/Choibalsan": { id: "Asia/Choibalsan", countrycode: "MN", country: "Mongolia", tz: "Asia/Choibalsan", offset: "UTC +08:00" },
+            "Asia/Hovd": { id: "Asia/Hovd", countrycode: "MN", country: "Mongolia", tz: "Asia/Hovd", offset: "UTC +07:00" },
+            "Asia/Ulaanbaatar": { id: "Asia/Ulaanbaatar", countrycode: "MN", country: "Mongolia", tz: "Asia/Ulaanbaatar", offset: "UTC +08:00" },
+            "Europe/Podgorica": { id: "Europe/Podgorica", countrycode: "ME", country: "Montenegro", tz: "Europe/Podgorica", offset: "UTC +01:00" },
+            "America/Montserrat": { id: "America/Montserrat", countrycode: "MS", country: "Montserrat", tz: "America/Montserrat", offset: "UTC -04:00" },
+            "Africa/Casablanca": { id: "Africa/Casablanca", countrycode: "MA", country: "Morocco", tz: "Africa/Casablanca", offset: "UTC +01:00" },
+            "Africa/Maputo": { id: "Africa/Maputo", countrycode: "MZ", country: "Mozambique", tz: "Africa/Maputo", offset: "UTC +02:00" },
+            "Asia/Yangon": { id: "Asia/Yangon", countrycode: "MM", country: "Myanmar", tz: "Asia/Yangon", offset: "UTC +06:30" },
+            "Africa/Windhoek": { id: "Africa/Windhoek", countrycode: "NA", country: "Namibia", tz: "Africa/Windhoek", offset: "UTC +02:00" },
+            "Pacific/Nauru": { id: "Pacific/Nauru", countrycode: "NR", country: "Nauru", tz: "Pacific/Nauru", offset: "UTC +12:00" },
+            "Asia/Kathmandu": { id: "Asia/Kathmandu", countrycode: "NP", country: "Nepal", tz: "Asia/Kathmandu", offset: "UTC +05:45" },
+            "Europe/Amsterdam": { id: "Europe/Amsterdam", countrycode: "NL", country: "Netherlands", tz: "Europe/Amsterdam", offset: "UTC +01:00" },
+            "Pacific/Noumea": { id: "Pacific/Noumea", countrycode: "NC", country: "New Caledonia", tz: "Pacific/Noumea", offset: "UTC +11:00" },
+            "Pacific/Auckland": { id: "Pacific/Auckland", countrycode: "NZ", country: "New Zealand", tz: "Pacific/Auckland", offset: "UTC +13:00" },
+            "Pacific/Chatham": { id: "Pacific/Chatham", countrycode: "NZ", country: "New Zealand", tz: "Pacific/Chatham", offset: "UTC +13:45" },
+            "America/Managua": { id: "America/Managua", countrycode: "NI", country: "Nicaragua", tz: "America/Managua", offset: "UTC -06:00" },
+            "Africa/Niamey": { id: "Africa/Niamey", countrycode: "NE", country: "Niger", tz: "Africa/Niamey", offset: "UTC +01:00" },
+            "Africa/Lagos": { id: "Africa/Lagos", countrycode: "NG", country: "Nigeria", tz: "Africa/Lagos", offset: "UTC +01:00" },
+            "Pacific/Niue": { id: "Pacific/Niue", countrycode: "NU", country: "Niue", tz: "Pacific/Niue", offset: "UTC -11:00" },
+            "Pacific/Norfolk": { id: "Pacific/Norfolk", countrycode: "NF", country: "Norfolk Island", tz: "Pacific/Norfolk", offset: "UTC +12:00" },
+            "Pacific/Saipan": { id: "Pacific/Saipan", countrycode: "MP", country: "Northern Mariana Islands", tz: "Pacific/Saipan", offset: "UTC +10:00" },
+            "Europe/Oslo": { id: "Europe/Oslo", countrycode: "NO", country: "Norway", tz: "Europe/Oslo", offset: "UTC +01:00" },
+            "Asia/Muscat": { id: "Asia/Muscat", countrycode: "OM", country: "Oman", tz: "Asia/Muscat", offset: "UTC +04:00" },
+            "Asia/Karachi": { id: "Asia/Karachi", countrycode: "PK", country: "Pakistan", tz: "Asia/Karachi", offset: "UTC +05:00" },
+            "Pacific/Palau": { id: "Pacific/Palau", countrycode: "PW", country: "Palau", tz: "Pacific/Palau", offset: "UTC +09:00" },
+            "Asia/Gaza": { id: "Asia/Gaza", countrycode: "PS", country: "Palestine, State of", tz: "Asia/Gaza", offset: "UTC +02:00" },
+            "Asia/Hebron": { id: "Asia/Hebron", countrycode: "PS", country: "Palestine, State of", tz: "Asia/Hebron", offset: "UTC +02:00" },
+            "America/Panama": { id: "America/Panama", countrycode: "PA", country: "Panama", tz: "America/Panama", offset: "UTC -05:00" },
+            "Pacific/Bougainville": { id: "Pacific/Bougainville", countrycode: "PG", country: "Papua New Guinea", tz: "Pacific/Bougainville", offset: "UTC +11:00" },
+            "Pacific/Port_Moresby": { id: "Pacific/Port_Moresby", countrycode: "PG", country: "Papua New Guinea", tz: "Pacific/Port_Moresby", offset: "UTC +10:00" },
+            "America/Asuncion": { id: "America/Asuncion", countrycode: "PY", country: "Paraguay", tz: "America/Asuncion", offset: "UTC -03:00" },
+            "America/Lima": { id: "America/Lima", countrycode: "PE", country: "Peru", tz: "America/Lima", offset: "UTC -05:00" },
+            "Asia/Manila": { id: "Asia/Manila", countrycode: "PH", country: "Philippines", tz: "Asia/Manila", offset: "UTC +08:00" },
+            "Pacific/Pitcairn": { id: "Pacific/Pitcairn", countrycode: "PN", country: "Pitcairn", tz: "Pacific/Pitcairn", offset: "UTC -08:00" },
+            "Europe/Warsaw": { id: "Europe/Warsaw", countrycode: "PL", country: "Poland", tz: "Europe/Warsaw", offset: "UTC +01:00" },
+            "Atlantic/Azores": { id: "Atlantic/Azores", countrycode: "PT", country: "Portugal", tz: "Atlantic/Azores", offset: "UTC -01:00" },
+            "Atlantic/Madeira": { id: "Atlantic/Madeira", countrycode: "PT", country: "Portugal", tz: "Atlantic/Madeira", offset: "UTC" },
+            "Europe/Lisbon": { id: "Europe/Lisbon", countrycode: "PT", country: "Portugal", tz: "Europe/Lisbon", offset: "UTC" },
+            "America/Puerto_Rico": { id: "America/Puerto_Rico", countrycode: "PR", country: "Puerto Rico", tz: "America/Puerto_Rico", offset: "UTC -04:00" },
+            "Asia/Qatar": { id: "Asia/Qatar", countrycode: "QA", country: "Qatar", tz: "Asia/Qatar", offset: "UTC +03:00" },
+            "Europe/Bucharest": { id: "Europe/Bucharest", countrycode: "RO", country: "Romania", tz: "Europe/Bucharest", offset: "UTC +02:00" },
+            "Asia/Anadyr": { id: "Asia/Anadyr", countrycode: "RU", country: "Russian Federation", tz: "Asia/Anadyr", offset: "UTC +12:00" },
+            "Asia/Barnaul": { id: "Asia/Barnaul", countrycode: "RU", country: "Russian Federation", tz: "Asia/Barnaul", offset: "UTC +07:00" },
+            "Asia/Chita": { id: "Asia/Chita", countrycode: "RU", country: "Russian Federation", tz: "Asia/Chita", offset: "UTC +09:00" },
+            "Asia/Irkutsk": { id: "Asia/Irkutsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Irkutsk", offset: "UTC +08:00" },
+            "Asia/Kamchatka": { id: "Asia/Kamchatka", countrycode: "RU", country: "Russian Federation", tz: "Asia/Kamchatka", offset: "UTC +12:00" },
+            "Asia/Khandyga": { id: "Asia/Khandyga", countrycode: "RU", country: "Russian Federation", tz: "Asia/Khandyga", offset: "UTC +09:00" },
+            "Asia/Krasnoyarsk": { id: "Asia/Krasnoyarsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Krasnoyarsk", offset: "UTC +07:00" },
+            "Asia/Magadan": { id: "Asia/Magadan", countrycode: "RU", country: "Russian Federation", tz: "Asia/Magadan", offset: "UTC +11:00" },
+            "Asia/Novokuznetsk": { id: "Asia/Novokuznetsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Novokuznetsk", offset: "UTC +07:00" },
+            "Asia/Novosibirsk": { id: "Asia/Novosibirsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Novosibirsk", offset: "UTC +07:00" },
+            "Asia/Omsk": { id: "Asia/Omsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Omsk", offset: "UTC +06:00" },
+            "Asia/Sakhalin": { id: "Asia/Sakhalin", countrycode: "RU", country: "Russian Federation", tz: "Asia/Sakhalin", offset: "UTC +11:00" },
+            "Asia/Srednekolymsk": { id: "Asia/Srednekolymsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Srednekolymsk", offset: "UTC +11:00" },
+            "Asia/Tomsk": { id: "Asia/Tomsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Tomsk", offset: "UTC +07:00" },
+            "Asia/Ust-Nera": { id: "Asia/Ust-Nera", countrycode: "RU", country: "Russian Federation", tz: "Asia/Ust-Nera", offset: "UTC +10:00" },
+            "Asia/Vladivostok": { id: "Asia/Vladivostok", countrycode: "RU", country: "Russian Federation", tz: "Asia/Vladivostok", offset: "UTC +10:00" },
+            "Asia/Yakutsk": { id: "Asia/Yakutsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Yakutsk", offset: "UTC +09:00" },
+            "Asia/Yekaterinburg": { id: "Asia/Yekaterinburg", countrycode: "RU", country: "Russian Federation", tz: "Asia/Yekaterinburg", offset: "UTC +05:00" },
+            "Europe/Astrakhan": { id: "Europe/Astrakhan", countrycode: "RU", country: "Russian Federation", tz: "Europe/Astrakhan", offset: "UTC +04:00" },
+            "Europe/Kaliningrad": { id: "Europe/Kaliningrad", countrycode: "RU", country: "Russian Federation", tz: "Europe/Kaliningrad", offset: "UTC +02:00" },
+            "Europe/Kirov": { id: "Europe/Kirov", countrycode: "RU", country: "Russian Federation", tz: "Europe/Kirov", offset: "UTC +03:00" },
+            "Europe/Moscow": { id: "Europe/Moscow", countrycode: "RU", country: "Russian Federation", tz: "Europe/Moscow", offset: "UTC +03:00" },
+            "Europe/Samara": { id: "Europe/Samara", countrycode: "RU", country: "Russian Federation", tz: "Europe/Samara", offset: "UTC +04:00" },
+            "Europe/Saratov": { id: "Europe/Saratov", countrycode: "RU", country: "Russian Federation", tz: "Europe/Saratov", offset: "UTC +04:00" },
+            "Europe/Ulyanovsk": { id: "Europe/Ulyanovsk", countrycode: "RU", country: "Russian Federation", tz: "Europe/Ulyanovsk", offset: "UTC +04:00" },
+            "Europe/Volgograd": { id: "Europe/Volgograd", countrycode: "RU", country: "Russian Federation", tz: "Europe/Volgograd", offset: "UTC +04:00" },
+            "Africa/Kigali": { id: "Africa/Kigali", countrycode: "RW", country: "Rwanda", tz: "Africa/Kigali", offset: "UTC +02:00" },
+            "Indian/Reunion": { id: "Indian/Reunion", countrycode: "RE", country: "Réunion", tz: "Indian/Reunion", offset: "UTC +04:00" },
+            "America/St_Barthelemy": { id: "America/St_Barthelemy", countrycode: "BL", country: "Saint Barthélemy", tz: "America/St_Barthelemy", offset: "UTC -04:00" },
+            "Atlantic/St_Helena": { id: "Atlantic/St_Helena", countrycode: "SH", country: "Saint Helena, Ascension and Tristan da Cunha", tz: "Atlantic/St_Helena", offset: "UTC" },
+            "America/St_Kitts": { id: "America/St_Kitts", countrycode: "KN", country: "Saint Kitts and Nevis", tz: "America/St_Kitts", offset: "UTC -04:00" },
+            "America/St_Lucia": { id: "America/St_Lucia", countrycode: "LC", country: "Saint Lucia", tz: "America/St_Lucia", offset: "UTC -04:00" },
+            "America/Marigot": { id: "America/Marigot", countrycode: "MF", country: "Saint Martin (French part)", tz: "America/Marigot", offset: "UTC -04:00" },
+            "America/Miquelon": { id: "America/Miquelon", countrycode: "PM", country: "Saint Pierre and Miquelon", tz: "America/Miquelon", offset: "UTC -03:00" },
+            "America/St_Vincent": { id: "America/St_Vincent", countrycode: "VC", country: "Saint Vincent and the Grenadines", tz: "America/St_Vincent", offset: "UTC -04:00" },
+            "Pacific/Apia": { id: "Pacific/Apia", countrycode: "WS", country: "Samoa", tz: "Pacific/Apia", offset: "UTC +14:00" },
+            "Europe/San_Marino": { id: "Europe/San_Marino", countrycode: "SM", country: "San Marino", tz: "Europe/San_Marino", offset: "UTC +01:00" },
+            "Africa/Sao_Tome": { id: "Africa/Sao_Tome", countrycode: "ST", country: "Sao Tome and Principe", tz: "Africa/Sao_Tome", offset: "UTC" },
+            "Asia/Riyadh": { id: "Asia/Riyadh", countrycode: "SA", country: "Saudi Arabia", tz: "Asia/Riyadh", offset: "UTC +03:00" },
+            "Africa/Dakar": { id: "Africa/Dakar", countrycode: "SN", country: "Senegal", tz: "Africa/Dakar", offset: "UTC" },
+            "Europe/Belgrade": { id: "Europe/Belgrade", countrycode: "RS", country: "Serbia", tz: "Europe/Belgrade", offset: "UTC +01:00" },
+            "Indian/Mahe": { id: "Indian/Mahe", countrycode: "SC", country: "Seychelles", tz: "Indian/Mahe", offset: "UTC +04:00" },
+            "Africa/Freetown": { id: "Africa/Freetown", countrycode: "SL", country: "Sierra Leone", tz: "Africa/Freetown", offset: "UTC" },
+            "Asia/Singapore": { id: "Asia/Singapore", countrycode: "SG", country: "Singapore", tz: "Asia/Singapore", offset: "UTC +08:00" },
+            "America/Lower_Princes": { id: "America/Lower_Princes", countrycode: "SX", country: "Sint Maarten (Dutch part)", tz: "America/Lower_Princes", offset: "UTC -04:00" },
+            "Europe/Bratislava": { id: "Europe/Bratislava", countrycode: "SK", country: "Slovakia", tz: "Europe/Bratislava", offset: "UTC +01:00" },
+            "Europe/Ljubljana": { id: "Europe/Ljubljana", countrycode: "SI", country: "Slovenia", tz: "Europe/Ljubljana", offset: "UTC +01:00" },
+            "Pacific/Guadalcanal": { id: "Pacific/Guadalcanal", countrycode: "SB", country: "Solomon Islands", tz: "Pacific/Guadalcanal", offset: "UTC +11:00" },
+            "Africa/Mogadishu": { id: "Africa/Mogadishu", countrycode: "SO", country: "Somalia", tz: "Africa/Mogadishu", offset: "UTC +03:00" },
+            "Africa/Johannesburg": { id: "Africa/Johannesburg", countrycode: "ZA", country: "South Africa", tz: "Africa/Johannesburg", offset: "UTC +02:00" },
+            "Atlantic/South_Georgia": { id: "Atlantic/South_Georgia", countrycode: "GS", country: "South Georgia and the South Sandwich Islands", tz: "Atlantic/South_Georgia", offset: "UTC -02:00" },
+            "Africa/Juba": { id: "Africa/Juba", countrycode: "SS", country: "South Sudan", tz: "Africa/Juba", offset: "UTC +03:00" },
+            "Africa/Ceuta": { id: "Africa/Ceuta", countrycode: "ES", country: "Spain", tz: "Africa/Ceuta", offset: "UTC +01:00" },
+            "Atlantic/Canary": { id: "Atlantic/Canary", countrycode: "ES", country: "Spain", tz: "Atlantic/Canary", offset: "UTC" },
+            "Europe/Madrid": { id: "Europe/Madrid", countrycode: "ES", country: "Spain", tz: "Europe/Madrid", offset: "UTC +01:00" },
+            "Asia/Colombo": { id: "Asia/Colombo", countrycode: "LK", country: "Sri Lanka", tz: "Asia/Colombo", offset: "UTC +05:30" },
+            "Africa/Khartoum": { id: "Africa/Khartoum", countrycode: "SD", country: "Sudan", tz: "Africa/Khartoum", offset: "UTC +02:00" },
+            "America/Paramaribo": { id: "America/Paramaribo", countrycode: "SR", country: "Suriname", tz: "America/Paramaribo", offset: "UTC -03:00" },
+            "Arctic/Longyearbyen": { id: "Arctic/Longyearbyen", countrycode: "SJ", country: "Svalbard and Jan Mayen", tz: "Arctic/Longyearbyen", offset: "UTC +01:00" },
+            "Africa/Mbabane": { id: "Africa/Mbabane", countrycode: "SZ", country: "Swaziland", tz: "Africa/Mbabane", offset: "UTC +02:00" },
+            "Europe/Stockholm": { id: "Europe/Stockholm", countrycode: "SE", country: "Sweden", tz: "Europe/Stockholm", offset: "UTC +01:00" },
+            "Europe/Zurich": { id: "Europe/Zurich", countrycode: "CH", country: "Switzerland", tz: "Europe/Zurich", offset: "UTC +01:00" },
+            "Asia/Damascus": { id: "Asia/Damascus", countrycode: "SY", country: "Syrian Arab Republic", tz: "Asia/Damascus", offset: "UTC +02:00" },
+            "Asia/Taipei": { id: "Asia/Taipei", countrycode: "TW", country: "Taiwan, Province of China", tz: "Asia/Taipei", offset: "UTC +08:00" },
+            "Asia/Dushanbe": { id: "Asia/Dushanbe", countrycode: "TJ", country: "Tajikistan", tz: "Asia/Dushanbe", offset: "UTC +05:00" },
+            "Africa/Dar_es_Salaam": { id: "Africa/Dar_es_Salaam", countrycode: "TZ", country: "Tanzania, United Republic of", tz: "Africa/Dar_es_Salaam", offset: "UTC +03:00" },
+            "Asia/Bangkok": { id: "Asia/Bangkok", countrycode: "TH", country: "Thailand", tz: "Asia/Bangkok", offset: "UTC +07:00" },
+            "Asia/Dili": { id: "Asia/Dili", countrycode: "TL", country: "Timor-Leste", tz: "Asia/Dili", offset: "UTC +09:00" },
+            "Africa/Lome": { id: "Africa/Lome", countrycode: "TG", country: "Togo", tz: "Africa/Lome", offset: "UTC" },
+            "Pacific/Fakaofo": { id: "Pacific/Fakaofo", countrycode: "TK", country: "Tokelau", tz: "Pacific/Fakaofo", offset: "UTC +13:00" },
+            "Pacific/Tongatapu": { id: "Pacific/Tongatapu", countrycode: "TO", country: "Tonga", tz: "Pacific/Tongatapu", offset: "UTC +13:00" },
+            "America/Port_of_Spain": { id: "America/Port_of_Spain", countrycode: "TT", country: "Trinidad and Tobago", tz: "America/Port_of_Spain", offset: "UTC -04:00" },
+            "Africa/Tunis": { id: "Africa/Tunis", countrycode: "TN", country: "Tunisia", tz: "Africa/Tunis", offset: "UTC +01:00" },
+            "Europe/Istanbul": { id: "Europe/Istanbul", countrycode: "TR", country: "Turkey", tz: "Europe/Istanbul", offset: "UTC +03:00" },
+            "Asia/Ashgabat": { id: "Asia/Ashgabat", countrycode: "TM", country: "Turkmenistan", tz: "Asia/Ashgabat", offset: "UTC +05:00" },
+            "America/Grand_Turk": { id: "America/Grand_Turk", countrycode: "TC", country: "Turks and Caicos Islands", tz: "America/Grand_Turk", offset: "UTC -05:00" },
+            "Pacific/Funafuti": { id: "Pacific/Funafuti", countrycode: "TV", country: "Tuvalu", tz: "Pacific/Funafuti", offset: "UTC +12:00" },
+            "Africa/Kampala": { id: "Africa/Kampala", countrycode: "UG", country: "Uganda", tz: "Africa/Kampala", offset: "UTC +03:00" },
+            "Europe/Kiev": { id: "Europe/Kiev", countrycode: "UA", country: "Ukraine", tz: "Europe/Kiev", offset: "UTC +02:00" },
+            "Europe/Simferopol": { id: "Europe/Simferopol", countrycode: "UA", country: "Ukraine", tz: "Europe/Simferopol", offset: "UTC +03:00" },
+            "Europe/Uzhgorod": { id: "Europe/Uzhgorod", countrycode: "UA", country: "Ukraine", tz: "Europe/Uzhgorod", offset: "UTC +02:00" },
+            "Europe/Zaporozhye": { id: "Europe/Zaporozhye", countrycode: "UA", country: "Ukraine", tz: "Europe/Zaporozhye", offset: "UTC +02:00" },
+            "Asia/Dubai": { id: "Asia/Dubai", countrycode: "AE", country: "United Arab Emirates", tz: "Asia/Dubai", offset: "UTC +04:00" },
+            "Europe/London": { id: "Europe/London", countrycode: "GB", country: "United Kingdom", tz: "Europe/London", offset: "UTC" },
+            "America/Adak": { id: "America/Adak", countrycode: "US", country: "United States", tz: "America/Adak", offset: "UTC -10:00" },
+            "America/Anchorage": { id: "America/Anchorage", countrycode: "US", country: "United States", tz: "America/Anchorage", offset: "UTC -09:00" },
+            "America/Boise": { id: "America/Boise", countrycode: "US", country: "United States", tz: "America/Boise", offset: "UTC -07:00" },
+            "America/Chicago": { id: "America/Chicago", countrycode: "US", country: "United States", tz: "America/Chicago", offset: "UTC -06:00" },
+            "America/Denver": { id: "America/Denver", countrycode: "US", country: "United States", tz: "America/Denver", offset: "UTC -07:00" },
+            "America/Detroit": { id: "America/Detroit", countrycode: "US", country: "United States", tz: "America/Detroit", offset: "UTC -05:00" },
+            "America/Indiana/Indianapolis": { id: "America/Indiana/Indianapolis", countrycode: "US", country: "United States", tz: "America/Indiana/Indianapolis", offset: "UTC -05:00" },
+            "America/Indiana/Knox": { id: "America/Indiana/Knox", countrycode: "US", country: "United States", tz: "America/Indiana/Knox", offset: "UTC -06:00" },
+            "America/Indiana/Marengo": { id: "America/Indiana/Marengo", countrycode: "US", country: "United States", tz: "America/Indiana/Marengo", offset: "UTC -05:00" },
+            "America/Indiana/Petersburg": { id: "America/Indiana/Petersburg", countrycode: "US", country: "United States", tz: "America/Indiana/Petersburg", offset: "UTC -05:00" },
+            "America/Indiana/Tell_City": { id: "America/Indiana/Tell_City", countrycode: "US", country: "United States", tz: "America/Indiana/Tell_City", offset: "UTC -06:00" },
+            "America/Indiana/Vevay": { id: "America/Indiana/Vevay", countrycode: "US", country: "United States", tz: "America/Indiana/Vevay", offset: "UTC -05:00" },
+            "America/Indiana/Vincennes": { id: "America/Indiana/Vincennes", countrycode: "US", country: "United States", tz: "America/Indiana/Vincennes", offset: "UTC -05:00" },
+            "America/Indiana/Winamac": { id: "America/Indiana/Winamac", countrycode: "US", country: "United States", tz: "America/Indiana/Winamac", offset: "UTC -05:00" },
+            "America/Juneau": { id: "America/Juneau", countrycode: "US", country: "United States", tz: "America/Juneau", offset: "UTC -09:00" },
+            "America/Kentucky/Louisville": { id: "America/Kentucky/Louisville", countrycode: "US", country: "United States", tz: "America/Kentucky/Louisville", offset: "UTC -05:00" },
+            "America/Kentucky/Monticello": { id: "America/Kentucky/Monticello", countrycode: "US", country: "United States", tz: "America/Kentucky/Monticello", offset: "UTC -05:00" },
+            "America/Los_Angeles": { id: "America/Los_Angeles", countrycode: "US", country: "United States", tz: "America/Los_Angeles", offset: "UTC -08:00" },
+            "America/Menominee": { id: "America/Menominee", countrycode: "US", country: "United States", tz: "America/Menominee", offset: "UTC -06:00" },
+            "America/Metlakatla": { id: "America/Metlakatla", countrycode: "US", country: "United States", tz: "America/Metlakatla", offset: "UTC -09:00" },
+            "America/New_York": { id: "America/New_York", countrycode: "US", country: "United States", tz: "America/New_York", offset: "UTC -05:00" },
+            "America/Nome": { id: "America/Nome", countrycode: "US", country: "United States", tz: "America/Nome", offset: "UTC -09:00" },
+            "America/North_Dakota/Beulah": { id: "America/North_Dakota/Beulah", countrycode: "US", country: "United States", tz: "America/North_Dakota/Beulah", offset: "UTC -06:00" },
+            "America/North_Dakota/Center": { id: "America/North_Dakota/Center", countrycode: "US", country: "United States", tz: "America/North_Dakota/Center", offset: "UTC -06:00" },
+            "America/North_Dakota/New_Salem": { id: "America/North_Dakota/New_Salem", countrycode: "US", country: "United States", tz: "America/North_Dakota/New_Salem", offset: "UTC -06:00" },
+            "America/Phoenix": { id: "America/Phoenix", countrycode: "US", country: "United States", tz: "America/Phoenix", offset: "UTC -07:00" },
+            "America/Sitka": { id: "America/Sitka", countrycode: "US", country: "United States", tz: "America/Sitka", offset: "UTC -09:00" },
+            "America/Yakutat": { id: "America/Yakutat", countrycode: "US", country: "United States", tz: "America/Yakutat", offset: "UTC -09:00" },
+            "Pacific/Honolulu": { id: "Pacific/Honolulu", countrycode: "US", country: "United States", tz: "Pacific/Honolulu", offset: "UTC -10:00" },
+            "Pacific/Midway": { id: "Pacific/Midway", countrycode: "UM", country: "United States Minor Outlying Islands", tz: "Pacific/Midway", offset: "UTC -11:00" },
+            "Pacific/Wake": { id: "Pacific/Wake", countrycode: "UM", country: "United States Minor Outlying Islands", tz: "Pacific/Wake", offset: "UTC +12:00" },
+            "America/Montevideo": { id: "America/Montevideo", countrycode: "UY", country: "Uruguay", tz: "America/Montevideo", offset: "UTC -03:00" },
+            "Asia/Samarkand": { id: "Asia/Samarkand", countrycode: "UZ", country: "Uzbekistan", tz: "Asia/Samarkand", offset: "UTC +05:00" },
+            "Asia/Tashkent": { id: "Asia/Tashkent", countrycode: "UZ", country: "Uzbekistan", tz: "Asia/Tashkent", offset: "UTC +05:00" },
+            "Pacific/Efate": { id: "Pacific/Efate", countrycode: "VU", country: "Vanuatu", tz: "Pacific/Efate", offset: "UTC +11:00" },
+            "America/Caracas": { id: "America/Caracas", countrycode: "VE", country: "Venezuela, Bolivarian Republic of", tz: "America/Caracas", offset: "UTC -04:00" },
+            "Asia/Ho_Chi_Minh": { id: "Asia/Ho_Chi_Minh", countrycode: "VN", country: "Viet Nam", tz: "Asia/Ho_Chi_Minh", offset: "UTC +07:00" },
+            "America/Tortola": { id: "America/Tortola", countrycode: "VG", country: "Virgin Islands, British", tz: "America/Tortola", offset: "UTC -04:00" },
+            "America/St_Thomas": { id: "America/St_Thomas", countrycode: "VI", country: "Virgin Islands, U.S.", tz: "America/St_Thomas", offset: "UTC -04:00" },
+            "Pacific/Wallis": { id: "Pacific/Wallis", countrycode: "WF", country: "Wallis and Futuna", tz: "Pacific/Wallis", offset: "UTC +12:00" },
+            "Africa/El_Aaiun": { id: "Africa/El_Aaiun", countrycode: "EH", country: "Western Sahara", tz: "Africa/El_Aaiun", offset: "UTC +01:00" },
+            "Asia/Aden": { id: "Asia/Aden", countrycode: "YE", country: "Yemen", tz: "Asia/Aden", offset: "UTC +03:00" },
+            "Africa/Lusaka": { id: "Africa/Lusaka", countrycode: "ZM", country: "Zambia", tz: "Africa/Lusaka", offset: "UTC +02:00" },
+            "Africa/Harare": { id: "Africa/Harare", countrycode: "ZW", country: "Zimbabwe", tz: "Africa/Harare", offset: "UTC +02:00" },
+            "Europe/Mariehamn": { id: "Europe/Mariehamn", countrycode: "AX", country: "Åland Islands", tz: "Europe/Mariehamn", offset: "UTC +02:00" },
+        }
+    }
+
+    /**
+     * Get a specific timezone def by its code
+     * @param code the code to get
+     * @return {*} the tz definition, or null
+     */
+    static get(code) {
+        return TimezoneDB.MAP[code];
+    }
+
+    /**
+     * Get a list of timezones
+     * @return {Array} an array of timezone object definitions
+     */
+    static list() {
+        let list = [];
+        for (let c of Object.values(TimezoneDB.MAP)) {
+            list.push(c);
+        }
+        list.sort(function(a,b){
+            if (a.id > b.id){ return 1 }
+            if (a.id < b.id){ return -1 }
+            return 0;
+        });
+        return list;
+    }
+    
+}
 class SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
             submits: false, // If true, force "type='submit'"
+            ariacontrols: null, // Given a DOM id, sets an aria-controls attribute.
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
@@ -871,11 +1638,14 @@ class SimpleButton {
             this.button.appendChild(secondicon);
         }
 
-        this.button.setAttribute('aria-label', this.text);
+        if (this.text) { this.button.setAttribute('aria-label', this.text); }
         this.button.setAttribute('id', this.id);
         this.button.setAttribute('role', 'button');
         this.button.setAttribute('type', (this.submits ? 'submit' : 'button'));
         this.button.classList.add(this.size);
+        if (this.ariacontrols) {
+            this.button.setAttribute('aria-controls', this.ariacontrols);
+        }
 
         for (let c of this.classes) {
             this.button.classList.add(c);
@@ -921,7 +1691,6 @@ class SimpleButton {
             this.button.classList.add('naked');
         }
         if (this.shape) { this.button.classList.add(this.shape); }
-
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', function (e) {
@@ -987,6 +1756,9 @@ class SimpleButton {
         }
         this.config.action = action;
     }
+
+    get ariacontrols() { return this.config.ariacontrols; }
+    set ariacontrols(ariacontrols) { this.config.ariacontrols = ariacontrols; }
 
     get button() {
         if (!this._button) { this.buildButton(); }
@@ -1122,14 +1894,15 @@ class ButtonMenu extends SimpleButton {
                 }
             },
             secondicon: 'triangle-down', // this is passed up as a secondicon
+            autoclose: true, // don't close on outside clicks
             menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
-            items: [] // list of menu item definitions
-                    // {
-                    //    label: "Menu Text", // text
-                    //    tooltip: null, // Tooltip text
-                    //    icon: null, // Icon to use, if any
-                    //    action: function() { } // what to do when the tab is clicked.
-                    // }
+            items: []   // list of menu item definitions
+                        // {
+                        //    label: "Menu Text", // text
+                        //    tooltip: null, // Tooltip text
+                        //    icon: null, // Icon to use, if any
+                        //    action: function() { } // what to do when the tab is clicked.
+                        // }
         };
     }
 
@@ -1187,13 +1960,15 @@ class ButtonMenu extends SimpleButton {
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        if (focusable) {
+        if ((focusable) && (focusable.length > 0)) {
             focusable[0].focus();
         }
 
-        window.setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
-        }, 200);
+        if (this.autoclose) {
+            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
+                me.setCloseListener();
+            }, 200);
+        }
     }
 
     /**
@@ -1211,15 +1986,17 @@ class ButtonMenu extends SimpleButton {
         }
     }
 
-
     /**
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
         const me = this;
         window.addEventListener('click', function(e) {
-            if (me.menu.contains(e.target)) {
+            let tag = me.menu.tagName.toLowerCase();
+            if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 me.setCloseListener();
+            } else if (me.menu.contains(e.target)) {
+                me.close();
             } else if (me.button.contains(e.target)) {
                 me.toggle();
             } else {
@@ -1239,6 +2016,7 @@ class ButtonMenu extends SimpleButton {
     buildMenu() {
         const me = this;
         this.menu = document.createElement('ul');
+        this.menu.classList.add('menu');
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         let order = 1;
@@ -1303,18 +2081,19 @@ class ButtonMenu extends SimpleButton {
         const me = this;
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
+        this.menu.classList.add('menu');
         this.button.appendChild(this.menu);
         this.menu.addEventListener('keyup', function(e) {
-
-            if (e.keyCode === 9) { // Tab
-                //me.close();
-            } else if (e.keyCode === 27) { // Escape
+            if (e.keyCode === 27) { // Escape
                 me.close();
             }
         });
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get autoclose() { return this.config.autoclose; }
+    set autoclose(autoclose) { this.config.autoclose = autoclose; }
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
@@ -1608,6 +2387,301 @@ class TagButton extends HelpButton {
 
 }
 
+class DatePicker {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            dateicon: 'calendar',
+            startdate: null,
+            value: null,
+            timezone: 'GMT',
+            basetime: '12:00:00', // Time to set dates on
+            locale: 'en-US',
+            weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            onselect: null, // A function to be called on selection. Passed the date selected, as a string.
+            classes: [] // Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define a DataGrid
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
+    }
+
+    getMonthName(m) {
+        return this.months[m];
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the full messagebox container
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('datepicker');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        this.container.appendChild(this.monthbox);
+    }
+
+    buildMonthBox() {
+        this.monthbox = document.createElement('div');
+        this.monthbox.classList.add('monthbox');
+        this.renderMonth(this.startdate); // initial
+    }
+
+    renderMonth(startDate) {
+        const me = this;
+
+        // XXX there has to be a better way to do this.
+
+        let now = new Date();
+        let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
+
+        if (!startDate) {
+            startDate = today;
+        } else if (typeof startDate === 'string') {
+            startDate = new Date(`${startDate} ${this.basetime}`);
+            this.value = startDate;
+            this.startdate = startDate;
+        }
+
+        let startDay = new Date(startDate.getFullYear(), startDate.getMonth()).getDay();
+        //let daysInMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0).getDate();
+        //console.log(`startDay: ${startDay}, daysInThisMonth: ${daysInMonth}`);
+
+        // Many additional dates or things
+        let daysInMonth = (32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate()),
+            previousMonth = new Date(startDate.getFullYear(), (startDate.getMonth() - 1)),
+            daysInPreviousMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth(), 0).getDate(),
+            nextMonth = new Date(startDate.getFullYear(), (startDate.getMonth() + 1));
+
+        let month = document.createElement('div');
+        month.classList.add('month');
+
+        let header = document.createElement('div');
+        header.classList.add('datepicker-header');
+
+        let pMonthButton = new SimpleButton({
+            shape: 'square',
+            mute: true,
+            size: 'small',
+            icon: 'triangle-left',
+            action: function(e) {
+                e.preventDefault();
+                me.renderMonth(previousMonth);
+            }
+        });
+
+        let nMonthButton = new SimpleButton({
+            shape: 'square',
+            mute: true,
+            size: 'small',
+            icon: 'triangle-right',
+            action: function(e) {
+                e.preventDefault();
+                me.renderMonth(nextMonth);
+            }
+        });
+
+        let mname = document.createElement('div');
+        mname.classList.add('name');
+        mname.innerHTML = `${this.getMonthName(startDate.getMonth())}, ${startDate.getFullYear()}`;
+
+        header.appendChild(mname);
+        header.appendChild(pMonthButton.button);
+        header.appendChild(nMonthButton.button);
+
+        month.appendChild(header);
+
+        let calendar = document.createElement('table');
+        calendar.classList.add('month');
+
+        let thead = document.createElement('thead');
+        let hr = document.createElement('tr');
+        for (let weekday of this.weekdays) {
+            let th = document.createElement('th');
+            th.innerHTML = weekday.charAt(0);
+            hr.appendChild(th);
+        }
+        thead.appendChild(hr);
+        calendar.appendChild(thead);
+
+        let tbody = document.createElement('tbody');
+
+        let dayOfMonth = 1,
+            dayOfNextMonth = 1,
+            dayOfPreviousMonth = daysInPreviousMonth - startDay;
+
+        let cellCount = 0;
+        for (let rc = 0; rc <= 5; rc++) {
+            let tr = document.createElement('tr');
+            for (let d = 0; d <= 6; d++) {
+
+                let td = document.createElement('td'),
+                    link = document.createElement('a'),
+                    thisDay;
+
+                link.setAttribute('data-cellno', cellCount);
+
+                if ((cellCount >= startDay) && (dayOfMonth <= daysInMonth)) {
+                    // startDay or into the future until the end of the month
+                    link.innerHTML = dayOfMonth;
+                    link.classList.add('cmonth');
+                    link.setAttribute('data-day', `${startDate.getFullYear()}-${(startDate.getMonth() + 1)}-${dayOfMonth}`);
+                    thisDay = new Date(`${startDate.getFullYear()}-${(startDate.getMonth() +1)}-${dayOfMonth} ${this.basetime}`);
+                    dayOfMonth++;
+                } else if ((cellCount < startDay)) {
+                    // before the startDay, so last month
+                    link.innerHTML = dayOfPreviousMonth;
+                    thisDay = new Date(`${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth} ${this.basetime}`);
+                    link.setAttribute('data-day', `${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth}`);
+                    dayOfPreviousMonth++;
+                } else {
+                    // after this month, so next month
+                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} ${this.basetime}`);
+                    link.innerHTML = dayOfNextMonth;
+                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
+                    dayOfNextMonth++;
+                }
+
+                link.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    me.select(link);
+                });
+                link.addEventListener('keydown', function(e) {
+
+                    let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
+                    let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
+
+                    switch (e.keyCode) {
+                        case 37: // Left Arrow
+                        case 38:  // Up Arrow
+                            let p = tbody.querySelector(`[data-cellno='${pcell}'`);
+                            if (p) {
+                                p.focus();
+                            }
+                            e.stopPropagation();
+                            break;
+                        case 39: // Right Arrow
+                        case 40: // Down Arrow
+                            let n = tbody.querySelector(`[data-cellno='${ncell}'`);
+                            if (n) {
+                                n.focus();
+                            }
+                            e.stopPropagation();
+                            break;
+                        case 13: // Return
+                        case 32: // Space
+                            me.select(link);
+                            e.stopPropagation();
+                            break;
+                        default:
+                            break;
+                    }
+                    return false;
+                });
+
+                link.setAttribute('aria-label', link.getAttribute('data-day'));
+                link.setAttribute('tabindex', 0);
+
+                if (thisDay.getTime() === today.getTime()) {
+                    link.classList.add('today');
+                } else if (thisDay.getTime() < today.getTime()) {
+                    link.classList.add('past');
+                } else if (thisDay.getTime() > today.getTime()) {
+                    link.classList.add('future');
+                }
+
+                if ((this.value) && (
+                    (this.startdate.getFullYear() === thisDay.getFullYear()) &&
+                    (this.startdate.getMonth() === thisDay.getMonth()) &&
+                    (this.startdate.getDate() === thisDay.getDate())
+                )) {
+                    link.setAttribute('aria-selected', true);
+                }
+
+                td.appendChild(link);
+
+                tr.appendChild(td);
+                cellCount++;
+            }
+            tbody.appendChild(tr);
+        }
+        calendar.appendChild(tbody);
+
+        month.append(calendar);
+
+        this.monthbox.innerHTML = "";
+        this.monthbox.appendChild(month);
+    }
+
+    select(link) {
+        this.startdate = new Date(link.getAttribute('data-day'));
+        if ((this.onselect) && (typeof this.onselect === 'function')) {
+            this.onselect(link.getAttribute('data-day'));
+        }
+    }
+
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get basetime() { return this.config.basetime; }
+    set basetime(basetime) { this.config.basetime = basetime; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get dateicon() { return this.config.dateicon; }
+    set dateicon(dateicon) { this.config.dateicon = dateicon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get locale() { return this.config.locale; }
+    set locale(locale) { this.config.locale = locale; }
+
+    get monthbox() {
+        if (!this._monthbox) { this.buildMonthBox(); }
+        return this._monthbox;
+    }
+    set monthbox(monthbox) { this._monthbox = monthbox; }
+
+    get months() { return this.config.months; }
+    set months(months) { this.config.months = months; }
+
+    get onselect() { return this.config.onselect; }
+    set onselect(onselect) { this.config.onselect = onselect; }
+
+    get startdate() { return this.config.startdate; }
+    set startdate(startdate) { this.config.startdate = startdate; }
+
+    get timezone() { return this.config.timezone; }
+    set timezone(timezone) { this.config.timezone = timezone; }
+
+    get weekdays() { return this.config.weekdays; }
+    set weekdays(weekdays) { this.config.weekdays = weekdays; }
+
+    get value() { return this.config.value; }
+    set value(value) { this.config.value = value; }
+
+
+}
 class InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -2840,6 +3914,152 @@ class NumberInput extends TextInput {
 }
 
 
+class DateInput extends TextInput {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            basetime: '12:00:00', // Time to set dates on
+            timezone: 'GMT',
+            type: 'date',
+            forceconstraints: true,
+            dateicon: 'calendar'
+        };
+    }
+
+    /**
+     * Tests whether or the value is a valid date.
+     * @param date The date to check
+     * @returns {boolean} true or false, depending
+     */
+    static isValid(date) {
+        let d = new Date(date);
+        return d instanceof Date && !isNaN(d);
+    }
+
+    constructor(config) {
+        config = Object.assign({}, DateInput.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get inputcontrol() { return this.calbutton; }
+
+    get topcontrol() { return this.datedisplay; }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    calculatePlaceholder() {
+        return 'YYYY-MM-DD';
+    }
+
+    localValidator() {
+        if ((this.value) && (this.forceconstraints)) {
+            if (!DateInput.isValid(this.value)) {
+                this.errors.push("This is an invalid date.");
+            }
+        }
+        this.updateDateDisplay();
+    }
+
+    updateDateDisplay() {
+        if ((!this.value) || (this.value === '')) {
+            this.datedisplay.classList.add('hidden');
+            this.datedisplay.innerHTML = '';
+            return;
+        }
+        this.datedisplay.classList.remove('hidden');
+        let d = new Date(`${this.value} ${this.basetime} GMT`);
+        this.datedisplay.innerHTML = d.toUTCString();
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the calendar button and attach the DatePicker
+     */
+    buildCalendarButton() {
+        const me = this;
+
+        this.datepicker = new DatePicker({
+            onselect: function(value) {
+                me.value = value;
+                me.triggerbutton.close();
+                me.input.focus();
+                me.validate();
+            }
+        });
+
+        this.triggerbutton = new ButtonMenu({
+            classes: ['naked'],
+            shape: 'square',
+            icon: this.dateicon,
+            menu: this.datepicker.container,
+            action: function(e, self) {
+                if (self.isopen) {
+                    self.close();
+                    me.input.focus();
+                } else {
+                    self.open();
+                }
+                me.datepicker.renderMonth(me.value);
+                e.stopPropagation();
+            },
+        });
+
+        this.calbutton = document.createElement('div');
+        this.calbutton.classList.add('calbutton');
+        this.calbutton.classList.add('inputcontrol');
+        this.calbutton.appendChild(this.triggerbutton.button);
+
+        this.calbutton.addEventListener('mousedown', function(e) {
+            e.preventDefault(); // Prevents focus shifting.
+        });
+
+    }
+
+    /**
+     * Draws the date text display.
+     */
+    buildDateDisplay() {
+        this.datedisplay = document.createElement('div');
+        this.datedisplay.classList.add('datedisplay');
+        this.datedisplay.classList.add('topcontrol');
+        this.updateDateDisplay();
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get basetime() { return this.config.basetime; }
+    set basetime(basetime) { this.config.basetime = basetime; }
+
+    get calbutton() {
+        if (!this._calbutton) { this.buildCalendarButton(); }
+        return this._calbutton;
+    }
+    set calbutton(calbutton) { this._calbutton = calbutton; }
+
+    get datedisplay() {
+        if (!this._datedisplay) { this.buildDateDisplay(); }
+        return this._datedisplay;
+    }
+    set datedisplay(datedisplay) { this._datedisplay = datedisplay; }
+
+    get dateicon() { return this.config.dateicon; }
+    set dateicon(dateicon) { this.config.dateicon = dateicon; }
+
+    get datepicker() { return this._datepicker; }
+    set datepicker(datepicker) { this._datepicker = datepicker; }
+
+    get timezone() { return this.config.timezone; }
+    set timezone(timezone) { this.config.timezone = timezone; }
+
+    get triggerbutton() { return this._triggerbutton; }
+    set triggerbutton(triggerbutton) { this._triggerbutton = triggerbutton; }
+
+}
+
+
 class EmailInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
@@ -3366,7 +4586,7 @@ class SelectMenu extends InputElement {
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
 
-        li.addEventListener('keydown', function(e) {
+        li.addEventListener('keyup', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
             } else if (e.keyCode === 9) { // Tab
@@ -3392,6 +4612,7 @@ class SelectMenu extends InputElement {
                 me.runKeySearch(e.key);
             }
         });
+
         li.addEventListener('click', function() {
             let opts = me.optionlist.querySelectorAll('li');
             for (let o of opts) {
@@ -3808,6 +5029,80 @@ class StateMenu extends SelectMenu {
 
     }
 }
+class CountryMenu extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            unselectedtext: "(Select Country)",
+            valuesas: 'code' // What to stick in the value for the elements.
+                             // "code" or "name".
+        };
+    }
+
+    /**
+     * Define the CountryMenu
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
+        // { label: "Label to show", value: "v", checked: true }
+
+        let countries = CountryCodes.list();
+        let options = [];
+        for (let c of countries) {
+            let d = { label: c.country };
+            if ((config.valuesas) && (config.valuesas === 'name')) {
+                d.value = c.country;
+            } else {
+                d.value = c.code;
+            }
+            if ((config.value) && ((config.value.toUpperCase() === c.code) || (config.value.toUpperCase() === c.country))) {
+                d.checked = true;
+            }
+            options.push(d);
+        }
+
+        config.options = options;
+        super(config);
+
+    }
+}
+class TimezoneMenu extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            unselectedtext: "(Select Timezone)",
+            valuesas: 'offset' // What to stick in the value for the elements.
+                             // "offset" or "name".
+        };
+    }
+
+    /**
+     * Define the TimezoneMenu
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
+
+        let options = [];
+        for (let tz of TimezoneDB.list()) {
+            let o = { label: tz.id };
+            if ((config.valuesas) && (config.valuesas === 'name')) {
+                o.value = tz.id;
+            } else {
+                o.value = tz.offset;
+            }
+            if ((config.value) && ((config.value.toUpperCase() === tz.id) || (config.value.toUpperCase() === tz.offset))) {
+                o.checked = true;
+            }
+            options.push(o);
+        }
+
+        config.options = options;
+        super(config);
+
+    }
+}
 class TextArea extends InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -4025,6 +5320,8 @@ class DialogWindow {
        return {
            id: null,
            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+           actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
+                            // Possible keywords:  closebutton, cancelbutton
            content: '<p />No provided content</p', // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
@@ -4035,6 +5332,8 @@ class DialogWindow {
            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
            escapecloses: true, // Allow the window to be closed by the escape key
            nofocus: false, // If true, do not auto focus anything.
+           canceltext: 'Cancel',
+           closetext: 'Close', // Text for the closebutton, if any
            showclose: true  // Show or hide the X button in the corner (requires title != null)
         };
     }
@@ -4125,8 +5424,6 @@ class DialogWindow {
     escape(e, self) {
         console.log(e.key);
         if (e.key === 'Escape') {
-            console.log("asdfadssadfasdfasdads");
-            console.log(self);
             self.close();
         }
     }
@@ -4192,6 +5489,38 @@ class DialogWindow {
             this.contentbox.appendChild(this.content);
 
             this.window.appendChild(this.contentbox);
+
+            if ((this.actions) && (this.actions.length > 0)) {
+                this.actionbox = document.createElement('div');
+                this.actionbox.classList.add('actions');
+                for (let a of this.actions) {
+                    if (typeof a === 'string') { // it's a keyword
+                        switch(a) {
+                            case 'closebutton':
+                                this.actionbox.appendChild(new SimpleButton({
+                                    text: this.closetext,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }).container);
+                                break;
+                            case 'cancelbutton':
+                                this.actionbox.appendChild(new DestructiveButton({
+                                    text: this.canceltext,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }).container);
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        this.actionbox.appendChild(a.container);
+                    }
+                }
+                this.window.appendChild(this.actionbox);
+            }
         }
     }
 
@@ -4205,6 +5534,15 @@ class DialogWindow {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get actionbox() { return this._actionbox; }
+    set actionbox(actionbox) { this._actionbox = actionbox; }
+
+    get actions() { return this.config.actions; }
+    set actions(actions) { this.config.actions = actions; }
+
+    get canceltext() { return this.config.canceltext; }
+    set canceltext(canceltext) { this.config.canceltext = canceltext; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -4213,6 +5551,9 @@ class DialogWindow {
 
     get closebutton() { return this._closebutton; }
     set closebutton(closebutton) { this._closebutton = closebutton; }
+
+    get closetext() { return this.config.closetext; }
+    set closetext(closetext) { this.config.closetext = closetext; }
 
     get container() { return this._container; }
     set container(container) { this._container = container; }
@@ -4261,24 +5602,25 @@ class DialogWindow {
 
 }
 
-class FloatingPanel {
+class Panel {
 
     static get DEFAULT_CONFIG() {
         return {
             id : null, // The id
+            contentid : null, // The contentid
+            headerid : null, // The headerid
             title: null, // The title
             content : null, // The content payload
             style: 'plain', // Various styles that can be applied to the panel.
-            // - 'plain': simple, spartan, solid.
-            // - 'ghost': similar to 'plain' except that it turns translucent when not in focus or hover
-            // - 'invisible: panel behaves as normal but the background is transparent
+                            // - 'plain': simple, spartan, solid.
+                            // - 'ghost': similar to 'plain' except that it turns
+                            //            translucent when not in focus or hover
+                            // - 'invisible: panel behaves as normal but the background is transparent
 
             hidden: false, // set to true to hide
-            togglecontrol: true, // show a visibility toggle
-            closeicon: 'triangle-down-circle',
+            collapsible: true, // can the panel collapse
+            closeicon: 'chevron-up',
             minimized: false, // Start minimized
-            position: 'top-left', // Position for the panel. Valid values:
-            // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
             classes: [], //Extra css classes to apply,
 
             onclose: null, // A function to run to when the panel closes. Passed the self.
@@ -4288,9 +5630,10 @@ class FloatingPanel {
     }
 
     constructor(config) {
-        this.config = Object.assign({}, FloatingPanel.DEFAULT_CONFIG, config);
-
+        this.config = Object.assign({}, Panel.DEFAULT_CONFIG, config);
         if (!this.id) { this.id = `panel-${Utils.getUniqueKey(5)}`; }
+        if (!this.contentid) { this.contentid = `panel-c-${Utils.getUniqueKey(5)}`; }
+        if (!this.headerid) { this.headerid = `panel-h-${Utils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -4310,9 +5653,8 @@ class FloatingPanel {
      * Unminimize the panel
      */
     open() {
-        this.container.setAttribute('aria-expanded', 'true');
-        this.pcontent.setAttribute('aria-hidden', 'false');
         this.minimized = false;
+        this.container.setAttribute('aria-expanded', 'true');
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
@@ -4323,7 +5665,6 @@ class FloatingPanel {
      */
     close() {
         this.container.setAttribute('aria-expanded', 'false');
-        this.pcontent.setAttribute('aria-hidden', 'true');
         this.minimized = true;
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
@@ -4347,70 +5688,62 @@ class FloatingPanel {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
+     * Build the header.
+     */
+    buildHeader() {
+        const me = this;
+        this.header = document.createElement('h3');
+        if (this.collapsible) {
+            this.togglebutton = new SimpleButton({
+                id: this.headerid,
+                secondicon: this.closeicon,
+                text: this.title,
+                naked: true,
+                ariacontrols: this.contentid,
+                iconclasses: ['headerbutton'],
+                classes: ['headerbutton'],
+                action: function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.toggleClose();
+                }
+            });
+            this.header.appendChild(this.togglebutton.button);
+        } else {
+            this.header.innerHTML = this.title;
+        }
+    }
+
+    /**
      * Build the HTML elements of the Floating Panel
      */
     buildContainer() {
 
-        const me = this;
-
         this.container = document.createElement('div');
         this.container.classList.add('panel');
-        this.container.classList.add(this.style);
-        this.container.classList.add(this.position);
+        this.container.setAttribute('aria-expanded', 'true');
+
+        this.contentbox = document.createElement('div');
+        this.contentbox.classList.add('content');
+        this.contentbox.setAttribute('role', 'region');
 
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
 
-        if (this.togglecontrol) {
-            this.togglebutton = new SimpleButton({
-                icon: this.closeicon,
-                text: "Close",
-                naked: true,
-                shape: "square",
-                classes: ["togglebutton"],
-                action: function(e) {
-                    e.preventDefault();
-                }
-            });
-        }
-
         if (this.title) {
-            this.titlecontainer = document.createElement('h3');
-            this.titlecontainer.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    me.toggleClose();
-                });
-            if (this.togglecontrol) {
-                this.titlecontainer.appendChild(this.togglebutton.button);
-            }
-            this.titleactual = document.createElement('span');
-            this.titleactual.classList.add('text');
-            this.titleactual.innerHTML = this.title;
-            this.titlecontainer.appendChild(this.titleactual);
-        } else {
-            if (this.togglecontrol) {
-                this.container.appendChild(this.togglebutton.button);
-            }
+            this.container.append(this.header);
+            this.contentbox.setAttribute('aria-labelledby', this.headerid);
         }
-
-        this.pcontent = document.createElement('div');
-        this.pcontent.classList.add('pcontent');
         if (this.content) {
-            this.pcontent.appendChild(this.content);
+            this.contentbox.appendChild(this.content);
         }
-
-        this.contentbox = document.createElement('div');
-        this.contentbox.classList.add('content');
-        if (this.title) { this.contentbox.appendChild(this.titlecontainer); }
-        this.contentbox.appendChild(this.pcontent);
 
         this.container.appendChild(this.contentbox);
 
-        if (this.minimized) {
-            this.close();
-        } else {
-            this.open();
+        if (this.minimized) { // don't call close() to avoid the callbacks.
+            this.container.setAttribute('aria-expanded', 'false');
+            this.minimized = true;
         }
 
         if (this.hidden) { this.hide(); }
@@ -4421,9 +5754,9 @@ class FloatingPanel {
      * @param content the content to place
      */
     replace(content) {
+        this.content.parentNode.removeChild(this.content);
         this.content = content;
-        this.pcontent.innerHTML = "";
-        this.pcontent.appendChild(this.content);
+        this.container.appendChild(this.content);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -4448,6 +5781,9 @@ class FloatingPanel {
     get closeicon() { return this.config.closeicon; }
     set closeicon(closeicon) { this.config.closeicon = closeicon; }
 
+    get collapsible() { return this.config.collapsible; }
+    set collapsible(collapsible) { this.config.collapsible = collapsible; }
+
     get container() {
         if (!this._container) { this.buildContainer(); }
         return this._container;
@@ -4460,8 +5796,20 @@ class FloatingPanel {
         this.config.content = content;
     }
 
+    get contentid() { return this.config.contentid; }
+    set contentid(contentid) { this.config.contentid = contentid; }
+
     get contentbox() { return this._contentbox; }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get header() {
+        if (!this._header) { this.buildHeader(); }
+        return this._header;
+    }
+    set header(header) { this._header = header; }
+
+    get headerid() { return this.config.headerid; }
+    set headerid(headerid) { this.config.headerid = headerid; }
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
@@ -4469,8 +5817,8 @@ class FloatingPanel {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get minimized() { return this._minimized; }
-    set minimized(minimized) { this._minimized = minimized; }
+    get minimized() { return this.config.minimized; }
+    set minimized(minimized) { this.config.minimized = minimized; }
 
     get onclose() { return this.config.onclose; }
     set onclose(onclose) {
@@ -4503,13 +5851,1356 @@ class FloatingPanel {
         if (this.titleactual) { this.titleactual.innerHTML = title; }
     }
 
-    get titleactual() { return this._titleactual; }
-    set titleactual(titleactual) { this._titleactual = titleactual; }
-
     get titlecontainer() { return this._titlecontainer; }
     set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }
 
 }
+class FloatingPanel extends Panel {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            style: 'plain', // Various styles that can be applied to the panel.
+                            // - 'plain': simple, spartan, solid.
+                            // - 'ghost': similar to 'plain' except that it turns
+                            //            translucent when not in focus or hover
+                            // - 'invisible: panel behaves as normal but the background is transparent
+            position: 'top-left' // Position for the panel. Valid values:
+                                 // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+        };
+    }
+
+    constructor(config) {
+        config = Object.assign({}, FloatingPanel.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('floating');
+        } else {
+            config.classes = ['floating'];
+        }
+        config.classes.push(config.position);
+        config.classes.push(config.style);
+        super(config);
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get position() { return this.config.position; }
+    set position(position) { this.config.position = position; }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
+
+}
+class DataGrid extends Panel {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            title: null, // the title for the grid
+            id: null, // The id. An id is required to save a grid's state.
+            sortable: true, //  Data columns can be sorted
+
+            fields: [  // The data fields for the grid and how they behave.
+                /*
+                 * An array of field definition dictionaries:
+                 *
+                    name: <string>,    // The variable name for this field (computer readable)
+                    label: <string>,   // The human-readable name for the column
+                    width: <number,    // The default width of the column
+                    hidden: <boolean>, // Is the column hidden or not.
+                    type: <string>,    // The datatype of the column
+                                       //   - string
+                                       //   - number
+                                       //   - date
+                                       //   - time
+                                       //   - stringarray
+                                       //   - paragraph
+                    separator: <string>, // Used when rendering array values
+                    resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
+                    description: <string>>,  // A string that describes the data in the column
+                    classes: <string array>, // Additional classes to apply to cells of this field
+                    filterable: <null|string|enum> // Is the field filterable? if so, how?
+                    renderer: function(data) {     // A function that can be used to
+                        return `${data}.`;
+                    }
+                */
+            ],
+            data: [], // The data to throw into the grid
+
+            savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
+
+            columnconfigurationlabel: 'Columns',
+            columnconfigurationicon: 'table',
+            columnconfigurationinstructions: ['Select which columns to show in the grid. This does not hide the columns during export.'],
+            columnconfigurationtitle: 'Configure Columns',
+
+            searchable: true, // Data can be filtered
+            searchbuttontext: 'Search',
+            searchplaceholder: 'Search this data',
+            noresultstitle: 'No results',
+            noresultstext: 'No entries were found matching your search terms.',
+
+            itemcountlabeltext: 'Items:',
+
+            exportable: true, // Data can be exported
+            exportbuttontext: "Export",
+            exporticon: "download",
+            exportheaderrow: 'readable', // When exporting a CSV file, should a header row
+                                         // be included?  Possible values:
+                                         // 'readable' : Uses the header labels (human readable)
+                                         // 'data' : Uses the data labels
+                                         // 'no' or null: don't include a header row
+            exportfilename: function(self) { // the filename to name the exported data.
+                if (self.title) {
+                    return `${self.title}-export.csv`;
+                }
+                return 'export.csv';     // This can be a string or a function, but must return a string
+            },
+            exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
+
+            filterable: true, // Can the datagrid be filtered?
+                      // No all fields are filtered by default.
+                      // Whether or not a field can be filtered is defined in the field's definition.
+            filterbuttontext: 'Filters',
+            filterbuttonicon: 'filter',
+            filterinstructions: ['Columns that are filterable are shown below. Set the value of the column to filter it.'],
+            filterlabel: 'Active Filters:',
+            filtertitle: 'Manage Filters',
+            filterunselectedvaluetext: '(No filter)',
+            filterplaceholder: '(No filter)',
+            filterhelpexacttext: 'Match exactly:',
+            filterhelpcontaintext: 'Matches contain:',
+            applyfilterstext: 'Apply Filters',
+            applyfiltersicon: 'checkmark-circle',
+
+            actionsbuttontext: 'Actions',
+            actionsbuttonicon: 'menu',
+
+            selectable: true, //  Data rows can be selected.
+            selectaction: function(self) {  // What to do when a single row is selected.
+                //console.log("row clicked");
+            },
+
+            multiselectbuttontext: "Bulk Select",
+            multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
+            multiselectactions: [], // Array of button actions to multiselects
+            multiselecticon: 'checkmark',
+
+            texttotal: 'total',
+            sorticon: 'chevron-down',
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define a DataGrid
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
+        super(config);
+
+        if (this.id) {
+            this.savekey = `grid-${this.id}`;
+        } else {
+            this.id = `grid-${Utils.getUniqueKey(5)}`;
+        }
+
+        this.activefilters = {};
+        this.loadstate();
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    /**
+     * Are we in multi-select mode or not?
+     * @return {boolean}
+     */
+    get multiselecting() {
+        return this.grid.classList.contains('multiselecting');
+    }
+
+    /**
+     * Test if the grid can be persisted.
+     * @return {boolean}
+     */
+    get ispersistable() {
+        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+    }
+
+    /**
+     * Get all values for a given field key
+     * @param key the data key
+     * @return {[]} and array of values
+     */
+    getvalues(key) {
+        let a = [];
+        for (let d of this.data) {
+            a.push(d[key]);
+        }
+        return a;
+    }
+
+    /**
+     * Get all unique values for a given field key
+     * @param key the data key
+     * @return {[]} and array of values
+     */
+    getuniquevalues(key) {
+        let s = new Set();
+        for (let d of this.data) {
+            s.add(d[key]);
+        }
+        return Array.from(s).sort();
+    }
+
+    /**
+     * Get a field definition
+     * @param fieldid the id of the field.
+     * @return {*}
+     */
+    getfield(fieldid) {
+        let rf;
+        for (let f of this.fields) {
+            if (f.name === fieldid) {
+                rf = f;
+                break;
+            }
+        }
+        return rf;
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Export the data in the grid as a CSV
+     */
+    export() {
+        let lineDivider = '\r\n', // line divider
+            cellDivider = ',', // cell divider
+            rows = [],
+            fname;
+
+        if (this.expoortbutton) {
+            this.exportbutton.disable();
+        }
+
+        if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
+            fname = this.exportfilename(this);
+        } else {
+            fname = this.exportfilename;
+        }
+        // XXX TODO: Don't export hidden fields
+
+        // Include the header row, if required.
+        if ((this.exportheaderrow) && (this.exportheaderrow !== 'no')) {
+            let colTitles = [],
+                colData = [];
+            for (let f of this.fields) {
+                colTitles.push(`\"${f.label.replace(/"/g,"\\\"")}\"`);
+                colData.push(`\"${f.name.replace(/"/g,"\\\"")}\"`);
+            }
+            if (this.exportheaderrow === 'readable') {
+                rows.push(`${colTitles.join(cellDivider)}`);
+            } else {
+                rows.push(`${colData.join(cellDivider)}`);
+            }
+        }
+
+        for (let d of this.data) {
+            let cells = [];
+            for (let f of this.fields) { // do mapping by field
+                let val;
+                switch (f.type) {
+                    case 'date':
+                        val = d[f.name].toString().replace(/"/g,"\\\"");
+                        break;
+                    case 'stringarray':
+                        val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
+                        break;
+                    case 'number':
+                    case 'time':
+                        val = d[f.name];
+                        break;
+                    case 'string':
+                    case 'paragraph':
+                    default:
+                        val = d[f.name].replace(/"/g,"\\\"");
+                        break;
+                }
+                cells.push(`\"${val}\"`);
+            }
+            rows.push(cells.join(cellDivider));
+        }
+
+        let csv = rows.join(lineDivider);
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csv)}`);
+        hiddenElement.setAttribute('id', 'downloadLink');
+        hiddenElement.setAttribute('target', '_blank');
+        hiddenElement.setAttribute('download', fname);
+        hiddenElement.click();
+
+        if (this.exportbutton) {
+            this.exportbutton.enable();
+        }
+    }
+
+    /**
+     * Search the grid for the value provided.
+     * @param value
+     */
+    search(value) {
+        this.noresultsbox.container.classList.add('hidden');
+
+        let rows = Array.from(this.gridbody.childNodes);
+
+        let matches = 0;
+        for (let r of rows) {
+            let show = false;
+            r.setAttribute('data-search-hidden', true,);
+
+            if ((!value) || (value === '')) {
+                show = true;
+            } else {
+                let cells = Array.from(r.childNodes);
+                for (let c of cells) {
+                    if (show) { break; }
+                    if (!c.classList.contains('selector')) {
+                        if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                            show = true;
+                        }
+                    }
+                }
+            }
+
+            if (show) {
+                matches++;
+                r.removeAttribute('data-search-hidden');
+            }
+        }
+
+        if (matches <= 0) {
+            this.noresultsbox.container.classList.remove('hidden');
+        }
+    }
+
+    /**
+     * Sort the table based on a field.
+     * @param field the field to sort
+     */
+    sortfield(field) {
+        let sort = "asc";
+
+        let hCell = this.thead.querySelector(`[data-name='${field}']`);
+
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
+                sort = "desc";
+            }
+        }
+
+        let hchildren = this.thead.querySelectorAll('th');
+        for (let hc of hchildren) {
+            hc.removeAttribute('data-sort');
+        }
+
+        hCell.setAttribute('data-sort', sort);
+
+        let elements = Array.from(this.gridbody.childNodes);
+
+        elements.sort(function(a, b) {
+            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
+            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
+
+            if (sort === 'asc') {
+                if (textA < textB) return -1;
+                if (textA > textB) return 1;
+            } else {
+                if (textA > textB) return -1;
+                if (textA < textB) return 1;
+            }
+
+            return 0;
+        });
+
+        this.gridbody.innerHTML = "";
+
+        for (let row of elements) {
+            this.gridbody.appendChild(row);
+        }
+
+    }
+
+    /**
+     * Opens a configuration dialog.
+     * @param type the type of dialog configurator
+     */
+    configurator(type) {
+        const me = this;
+
+        let container = document.createElement('div');
+        container.classList.add('datagrid-configurator');
+        container.classList.add('column');
+
+        let instructions,
+            title,
+            content;
+
+        switch(type) {
+            case 'column':
+                instructions = this.columnconfigurationinstructions;
+                title = this.columnconfigurationtitle;
+
+                content = document.createElement('ul');
+                content.classList.add('elements');
+                for (let f of this.fields) {
+                    let li = document.createElement('li');
+
+                    let cbox = new BooleanToggle({
+                        label: f.label,
+                        checked: !f.hidden,
+                        classes: ['column'],
+                        onchange: function() {
+                            me.toggleColumn(f);
+                        }
+                    });
+                    li.appendChild(cbox.container);
+
+                    if (f.description) {
+                        let desc = document.createElement('div');
+                        desc.classList.add('description');
+                        desc.innerHTML = f.description;
+                        li.appendChild(desc);
+                    }
+                    content.appendChild(li);
+                }
+                break;
+            case 'filter':
+                instructions = this.filterinstructions;
+                title = this.filtertitle;
+
+                content = document.createElement('ul');
+                content.classList.add('elements');
+                for (let f of this.fields) {
+                    if (f.filterable) {
+                        let li = document.createElement('li');
+                        li.appendChild(this.getFilterLine(f).container);
+                        content.appendChild(li);
+                    }
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        // instructions
+        if (instructions) {
+            container.append(new InstructionBox({
+                instructions: instructions
+            }).container);
+        }
+        container.append(content);
+
+        let dialog = new DialogWindow({
+            title: title,
+            content: container,
+            actions: ["closebutton"]
+        });
+        dialog.open();
+    }
+
+    /* COLUMN METHODS___________________________________________________________________ */
+
+    /**
+     * Toggle a column on or off
+     * @param f
+     */
+    toggleColumn(f) {
+        if (f.hidden) {
+            this.showColumn(f);
+        } else {
+            this.hideColumn(f);
+        }
+        this.persist();
+    }
+
+    /**
+     * Hide a column from the view.
+     * @param field the field to hide.
+     */
+    hideColumn(field) {
+        field.hidden = true;
+        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
+        for (let c of cols) {
+            c.classList.add('hidden');
+        }
+    }
+
+    /**
+     * Show a hidden column in the view.
+     * @param field
+     */
+    showColumn(field) {
+        field.hidden = false;
+        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
+        for (let c of cols) {
+            c.classList.remove('hidden');
+        }
+    }
+
+    /* PERSISTENCE METHODS______________________________________________________________ */
+
+    /**
+     * Persist the grid state
+     */
+    persist() {
+        if (!this.ispersistable) {
+            return;
+        }
+        this.state = this.grindstate(); // get a current copy of it.
+        localStorage.setItem(this.savekey, JSON.stringify(this.state));
+    }
+
+    /**
+     * Load a saved state from local storage
+     */
+    loadstate() {
+        if (this.ispersistable) {
+            this.state = JSON.parse(localStorage.getItem(this.savekey));
+        }
+        if (!this.state) {
+            this.state = this.grindstate(); // this will be the default
+        }
+    }
+
+    /**
+     * Apply the saved state to the grid
+     */
+    applystate() {
+        if (!this.state) { return; }
+        if (this.state.fields) {
+            for (let f of Object.values(this.state.fields)) {
+                if (f.hidden) {
+                    this.hideColumn(this.getfield(f.name));
+                } else {
+                    this.showColumn(this.getfield(f.name));
+                }
+            }
+        }
+        if (this.state.filters) {
+            this.activefilters = this.state.filters;
+        }
+        this.applyFilters();
+    }
+
+    /**
+     * Figures out the state of the grid and generates the state object
+     */
+    grindstate() {
+        let state = {
+            fields: {},
+            filters: {},
+            search: null
+        };
+
+        for (let f of this.fields) {
+            if (f.hidden === undefined) { f.hidden = false; }
+            state.fields[f.name] = {
+                name: f.name,
+                hidden: f.hidden
+            };
+        }
+        for (let af of (Object.values(this.activefilters))) {
+            state.filters[af.field] = af;
+        }
+        return state;
+    }
+
+    /* FILTER METHODS___________________________________________________________________ */
+
+    /**
+     * Builds the filter manipulation controls
+     * @param f the field
+     * @return {TextInput|SelectMenu}
+     */
+    getFilterLine(f) {
+        const me = this;
+
+        let element;
+
+        let values = me.getuniquevalues(f.name);
+
+        if (f.filterable === 'enum') {
+            let options = [];
+            for (let v of values) {
+                options.push({
+                    label: v,
+                    value: v
+                })
+            }
+            element = new SelectMenu({
+                label: f.label,
+                unselectedtext: me.filterunselectedvaluetext,
+                options: options,
+                onchange: function(self) {
+                    me.addFilter(f.name, self.value, true);
+                }
+            });
+        } else {
+            element = new TextInput({
+                name: 'value',
+                label: f.label,
+                placeholder: me.filterplaceholder,
+                onkeyup: function(e, self) {
+                    me.addFilter(f.name, self.value, false);
+                }
+            });
+        }
+        return element;
+    }
+
+    /**
+     * Add a filter to the active filters
+     * @param field the field to affect
+     * @param value the value of the field to match
+     * @param exact whether or not to be an exact match
+     */
+    addFilter(field, value, exact) {
+        if ((!value) || (value === '')) {
+            delete this.activefilters[field];
+        } else {
+            this.activefilters[field] = {
+                field: field,
+                value: value,
+                exact: exact
+            };
+        }
+        this.persist();
+        this.applyFilters();
+    }
+
+    /**
+     * Remove a filter from the active filter list
+     * @param f the filter to drop
+     */
+    removeFilter(f) {
+        delete this.activefilters[f.field];
+        this.persist();
+        this.applyFilters();
+    }
+
+    /**
+     * Apply all filters
+     */
+    applyFilters() {
+        const me = this;
+        let rows = Array.from(this.gridbody.childNodes);
+
+        this.filtertags.innerHTML = '';
+
+        if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            this.filterinfo.setAttribute('aria-expanded', true);
+            for (let f of Object.values(this.activefilters)) {
+                f.tagbutton = new TagButton({
+                    text: this.getfield(f.field).label,
+                    help: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
+                    action: function() {
+                        me.removeFilter(f);
+                    }
+                });
+                this.filtertags.appendChild(f.tagbutton.button);
+            }
+        } else {
+            this.filterinfo.removeAttribute('aria-expanded');
+        }
+
+        for (let r of rows) {
+            r.removeAttribute('data-matched-filters');
+            r.classList.remove('filtered');
+
+            if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+                let matchedfilters = [];
+
+                for (let filter of Object.values(this.activefilters)) {
+
+                    let c = r.querySelector(`[data-name='${filter.field}']`);
+
+                    if (filter.exact) {
+                        if (c.innerHTML === filter.value) {
+                            matchedfilters.push(filter.field);
+                        } else {
+                            r.classList.add('filtered');
+                        }
+                    } else {
+                        if (c.innerHTML.toLowerCase().indexOf(filter.value.toLowerCase()) !== -1) {
+                            matchedfilters.push(filter.field);
+                        } else {
+                            r.classList.add('filtered');
+                        }
+                    }
+
+                }
+
+                if (matchedfilters.length > 0) {
+                    r.setAttribute('data-matched-filters', matchedfilters.join(','));
+                } else {
+                    r.removeAttribute('data-matched-filters');
+                }
+            }
+        }
+    }
+
+    /* SELECTION METHODS________________________________________________________________ */
+
+    /**
+     * Select a row
+     * @param row the row to select
+     */
+    select(row) {
+        row.setAttribute('aria-selected', 'true');
+        row.querySelector('input.selector').checked = true;
+
+        if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+            this.selectaction(this);
+        }
+    }
+
+    /**
+     * Deselect a row
+     * @param row the row to deselect
+     */
+    deselect(row) {
+        row.removeAttribute('aria-selected');
+        row.querySelector('input.selector').checked = false;
+    }
+
+    /**
+     * Toggle all/none selection
+     * @param select if true, select all; if false, deselect all.
+     */
+    toggleallselect(select) {
+        let rows = this.gridbody.querySelectorAll('tr');
+        for (let r of rows) {
+            if (select) {
+                this.select(r);
+            } else {
+                this.deselect(r);
+            }
+        }
+    }
+
+    /**
+     * Toggle the select mode
+     */
+    selectmodetoggle() {
+        if (this.multiselecting) {
+            this.grid.classList.remove('multiselecting');
+            return;
+        }
+        this.grid.classList.add('multiselecting');
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds the total DOM.
+     * @returns the grid container
+     */
+    buildContainer() {
+        const me = this;
+
+        for (let rdata of this.data) {
+            this.gridbody.appendChild(this.buildRow(rdata));
+        }
+
+        this.container = document.createElement('div');
+        this.container.classList.add('datagrid-container');
+        this.container.classList.add('panel');
+        this.container.setAttribute('id', this.id);
+        this.container.setAttribute('aria-expanded', 'true');
+
+        if (this.title) {
+            this.container.append(this.header);
+        }
+
+        this.container.append(this.gridinfo);
+
+        if (this.filterable) {
+            this.container.append(this.filterinfo);
+        }
+
+        this.grid.appendChild(this.thead);
+        this.grid.appendChild(this.gridbody);
+
+        this.gridwrapper = document.createElement('div');
+        this.gridwrapper.classList.add('grid-wrapper');
+        this.gridwrapper.appendChild(this.grid);
+        this.container.append(this.gridwrapper);
+
+        if (this.searchable) {
+            this.noresultsbox = new MessageBox({
+                warningstitle: this.noresultstitle,
+                warnings: [this.noresultstext],
+                classes: ['hidden']
+            });
+            this.container.append(this.noresultsbox.container);
+        }
+
+        if (this.minimized) { // don't call close() to avoid the callbacks.
+            this.container.setAttribute('aria-expanded', 'false');
+            this.minimized = true;
+        }
+
+        if (this.hidden) { this.hide(); }
+
+        setTimeout(function() { // Have to wait until we're sure we're in the DOM
+            me.applystate();
+        }, 100);
+
+    }
+
+    /**
+     * Build the grid filters bit
+     */
+    buildFilterInfo() {
+
+        this.filterinfo = document.createElement('div');
+        this.filterinfo.classList.add('grid-filterinfo');
+
+        let label = document.createElement('label');
+        label.innerHTML = this.filterlabel;
+        this.filterinfo.appendChild(label);
+
+        this.filtertags = document.createElement('div');
+        this.filtertags.classList.add('grid-filtertags');
+
+        this.filterinfo.appendChild(this.filtertags);
+    }
+
+    /**
+     * Build the grid info bit
+     */
+    buildGridInfo() {
+        const me = this;
+
+        this.gridinfo = document.createElement('div');
+        this.gridinfo.classList.add('grid-info');
+
+        this.itemcountlabel = document.createElement('label');
+        this.itemcountlabel.innerHTML = this.itemcountlabeltext;
+
+        this.itemcount = document.createElement('span');
+        this.itemcount.classList.add('itemcount');
+        this.itemcount.innerHTML = this.data.length;
+
+        this.itemcountbox = document.createElement('div');
+        this.itemcountbox.classList.add('countbox');
+        this.itemcountbox.appendChild(this.itemcountlabel);
+        this.itemcountbox.appendChild(this.itemcount);
+
+        this.gridinfo.appendChild(this.itemcountbox);
+
+        if (this.searchable) {
+            this.searchcontrol = new SearchControl({
+                arialabel: this.searchplaceholder,
+                placeholder: this.searchplaceholder,
+                searchtext: this.searchbuttontext,
+                action: function(value, searchcontrol) {
+                    me.search(value);
+                }
+            });
+            this.gridinfo.append(this.searchcontrol.container);
+        }
+
+        if (this.filterable) {
+            this.filterbutton  = new SimpleButton({
+                mute: true,
+                text: this.filterbuttontext,
+                icon: this.filterbuttonicon,
+                classes: ['filter'],
+                action: function() {
+                    me.configurator('filter');
+                }
+            });
+            this.gridinfo.append(this.filterbutton.button);
+        }
+
+        let items = [];
+        if (this.multiselect) {
+            items.push({
+                label: this.multiselectbuttontext,
+                icon: this.multiselecticon,
+                action: function() {
+                    me.selectmodetoggle();
+                }
+            });
+        }
+        items.push({
+            label: this.columnconfigurationlabel,
+            icon: this.columnconfigurationicon,
+            action: function() {
+                me.configurator('column');
+            }
+        });
+        if (this.exportable) {
+            items.push({
+                label: this.exportbuttontext,
+                icon: this.exporticon,
+                action: function() {
+                    me.export();
+                }
+            });
+        }
+
+        this.actionsbutton  = new ButtonMenu({
+            mute: true,
+            shape: 'square',
+            secondicon: null,
+            text: this.actionsbuttontext,
+            icon: this.actionsbuttonicon,
+            classes: ['actions'],
+            items: items
+        });
+
+        this.gridinfo.append(this.actionsbutton.button);
+    }
+
+    /**
+     * Build the actual grid table.
+     */
+    buildGrid() {
+        this.grid = document.createElement('table');
+        this.grid.classList.add('grid');
+        if (this.selectable) {
+            this.grid.classList.add('selectable');
+        }
+    }
+
+    /**
+     * Build the table header
+     */
+    buildTableHead() {
+        const me = this;
+        if (this.multiselect) {
+            this.masterselector = new BooleanToggle({
+                onchange: function(self) {
+                    me.toggleallselect(self.checked);
+                }
+            });
+            let cell = document.createElement('th');
+            cell.classList.add('selector');
+            cell.appendChild(this.masterselector.naked);
+            this.gridheader.appendChild(cell);
+        }
+
+        for (let f of this.fields) {
+            this.gridheader.appendChild(this.buildHeaderCell(f));
+        }
+
+        this.thead = document.createElement('thead');
+        this.thead.appendChild(this.gridheader);
+    }
+
+    /**
+     * Build a single header cell
+     * @param field the field definition dictionary
+     * @return {HTMLTableHeaderCellElement}
+     */
+    buildHeaderCell(field) {
+        const me = this;
+
+        let div = document.createElement('div');
+        div.innerHTML = field.label;
+        if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
+
+        let cell = document.createElement('th');
+        cell.setAttribute('id', `${this.id}-h-c-${field.name}`);
+        cell.setAttribute('data-name', field.name);
+        cell.setAttribute('data-datatype', field.type);
+        cell.classList.add(field.type);
+        cell.appendChild(div);
+
+        if (field.resize) {
+            cell.classList.add('resize');
+        }
+
+        if (field.hidden) {
+            cell.classList.add('hidden');
+        }
+
+        if (this.sortable) {
+            cell.setAttribute('tabindex', '0');
+            cell.addEventListener('click', function(e) {
+                e.preventDefault();
+                me.sortfield(field.name);
+            });
+        }
+
+        this.headercells[field.name] = cell;
+
+        return cell;
+    }
+
+    /**
+     * Builds the table body
+     */
+    buildGridBody() {
+        this.gridbody = document.createElement('tbody');
+    }
+
+    /**
+     * Builds the table header row.
+     */
+    buildGridHeader() {
+        this.gridheader = document.createElement('tr');
+        this.gridheader.classList.add('header');
+    }
+
+    /**
+     * Build a single row
+     * @param rdata the row data
+     * @return {HTMLTableRowElement}
+     */
+    buildRow(rdata) {
+        const me = this;
+        let row = document.createElement('tr');
+
+        if (this.selectable) {
+
+            row.setAttribute('tabindex', '0');
+
+            row.addEventListener('click', function(e) {
+                if ((me.selectable) && (!me.multiselecting)) {
+                    me.select(row);
+                }
+            });
+
+            row.addEventListener('keydown', function(e) {
+                if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
+                    e.preventDefault();
+                    let previous = row.parentNode.rows[row.rowIndex - 2];
+                    if (previous) { previous.focus(); }
+                } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
+                    e.preventDefault();
+                    let next = row.parentNode.rows[row.rowIndex];
+                    if (next) { next.focus(); }
+                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
+                    row.click();
+                }
+            });
+        }
+
+        if (this.multiselect) {
+            let selector = new BooleanToggle({
+                classes: ['selector'],
+                onchange: function(self) {
+                    if (row.getAttribute('aria-selected') === 'true') {
+                        row.removeAttribute('aria-selected');
+                    } else {
+                        row.setAttribute('aria-selected', true);
+                    }
+                }
+            });
+            let cell = document.createElement('td');
+            cell.classList.add('selector');
+            cell.appendChild(selector.naked);
+            row.appendChild(cell);
+        }
+
+        for (let f of this.fields) {
+            row.appendChild(this.buildCell(rdata, f));
+        }
+
+        return row;
+    }
+
+    /**
+     * Builds a single data cell
+     * @param data the data dictionary
+     * @param field the field definition dictionary
+     * @return {HTMLTableDataCellElement}
+     */
+    buildCell(data, field) {
+        let content;
+        let d = data[field.name];
+
+        if ((field.renderer) && (typeof field.renderer === 'function')) {
+            content = field.renderer(d);
+        } else {
+            switch(field.type) {
+                case 'number':
+                    content = d;
+                    break;
+                case 'time':
+                    content = d;
+                    break;
+                case 'date':
+                    content = d.toString();
+                    break;
+                case 'stringarray':
+                    content = d.join(field.separator);
+                    break;
+                case 'paragraph':
+                    content = d.join(field.separator);
+                    break;
+                case 'string':
+                default:
+                    content = d;
+                    break;
+            }
+        }
+
+        let cell = document.createElement('td');
+        cell.setAttribute('data-name', field.name);
+        cell.setAttribute('data-datatype', field.type);
+        cell.classList.add(field.name);
+        cell.classList.add(field.type);
+        cell.innerHTML = content;
+
+        if (field.classes) {
+            for (let c of field.classes) {
+                cell.classList.add(c);
+            }
+        }
+        if (field.hidden) {
+            cell.classList.add('hidden');
+        }
+
+        return cell;
+    }
+
+    /**
+     * Build the footer element
+     */
+    buildFooter() {
+        this.footer = document.createElement('div');
+        this.footer.classList.add('footer');
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actionsbutton() { return this._actionsbutton; }
+    set actionsbutton(actionsbutton) { this._actionsbutton = actionsbutton; }
+
+    get actionsbuttonicon() { return this.config.actionsbuttonicon; }
+    set actionsbuttonicon(actionsbuttonicon) { this.config.actionsbuttonicon = actionsbuttonicon; }
+
+    get actionsbuttontext() { return this.config.actionsbuttontext; }
+    set actionsbuttontext(actionsbuttontext) { this.config.actionsbuttontext = actionsbuttontext; }
+
+    get activefilters() { return this._activefilters; }
+    set activefilters(activefilters) { this._activefilters = activefilters; }
+
+    get columnconfigbutton() { return this._columnconfigbutton; }
+    set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
+
+    get columnconfigurationicon() { return this.config.columnconfigurationicon; }
+    set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
+
+    get columnconfigurationinstructions() { return this.config.columnconfigurationinstructions; }
+    set columnconfigurationinstructions(columnconfigurationinstructions) { this.config.columnconfigurationinstructions = columnconfigurationinstructions; }
+
+    get columnconfigurationlabel() { return this.config.columnconfigurationlabel; }
+    set columnconfigurationlabel(columnconfigurationlabel) { this.config.columnconfigurationlabel = columnconfigurationlabel; }
+
+    get columnconfigurationtitle() { return this.config.columnconfigurationtitle; }
+    set columnconfigurationtitle(columnconfigurationtitle) { this.config.columnconfigurationtitle = columnconfigurationtitle; }
+
+    get data() { return this.config.data; }
+    set data(data) { this.config.data = data; }
+
+    get exportable() { return this.config.exportable; }
+    set exportable(exportable) { this.config.exportable = exportable; }
+
+    get exportarrayseparator() { return this.config.exportarrayseparator; }
+    set exportarrayseparator(exportarrayseparator) { this.config.exportarrayseparator = exportarrayseparator; }
+
+    get exportbutton() { return this._exportbutton; }
+    set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
+
+    get exportbuttontext() { return this.config.exportbuttontext; }
+    set exportbuttontext(exportbuttontext) { this.config.exportbuttontext = exportbuttontext; }
+
+    get exportfilename() { return this.config.exportfilename; }
+    set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
+
+    get exportheaderrow() { return this.config.exportheaderrow; }
+    set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
+
+    get exporticon() { return this.config.exporticon; }
+    set exporticon(exporticon) { this.config.exporticon = exporticon; }
+
+    get fields() { return this.config.fields; }
+    set fields(fields) { this.config.fields = fields; }
+
+    get filterable() { return this.config.filterable; }
+    set filterable(filterable) { this.config.filterable = filterable; }
+
+    get filterbutton() { return this._filterbutton; }
+    set filterbutton(filterbutton) { this._filterbutton = filterbutton; }
+
+    get filterbuttonicon() { return this.config.filterbuttonicon; }
+    set filterbuttonicon(filterbuttonicon) { this.config.filterbuttonicon = filterbuttonicon; }
+
+    get filterbuttontext() { return this.config.filterbuttontext; }
+    set filterbuttontext(filterbuttontext) { this.config.filterbuttontext = filterbuttontext; }
+
+    get filterhelpcontaintext() { return this.config.filterhelpcontaintext; }
+    set filterhelpcontaintext(filterhelpcontaintext) { this.config.filterhelpcontaintext = filterhelpcontaintext; }
+
+    get filterhelpexacttext() { return this.config.filterhelpexacttext; }
+    set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
+
+    get filterinfo() {
+        if (!this._filterinfo) { this.buildFilterInfo(); }
+        return this._filterinfo;
+    }
+    set filterinfo(filterinfo) { this._filterinfo = filterinfo; }
+
+    get filterinstructions() { return this.config.filterinstructions; }
+    set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }
+
+    get filterlabel() { return this.config.filterlabel; }
+    set filterlabel(filterlabel) { this.config.filterlabel = filterlabel; }
+
+    get filterplaceholder() { return this.config.filterplaceholder; }
+    set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
+
+    get filtertitle() { return this.config.filtertitle; }
+    set filtertitle(filtertitle) { this.config.filtertitle = filtertitle; }
+
+    get filtertags() { return this._filtertags; }
+    set filtertags(filtertags) { this._filtertags = filtertags; }
+
+    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
+    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
+
+    get footer() {
+        if (!this._footer) { this.buildFooter(); }
+        return this._footer;
+    }
+    set footer(footer) { this._footer = footer; }
+
+    get grid() {
+        if (!this._grid) { this.buildGrid(); }
+        return this._grid;
+    }
+    set grid(grid) { this._grid = grid; }
+
+    get gridinfo() {
+        if (!this._gridinfo) { this.buildGridInfo(); }
+        return this._gridinfo;
+    }
+    set gridinfo(gridinfo) { this._gridinfo = gridinfo; }
+
+    get gridbody() {
+        if (!this._gridbody) { this.buildGridBody(); }
+        return this._gridbody;
+    }
+    set gridbody(gridbody) { this._gridbody = gridbody; }
+
+    get gridheader() {
+        if (!this._gridheader) { this.buildGridHeader(); }
+        return this._gridheader;
+    }
+    set gridheader(gridheader) { this._gridheader = gridheader; }
+
+    get gridwrapper() { return this._gridwrapper; }
+    set gridwrapper(gridwrapper) { this._gridwrapper = gridwrapper; }
+
+    get headercells() {
+        if (!this._headercells) { this._headercells = {} ; }
+        return this._headercells;
+    }
+    set headercells(headercells) { this._headercells = headercells; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get itemcount()  { return this._itemcount; }
+    set itemcount(itemcount) { this._itemcount = itemcount; }
+
+    get itemcountbox()  { return this._itemcountbox; }
+    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
+
+    get itemcountlabel()  { return this._itemcountlabel; }
+    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
+
+    get itemcountlabeltext()  { return this.config.itemcountlabeltext; }
+    set itemcountlabeltext(itemcountlabeltext) { this.config.itemcountlabeltext = itemcountlabeltext; }
+
+    get masterselector() { return this._masterselector; }
+    set masterselector(masterselector) { this._masterselector = masterselector; }
+
+    get multiselect() { return this.config.multiselect; }
+    set multiselect(multiselect) { this.config.multiselect = multiselect; }
+
+    get multiselectbutton() { return this._multiselectbutton; }
+    set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
+
+    get multiselectbuttontext() { return this.config.multiselectbuttontext; }
+    set multiselectbuttontext(multiselectbuttontext) { this.config.multiselectbuttontext = multiselectbuttontext; }
+
+    get multiselecticon() { return this.config.multiselecticon; }
+    set multiselecticon(multiselecticon) { this.config.multiselecticon = multiselecticon; }
+
+    get multiselectactions() { return this.config.multiselectactions; }
+    set multiselectactions(multiselectactions) { this.config.multiselectactions = multiselectactions; }
+
+    get noresultsbox() { return this._noresultsbox; }
+    set noresultsbox(noresultsbox) { this._noresultsbox = noresultsbox; }
+
+    get noresultstext() { return this.config.noresultstext; }
+    set noresultstext(noresultstext) { this.config.noresultstext = noresultstext; }
+
+    get noresultstitle() { return this.config.noresultstitle; }
+    set noresultstitle(noresultstitle) { this.config.noresultstitle = noresultstitle; }
+
+    get savekey() { return this._savekey; }
+    set savekey(savekey) { this._savekey = savekey; }
+
+    get savestate() { return this.config.savestate; }
+    set savestate(savestate) { this.config.savestate = savestate; }
+
+    get searchable() { return this.config.searchable; }
+    set searchable(searchable) { this.config.searchable = searchable; }
+
+    get searchcontrol() { return this._searchcontrol; }
+    set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
+
+    get searchbuttontext() { return this.config.searchbuttontext; }
+    set searchbuttontext(searchbuttontext) { this.config.searchbuttontext = searchbuttontext; }
+
+    get searchplaceholder() { return this.config.searchplaceholder; }
+    set searchplaceholder(searchplaceholder) { this.config.searchplaceholder = searchplaceholder; }
+
+    get selectable() { return this.config.selectable; }
+    set selectable(selectable) { this.config.selectable = selectable; }
+
+    get selectaction() { return this.config.selectaction; }
+    set selectaction(selectaction) { this.config.selectaction = selectaction; }
+
+    get sortable() { return this.config.sortable; }
+    set sortable(sortable) { this.config.sortable = sortable; }
+
+    get sorticon() { return this.config.sorticon; }
+    set sorticon(sorticon) { this.config.sorticon = sorticon; }
+
+    get state() { return this._state; }
+    set state(state) { this._state = state; }
+
+    get thead() {
+        if (!this._thead) { this.buildTableHead(); }
+        return this._thead;
+    }
+    set thead(thead) { this._thead = thead; }
+
+}
+
 class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
