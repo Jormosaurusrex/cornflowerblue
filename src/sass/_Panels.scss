@@ -8,40 +8,41 @@ div.panel {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-
-  div.titlebox {
+  h3 {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 1em;
-    h3 {
-      margin: 0;
-      cursor: pointer;
-      border-bottom: .1em var(--panel-text-color);
-      color: var(--panel-text-color);
-      button.togglebutton {
-        --button-default-color: var(--panel-text-color);
-        margin: 0 .5em 0 0;
-        box-shadow: none;
-        width: 1em;
-        height: 1em;
+    padding: 0;
+    margin: 0;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    border-bottom: .1em var(--panel-text-color);
+    color: var(--panel-text-color);
+    --button-default-color: var(--panel-text-color);
+    button.headerbutton {
+      padding: 1em;
+      outline-offset: -.3em;
+      &:focus,
+      &:active {
         opacity: 1;
-        border: none;
-        font-size: .85em;
-        &:focus,
-        &:active {
+        background: none;
+        box-shadow: none;
+      }
+      @include for-hover-only {
+        &:hover {
           opacity: 1;
           background: none;
           box-shadow: none;
         }
-        @include for-hover-only {
-          &:hover {
-            opacity: 1;
-            background: none;
-            box-shadow: none;
-          }
-        }
+      }
+    }
+    &:focus-within {
+
+    }
+    @include for-hover-only {
+      &:hover {
+        color: var(--panel-text-color);
       }
     }
   }
@@ -51,39 +52,22 @@ div.panel {
     flex-wrap: nowrap;
     align-items: stretch;
     transition: all .2s;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
   &[aria-hidden=true] {
     display: none;
   }
   &[aria-expanded=false] {
-    div.titlebox {
-      h3 {
-        margin: 0;
-      }
-      button.closebutton {
-        transform: rotate(-90deg);
-        &:focus,
-        &:active {
-          color: var(--panel-text-color);
-        }
-        @include for-hover-only {
-          &:hover {
-            color: var(--panel-text-color);
-          }
+    h3 {
+      button.headerbutton {
+        span.icon {
+          transform: rotate(-180deg);
         }
       }
     }
     div.content {
       display: none;
-    }
-    &:active,
-    &:focus {
-
-    }
-    @include for-hover-only {
-      &:hover {
-
-      }
     }
   }
   &.floating {

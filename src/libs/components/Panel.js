@@ -1,11 +1,12 @@
-class Accordion {
+class Panel {
 
     static get DEFAULT_CONFIG() {
         return {
             id : null, // The id
+            contentid : null, // The contentid
+            headerid : null, // The headerid
             title: null, // The title
             content : null, // The content payload
-
             style: 'plain', // Various styles that can be applied to the panel.
                             // - 'plain': simple, spartan, solid.
                             // - 'ghost': similar to 'plain' except that it turns
@@ -13,9 +14,8 @@ class Accordion {
                             // - 'invisible: panel behaves as normal but the background is transparent
 
             hidden: false, // set to true to hide
-            togglecontrol: true, // show a visibility toggle
-            closetext: "Close",
-            closeicon: 'triangle-down-circle',
+            collapsible: true, // can the panel collapse
+            closeicon: 'chevron-up',
             minimized: false, // Start minimized
             classes: [], //Extra css classes to apply,
 
@@ -26,9 +26,10 @@ class Accordion {
     }
 
     constructor(config) {
-        this.config = Object.assign({}, Accordion.DEFAULT_CONFIG, config);
-
+        this.config = Object.assign({}, Panel.DEFAULT_CONFIG, config);
         if (!this.id) { this.id = `panel-${Utils.getUniqueKey(5)}`; }
+        if (!this.contentid) { this.contentid = `panel-c-${Utils.getUniqueKey(5)}`; }
+        if (!this.headerid) { this.headerid = `panel-h-${Utils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -37,7 +38,6 @@ class Accordion {
      * Toggle panel minimization
      */
     toggleClose() {
-        console.log(`toggleclose: ${this.minimized}`);
         if (this.minimized) {
             this.open();
             return;
@@ -84,33 +84,29 @@ class Accordion {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build the title box section.
+     * Build the header.
      */
-    buildTitleBox() {
+    buildHeader() {
         const me = this;
-        this.titlebox = document.createElement('div');
-        this.titlebox.classList.add('titlebox');
-        this.titlebox.addEventListener('click', function(e) {
-            e.preventDefault();
-            me.toggleClose();
-        });
-
         this.header = document.createElement('h3');
-        this.header.innerHTML = this.title;
-        this.titlebox.appendChild(this.header);
-
-        if (this.togglecontrol) {
-            this.togglebutton = new CloseButton({
-                icon: this.closeicon,
-                text: this.closetext,
-                iconclasses: ['togglebutton'],
+        if (this.collapsible) {
+            this.togglebutton = new SimpleButton({
+                id: this.headerid,
+                secondicon: this.closeicon,
+                text: this.title,
+                naked: true,
+                ariacontrols: this.contentid,
+                iconclasses: ['headerbutton'],
+                classes: ['headerbutton'],
                 action: function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     me.toggleClose();
                 }
             });
-            this.titlebox.appendChild(this.togglebutton.button);
+            this.header.appendChild(this.togglebutton.button);
+        } else {
+            this.header.innerHTML = this.title;
         }
     }
 
@@ -123,14 +119,18 @@ class Accordion {
         this.container.classList.add('panel');
         this.container.setAttribute('aria-expanded', 'true');
 
+        this.contentbox = document.createElement('div');
+        this.contentbox.classList.add('content');
+        this.contentbox.setAttribute('role', 'region');
+
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
 
-        this.container.append(this.titlebox);
-
-        this.contentbox = document.createElement('div');
-        this.contentbox.classList.add('content');
+        if (this.title) {
+            this.container.append(this.header);
+            this.contentbox.setAttribute('aria-labelledby', this.headerid);
+        }
         if (this.content) {
             this.contentbox.appendChild(this.content);
         }
@@ -177,8 +177,8 @@ class Accordion {
     get closeicon() { return this.config.closeicon; }
     set closeicon(closeicon) { this.config.closeicon = closeicon; }
 
-    get closetext() { return this.config.closetext; }
-    set closetext(closetext) { this.config.closetext = closetext; }
+    get collapsible() { return this.config.collapsible; }
+    set collapsible(collapsible) { this.config.collapsible = collapsible; }
 
     get container() {
         if (!this._container) { this.buildContainer(); }
@@ -192,11 +192,20 @@ class Accordion {
         this.config.content = content;
     }
 
+    get contentid() { return this.config.contentid; }
+    set contentid(contentid) { this.config.contentid = contentid; }
+
     get contentbox() { return this._contentbox; }
     set contentbox(contentbox) { this._contentbox = contentbox; }
 
-    get header() { return this._header; }
+    get header() {
+        if (!this._header) { this.buildHeader(); }
+        return this._header;
+    }
     set header(header) { this._header = header; }
+
+    get headerid() { return this.config.headerid; }
+    set headerid(headerid) { this.config.headerid = headerid; }
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
@@ -237,15 +246,6 @@ class Accordion {
         this.config.title = title;
         if (this.titleactual) { this.titleactual.innerHTML = title; }
     }
-
-    get titleactual() { return this._titleactual; }
-    set titleactual(titleactual) { this._titleactual = titleactual; }
-
-    get titlebox() {
-        if (!this._titlebox) { this.buildTitleBox(); }
-        return this._titlebox;
-    }
-    set titlebox(titlebox) { this._titlebox = titlebox; }
 
     get titlecontainer() { return this._titlecontainer; }
     set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }

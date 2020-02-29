@@ -4,6 +4,7 @@ class SimpleButton {
         return {
             id : null, // the id
             submits: false, // If true, force "type='submit'"
+            ariacontrols: null, // Given a DOM id, sets an aria-controls attribute.
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
@@ -105,6 +106,9 @@ class SimpleButton {
         this.button.setAttribute('role', 'button');
         this.button.setAttribute('type', (this.submits ? 'submit' : 'button'));
         this.button.classList.add(this.size);
+        if (this.ariacontrols) {
+            this.button.setAttribute('aria-controls', this.ariacontrols);
+        }
 
         for (let c of this.classes) {
             this.button.classList.add(c);
@@ -215,6 +219,9 @@ class SimpleButton {
         }
         this.config.action = action;
     }
+
+    get ariacontrols() { return this.config.ariacontrols; }
+    set ariacontrols(ariacontrols) { this.config.ariacontrols = ariacontrols; }
 
     get button() {
         if (!this._button) { this.buildButton(); }

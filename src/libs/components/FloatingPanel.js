@@ -1,4 +1,4 @@
-class FloatingPanel extends Accordion {
+class FloatingPanel extends Panel {
 
     static get DEFAULT_CONFIG() {
         return {

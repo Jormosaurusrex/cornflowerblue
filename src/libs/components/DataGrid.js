@@ -1,4 +1,4 @@
-class DataGrid extends Accordion {
+class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
         return {
@@ -729,7 +729,7 @@ class DataGrid extends Accordion {
         this.container.setAttribute('aria-expanded', 'true');
 
         if (this.title) {
-            this.container.append(this.titlebox);
+            this.container.append(this.header);
         }
 
         this.container.append(this.gridinfo);

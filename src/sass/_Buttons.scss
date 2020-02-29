@@ -113,26 +113,6 @@ button {
       }
     }
   }
-  &.closebutton,
-  &.togglebutton {
-    --button-default-color: var(--hot-text-color);
-    opacity: 0.5;
-    box-shadow: none;
-    margin-right: .5em;
-    background: none;
-    &:focus,
-    &:active {
-      color: var(--hot-text-color);
-      background: none;
-    }
-    @include for-hover-only {
-      &:hover {
-        opacity: 1;
-        color: var(--hot-text-color);
-        background: none;
-      }
-    }
-  }
   &.ghost {
     --button-border-color: var(--button-default-color);
     color: var(--button-default-color);
@@ -348,6 +328,62 @@ button {
       border: none;
     }
   }
+  &.naked,
+  &.link {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    background-image: none;
+    height: auto;
+    width: auto;
+    transition: brightness .5s;
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: transparent;
+      background-image: none;
+      color: var(--button-default-color);
+    }
+    @include for-hover-only {
+      &:hover,
+      &.hover {
+        background-color: transparent;
+        background-image: none;
+        color: var(--button-default-color);
+      }
+    }
+  }
+  &.naked {
+    color: var(--button-default-color);
+  }
+  &.link {
+    color: var(--link-color);
+    text-shadow: var(--link-text-shadow);
+    text-decoration: underline;
+    @include for-hover-only {
+      &:hover,
+      &.hover {
+        color: var(--link-color);
+        filter: brightness(120%);
+        text-decoration: underline double;
+      }
+    }
+    &:active,
+    &.active {
+      color: var(--link-color);
+    }
+    &:focus,
+    &.focus {
+      color: var(--link-color);
+      text-decoration: underline double;
+    }
+    &:disabled {
+      color: var(--button-disabled-text-color);
+      text-shadow: none;
+    }
+  }
   &.micro {
     font-size: .6em;
   }
@@ -441,12 +477,45 @@ button {
       div.tooltip {
         display: flex;
         animation: cfb-fadein-delay-half .2s;
-      }
-    }
-    &.stayopen {
-      div.tooltip {
         button.closebutton {
           display: inline-block;
+        }
+      }
+    }
+  }
+  &.closebutton,
+  &.togglebutton {
+    --button-default-color: var(--hot-text-color);
+    opacity: 0.5;
+    box-shadow: none;
+    margin-right: .5em;
+    background: none;
+    &:focus,
+    &:active {
+      color: var(--hot-text-color);
+      background: none;
+    }
+    @include for-hover-only {
+      &:hover {
+        opacity: 1;
+        color: var(--hot-text-color);
+        background: none;
+      }
+    }
+  }
+  &.headerbutton {
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: none;
+    background: none;
+    span.icon {
+      opacity: 0.5;
+      margin-right: 0;
+    }
+    @include for-hover-only {
+      &:hover {
+        span.icon {
+          opacity: 1;
         }
       }
     }
@@ -498,62 +567,6 @@ button {
         margin-right: 0;
         margin-left: 1em;
       }
-    }
-  }
-  &.naked,
-  &.link {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    box-shadow: none;
-    background-image: none;
-    height: auto;
-    width: auto;
-    transition: brightness .5s;
-    &:focus,
-    &.focus,
-    &:active,
-    &.active {
-      background-color: transparent;
-      background-image: none;
-      color: var(--button-default-color);
-    }
-    @include for-hover-only {
-      &:hover,
-      &.hover {
-        background-color: transparent;
-        background-image: none;
-        color: var(--button-default-color);
-      }
-    }
-  }
-  &.naked {
-    color: var(--button-default-color);
-  }
-  &.link {
-    color: var(--link-color);
-    text-shadow: var(--link-text-shadow);
-    text-decoration: underline;
-    @include for-hover-only {
-      &:hover,
-      &.hover {
-        color: var(--link-color);
-        filter: brightness(120%);
-        text-decoration: underline double;
-      }
-    }
-    &:active,
-    &.active {
-      color: var(--link-color);
-    }
-    &:focus,
-    &.focus {
-      color: var(--link-color);
-      text-decoration: underline double;
-    }
-    &:disabled {
-      color: var(--button-disabled-text-color);
-      text-shadow: none;
     }
   }
   &.menu {
@@ -693,7 +706,6 @@ button {
       }
     }
   }
-
 }
 
 

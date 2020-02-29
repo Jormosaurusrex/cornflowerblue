@@ -2,14 +2,13 @@
 
   --datagrid-background-color: var(--ultralight);
 
-
-  --datagrid-header-background-color: var(--light);
-  --datagrid-header-text-color: var(--grey-darkest);
-  --datagrid-header-grid-text-color: var(--grey-darker);
-  --datagrid-header-hover-text-shadow: var(--text-shadow);
-  --datagrid-header-hover-text-color: var(--hot-text-color);
-  --datagrid-header-sort-highlight-color: var(--focus-color);
-  --datagrid-header-hover-background-color: var(--focus-color);
+  --datagrid-gridheader-background-color: var(--light);
+  --datagrid-gridheader-text-color: var(--grey-darkest);
+  --datagrid-gridheader-grid-text-color: var(--grey-darker);
+  --datagrid-gridheader-hover-text-shadow: var(--text-shadow);
+  --datagrid-gridheader-hover-text-color: var(--hot-text-color);
+  --datagrid-gridheader-sort-highlight-color: var(--focus-color);
+  --datagrid-gridheader-hover-background-color: var(--focus-color);
 
   --datagrid-grid-color: transparent;
   --datagrid-grid-text-color: var(--grey-darkest);
@@ -28,12 +27,12 @@
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
 
-  --datagrid-configurator-columnwidth: 10em;
-
   --datagrid-filter-border-color: var(--light);
 
-  --datagrid-actions-menu-background-color: var(--cornflowerblue-translucent);
   --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
+
+  --datagrid-title-background-color: var(--darkblue);
+  --datagrid-title-text-color: var(--ultralight);
 
 }
 div.datagrid-container {
@@ -46,9 +45,7 @@ div.datagrid-container {
   overflow: visible;
   padding: 0;
   background-color: var(--datagrid-background-color);
-  div.titlebox {
-    --datagrid-title-background-color: var(--darkblue);
-    --datagrid-title-text-color: var(--ultralight);
+  h3 {
     --panel-text-color: var(--datagrid-title-text-color);
     background-color: var(--datagrid-title-background-color);
   }
@@ -106,6 +103,8 @@ div.datagrid-container {
     width: 100%;
     height: 100%;
     flex-grow: 2;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
   table.grid {
     width: 100%;
@@ -120,8 +119,8 @@ div.datagrid-container {
         th {
           cursor: pointer;
           padding: 0;
-          color: var(--datagrid-header-text-color);
-          background-color: var(--datagrid-header-background-color);
+          color: var(--datagrid-gridheader-text-color);
+          background-color: var(--datagrid-gridheader-background-color);
           text-align: left;
           font-weight: normal;
           position: sticky;
@@ -141,7 +140,7 @@ div.datagrid-container {
               justify-content: center;
               align-items: center;
               transition: all .2s;
-              color: var(--datagrid-header-color);
+              color: var(--datagrid-gridheader-color);
               opacity: 0;
             }
           }
@@ -149,9 +148,9 @@ div.datagrid-container {
           &:active,
           &.focus,
           &.active {
-            color: var(--datagrid-header-hover-text-color);
-            text-shadow: var(--datagrid-header-hover-text-shadow);
-            background-color: var(--datagrid-header-hover-background-color);
+            color: var(--datagrid-gridheader-hover-text-color);
+            text-shadow: var(--datagrid-gridheader-hover-text-shadow);
+            background-color: var(--datagrid-gridheader-hover-background-color);
             outline: none;
           }
           @include for-hover-only {
@@ -160,9 +159,9 @@ div.datagrid-container {
               outline: none;
               text-decoration: underline;
               &:not(.selector) {
-                color: var(--datagrid-header-hover-text-color);
-                text-shadow: var(--datagrid-header-hover-text-shadow);
-                background-color: var(--datagrid-header-hover-background-color);
+                color: var(--datagrid-gridheader-hover-text-color);
+                text-shadow: var(--datagrid-gridheader-hover-text-shadow);
+                background-color: var(--datagrid-gridheader-hover-background-color);
               }
             }
           }
@@ -180,7 +179,7 @@ div.datagrid-container {
           &[data-sort='asc'],
           &[data-sort='desc']{
             div {
-              box-shadow: inset 0px -.2em 0 0 var(--datagrid-header-sort-highlight-color);
+              box-shadow: inset 0px -.2em 0 0 var(--datagrid-gridheader-sort-highlight-color);
               &:before {
                 opacity: 1;
 
