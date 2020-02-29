@@ -274,8 +274,8 @@ class CountryCodes {
             list.push(c);
         }
         list.sort(function(a,b){
-            if(a.country > b.country){ return 1}
-            if(a.country < b.country){ return -1}
+            if (a.country > b.country) { return 1 }
+            if (a.country < b.country) { return -1 }
             return 0;
         });
         return list;

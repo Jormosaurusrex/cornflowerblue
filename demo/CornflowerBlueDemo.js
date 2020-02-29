@@ -1489,6 +1489,14 @@ class CornflowerBlueDemo {
         }).container);
         document.getElementById('selects-country').appendChild(country);
 
+        let timezone = document.createElement('div');
+        timezone.classList.add('example');
+        timezone.classList.add('vert');
+        timezone.appendChild( new TimezoneMenu({
+            value: 'America/Los_Angeles'
+        }).container);
+        document.getElementById('selects-timezone').appendChild(timezone);
+
         let standard = document.createElement('div');
         standard.classList.add('example');
         standard.classList.add('vert');
