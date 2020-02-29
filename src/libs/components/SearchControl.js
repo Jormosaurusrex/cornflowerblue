@@ -95,22 +95,27 @@ class SearchControl {
         }
 
         this.searchinput.addEventListener('keyup', function(e) {
-            if (e.keyCode === 9) { // Tab
-                if (me.autoexecute) {
+            switch (e.keyCode) {
+                case 9:
+                    if (me.autoexecute) {
+                        if ((me.action) && (typeof me.action === 'function')) {
+                            me.action(me.value, me);
+                        }
+                    }
+                    break;
+                case 13:
                     if ((me.action) && (typeof me.action === 'function')) {
                         me.action(me.value, me);
                     }
-                }
-            } else if (e.keyCode === 13) { // return or space
-                if ((me.action) && (typeof me.action === 'function')) {
-                    me.action(me.value, me);
-                }
-            } else {
-                if (me.autoexecute) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+                    break;
+                default:
+                    if (me.autoexecute) {
+                        if ((me.action) && (typeof me.action === 'function')) {
+                            me.action(me.value, me);
+                        }
                     }
-                }
+                    break;
+
             }
         });
 

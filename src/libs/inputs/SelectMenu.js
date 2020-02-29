@@ -279,28 +279,38 @@ class SelectMenu extends InputElement {
         li.addEventListener('keyup', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
-            } else if (e.keyCode === 9) { // Tab
-                me.close();
-            } else if (e.keyCode === 27) { // Escape
-                me.close();
-            } else if (e.keyCode === 38) { // Up arrow
-                e.preventDefault();
-                me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
-            } else if (e.keyCode === 40) { // Down arrow
-                e.preventDefault();
-                me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
-            } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                li.querySelector('input').click(); // click the one inside
-            } else if (e.keyCode === 8) { // Backspace
-                me.rmSearchKey();
-            } else if ((e.keyCode === 17) // ctrl
-                || (e.keyCode === 18) // alt
-                || (e.keyCode === 91) // command
-            ) {
-                // do nothing, ignore
-            } else { // Anything else
-                me.runKeySearch(e.key);
+            } else {
+                switch (e.keyCode) {
+                    case 9:  // Tab
+                    case 27: // Escape
+                        me.close();
+                        break;
+                    case 38: // Up
+                        e.preventDefault();
+                        me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
+                        break;
+                    case 40: // Down
+                        e.preventDefault();
+                        me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
+                        break;
+                    case 13: // Return
+                    case 32: // Space
+                        li.querySelector('input').click(); // click the one inside
+                        break;
+                    case 8:  // Backspace
+                        me.rmSearchKey();
+                        break;
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 91: // command
+                        // Nothing.
+                        break;
+                    default:
+                        me.runKeySearch(e.key);
+                        break;
+                }
             }
+
         });
 
         li.addEventListener('click', function() {

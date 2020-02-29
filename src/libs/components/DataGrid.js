@@ -943,6 +943,18 @@ class DataGrid extends Panel {
                 e.preventDefault();
                 me.sortfield(field.name);
             });
+            cell.addEventListener('keyup', function(e) {
+                e.preventDefault();
+                switch (e.keyCode) {
+                    case 13: // enter
+                    case 32: // 32
+                        me.sortfield(field.name);
+                        break;
+                    default:
+                        break;
+
+                }
+            });
         }
 
         this.headercells[field.name] = cell;

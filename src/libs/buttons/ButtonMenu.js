@@ -148,18 +148,24 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('data-order', order);
 
             menuitem.addEventListener('keyup', function(e) {
-                if (e.keyCode === 9) { // Tab
-                    me.close();
-                } else if (e.keyCode === 27) { // Escape
-                    me.close();
-                } else if (e.keyCode === 38) { // Up arrow
-                    e.preventDefault();
-                    me.menu.querySelector(`[data-order='${previous}']`).focus();
-                } else if (e.keyCode === 40) { // Down arrow
-                    e.preventDefault();
-                    me.menu.querySelector(`[data-order='${next}']`).focus();
-                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                    me.querySelector('a').click(); // click the one inside
+                switch (e.keyCode) {
+                    case 9: // Tab
+                    case 27: // Escape
+                        me.close();
+                        break;
+                    case 38: // Up Arrow
+                        e.preventDefault();
+                        me.menu.querySelector(`[data-order='${previous}']`).focus();
+                        break;
+                    case 40: // Down Arrow
+                        e.preventDefault();
+                        me.menu.querySelector(`[data-order='${next}']`).focus();
+                        break;
+                    case 13: // Enter
+                    case 32: // Space
+                        me.querySelector('a').click(); // click the one inside
+                        break;
+
                 }
             });
 
