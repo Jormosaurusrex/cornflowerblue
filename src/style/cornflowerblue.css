@@ -5058,6 +5058,14 @@ div.datagrid-container table.grid td.time div:before {
   right: unset;
   left: 0.5em;
 }
+div.datagrid-container table.grid th.imageurl,
+div.datagrid-container table.grid td.imageurl {
+  text-align: center;
+}
+div.datagrid-container table.grid th.imageurl a img,
+div.datagrid-container table.grid td.imageurl a img {
+  height: 1.5em;
+}
 div.datagrid-container table.grid th.center,
 div.datagrid-container table.grid td.center {
   text-align: center;

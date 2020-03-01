@@ -965,7 +965,6 @@ class DataGrid extends Panel {
             });
         }
 
-
         this.headercells[field.name] = cell;
 
         return cell;
@@ -1063,6 +1062,9 @@ class DataGrid extends Panel {
                     break;
                 case 'time':
                     content = d;
+                    break;
+                case 'imageurl':
+                    content = `<a href="${d}"><img src="${d}" /></a>`;
                     break;
                 case 'date':
                     content = d.toString();

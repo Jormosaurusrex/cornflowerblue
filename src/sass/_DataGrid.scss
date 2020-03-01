@@ -250,6 +250,14 @@ div.datagrid-container {
           }
         }
       }
+      &.imageurl {
+        text-align: center;
+        a {
+          img {
+            height: 1.5em;
+          }
+        }
+      }
       &.center {
         text-align: center;
       }
