@@ -919,6 +919,7 @@ class DataGrid extends Panel {
         const me = this;
 
         let div = document.createElement('div');
+        div.classList.add('th');
         div.innerHTML = field.label;
         if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
 
@@ -935,6 +936,13 @@ class DataGrid extends Panel {
 
         if (field.hidden) {
             cell.classList.add('hidden');
+        }
+
+        if (field.description) {
+            let celltip = new ToolTip({
+                text: field.description
+            });
+            celltip.attach(div);
         }
 
         if (this.sortable) {
@@ -956,6 +964,7 @@ class DataGrid extends Panel {
                 }
             });
         }
+
 
         this.headercells[field.name] = cell;
 

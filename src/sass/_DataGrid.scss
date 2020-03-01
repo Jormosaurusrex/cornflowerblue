@@ -127,7 +127,7 @@ div.datagrid-container {
           vertical-align: top;
           top: 0;
           z-index: 10;
-          div {
+          div.th {
             padding: .75em 1.5em .75em 1em;
             position: relative;
             white-space:nowrap;
@@ -178,7 +178,7 @@ div.datagrid-container {
           }
           &[data-sort='asc'],
           &[data-sort='desc']{
-            div {
+            div.th {
               box-shadow: inset 0px -.2em 0 0 var(--datagrid-gridheader-sort-highlight-color);
               &:before {
                 opacity: 1;
@@ -187,7 +187,7 @@ div.datagrid-container {
             }
           }
           &[data-sort='desc'] {
-            div {
+            div.th {
               &:before {
                 transform: rotate(180deg);
               }

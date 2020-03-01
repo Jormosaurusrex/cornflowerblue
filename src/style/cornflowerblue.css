@@ -3992,20 +3992,18 @@ div.panel.bottom-center {
 }
 
 div.tooltip {
+  position: absolute;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  align-content: flex-start;
+  align-content: center;
   list-style-type: none;
   margin: 0;
   padding: 0.5em;
-  position: absolute;
-  left: -1em;
-  bottom: 1.5em;
   overflow: visible;
-  z-index: 220;
+  z-index: 20000;
   border-radius: var(--tooltip-border-radius);
   background-color: var(--tooltip-background-color);
   color: var(--tooltip-text-color);
@@ -4034,22 +4032,12 @@ div.tooltip div.tiptext {
   max-width: 33em;
   min-width: 15em;
   white-space: normal;
-  line-height: 1.2;
+  line-height: 1;
   text-align: left;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 div.tooltip div.tiptext a {
   color: var(--hot-text-color);
-}
-div.tooltip button.closebutton {
-  display: none;
-}
-div.tooltip.stayopen {
-  display: flex;
-  animation: cfb-fadein-delay-half 0.2s;
-}
-div.tooltip.stayopen button.closebutton {
-  display: inline-block;
 }
 
 div.instructions {
@@ -4963,12 +4951,12 @@ div.datagrid-container table.grid thead tr th {
   top: 0;
   z-index: 10;
 }
-div.datagrid-container table.grid thead tr th div {
+div.datagrid-container table.grid thead tr th div.th {
   padding: 0.75em 1.5em 0.75em 1em;
   position: relative;
   white-space: nowrap;
 }
-div.datagrid-container table.grid thead tr th div:before {
+div.datagrid-container table.grid thead tr th div.th:before {
   position: absolute;
   right: 0.5em;
   margin: 0;
@@ -5006,13 +4994,13 @@ div.datagrid-container table.grid thead tr th:focus, div.datagrid-container tabl
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
-div.datagrid-container table.grid thead tr th[data-sort=asc] div, div.datagrid-container table.grid thead tr th[data-sort=desc] div {
+div.datagrid-container table.grid thead tr th[data-sort=asc] div.th, div.datagrid-container table.grid thead tr th[data-sort=desc] div.th {
   box-shadow: inset 0px -0.2em 0 0 var(--datagrid-gridheader-sort-highlight-color);
 }
-div.datagrid-container table.grid thead tr th[data-sort=asc] div:before, div.datagrid-container table.grid thead tr th[data-sort=desc] div:before {
+div.datagrid-container table.grid thead tr th[data-sort=asc] div.th:before, div.datagrid-container table.grid thead tr th[data-sort=desc] div.th:before {
   opacity: 1;
 }
-div.datagrid-container table.grid thead tr th[data-sort=desc] div:before {
+div.datagrid-container table.grid thead tr th[data-sort=desc] div.th:before {
   transform: rotate(180deg);
 }
 div.datagrid-container table.grid tbody tr {

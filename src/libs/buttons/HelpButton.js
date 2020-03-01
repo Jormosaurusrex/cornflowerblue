@@ -2,9 +2,7 @@ class HelpButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) { self.tooltip.stayopen(); },
-            hoverin: function(e, self) { self.tooltip.open(); },
-            hoverout: function(e, self) { self.tooltip.close(); },
+            action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
             iconclasses: ['helpicon'],
@@ -45,7 +43,6 @@ class HelpButton extends SimpleButton {
             icon: this.tipicon,
             text: this.help
         });
-        this.button.appendChild(this.tooltip.container);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

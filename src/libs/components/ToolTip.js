@@ -5,8 +5,10 @@ class ToolTip {
             id : null, // the id
             icon: 'help-circle',
             tipicon: 'help-circle',
+            direction: 'n',
             iconclasses: [], // Classes to apply to the icon
-            text: null, // The text to use
+            text: null, // The text to use,
+            parent: null, // the parent object to fire off
             classes: [] //Extra css classes to apply
         };
     }
@@ -17,45 +19,64 @@ class ToolTip {
      */
     constructor(config) {
         this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `tt-${Utils.getUniqueKey(5)}`; }
         return this;
     }
 
+    /**
+     * Attach the tooltip to its parent.  Will reset an existing parent if one is provided
+     * during construction.
+     * @param parent
+     */
     attach(parent) {
-        if (parent.container) {
+        const me = this;
+        if ((parent) && (parent.container)) {
            parent = parent.container;
         }
-        parent.appendChild(this.container);
-        parent.setAttribute('data-tooltip', 'closed');
+        this.parent = parent;
+        this.parent.appendChild(this.container);
+        this.parent.setAttribute('data-tooltip', 'closed');
+        this.parent.addEventListener('mouseover', function(e) {
+            me.open(e);
+        });
+        this.parent.addEventListener('mouseout', function(e) {
+            me.close(e);
+        });
+        this.parent.addEventListener('focusin', function(e) {
+            me.open(e);
+        });
+        this.parent.addEventListener('focusout', function(e) {
+            me.close(e);
+        });
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
-     * Force the tooltip to stay open.
-     */
-    stayopen() {
-        this.container.classList.add('stayopen');
-        this.open();
-    }
-
-    /**
      * Opens the help tooltip
      */
     open() {
-        console.log('open');
         const me = this;
+
+        document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
-        setTimeout(function() {
-            me.container.style.top = `calc(0px - ${me.container.style.height} - .5em)`;
-        },1);
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = this.parent.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        me.container.style.top = `${(offsetTop - me.container.clientHeight - (Utils.getSingleEmInPixels() / 2))}px`;
+        me.container.style.left = `${offsetLeft - Utils.getSingleEmInPixels()}px`;
+
     }
 
     /**
      * Closes the help tooltip.
      */
     close() {
-        if (this.container.classList.contains('stayopen')) { return; }
         this.container.setAttribute('aria-hidden', 'true');
+        this.parent.appendChild(this.container);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -83,19 +104,10 @@ class ToolTip {
 
         this.tiptext = document.createElement('div');
         this.tiptext.classList.add('tiptext');
-        this.tiptext.setAttribute('id', `${this.id}-tt`);
+        this.tiptext.setAttribute('id', `${this.id}-text`);
         if (this.text) {
             this.tiptext.innerHTML = this.text;
         }
-
-        this.closebutton = new CloseButton({
-            action: function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                me.container.classList.remove('stayopen');
-                me.close();
-            }
-        });
 
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
@@ -105,7 +117,6 @@ class ToolTip {
         }
 
         this.container.appendChild(this.tiptext);
-        this.container.appendChild(this.closebutton.button);
 
     }
 
@@ -121,9 +132,6 @@ class ToolTip {
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
-
-    get closebutton() { return this._closebutton; }
-    set closebutton(closebutton) { this._closebutton = closebutton; }
 
     get container() {
         if (!this._container) { this.buildContainer(); }
@@ -148,6 +156,9 @@ class ToolTip {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get parent() { return this.config.parent; }
+    set parent(parent) { this.config.parent = parent; }
 
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }
