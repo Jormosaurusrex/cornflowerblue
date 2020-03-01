@@ -45,4 +45,9 @@ div.tooltip {
       color: var(--hot-text-color);
     }
   }
+  &.unfixed {
+    div.tiptext{
+      min-width: unset;
+    }
+  }
 }

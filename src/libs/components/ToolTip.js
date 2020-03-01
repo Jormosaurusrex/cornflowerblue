@@ -91,6 +91,12 @@ class ToolTip {
         this.container.setAttribute('aria-hidden', 'true');
         if (this.id) { this.container.setAttribute('id', this.id); }
 
+        if ((this.classes) && (this.classes.length > 0)) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
+        }
+
         if ((this.tipicon) && (this.tipicon !== '')) {
             let icon = IconFactory.icon(this.tipicon);
             icon.classList.add('tipicon');

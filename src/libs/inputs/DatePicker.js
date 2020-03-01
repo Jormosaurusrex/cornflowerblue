@@ -122,6 +122,12 @@ class DatePicker {
         for (let weekday of this.weekdays) {
             let th = document.createElement('th');
             th.innerHTML = weekday.charAt(0);
+            let celltip = new ToolTip({
+                tipicon: '',
+                classes: ['unfixed'],
+                text: weekday
+            });
+            celltip.attach(th);
             hr.appendChild(th);
         }
         thead.appendChild(hr);
