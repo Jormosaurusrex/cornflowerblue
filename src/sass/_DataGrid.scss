@@ -340,20 +340,22 @@ div.datagrid-container {
       }
     }
   }
-  div.messagebox {
+  div.messages {
     &.hidden {
       display: none;
     }
-    div.box.warnings {
-      --color-base: var(--datagrid-searchresults-noresults-color-base);
-      --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
-      h4 {
-        display: none;
-        background-color: transparent;
-        color: var(--color-base);
-      }
-      div.lbox {
-        border-color: transparent;
+    div.messagebox {
+      div.box.warnings {
+        --color-base: var(--datagrid-searchresults-noresults-color-base);
+        --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
+        h4 {
+          display: none;
+          background-color: transparent;
+          color: var(--color-base);
+        }
+        div.lbox {
+          border-color: transparent;
+        }
       }
     }
   }

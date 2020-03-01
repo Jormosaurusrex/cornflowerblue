@@ -5144,19 +5144,19 @@ div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-
 div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-selected=true]:focus {
   outline: var(--datagrid-grid-selected-text-color) dashed 0.1em;
 }
-div.datagrid-container div.messagebox.hidden {
+div.datagrid-container div.messages.hidden {
   display: none;
 }
-div.datagrid-container div.messagebox div.box.warnings {
+div.datagrid-container div.messages div.messagebox div.box.warnings {
   --color-base: var(--datagrid-searchresults-noresults-color-base);
   --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
 }
-div.datagrid-container div.messagebox div.box.warnings h4 {
+div.datagrid-container div.messages div.messagebox div.box.warnings h4 {
   display: none;
   background-color: transparent;
   color: var(--color-base);
 }
-div.datagrid-container div.messagebox div.box.warnings div.lbox {
+div.datagrid-container div.messages div.messagebox div.box.warnings div.lbox {
   border-color: transparent;
 }
 div.datagrid-container[aria-expanded=false] div.grid-info,
