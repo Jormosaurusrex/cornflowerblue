@@ -16,6 +16,7 @@ class IconFactory {
             'legend',
             'echx',
             'arrow-down',
+            'clock',
             'chat',
             'check-circle-disc',
             'checkmark-circle',

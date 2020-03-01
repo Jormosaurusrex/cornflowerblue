@@ -96,3 +96,4 @@
 .cfb-flag-rectangle-angle:before { content: '\e800'; } /* '' */
 .cfb-table:before { content: '\e801'; } /* '' */
 .cfb-filter:before { content: '\e802'; } /* '' */
+.cfb-clock:before { content: '\e803'; } /* '' */
