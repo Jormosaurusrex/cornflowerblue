@@ -57,6 +57,7 @@ class SelectMenu extends InputElement {
         const me = this;
 
         this.optionlist.removeAttribute('aria-hidden');
+        //this.optionlist.setAttribute('tabindex', '0');
         this.triggerbox.setAttribute('aria-expanded', 'true');
 
         let items = Array.from(this.optionlist.querySelector('li'));
@@ -133,6 +134,7 @@ class SelectMenu extends InputElement {
      */
     close() {
         this.optionlist.setAttribute('aria-hidden', 'true');
+        this.optionlist.setAttribute('tabindex', '-1');
         this.triggerbox.removeAttribute('aria-expanded');
 
         let items = Array.from(this.optionlist.querySelector('li'));
@@ -232,7 +234,7 @@ class SelectMenu extends InputElement {
         this.optionlist.classList.add('selectmenu');
         this.optionlist.setAttribute('id', this.id);
         this.optionlist.setAttribute('aria-hidden', 'true');
-        this.optionlist.setAttribute('tabindex', '0');
+        this.optionlist.setAttribute('tabindex', '-1');
         this.optionlist.setAttribute('role', 'radiogroup');
 
         let order = 1;

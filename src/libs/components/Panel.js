@@ -95,7 +95,6 @@ class Panel {
                 secondicon: this.closeicon,
                 text: this.title,
                 naked: true,
-                ariacontrols: this.contentid,
                 iconclasses: ['headerbutton'],
                 classes: ['headerbutton'],
                 action: function(e) {

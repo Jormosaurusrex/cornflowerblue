@@ -302,7 +302,7 @@
   --input-mute-background-color: var(--grey-translucent);
   --input-mute-disabled-background-color: var(--light);
   --input-mute-focus-background-color: var(--grey-quarter);
-  --input-subline-text-color: var(--grey-medium);
+  --input-subline-text-color: var(--grey-dark);
   --input-subline-warning-text-color: var(--warning-color);
   --input-subline-error-text-color: var(--error-color);
   --input-messages-background-color: transparent;
@@ -1640,7 +1640,6 @@ div.textarea-container.mute label {
 }
 div.input-container.mute div.topcontrol,
 div.textarea-container.mute div.topcontrol {
-  opacity: 0.5;
   top: 0.3em;
 }
 div.input-container.mute.active label, div.input-container.mute.filled label,

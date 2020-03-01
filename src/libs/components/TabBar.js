@@ -78,9 +78,11 @@ class TabBar {
         this.list = document.createElement('ul');
         this.list.setAttribute('role', 'tablist');
         this.list.classList.add('tabbar');
+
         for (let c of this.classes) {
             this.list.classList.add(c);
         }
+
         if (this.vertical) {
             this.list.classList.add('vertical');
         }
@@ -92,7 +94,7 @@ class TabBar {
 
         if (this.navigation) {
             this.container = document.createElement('nav');
-            this.container.setAttribute('role', 'menubar');
+            this.list.removeAttribute('role');
             this.container.setAttribute('aria-label', this.arialabel);
         } else {
             this.container = document.createElement('div');
@@ -143,12 +145,14 @@ class TabBar {
         }
 
         let link = document.createElement('a');
-        link.setAttribute('role', 'menuitem');
-        link.setAttribute('aria-controls', `t-${tabdef.id}`);
         link.setAttribute('data-tabtext', `${tabdef.label}`);
         link.setAttribute('data-tabno', `${order}`);
         link.setAttribute('id', tabdef.id);
         link.setAttribute('data-tabid', tabdef.id);
+        if (!this.navigation) {
+            link.setAttribute('role', 'menuitem');
+        }
+
         if (tabdef.icon) {
             link.appendChild(IconFactory.icon(tabdef.icon));
         }

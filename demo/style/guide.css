@@ -40,7 +40,7 @@ div#container {
     max-width: 100%;
   }
 }
-div#container div.banner {
+div#container header {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -54,22 +54,22 @@ div#container div.banner {
   background-position: bottom;
   background-repeat: no-repeat;
 }
-div#container div.banner h1.cfbtitle {
+div#container header h1.cfbtitle {
   color: #6495ED;
   margin: 0 0.5em 0.5em 0.5em;
   justify-content: flex-end;
   text-shadow: var(--text-shadow-heavier);
 }
-div#container div.banner h1.cfbtitle:after {
+div#container header h1.cfbtitle:after {
   display: none;
 }
 @media (max-width: 599px) {
-  div#container div.banner h1.cfbtitle {
+  div#container header h1.cfbtitle {
     margin: 0 0.5em 0 0.5em;
   }
 }
 @media (max-width: 599px) {
-  div#container div.banner {
+  div#container header {
     position: relative;
     height: var(--mobile-banner-height);
   }
@@ -121,7 +121,7 @@ div#container div.displaybox nav {
     border-color: transparent;
   }
 }
-div#container div.displaybox div.articlebox {
+div#container div.displaybox main {
   padding: 2em;
   width: 100%;
   min-width: var(--content-width);

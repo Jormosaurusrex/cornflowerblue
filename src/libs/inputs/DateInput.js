@@ -5,6 +5,7 @@ class DateInput extends TextInput {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
             type: 'date',
+            triggerarialabel: 'Open Date Picker',
             forceconstraints: true,
             dateicon: 'calendar'
         };
@@ -78,6 +79,7 @@ class DateInput extends TextInput {
             classes: ['naked'],
             shape: 'square',
             icon: this.dateicon,
+            arialabel: this.triggerarialabel,
             menu: this.datepicker.container,
             action: function(e, self) {
                 if (self.isopen) {
@@ -137,6 +139,9 @@ class DateInput extends TextInput {
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }
+
+    get triggerarialabel() { return this.config.triggerarialabel; }
+    set triggerarialabel(triggerarialabel) { this.config.triggerarialabel = triggerarialabel; }
 
     get triggerbutton() { return this._triggerbutton; }
     set triggerbutton(triggerbutton) { this._triggerbutton = triggerbutton; }

@@ -213,7 +213,7 @@ class CornflowerBlueDemo {
         const me = this;
 
         this.skipbutton = new SkipButton(); // defaults are fine
-        this.body.prepend(this.skipbutton.button);
+        document.querySelector('header').prepend(this.skipbutton.button);
 
         this.container = document.getElementById('container');
 

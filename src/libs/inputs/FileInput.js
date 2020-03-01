@@ -122,7 +122,7 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('id', this.id);
         this.fileinput.setAttribute('accept', this.accept);
         this.fileinput.setAttribute('multiple', this.multiple);
-        this.fileinput.setAttribute('aria-labelled-by', this.labelobj.id);
+        this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
         this.fileinput.addEventListener('focusin', function() {
                 me.triggerbox.focus();
         });

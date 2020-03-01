@@ -6,6 +6,8 @@ class NumberInput extends TextInput {
             //pattern:'[0-9.%+-]$',
             minnumber: null,
             maxnumber: null,
+            downbuttonarialabel: 'Decrement Number',
+            upbuttonarialabel: 'Increment Number',
             wholenumbers: false, // Require whole numbers
             steppers: true,
             step: null
@@ -162,6 +164,7 @@ class NumberInput extends TextInput {
             this.upbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-up',
+                arialabel: this.upbuttonarialabel,
                 notab: true,
                 action: function(e) {
                     e.preventDefault();
@@ -172,6 +175,7 @@ class NumberInput extends TextInput {
             this.downbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-down',
+                arialabel: this.downbuttonarialabel,
                 notab: true,
                 action: function(e) {
                     e.preventDefault();
@@ -194,6 +198,9 @@ class NumberInput extends TextInput {
 
     get downbtn() { return this._downbtn; }
     set downbtn(downbtn) { this._downbtn = downbtn; }
+
+    get downbuttonarialabel() { return this.config.downbuttonarialabel; }
+    set downbuttonarialabel(downbuttonarialabel) { this.config.downbuttonarialabel = downbuttonarialabel; }
 
     get maxnumber() { return this.config.maxnumber; }
     set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
@@ -218,6 +225,9 @@ class NumberInput extends TextInput {
 
     get upbtn() { return this._upbtn; }
     set upbtn(upbtn) { this._upbtn = upbtn; }
+
+    get upbuttonarialabel() { return this.config.upbuttonarialabel; }
+    set upbuttonarialabel(upbuttonarialabel) { this.config.upbuttonarialabel = upbuttonarialabel; }
 
     get wholenumbers() { return this.config.wholenumbers; }
     set wholenumbers(wholenumbers) { this.config.wholenumbers = wholenumbers; }

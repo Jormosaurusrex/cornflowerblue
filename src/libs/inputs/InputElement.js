@@ -352,8 +352,8 @@ class InputElement {
             this.pacify();
         }
         if (this.help) {
-            this.input.setAttribute('aria-described-by', `${this.help.id}-tt`);
-            this.input.setAttribute('aria-labeled-by', `label-${this.id}`);
+            this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
+            this.input.setAttribute('aria-labelledby', `${this.id}-label`);
         }
 
         this.validate(true);
@@ -504,7 +504,7 @@ class InputElement {
 
         this.labelobj = document.createElement('label');
         this.labelobj.setAttribute('for', this.id);
-        this.labelobj.setAttribute('id', `label-${this.id}`);
+        this.labelobj.setAttribute('id', `${this.id}-label`);
         this.labelobj.innerHTML = this.label;
         this.labelobj.addEventListener('click', function() {
             // XXX JQUERY
@@ -516,7 +516,10 @@ class InputElement {
         }
 
         if (this.help) {
-            this.helpicon = new HelpButton({ help: this.help });
+            this.helpicon = new HelpButton({
+                id: `${this.id}-help`,
+                help: this.help
+            });
             this.labelobj.appendChild(this.helpicon.button);
             this.labelobj.addEventListener('onmouseover', function() {
                 me.helpicon.open();

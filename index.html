@@ -5,7 +5,7 @@
 
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="A demo page for Cornflower Blue" />
         <meta name="author" content="Brandon Harris" />
 
@@ -81,13 +81,13 @@
     </head>
     <body>
         <div class="container" id="container">
-            <div class="banner">
+            <header role="banner">
                 <h1 class="cfbtitle" role="heading" aria-level="1">cornflowerblue</h1>
-            </div>
+            </header>
             <div class="displaybox" id="displaybox">
-                <div class="articlebox" id="articlebox">
+                <main role="main" class="articlebox" id="articlebox">
                     <a class="visually-hidden" name="content-start">Content</a>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-intro" aria-labelledby="intro">
+                    <article aria-hidden="true" tabindex="-1" id="t-intro" aria-labelledby="intro">
 
                         <h2 role="heading" aria-level="2">Introduction</h2>
                         <p><i>cornflowerblue</i> is an easy-to-use and flexible UI toolkit written in native ES6 Javascript.  It is accessible out of the box.</p>
@@ -100,7 +100,7 @@
                         <p>I hate explaining jokes.</p>
 
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-wiki" aria-labelledby="wiki">
+                    <article aria-hidden="true" tabindex="-1" id="t-wiki" aria-labelledby="wiki">
                         <h2 role="heading" aria-level="2">Cornflower Blue</h2>
                         <div class="wiki">
                             <figure>
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-text" aria-labelledby="text">
+                    <article aria-hidden="true" tabindex="-1" id="t-text" aria-labelledby="text">
                         <h2 role="heading" aria-level="2">Text</h2>
 
                         <p>This is a text style and inheritence playground.  An application of the aesthetic to a <a class="internal" data-tab-target="wiki">wikipedia page</a> is available.</p>
@@ -198,7 +198,7 @@
                             <p>Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-messageboxes" aria-labelledby="messageboxes">
+                    <article aria-hidden="true" tabindex="-1" id="t-messageboxes" aria-labelledby="messageboxes">
                         <h2 role="heading" aria-level="2">Message Boxes</h2>
                         <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
                         <div class="demobox" id="boxes-instructions">
@@ -213,7 +213,7 @@
                             <p>A <code>MessageBox</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain both <code>results</code> and <code>warnings</code> or <code>errors</code> and <code>warnings</code>.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-buttons" aria-labelledby="buttons">
+                    <article aria-hidden="true" tabindex="-1" id="t-buttons" aria-labelledby="buttons">
                         <h2 role="heading" aria-level="2">Buttons</h2>
                         <code class="invoker">new SimpleButton({options});</code>
 
@@ -258,7 +258,7 @@
                         </div>
 
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-textareas" aria-labelledby="textareas">
+                    <article aria-hidden="true" tabindex="-1" id="t-textareas" aria-labelledby="textareas">
                         <h2 role="heading" aria-level="2">Text Areas</h2>
                         <code class="invoker">new TextArea({options});</code>
                         <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
@@ -279,7 +279,7 @@
                             <p>Disabled <code>TextArea</code> elements behave like disabled TextInputs in nearly all respects.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-inputs" aria-labelledby="inputs">
+                    <article aria-hidden="true" tabindex="-1" id="t-inputs" aria-labelledby="inputs">
                         <h2 role="heading" aria-level="2">Inputs</h2>
                         <code class="invoker">new TextInput({options});</code>
                         <p>A <dfn>TextInput</dfn> is one of several types of freeform data entry elements.  Text inputs typically accept "short" data - a few words at most - and the data is often <em>specifically typed</em> (long form text entry should be accomplished with a <code>TextArea</code> element). All <code>TextInput</code> classes extend <code>InputElement</code>.</p>
@@ -342,7 +342,7 @@
                             <p>A <dfn>HiddenInput</dfn> is just that: hidden.  It will not display to the user, nor will it appear in screen readers. Do not use a HiddenInput if the input may ever become visible.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-selects" aria-labelledby="selects">
+                    <article aria-hidden="true" tabindex="-1" id="t-selects" aria-labelledby="selects">
                         <h2 role="heading" aria-level="2">Selects</h2>
                         <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
                         <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
@@ -386,7 +386,7 @@
                             <p>By default, the value provided by the menu will be the capitalized UTC offset. This can be changed with <code>valuesas</code> (takes "offset" or "name") to change.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-radiobuttons" aria-labelledby="radiobuttons">
+                    <article aria-hidden="true" tabindex="-1" id="t-radiobuttons" aria-labelledby="radiobuttons">
                         <h2 role="heading" aria-level="2">Radio Buttons</h2>
                         <code class="invoker">new RadioGroup({options});</code>
                         <p>A <dfn>RadioGroup</dfn> is similar to a <code>SelectMenu</code> except that all of the options are visible to the user from the outset.  This is desirable when comparison is important, but the largest benefit is the reduction of the cognative load on the user (they don't have to click open the menu nor do they have to scroll the list).</p>
@@ -408,7 +408,7 @@
                         </div>
 
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-toggles" aria-labelledby="toggles">
+                    <article aria-hidden="true" tabindex="-1" id="t-toggles" aria-labelledby="toggles">
                         <h2 role="heading" aria-level="2">Checkboxes and Toggles</h2>
                         <code class="invoker">new BooleanToggle({options});</code>
 
@@ -424,7 +424,7 @@
                             <p>Styles can be applied to the toggles. Values for the <code>style</code> attribute include square, circle, switch, and toggle.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-forms" aria-labelledby="forms">
+                    <article aria-hidden="true" tabindex="-1" id="t-forms" aria-labelledby="forms">
                         <h2 role="heading" aria-level="2">Forms</h2>
                         <code class="invoker">new SimpleForm({options});</code>
                         <p>The <code>SimpleForm</code> class is the form management system. <code>SimpleForm</code> has built-in validation, submission, and response handling systems.</p>
@@ -438,7 +438,7 @@
                             <p>Forms can be made <i>passive</i>, like inputs.  Forms that can be made passive accepts  <code>passiveinstructions</code> and <code>passiveactions</code> parameters, both of which displays when the form is in <i>passive</i> mode.  If either are omitted, no harm and no foul.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-dialogs" aria-labelledby="dialogs">
+                    <article aria-hidden="true" tabindex="-1" id="t-dialogs" aria-labelledby="dialogs">
                         <h2 role="heading" aria-level="2">Dialogs</h2>
                         <code class="invoker">new DialogWindow({options});</code>
                         <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
@@ -512,7 +512,7 @@
                             </div>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-growlers" aria-labelledby="growlers">
+                    <article aria-hidden="true" tabindex="-1" id="t-growlers" aria-labelledby="growlers">
                         <h2 role="heading" aria-level="2">Growlers</h2>
 
                         <code class="invoker">new Growler({options});</code>
@@ -535,7 +535,7 @@
                             </code>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-tabsmenus" aria-labeledby="c">
+                    <article aria-hidden="true" tabindex="-1" id="t-tabsmenus">
                         <h2 role="heading" aria-level="2">Tabs and Menus</h2>
 
                         <div class="demobox" id="tabsmenus-buttonmenu">
@@ -551,7 +551,7 @@
                             <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-pwchanger" aria-labeledby="pwchanger">
+                    <article aria-hidden="true" tabindex="-1" id="t-pwchanger">
                         <h2 role="heading" aria-level="2">Password Changer</h2>
 
                         <div class="demobox" id="pwchanger-simple">
@@ -561,7 +561,7 @@
                             <p>It includes a <code>PasswordGenerator</code> component, which can be used anywhere else.  The generator can be configured by the user to include various sets of characters in the generation.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-progressmeter" aria-labeledby="progressmeter">
+                    <article aria-hidden="true" tabindex="-1" id="t-progressmeter">
                         <h2 role="heading" aria-level="2">Progress Meters</h2>
                         <div class="demobox" id="progressmeter-simple">
                             <h3 role="heading" aria-level="3">Simple</h3>
@@ -578,20 +578,20 @@
                             <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-fontglyphs" aria-labeledby="fontglyphs">
+                    <article aria-hidden="true" tabindex="-1" id="t-fontglyphs">
                         <h2 role="heading" aria-level="2">Font Glyphs</h2>
 
                         <div class="demobox" id="glyphs">
                         </div>
                     </article>
-                    <article role="tabpanel" aria-hidden="true" tabindex="-1" id="t-datagrid" aria-labeledby="datagrid">
+                    <article aria-hidden="true" tabindex="-1" id="t-datagrid">
                         <h2 role="heading" aria-level="2">Data Grids</h2>
 
                         <div class="demobox" id="datagrid-basic">
                             <h3 role="heading" aria-level="3">Data Grid</h3>
                         </div>
                     </article>
-                </div>
+                </main>
             </div>
         </div>
     </body>

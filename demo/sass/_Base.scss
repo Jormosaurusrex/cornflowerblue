@@ -37,7 +37,7 @@ div#container {
     min-width: 100%;
     max-width: 100%;
   }
-  div.banner {
+  header {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -113,7 +113,7 @@ div#container {
         }
       }
     }
-    div.articlebox {
+    main {
       padding: 2em;
       width: 100%;
       min-width: var(--content-width);

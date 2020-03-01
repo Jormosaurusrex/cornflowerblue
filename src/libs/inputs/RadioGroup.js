@@ -98,8 +98,8 @@ class RadioGroup extends SelectMenu {
         if (this.disabled) { this.disable(); }
 
         if (this.help) {
-            this.optionlist.setAttribute('aria-described-by', `${this.help.id}-tt`);
-            this.optionlist.setAttribute('aria-labeled-by', `label-${this.id}`);
+            this.optionlist.setAttribute('aria-describedby', `${this.id}-help-tt`);
+            this.optionlist.setAttribute('aria-labelledby', `${this.id}-label`);
         }
     }
 
@@ -162,7 +162,6 @@ class RadioGroup extends SelectMenu {
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('radiogroup');
         this.optionlist.setAttribute('tabindex', '-1');
-        this.optionlist.setAttribute('role', 'radiogroup');
 
         for (let opt of this.options) {
             let o = this.buildOption(opt);

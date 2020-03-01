@@ -5,6 +5,7 @@ class HelpButton extends SimpleButton {
             action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
+            arialabel: 'Help',
             iconclasses: ['helpicon'],
             help: null // help text to display
         };
@@ -21,7 +22,7 @@ class HelpButton extends SimpleButton {
             config.classes = ['naked', 'help'];
         }
         if (!config.id) { // need to generate an id for aria stuff
-            config.id = `help-${Utils.getUniqueKey(5)}`;
+            config.id = `${Utils.getUniqueKey(5)}-help`;
         }
         super(config);
         this.tooltip.attach(this);
@@ -40,6 +41,7 @@ class HelpButton extends SimpleButton {
      */
     buildTooltip() {
         this.tooltip = new ToolTip({
+            id: `${this.id}-tt`,
             icon: this.tipicon,
             text: this.help
         });
