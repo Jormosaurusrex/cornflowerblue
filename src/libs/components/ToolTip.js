@@ -13,7 +13,6 @@ class ToolTip {
         };
     }
 
-    static activeTooltip = null;
 
     /**
      * Define the element
@@ -80,8 +79,12 @@ class ToolTip {
 
         this.container.style.top = `${(offsetTop - me.container.clientHeight - (Utils.getSingleEmInPixels() / 2))}px`;
         this.container.style.left = `${offsetLeft - Utils.getSingleEmInPixels()}px`;
-        ToolTip.activeTooltip = this;
 
+        if (typeof ToolTip.activeTooltip === 'undefined' ) {
+            ToolTip.activeTooltip = this;
+        } else {
+            ToolTip.activeTooltip = this;
+        }
     }
 
     /**
@@ -196,5 +199,5 @@ class ToolTip {
 
     get waittime() { return this.config.waittime; }
     set waittime(waittime) { this.config.waittime = waittime; }
-    
+
 }

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-02-29
+/*! Cornflower Blue - v0.1.1 - 2020-03-02
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
@@ -488,6 +488,7 @@ class IconFactory {
             'legend',
             'echx',
             'arrow-down',
+            'clock',
             'chat',
             'check-circle-disc',
             'checkmark-circle',
@@ -1535,13 +1536,217 @@ class TimezoneDB {
     }
     
 }
+class ToolTip {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // the id
+            icon: 'help-circle',
+            tipicon: 'help-circle',
+            iconclasses: [], // Classes to apply to the icon
+            text: null, // The text to use,
+            parent: null, // the parent object to fire off
+            waittime: 1000, // how long to wait before activating
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `tt-${Utils.getUniqueKey(5)}`; }
+        return this;
+    }
+
+    /**
+     * Attach the tooltip to its parent.  Will reset an existing parent if one is provided
+     * during construction.
+     * @param parent
+     */
+    attach(parent) {
+        const me = this;
+        if ((parent) && (parent.container)) {
+           parent = parent.container;
+        }
+        this.parent = parent;
+        this.parent.appendChild(this.container);
+        this.parent.setAttribute('data-tooltip', 'closed');
+        this.parent.addEventListener('mouseover', function() {
+            me.timer = setTimeout(function() {
+                me.open();
+            }, me.waittime);
+        });
+        this.parent.addEventListener('mouseout', function() {
+            clearTimeout(me.timer);
+            me.close();
+        });
+        this.parent.addEventListener('focusin', function() {
+            me.timer = setTimeout(function() {
+                me.open();
+            }, me.waittime);
+        });
+        this.parent.addEventListener('focusout', function() {
+            clearTimeout(me.timer);
+            me.close();
+        });
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Opens the help tooltip
+     */
+    open() {
+        const me = this;
+
+        if (ToolTip.activeTooltip) {
+            ToolTip.activeTooltip.close();
+        }
+
+        document.body.appendChild(this.container);
+        this.container.removeAttribute('aria-hidden');
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = this.parent.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        this.container.style.top = `${(offsetTop - me.container.clientHeight - (Utils.getSingleEmInPixels() / 2))}px`;
+        this.container.style.left = `${offsetLeft - Utils.getSingleEmInPixels()}px`;
+
+        if (typeof ToolTip.activeTooltip === 'undefined' ) {
+            ToolTip.activeTooltip = this;
+        } else {
+            ToolTip.activeTooltip = this;
+        }
+    }
+
+    /**
+     * Closes the help tooltip.
+     */
+    close() {
+        this.container.setAttribute('aria-hidden', 'true');
+        this.parent.appendChild(this.container);
+        ToolTip.activeTooltip = null;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the full container
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('tooltip');
+        this.container.setAttribute('aria-hidden', 'true');
+        if (this.id) { this.container.setAttribute('id', this.id); }
+
+        if ((this.classes) && (this.classes.length > 0)) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
+        }
+
+        if ((this.tipicon) && (this.tipicon !== '')) {
+            let icon = IconFactory.icon(this.tipicon);
+            icon.classList.add('tipicon');
+            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+                for (let ic of this.iconclasses) {
+                    icon.classList.add(ic);
+                }
+            }
+            this.container.appendChild(icon);
+        }
+
+        this.tiptext = document.createElement('div');
+        this.tiptext.classList.add('tiptext');
+        this.tiptext.setAttribute('id', `${this.id}-text`);
+        if (this.text) {
+            this.tiptext.innerHTML = this.text;
+        }
+
+        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+            for (let ic of this.iconclasses) {
+                if (icon) { icon.classList.add(ic); }
+                if (secondicon) { secondicon.classList.add(ic); }
+            }
+        }
+
+        this.container.appendChild(this.tiptext);
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return Utils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get help() { return this.config.help; }
+    set help(help) { this.config.help = help; }
+
+    get helptext() { return this._helptext; }
+    set helptext(helptext) { this._helptext = helptext; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get iconclasses() { return this.config.iconclasses; }
+    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
+
+    get iconside() { return this.config.iconside; }
+    set iconside(iconside) { this.config.iconside = iconside; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get parent() { return this.config.parent; }
+    set parent(parent) { this.config.parent = parent; }
+
+    get text() { return this.config.text; }
+    set text(text) { this.config.text = text; }
+
+    get timer() { return this._timer; }
+    set timer(timer) { this._timer = timer; }
+
+    get tipicon() { return this.config.tipicon; }
+    set tipicon(tipicon) { this.config.tipicon = tipicon; }
+
+    get tiptext() { return this._tiptext; }
+    set tiptext(tiptext) { this._tiptext = tiptext; }
+
+    get tooltip() { return this._tooltip; }
+    set tooltip(tooltip) { this._tooltip = tooltip; }
+
+    get waittime() { return this.config.waittime; }
+    set waittime(waittime) { this.config.waittime = waittime; }
+
+}
+
 class SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
             submits: false, // If true, force "type='submit'"
-            ariacontrols: null, // Given a DOM id, sets an aria-controls attribute.
+            arialabel: null, // THe aria-label attribute
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
@@ -1638,14 +1843,15 @@ class SimpleButton {
             this.button.appendChild(secondicon);
         }
 
-        if (this.text) { this.button.setAttribute('aria-label', this.text); }
+        if (this.arialabel) {
+            this.button.setAttribute('aria-label', this.arialabel);
+        } else if (this.text) {
+            this.button.setAttribute('aria-label', this.text);
+        }
         this.button.setAttribute('id', this.id);
         this.button.setAttribute('role', 'button');
         this.button.setAttribute('type', (this.submits ? 'submit' : 'button'));
         this.button.classList.add(this.size);
-        if (this.ariacontrols) {
-            this.button.setAttribute('aria-controls', this.ariacontrols);
-        }
 
         for (let c of this.classes) {
             this.button.classList.add(c);
@@ -1757,8 +1963,8 @@ class SimpleButton {
         this.config.action = action;
     }
 
-    get ariacontrols() { return this.config.ariacontrols; }
-    set ariacontrols(ariacontrols) { this.config.ariacontrols = ariacontrols; }
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
 
     get button() {
         if (!this._button) { this.buildButton(); }
@@ -2033,18 +2239,24 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('data-order', order);
 
             menuitem.addEventListener('keyup', function(e) {
-                if (e.keyCode === 9) { // Tab
-                    me.close();
-                } else if (e.keyCode === 27) { // Escape
-                    me.close();
-                } else if (e.keyCode === 38) { // Up arrow
-                    e.preventDefault();
-                    me.menu.querySelector(`[data-order='${previous}']`).focus();
-                } else if (e.keyCode === 40) { // Down arrow
-                    e.preventDefault();
-                    me.menu.querySelector(`[data-order='${next}']`).focus();
-                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                    me.querySelector('a').click(); // click the one inside
+                switch (e.keyCode) {
+                    case 9: // Tab
+                    case 27: // Escape
+                        me.close();
+                        break;
+                    case 38: // Up Arrow
+                        e.preventDefault();
+                        me.menu.querySelector(`[data-order='${previous}']`).focus();
+                        break;
+                    case 40: // Down Arrow
+                        e.preventDefault();
+                        me.menu.querySelector(`[data-order='${next}']`).focus();
+                        break;
+                    case 13: // Enter
+                    case 32: // Space
+                        me.querySelector('a').click(); // click the one inside
+                        break;
+
                 }
             });
 
@@ -2126,11 +2338,10 @@ class HelpButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) { self.stayopen(); },
-            hoverin: function(e, self) { self.open(); },
-            hoverout: function(e, self) { self.close(); },
+            action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
+            arialabel: 'Help',
             iconclasses: ['helpicon'],
             help: null // help text to display
         };
@@ -2147,9 +2358,10 @@ class HelpButton extends SimpleButton {
             config.classes = ['naked', 'help'];
         }
         if (!config.id) { // need to generate an id for aria stuff
-            config.id = `help-${Utils.getUniqueKey(5)}`;
+            config.id = `${Utils.getUniqueKey(5)}-help`;
         }
         super(config);
+        this.tooltip.attach(this);
     }
 
     /**
@@ -2161,62 +2373,14 @@ class HelpButton extends SimpleButton {
     }
 
     /**
-     * Opens the help tooltip
-     */
-    open() {
-        const me = this;
-        if (!this.tooltip) { this.buildTooltip(); }
-        this.button.setAttribute('aria-expanded', 'true');
-        this.tooltip.removeAttribute('aria-hidden');
-        setTimeout(function() {
-            me.tooltip.style.top = `calc(0px - ${me.tooltip.style.height} - .5em)`;
-        },1);
-    }
-
-    /**
-     * Closes the help tooltip.
-     */
-    close() {
-        if (this.button.classList.contains('stayopen')) { return; }
-        this.button.removeAttribute('aria-expanded');
-        this.tooltip.setAttribute('aria-hidden', 'true');
-    }
-
-    /**
      * Builds the help.
      */
     buildTooltip() {
-        const me = this;
-        this.tooltip = document.createElement('div');
-        this.tooltip.classList.add('tooltip');
-        this.tooltip.setAttribute('aria-hidden', 'true');
-        this.tooltip.setAttribute('id', this.id);
-
-        if ((this.tipicon) && (this.tipicon !== '')) {
-            let icon = IconFactory.icon(this.tipicon);
-            icon.classList.add('tipicon');
-            this.tooltip.appendChild(icon);
-        }
-
-        this.helptext = document.createElement('div');
-        this.helptext.classList.add('helptext');
-        this.helptext.setAttribute('id', `${this.id}-tt`);
-        this.helptext.innerHTML = this.help;
-
-        this.closebutton = new CloseButton({
-            action: function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                me.button.classList.remove('stayopen');
-                me.close();
-            }
+        this.tooltip = new ToolTip({
+            id: `${this.id}-tt`,
+            icon: this.tipicon,
+            text: this.help
         });
-
-        this.tooltip.appendChild(this.helptext);
-        this.tooltip.appendChild(this.closebutton.button);
-
-        this.button.removeAttribute('aria-expanded');
-        this.button.appendChild(this.tooltip);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
@@ -2228,19 +2392,16 @@ class HelpButton extends SimpleButton {
     }
     set button(button) { this._button = button; }
 
-    get closebutton() { return this._closebutton; }
-    set closebutton(closebutton) { this._closebutton = closebutton; }
-
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
-
-    get helptext() { return this._helptext; }
-    set helptext(helptext) { this._helptext = helptext; }
 
     get tipicon() { return this.config.tipicon; }
     set tipicon(tipicon) { this.config.tipicon = tipicon; }
 
-    get tooltip() { return this._tooltip; }
+    get tooltip() {
+        if (!this._tooltip) { this.buildTooltip(); }
+        return this._tooltip;
+    }
     set tooltip(tooltip) { this._tooltip = tooltip; }
 
 }
@@ -2366,8 +2527,7 @@ class TagButton extends HelpButton {
             icon: 'echx',  // icon to use in the button,
             iconclasses: ['tagicon'],
             shape: 'pill',
-            size: 'small',
-            //tipicon: '' // hide
+            size: 'small'
         };
     }
 
@@ -2511,6 +2671,12 @@ class DatePicker {
         for (let weekday of this.weekdays) {
             let th = document.createElement('th');
             th.innerHTML = weekday.charAt(0);
+            let celltip = new ToolTip({
+                tipicon: '',
+                classes: ['unfixed'],
+                text: weekday
+            });
+            celltip.attach(th);
             hr.appendChild(th);
         }
         thead.appendChild(hr);
@@ -3036,8 +3202,8 @@ class InputElement {
             this.pacify();
         }
         if (this.help) {
-            this.input.setAttribute('aria-described-by', `${this.help.id}-tt`);
-            this.input.setAttribute('aria-labeled-by', `label-${this.id}`);
+            this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
+            this.input.setAttribute('aria-labelledby', `${this.id}-label`);
         }
 
         this.validate(true);
@@ -3188,7 +3354,7 @@ class InputElement {
 
         this.labelobj = document.createElement('label');
         this.labelobj.setAttribute('for', this.id);
-        this.labelobj.setAttribute('id', `label-${this.id}`);
+        this.labelobj.setAttribute('id', `${this.id}-label`);
         this.labelobj.innerHTML = this.label;
         this.labelobj.addEventListener('click', function() {
             // XXX JQUERY
@@ -3200,7 +3366,10 @@ class InputElement {
         }
 
         if (this.help) {
-            this.helpicon = new HelpButton({ help: this.help });
+            this.helpicon = new HelpButton({
+                id: `${this.id}-help`,
+                help: this.help
+            });
             this.labelobj.appendChild(this.helpicon.button);
             this.labelobj.addEventListener('onmouseover', function() {
                 me.helpicon.open();
@@ -3695,6 +3864,8 @@ class NumberInput extends TextInput {
             //pattern:'[0-9.%+-]$',
             minnumber: null,
             maxnumber: null,
+            downbuttonarialabel: 'Decrement Number',
+            upbuttonarialabel: 'Increment Number',
             wholenumbers: false, // Require whole numbers
             steppers: true,
             step: null
@@ -3851,6 +4022,7 @@ class NumberInput extends TextInput {
             this.upbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-up',
+                arialabel: this.upbuttonarialabel,
                 notab: true,
                 action: function(e) {
                     e.preventDefault();
@@ -3861,6 +4033,7 @@ class NumberInput extends TextInput {
             this.downbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-down',
+                arialabel: this.downbuttonarialabel,
                 notab: true,
                 action: function(e) {
                     e.preventDefault();
@@ -3883,6 +4056,9 @@ class NumberInput extends TextInput {
 
     get downbtn() { return this._downbtn; }
     set downbtn(downbtn) { this._downbtn = downbtn; }
+
+    get downbuttonarialabel() { return this.config.downbuttonarialabel; }
+    set downbuttonarialabel(downbuttonarialabel) { this.config.downbuttonarialabel = downbuttonarialabel; }
 
     get maxnumber() { return this.config.maxnumber; }
     set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
@@ -3908,6 +4084,9 @@ class NumberInput extends TextInput {
     get upbtn() { return this._upbtn; }
     set upbtn(upbtn) { this._upbtn = upbtn; }
 
+    get upbuttonarialabel() { return this.config.upbuttonarialabel; }
+    set upbuttonarialabel(upbuttonarialabel) { this.config.upbuttonarialabel = upbuttonarialabel; }
+
     get wholenumbers() { return this.config.wholenumbers; }
     set wholenumbers(wholenumbers) { this.config.wholenumbers = wholenumbers; }
 
@@ -3921,6 +4100,7 @@ class DateInput extends TextInput {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
             type: 'date',
+            triggerarialabel: 'Open Date Picker',
             forceconstraints: true,
             dateicon: 'calendar'
         };
@@ -3994,6 +4174,7 @@ class DateInput extends TextInput {
             classes: ['naked'],
             shape: 'square',
             icon: this.dateicon,
+            arialabel: this.triggerarialabel,
             menu: this.datepicker.container,
             action: function(e, self) {
                 if (self.isopen) {
@@ -4053,6 +4234,9 @@ class DateInput extends TextInput {
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }
+
+    get triggerarialabel() { return this.config.triggerarialabel; }
+    set triggerarialabel(triggerarialabel) { this.config.triggerarialabel = triggerarialabel; }
 
     get triggerbutton() { return this._triggerbutton; }
     set triggerbutton(triggerbutton) { this._triggerbutton = triggerbutton; }
@@ -4367,6 +4551,7 @@ class SelectMenu extends InputElement {
         const me = this;
 
         this.optionlist.removeAttribute('aria-hidden');
+        //this.optionlist.setAttribute('tabindex', '0');
         this.triggerbox.setAttribute('aria-expanded', 'true');
 
         let items = Array.from(this.optionlist.querySelector('li'));
@@ -4443,6 +4628,7 @@ class SelectMenu extends InputElement {
      */
     close() {
         this.optionlist.setAttribute('aria-hidden', 'true');
+        this.optionlist.setAttribute('tabindex', '-1');
         this.triggerbox.removeAttribute('aria-expanded');
 
         let items = Array.from(this.optionlist.querySelector('li'));
@@ -4542,7 +4728,7 @@ class SelectMenu extends InputElement {
         this.optionlist.classList.add('selectmenu');
         this.optionlist.setAttribute('id', this.id);
         this.optionlist.setAttribute('aria-hidden', 'true');
-        this.optionlist.setAttribute('tabindex', '0');
+        this.optionlist.setAttribute('tabindex', '-1');
         this.optionlist.setAttribute('role', 'radiogroup');
 
         let order = 1;
@@ -4589,28 +4775,38 @@ class SelectMenu extends InputElement {
         li.addEventListener('keyup', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
-            } else if (e.keyCode === 9) { // Tab
-                me.close();
-            } else if (e.keyCode === 27) { // Escape
-                me.close();
-            } else if (e.keyCode === 38) { // Up arrow
-                e.preventDefault();
-                me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
-            } else if (e.keyCode === 40) { // Down arrow
-                e.preventDefault();
-                me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
-            } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                li.querySelector('input').click(); // click the one inside
-            } else if (e.keyCode === 8) { // Backspace
-                me.rmSearchKey();
-            } else if ((e.keyCode === 17) // ctrl
-                || (e.keyCode === 18) // alt
-                || (e.keyCode === 91) // command
-            ) {
-                // do nothing, ignore
-            } else { // Anything else
-                me.runKeySearch(e.key);
+            } else {
+                switch (e.keyCode) {
+                    case 9:  // Tab
+                    case 27: // Escape
+                        me.close();
+                        break;
+                    case 38: // Up
+                        e.preventDefault();
+                        me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
+                        break;
+                    case 40: // Down
+                        e.preventDefault();
+                        me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
+                        break;
+                    case 13: // Return
+                    case 32: // Space
+                        li.querySelector('input').click(); // click the one inside
+                        break;
+                    case 8:  // Backspace
+                        me.rmSearchKey();
+                        break;
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 91: // command
+                        // Nothing.
+                        break;
+                    default:
+                        me.runKeySearch(e.key);
+                        break;
+                }
             }
+
         });
 
         li.addEventListener('click', function() {
@@ -4902,8 +5098,8 @@ class RadioGroup extends SelectMenu {
         if (this.disabled) { this.disable(); }
 
         if (this.help) {
-            this.optionlist.setAttribute('aria-described-by', `${this.help.id}-tt`);
-            this.optionlist.setAttribute('aria-labeled-by', `label-${this.id}`);
+            this.optionlist.setAttribute('aria-describedby', `${this.id}-help-tt`);
+            this.optionlist.setAttribute('aria-labelledby', `${this.id}-label`);
         }
     }
 
@@ -4966,7 +5162,6 @@ class RadioGroup extends SelectMenu {
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('radiogroup');
         this.optionlist.setAttribute('tabindex', '-1');
-        this.optionlist.setAttribute('role', 'radiogroup');
 
         for (let opt of this.options) {
             let o = this.buildOption(opt);
@@ -5264,7 +5459,7 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('id', this.id);
         this.fileinput.setAttribute('accept', this.accept);
         this.fileinput.setAttribute('multiple', this.multiple);
-        this.fileinput.setAttribute('aria-labelled-by', this.labelobj.id);
+        this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
         this.fileinput.addEventListener('focusin', function() {
                 me.triggerbox.focus();
         });
@@ -5699,7 +5894,6 @@ class Panel {
                 secondicon: this.closeicon,
                 text: this.title,
                 naked: true,
-                ariacontrols: this.contentid,
                 iconclasses: ['headerbutton'],
                 classes: ['headerbutton'],
                 action: function(e) {
@@ -5938,6 +6132,9 @@ class DataGrid extends Panel {
             noresultstitle: 'No results',
             noresultstext: 'No entries were found matching your search terms.',
 
+            nocolumnstitle: 'No columns',
+            nocolumnstext: 'No columns are visible in this table.',
+
             itemcountlabeltext: 'Items:',
 
             exportable: true, // Data can be exported
@@ -5970,6 +6167,9 @@ class DataGrid extends Panel {
             filterhelpcontaintext: 'Matches contain:',
             applyfilterstext: 'Apply Filters',
             applyfiltersicon: 'checkmark-circle',
+            allfilteredtitle: 'No results',
+            allfilteredtext: 'All entries have matched a filter, preventing display.',
+
 
             actionsbuttontext: 'Actions',
             actionsbuttonicon: 'menu',
@@ -6150,7 +6350,7 @@ class DataGrid extends Panel {
      * @param value
      */
     search(value) {
-        this.noresultsbox.container.classList.add('hidden');
+        this.messagebox.classList.add('hidden');
 
         let rows = Array.from(this.gridbody.childNodes);
 
@@ -6180,7 +6380,13 @@ class DataGrid extends Panel {
         }
 
         if (matches <= 0) {
-            this.noresultsbox.container.classList.remove('hidden');
+            this.messagebox.innerHTML = "";
+            this.messagebox.append(new MessageBox({
+                warningstitle: this.noresultstitle,
+                warnings: [this.noresultstext],
+                classes: ['hidden']
+            }).container);
+            this.messagebox.classList.remove('hidden');
         }
     }
 
@@ -6322,7 +6528,29 @@ class DataGrid extends Panel {
         } else {
             this.hideColumn(f);
         }
+
         this.persist();
+    }
+
+    handleColumnPresences() {
+        let colsvisible = false;
+        for (let field of Object.values(this.fields)) {
+            if (!field.hidden) {
+                colsvisible = true;
+                break;
+            }
+        }
+        if (!colsvisible) {
+            this.messagebox.innerHTML = "";
+            this.messagebox.append(new MessageBox({
+                warningstitle: this.nocolumnstitle,
+                warnings: [this.nocolumnstext],
+                classes: ['hidden']
+            }).container);
+            this.messagebox.classList.remove('hidden');
+        } else {
+            this.messagebox.classList.add('hidden');
+        }
     }
 
     /**
@@ -6335,6 +6563,7 @@ class DataGrid extends Panel {
         for (let c of cols) {
             c.classList.add('hidden');
         }
+        this.handleColumnPresences();
     }
 
     /**
@@ -6347,6 +6576,7 @@ class DataGrid extends Panel {
         for (let c of cols) {
             c.classList.remove('hidden');
         }
+        this.handleColumnPresences();
     }
 
     /* PERSISTENCE METHODS______________________________________________________________ */
@@ -6539,7 +6769,6 @@ class DataGrid extends Panel {
                             r.classList.add('filtered');
                         }
                     }
-
                 }
 
                 if (matchedfilters.length > 0) {
@@ -6549,6 +6778,22 @@ class DataGrid extends Panel {
                 }
             }
         }
+
+
+        let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
+        if ((!visible) || (visible.length === 0)) {
+            this.messagebox.innerHTML = "";
+            this.messagebox.append(new MessageBox({
+                warningstitle: this.allfilteredtitle,
+                warnings: [this.allfilteredtext],
+                classes: ['hidden']
+            }).container);
+            this.messagebox.classList.remove('hidden');
+        } else {
+            this.messagebox.classList.add('hidden');
+        }
+       
+
     }
 
     /* SELECTION METHODS________________________________________________________________ */
@@ -6638,14 +6883,11 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
 
-        if (this.searchable) {
-            this.noresultsbox = new MessageBox({
-                warningstitle: this.noresultstitle,
-                warnings: [this.noresultstext],
-                classes: ['hidden']
-            });
-            this.container.append(this.noresultsbox.container);
-        }
+
+        this.messagebox = document.createElement('div');
+        this.messagebox.classList.add('messages');
+        this.messagebox.classList.add('hidden');
+        this.container.append(this.messagebox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
@@ -6811,6 +7053,7 @@ class DataGrid extends Panel {
         const me = this;
 
         let div = document.createElement('div');
+        div.classList.add('th');
         div.innerHTML = field.label;
         if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
 
@@ -6829,11 +7072,30 @@ class DataGrid extends Panel {
             cell.classList.add('hidden');
         }
 
+        if (field.description) {
+            let celltip = new ToolTip({
+                text: field.description
+            });
+            celltip.attach(div);
+        }
+
         if (this.sortable) {
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
                 me.sortfield(field.name);
+            });
+            cell.addEventListener('keyup', function(e) {
+                e.preventDefault();
+                switch (e.keyCode) {
+                    case 13: // enter
+                    case 32: // 32
+                        me.sortfield(field.name);
+                        break;
+                    default:
+                        break;
+
+                }
             });
         }
 
@@ -6935,6 +7197,9 @@ class DataGrid extends Panel {
                 case 'time':
                     content = d;
                     break;
+                case 'imageurl':
+                    content = `<a href="${d}"><img src="${d}" /></a>`;
+                    break;
                 case 'date':
                     content = d.toString();
                     break;
@@ -6994,6 +7259,12 @@ class DataGrid extends Panel {
 
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
+
+    get allfilteredtitle() { return this.config.allfilteredtitle; }
+    set allfilteredtitle(allfilteredtitle) { this.config.allfilteredtitle = allfilteredtitle; }
+
+    get allfilteredtext() { return this.config.allfilteredtext; }
+    set allfilteredtext(allfilteredtext) { this.config.allfilteredtext = allfilteredtext; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
@@ -7151,8 +7422,14 @@ class DataGrid extends Panel {
     get multiselectactions() { return this.config.multiselectactions; }
     set multiselectactions(multiselectactions) { this.config.multiselectactions = multiselectactions; }
 
-    get noresultsbox() { return this._noresultsbox; }
-    set noresultsbox(noresultsbox) { this._noresultsbox = noresultsbox; }
+    get messagebox() { return this._messagebox; }
+    set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get nocolumnstext() { return this.config.nocolumnstext; }
+    set nocolumnstext(nocolumnstext) { this.config.nocolumnstext = nocolumnstext; }
+
+    get nocolumnstitle() { return this.config.nocolumnstitle; }
+    set nocolumnstitle(nocolumnstitle) { this.config.nocolumnstitle = nocolumnstitle; }
 
     get noresultstext() { return this.config.noresultstext; }
     set noresultstext(noresultstext) { this.config.noresultstext = noresultstext; }
@@ -8259,9 +8536,11 @@ class TabBar {
         this.list = document.createElement('ul');
         this.list.setAttribute('role', 'tablist');
         this.list.classList.add('tabbar');
+
         for (let c of this.classes) {
             this.list.classList.add(c);
         }
+
         if (this.vertical) {
             this.list.classList.add('vertical');
         }
@@ -8273,7 +8552,7 @@ class TabBar {
 
         if (this.navigation) {
             this.container = document.createElement('nav');
-            this.container.setAttribute('role', 'menubar');
+            this.list.removeAttribute('role');
             this.container.setAttribute('aria-label', this.arialabel);
         } else {
             this.container = document.createElement('div');
@@ -8324,12 +8603,14 @@ class TabBar {
         }
 
         let link = document.createElement('a');
-        link.setAttribute('role', 'menuitem');
-        link.setAttribute('aria-controls', `t-${tabdef.id}`);
         link.setAttribute('data-tabtext', `${tabdef.label}`);
         link.setAttribute('data-tabno', `${order}`);
         link.setAttribute('id', tabdef.id);
         link.setAttribute('data-tabid', tabdef.id);
+        if (!this.navigation) {
+            link.setAttribute('role', 'menuitem');
+        }
+
         if (tabdef.icon) {
             link.appendChild(IconFactory.icon(tabdef.icon));
         }
@@ -8665,22 +8946,27 @@ class SearchControl {
         }
 
         this.searchinput.addEventListener('keyup', function(e) {
-            if (e.keyCode === 9) { // Tab
-                if (me.autoexecute) {
+            switch (e.keyCode) {
+                case 9:
+                    if (me.autoexecute) {
+                        if ((me.action) && (typeof me.action === 'function')) {
+                            me.action(me.value, me);
+                        }
+                    }
+                    break;
+                case 13:
                     if ((me.action) && (typeof me.action === 'function')) {
                         me.action(me.value, me);
                     }
-                }
-            } else if (e.keyCode === 13) { // return or space
-                if ((me.action) && (typeof me.action === 'function')) {
-                    me.action(me.value, me);
-                }
-            } else {
-                if (me.autoexecute) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+                    break;
+                default:
+                    if (me.autoexecute) {
+                        if ((me.action) && (typeof me.action === 'function')) {
+                            me.action(me.value, me);
+                        }
                     }
-                }
+                    break;
+
             }
         });
 
