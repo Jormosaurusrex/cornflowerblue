@@ -3996,6 +3996,8 @@ div.panel.bottom-center {
 }
 
 div.tooltip {
+  animation: cfb-fadein 0.5s;
+  opacity: 1;
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -4415,7 +4417,7 @@ ul.tabbar {
   min-height: 3em;
   max-height: 3em;
 }
-ul.tabbar li {
+ul.tabbar > li {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -4423,15 +4425,15 @@ ul.tabbar li {
   padding: 0;
   position: relative;
 }
-ul.tabbar li.mobileonly {
+ul.tabbar > li.mobileonly {
   display: none;
 }
 @media (max-width: 599px) {
-  ul.tabbar li.mobileonly {
+  ul.tabbar > li.mobileonly {
     display: flex;
   }
 }
-ul.tabbar li a {
+ul.tabbar > li > a {
   padding: 0 1em 0 1em;
   white-space: nowrap;
   background-color: var(--tabbar-tab-background-color);
@@ -4446,58 +4448,58 @@ ul.tabbar li a {
   font-size: 1.1em;
   transition: all 0.1s linear;
 }
-ul.tabbar li a[aria-selected=true] {
+ul.tabbar > li > a[aria-selected=true] {
   background-color: var(--tabbar-selected-tab-background-color);
   box-shadow: inset 0px -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
   color: var(--tabbar-selected-tab-text-color);
   text-shadow: var(--tabbar-selected-tab-text-shadow);
 }
-ul.tabbar li a:active, ul.tabbar li a:focus {
+ul.tabbar > li > a:active, ul.tabbar > li > a:focus {
   color: var(--tabbar-hover-tab-text-color);
   background-color: var(--tabbar-hover-tab-background-color);
   text-shadow: var(--tabbar-hover-tab-text-shadow);
   filter: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  ul.tabbar li a:hover {
+  ul.tabbar > li > a:hover {
     color: var(--tabbar-hover-tab-text-color);
     background-color: var(--tabbar-hover-tab-background-color);
     text-shadow: var(--tabbar-hover-tab-text-shadow);
     filter: none;
   }
 }
-ul.tabbar li a:focus {
+ul.tabbar > li > a:focus {
   outline: var(--hot-text-color) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
 @media (hover: hover) and (pointer: fine) {
-  ul.tabbar li a:focus:hover {
+  ul.tabbar > li > a:focus:hover {
     outline-color: var(--ultralight);
   }
 }
-ul.tabbar li a span.icon {
+ul.tabbar > li > a > span.icon {
   margin-right: 0.5em;
 }
 @media (hover: hover) and (pointer: fine) {
-  ul.tabbar li:hover {
+  ul.tabbar > li:hover {
     background-color: var(--tabbar-hover-tab-background-color);
     border-color: var(--tabbar-hover-tab-highlight-color);
     color: var(--tabbar-hover-tab-text-color);
   }
 }
-ul.tabbar li[aria-selected=true] {
+ul.tabbar > li[aria-selected=true] {
   box-shadow: inset 0 -0.3em 0 0 var(--tabbar-selected-tab-highlight-color);
   color: var(--tabbar-hover-tab-text-color);
   text-shadow: var(--tabbar-selected-tab-text-shadow);
 }
 @media (hover: hover) and (pointer: fine) {
-  ul.tabbar li[aria-selected=true]:hover {
+  ul.tabbar > li[aria-selected=true]:hover {
     color: var(--tabbar-hover-tab-text-color);
     text-shadow: var(--tabbar-hover-tab-text-shadow);
   }
 }
-ul.tabbar li ul.submenu {
+ul.tabbar > li > ul.submenu {
   display: none;
   z-index: 5001;
   width: 100%;
@@ -4508,11 +4510,11 @@ ul.tabbar li ul.submenu {
   background-color: var(--light);
   padding: 0;
 }
-ul.tabbar li ul.submenu li {
+ul.tabbar > li > ul.submenu > li {
   align-items: flex-start;
   margin: 0;
 }
-ul.tabbar li ul.submenu li a {
+ul.tabbar > li > ul.submenu > li > a {
   align-items: center;
   justify-content: flex-start;
   height: 2em;
@@ -4521,7 +4523,7 @@ ul.tabbar li ul.submenu li a {
   font-size: 1em;
   width: 100%;
 }
-ul.tabbar li:focus-within ul {
+ul.tabbar > li:focus-within > ul.submenu {
   display: block;
 }
 ul.tabbar.vertical {
@@ -4532,25 +4534,25 @@ ul.tabbar.vertical {
   min-height: unset;
   max-height: unset;
 }
-ul.tabbar.vertical li {
+ul.tabbar.vertical > li {
   margin: 0;
 }
-ul.tabbar.vertical li a {
+ul.tabbar.vertical > li > a {
   padding: 0.5em 1em 0.5em 1em;
   justify-content: flex-start;
 }
-ul.tabbar.vertical li a:focus {
+ul.tabbar.vertical > li > a:focus {
   margin: 0;
   outline: var(--ultralight) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
 @media (hover: hover) and (pointer: fine) {
-  ul.tabbar.vertical li a:focus:hover {
+  ul.tabbar.vertical > li > a:focus:hover {
     outline-color: var(--ultralight);
   }
 }
-ul.tabbar.vertical li ul {
+ul.tabbar.vertical > li > ul.submenu {
   display: block;
 }
 
@@ -4593,8 +4595,8 @@ div.tablist-container.responsive div.responsivebox {
     width: 100%;
     background-color: var(--tabbar-collapsed-background-color);
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger,
-div.tablist-container.responsive div.responsivebox button.hamburger {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger,
+div.tablist-container.responsive div.responsivebox > button.hamburger {
     margin: 0;
     width: var(--tabbar-collapsed-height);
     height: var(--tabbar-collapsed-height);
@@ -4604,54 +4606,54 @@ div.tablist-container.responsive div.responsivebox button.hamburger {
     box-shadow: none;
     background-color: transparent;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger,
-div.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger,
+div.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger {
     width: 2em;
     height: 2em;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span,
-div.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span,
+div.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span {
     width: 2em;
     height: 0.3em;
     background-color: var(--tabbar-collapsed-button-color);
     border-radius: 0.1em;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span:first-child,
-div.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span:first-child {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span:first-child,
+div.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span:first-child {
     margin-top: 0.1em;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span:nth-child(2),
-div.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span:nth-child(2) {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span:nth-child(2),
+div.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span:nth-child(2) {
     margin: 0.4em auto 0.4em auto;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span:last-child,
-div.tablist-container.responsive div.responsivebox button.hamburger span.magichamburger span:last-child {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span:last-child,
+div.tablist-container.responsive div.responsivebox > button.hamburger > span.magichamburger span:last-child {
     margin-bottom: 0.1em;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger:focus,
-div.tablist-container.responsive div.responsivebox button.hamburger:focus {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger:focus,
+div.tablist-container.responsive div.responsivebox > button.hamburger:focus {
     background-color: var(--tabbar-collapsed-open-menu-color);
     outline: var(--tabbar-collapsed-button-color) dashed 0.2em;
     outline-offset: -0.3em;
     filter: none;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true],
-div.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true],
+div.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] {
     background-color: var(--tabbar-collapsed-open-menu-color);
     filter: none;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] span.magichamburger span:first-child,
-div.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] span.magichamburger span:first-child {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] > span.magichamburger span:first-child,
+div.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] > span.magichamburger span:first-child {
     width: 2.1em;
     transform: translateX(0.4em) rotate(45deg);
     transform-origin: top left;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] span.magichamburger span:nth-child(2),
-div.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] span.magichamburger span:nth-child(2) {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] > span.magichamburger span:nth-child(2),
+div.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] > span.magichamburger span:nth-child(2) {
     opacity: 0;
   }
-  nav.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] span.magichamburger span:last-child,
-div.tablist-container.responsive div.responsivebox button.hamburger[aria-expanded=true] span.magichamburger span:last-child {
+  nav.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] > span.magichamburger span:last-child,
+div.tablist-container.responsive div.responsivebox > button.hamburger[aria-expanded=true] > span.magichamburger span:last-child {
     width: 2.1em;
     transform: translateX(0.4em) rotate(-45deg);
     transform-origin: bottom left;

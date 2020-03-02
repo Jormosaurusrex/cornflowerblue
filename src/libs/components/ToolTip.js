@@ -5,13 +5,15 @@ class ToolTip {
             id : null, // the id
             icon: 'help-circle',
             tipicon: 'help-circle',
-            direction: 'n',
             iconclasses: [], // Classes to apply to the icon
             text: null, // The text to use,
             parent: null, // the parent object to fire off
+            waittime: 1000, // how long to wait before activating
             classes: [] //Extra css classes to apply
         };
     }
+
+    static activeTooltip = null;
 
     /**
      * Define the element
@@ -36,17 +38,23 @@ class ToolTip {
         this.parent = parent;
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
-        this.parent.addEventListener('mouseover', function(e) {
-            me.open(e);
+        this.parent.addEventListener('mouseover', function() {
+            me.timer = setTimeout(function() {
+                me.open();
+            }, me.waittime);
         });
-        this.parent.addEventListener('mouseout', function(e) {
-            me.close(e);
+        this.parent.addEventListener('mouseout', function() {
+            clearTimeout(me.timer);
+            me.close();
         });
-        this.parent.addEventListener('focusin', function(e) {
-            me.open(e);
+        this.parent.addEventListener('focusin', function() {
+            me.timer = setTimeout(function() {
+                me.open();
+            }, me.waittime);
         });
-        this.parent.addEventListener('focusout', function(e) {
-            me.close(e);
+        this.parent.addEventListener('focusout', function() {
+            clearTimeout(me.timer);
+            me.close();
         });
     }
 
@@ -58,6 +66,10 @@ class ToolTip {
     open() {
         const me = this;
 
+        if (ToolTip.activeTooltip) {
+            ToolTip.activeTooltip.close();
+        }
+
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
 
@@ -66,8 +78,9 @@ class ToolTip {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-        me.container.style.top = `${(offsetTop - me.container.clientHeight - (Utils.getSingleEmInPixels() / 2))}px`;
-        me.container.style.left = `${offsetLeft - Utils.getSingleEmInPixels()}px`;
+        this.container.style.top = `${(offsetTop - me.container.clientHeight - (Utils.getSingleEmInPixels() / 2))}px`;
+        this.container.style.left = `${offsetLeft - Utils.getSingleEmInPixels()}px`;
+        ToolTip.activeTooltip = this;
 
     }
 
@@ -77,6 +90,7 @@ class ToolTip {
     close() {
         this.container.setAttribute('aria-hidden', 'true');
         this.parent.appendChild(this.container);
+        ToolTip.activeTooltip = null;
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -85,7 +99,6 @@ class ToolTip {
      * Build the full container
      */
     buildContainer() {
-        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('tooltip');
         this.container.setAttribute('aria-hidden', 'true');
@@ -169,6 +182,9 @@ class ToolTip {
     get text() { return this.config.text; }
     set text(text) { this.config.text = text; }
 
+    get timer() { return this._timer; }
+    set timer(timer) { this._timer = timer; }
+
     get tipicon() { return this.config.tipicon; }
     set tipicon(tipicon) { this.config.tipicon = tipicon; }
 
@@ -178,5 +194,7 @@ class ToolTip {
     get tooltip() { return this._tooltip; }
     set tooltip(tooltip) { this._tooltip = tooltip; }
 
-
+    get waittime() { return this.config.waittime; }
+    set waittime(waittime) { this.config.waittime = waittime; }
+    
 }

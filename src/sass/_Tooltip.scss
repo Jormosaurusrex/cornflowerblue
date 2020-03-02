@@ -1,4 +1,6 @@
 div.tooltip {
+  animation: cfb-fadein .5s;
+  opacity: 1;
   position: absolute;
   display: flex;
   flex-direction: row;

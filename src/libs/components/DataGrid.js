@@ -81,6 +81,9 @@ class DataGrid extends Panel {
             filterhelpcontaintext: 'Matches contain:',
             applyfilterstext: 'Apply Filters',
             applyfiltersicon: 'checkmark-circle',
+            allfilteredtitle: 'No results',
+            allfilteredtext: 'All entries have matched a filter, preventing display.',
+
 
             actionsbuttontext: 'Actions',
             actionsbuttonicon: 'menu',
@@ -690,14 +693,13 @@ class DataGrid extends Panel {
             }
         }
 
-        /*
-        let visible = this.gridbody.querySelector(`tr:not(data-search-hidden['true]):not(.filtered)`);
 
-        if (visible.length === 0) {
+        let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
+        if ((!visible) || (visible.length === 0)) {
             this.messagebox.innerHTML = "";
             this.messagebox.append(new MessageBox({
-                warningstitle: this.noresultstitle,
-                warnings: [this.noresultstext],
+                warningstitle: this.allfilteredtitle,
+                warnings: [this.allfilteredtext],
                 classes: ['hidden']
             }).container);
             this.messagebox.classList.remove('hidden');
@@ -705,7 +707,7 @@ class DataGrid extends Panel {
             this.messagebox.classList.add('hidden');
         }
        
-         */
+
     }
 
     /* SELECTION METHODS________________________________________________________________ */
@@ -1171,6 +1173,12 @@ class DataGrid extends Panel {
 
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
+
+    get allfilteredtitle() { return this.config.allfilteredtitle; }
+    set allfilteredtitle(allfilteredtitle) { this.config.allfilteredtitle = allfilteredtitle; }
+
+    get allfilteredtext() { return this.config.allfilteredtext; }
+    set allfilteredtext(allfilteredtext) { this.config.allfilteredtext = allfilteredtext; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }

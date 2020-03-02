@@ -13,7 +13,7 @@ ul.tabbar {
   height: 3em;
   min-height: 3em;
   max-height: 3em;
-  li {
+  > li {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,7 +26,7 @@ ul.tabbar {
         display: flex;
       }
     }
-    a {
+    > a {
       padding: 0 1em 0 1em;
       white-space: nowrap;
       background-color: var(--tabbar-tab-background-color);
@@ -71,8 +71,7 @@ ul.tabbar {
           }
         }
       }
-
-      span.icon {
+      > span.icon {
         margin-right: .5em;
       }
     }
@@ -94,7 +93,7 @@ ul.tabbar {
         }
       }
     }
-    ul.submenu {
+    > ul.submenu {
       display: none;
       z-index: 5001;
       width: 100%;
@@ -104,10 +103,10 @@ ul.tabbar {
       overflow: visible;
       background-color: var(--light);
       padding: 0;
-      li {
+      > li {
         align-items: flex-start;
         margin: 0;
-        a {
+        > a {
           align-items: center;
           justify-content: flex-start;
           height: 2em;
@@ -119,7 +118,7 @@ ul.tabbar {
       }
     }
     &:focus-within {
-      ul {
+      > ul.submenu {
         display: block;
       }
     }
@@ -131,9 +130,9 @@ ul.tabbar {
     height: unset;
     min-height: unset;
     max-height: unset;
-    li {
+    > li {
       margin: 0;
-      a {
+      > a {
         padding: .5em 1em .5em 1em;
         justify-content: flex-start;
         &:focus {
@@ -148,7 +147,7 @@ ul.tabbar {
           }
         }
       }
-      ul {
+      > ul.submenu {
         display: block;
       }
     }
@@ -184,7 +183,7 @@ div.tablist-container {
         max-height: var(--tabbar-collapsed-height);
         width: 100%;
         background-color: var(--tabbar-collapsed-background-color);
-        button.hamburger {
+        > button.hamburger {
           margin: 0;
           width: var(--tabbar-collapsed-height);
           height: var(--tabbar-collapsed-height);
@@ -193,7 +192,7 @@ div.tablist-container {
           font-size: 1em;
           box-shadow: none;
           background-color: transparent;
-          span.magichamburger {
+          > span.magichamburger {
             width: 2em;
             height: 2em;
             span {
@@ -221,7 +220,7 @@ div.tablist-container {
           &[aria-expanded='true'] {
             background-color: var(--tabbar-collapsed-open-menu-color);
             filter: none;
-            span.magichamburger {
+            > span.magichamburger {
               span {
                 &:first-child {
                   width: 2.1em;
