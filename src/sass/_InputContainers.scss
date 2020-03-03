@@ -50,6 +50,16 @@ div.textarea-container {
         opacity: 1;
       }
     }
+    &:before {
+      position: absolute;
+      right: 3.5em;
+      top: .7em;
+      margin: 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--input-default-placeholder-color);
+    }
     &:after {
       opacity: 0;
       display: flex;

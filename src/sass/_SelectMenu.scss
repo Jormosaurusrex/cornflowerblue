@@ -4,74 +4,8 @@ div.select-container {
     label {
       text-shadow: none;
     }
-    div.trigger {
-      border-color: var(--input-disabled-border-color);
-      background-color: var(--input-disabled-background-color);
-      color: var(--input-disabled-text-color);
-      cursor: not-allowed;
-      text-shadow:none;
-      &:focus {
-        border-color: var(--input-disabled-border-color);
-        background-color: var(--input-disabled-background-color);
-        color: var(--input-disabled-text-color);
-        &:before {
-          color: var(--input-disabled-text-color);
-        }
-        ul.selectmenu {
-          display: none;
-        }
-      }
-    }
-  }
-  div.trigger {
-    transition: all .2s;
-    box-sizing: border-box;
-    outline: none;
-    position: relative;
-    font-family: inherit;
-    width: 100%;
-    margin: 0;
-    font-size: 1em;
-    background-color: var(--input-default-background-color);
-    border: .1em solid var(--input-default-border-color);
-    padding: .5em 1em .5em 1.5em;
-    border-radius: .1em;
-    color: var(--input-default-text-color);
-    text-shadow:var(--input-default-text-shadow);
-    vertical-align: middle;
-    &:before {
-      position: absolute;
-      right: 3.5em;
-      top: .7em;
-      margin: 0;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: all .2s;
-      color: var(--input-default-placeholder-color);
-    }
-    &:focus {
-      border-color: var(--input-focused-border-color);
-      background-color: var(--input-focused-background-color);
-      &:before {
-        color: var(--input-focused-border-color);
-      }
-    }
-    &.mute {
-      background-color: var(--input-mute-background-color);
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      padding: .5em 1em .5em 1.5em;
-    }
-    &[aria-expanded="true"] {
-      border-color: var(--input-focused-border-color);
-      background-color: var(--input-focused-background-color);
-      box-shadow: inset .5em 0 0 var(--input-focused-border-color);
-      &:before {
-
-        transform: rotate(180deg);
-      }
+    div[role='listbox'] {
+      display: none;
     }
   }
   div.searchdisplay {
@@ -97,117 +31,109 @@ div.select-container {
       top: 3em;
     }
   }
-  ul.selectmenu {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    background-color: var(--selectmenu-menu-background-color);
-    border: .1em solid var(--input-default-border-color);
-    border-top: none;
-    padding: 0;
-    overflow: auto;
-    max-height: 10em;
-    z-index: 201;
-    position: absolute;
-    margin: 0;
-    box-shadow: var(--panel-shadow-light);
-    width: 100%;
-    transition: all .2s;
-    li {
-      display: block;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      align-items: center;
-      align-content: center;
-      padding: 0;
-      margin: 0;
-      white-space: nowrap;
-      input[type="radio"] {
-        display: none;
-      }
-      label {
-        display: inline-block;
-        padding: .5em 1em .5em 1.5em;
-        margin: 0;
-        text-shadow: none;
-        width: 100%;
-        min-width: 100%;
-        &:after {
-          display: none;
-        }
-        &:before {
-          display: none;
-        }
-      }
-      &:focus {
-        outline: var(--selectmenu-menu-background-color) dashed .1em;
-        outline-offset: -.3em;
-        text-decoration: underline double;
-      }
-      &[aria-selected=true] {
-        box-shadow: inset .5em 0 0 var(--input-focused-border-color);
-        label {
-          padding: .5em 1em .5em .1em;
-          &:before {
-            display: inline-block;
-          }
-        }
-      }
-      &:nth-child(even) {
-        background-color: var(--selectmenu-menu-alternate-background-color);
-      }
-      &:focus {
-        background-color: var(--selectmenu-menu-item-hover-background-color);
-        color: var(--selectmenu-menu-item-hover-text-color);
-        label {
-          color: var(--selectmenu-menu-item-hover-text-color);
-          text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
-        }
-        &[aria-selected=true] {
-          label {
-            &:before {
-              color: var(--selectmenu-menu-item-hover-text-color);
-            }
-          }
-        }
-      }
-      @include for-hover-only {
-        &:hover {
-          background-color: var(--selectmenu-menu-item-hover-background-color);
-          color: var(--selectmenu-menu-item-hover-text-color);
-          label {
-            color: var(--selectmenu-menu-item-hover-text-color);
-            text-shadow: var(--selectmenu-menu-item-hover-text-shadow);
-          }
-          &[aria-selected=true] {
-            label {
-              &:before {
-                color: var(--selectmenu-menu-item-hover-text-color);
-              }
-            }
-          }
-        }
+  div.wrap {
+    display: block;
+    position: relative;
+    input.trigger {
+
+    }
+    &:before {
+      cursor: pointer;
+    }
+    &[aria-expanded="true"],
+    &:focus-within {
+      input.trigger {
+        border-color: var(--input-focused-border-color);
+        background-color: var(--input-focused-background-color);
+        box-shadow: var(--input-focus-box-shadow);
       }
     }
-    &.vert {
-      bottom: 2.5em;
-      box-shadow: var(--panel-shadow-light-inverse);
-      border-top: .1em solid var(--input-default-border-color);
-      border-bottom: none;
+    &[aria-expanded="true"] {
+      &:before {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  div[role='listbox'] {
+    ul.selectmenu {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      background-color: var(--selectmenu-menu-background-color);
+      border: .1em solid var(--input-default-border-color);
+      border-top: none;
+      padding: 0;
+      overflow: auto;
+      max-height: 10em;
+      z-index: 201;
+      position: absolute;
+      margin: 0;
+      box-shadow: var(--panel-shadow-light);
+      width: 100%;
+      transition: all .2s;
+      li {
+        display: block;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: center;
+        margin: 0;
+        white-space: nowrap;
+        padding: .5em 1em .5em 1.5em;
+        &:focus {
+          outline: var(--selectmenu-menu-background-color) dashed .1em;
+          outline-offset: -.3em;
+          text-decoration: underline double;
+        }
+        &[aria-selected=true] {
+          box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+        }
+        &:nth-child(even) {
+          background-color: var(--selectmenu-menu-alternate-background-color);
+        }
+        &:focus {
+          background-color: var(--selectmenu-menu-item-hover-background-color);
+          color: var(--selectmenu-menu-item-hover-text-color);
+          &[aria-selected=true] {
+          }
+        }
+        @include for-hover-only {
+          &:hover {
+            background-color: var(--selectmenu-menu-item-hover-background-color);
+            color: var(--selectmenu-menu-item-hover-text-color);
+          }
+        }
+      }
+      &.vert {
+        bottom: 2.5em;
+        box-shadow: var(--panel-shadow-light-inverse);
+        border-top: .1em solid var(--input-default-border-color);
+        border-bottom: none;
+      }
     }
     &[aria-hidden='true'] {
       height: 0;
       max-height: 0;
       box-shadow: none;
       border: none;
+      display: none;
     }
   }
   &.mute {
     label {
       opacity: 1;
     }
+    &[aria-expanded="true"],
+    &:focus-within {
+      input.trigger {
+        border-bottom-color: var(--focus-color);
+        background-color: var(--input-focused-background-color);
+        box-shadow: var(--input-mute-focus-box-shadow);
+      }
+    }
+
   }
   &.minimal {
     display: inline-block;
@@ -217,7 +143,7 @@ div.select-container {
         display: none;
       }
     }
-    div.trigger {
+    input.trigger {
       padding-right: 2em;
       &:before {
         right: .5em;
@@ -225,13 +151,13 @@ div.select-container {
     }
   }
   &.disabled {
-    div.trigger {
+    input.trigger {
       &:before {
         opacity: .5;
       }
     }
     &.mute {
-      div.trigger {
+      input.trigger {
         background-color: var(--input-mute-disabled-background-color);
       }
     }

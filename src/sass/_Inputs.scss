@@ -26,16 +26,6 @@ textarea {
     font-weight: normal;
     text-shadow: none;
   }
-  &:before {
-    position: absolute;
-    right: 3.5em;
-    top: .7em;
-    margin: 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--input-default-placeholder-color);
-  }
   &:disabled {
     border-color: var(--input-disabled-border-color);
     background-color: var(--input-disabled-background-color);

@@ -7,7 +7,6 @@ class SelectMenu extends InputElement {
             prefix: null, // a prefix to display in the trigger box.
             minimal: false, // if true, build with the intent that it is part of a larger component.
                             // this removes things like the search controls and validation boxes.
-            searchtext: true, // Show the "searchtext" box.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
             onchange: null // The change handler. Passed (self).
@@ -26,6 +25,14 @@ class SelectMenu extends InputElement {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     /**
+     * Let us know if the button is open
+     * @return boolean true if it is!
+     */
+    get isopen() {
+        return (this.wrapper.getAttribute('aria-expanded') === 'true');
+    }
+
+    /**
      * Return the selected radio input.
      * @return {HTMLElement}
      */
@@ -36,10 +43,8 @@ class SelectMenu extends InputElement {
     }
 
     get value() {
-        return this.optionlist.querySelector(`input[name=${this.name}]:checked`).value;
+        return this.triggerbox.value;
     }
-
-    get topcontrol() { return this.searchdisplay; }
 
     get passivetext() {
         if (this.selectedoption) { return this.selectedoption.label; }
@@ -56,12 +61,14 @@ class SelectMenu extends InputElement {
     open() {
         const me = this;
 
-        this.optionlist.removeAttribute('aria-hidden');
-        //this.optionlist.setAttribute('tabindex', '0');
-        this.triggerbox.setAttribute('aria-expanded', 'true');
+        if (SelectMenu.activeMenu) { // close any spuriously open other ones
+            SelectMenu.activeMenu.close();
+        }
 
-        let items = Array.from(this.optionlist.querySelector('li'));
-        for (let li of items) {
+        this.listbox.removeAttribute('aria-hidden');
+        this.wrapper.setAttribute('aria-expanded', true);
+
+        for (let li of Array.from(this.optionlist.querySelector('li'))) {
             li.setAttribute('tabindex', '0');
         }
 
@@ -73,46 +80,23 @@ class SelectMenu extends InputElement {
         }
 
         if (vertpos > window.innerHeight) {
-            this.optionlist.classList.add('vert');
+            this.wrapper.classList.add('vert');
             if (this.container) { this.container.classList.add('vert'); }
         } else {
             this.optionlist.classList.remove('vert');
             if (this.container) { this.container.classList.remove('vert'); }
         }
 
-        setTimeout(function() { // Have to wait until we're sure we're in the DOM
-            let sel = me.optionlist.querySelector('li[aria-selected="true"]');
-            if (!sel) {
-                sel = me.optionlist.querySelector('li:first-child');
-            }
-            if (sel) {
-                me.scrollto(sel);
-                sel.focus();
-            }
-        }, 100);
+        if (typeof SelectMenu.activeMenu === 'undefined' ) {
+            SelectMenu.activeMenu = this;
+        } else {
+            SelectMenu.activeMenu = this;
+        }
 
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
-        }, 200);
+        }, 100);
 
-    }
-
-    /**
-     * Sets an event listener to close the menu if the user clicks outside of it.
-     */
-    setCloseListener() {
-        const me = this;
-        window.addEventListener('click', function(e) {
-            if (e.target === me.optionlist) {
-                me.setCloseListener();
-            } else if ((e.target === me.triggerbox) && (me.triggerbox.getAttribute('aria-expanded') === 'true')) {
-                // Do _nothing_
-            } else {
-                me.close();
-            }
-        }, {
-            once: true,
-        });
     }
 
     /**
@@ -125,44 +109,52 @@ class SelectMenu extends InputElement {
             return; // this is us, don't reflow.
         }
         this.optionlist.scrollTop = element.offsetHeight;
-        element.focus();
         this.scrolleditem = element;
+    }
+
+    /**
+     * Scroll the select to the selected element and optionally set focus there
+     * @param andfocus if true, focus on the element.
+     */
+    jumptoSelected(andfocus) {
+        let sel = this.optionlist.querySelector('li[aria-selected="true"]');
+        if (!sel) {
+            sel = this.optionlist.querySelector('li:first-child');
+        }
+        if (sel) {
+            this.scrollto(sel);
+            if (andfocus) {
+                sel.focus();
+            }
+        }
     }
 
     /**
      * Closes the option list.
      */
     close() {
-        this.optionlist.setAttribute('aria-hidden', 'true');
-        this.optionlist.setAttribute('tabindex', '-1');
-        this.triggerbox.removeAttribute('aria-expanded');
+        this.listbox.setAttribute('aria-hidden', 'true');
+        this.listbox.setAttribute('tabindex', '-1');
+        this.wrapper.setAttribute('aria-expanded', false);
 
-        let items = Array.from(this.optionlist.querySelector('li'));
-        for (let li of items) {
+        for (let li of Array.from(this.optionlist.querySelector('li'))) {
             li.setAttribute('tabindex', '-1');
         }
 
         this.searchkeys = [];
         this.updateSearch();
+        SelectMenu.activeMenu = null;
     }
 
     disable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.setAttribute('disabled', 'disabled');
-        }
         this.triggerbox.setAttribute('disabled', 'disabled');
-        this.triggerbox.removeAttribute('aria-expanded');
+        this.wrapper.removeAttribute('aria-expanded');
         this.disabled = true;
         if (this.triggerbox) { this.triggerbox.classList.add('disabled'); }
         if (this.container) { this.container.classList.add('disabled'); }
     }
 
     enable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.removeAttribute('disabled');
-        }
         this.triggerbox.removeAttribute('disabled');
         this.disabled = false;
         if (this.triggerbox) { this.triggerbox.classList.remove('disabled'); }
@@ -192,16 +184,27 @@ class SelectMenu extends InputElement {
         }
         if (this.labelobj) { this.container.appendChild(this.labelobj); }
 
-        let wrap = document.createElement('div');
-        wrap.classList.add('wrap');
-        wrap.appendChild(this.triggerbox);
-        this.container.append(wrap);
+        this.wrapper = document.createElement('div');
+        this.wrapper.classList.add('wrap');
+        this.wrapper.setAttribute('role', 'combobox');
+        this.wrapper.setAttribute('aria-haspopup', 'listbox');
+        this.wrapper.setAttribute('aria-expanded', false);
+        this.wrapper.setAttribute('aria-owns', `${this.id}-options`);
+        if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
+        this.wrapper.appendChild(this.triggerbox);
 
-        this.container.appendChild(this.optionlist);
+        this.container.append(this.wrapper);
+
+        this.listbox = document.createElement('div');
+        this.listbox.setAttribute('id', `${this.id}-options`);
+        this.listbox.setAttribute('aria-hidden', 'true');
+        this.listbox.setAttribute('role', 'listbox');
+        this.listbox.appendChild(this.optionlist);
+
+        this.container.appendChild(this.listbox);
 
         if (!this.minimal) {
             this.container.appendChild(this.passivebox);
-            this.container.appendChild(this.topcontrol);
             this.container.appendChild(this.messagebox);
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
@@ -214,28 +217,57 @@ class SelectMenu extends InputElement {
      */
     buildTriggerBox() {
         const me = this;
-        this.triggerbox = document.createElement('div');
+        this.triggerbox = document.createElement('input');
         this.triggerbox.classList.add('trigger');
+        this.triggerbox.setAttribute('type', 'text');
         this.triggerbox.setAttribute('tabindex', '0');
-        this.triggerbox.addEventListener('focus', function(e) {
+        this.triggerbox.setAttribute('aria-autocomplete', 'none');
+        this.triggerbox.setAttribute('aria-activedescendant', '');
+
+        this.triggerbox.addEventListener('focusin', function(e) {
             if (me.disabled) {
                 e.stopPropagation();
                 return;
             }
+            me.triggerbox.select();
             me.open();
         });
+
+        this.triggerbox.addEventListener('keyup', function(e) {
+            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+                me.close();
+            } else {
+                switch (e.keyCode) {
+                    case 40: // Down
+                        e.preventDefault();
+                        me.open();
+                        me.jumptoSelected(true);
+                        break;
+                    case 8:  // Backspace
+                        me.updateSearch();
+                        break;
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 91: // command
+                        // Nothing.
+                        break;
+                    default:
+                        me.updateSearch();
+                        break;
+                }
+            }
+        });
+
         if (this.mute) { this.triggerbox.classList.add('mute'); }
-        if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
 
     }
 
     buildOptions() {
+
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('selectmenu');
         this.optionlist.setAttribute('id', this.id);
-        this.optionlist.setAttribute('aria-hidden', 'true');
         this.optionlist.setAttribute('tabindex', '-1');
-        this.optionlist.setAttribute('role', 'radiogroup');
 
         let order = 1;
         for (let opt of this.options) {
@@ -277,8 +309,10 @@ class SelectMenu extends InputElement {
         li.setAttribute('tabindex', '-1');
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
+        li.setAttribute('role', 'option');
+        li.setAttribute('data-value', def.value);
 
-        li.addEventListener('keyup', function(e) {
+        li.addEventListener('keydown', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
             } else {
@@ -297,10 +331,10 @@ class SelectMenu extends InputElement {
                         break;
                     case 13: // Return
                     case 32: // Space
-                        li.querySelector('input').click(); // click the one inside
+                        li.click(); // click the one inside
                         break;
                     case 8:  // Backspace
-                        me.rmSearchKey();
+                        me.updateSearch();
                         break;
                     case 17: // ctrl
                     case 18: // alt
@@ -308,7 +342,7 @@ class SelectMenu extends InputElement {
                         // Nothing.
                         break;
                     default:
-                        me.runKeySearch(e.key);
+                        me.updateSearch();
                         break;
                 }
             }
@@ -321,27 +355,11 @@ class SelectMenu extends InputElement {
                 o.removeAttribute('aria-selected');
             }
             li.setAttribute('aria-selected', 'true');
-        });
 
-        let opLabel = document.createElement('label');
-        opLabel.setAttribute('for', lId);
-        opLabel.innerHTML = def.label;
-        opLabel.classList.add('cfb-triangle-down');
-
-        let op = document.createElement('input');
-        op.setAttribute('id', lId);
-        op.setAttribute('type', 'radio');
-        op.setAttribute('name', this.name);
-        op.setAttribute('tabindex', '-1');
-        op.setAttribute('value', def.value);
-        op.setAttribute('aria-labelledby', lId);
-        op.setAttribute('aria-label', def.label);
-        op.setAttribute('role', 'radio');
-        op.addEventListener('change', function() {
             if (me.prefix) {
-                me.triggerbox.innerHTML = `${me.prefix} ${def.label}`;
+                me.triggerbox.value = `${me.prefix} ${def.label}`;
             } else {
-                me.triggerbox.innerHTML = def.label;
+                me.triggerbox.value = def.label;
             }
 
             me.selectedoption = def;
@@ -363,73 +381,22 @@ class SelectMenu extends InputElement {
             }
         });
 
+        li.innerHTML = def.label;
+
         if (def.checked) {
             this.origval = def.value;
             if (this.prefix) {
-                this.triggerbox.innerHTML = `${this.prefix} ${def.label}`;
+                this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
-                this.triggerbox.innerHTML = def.label;
+                this.triggerbox.value = def.label;
             }
             li.setAttribute('aria-selected', 'true');
-            op.setAttribute('aria-checked', 'checked');
-            op.setAttribute('checked', 'checked');
         }
 
-        li.appendChild(op);
-        li.appendChild(opLabel);
         return li;
     }
 
-    /**
-     * Draws the search text display.
-     */
-    buildSearchDisplay() {
-        if (this.searchtext) {
-            this.searchdisplay = document.createElement('div');
-            this.searchdisplay.classList.add('searchdisplay');
-            this.searchdisplay.classList.add('topcontrol');
-            this.updateSearch();
-        }
-    }
-
-    /**
-     * Updates the counter
-     */
-    updateSearch() {
-        if (this.searchkeys.length === 0) {
-            this.searchdisplay.classList.add('hidden');
-            this.searchdisplay.innerHTML = '';
-            return;
-        }
-        this.searchdisplay.classList.remove('hidden');
-        this.searchdisplay.innerHTML = this.searchkeys.join('');
-    }
-
     /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Delete a search key from the stack
-     */
-    rmSearchKey() {
-        if (this.searchkeys.length === 0) return;
-        this.searchkeys.pop();
-        if (this.searchkeys.length > 0) {
-            this.findByString(this.searchkeys.join(''));
-        }
-        this.updateSearch();
-    }
-
-    /**
-     * Search the options from keyboard input
-     * @param key the key to add to the stack
-     */
-    runKeySearch(key) {
-        this.searchkeys.push(key);
-        if (this.searchkeys.length > 0) {
-            this.findByString(this.searchkeys.join(''));
-        }
-        this.updateSearch();
-    }
 
     /**
      * Search the list of options and scroll to it
@@ -439,18 +406,48 @@ class SelectMenu extends InputElement {
         if ((!s) || (typeof s !== 'string')) { return; }
         let target;
 
-        let lis = this.optionlist.querySelectorAll('li');
-        for (let li of lis) {
-            let label = li.querySelector('label');
-            if (label.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            if (li.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
                 target = li;
                 break;
             }
         }
-        this.scrollto(target);
+        if (target) {
+            console.log(target);
+            this.scrollto(target);
+            target.focus();
+        }
+
     }
 
+    /**
+     * Updates the counter
+     */
+    updateSearch() {
+        this.findByString(this.value);
+    }
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+        window.addEventListener('click', function(e) {
+            if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
+                me.setCloseListener();
+            } else {
+                me.close();
+            }
+        }, {
+            once: true,
+        });
+    }
+
+
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get listbox() { return this._listbox; }
+    set listbox(listbox) { this._listbox = listbox; }
 
     get minimal() { return this.config.minimal; }
     set minimal(minimal) { this.config.minimal = minimal; }
@@ -470,21 +467,6 @@ class SelectMenu extends InputElement {
     get prefix() { return this.config.prefix; }
     set prefix(prefix) { this.config.prefix = prefix; }
 
-    get searchdisplay() {
-        if (!this._searchdisplay) { this.buildSearchDisplay(); }
-        return this._searchdisplay;
-    }
-    set searchdisplay(searchdisplay) { this._searchdisplay = searchdisplay; }
-
-    get searchkeys() {
-        if (!this._searchkeys) { this._searchkeys = []; }
-        return this._searchkeys;
-    }
-    set searchkeys(searchkeys) { this._searchkeys = searchkeys; }
-
-    get searchtext() { return this.config.searchtext; }
-    set searchtext(searchtext) { this.config.searchtext = searchtext; }
-
     get selectedoption() { return this._selectedoption; }
     set selectedoption(selectedoption) { this._selectedoption = selectedoption; }
 
@@ -499,6 +481,9 @@ class SelectMenu extends InputElement {
 
     get unselectedtext() { return this.config.unselectedtext; }
     set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
+
+    get wrapper() { return this._wrapper; }
+    set wrapper(wrapper) { this._wrapper = wrapper; }
 
 }
 
