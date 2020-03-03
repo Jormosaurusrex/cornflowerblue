@@ -457,7 +457,6 @@ class DataGrid extends Panel {
                     }
                 }
             }
-
             previousRow = r;
         }
     }
@@ -508,7 +507,7 @@ class DataGrid extends Panel {
      */
     hideColumn(field) {
         field.hidden = true;
-        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
+        let cols = Array.from(this.grid.querySelector(`[data-name='${field.name}']`));
         for (let c of cols) {
             c.classList.add('hidden');
         }
@@ -521,7 +520,7 @@ class DataGrid extends Panel {
      */
     showColumn(field) {
         field.hidden = false;
-        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
+        let cols = Array.from(this.grid.querySelector(`[data-name='${field.name}']`));
         for (let c of cols) {
             c.classList.remove('hidden');
         }
