@@ -212,6 +212,8 @@ div.datagrid-container {
         }
         &:nth-child(even) {
           background-color: var(--datagrid-grid-alternate-background-color);
+          td {
+          }
         }
         &.hidden,
         &.filtered,
@@ -230,6 +232,9 @@ div.datagrid-container {
       &.hidden {
         display: none;
       }
+      &.duplicate {
+        opacity: .2;
+      }
       &.resize {
         resize: horizontal;
         overflow: hidden;
@@ -242,7 +247,7 @@ div.datagrid-container {
       &.number,
       &.time {
         text-align: right;
-        div {
+        > div {
           padding: .75em 1em .75em 1.5em;
           &:before {
             right: unset;
@@ -252,9 +257,13 @@ div.datagrid-container {
       }
       &.imageurl {
         text-align: center;
+        padding: 0;
+        vertical-align: middle;
         a {
+          height: 2em;
+          min-height: 2em;
           img {
-            height: 1.5em;
+            height: 2em;
           }
         }
       }
@@ -300,15 +309,24 @@ div.datagrid-container {
               background-color: var(--datagrid-grid-hover-background-color);
               color: var(--datagrid-grid-hover-text-color);
               text-shadow: var(--datagrid-grid-hover-text-shadow);
+              > td {
+                opacity: 1;
+              }
             }
           }
           &:focus {
             outline: var(--datagrid-grid-selected-background-color) dashed .1em;
             outline-offset: -.3em;
+            > td {
+              opacity: 1;
+            }
           }
           &[aria-selected=true] {
             background-color: var(--datagrid-grid-multiselected-selected-background-color);
             color: var(--datagrid-grid-multiselected-selected-text-color);
+            > td {
+              opacity: 1;
+            }
             &:focus {
               outline: var(--datagrid-grid-selected-text-color) dashed .1em;
             }

@@ -665,6 +665,7 @@ class CornflowerBlueDemo {
                     label: "Track",
                     width: 1,
                     type: "number",
+                    nodupe: true,
                     description: "The track number of the song.",
                     renderer: function(data) {
                         return `${data}.`;
@@ -705,6 +706,7 @@ class CornflowerBlueDemo {
                     label: "Writers",
                     width: 3,
                     resize: true,
+                    nodupe: true,
                     filterable: 'string',
                     type: "stringarray",
                     separator: " &middot; ",
@@ -721,6 +723,7 @@ class CornflowerBlueDemo {
                     name: "length",
                     label: "Length",
                     width: 1,
+                    nodupe: true,
                     description: "The time length of the song.",
                     type: "time"
                 }

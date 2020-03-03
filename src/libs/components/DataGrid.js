@@ -22,6 +22,7 @@ class DataGrid extends Panel {
                                        //   - stringarray
                                        //   - paragraph
                     separator: <string>, // Used when rendering array values
+                    nodupe: false, // If true, this column is ignored when deemphasizing duplicate rows.
                     resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
                     description: <string>>,  // A string that describes the data in the column
                     classes: <string array>, // Additional classes to apply to cells of this field
@@ -34,6 +35,9 @@ class DataGrid extends Panel {
             data: [], // The data to throw into the grid
 
             savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
+
+            demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
+                                        // in the previous row.
 
             columnconfigurationlabel: 'Columns',
             columnconfigurationicon: 'table',
@@ -279,7 +283,7 @@ class DataGrid extends Panel {
                 let cells = Array.from(r.childNodes);
                 for (let c of cells) {
                     if (show) { break; }
-                    if (!c.classList.contains('selector')) {
+                    if (!c.classList.contains('mechanical')) {
                         if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             show = true;
                         }
@@ -349,6 +353,7 @@ class DataGrid extends Panel {
             this.gridbody.appendChild(row);
         }
 
+        this.grindDuplicateCells();
     }
 
     /**
@@ -430,6 +435,33 @@ class DataGrid extends Panel {
         dialog.open();
     }
 
+    /**
+     * Grind through duplicate cells if configured to do so.
+     */
+    grindDuplicateCells() {
+        if (!this.demphasizeduplicates) return;
+        let previousRow;
+        for (let r of this.gridbody.querySelectorAll('tr')) {
+            if (!previousRow) {
+                previousRow = r;
+                continue;
+            }
+            let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
+            let cells = r.querySelectorAll("td:not(.mechanical)");
+            for (let i = 0; i < cells.length; i++) {
+                if (!this.getfield(cells[i].getAttribute('data-name')).nodupe) {
+                    if (cells[i].innerHTML === pcells[i].innerHTML) {
+                        cells[i].classList.add('duplicate');
+                    } else {
+                        cells[i].classList.remove('duplicate');
+                    }
+                }
+            }
+
+            previousRow = r;
+        }
+    }
+
     /* COLUMN METHODS___________________________________________________________________ */
 
     /**
@@ -446,6 +478,9 @@ class DataGrid extends Panel {
         this.persist();
     }
 
+    /**
+     * Check to see that at least one column is visible, and if not, show a warning.
+     */
     handleColumnPresences() {
         let colsvisible = false;
         for (let field of Object.values(this.fields)) {
@@ -812,6 +847,7 @@ class DataGrid extends Panel {
 
         setTimeout(function() { // Have to wait until we're sure we're in the DOM
             me.applystate();
+            me.grindDuplicateCells();
         }, 100);
 
     }
@@ -946,6 +982,7 @@ class DataGrid extends Panel {
             });
             let cell = document.createElement('th');
             cell.classList.add('selector');
+            cell.classList.add('mechanical');
             cell.appendChild(this.masterselector.naked);
             this.gridheader.appendChild(cell);
         }
@@ -980,6 +1017,10 @@ class DataGrid extends Panel {
 
         if (field.resize) {
             cell.classList.add('resize');
+        }
+
+        if (field.nodupe) {
+            cell.classList.add('nodupe');
         }
 
         if (field.hidden) {
@@ -1080,6 +1121,7 @@ class DataGrid extends Panel {
             });
             let cell = document.createElement('td');
             cell.classList.add('selector');
+            cell.classList.add('mechanical');
             cell.appendChild(selector.naked);
             row.appendChild(cell);
         }
@@ -1197,6 +1239,9 @@ class DataGrid extends Panel {
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get demphasizeduplicates() { return this.config.demphasizeduplicates; }
+    set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }

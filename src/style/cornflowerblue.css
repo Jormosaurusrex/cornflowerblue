@@ -5039,6 +5039,10 @@ div.datagrid-container table.grid th.hidden,
 div.datagrid-container table.grid td.hidden {
   display: none;
 }
+div.datagrid-container table.grid th.duplicate,
+div.datagrid-container table.grid td.duplicate {
+  opacity: 0.2;
+}
 div.datagrid-container table.grid th.resize,
 div.datagrid-container table.grid td.resize {
   resize: horizontal;
@@ -5055,26 +5059,33 @@ div.datagrid-container table.grid td.number,
 div.datagrid-container table.grid td.time {
   text-align: right;
 }
-div.datagrid-container table.grid th.right div, div.datagrid-container table.grid th.number div, div.datagrid-container table.grid th.time div,
-div.datagrid-container table.grid td.right div,
-div.datagrid-container table.grid td.number div,
-div.datagrid-container table.grid td.time div {
+div.datagrid-container table.grid th.right > div, div.datagrid-container table.grid th.number > div, div.datagrid-container table.grid th.time > div,
+div.datagrid-container table.grid td.right > div,
+div.datagrid-container table.grid td.number > div,
+div.datagrid-container table.grid td.time > div {
   padding: 0.75em 1em 0.75em 1.5em;
 }
-div.datagrid-container table.grid th.right div:before, div.datagrid-container table.grid th.number div:before, div.datagrid-container table.grid th.time div:before,
-div.datagrid-container table.grid td.right div:before,
-div.datagrid-container table.grid td.number div:before,
-div.datagrid-container table.grid td.time div:before {
+div.datagrid-container table.grid th.right > div:before, div.datagrid-container table.grid th.number > div:before, div.datagrid-container table.grid th.time > div:before,
+div.datagrid-container table.grid td.right > div:before,
+div.datagrid-container table.grid td.number > div:before,
+div.datagrid-container table.grid td.time > div:before {
   right: unset;
   left: 0.5em;
 }
 div.datagrid-container table.grid th.imageurl,
 div.datagrid-container table.grid td.imageurl {
   text-align: center;
+  padding: 0;
+  vertical-align: middle;
+}
+div.datagrid-container table.grid th.imageurl a,
+div.datagrid-container table.grid td.imageurl a {
+  height: 2em;
+  min-height: 2em;
 }
 div.datagrid-container table.grid th.imageurl a img,
 div.datagrid-container table.grid td.imageurl a img {
-  height: 1.5em;
+  height: 2em;
 }
 div.datagrid-container table.grid th.center,
 div.datagrid-container table.grid td.center {
@@ -5117,14 +5128,23 @@ div.datagrid-container table.grid.selectable tbody tr {
     color: var(--datagrid-grid-hover-text-color);
     text-shadow: var(--datagrid-grid-hover-text-shadow);
   }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td {
+    opacity: 1;
+  }
 }
 div.datagrid-container table.grid.selectable tbody tr:focus {
   outline: var(--datagrid-grid-selected-background-color) dashed 0.1em;
   outline-offset: -0.3em;
 }
+div.datagrid-container table.grid.selectable tbody tr:focus > td {
+  opacity: 1;
+}
 div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] {
   background-color: var(--datagrid-grid-multiselected-selected-background-color);
   color: var(--datagrid-grid-multiselected-selected-text-color);
+}
+div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] > td {
+  opacity: 1;
 }
 div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:focus {
   outline: var(--datagrid-grid-selected-text-color) dashed 0.1em;
