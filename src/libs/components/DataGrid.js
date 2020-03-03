@@ -2,9 +2,26 @@ class DataGrid extends Panel {
 
     static get DEFAULT_STRINGS() {
         return {
+            actions: 'Actions',
+            bulk_select: 'Bulk select',
+            columns: 'Columns',
+            configure_columns: 'Configure Columns',
+            datagrid_column_config_instructions: "Select which columns to show in the grid. This does not hide the columns during export.",
+            datagrid_filter_instructions: "Columns that are filterable are shown below. Set the value of the column to filter it.",
+            datagrid_no_visible_columns: 'No columns are visible in this table.',
+            export: 'Export',
+            filters: 'Filters',
+            items_label: 'Items:',
+            manage_filters: 'Manage Filters',
             matches_hidden_columns: "Your search matches data in hidden columns.",
+            no_columns: 'No columns',
+            no_results: 'No results',
+            search: 'Search',
+            search_noresults: 'No entries were found matching your search terms.',
+            search_this_data: 'Search this data'
         }
     }
+
 
     static string(identifier) {
         return DataGrid.DEFAULT_STRINGS[identifier];
@@ -50,23 +67,10 @@ class DataGrid extends Panel {
                                         // in the previous row.
 
             columnconfigurationicon: 'table',
-            columnconfigurationinstructions: ['Select which columns to show in the grid. This does not hide the columns during export.'],
-            columnconfigurationtitle: 'Configure Columns',
-            columnconfigurationlabel: 'Columns',
 
             searchable: true, // Data can be filtered
-            searchbuttontext: 'Search',
-            searchplaceholder: 'Search this data',
-            noresultstitle: 'No results',
-            noresultstext: 'No entries were found matching your search terms.',
-
-            nocolumnstitle: 'No columns',
-            nocolumnstext: 'No columns are visible in this table.',
-
-            itemcountlabeltext: 'Items:',
 
             exportable: true, // Data can be exported
-            exportbuttontext: "Export",
             exporticon: "download",
             exportheaderrow: 'readable', // When exporting a CSV file, should a header row
                                          // be included?  Possible values:
@@ -84,22 +88,9 @@ class DataGrid extends Panel {
             filterable: true, // Can the datagrid be filtered?
                       // No all fields are filtered by default.
                       // Whether or not a field can be filtered is defined in the field's definition.
-            filterbuttontext: 'Filters',
-            filterbuttonicon: 'filter',
-            filterinstructions: ['Columns that are filterable are shown below. Set the value of the column to filter it.'],
-            filterlabel: 'Active Filters:',
-            filtertitle: 'Manage Filters',
-            filterunselectedvaluetext: '(No filter)',
-            filterplaceholder: '(No filter)',
-            filterhelpexacttext: 'Match exactly:',
-            filterhelpcontaintext: 'Matches contain:',
-            applyfilterstext: 'Apply Filters',
             applyfiltersicon: 'checkmark-circle',
-            allfilteredtitle: 'No results',
-            allfilteredtext: 'All entries have matched a filter, preventing display.',
 
 
-            actionsbuttontext: 'Actions',
             actionsbuttonicon: 'menu',
 
             selectable: true, //  Data rows can be selected.
@@ -107,7 +98,6 @@ class DataGrid extends Panel {
                 //console.log("row clicked");
             },
 
-            multiselectbuttontext: "Bulk Select",
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
@@ -313,12 +303,12 @@ class DataGrid extends Panel {
 
         if (matches <= 0) {
             this.messagebox.innerHTML = "";
-            let warnings = [this.noresultstext];
+            let warnings = [DataGrid.string('search_noresults')];
             if (matchesHiddenColumns) {
                 warnings.push(DataGrid.string('matches_hidden_columns'));
             }
             this.messagebox.append(new MessageBox({
-                warningstitle: this.noresultstitle,
+                warningstitle: DataGrid.string('no_results'),
                 warnings: warnings,
                 classes: ['hidden']
             }).container);
@@ -391,8 +381,8 @@ class DataGrid extends Panel {
 
         switch(type) {
             case 'column':
-                instructions = this.columnconfigurationinstructions;
-                title = this.columnconfigurationtitle;
+                instructions = DataGrid.string('datagrid_column_config_instructions');
+                title = DataGrid.string('configure_columns');
 
                 content = document.createElement('ul');
                 content.classList.add('elements');
@@ -419,8 +409,8 @@ class DataGrid extends Panel {
                 }
                 break;
             case 'filter':
-                instructions = this.filterinstructions;
-                title = this.filtertitle;
+                instructions = DataGrid.string('datagrid_filter_instructions');
+                title = DataGrid.string('manage_filters');
 
                 content = document.createElement('ul');
                 content.classList.add('elements');
@@ -440,7 +430,7 @@ class DataGrid extends Panel {
         // instructions
         if (instructions) {
             container.append(new InstructionBox({
-                instructions: instructions
+                instructions: [instructions]
             }).container);
         }
         container.append(content);
@@ -508,8 +498,8 @@ class DataGrid extends Panel {
         if (!colsvisible) {
             this.messagebox.innerHTML = "";
             this.messagebox.append(new MessageBox({
-                warningstitle: this.nocolumnstitle,
-                warnings: [this.nocolumnstext],
+                warningstitle: DataGrid.string('no_columns'),
+                warnings: [DataGrid.string('datagrid_no_visible_columns')],
                 classes: ['hidden']
             }).container);
             this.messagebox.classList.remove('hidden');
@@ -537,7 +527,7 @@ class DataGrid extends Panel {
      */
     showColumn(field) {
         field.hidden = false;
-        let cols = Array.from(this.grid.querySelector(`[data-name='${field.name}']`));
+        let cols = Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`));
         for (let c of cols) {
             c.classList.remove('hidden');
         }
@@ -550,9 +540,7 @@ class DataGrid extends Panel {
      * Persist the grid state
      */
     persist() {
-        if (!this.ispersistable) {
-            return;
-        }
+        if (!this.ispersistable) { return; }
         this.state = this.grindstate(); // get a current copy of it.
         localStorage.setItem(this.savekey, JSON.stringify(this.state));
     }
@@ -896,7 +884,7 @@ class DataGrid extends Panel {
         this.gridinfo.classList.add('grid-info');
 
         this.itemcountlabel = document.createElement('label');
-        this.itemcountlabel.innerHTML = this.itemcountlabeltext;
+        this.itemcountlabel.innerHTML = DataGrid.string('items_label');
 
         this.itemcount = document.createElement('span');
         this.itemcount.classList.add('itemcount');
@@ -911,9 +899,9 @@ class DataGrid extends Panel {
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
-                arialabel: this.searchplaceholder,
-                placeholder: this.searchplaceholder,
-                searchtext: this.searchbuttontext,
+                arialabel: DataGrid.string('search_this_data'),
+                placeholder: DataGrid.string('search_this_data'),
+                searchtext: DataGrid.string('search'),
                 action: function(value, searchcontrol) {
                     me.search(value);
                 }
@@ -924,7 +912,7 @@ class DataGrid extends Panel {
         if (this.filterable) {
             this.filterbutton  = new SimpleButton({
                 mute: true,
-                text: this.filterbuttontext,
+                text: DataGrid.string('filters'),
                 icon: this.filterbuttonicon,
                 classes: ['filter'],
                 action: function() {
@@ -937,7 +925,7 @@ class DataGrid extends Panel {
         let items = [];
         if (this.multiselect) {
             items.push({
-                label: this.multiselectbuttontext,
+                label: DataGrid.string('bulk_select'),
                 icon: this.multiselecticon,
                 action: function() {
                     me.selectmodetoggle();
@@ -945,7 +933,7 @@ class DataGrid extends Panel {
             });
         }
         items.push({
-            label: this.columnconfigurationlabel,
+            label: DataGrid.string('columns'),
             icon: this.columnconfigurationicon,
             action: function() {
                 me.configurator('column');
@@ -953,7 +941,7 @@ class DataGrid extends Panel {
         });
         if (this.exportable) {
             items.push({
-                label: this.exportbuttontext,
+                label: DataGrid.string('export'),
                 icon: this.exporticon,
                 action: function() {
                     me.export();
@@ -965,7 +953,7 @@ class DataGrid extends Panel {
             mute: true,
             shape: 'square',
             secondicon: null,
-            text: this.actionsbuttontext,
+            text: DataGrid.string('actions'),
             icon: this.actionsbuttonicon,
             classes: ['actions'],
             items: items
@@ -1051,6 +1039,7 @@ class DataGrid extends Panel {
         }
 
         if (this.sortable) {
+            // XXX Add "sort this" aria thing
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1110,16 +1099,25 @@ class DataGrid extends Panel {
             });
 
             row.addEventListener('keydown', function(e) {
-                if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
-                    e.preventDefault();
-                    let previous = row.parentNode.rows[row.rowIndex - 2];
-                    if (previous) { previous.focus(); }
-                } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
-                    e.preventDefault();
-                    let next = row.parentNode.rows[row.rowIndex];
-                    if (next) { next.focus(); }
-                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                    row.click();
+                switch(e.keyCode) {
+                    case 37:
+                    case 38:
+                        e.preventDefault();
+                        let previous = row.parentNode.rows[row.rowIndex - 2];
+                        if (previous) { previous.focus(); }
+                        break;
+                    case 39:
+                    case 40:
+                        e.preventDefault();
+                        let next = row.parentNode.rows[row.rowIndex];
+                        if (next) { next.focus(); }
+                        break;
+                    case 13:
+                    case 32:
+                        row.click();
+                        break;
+                    default:
+                        break;
                 }
             });
         }
@@ -1131,7 +1129,7 @@ class DataGrid extends Panel {
                     if (row.getAttribute('aria-selected') === 'true') {
                         row.removeAttribute('aria-selected');
                     } else {
-                        row.setAttribute('aria-selected', true);
+                        row.setAttribute('aria-selected', 'true');
                     }
                 }
             });
