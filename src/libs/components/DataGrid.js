@@ -1,5 +1,11 @@
 class DataGrid extends Panel {
 
+    static get DEFAULT_STRINGS() {
+        return {
+            matches_hidden_columns: "Your search matches data in hidden columns.",
+        }
+    }
+
     static get DEFAULT_CONFIG() {
         return {
             title: null, // the title for the grid
@@ -273,6 +279,7 @@ class DataGrid extends Panel {
         let rows = Array.from(this.gridbody.childNodes);
 
         let matches = 0;
+        let matchesHiddenColumns = false;
         for (let r of rows) {
             let show = false;
             r.setAttribute('data-search-hidden', true,);
@@ -285,12 +292,15 @@ class DataGrid extends Panel {
                     if (show) { break; }
                     if (!c.classList.contains('mechanical')) {
                         if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-                            show = true;
+                            if (c.classList.contains('hidden')) {
+                                matchesHiddenColumns = true;
+                            } else {
+                                show = true;
+                            }
                         }
                     }
                 }
             }
-
             if (show) {
                 matches++;
                 r.removeAttribute('data-search-hidden');
@@ -299,9 +309,13 @@ class DataGrid extends Panel {
 
         if (matches <= 0) {
             this.messagebox.innerHTML = "";
+            let warnings = [this.noresultstext];
+            if (matchesHiddenColumns) {
+                warnings.push(DataGrid.DEFAULT_STRINGS.matches_hidden_columns);
+            }
             this.messagebox.append(new MessageBox({
                 warningstitle: this.noresultstitle,
-                warnings: [this.noresultstext],
+                warnings: warnings,
                 classes: ['hidden']
             }).container);
             this.messagebox.classList.remove('hidden');
@@ -473,7 +487,6 @@ class DataGrid extends Panel {
         } else {
             this.hideColumn(f);
         }
-
         this.persist();
     }
 
@@ -507,7 +520,7 @@ class DataGrid extends Panel {
      */
     hideColumn(field) {
         field.hidden = true;
-        let cols = Array.from(this.grid.querySelector(`[data-name='${field.name}']`));
+        let cols = Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`));
         for (let c of cols) {
             c.classList.add('hidden');
         }
