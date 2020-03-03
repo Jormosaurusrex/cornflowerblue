@@ -2,14 +2,20 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select)",
+            unselectedtext: "(Select value)",
             icon: "chevron-down",
-            prefix: null, // a prefix to display in the trigger box.
+            prefix: null,   // a prefix to display in the trigger box.
             minimal: false, // if true, build with the intent that it is part of a larger component.
                             // this removes things like the search controls and validation boxes.
-            options: [], // Array of option dictionary objects.  Printed in order given.
-                         // { label: "Label to show", value: "v", checked: true }
-            onchange: null // The change handler. Passed (self).
+            options: [],    // Array of option dictionary objects.  Printed in order given.
+                            // { label: "Label to show", value: "v", checked: true }
+            onchange: null  // The change handler. Passed (self).
+        };
+    }
+
+    static get DEFAULT_STRINGS() {
+        return {
+            placeholder: 'Select value'
         };
     }
 
@@ -56,6 +62,36 @@ class SelectMenu extends InputElement {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
+     * Scroll to a specific element in the list
+     * @param element the element to scroll to
+     */
+    scrollto(element) {
+        if (!element) return;
+        if ((this.scrolleditem) && (element.getAttribute('id') === this.scrolleditem.getAttribute('id'))) {
+            return; // this is us, don't reflow.
+        }
+        this.optionlist.scrollTop = element.offsetHeight;
+        this.scrolleditem = element;
+    }
+
+    /**
+     * Scroll the select to the selected element and optionally set focus there
+     * @param andfocus if true, focus on the element.
+     */
+    jumptoSelected(andfocus) {
+        let sel = this.optionlist.querySelector('li[aria-selected="true"]');
+        if (!sel) {
+            sel = this.optionlist.querySelector('li:first-child');
+        }
+        if (sel) {
+            this.scrollto(sel);
+            if (andfocus) {
+                sel.focus();
+            }
+        }
+    }
+
+    /**
      * Opens the option list.
      */
     open() {
@@ -97,36 +133,6 @@ class SelectMenu extends InputElement {
             me.setCloseListener();
         }, 100);
 
-    }
-
-    /**
-     * Scroll to a specific element in the list
-     * @param element the element to scroll to
-     */
-    scrollto(element) {
-        if (!element) return;
-        if ((this.scrolleditem) && (element.getAttribute('id') === this.scrolleditem.getAttribute('id'))) {
-            return; // this is us, don't reflow.
-        }
-        this.optionlist.scrollTop = element.offsetHeight;
-        this.scrolleditem = element;
-    }
-
-    /**
-     * Scroll the select to the selected element and optionally set focus there
-     * @param andfocus if true, focus on the element.
-     */
-    jumptoSelected(andfocus) {
-        let sel = this.optionlist.querySelector('li[aria-selected="true"]');
-        if (!sel) {
-            sel = this.optionlist.querySelector('li:first-child');
-        }
-        if (sel) {
-            this.scrollto(sel);
-            if (andfocus) {
-                sel.focus();
-            }
-        }
     }
 
     /**
@@ -223,13 +229,14 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('tabindex', '0');
         this.triggerbox.setAttribute('aria-autocomplete', 'none');
         this.triggerbox.setAttribute('aria-activedescendant', '');
+        this.triggerbox.setAttribute('placeholder', this.calculatePlaceholder());
 
         this.triggerbox.addEventListener('focusin', function(e) {
             if (me.disabled) {
                 e.stopPropagation();
                 return;
             }
-            me.triggerbox.select();
+            me.triggerbox.select(); // Select all the text
             me.open();
         });
 
@@ -262,6 +269,13 @@ class SelectMenu extends InputElement {
 
     }
 
+    calculatePlaceholder() {
+        if (this.unselectedtext) {
+            return this.unselectedtext;
+        }
+        return SelectMenu.DEFAULT_STRINGS.placeholder;
+    }
+
     buildOptions() {
 
         this.optionlist = document.createElement('ul');
@@ -277,18 +291,6 @@ class SelectMenu extends InputElement {
             }
             order++;
             this.optionlist.appendChild(o);
-        }
-
-        if (this.unselectedtext) { // Unselected slots last because we need to select if nothing is selected
-            let unselconfig = {
-                label: this.unselectedtext,
-                value: '',
-                checked: !this.selectedoption,
-                unselectoption: true
-            };
-            let o = this.buildOption(unselconfig, 0);
-            o.setAttribute('data-menuorder', 0);
-            this.optionlist.prepend(o);
         }
     }
 
@@ -404,20 +406,13 @@ class SelectMenu extends InputElement {
      */
     findByString(s) {
         if ((!s) || (typeof s !== 'string')) { return; }
-        let target;
-
         for (let li of this.optionlist.querySelectorAll('li')) {
             if (li.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
-                target = li;
+                this.scrollto(li);
+                li.focus();
                 break;
             }
         }
-        if (target) {
-            console.log(target);
-            this.scrollto(target);
-            target.focus();
-        }
-
     }
 
     /**
@@ -442,7 +437,6 @@ class SelectMenu extends InputElement {
             once: true,
         });
     }
-
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

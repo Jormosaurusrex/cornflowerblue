@@ -6,6 +6,10 @@ class DataGrid extends Panel {
         }
     }
 
+    static string(identifier) {
+        return DataGrid.DEFAULT_STRINGS[identifier];
+    }
+
     static get DEFAULT_CONFIG() {
         return {
             title: null, // the title for the grid
@@ -45,10 +49,10 @@ class DataGrid extends Panel {
             demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
                                         // in the previous row.
 
-            columnconfigurationlabel: 'Columns',
             columnconfigurationicon: 'table',
             columnconfigurationinstructions: ['Select which columns to show in the grid. This does not hide the columns during export.'],
             columnconfigurationtitle: 'Configure Columns',
+            columnconfigurationlabel: 'Columns',
 
             searchable: true, // Data can be filtered
             searchbuttontext: 'Search',
@@ -311,7 +315,7 @@ class DataGrid extends Panel {
             this.messagebox.innerHTML = "";
             let warnings = [this.noresultstext];
             if (matchesHiddenColumns) {
-                warnings.push(DataGrid.DEFAULT_STRINGS.matches_hidden_columns);
+                warnings.push(DataGrid.string('matches_hidden_columns'));
             }
             this.messagebox.append(new MessageBox({
                 warningstitle: this.noresultstitle,
