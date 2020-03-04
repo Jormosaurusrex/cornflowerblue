@@ -3872,6 +3872,9 @@ div.panel h3 button.headerbutton:focus, div.panel h3 button.headerbutton:active 
     box-shadow: none;
   }
 }
+div.panel h3.nocollapse {
+  padding: 1em;
+}
 @media (hover: hover) and (pointer: fine) {
   div.panel h3:hover {
     color: var(--panel-text-color);

@@ -105,6 +105,7 @@ class Panel {
             });
             this.header.appendChild(this.togglebutton.button);
         } else {
+            this.header.classList.add('nocollapse');
             this.header.innerHTML = this.title;
         }
     }
