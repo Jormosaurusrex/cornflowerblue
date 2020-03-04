@@ -654,7 +654,21 @@ class CornflowerBlueDemo {
 
     }
 
+    getCoda() {
+        return [
+            { track: 1, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "We're Gonna Groove", writers: ["Bethea", "King"], length: "2:37", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 2, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "Poor Tom", writers: ["Page", "Plant"], length: "3:02", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 3, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "I Can't Quit You Baby", writers: ["Dixon"], length: "4:18", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 4, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "Walter's Walk", writers: ["Page", "Plant"], length: "4:31", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 5, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "Ozone Baby", writers: ["Page", "Plant"], length: "3:36", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 6, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "Darlene", writers: ["Page", "Plant", "Bonham", "Jones"], length: "5:06", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 7, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "Bonzo's Montreux", writers: ["Bonham"], length: "4:22", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" },
+            { track: 8, album: "Coda", released: "1982-11-19", label: "Swan Song", title: "Wearing and Tearing", writers: ["Page", "Plant"], length: "5:27", image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Led_Zeppelin_-_Coda.jpg" }
+        ];
+    }
+
     grindDataGrids() {
+        const me = this;
 
         let dg = new DataGrid({
             id: 'cfb-demo-grid-lz',
@@ -796,7 +810,6 @@ class CornflowerBlueDemo {
                 { track: 15, album: "Physical Graffiti", released: "1975-02-24", label: "Swan Song", title: "Sick Again", writers: ["Page", "Plant"], length: "4:43", image: "https://upload.wikimedia.org/wikipedia/en/e/e3/Led_Zeppelin_-_Physical_Graffiti.jpg" },
 
 
-
                 { track: 1, album: "Presence", released: "1976-03-31", label: "Swan Song", title: "Achilles Last Stand", writers: ["Page", "Plant"], length: "10:26", image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Led_Zeppelin_-_Presence.jpg" },
                 { track: 2, album: "Presence", released: "1976-03-31", label: "Swan Song", title: "For Your Life", writers: ["Page", "Plant"], length: "6:21", image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Led_Zeppelin_-_Presence.jpg" },
                 { track: 3, album: "Presence", released: "1976-03-31", label: "Swan Song", title: "Royal Orleans", writers: ["Page", "Plant", "Bonham", "Jones"], length: "2:58", image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Led_Zeppelin_-_Presence.jpg" },
@@ -804,7 +817,6 @@ class CornflowerBlueDemo {
                 { track: 5, album: "Presence", released: "1976-03-31", label: "Swan Song", title: "Candy Store Rock", writers: ["Page", "Plant"], length: "4:10", image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Led_Zeppelin_-_Presence.jpg" },
                 { track: 6, album: "Presence", released: "1976-03-31", label: "Swan Song", title: "Host On for Nowhere", writers: ["Page", "Plant"], length: "4:42", image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Led_Zeppelin_-_Presence.jpg" },
                 { track: 7, album: "Presence", released: "1976-03-31", label: "Swan Song", title: "Tea for One", writers: ["Page", "Plant"], length: "9:27", image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Led_Zeppelin_-_Presence.jpg" },
-
 
                 { track: 1, album: "In Through the Out Door", released: "1979-08-15", label: "Swan Song", title: "In the Evening", writers: ["Page", "Plant", "Jones"], length: "6:48", image: "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
                 { track: 2, album: "In Through the Out Door", released: "1979-08-15", label: "Swan Song", title: "South Bound Saurez", writers: ["Jones", "Plant"], length: "4:11", image: "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
@@ -817,6 +829,26 @@ class CornflowerBlueDemo {
         });
 
         document.getElementById('datagrid-basic').appendChild(dg.container);
+
+        let controls = document.createElement('div');
+        controls.classList.add('example');
+        controls.classList.add('centered');
+
+        controls.appendChild(new SimpleButton({
+            text: "Append Data from URL",
+            action: function() {
+                dg.loadAndAppend('demo/data/coda.json');
+            }
+        }).container);
+
+        controls.appendChild(new SimpleButton({
+            text: "Append Data Programmatically",
+            action: function() {
+                dg.append(me.getCoda());
+            }
+        }).container);
+
+        document.getElementById('datagrid-basic').appendChild(controls);
     }
 
     grindDialogs() {

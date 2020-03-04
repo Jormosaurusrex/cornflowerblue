@@ -286,16 +286,9 @@ class DataGrid extends Panel {
      * Sort the table based on a field.
      * @param field the field to sort
      */
-    sortfield(field) {
-        let sort = "asc";
+    sortfield(field, sort='asc') {
 
         let hCell = this.thead.querySelector(`[data-name='${field}']`);
-
-        if ((hCell) && (hCell.getAttribute('data-sort'))) {
-            if (hCell.getAttribute('data-sort') === 'asc') {
-                sort = "desc";
-            }
-        }
 
         let hchildren = this.thead.querySelectorAll('th');
         for (let hc of hchildren) {
@@ -326,6 +319,11 @@ class DataGrid extends Panel {
         for (let row of elements) {
             this.gridbody.appendChild(row);
         }
+
+        this.currentsort = {
+            field: field,
+            direction: sort
+        };
 
         this.grindDuplicateCells();
     }
@@ -433,6 +431,47 @@ class DataGrid extends Panel {
             }
             previousRow = r;
         }
+    }
+
+    /* DATA METHODS_____________________________________________________________________ */
+
+    /**
+     * Append data into the grid.  Does not replace.
+     * @param data the data to append (an array of data rows)
+     */
+    append(data) {
+        for (let entry of data) {
+            this.gridbody.appendChild(this.buildRow(entry));
+            this.data.push(entry);
+        }
+        this.updateCount();
+        if (this.currentsort) {
+            this.sortfield(this.currentsort.field, this.currentsort.direction);
+        }
+        this.updateCount();
+        this.applyFilters();
+        this.search(this.searchcontrol.value);
+        this.grindDuplicateCells();
+    }
+
+    /**
+     * Load data from a URL and append it.
+     * @param url the URL to add.
+     */
+    loadAndAppend(url) {
+        fetch(url, {
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+            .then(response => response.json()) // response -> json
+            .then(data => { // do the thing.
+                // Expects data in json format like this:
+                // { data: [] }, where each row is a table row.
+                this.append(data.data);
+            })
+            .catch(err => {
+                console.error(`Error while fetching data`);
+                console.error(err);
+            });
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -800,7 +839,6 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
 
-
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
@@ -839,6 +877,13 @@ class DataGrid extends Panel {
     }
 
     /**
+     * Update the count of elements in the data grid.
+     */
+    updateCount() {
+        this.itemcount.innerHTML = this.data.length;
+    }
+
+    /**
      * Build the grid info bit
      */
     buildGridInfo() {
@@ -852,7 +897,7 @@ class DataGrid extends Panel {
 
         this.itemcount = document.createElement('span');
         this.itemcount.classList.add('itemcount');
-        this.itemcount.innerHTML = this.data.length;
+        this.updateCount();
 
         this.itemcountbox = document.createElement('div');
         this.itemcountbox.classList.add('countbox');
@@ -1001,14 +1046,14 @@ class DataGrid extends Panel {
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
-                me.sortfield(field.name);
+                me.togglesort(field.name);
             });
             cell.addEventListener('keyup', function(e) {
                 e.preventDefault();
                 switch (e.keyCode) {
                     case 13: // enter
                     case 32: // 32
-                        me.sortfield(field.name);
+                        me.togglesort(field.name);
                         break;
                     default:
                         break;
@@ -1020,6 +1065,21 @@ class DataGrid extends Panel {
         this.headercells[field.name] = cell;
 
         return cell;
+    }
+
+    /**
+     * Toggle sort direction on a header cell
+     * @param fieldname
+     */
+    togglesort(fieldname) {
+        let hCell = this.gridheader.querySelector(`[data-name='${fieldname}'`);
+        let sort = 'asc';
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
+                sort = "desc";
+            }
+        }
+        this.sortfield(fieldname, sort);
     }
 
     /**
@@ -1190,6 +1250,9 @@ class DataGrid extends Panel {
 
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
+
+    get currentsort() { return this._currentsort; }
+    set currentsort(currentsort) { this._currentsort = currentsort; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
