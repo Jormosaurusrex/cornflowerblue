@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-02
+/*! Cornflower Blue - v0.1.1 - 2020-03-04
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class Utils {
@@ -470,6 +470,119 @@ class Utils {
 }
 
 
+class TextFactory {
+
+    static get DEFAULT_STRINGS() {
+        return {
+            "actions" : 'Actions',
+            "bulk_select" : 'Bulk select',
+            "cancel" : 'Cancel',
+            "caution" : 'Caution',
+            "change_password" : 'Change Password',
+            "close" : 'Close',
+            "columns" : 'Columns',
+            "configure_columns" : 'Configure Columns',
+            "configure_generator" : 'Configure generator',
+            "confirm_password" : 'Confirm Password',
+            "countrymenu_select" : 'Select country',
+            "current_password" : 'Current Password',
+            "datagrid-column-config-instructions" : "Select which columns to show in the grid. This does not hide the columns during export.",
+            "datagrid-filter-instructions" : "Columns that are filterable are shown below. Set the value of the column to filter it.",
+            "datagrid-message-no_visible_columns" : 'No columns are visible in this table.',
+            "dateinput-error-invalid" : 'This is an invalid date.',
+            "datagrid-spinnertext" : 'Loading',
+            "dateinput-trigger-arialabel" : 'Open date picker',
+            "decrement_number" : 'Decrement number',
+            "emailinput-placeholder-default" : 'person@myemailaccount.net',
+            "emailinput-error-invalid_web_address" : 'This is an invalid email address.',
+            "error" : 'Error',
+            "export" : 'Export',
+            "fileinput-placeholder-file" : 'Select file',
+            "fileinput-placeholder-multiple" : 'Select files (multiple accepted)',
+            "filters" : 'Filters',
+            "generate_password" : 'Generate password',
+            "help" : 'Help',
+            "hide_password" : 'Hide password',
+            "increment_number" : 'Increment number',
+            "input-counter-limit" : '$1 of $2 characters entered',
+            "input-counter-sky" : '$1 characters entered',
+            "input-counter-remaining" : '$1 characters remaining',
+            "input-error-required" : 'This field is required',
+            "items_label" : 'Items:',
+            "lowercase" : 'Lowercase',
+            "manage_filters" : 'Manage Filters',
+            "matches_hidden_columns" : "Your search matches data in hidden columns.",
+            "new_password" : 'New Password',
+            "no_columns" : 'No columns',
+            "no_provided_content" : 'No provided content',
+            "no_results" : 'No results',
+            "not_set" : "(Not Set)",
+            "numberinput-error-maximum_value" : "The maximum value for this field is '$1'.",
+            "numberinput-error-minimum_value" : "The minimum value for this field is '$1'.",
+            "numberinput-error-must_be_whole_numbers" : 'Values must be whole numbers.',
+            "numberinput-error-nan" : 'This is not a number.',
+            "numberinput-error-values_divisible" : 'Values must be divisible by $1',
+            "numberinput-placeholder-basic" : 'Enter a number',
+            "numberinput-placeholder-between_x_y" : 'Enter a number between $1 and $2',
+            "numberinput-placeholder-fragment_increments" : ' (increments of $1)',
+            "numberinput-placeholder-larger_than_x" : 'Enter a number larger than $1',
+            "numberinput-placeholder-smaller_than_y" : 'Enter a number smaller than $1',
+            "numbers" : 'Numbers',
+            "open_menu" : 'Open menu',
+            "passwordchanger-currentpw-help" : 'This is your current password. We need to confirm that you are who you are.',
+            "passwordchanger-currentpw-placeholder" : 'Your current password',
+            "passwordchanger-error-cannot_be_used_as_pw" : 'This cannot be used as a password.',
+            "passwordchanger-error-passwords_must_match" : 'Passwords must match.',
+            "passwordchanger-form-instructions" : 'Change your password here.',
+            "passwordchanger-placeholder-minlength" : 'Must be at least $1 characters',
+            "passwordchanger-placeholder-suggested" : 'Should be at least $1 characters',
+            "passwordchanger-results-changed_successfully" : 'Your password has been changed successfully!',
+            "passwordchanger-error-maxlength" : 'Password must be less than $1 characters.',
+            "passwordchanger-error-minlength" : 'Password must be at least $1 characters.',
+            "passwordchanger-error-suggestedlength" : 'Password is less than the suggested length of $1 characters.',
+            "primary" : 'Primary',
+            "punctuation" : 'Punctuation',
+            "required_lc" : 'required',
+            "search" : 'Search',
+            "search_noresults" : 'No entries were found matching your search terms.',
+            "search_this_data" : 'Search this data',
+            "searchcontrol-instructions" : 'Enter search terms',
+            "selectmenu-placeholder-default" : 'Select value',
+            "show_password" : 'Show password',
+            "simpleform-spinnertext" : 'Please wait',
+            "skip_to_content" : 'Skip to content',
+            "statemenu_select" : 'Select state or province',
+            "success" : 'Success',
+            "timezone_select" : 'Select timezone',
+            "toggle_menu" : 'Toggle menu',
+            "uppercase" : 'Uppercase',
+            "urlinput-placeholder-default" : 'https://somewhere.cornflower.blue/',
+            "urlinput-error-invalid_web_address" : 'This is an invalid web address.',
+            "warning" : 'Warning'
+
+        }
+    }
+
+    /**
+     * Get a text value by key
+     * @return {null|*}
+     */
+    static get() {
+        if (!arguments) { return null; }
+        if (arguments.length > 1) {
+            let t = TextFactory.DEFAULT_STRINGS[arguments[0]];
+            for (let acount = 1; acount <= arguments.length; acount++) {
+                t = t.replace(`$${acount}`, arguments[acount]);
+            }
+            return t;
+        }
+        if (!TextFactory.DEFAULT_STRINGS[arguments[0]]) {
+            console.error(`Text key not found: ${arguments[0]}`);
+        }
+        return TextFactory.DEFAULT_STRINGS[arguments[0]];
+    }
+
+}
 class IconFactory {
 
     static get LIST() {
@@ -2139,6 +2252,9 @@ class ButtonMenu extends SimpleButton {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
+    /**
+     * Toggle the menu.
+     */
     toggle() {
         if (this.isopen) {
             this.close();
@@ -2197,6 +2313,11 @@ class ButtonMenu extends SimpleButton {
      */
     setCloseListener() {
         const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) { me.close(); }
+        }, { once: true });
+
         window.addEventListener('click', function(e) {
             let tag = me.menu.tagName.toLowerCase();
             if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
@@ -2208,9 +2329,7 @@ class ButtonMenu extends SimpleButton {
             } else {
                 me.close();
             }
-        }, {
-            once: true,
-        });
+        }, { once: true, });
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -2320,7 +2439,7 @@ class CloseButton extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             icon: 'echx',
-            text: "Close",
+            text: TextFactory.get('close'),
             shape: "square",
             iconclasses: ['closeicon'],
             classes: ["naked", "closebutton"]
@@ -2341,7 +2460,7 @@ class HelpButton extends SimpleButton {
             action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
-            arialabel: 'Help',
+            arialabel: TextFactory.get('help'),
             iconclasses: ['helpicon'],
             help: null // help text to display
         };
@@ -2412,7 +2531,7 @@ class SkipButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            text: "Skip to Content",
+            text: TextFactory.get('skip_to_content'),
             classes: ['visually-hidden'],
             id: 'content-jump',
             hot: true,
@@ -2438,6 +2557,10 @@ class SkipButton extends SimpleButton {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    /**
+     * Get the content start identifier
+     * @return {string}
+     */
     get contentstart() { return this.config.contentstart; }
     set contentstart(contentstart) { this.config.contentstart = contentstart; }
 
@@ -2448,7 +2571,7 @@ class HamburgerButton extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             toggletarget: null, // The menu object to open or close.
-            text: "Open Menu",
+            text: TextFactory.get('open_menu'),
             shape: 'square',
             naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,
@@ -2868,13 +2991,13 @@ class InputElement {
 
 
             passive: false, // Start life in "passive" mode.
-            unsettext: "(Not Set)", // what to display in passive mode if the value is empty
+            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
 
             help: null, // Help text.
             helpwaittime: 5000, // How long to wait before automatically showing help tooltip
             required: false, // Is this a required field or not
-            requiredtext: 'required', // text to display on required items
-            requirederror: 'This field is required', // error to display if required item isn't filled.
+            requiredtext: TextFactory.get('required_lc'), // text to display on required items
+            requirederror: TextFactory.get('input-error-required'), // error to display if required item isn't filled.
             hidden: false, // Whether or not to be hidden
             autocomplete: 'off', // Enable browser autocomplete. Default is off.
             arialabel: null, // The aria-label value. If null, follows: label > title > null
@@ -3068,11 +3191,11 @@ class InputElement {
 
         let ctext = "";
         if (this.counter === 'limit') {
-            ctext = `${this.value.length} of ${this.maxlength} characters entered`;
+            ctext = TextFactory.get('input-counter-limit', this.value.length, this.maxlength);
         } else if (this.counter === 'sky') {
-            ctext = `${this.value.length} characters entered`;
+            ctext = TextFactory.get('input-counter-sky', this.value.length);
         } else { // remaining
-            ctext = `${(this.maxlength - this.value.length)} characters remaining`;
+            ctext = TextFactory.get('input-counter-remaining', (this.maxlength - this.value.length));
         }
 
         this.charactercounter.innerHTML = ctext;
@@ -3237,10 +3360,10 @@ class InputElement {
         this.input.setAttribute('aria-describedby', `msg-${this.id}`);
         this.input.setAttribute('role', 'textbox');
         this.input.setAttribute('tabindex', '0');
+        this.input.setAttribute('placeholder', this.placeholder);
 
         if (this.title) { this.input.setAttribute('title', this.title); }
         if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
-        if (this.placeholder) { this.input.setAttribute('placeholder', this.placeholder); }
         if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
         if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 
@@ -3864,8 +3987,8 @@ class NumberInput extends TextInput {
             //pattern:'[0-9.%+-]$',
             minnumber: null,
             maxnumber: null,
-            downbuttonarialabel: 'Decrement Number',
-            upbuttonarialabel: 'Increment Number',
+            downbuttonarialabel: TextFactory.get('decrement_number'),
+            upbuttonarialabel: TextFactory.get('increment_number'),
             wholenumbers: false, // Require whole numbers
             steppers: true,
             step: null
@@ -3941,35 +4064,34 @@ class NumberInput extends TextInput {
     localValidator(onload) {
         if (this.value) {
             if (isNaN(this.value)) {
-                this.errors.push("This is not a number.");
+                this.errors.push(TextFactory.get('numberinput-error-nan'));
                 return;
             }
             let v = parseFloat(this.value);
             if ((this.minnumber !== 'undefined') && (v < this.minnumber)) {
-                this.errors.push(`The minimum value for this field is '${this.minnumber}'.`);
+                this.errors.push(TextFactory.get('numberinput-error-minimum_value', this.minnumber));
             } else if ((this.maxnumber !== 'undefined') && (v > this.maxnumber)) {
-                this.errors.push(`The maximum value for this field is '${this.maxnumber}'.`);
+                this.errors.push(TextFactory.get('numberinput-error-maximum_value', this.maxnumber));
             } else if ((this.step) && (v % this.step !== 0)) {
-                this.errors.push(`Values must be divisible by ${this.step}.`);
+                this.errors.push(TextFactory.get('numberinput-error-values_divisible', this.step));
             } else if ((this.wholenumbers) && (v % 1 > 0)) {
-                this.errors.push("Values must be whole numbers.");
+                this.errors.push(TextFactory.get('numberinput-error-must_be_whole_numbers'));
             }
         }
     }
 
     calculatePlaceholder() {
-        let text = "Enter a number";
+        let text = TextFactory.get('numberinput-placeholder-basic');
         if ((this.minnumber !== 'undefined') && (this.maxnumber !== 'undefined')) {
-            text = `Enter a number between ${this.minnumber} and ${this.maxnumber}`;
+            text = TextFactory.get('numberinput-placeholder-between_x_y', this.minnumber, this.maxnumber);
         } else if (this.minnumber !== 'undefined') {
-            text = `Enter a number larger than ${this.minnumber}`;
+            text = TextFactory.get('numberinput-placeholder-larger_than_x', this.minnumber);
         } else if (this.maxnumber !== 'undefined') {
-            text = `Enter a number smaller than ${this.maxnumber}`;
+            text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
         }
         if (this.step) {
-            text += ` (increments of ${this.step})`;
+            text += TextFactory.get('numberinput-placeholder-fragment_increments', this.step);
         }
-        text += ".";
         return text;
     }
 
@@ -4100,7 +4222,7 @@ class DateInput extends TextInput {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
             type: 'date',
-            triggerarialabel: 'Open Date Picker',
+            triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             dateicon: 'calendar'
         };
@@ -4136,7 +4258,7 @@ class DateInput extends TextInput {
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!DateInput.isValid(this.value)) {
-                this.errors.push("This is an invalid date.");
+                this.errors.push(TextFactory.get('dateinput-error-invalid'));
             }
         }
         this.updateDateDisplay();
@@ -4275,13 +4397,13 @@ class EmailInput extends TextInput {
     /* CORE METHODS_____________________________________________________________________ */
 
     calculatePlaceholder() {
-        return 'person@myemailaccount.net';
+        return TextFactory.get('emailinput-placeholder-default');
     }
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!EmailInput.isValid(this.value)) {
-                this.errors.push("This is an invalid email address.");
+                this.errors.push(TextFactory.get('emailinput-error-invalid_web_address'));
             }
         }
     }
@@ -4333,13 +4455,13 @@ class URIInput extends TextInput {
     /* CORE METHODS_____________________________________________________________________ */
 
     calculatePlaceholder() {
-        return 'https://somewhere.cornflower.blue/';
+        return TextFactory.get('urlinput-placeholder-default');
     }
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!URIInput.isValid(this.value)) {
-                this.errors.push("This is an invalid web address.");
+                this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
             }
         }
     }
@@ -4398,7 +4520,7 @@ class PasswordInput extends TextInput {
         if (this.visibilityswitch) {
             this.hidepwbutton = new SimpleButton({
                 classes: ['naked'],
-                text: "Hide Password",
+                text: TextFactory.get('hide_password'),
                 hidden: true,
                 notab: true,
                 icon: 'eye-slash',
@@ -4408,7 +4530,7 @@ class PasswordInput extends TextInput {
             });
             this.showpwbutton = new SimpleButton({
                 classes: ['naked'],
-                text: "Show Password",
+                text: TextFactory.get('show_password'),
                 hidden: true,
                 notab: true,
                 icon: 'eye',
@@ -4452,11 +4574,11 @@ class PasswordInput extends TextInput {
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (this.value.length < this.minlength) {
-                this.errors.push(`Password must be at least ${this.minlength} characters.`);
+                this.errors.push(TextFactory.get('passwordchanger-error-minlength', this.minlength));
             } else if (this.value.length < this.suggestedlength) {
-                this.warnings.push(`Password is less than the suggested length of ${this.suggestedlength} characters.`);
+                this.errors.push(TextFactory.get('passwordchanger-error-suggestedlength', this.suggestedlength));
             } else if (this.value.length > this.maxlength) {
-                this.errors.push(`Password must be less than ${this.maxlength} characters.`);
+                this.errors.push(TextFactory.get('passwordchanger-error-maxlength', this.maxlength));
             }
         }
     }
@@ -4496,15 +4618,14 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select)",
+            unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
-            prefix: null, // a prefix to display in the trigger box.
+            prefix: null,   // a prefix to display in the trigger box.
             minimal: false, // if true, build with the intent that it is part of a larger component.
                             // this removes things like the search controls and validation boxes.
-            searchtext: true, // Show the "searchtext" box.
-            options: [], // Array of option dictionary objects.  Printed in order given.
-                         // { label: "Label to show", value: "v", checked: true }
-            onchange: null // The change handler. Passed (self).
+            options: [],    // Array of option dictionary objects.  Printed in order given.
+                            // { label: "Label to show", value: "v", checked: true }
+            onchange: null  // The change handler. Passed (self).
         };
     }
 
@@ -4520,6 +4641,14 @@ class SelectMenu extends InputElement {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     /**
+     * Let us know if the button is open
+     * @return boolean true if it is!
+     */
+    get isopen() {
+        return (this.wrapper.getAttribute('aria-expanded') === 'true');
+    }
+
+    /**
      * Return the selected radio input.
      * @return {HTMLElement}
      */
@@ -4530,10 +4659,13 @@ class SelectMenu extends InputElement {
     }
 
     get value() {
-        return this.optionlist.querySelector(`input[name=${this.name}]:checked`).value;
+        return this.triggerbox.value;
     }
-
-    get topcontrol() { return this.searchdisplay; }
+    set value(value) {
+        this.config.value = value;
+        this.triggerbox.value = value;
+        this.passivebox.value = value;
+    }
 
     get passivetext() {
         if (this.selectedoption) { return this.selectedoption.label; }
@@ -4545,17 +4677,49 @@ class SelectMenu extends InputElement {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
+     * Scroll to a specific element in the list
+     * @param element the element to scroll to
+     */
+    scrollto(element) {
+        if (!element) return;
+        if ((this.scrolleditem) && (element.getAttribute('id') === this.scrolleditem.getAttribute('id'))) {
+            return; // this is us, don't reflow.
+        }
+        this.optionlist.scrollTop = element.offsetHeight;
+        this.scrolleditem = element;
+    }
+
+    /**
+     * Scroll the select to the selected element and optionally set focus there
+     * @param andfocus if true, focus on the element.
+     */
+    jumptoSelected(andfocus) {
+        let sel = this.optionlist.querySelector('li[aria-selected="true"]');
+        if (!sel) {
+            sel = this.optionlist.querySelector('li:first-child');
+        }
+        if (sel) {
+            this.scrollto(sel);
+            if (andfocus) {
+                sel.focus();
+            }
+        }
+    }
+
+    /**
      * Opens the option list.
      */
     open() {
         const me = this;
 
-        this.optionlist.removeAttribute('aria-hidden');
-        //this.optionlist.setAttribute('tabindex', '0');
-        this.triggerbox.setAttribute('aria-expanded', 'true');
+        if (SelectMenu.activeMenu) { // close any spuriously open other ones
+            SelectMenu.activeMenu.close();
+        }
 
-        let items = Array.from(this.optionlist.querySelector('li'));
-        for (let li of items) {
+        this.listbox.removeAttribute('aria-hidden');
+        this.wrapper.setAttribute('aria-expanded', true);
+
+        for (let li of Array.from(this.optionlist.querySelector('li'))) {
             li.setAttribute('tabindex', '0');
         }
 
@@ -4567,96 +4731,51 @@ class SelectMenu extends InputElement {
         }
 
         if (vertpos > window.innerHeight) {
-            this.optionlist.classList.add('vert');
+            this.wrapper.classList.add('vert');
             if (this.container) { this.container.classList.add('vert'); }
         } else {
             this.optionlist.classList.remove('vert');
             if (this.container) { this.container.classList.remove('vert'); }
         }
 
-        setTimeout(function() { // Have to wait until we're sure we're in the DOM
-            let sel = me.optionlist.querySelector('li[aria-selected="true"]');
-            if (!sel) {
-                sel = me.optionlist.querySelector('li:first-child');
-            }
-            if (sel) {
-                me.scrollto(sel);
-                sel.focus();
-            }
-        }, 100);
+        if (typeof SelectMenu.activeMenu === 'undefined' ) {
+            SelectMenu.activeMenu = this;
+        } else {
+            SelectMenu.activeMenu = this;
+        }
 
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
-        }, 200);
+        }, 100);
 
-    }
-
-    /**
-     * Sets an event listener to close the menu if the user clicks outside of it.
-     */
-    setCloseListener() {
-        const me = this;
-        window.addEventListener('click', function(e) {
-            if (e.target === me.optionlist) {
-                me.setCloseListener();
-            } else if ((e.target === me.triggerbox) && (me.triggerbox.getAttribute('aria-expanded') === 'true')) {
-                // Do _nothing_
-            } else {
-                me.close();
-            }
-        }, {
-            once: true,
-        });
-    }
-
-    /**
-     * Scroll to a specific element in the list
-     * @param element the element to scroll to
-     */
-    scrollto(element) {
-        if (!element) return;
-        if ((this.scrolleditem) && (element.getAttribute('id') === this.scrolleditem.getAttribute('id'))) {
-            return; // this is us, don't reflow.
-        }
-        this.optionlist.scrollTop = element.offsetHeight;
-        element.focus();
-        this.scrolleditem = element;
     }
 
     /**
      * Closes the option list.
      */
     close() {
-        this.optionlist.setAttribute('aria-hidden', 'true');
-        this.optionlist.setAttribute('tabindex', '-1');
-        this.triggerbox.removeAttribute('aria-expanded');
+        this.listbox.setAttribute('aria-hidden', 'true');
+        this.listbox.setAttribute('tabindex', '-1');
+        this.wrapper.setAttribute('aria-expanded', false);
 
-        let items = Array.from(this.optionlist.querySelector('li'));
-        for (let li of items) {
+        for (let li of Array.from(this.optionlist.querySelector('li'))) {
             li.setAttribute('tabindex', '-1');
         }
 
         this.searchkeys = [];
         this.updateSearch();
+        SelectMenu.activeMenu = null;
     }
 
     disable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.setAttribute('disabled', 'disabled');
-        }
         this.triggerbox.setAttribute('disabled', 'disabled');
-        this.triggerbox.removeAttribute('aria-expanded');
+        this.wrapper.removeAttribute('aria-expanded');
         this.disabled = true;
         if (this.triggerbox) { this.triggerbox.classList.add('disabled'); }
         if (this.container) { this.container.classList.add('disabled'); }
     }
 
     enable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.removeAttribute('disabled');
-        }
         this.triggerbox.removeAttribute('disabled');
         this.disabled = false;
         if (this.triggerbox) { this.triggerbox.classList.remove('disabled'); }
@@ -4686,16 +4805,27 @@ class SelectMenu extends InputElement {
         }
         if (this.labelobj) { this.container.appendChild(this.labelobj); }
 
-        let wrap = document.createElement('div');
-        wrap.classList.add('wrap');
-        wrap.appendChild(this.triggerbox);
-        this.container.append(wrap);
+        this.wrapper = document.createElement('div');
+        this.wrapper.classList.add('wrap');
+        this.wrapper.setAttribute('role', 'combobox');
+        this.wrapper.setAttribute('aria-haspopup', 'listbox');
+        this.wrapper.setAttribute('aria-expanded', false);
+        this.wrapper.setAttribute('aria-owns', `${this.id}-options`);
+        if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
+        this.wrapper.appendChild(this.triggerbox);
 
-        this.container.appendChild(this.optionlist);
+        this.container.append(this.wrapper);
+
+        this.listbox = document.createElement('div');
+        this.listbox.setAttribute('id', `${this.id}-options`);
+        this.listbox.setAttribute('aria-hidden', 'true');
+        this.listbox.setAttribute('role', 'listbox');
+        this.listbox.appendChild(this.optionlist);
+
+        this.container.appendChild(this.listbox);
 
         if (!this.minimal) {
             this.container.appendChild(this.passivebox);
-            this.container.appendChild(this.topcontrol);
             this.container.appendChild(this.messagebox);
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
@@ -4708,28 +4838,80 @@ class SelectMenu extends InputElement {
      */
     buildTriggerBox() {
         const me = this;
-        this.triggerbox = document.createElement('div');
+        this.triggerbox = document.createElement('input');
         this.triggerbox.classList.add('trigger');
+        this.triggerbox.setAttribute('type', 'text');
         this.triggerbox.setAttribute('tabindex', '0');
-        this.triggerbox.addEventListener('focus', function(e) {
+        this.triggerbox.setAttribute('aria-autocomplete', 'none');
+        this.triggerbox.setAttribute('aria-activedescendant', '');
+        this.triggerbox.setAttribute('placeholder', this.placeholder);
+
+        this.triggerbox.addEventListener('focusin', function(e) {
             if (me.disabled) {
                 e.stopPropagation();
                 return;
             }
+            me.triggerbox.select(); // Select all the text
             me.open();
         });
+
+        this.triggerbox.addEventListener('keyup', function(e) {
+            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+                me.close();
+            } else {
+                switch (e.keyCode) {
+                    case 13: // Return
+                    case 16: // shift
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 19: // break
+                    case 20: // capslock
+                    case 33: // page up
+                    case 34: // page down
+                    case 35: // end
+                    case 36: // home
+                    case 45: // insert
+                    case 91: // command
+                    case 93: // command (right)
+                        // Nothing.
+                        break;
+                    case 9:  // Tab
+                    case 27: // Escape
+                    case 38: // Up
+                        me.close();
+                        break;
+                    case 40: // Down
+                        e.preventDefault();
+                        me.open();
+                        me.jumptoSelected(true);
+                        break;
+                    case 8:  // Backspace
+                    case 46:  // Delete
+                        me.updateSearch();
+                        break;
+                    case 32: // space
+                    default:
+                        me.updateSearch();
+                        break;
+                }
+            }
+        });
+
         if (this.mute) { this.triggerbox.classList.add('mute'); }
-        if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
 
     }
 
+    calculatePlaceholder() {
+        if (this.unselectedtext) { return this.unselectedtext; }
+        return TextFactory.get('selectmenu-placeholder-default');
+    }
+
     buildOptions() {
+
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('selectmenu');
         this.optionlist.setAttribute('id', this.id);
-        this.optionlist.setAttribute('aria-hidden', 'true');
         this.optionlist.setAttribute('tabindex', '-1');
-        this.optionlist.setAttribute('role', 'radiogroup');
 
         let order = 1;
         for (let opt of this.options) {
@@ -4739,18 +4921,6 @@ class SelectMenu extends InputElement {
             }
             order++;
             this.optionlist.appendChild(o);
-        }
-
-        if (this.unselectedtext) { // Unselected slots last because we need to select if nothing is selected
-            let unselconfig = {
-                label: this.unselectedtext,
-                value: '',
-                checked: !this.selectedoption,
-                unselectoption: true
-            };
-            let o = this.buildOption(unselconfig, 0);
-            o.setAttribute('data-menuorder', 0);
-            this.optionlist.prepend(o);
         }
     }
 
@@ -4771,12 +4941,28 @@ class SelectMenu extends InputElement {
         li.setAttribute('tabindex', '-1');
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
+        li.setAttribute('role', 'option');
+        li.setAttribute('data-value', def.value);
 
-        li.addEventListener('keyup', function(e) {
+        li.addEventListener('keydown', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
                 me.close();
             } else {
                 switch (e.keyCode) {
+                    case 16: // shift
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 19: // break
+                    case 20: // capslock
+                    case 33: // page up
+                    case 34: // page down
+                    case 35: // end
+                    case 36: // home
+                    case 45: // insert
+                    case 91: // command
+                    case 93: // command (right)
+                        // Nothing.
+                        break;
                     case 9:  // Tab
                     case 27: // Escape
                         me.close();
@@ -4790,19 +4976,18 @@ class SelectMenu extends InputElement {
                         me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
                         break;
                     case 13: // Return
-                    case 32: // Space
-                        li.querySelector('input').click(); // click the one inside
+                        li.click(); // click the one inside
                         break;
                     case 8:  // Backspace
-                        me.rmSearchKey();
+                    case 46:  // Delete
+                        me.value = me.value.substring(0, me.value.length - 1);
+                        me.updateSearch();
                         break;
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 91: // command
-                        // Nothing.
-                        break;
+                    case 32: // space
                     default:
-                        me.runKeySearch(e.key);
+                        e.preventDefault();
+                        me.value = me.value + e.key;
+                        me.updateSearch();
                         break;
                 }
             }
@@ -4815,27 +5000,11 @@ class SelectMenu extends InputElement {
                 o.removeAttribute('aria-selected');
             }
             li.setAttribute('aria-selected', 'true');
-        });
 
-        let opLabel = document.createElement('label');
-        opLabel.setAttribute('for', lId);
-        opLabel.innerHTML = def.label;
-        opLabel.classList.add('cfb-triangle-down');
-
-        let op = document.createElement('input');
-        op.setAttribute('id', lId);
-        op.setAttribute('type', 'radio');
-        op.setAttribute('name', this.name);
-        op.setAttribute('tabindex', '-1');
-        op.setAttribute('value', def.value);
-        op.setAttribute('aria-labelledby', lId);
-        op.setAttribute('aria-label', def.label);
-        op.setAttribute('role', 'radio');
-        op.addEventListener('change', function() {
             if (me.prefix) {
-                me.triggerbox.innerHTML = `${me.prefix} ${def.label}`;
+                me.triggerbox.value = `${me.prefix} ${def.label}`;
             } else {
-                me.triggerbox.innerHTML = def.label;
+                me.triggerbox.value = def.label;
             }
 
             me.selectedoption = def;
@@ -4857,73 +5026,22 @@ class SelectMenu extends InputElement {
             }
         });
 
+        li.innerHTML = def.label;
+
         if (def.checked) {
             this.origval = def.value;
             if (this.prefix) {
-                this.triggerbox.innerHTML = `${this.prefix} ${def.label}`;
+                this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
-                this.triggerbox.innerHTML = def.label;
+                this.triggerbox.value = def.label;
             }
             li.setAttribute('aria-selected', 'true');
-            op.setAttribute('aria-checked', 'checked');
-            op.setAttribute('checked', 'checked');
         }
 
-        li.appendChild(op);
-        li.appendChild(opLabel);
         return li;
     }
 
-    /**
-     * Draws the search text display.
-     */
-    buildSearchDisplay() {
-        if (this.searchtext) {
-            this.searchdisplay = document.createElement('div');
-            this.searchdisplay.classList.add('searchdisplay');
-            this.searchdisplay.classList.add('topcontrol');
-            this.updateSearch();
-        }
-    }
-
-    /**
-     * Updates the counter
-     */
-    updateSearch() {
-        if (this.searchkeys.length === 0) {
-            this.searchdisplay.classList.add('hidden');
-            this.searchdisplay.innerHTML = '';
-            return;
-        }
-        this.searchdisplay.classList.remove('hidden');
-        this.searchdisplay.innerHTML = this.searchkeys.join('');
-    }
-
     /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Delete a search key from the stack
-     */
-    rmSearchKey() {
-        if (this.searchkeys.length === 0) return;
-        this.searchkeys.pop();
-        if (this.searchkeys.length > 0) {
-            this.findByString(this.searchkeys.join(''));
-        }
-        this.updateSearch();
-    }
-
-    /**
-     * Search the options from keyboard input
-     * @param key the key to add to the stack
-     */
-    runKeySearch(key) {
-        this.searchkeys.push(key);
-        if (this.searchkeys.length > 0) {
-            this.findByString(this.searchkeys.join(''));
-        }
-        this.updateSearch();
-    }
 
     /**
      * Search the list of options and scroll to it
@@ -4931,20 +5049,45 @@ class SelectMenu extends InputElement {
      */
     findByString(s) {
         if ((!s) || (typeof s !== 'string')) { return; }
-        let target;
-
-        let lis = this.optionlist.querySelectorAll('li');
-        for (let li of lis) {
-            let label = li.querySelector('label');
-            if (label.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
-                target = li;
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            if (li.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
+                this.scrollto(li);
+                li.focus();
                 break;
             }
         }
-        this.scrollto(target);
+    }
+
+    /**
+     * Updates the counter
+     */
+    updateSearch() {
+        this.findByString(this.value);
+    }
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) { me.close(); }
+        }, { once: true });
+
+        window.addEventListener('click', function(e) {
+            if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
+                me.setCloseListener();
+            } else {
+                me.close();
+            }
+        }, { once: true });
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get listbox() { return this._listbox; }
+    set listbox(listbox) { this._listbox = listbox; }
 
     get minimal() { return this.config.minimal; }
     set minimal(minimal) { this.config.minimal = minimal; }
@@ -4964,21 +5107,6 @@ class SelectMenu extends InputElement {
     get prefix() { return this.config.prefix; }
     set prefix(prefix) { this.config.prefix = prefix; }
 
-    get searchdisplay() {
-        if (!this._searchdisplay) { this.buildSearchDisplay(); }
-        return this._searchdisplay;
-    }
-    set searchdisplay(searchdisplay) { this._searchdisplay = searchdisplay; }
-
-    get searchkeys() {
-        if (!this._searchkeys) { this._searchkeys = []; }
-        return this._searchkeys;
-    }
-    set searchkeys(searchkeys) { this._searchkeys = searchkeys; }
-
-    get searchtext() { return this.config.searchtext; }
-    set searchtext(searchtext) { this.config.searchtext = searchtext; }
-
     get selectedoption() { return this._selectedoption; }
     set selectedoption(selectedoption) { this._selectedoption = selectedoption; }
 
@@ -4994,6 +5122,9 @@ class SelectMenu extends InputElement {
     get unselectedtext() { return this.config.unselectedtext; }
     set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
 
+    get wrapper() { return this._wrapper; }
+    set wrapper(wrapper) { this._wrapper = wrapper; }
+
 }
 
 
@@ -5008,7 +5139,7 @@ class RadioGroup extends SelectMenu {
             label: null, // The text for the label.
             passive: false, // Start life in "passive" mode.
             required: false, // Is this a required field or not
-            unsettext: "(Not Set)", // what to display in passive mode if the value is empty
+            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
@@ -5189,7 +5320,7 @@ class StateMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select State or Province)",
+            unselectedtext: TextFactory.get('statemenu_select'),
             valuesas: 'code', // What to stick in the value for the elements.
                             // "code" or "name".
             set: null // Empty, or "US" or "CA". If empty, fills with all states.
@@ -5228,7 +5359,7 @@ class CountryMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select Country)",
+            unselectedtext: TextFactory.get('countrymenu_select'),
             valuesas: 'code' // What to stick in the value for the elements.
                              // "code" or "name".
         };
@@ -5266,7 +5397,7 @@ class TimezoneMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select Timezone)",
+            unselectedtext: TextFactory.get('timezone_select'),
             valuesas: 'offset' // What to stick in the value for the elements.
                              // "offset" or "name".
         };
@@ -5347,13 +5478,6 @@ class FileInput extends InputElement {
         };
     }
 
-    static get DEFAULT_STRINGS() {
-        return {
-            multiple_file_placeholder: 'Select files (multiple accepted)',
-            single_file_placeholder: 'Select file'
-        };
-    }
-
     constructor(config) {
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
         super(config);
@@ -5378,8 +5502,8 @@ class FileInput extends InputElement {
     /* CONTROL METHODS__________________________________________________________________ */
 
     calculatePlaceholder() {
-        if (this.multiple) { return FileInput.DEFAULT_STRINGS.multiple_file_placeholder; }
-        return FileInput.DEFAULT_STRINGS.single_file_placeholder;
+        if (this.multiple) { return TextFactory.get('fileinput-placeholder-multiple'); }
+        return TextFactory.get('fileinput-placeholder-file');
     }
 
     disable() {
@@ -5509,6 +5633,100 @@ class FileInput extends InputElement {
 
 
 
+class LoadingShade {
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // the id
+            spinnerstyle: 'spin', //
+            spinnertext: TextFactory.get('simpleform-spinnertext'), //
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, LoadingShade.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `shade-${Utils.getUniqueKey(5)}`; }
+        return this;
+    }
+
+    activate() {
+        this.container.parentNode.classList.add('shaded');
+        this.container.removeAttribute('aria-hidden');
+    }
+
+    deactivate() {
+        this.container.parentNode.classList.remove('shaded');
+        this.container.setAttribute('aria-hidden', 'true');
+    }
+
+    toggle() {
+        if (this.container.getAttribute('aria-hidden') === true) {
+            this.activate();
+        } else {
+            this.deactivate();
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Draw the Form's shade
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('loading-shade');
+        this.container.setAttribute('aria-hidden', true);
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        if (this.spinnerstyle) {
+            let d = document.createElement('div');
+            d.classList.add('spinner');
+            d.classList.add(this.spinnerstyle);
+            this.container.append(d);
+        }
+        if (this.spinnertext) {
+            let d = document.createElement('div');
+            d.classList.add('spinnertext');
+            d.innerHTML = this.spinnertext;
+            this.container.append(d);
+        }
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return Utils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get spinnerstyle() { return this.config.spinnerstyle; }
+    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
+
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
+
+}
 class DialogWindow {
 
     static get DEFAULT_CONFIG() {
@@ -5517,7 +5735,7 @@ class DialogWindow {
            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
            actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
                             // Possible keywords:  closebutton, cancelbutton
-           content: '<p />No provided content</p', // This is the content of the dialog
+           content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
            title: null,  // Adds a title to the dialog if present. header must be null.
@@ -5527,8 +5745,8 @@ class DialogWindow {
            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
            escapecloses: true, // Allow the window to be closed by the escape key
            nofocus: false, // If true, do not auto focus anything.
-           canceltext: 'Cancel',
-           closetext: 'Close', // Text for the closebutton, if any
+           canceltext: TextFactory.get('cancel'),
+           closetext: TextFactory.get('close'), // Text for the closebutton, if any
            showclose: true  // Show or hide the X button in the corner (requires title != null)
         };
     }
@@ -5617,7 +5835,6 @@ class DialogWindow {
      * @param e the event.
      */
     escape(e, self) {
-        console.log(e.key);
         if (e.key === 'Escape') {
             self.close();
         }
@@ -6108,6 +6325,7 @@ class DataGrid extends Panel {
                                        //   - stringarray
                                        //   - paragraph
                     separator: <string>, // Used when rendering array values
+                    nodupe: false, // If true, this column is ignored when deemphasizing duplicate rows.
                     resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
                     description: <string>>,  // A string that describes the data in the column
                     classes: <string array>, // Additional classes to apply to cells of this field
@@ -6118,27 +6336,12 @@ class DataGrid extends Panel {
                 */
             ],
             data: [], // The data to throw into the grid
-
             savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
-
-            columnconfigurationlabel: 'Columns',
+            demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
+                                        // in the previous row.
             columnconfigurationicon: 'table',
-            columnconfigurationinstructions: ['Select which columns to show in the grid. This does not hide the columns during export.'],
-            columnconfigurationtitle: 'Configure Columns',
-
-            searchable: true, // Data can be filtered
-            searchbuttontext: 'Search',
-            searchplaceholder: 'Search this data',
-            noresultstitle: 'No results',
-            noresultstext: 'No entries were found matching your search terms.',
-
-            nocolumnstitle: 'No columns',
-            nocolumnstext: 'No columns are visible in this table.',
-
-            itemcountlabeltext: 'Items:',
-
+            searchable: true, // Data can be searched
             exportable: true, // Data can be exported
-            exportbuttontext: "Export",
             exporticon: "download",
             exportheaderrow: 'readable', // When exporting a CSV file, should a header row
                                          // be included?  Possible values:
@@ -6156,30 +6359,16 @@ class DataGrid extends Panel {
             filterable: true, // Can the datagrid be filtered?
                       // No all fields are filtered by default.
                       // Whether or not a field can be filtered is defined in the field's definition.
-            filterbuttontext: 'Filters',
-            filterbuttonicon: 'filter',
-            filterinstructions: ['Columns that are filterable are shown below. Set the value of the column to filter it.'],
-            filterlabel: 'Active Filters:',
-            filtertitle: 'Manage Filters',
-            filterunselectedvaluetext: '(No filter)',
-            filterplaceholder: '(No filter)',
-            filterhelpexacttext: 'Match exactly:',
-            filterhelpcontaintext: 'Matches contain:',
-            applyfilterstext: 'Apply Filters',
             applyfiltersicon: 'checkmark-circle',
-            allfilteredtitle: 'No results',
-            allfilteredtext: 'All entries have matched a filter, preventing display.',
-
-
-            actionsbuttontext: 'Actions',
             actionsbuttonicon: 'menu',
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
+            spinnerstyle: 'spin', //
+            spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
-            multiselectbuttontext: "Bulk Select",
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
@@ -6355,6 +6544,7 @@ class DataGrid extends Panel {
         let rows = Array.from(this.gridbody.childNodes);
 
         let matches = 0;
+        let matchesHiddenColumns = false;
         for (let r of rows) {
             let show = false;
             r.setAttribute('data-search-hidden', true,);
@@ -6365,14 +6555,17 @@ class DataGrid extends Panel {
                 let cells = Array.from(r.childNodes);
                 for (let c of cells) {
                     if (show) { break; }
-                    if (!c.classList.contains('selector')) {
+                    if (!c.classList.contains('mechanical')) {
                         if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-                            show = true;
+                            if (c.classList.contains('hidden')) {
+                                matchesHiddenColumns = true;
+                            } else {
+                                show = true;
+                            }
                         }
                     }
                 }
             }
-
             if (show) {
                 matches++;
                 r.removeAttribute('data-search-hidden');
@@ -6381,9 +6574,13 @@ class DataGrid extends Panel {
 
         if (matches <= 0) {
             this.messagebox.innerHTML = "";
+            let warnings = [TextFactory.get('search_noresults')];
+            if (matchesHiddenColumns) {
+                warnings.push(TextFactory.get('matches_hidden_columns'));
+            }
             this.messagebox.append(new MessageBox({
-                warningstitle: this.noresultstitle,
-                warnings: [this.noresultstext],
+                warningstitle: TextFactory.get('no_results'),
+                warnings: warnings,
                 classes: ['hidden']
             }).container);
             this.messagebox.classList.remove('hidden');
@@ -6394,16 +6591,9 @@ class DataGrid extends Panel {
      * Sort the table based on a field.
      * @param field the field to sort
      */
-    sortfield(field) {
-        let sort = "asc";
+    sortfield(field, sort='asc') {
 
         let hCell = this.thead.querySelector(`[data-name='${field}']`);
-
-        if ((hCell) && (hCell.getAttribute('data-sort'))) {
-            if (hCell.getAttribute('data-sort') === 'asc') {
-                sort = "desc";
-            }
-        }
 
         let hchildren = this.thead.querySelectorAll('th');
         for (let hc of hchildren) {
@@ -6435,6 +6625,27 @@ class DataGrid extends Panel {
             this.gridbody.appendChild(row);
         }
 
+        this.currentsort = {
+            field: field,
+            direction: sort
+        };
+
+        this.grindDuplicateCells();
+    }
+
+    /**
+     * Toggle sort direction on a header cell
+     * @param fieldname
+     */
+    togglesort(fieldname) {
+        let hCell = this.gridheader.querySelector(`[data-name='${fieldname}'`);
+        let sort = 'asc';
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
+                sort = "desc";
+            }
+        }
+        this.sortfield(fieldname, sort);
     }
 
     /**
@@ -6454,8 +6665,8 @@ class DataGrid extends Panel {
 
         switch(type) {
             case 'column':
-                instructions = this.columnconfigurationinstructions;
-                title = this.columnconfigurationtitle;
+                instructions = TextFactory.get('datagrid-column-config-instructions');
+                title = TextFactory.get('configure_columns');
 
                 content = document.createElement('ul');
                 content.classList.add('elements');
@@ -6482,8 +6693,8 @@ class DataGrid extends Panel {
                 }
                 break;
             case 'filter':
-                instructions = this.filterinstructions;
-                title = this.filtertitle;
+                instructions = TextFactory.get('datagrid-filter-instructions');
+                title = TextFactory.get('manage_filters');
 
                 content = document.createElement('ul');
                 content.classList.add('elements');
@@ -6503,7 +6714,7 @@ class DataGrid extends Panel {
         // instructions
         if (instructions) {
             container.append(new InstructionBox({
-                instructions: instructions
+                instructions: [instructions]
             }).container);
         }
         container.append(content);
@@ -6514,6 +6725,73 @@ class DataGrid extends Panel {
             actions: ["closebutton"]
         });
         dialog.open();
+    }
+
+    /**
+     * Grind through duplicate cells if configured to do so.
+     */
+    grindDuplicateCells() {
+        if (!this.demphasizeduplicates) return;
+        let previousRow;
+        for (let r of this.gridbody.querySelectorAll('tr')) {
+            if (!previousRow) {
+                previousRow = r;
+                continue;
+            }
+            let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
+            let cells = r.querySelectorAll("td:not(.mechanical)");
+            for (let i = 0; i < cells.length; i++) {
+                if (!this.getfield(cells[i].getAttribute('data-name')).nodupe) {
+                    if (cells[i].innerHTML === pcells[i].innerHTML) {
+                        cells[i].classList.add('duplicate');
+                    } else {
+                        cells[i].classList.remove('duplicate');
+                    }
+                }
+            }
+            previousRow = r;
+        }
+    }
+
+    /* DATA METHODS_____________________________________________________________________ */
+
+    /**
+     * Append data into the grid.  Does not replace.
+     * @param data the data to append (an array of data rows)
+     */
+    append(data) {
+        for (let entry of data) {
+            this.gridbody.appendChild(this.buildRow(entry));
+            this.data.push(entry);
+        }
+        this.updateCount();
+        if (this.currentsort) {
+            this.sortfield(this.currentsort.field, this.currentsort.direction);
+        }
+        this.updateCount();
+        this.applyFilters();
+        this.search(this.searchcontrol.value);
+        this.grindDuplicateCells();
+    }
+
+    /**
+     * Load data from a URL and append it.
+     * @param url the URL to add.
+     */
+    loadAndAppend(url) {
+        fetch(url, {
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+            .then(response => response.json()) // response -> json
+            .then(data => { // do the thing.
+                // Expects data in json format like this:
+                // { data: [] }, where each row is a table row.
+                this.append(data.data);
+            })
+            .catch(err => {
+                console.error(`Error while fetching data`);
+                console.error(err);
+            });
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -6528,10 +6806,12 @@ class DataGrid extends Panel {
         } else {
             this.hideColumn(f);
         }
-
         this.persist();
     }
 
+    /**
+     * Check to see that at least one column is visible, and if not, show a warning.
+     */
     handleColumnPresences() {
         let colsvisible = false;
         for (let field of Object.values(this.fields)) {
@@ -6543,8 +6823,8 @@ class DataGrid extends Panel {
         if (!colsvisible) {
             this.messagebox.innerHTML = "";
             this.messagebox.append(new MessageBox({
-                warningstitle: this.nocolumnstitle,
-                warnings: [this.nocolumnstext],
+                warningstitle: TextFactory.get('no_columns'),
+                warnings: [TextFactory.get('datagrid-message-no_visible_columns')],
                 classes: ['hidden']
             }).container);
             this.messagebox.classList.remove('hidden');
@@ -6559,8 +6839,7 @@ class DataGrid extends Panel {
      */
     hideColumn(field) {
         field.hidden = true;
-        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
-        for (let c of cols) {
+        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
             c.classList.add('hidden');
         }
         this.handleColumnPresences();
@@ -6572,8 +6851,7 @@ class DataGrid extends Panel {
      */
     showColumn(field) {
         field.hidden = false;
-        let cols = this.grid.querySelectorAll(`[data-name='${field.name}']`);
-        for (let c of cols) {
+        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
             c.classList.remove('hidden');
         }
         this.handleColumnPresences();
@@ -6585,9 +6863,7 @@ class DataGrid extends Panel {
      * Persist the grid state
      */
     persist() {
-        if (!this.ispersistable) {
-            return;
-        }
+        if (!this.ispersistable) { return; }
         this.state = this.grindstate(); // get a current copy of it.
         localStorage.setItem(this.savekey, JSON.stringify(this.state));
     }
@@ -6880,9 +7156,9 @@ class DataGrid extends Panel {
 
         this.gridwrapper = document.createElement('div');
         this.gridwrapper.classList.add('grid-wrapper');
+        this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
-
 
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
@@ -6898,8 +7174,19 @@ class DataGrid extends Panel {
 
         setTimeout(function() { // Have to wait until we're sure we're in the DOM
             me.applystate();
+            me.grindDuplicateCells();
         }, 100);
 
+    }
+
+    /**
+     * Build the form shade
+     */
+    buildShade() {
+        this.shade = new LoadingShade({
+            spinnertext: this.spinnertext,
+            spinnerstyle: this.spinnerstyle
+        });
     }
 
     /**
@@ -6921,6 +7208,13 @@ class DataGrid extends Panel {
     }
 
     /**
+     * Update the count of elements in the data grid.
+     */
+    updateCount() {
+        this.itemcount.innerHTML = this.data.length;
+    }
+
+    /**
      * Build the grid info bit
      */
     buildGridInfo() {
@@ -6930,11 +7224,11 @@ class DataGrid extends Panel {
         this.gridinfo.classList.add('grid-info');
 
         this.itemcountlabel = document.createElement('label');
-        this.itemcountlabel.innerHTML = this.itemcountlabeltext;
+        this.itemcountlabel.innerHTML = TextFactory.get('items_label');
 
         this.itemcount = document.createElement('span');
         this.itemcount.classList.add('itemcount');
-        this.itemcount.innerHTML = this.data.length;
+        this.updateCount();
 
         this.itemcountbox = document.createElement('div');
         this.itemcountbox.classList.add('countbox');
@@ -6945,9 +7239,9 @@ class DataGrid extends Panel {
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
-                arialabel: this.searchplaceholder,
-                placeholder: this.searchplaceholder,
-                searchtext: this.searchbuttontext,
+                arialabel: TextFactory.get('search_this_data'),
+                placeholder: TextFactory.get('search_this_data'),
+                searchtext: TextFactory.get('search'),
                 action: function(value, searchcontrol) {
                     me.search(value);
                 }
@@ -6958,7 +7252,7 @@ class DataGrid extends Panel {
         if (this.filterable) {
             this.filterbutton  = new SimpleButton({
                 mute: true,
-                text: this.filterbuttontext,
+                text: TextFactory.get('filters'),
                 icon: this.filterbuttonicon,
                 classes: ['filter'],
                 action: function() {
@@ -6971,7 +7265,7 @@ class DataGrid extends Panel {
         let items = [];
         if (this.multiselect) {
             items.push({
-                label: this.multiselectbuttontext,
+                label: TextFactory.get('bulk_select'),
                 icon: this.multiselecticon,
                 action: function() {
                     me.selectmodetoggle();
@@ -6979,7 +7273,7 @@ class DataGrid extends Panel {
             });
         }
         items.push({
-            label: this.columnconfigurationlabel,
+            label: TextFactory.get('columns'),
             icon: this.columnconfigurationicon,
             action: function() {
                 me.configurator('column');
@@ -6987,7 +7281,7 @@ class DataGrid extends Panel {
         });
         if (this.exportable) {
             items.push({
-                label: this.exportbuttontext,
+                label: TextFactory.get('export'),
                 icon: this.exporticon,
                 action: function() {
                     me.export();
@@ -6999,7 +7293,7 @@ class DataGrid extends Panel {
             mute: true,
             shape: 'square',
             secondicon: null,
-            text: this.actionsbuttontext,
+            text: TextFactory.get('actions'),
             icon: this.actionsbuttonicon,
             classes: ['actions'],
             items: items
@@ -7032,6 +7326,7 @@ class DataGrid extends Panel {
             });
             let cell = document.createElement('th');
             cell.classList.add('selector');
+            cell.classList.add('mechanical');
             cell.appendChild(this.masterselector.naked);
             this.gridheader.appendChild(cell);
         }
@@ -7064,13 +7359,11 @@ class DataGrid extends Panel {
         cell.classList.add(field.type);
         cell.appendChild(div);
 
-        if (field.resize) {
-            cell.classList.add('resize');
-        }
+        if (field.resize) { cell.classList.add('resize'); }
 
-        if (field.hidden) {
-            cell.classList.add('hidden');
-        }
+        if (field.nodupe) { cell.classList.add('nodupe'); }
+
+        if (field.hidden) { cell.classList.add('hidden'); }
 
         if (field.description) {
             let celltip = new ToolTip({
@@ -7080,17 +7373,18 @@ class DataGrid extends Panel {
         }
 
         if (this.sortable) {
+            // XXX Add "sort this" aria label
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
-                me.sortfield(field.name);
+                me.togglesort(field.name);
             });
             cell.addEventListener('keyup', function(e) {
                 e.preventDefault();
                 switch (e.keyCode) {
                     case 13: // enter
                     case 32: // 32
-                        me.sortfield(field.name);
+                        me.togglesort(field.name);
                         break;
                     default:
                         break;
@@ -7139,16 +7433,25 @@ class DataGrid extends Panel {
             });
 
             row.addEventListener('keydown', function(e) {
-                if ((e.keyCode === 37) || (e.keyCode === 38)) { // Left arrow || Up Arrow
-                    e.preventDefault();
-                    let previous = row.parentNode.rows[row.rowIndex - 2];
-                    if (previous) { previous.focus(); }
-                } else if ((e.keyCode === 39) || (e.keyCode === 40)) { // Right arrow || Down Arrow
-                    e.preventDefault();
-                    let next = row.parentNode.rows[row.rowIndex];
-                    if (next) { next.focus(); }
-                } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                    row.click();
+                switch(e.keyCode) {
+                    case 37:
+                    case 38:
+                        e.preventDefault();
+                        let previous = row.parentNode.rows[row.rowIndex - 2];
+                        if (previous) { previous.focus(); }
+                        break;
+                    case 39:
+                    case 40:
+                        e.preventDefault();
+                        let next = row.parentNode.rows[row.rowIndex];
+                        if (next) { next.focus(); }
+                        break;
+                    case 13:
+                    case 32:
+                        row.click();
+                        break;
+                    default:
+                        break;
                 }
             });
         }
@@ -7160,12 +7463,13 @@ class DataGrid extends Panel {
                     if (row.getAttribute('aria-selected') === 'true') {
                         row.removeAttribute('aria-selected');
                     } else {
-                        row.setAttribute('aria-selected', true);
+                        row.setAttribute('aria-selected', 'true');
                     }
                 }
             });
             let cell = document.createElement('td');
             cell.classList.add('selector');
+            cell.classList.add('mechanical');
             cell.appendChild(selector.naked);
             row.appendChild(cell);
         }
@@ -7254,17 +7558,8 @@ class DataGrid extends Panel {
     get actionsbuttonicon() { return this.config.actionsbuttonicon; }
     set actionsbuttonicon(actionsbuttonicon) { this.config.actionsbuttonicon = actionsbuttonicon; }
 
-    get actionsbuttontext() { return this.config.actionsbuttontext; }
-    set actionsbuttontext(actionsbuttontext) { this.config.actionsbuttontext = actionsbuttontext; }
-
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
-
-    get allfilteredtitle() { return this.config.allfilteredtitle; }
-    set allfilteredtitle(allfilteredtitle) { this.config.allfilteredtitle = allfilteredtitle; }
-
-    get allfilteredtext() { return this.config.allfilteredtext; }
-    set allfilteredtext(allfilteredtext) { this.config.allfilteredtext = allfilteredtext; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
@@ -7272,17 +7567,14 @@ class DataGrid extends Panel {
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
 
-    get columnconfigurationinstructions() { return this.config.columnconfigurationinstructions; }
-    set columnconfigurationinstructions(columnconfigurationinstructions) { this.config.columnconfigurationinstructions = columnconfigurationinstructions; }
-
-    get columnconfigurationlabel() { return this.config.columnconfigurationlabel; }
-    set columnconfigurationlabel(columnconfigurationlabel) { this.config.columnconfigurationlabel = columnconfigurationlabel; }
-
-    get columnconfigurationtitle() { return this.config.columnconfigurationtitle; }
-    set columnconfigurationtitle(columnconfigurationtitle) { this.config.columnconfigurationtitle = columnconfigurationtitle; }
+    get currentsort() { return this._currentsort; }
+    set currentsort(currentsort) { this._currentsort = currentsort; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get demphasizeduplicates() { return this.config.demphasizeduplicates; }
+    set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }
@@ -7292,9 +7584,6 @@ class DataGrid extends Panel {
 
     get exportbutton() { return this._exportbutton; }
     set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
-
-    get exportbuttontext() { return this.config.exportbuttontext; }
-    set exportbuttontext(exportbuttontext) { this.config.exportbuttontext = exportbuttontext; }
 
     get exportfilename() { return this.config.exportfilename; }
     set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
@@ -7317,38 +7606,14 @@ class DataGrid extends Panel {
     get filterbuttonicon() { return this.config.filterbuttonicon; }
     set filterbuttonicon(filterbuttonicon) { this.config.filterbuttonicon = filterbuttonicon; }
 
-    get filterbuttontext() { return this.config.filterbuttontext; }
-    set filterbuttontext(filterbuttontext) { this.config.filterbuttontext = filterbuttontext; }
-
-    get filterhelpcontaintext() { return this.config.filterhelpcontaintext; }
-    set filterhelpcontaintext(filterhelpcontaintext) { this.config.filterhelpcontaintext = filterhelpcontaintext; }
-
-    get filterhelpexacttext() { return this.config.filterhelpexacttext; }
-    set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
-
     get filterinfo() {
         if (!this._filterinfo) { this.buildFilterInfo(); }
         return this._filterinfo;
     }
     set filterinfo(filterinfo) { this._filterinfo = filterinfo; }
 
-    get filterinstructions() { return this.config.filterinstructions; }
-    set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }
-
-    get filterlabel() { return this.config.filterlabel; }
-    set filterlabel(filterlabel) { this.config.filterlabel = filterlabel; }
-
-    get filterplaceholder() { return this.config.filterplaceholder; }
-    set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
-
-    get filtertitle() { return this.config.filtertitle; }
-    set filtertitle(filtertitle) { this.config.filtertitle = filtertitle; }
-
     get filtertags() { return this._filtertags; }
     set filtertags(filtertags) { this._filtertags = filtertags; }
-
-    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
-    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }
@@ -7401,9 +7666,6 @@ class DataGrid extends Panel {
     get itemcountlabel()  { return this._itemcountlabel; }
     set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
 
-    get itemcountlabeltext()  { return this.config.itemcountlabeltext; }
-    set itemcountlabeltext(itemcountlabeltext) { this.config.itemcountlabeltext = itemcountlabeltext; }
-
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
 
@@ -7413,9 +7675,6 @@ class DataGrid extends Panel {
     get multiselectbutton() { return this._multiselectbutton; }
     set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
 
-    get multiselectbuttontext() { return this.config.multiselectbuttontext; }
-    set multiselectbuttontext(multiselectbuttontext) { this.config.multiselectbuttontext = multiselectbuttontext; }
-
     get multiselecticon() { return this.config.multiselecticon; }
     set multiselecticon(multiselecticon) { this.config.multiselecticon = multiselecticon; }
 
@@ -7424,18 +7683,6 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
-
-    get nocolumnstext() { return this.config.nocolumnstext; }
-    set nocolumnstext(nocolumnstext) { this.config.nocolumnstext = nocolumnstext; }
-
-    get nocolumnstitle() { return this.config.nocolumnstitle; }
-    set nocolumnstitle(nocolumnstitle) { this.config.nocolumnstitle = nocolumnstitle; }
-
-    get noresultstext() { return this.config.noresultstext; }
-    set noresultstext(noresultstext) { this.config.noresultstext = noresultstext; }
-
-    get noresultstitle() { return this.config.noresultstitle; }
-    set noresultstitle(noresultstitle) { this.config.noresultstitle = noresultstitle; }
 
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
@@ -7449,23 +7696,29 @@ class DataGrid extends Panel {
     get searchcontrol() { return this._searchcontrol; }
     set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
 
-    get searchbuttontext() { return this.config.searchbuttontext; }
-    set searchbuttontext(searchbuttontext) { this.config.searchbuttontext = searchbuttontext; }
-
-    get searchplaceholder() { return this.config.searchplaceholder; }
-    set searchplaceholder(searchplaceholder) { this.config.searchplaceholder = searchplaceholder; }
-
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }
 
     get selectaction() { return this.config.selectaction; }
     set selectaction(selectaction) { this.config.selectaction = selectaction; }
 
+    get shade() {
+        if (!this._shade) { this.buildShade(); }
+        return this._shade;
+    }
+    set shade(shade) { this._shade = shade; }
+
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
 
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
+
+    get spinnerstyle() { return this.config.spinnerstyle; }
+    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
+
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
     get state() { return this._state; }
     set state(state) { this._state = state; }
@@ -7516,7 +7769,7 @@ class Growler extends FloatingPanel {
     static error(text) {
         return new Growler({
             text: text,
-            title: 'Error',
+            title: TextFactory.get('error'),
             icon: 'warn-hex',
             classes: ['error']
         });
@@ -7530,7 +7783,7 @@ class Growler extends FloatingPanel {
     static warn(text) {
         return new Growler({
             text: text,
-            title: 'Warning',
+            title: TextFactory.get('warning'),
             icon: 'warn-triangle',
             classes: ['warn']
         });
@@ -7544,7 +7797,7 @@ class Growler extends FloatingPanel {
     static caution(text) {
         return new Growler({
             text: text,
-            title: 'Caution',
+            title: TextFactory.get('caution'),
             icon: 'warn-circle',
             classes: ['caution']
         });
@@ -7558,7 +7811,7 @@ class Growler extends FloatingPanel {
     static success(text) {
         return new Growler({
             text: text,
-            title: 'Success',
+            title: TextFactory.get('success'),
             icon: 'check-circle',
             classes: ['success']
         });
@@ -7839,9 +8092,9 @@ class MessageBox {
             errors: null, // array of errors
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings
-            errorstitle: null,
-            successtitle: null,
-            warningstitle: null,
+            errorstitle: TextFactory.get('error'),
+            successtitle: TextFactory.get('success'),
+            warningstitle: TextFactory.get('warning'),
             erroricon: 'warn-hex', // If present, will be displayed large next to texts
             warningicon : 'warn-triangle', // If present, will be displayed large next to texts
             successicon: 'disc-check', // If present, will be displayed large next to texts
@@ -8001,7 +8254,7 @@ class PasswordGenerator {
     static get DEFAULT_CONFIG() {
         return {
             id: null,
-            buttontext: 'Generate Password',
+            buttontext: TextFactory.get('generate_password'),
             buttonicon: 'refresh',
             length: 15, // how many characters to generate
             autofills: [], // input elements to auto fill.
@@ -8011,10 +8264,10 @@ class PasswordGenerator {
 
     static get DATASETS () {
         return {
-            lc: { id: 'lc', label: 'Lowercase', set: 'a-z', chars: 'abcdefghijklmnopqrstuvwxyz' },
-            uc: { id: 'uc', label: 'Uppercase', set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
-            num: { id: 'num', label: 'Numbers', set: '0-9', chars: '0123456789' },
-            punc: { id: 'punc', label: 'Punctuation', set: '#', chars: '![]{}()%&*$#^<>~@|' }
+            lc: { id: 'lc', label: TextFactory.get('lowercase'), set: 'a-z', chars: 'abcdefghijklmnopqrstuvwxyz' },
+            uc: { id: 'uc', label: TextFactory.get('uppercase'), set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
+            num: { id: 'num', label: TextFactory.get('numbers'), set: '0-9', chars: '0123456789' },
+            punc: { id: 'punc', label: TextFactory.get('punctuation'), set: '#', chars: '![]{}()%&*$#^<>~@|' }
         };
     }
 
@@ -8134,7 +8387,7 @@ class PasswordGenerator {
         this.configbutton = new SimpleButton({
             icon: 'gear',
             naked: true,
-            arialabel: 'Configure Generator',
+            arialabel: TextFactory.get('configure_generator'),
             classes: ['config'],
             action: function(e) {
                 e.preventDefault();
@@ -8211,15 +8464,17 @@ class PasswordChangeForm {
             minlength: 5,
             suggestedlength: 8,
             cannotbe: [],
-            instructions: ["Change your password here."],
-            buttontext: 'Change Password',
-            pwcurrlabel: 'Current Password',
-            pwcurrplaceholder: 'Your current password',
-            pwcurrhelp: 'This is your <i>current</i> password. We need to confirm that you are who you are.',
-            pwonelabel: 'New Password',
+            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
+            instructions: [TextFactory.get('passwordchanger-form-instructions')],
+            placeholder: null,
+            buttontext: TextFactory.get('change_password'),
+            pwcurrlabel: TextFactory.get('current_password'),
+            pwcurrplaceholder: TextFactory.get('passwordchanger-currentpw-placeholder'),
+            pwcurrhelp: TextFactory.get('passwordchanger-currentpw-help'),
+            pwonelabel: TextFactory.get('new_password'),
             pwoneplaceholder: null,
             pwonehelp: null,
-            pwtwolabel: 'Confirm Password',
+            pwtwolabel: TextFactory.get('confirm_password'),
             pwtwoplaceholder: null,
             pwtwohelp: null,
             badpasswordhook: null // Function used to test the value against an external bad password list, like the one used by NIST.
@@ -8235,21 +8490,19 @@ class PasswordChangeForm {
     /* ACTION METHODS___________________________________________________________________ */
 
 
-
-
     /* VALIDATION METHODS_______________________________________________________________ */
 
     runChecks(self) {
         let valid = true;
         if ((this.pwone.value) !== (this.pwtwo.value)) {
-            this.pwone.errors.push('Passwords must match.');
+            this.pwone.errors.push(TextArea.get('passwordchanger-error-passwords_must_match'));
             this.pwone.showMessages();
             valid = false;
         }
         if ((this.cannotbe) && (this.cannotbe.length > 0)) {
             for (let cbs of this.cannotbe) {
                 if (this.pwone.value === cbs) {
-                    this.pwone.errors.push('This cannot be used as a password.');
+                    this.pwone.errors.push(TextArea.get('passwordchanger-error-cannot_be_used_as_pw'));
                     valid = false;
                 }
             }
@@ -8321,7 +8574,7 @@ class PasswordChangeForm {
             handler: function(self, callback) {
                 let results = {
                     success: true,
-                    results: ['Your password has been changed successfully!']
+                    results: [TextFactory.get('passwordchanger-results-changed_successfully')]
                 };
                 callback(results);
             },
@@ -8345,9 +8598,9 @@ class PasswordChangeForm {
     calculatePlaceholder() {
         if (this.placeholder) { return this.placeholder; }
         if (this.forceconstraints) {
-            return `Must be at least ${this.minlength} characters.`;
+            return TextFactory.get('passwordchanger-placeholder-minlength', this.minlength);
         } else if (this.suggestedlength) {
-            return `Should be at least ${this.suggestedlength} characters.`;
+            return TextFactory.get('passwordchanger-placeholder-suggested', this.suggestedlength);
         }
     }
 
@@ -8403,6 +8656,9 @@ class PasswordChangeForm {
     get cannotbe() { return this.config.cannotbe; }
     set cannotbe(cannotbe) { this.config.cannotbe = cannotbe; }
 
+    get forceconstraints() { return this.config.forceconstraints; }
+    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
+
     get form() {
         if (!this._form) { this.buildForm(); }
         return this._form;
@@ -8418,6 +8674,12 @@ class PasswordChangeForm {
     get minlength() { return this.config.minlength; }
     set minlength(minlength) { this.config.minlength = minlength; }
 
+    get placeholder() {
+        if (this.config.placeholder) return this.config.placeholder;
+        return this.calculatePlaceholder();
+    }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
     get pwactual() { return this._pwactual; }
     set pwactual(pwactual) { this._pwactual = pwactual; }
 
@@ -8426,7 +8688,6 @@ class PasswordChangeForm {
 
     get pwgen() { return this._pwgen; }
     set pwgen(pwgen) { this._pwgen = pwgen; }
-
 
     get pwone() { return this._pwone; }
     set pwone(pwone) { this._pwone = pwone; }
@@ -8464,8 +8725,8 @@ class TabBar {
             navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
             responsive: true, // Set to false to disable responsive collapsing.
             menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
-            menulabel: "Toggle Menu", // Default text for the menu
-            arialabel: 'Primary', // the aria label to use if this is a navigation
+            menulabel: TextFactory.get('toggle_menu'), // Default text for the menu
+            arialabel: TextFactory.get('primary'), // the aria label to use if this is a navigation
             submenuicon: 'triangle-down', // icon to indicate submenu
 
             vertical: false, // Vertical or horizontal
@@ -8671,16 +8932,24 @@ class TabBar {
         } else {
             // set link events here.
             link.addEventListener('keydown', function (e) {
-                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
-                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${next}']`).focus();
-                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
-                    link.click();
+                switch (e.keyCode) {
+                    case 37: // Left Arrow
+                    case 38: // Up Arrow
+                        e.preventDefault();
+                        e.stopPropagation();
+                        me.list.querySelector(`[data-tabno='${previous}']`).focus();
+                        break;
+                    case 39: // Right Arrow
+                    case 40: // Down Arrow
+                        e.preventDefault();
+                        e.stopPropagation();
+                        me.list.querySelector(`[data-tabno='${next}']`).focus();
+                        break;
+                    case 13: // Enter
+                    case 32: // Space
+                        link.click();
+                        break;
+
                 }
             });
             link.addEventListener('click', function (e) {
@@ -8734,19 +9003,6 @@ class TabBar {
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
 
-        /*
-        setTimeout(function() { // Have to wait until we're sure we're in the DOM
-            let sel = me.list.querySelector('a[aria-selected="true"]');
-            if (!sel) {
-                let fc = me.list.querySelector('li:first-child');
-                sel = fc.querySelector('a');
-            }
-            if (sel) {
-                me.scrollto(sel);
-                //sel.focus();
-            }
-        }, 100);
-         */
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);
@@ -8765,15 +9021,18 @@ class TabBar {
      */
     setCloseListener() {
         const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) { me.close(); }
+        }, { once: true });
+
         window.addEventListener('click', function(e) {
             if (e.target === me.list) {
                 me.setCloseListener();
             } else {
                 me.close();
             }
-        }, {
-            once: true,
-        });
+        }, { once: true, });
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -8856,9 +9115,9 @@ class SearchControl {
             id : null, // the id
             autoexecute: true, // Cause the search's action to execute automatically on focusout
                                // or when there number of seed characters is reached
-            arialabel: 'Enter Search Terms', // The aria-label value.
+            arialabel: TextFactory.get('searchcontrol-instructions'), // The aria-label value.
             maxlength: null, // Value for maxlength.
-            searchtext: 'Search',
+            searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
             action: function(value, self) { // The search action. Passed the value of the input and the self
                 console.log(`Executing search action: ${value}`);
@@ -9584,7 +9843,7 @@ class SimpleForm {
             passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
             spinnerstyle: 'spin', //
-            spinnertext: '...Please Wait...', //
+            spinnertext: TextFactory.get('simpleform-spinnertext'), //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
             classes: [], // Extra css classes to apply,
             submittors: [], // Array of elements that can submit this form.
@@ -9669,13 +9928,13 @@ class SimpleForm {
 
         if (this.validate()) {
             if (this.handler) {
-                this.form.classList.add('shaded');
+                this.shade.activate();
 
                 if (typeof this.handler === 'function') {
                     this.handler(me, function(results) {
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
-                            me.container.classList.remove('shaded');
+                            me.shade.deactivate();
                         } else {
                             me.handleResults(results);
                         }
@@ -9684,7 +9943,7 @@ class SimpleForm {
                     this.doAjax(function(results) {
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
-                            me.container.classList.remove('shaded');
+                            me.shade.deactivate();
                         } else {
                             me.handleResults(results);
                         }
@@ -9742,7 +10001,7 @@ class SimpleForm {
         if (this.messagebox) { this.messagebox.remove(); }
         this.messagebox = new MessageBox(results).container;
         this.headerbox.append(this.messagebox);
-        this.container.classList.remove('shaded');
+        this.shade.deactivate();
 
         if (!noexecution) {
             if ((results.success) && ((this.onsuccess) && (typeof this.onsuccess === 'function'))) {
@@ -9844,7 +10103,7 @@ class SimpleForm {
         this.contentbox.appendChild(this.headerbox);
         this.contentbox.appendChild(this.elementbox);
 
-        this.form.appendChild(this.shade);
+        this.form.appendChild(this.shade.container);
         this.form.appendChild(this.contentbox);
         if (this.actions.length > 0) {
             this.form.appendChild(this.actionbox);
@@ -9896,22 +10155,10 @@ class SimpleForm {
      * Draw the Form's shade
      */
     buildShade() {
-        this.shade = document.createElement('div');
-        this.shade.classList.add('shade');
-
-        if (this.spinnerstyle) {
-            let d = document.createElement('div');
-            d.classList.add('spinner');
-            d.classList.add(this.spinnerstyle);
-            this.shade.append(d);
-        }
-
-        if (this.spinnertext) {
-            let d = document.createElement('div');
-            d.classList.add('spinnertext');
-            d.classList.innerHTML = this.spinnertext;
-            this.shade.append(d);
-        }
+        this.shade = new LoadingShade({
+            spinnertext: this.spinnertext,
+            spinnerstyle: this.spinnerstyle
+        });
     }
 
     /**
