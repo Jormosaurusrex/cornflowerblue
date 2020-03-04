@@ -32,7 +32,12 @@ class DataGrid extends Panel {
                     }
                 */
             ],
-            data: [], // The data to throw into the grid
+            data: null,   // The data to throw into the grid on load. This is an array of rows.
+            source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
+            dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
+                                 // This is a function that data is passed through to massage.
+                                 // Must accept a JSON blob as it's argument and return an array
+                                 // of row definitions.
             savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
             demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
                                         // in the previous row.
@@ -84,14 +89,48 @@ class DataGrid extends Panel {
         config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
         super(config);
 
+        const me = this;
+
         if (this.id) {
             this.savekey = `grid-${this.id}`;
         } else {
             this.id = `grid-${Utils.getUniqueKey(5)}`;
         }
-
         this.activefilters = {};
         this.loadstate();
+
+        setTimeout(function() {
+           me.fillData();
+        }, 100);
+    }
+
+    postLoad() {
+        this.applystate();
+        this.grindDuplicateCells();
+    }
+
+    fillData() {
+        const me = this;
+
+        this.shade.activate();
+
+        if (this.data) {
+            for (let rdata of this.data) {
+                this.gridbody.appendChild(this.buildRow(rdata));
+            }
+            setTimeout(function() {
+                me.postLoad();
+                me.shade.deactivate();
+            }, 100);
+        } else if (this.source) {
+            this.fetchData(this.source, function(data){
+                me.append(data);
+                setTimeout(function() {
+                    me.postLoad();
+                    me.shade.deactivate();
+                }, 100);
+            });
+        }
     }
 
     /* PSEUDO GETTERS___________________________________________________________________ */
@@ -457,25 +496,47 @@ class DataGrid extends Panel {
      * @param data the data to append (an array of data rows)
      */
     append(data) {
+        if (!this.data) { this.data = []; }
         for (let entry of data) {
             this.gridbody.appendChild(this.buildRow(entry));
             this.data.push(entry);
         }
+        this.gridPostProcess();
+    }
+
+    /**
+     * Clears data from the grid. Completely flattens it.
+     */
+    clear() {
+        this.data = [];
+        this.gridbody.innerHTML = "";
+        this.gridPostProcess();
+    }
+
+    /**
+     * Things to do after the data in the grid has been manipulated, like
+     *    - Updates row counts
+     *    - Applies sort
+     *    - Applies filters
+     *    - Applies search
+     *    - Grinds duplicate cells
+     */
+    gridPostProcess() {
         this.updateCount();
         if (this.currentsort) {
             this.sortfield(this.currentsort.field, this.currentsort.direction);
         }
-        this.updateCount();
         this.applyFilters();
         this.search(this.searchcontrol.value);
         this.grindDuplicateCells();
     }
 
     /**
-     * Load data from a URL and append it.
-     * @param url the URL to add.
+     * Load data from a URL and put it into the grid. Appends by default.
+     * @param url the URL to get the data from
+     * @callback (optional) do this instead of Appending data. Takes data as an argument
      */
-    loadAndAppend(url) {
+    fetchData(url, callback) {
         fetch(url, {
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
@@ -483,12 +544,23 @@ class DataGrid extends Panel {
             .then(data => { // do the thing.
                 // Expects data in json format like this:
                 // { data: [] }, where each row is a table row.
-                this.append(data.data);
+                if ((this.dataprocessor) && (typeof this.dataprocessor === 'function')) {
+                    data = this.dataprocessor(data);
+                } else {
+                    data = data.data; // by default, a data package assumes its rows are in "data"
+                                      // e.g.:  { data: [ row array ] }
+                }
+                if ((callback) && (typeof callback === 'function')) {
+                    callback(data);
+                } else {
+                    this.append(data);
+                }
             })
             .catch(err => {
-                console.error(`Error while fetching data`);
+                console.error(`Error while fetching data from ${url}`);
                 console.error(err);
             });
+
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -828,10 +900,6 @@ class DataGrid extends Panel {
     buildContainer() {
         const me = this;
 
-        for (let rdata of this.data) {
-            this.gridbody.appendChild(this.buildRow(rdata));
-        }
-
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
         this.container.classList.add('panel');
@@ -869,11 +937,6 @@ class DataGrid extends Panel {
 
         if (this.hidden) { this.hide(); }
 
-        setTimeout(function() { // Have to wait until we're sure we're in the DOM
-            me.applystate();
-            me.grindDuplicateCells();
-        }, 100);
-
     }
 
     /**
@@ -908,7 +971,9 @@ class DataGrid extends Panel {
      * Update the count of elements in the data grid.
      */
     updateCount() {
-        this.itemcount.innerHTML = this.data.length;
+        if (this.data) {
+            this.itemcount.innerHTML = this.data.length;
+        }
     }
 
     /**
@@ -1270,6 +1335,9 @@ class DataGrid extends Panel {
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
 
+    get dataprocessor() { return this.config.dataprocessor; }
+    set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
+
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
 
@@ -1407,6 +1475,9 @@ class DataGrid extends Panel {
 
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
+
+    get source() { return this.config.source; }
+    set source(source) { this.config.source = source; }
 
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
