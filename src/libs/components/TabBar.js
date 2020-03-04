@@ -302,15 +302,18 @@ class TabBar {
      */
     setCloseListener() {
         const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) { me.close(); }
+        }, { once: true });
+
         window.addEventListener('click', function(e) {
             if (e.target === me.list) {
                 me.setCloseListener();
             } else {
                 me.close();
             }
-        }, {
-            once: true,
-        });
+        }, { once: true, });
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

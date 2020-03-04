@@ -1,40 +1,3 @@
-:root {
-
-  --datagrid-background-color: var(--ultralight);
-
-  --datagrid-gridheader-background-color: var(--light);
-  --datagrid-gridheader-text-color: var(--grey-darkest);
-  --datagrid-gridheader-grid-text-color: var(--grey-darker);
-  --datagrid-gridheader-hover-text-shadow: var(--text-shadow);
-  --datagrid-gridheader-hover-text-color: var(--hot-text-color);
-  --datagrid-gridheader-sort-highlight-color: var(--focus-color);
-  --datagrid-gridheader-hover-background-color: var(--focus-color);
-
-  --datagrid-grid-color: transparent;
-  --datagrid-grid-text-color: var(--grey-darkest);
-  --datagrid-grid-selected-background-color: var(--focus-color);
-  --datagrid-grid-selected-text-color: var(--hot-text-color);
-
-  --datagrid-grid-multiselected-selected-background-color: var(--focus-color-quarter);
-  --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
-
-  --datagrid-grid-background-color: var(--ultralight);
-  --datagrid-grid-alternate-background-color: var(--grey-translucent);
-  --datagrid-grid-hover-background-color: var(--focus-color-half);
-  --datagrid-grid-hover-text-color: var(--hot-text-color);
-  --datagrid-grid-hover-text-shadow: var(--text-shadow);
-
-  --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
-  --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
-
-  --datagrid-filter-border-color: var(--light);
-
-  --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
-
-  --datagrid-title-background-color: var(--darkblue);
-  --datagrid-title-text-color: var(--ultralight);
-
-}
 div.datagrid-container {
   position: relative;
   display: flex;
@@ -100,11 +63,18 @@ div.datagrid-container {
   }
   div.grid-wrapper {
     overflow: auto;
+    position: relative;
     width: 100%;
     height: 100%;
     flex-grow: 2;
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
+    &.shaded {
+      overflow: hidden;
+      table.grid {
+        filter: blur(3px);
+      }
+    }
   }
   table.grid {
     width: 100%;

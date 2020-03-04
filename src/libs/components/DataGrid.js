@@ -63,6 +63,8 @@ class DataGrid extends Panel {
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
+            spinnerstyle: 'spin', //
+            spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
             multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
             multiselectactions: [], // Array of button actions to multiselects
@@ -326,6 +328,21 @@ class DataGrid extends Panel {
         };
 
         this.grindDuplicateCells();
+    }
+
+    /**
+     * Toggle sort direction on a header cell
+     * @param fieldname
+     */
+    togglesort(fieldname) {
+        let hCell = this.gridheader.querySelector(`[data-name='${fieldname}'`);
+        let sort = 'asc';
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
+                sort = "desc";
+            }
+        }
+        this.sortfield(fieldname, sort);
     }
 
     /**
@@ -836,6 +853,7 @@ class DataGrid extends Panel {
 
         this.gridwrapper = document.createElement('div');
         this.gridwrapper.classList.add('grid-wrapper');
+        this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
 
@@ -856,6 +874,16 @@ class DataGrid extends Panel {
             me.grindDuplicateCells();
         }, 100);
 
+    }
+
+    /**
+     * Build the form shade
+     */
+    buildShade() {
+        this.shade = new LoadingShade({
+            spinnertext: this.spinnertext,
+            spinnerstyle: this.spinnerstyle
+        });
     }
 
     /**
@@ -1065,21 +1093,6 @@ class DataGrid extends Panel {
         this.headercells[field.name] = cell;
 
         return cell;
-    }
-
-    /**
-     * Toggle sort direction on a header cell
-     * @param fieldname
-     */
-    togglesort(fieldname) {
-        let hCell = this.gridheader.querySelector(`[data-name='${fieldname}'`);
-        let sort = 'asc';
-        if ((hCell) && (hCell.getAttribute('data-sort'))) {
-            if (hCell.getAttribute('data-sort') === 'asc') {
-                sort = "desc";
-            }
-        }
-        this.sortfield(fieldname, sort);
     }
 
     /**
@@ -1386,11 +1399,23 @@ class DataGrid extends Panel {
     get selectaction() { return this.config.selectaction; }
     set selectaction(selectaction) { this.config.selectaction = selectaction; }
 
+    get shade() {
+        if (!this._shade) { this.buildShade(); }
+        return this._shade;
+    }
+    set shade(shade) { this._shade = shade; }
+
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
 
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
+
+    get spinnerstyle() { return this.config.spinnerstyle; }
+    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
+
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
     get state() { return this._state; }
     set state(state) { this._state = state; }

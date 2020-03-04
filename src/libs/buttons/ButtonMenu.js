@@ -109,6 +109,11 @@ class ButtonMenu extends SimpleButton {
      */
     setCloseListener() {
         const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) { me.close(); }
+        }, { once: true });
+
         window.addEventListener('click', function(e) {
             let tag = me.menu.tagName.toLowerCase();
             if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
@@ -120,9 +125,7 @@ class ButtonMenu extends SimpleButton {
             } else {
                 me.close();
             }
-        }, {
-            once: true,
-        });
+        }, { once: true, });
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */

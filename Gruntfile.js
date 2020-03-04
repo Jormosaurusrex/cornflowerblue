@@ -53,6 +53,7 @@ module.exports = function(grunt) {
                     'src/libs/inputs/TimezoneMenu.js',
                     'src/libs/inputs/TextArea.js',
                     'src/libs/inputs/FileInput.js',
+                    'src/libs/components/LoadingShade.js',
                     'src/libs/components/DialogWindow.js',
                     'src/libs/components/Panel.js',
                     'src/libs/components/FloatingPanel.js',

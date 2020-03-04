@@ -29,7 +29,7 @@ class SimpleForm {
             passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
             spinnerstyle: 'spin', //
-            spinnertext: TextFactory.get('simpleform_spinnertext'), //
+            spinnertext: TextFactory.get('simpleform-spinnertext'), //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
             classes: [], // Extra css classes to apply,
             submittors: [], // Array of elements that can submit this form.
@@ -114,13 +114,13 @@ class SimpleForm {
 
         if (this.validate()) {
             if (this.handler) {
-                this.form.classList.add('shaded');
+                this.shade.activate();
 
                 if (typeof this.handler === 'function') {
                     this.handler(me, function(results) {
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
-                            me.container.classList.remove('shaded');
+                            me.shade.deactivate();
                         } else {
                             me.handleResults(results);
                         }
@@ -129,7 +129,7 @@ class SimpleForm {
                     this.doAjax(function(results) {
                         if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
                             me.handlercallback(me, results);
-                            me.container.classList.remove('shaded');
+                            me.shade.deactivate();
                         } else {
                             me.handleResults(results);
                         }
@@ -187,7 +187,7 @@ class SimpleForm {
         if (this.messagebox) { this.messagebox.remove(); }
         this.messagebox = new MessageBox(results).container;
         this.headerbox.append(this.messagebox);
-        this.container.classList.remove('shaded');
+        this.shade.deactivate();
 
         if (!noexecution) {
             if ((results.success) && ((this.onsuccess) && (typeof this.onsuccess === 'function'))) {
@@ -289,7 +289,7 @@ class SimpleForm {
         this.contentbox.appendChild(this.headerbox);
         this.contentbox.appendChild(this.elementbox);
 
-        this.form.appendChild(this.shade);
+        this.form.appendChild(this.shade.container);
         this.form.appendChild(this.contentbox);
         if (this.actions.length > 0) {
             this.form.appendChild(this.actionbox);
@@ -341,22 +341,10 @@ class SimpleForm {
      * Draw the Form's shade
      */
     buildShade() {
-        this.shade = document.createElement('div');
-        this.shade.classList.add('shade');
-
-        if (this.spinnerstyle) {
-            let d = document.createElement('div');
-            d.classList.add('spinner');
-            d.classList.add(this.spinnerstyle);
-            this.shade.append(d);
-        }
-
-        if (this.spinnertext) {
-            let d = document.createElement('div');
-            d.classList.add('spinnertext');
-            d.classList.innerHTML = this.spinnertext;
-            this.shade.append(d);
-        }
+        this.shade = new LoadingShade({
+            spinnertext: this.spinnertext,
+            spinnerstyle: this.spinnerstyle
+        });
     }
 
     /**

@@ -259,6 +259,41 @@
   --code-text-shadow: var(--text-shadow);
   --code-font-family: var(--fontstack-monospace);
 
+  // Datagrid keys
+  --datagrid-background-color: var(--ultralight);
+
+  --datagrid-gridheader-background-color: var(--light);
+  --datagrid-gridheader-text-color: var(--grey-darkest);
+  --datagrid-gridheader-grid-text-color: var(--grey-darker);
+  --datagrid-gridheader-hover-text-shadow: var(--text-shadow);
+  --datagrid-gridheader-hover-text-color: var(--hot-text-color);
+  --datagrid-gridheader-sort-highlight-color: var(--focus-color);
+  --datagrid-gridheader-hover-background-color: var(--focus-color);
+
+  --datagrid-grid-color: transparent;
+  --datagrid-grid-text-color: var(--grey-darkest);
+  --datagrid-grid-selected-background-color: var(--focus-color);
+  --datagrid-grid-selected-text-color: var(--hot-text-color);
+
+  --datagrid-grid-multiselected-selected-background-color: var(--focus-color-quarter);
+  --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
+
+  --datagrid-grid-background-color: var(--ultralight);
+  --datagrid-grid-alternate-background-color: var(--grey-translucent);
+  --datagrid-grid-hover-background-color: var(--focus-color-half);
+  --datagrid-grid-hover-text-color: var(--hot-text-color);
+  --datagrid-grid-hover-text-shadow: var(--text-shadow);
+
+  --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
+  --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
+
+  --datagrid-filter-border-color: var(--light);
+
+  --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
+
+  --datagrid-title-background-color: var(--darkblue);
+  --datagrid-title-text-color: var(--ultralight);
+
   // Dialog keys
   --dialog-background-color: var(--ultralight);
   --dialog-border-radius: var(--border-radius);
@@ -283,12 +318,13 @@
   --form-actions-background-color: var(--morelight);
   --form-actions-border-color: var(--light);
 
-  --form-shade-background-color: var(--white-half);
-  --form-shade-border-color: var(--white-half);
-  --form-shade-spinner-color: var(--blue);
-  --form-shade-spinner-downcolor: var(--light);
-  --form-shade-text-color: var(--blue);
-  --form-shade-text-shadow: var(--text-shadow);
+  // Shade keys
+  --shade-background-color: var(--white-half);
+  --shade-border-color: var(--white-half);
+  --shade-spinner-color: var(--darkblue);
+  --shade-spinner-downcolor: var(--light);
+  --shade-text-color: var(--blue);
+  --shade-text-shadow: var(--text-shadow);
 
   // Growler keys
   --growlbox-max-width: 22em;

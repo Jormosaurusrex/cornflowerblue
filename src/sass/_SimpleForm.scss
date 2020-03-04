@@ -1,34 +1,3 @@
-div.shade {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 2000;
-  background-color: var(--form-shade-background-color);
-  border: .1em solid var(--form-shade-border-color);
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  span.icon {
-    display: block;
-    color: var(--form-shade-icon-color);
-    font-size: 100pt;
-    text-shadow: var(--form-shade-icon-shadow);
-    margin-top:-1em;
-    animation: cfb-localspin 2s linear infinite;
-    &:before {
-      line-height: normal;
-    }
-  }
-  div.spinnertext {
-    color: var(--form-shade-text-color);
-    font-size: 2em;
-    text-shadow: var(--form-shade-text-shadow);
-  }
-}
 form {
   margin: 0;
   position: relative;
@@ -38,7 +7,7 @@ form {
   padding: 0;
   &.shaded {
     overflow: hidden;
-    div.shade {
+    div.loading-shade {
       display: flex;
     }
     div.header,
@@ -114,39 +83,3 @@ form {
     }
   }
 }
-
-div.spinner.spin {
-  border-radius: 50%;
-  width: 10em;
-  height: 10em;
-  position: relative;
-  margin: 1em 0 1em 0;
-  border: .75em solid var(--form-shade-spinner-downcolor);
-  border-top-color: var(--form-shade-spinner-color);
-  animation: cfb-localspin 1.1s infinite linear;
-}
-
-div.spinner.bounce {
-  width: 4em;
-  height: 4em;
-  position: relative;
-  margin: -2em 0 4em 0;
-  &:before,
-  &:after {
-    display: block;
-    content: '';
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: var(--form-shade-spinner-color);
-    opacity: 0.6;
-    position: absolute;
-    top: 0;
-    left: 0;
-    animation: cfb-spinner-bounce 2.0s infinite ease-in-out;
-  }
-  &:after {
-    animation-delay: -1.0s;
-  }
-}
-

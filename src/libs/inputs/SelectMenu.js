@@ -454,13 +454,10 @@ class SelectMenu extends InputElement {
      */
     setCloseListener() {
         const me = this;
+
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) {
-                me.close();
-            }
-        }, {
-            once: true
-        });
+            if (e.keyCode === 27) { me.close(); }
+        }, { once: true });
 
         window.addEventListener('click', function(e) {
             if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
@@ -468,9 +465,7 @@ class SelectMenu extends InputElement {
             } else {
                 me.close();
             }
-        }, {
-            once: true
-        });
+        }, { once: true });
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
