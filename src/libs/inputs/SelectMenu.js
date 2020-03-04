@@ -45,6 +45,11 @@ class SelectMenu extends InputElement {
     get value() {
         return this.triggerbox.value;
     }
+    set value(value) {
+        this.config.value = value;
+        this.triggerbox.value = value;
+        this.passivebox.value = value;
+    }
 
     get passivetext() {
         if (this.selectedoption) { return this.selectedoption.label; }
@@ -239,19 +244,36 @@ class SelectMenu extends InputElement {
                 me.close();
             } else {
                 switch (e.keyCode) {
+                    case 13: // Return
+                    case 16: // shift
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 19: // break
+                    case 20: // capslock
+                    case 33: // page up
+                    case 34: // page down
+                    case 35: // end
+                    case 36: // home
+                    case 45: // insert
+                    case 91: // command
+                    case 93: // command (right)
+                        // Nothing.
+                        break;
+                    case 9:  // Tab
+                    case 27: // Escape
+                    case 38: // Up
+                        me.close();
+                        break;
                     case 40: // Down
                         e.preventDefault();
                         me.open();
                         me.jumptoSelected(true);
                         break;
                     case 8:  // Backspace
+                    case 46:  // Delete
                         me.updateSearch();
                         break;
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 91: // command
-                        // Nothing.
-                        break;
+                    case 32: // space
                     default:
                         me.updateSearch();
                         break;
@@ -264,9 +286,7 @@ class SelectMenu extends InputElement {
     }
 
     calculatePlaceholder() {
-        if (this.unselectedtext) {
-            return this.unselectedtext;
-        }
+        if (this.unselectedtext) { return this.unselectedtext; }
         return TextFactory.get('selectmenu-placeholder-default');
     }
 
@@ -313,6 +333,20 @@ class SelectMenu extends InputElement {
                 me.close();
             } else {
                 switch (e.keyCode) {
+                    case 16: // shift
+                    case 17: // ctrl
+                    case 18: // alt
+                    case 19: // break
+                    case 20: // capslock
+                    case 33: // page up
+                    case 34: // page down
+                    case 35: // end
+                    case 36: // home
+                    case 45: // insert
+                    case 91: // command
+                    case 93: // command (right)
+                        // Nothing.
+                        break;
                     case 9:  // Tab
                     case 27: // Escape
                         me.close();
@@ -326,18 +360,17 @@ class SelectMenu extends InputElement {
                         me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
                         break;
                     case 13: // Return
-                    case 32: // Space
                         li.click(); // click the one inside
                         break;
                     case 8:  // Backspace
+                    case 46:  // Delete
+                        me.value = me.value.substring(0, me.value.length - 1);
                         me.updateSearch();
                         break;
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 91: // command
-                        // Nothing.
-                        break;
+                    case 32: // space
                     default:
+                        e.preventDefault();
+                        me.value = me.value + e.key;
                         me.updateSearch();
                         break;
                 }
@@ -421,6 +454,14 @@ class SelectMenu extends InputElement {
      */
     setCloseListener() {
         const me = this;
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) {
+                me.close();
+            }
+        }, {
+            once: true
+        });
+
         window.addEventListener('click', function(e) {
             if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
                 me.setCloseListener();
@@ -428,7 +469,7 @@ class SelectMenu extends InputElement {
                 me.close();
             }
         }, {
-            once: true,
+            once: true
         });
     }
 
