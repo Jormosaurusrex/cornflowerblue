@@ -8,7 +8,7 @@ class RadioGroup extends SelectMenu {
             label: null, // The text for the label.
             passive: false, // Start life in "passive" mode.
             required: false, // Is this a required field or not
-            unsettext: "(Not Set)", // what to display in passive mode if the value is empty
+            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.

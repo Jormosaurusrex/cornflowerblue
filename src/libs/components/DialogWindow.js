@@ -6,7 +6,7 @@ class DialogWindow {
            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
            actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
                             // Possible keywords:  closebutton, cancelbutton
-           content: '<p />No provided content</p', // This is the content of the dialog
+           content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
            title: null,  // Adds a title to the dialog if present. header must be null.
@@ -16,8 +16,8 @@ class DialogWindow {
            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
            escapecloses: true, // Allow the window to be closed by the escape key
            nofocus: false, // If true, do not auto focus anything.
-           canceltext: 'Cancel',
-           closetext: 'Close', // Text for the closebutton, if any
+           canceltext: TextFactory.get('cancel'),
+           closetext: TextFactory.get('close'), // Text for the closebutton, if any
            showclose: true  // Show or hide the X button in the corner (requires title != null)
         };
     }
@@ -106,7 +106,6 @@ class DialogWindow {
      * @param e the event.
      */
     escape(e, self) {
-        console.log(e.key);
         if (e.key === 'Escape') {
             self.close();
         }

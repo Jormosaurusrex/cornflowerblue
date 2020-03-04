@@ -2,7 +2,7 @@ class StateMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select State or Province)",
+            unselectedtext: TextFactory.get('statemenu_select'),
             valuesas: 'code', // What to stick in the value for the elements.
                             // "code" or "name".
             set: null // Empty, or "US" or "CA". If empty, fills with all states.

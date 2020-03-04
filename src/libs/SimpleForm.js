@@ -29,7 +29,7 @@ class SimpleForm {
             passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
             spinnerstyle: 'spin', //
-            spinnertext: '...Please Wait...', //
+            spinnertext: TextFactory.get('simpleform_spinnertext'), //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
             classes: [], // Extra css classes to apply,
             submittors: [], // Array of elements that can submit this form.

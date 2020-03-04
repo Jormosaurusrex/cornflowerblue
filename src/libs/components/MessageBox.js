@@ -6,9 +6,9 @@ class MessageBox {
             errors: null, // array of errors
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings
-            errorstitle: null,
-            successtitle: null,
-            warningstitle: null,
+            errorstitle: TextFactory.get('error'),
+            successtitle: TextFactory.get('success'),
+            warningstitle: TextFactory.get('warning'),
             erroricon: 'warn-hex', // If present, will be displayed large next to texts
             warningicon : 'warn-triangle', // If present, will be displayed large next to texts
             successicon: 'disc-check', // If present, will be displayed large next to texts

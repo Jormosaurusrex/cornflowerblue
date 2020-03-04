@@ -2,7 +2,7 @@ class CountryMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select Country)",
+            unselectedtext: TextFactory.get('countrymenu_select'),
             valuesas: 'code' // What to stick in the value for the elements.
                              // "code" or "name".
         };

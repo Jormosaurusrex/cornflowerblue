@@ -3,7 +3,7 @@ class HamburgerButton extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             toggletarget: null, // The menu object to open or close.
-            text: "Open Menu",
+            text: TextFactory.get('open_menu'),
             shape: 'square',
             naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,

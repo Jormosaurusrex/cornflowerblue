@@ -48,6 +48,9 @@ class ButtonMenu extends SimpleButton {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
+    /**
+     * Toggle the menu.
+     */
     toggle() {
         if (this.isopen) {
             this.close();

@@ -6,15 +6,17 @@ class PasswordChangeForm {
             minlength: 5,
             suggestedlength: 8,
             cannotbe: [],
-            instructions: ["Change your password here."],
-            buttontext: 'Change Password',
-            pwcurrlabel: 'Current Password',
-            pwcurrplaceholder: 'Your current password',
-            pwcurrhelp: 'This is your <i>current</i> password. We need to confirm that you are who you are.',
-            pwonelabel: 'New Password',
+            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
+            instructions: [TextFactory.get('passwordchanger-form-instructions')],
+            placeholder: null,
+            buttontext: TextFactory.get('change_password'),
+            pwcurrlabel: TextFactory.get('current_password'),
+            pwcurrplaceholder: TextFactory.get('passwordchanger-currentpw-placeholder'),
+            pwcurrhelp: TextFactory.get('passwordchanger-currentpw-help'),
+            pwonelabel: TextFactory.get('new_password'),
             pwoneplaceholder: null,
             pwonehelp: null,
-            pwtwolabel: 'Confirm Password',
+            pwtwolabel: TextFactory.get('confirm_password'),
             pwtwoplaceholder: null,
             pwtwohelp: null,
             badpasswordhook: null // Function used to test the value against an external bad password list, like the one used by NIST.
@@ -30,21 +32,19 @@ class PasswordChangeForm {
     /* ACTION METHODS___________________________________________________________________ */
 
 
-
-
     /* VALIDATION METHODS_______________________________________________________________ */
 
     runChecks(self) {
         let valid = true;
         if ((this.pwone.value) !== (this.pwtwo.value)) {
-            this.pwone.errors.push('Passwords must match.');
+            this.pwone.errors.push(TextArea.get('passwordchanger-error-passwords_must_match'));
             this.pwone.showMessages();
             valid = false;
         }
         if ((this.cannotbe) && (this.cannotbe.length > 0)) {
             for (let cbs of this.cannotbe) {
                 if (this.pwone.value === cbs) {
-                    this.pwone.errors.push('This cannot be used as a password.');
+                    this.pwone.errors.push(TextArea.get('passwordchanger-error-cannot_be_used_as_pw'));
                     valid = false;
                 }
             }
@@ -116,7 +116,7 @@ class PasswordChangeForm {
             handler: function(self, callback) {
                 let results = {
                     success: true,
-                    results: ['Your password has been changed successfully!']
+                    results: [TextFactory.get('passwordchanger-results-changed_successfully')]
                 };
                 callback(results);
             },
@@ -140,9 +140,9 @@ class PasswordChangeForm {
     calculatePlaceholder() {
         if (this.placeholder) { return this.placeholder; }
         if (this.forceconstraints) {
-            return `Must be at least ${this.minlength} characters.`;
+            return TextFactory.get('passwordchanger-placeholder-minlength', this.minlength);
         } else if (this.suggestedlength) {
-            return `Should be at least ${this.suggestedlength} characters.`;
+            return TextFactory.get('passwordchanger-placeholder-suggested', this.suggestedlength);
         }
     }
 
@@ -198,6 +198,9 @@ class PasswordChangeForm {
     get cannotbe() { return this.config.cannotbe; }
     set cannotbe(cannotbe) { this.config.cannotbe = cannotbe; }
 
+    get forceconstraints() { return this.config.forceconstraints; }
+    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
+
     get form() {
         if (!this._form) { this.buildForm(); }
         return this._form;
@@ -213,6 +216,12 @@ class PasswordChangeForm {
     get minlength() { return this.config.minlength; }
     set minlength(minlength) { this.config.minlength = minlength; }
 
+    get placeholder() {
+        if (this.config.placeholder) return this.config.placeholder;
+        return this.calculatePlaceholder();
+    }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
     get pwactual() { return this._pwactual; }
     set pwactual(pwactual) { this._pwactual = pwactual; }
 
@@ -221,7 +230,6 @@ class PasswordChangeForm {
 
     get pwgen() { return this._pwgen; }
     set pwgen(pwgen) { this._pwgen = pwgen; }
-
 
     get pwone() { return this._pwone; }
     set pwone(pwone) { this._pwone = pwone; }

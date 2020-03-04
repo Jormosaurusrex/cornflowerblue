@@ -3,7 +3,7 @@ class PasswordGenerator {
     static get DEFAULT_CONFIG() {
         return {
             id: null,
-            buttontext: 'Generate Password',
+            buttontext: TextFactory.get('generate_password'),
             buttonicon: 'refresh',
             length: 15, // how many characters to generate
             autofills: [], // input elements to auto fill.
@@ -13,10 +13,10 @@ class PasswordGenerator {
 
     static get DATASETS () {
         return {
-            lc: { id: 'lc', label: 'Lowercase', set: 'a-z', chars: 'abcdefghijklmnopqrstuvwxyz' },
-            uc: { id: 'uc', label: 'Uppercase', set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
-            num: { id: 'num', label: 'Numbers', set: '0-9', chars: '0123456789' },
-            punc: { id: 'punc', label: 'Punctuation', set: '#', chars: '![]{}()%&*$#^<>~@|' }
+            lc: { id: 'lc', label: TextFactory.get('lowercase'), set: 'a-z', chars: 'abcdefghijklmnopqrstuvwxyz' },
+            uc: { id: 'uc', label: TextFactory.get('uppercase'), set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
+            num: { id: 'num', label: TextFactory.get('numbers'), set: '0-9', chars: '0123456789' },
+            punc: { id: 'punc', label: TextFactory.get('punctuation'), set: '#', chars: '![]{}()%&*$#^<>~@|' }
         };
     }
 
@@ -136,7 +136,7 @@ class PasswordGenerator {
         this.configbutton = new SimpleButton({
             icon: 'gear',
             naked: true,
-            arialabel: 'Configure Generator',
+            arialabel: TextFactory.get('configure_generator'),
             classes: ['config'],
             action: function(e) {
                 e.preventDefault();

@@ -36,7 +36,7 @@ class Growler extends FloatingPanel {
     static error(text) {
         return new Growler({
             text: text,
-            title: 'Error',
+            title: TextFactory.get('error'),
             icon: 'warn-hex',
             classes: ['error']
         });
@@ -50,7 +50,7 @@ class Growler extends FloatingPanel {
     static warn(text) {
         return new Growler({
             text: text,
-            title: 'Warning',
+            title: TextFactory.get('warning'),
             icon: 'warn-triangle',
             classes: ['warn']
         });
@@ -64,7 +64,7 @@ class Growler extends FloatingPanel {
     static caution(text) {
         return new Growler({
             text: text,
-            title: 'Caution',
+            title: TextFactory.get('caution'),
             icon: 'warn-circle',
             classes: ['caution']
         });
@@ -78,7 +78,7 @@ class Growler extends FloatingPanel {
     static success(text) {
         return new Growler({
             text: text,
-            title: 'Success',
+            title: TextFactory.get('success'),
             icon: 'check-circle',
             classes: ['success']
         });

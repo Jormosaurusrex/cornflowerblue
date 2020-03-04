@@ -10,13 +10,6 @@ class FileInput extends InputElement {
         };
     }
 
-    static get DEFAULT_STRINGS() {
-        return {
-            multiple_file_placeholder: 'Select files (multiple accepted)',
-            single_file_placeholder: 'Select file'
-        };
-    }
-
     constructor(config) {
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
         super(config);
@@ -41,8 +34,8 @@ class FileInput extends InputElement {
     /* CONTROL METHODS__________________________________________________________________ */
 
     calculatePlaceholder() {
-        if (this.multiple) { return FileInput.DEFAULT_STRINGS.multiple_file_placeholder; }
-        return FileInput.DEFAULT_STRINGS.single_file_placeholder;
+        if (this.multiple) { return TextFactory.get('fileinput-placeholder-multiple'); }
+        return TextFactory.get('fileinput-placeholder-file');
     }
 
     disable() {

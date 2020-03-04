@@ -6,8 +6,8 @@ class NumberInput extends TextInput {
             //pattern:'[0-9.%+-]$',
             minnumber: null,
             maxnumber: null,
-            downbuttonarialabel: 'Decrement Number',
-            upbuttonarialabel: 'Increment Number',
+            downbuttonarialabel: TextFactory.get('decrement_number'),
+            upbuttonarialabel: TextFactory.get('increment_number'),
             wholenumbers: false, // Require whole numbers
             steppers: true,
             step: null
@@ -83,35 +83,34 @@ class NumberInput extends TextInput {
     localValidator(onload) {
         if (this.value) {
             if (isNaN(this.value)) {
-                this.errors.push("This is not a number.");
+                this.errors.push(TextFactory.get('numberinput-error-nan'));
                 return;
             }
             let v = parseFloat(this.value);
             if ((this.minnumber !== 'undefined') && (v < this.minnumber)) {
-                this.errors.push(`The minimum value for this field is '${this.minnumber}'.`);
+                this.errors.push(TextFactory.get('numberinput-error-minimum_value', this.minnumber));
             } else if ((this.maxnumber !== 'undefined') && (v > this.maxnumber)) {
-                this.errors.push(`The maximum value for this field is '${this.maxnumber}'.`);
+                this.errors.push(TextFactory.get('numberinput-error-maximum_value', this.maxnumber));
             } else if ((this.step) && (v % this.step !== 0)) {
-                this.errors.push(`Values must be divisible by ${this.step}.`);
+                this.errors.push(TextFactory.get('numberinput-error-values_divisible', this.step));
             } else if ((this.wholenumbers) && (v % 1 > 0)) {
-                this.errors.push("Values must be whole numbers.");
+                this.errors.push(TextFactory.get('numberinput-error-must_be_whole_numbers'));
             }
         }
     }
 
     calculatePlaceholder() {
-        let text = "Enter a number";
+        let text = TextFactory.get('numberinput-placeholder-basic');
         if ((this.minnumber !== 'undefined') && (this.maxnumber !== 'undefined')) {
-            text = `Enter a number between ${this.minnumber} and ${this.maxnumber}`;
+            text = TextFactory.get('numberinput-placeholder-between_x_y', this.minnumber, this.maxnumber);
         } else if (this.minnumber !== 'undefined') {
-            text = `Enter a number larger than ${this.minnumber}`;
+            text = TextFactory.get('numberinput-placeholder-larger_than_x', this.minnumber);
         } else if (this.maxnumber !== 'undefined') {
-            text = `Enter a number smaller than ${this.maxnumber}`;
+            text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
         }
         if (this.step) {
-            text += ` (increments of ${this.step})`;
+            text += TextFactory.get('numberinput-placeholder-fragment_increments', this.step);
         }
-        text += ".";
         return text;
     }
 

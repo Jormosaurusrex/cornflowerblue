@@ -5,7 +5,7 @@ class DateInput extends TextInput {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
             type: 'date',
-            triggerarialabel: 'Open Date Picker',
+            triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             dateicon: 'calendar'
         };
@@ -41,7 +41,7 @@ class DateInput extends TextInput {
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!DateInput.isValid(this.value)) {
-                this.errors.push("This is an invalid date.");
+                this.errors.push(TextFactory.get('dateinput-error-invalid'));
             }
         }
         this.updateDateDisplay();

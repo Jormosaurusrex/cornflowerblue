@@ -6,8 +6,8 @@ class TabBar {
             navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
             responsive: true, // Set to false to disable responsive collapsing.
             menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
-            menulabel: "Toggle Menu", // Default text for the menu
-            arialabel: 'Primary', // the aria label to use if this is a navigation
+            menulabel: TextFactory.get('toggle_menu'), // Default text for the menu
+            arialabel: TextFactory.get('primary'), // the aria label to use if this is a navigation
             submenuicon: 'triangle-down', // icon to indicate submenu
 
             vertical: false, // Vertical or horizontal
@@ -213,16 +213,24 @@ class TabBar {
         } else {
             // set link events here.
             link.addEventListener('keydown', function (e) {
-                if ((e.key === 'ArrowLeft') || (e.key === 'ArrowUp')) { // Left arrow || Up Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${previous}']`).focus();
-                } else if ((e.key === 'ArrowRight') || (e.key === 'ArrowDown')) { // Right arrow || Down Arrow
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.list.querySelector(`[data-tabno='${next}']`).focus();
-                } else if ((e.key === " ") || (e.key === "Spacebar") || (e.key === 'Enter')) { // return or space
-                    link.click();
+                switch (e.keyCode) {
+                    case 37: // Left Arrow
+                    case 38: // Up Arrow
+                        e.preventDefault();
+                        e.stopPropagation();
+                        me.list.querySelector(`[data-tabno='${previous}']`).focus();
+                        break;
+                    case 39: // Right Arrow
+                    case 40: // Down Arrow
+                        e.preventDefault();
+                        e.stopPropagation();
+                        me.list.querySelector(`[data-tabno='${next}']`).focus();
+                        break;
+                    case 13: // Enter
+                    case 32: // Space
+                        link.click();
+                        break;
+
                 }
             });
             link.addEventListener('click', function (e) {
@@ -276,19 +284,6 @@ class TabBar {
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
 
-        /*
-        setTimeout(function() { // Have to wait until we're sure we're in the DOM
-            let sel = me.list.querySelector('a[aria-selected="true"]');
-            if (!sel) {
-                let fc = me.list.querySelector('li:first-child');
-                sel = fc.querySelector('a');
-            }
-            if (sel) {
-                me.scrollto(sel);
-                //sel.focus();
-            }
-        }, 100);
-         */
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);

@@ -42,13 +42,13 @@ class URIInput extends TextInput {
     /* CORE METHODS_____________________________________________________________________ */
 
     calculatePlaceholder() {
-        return 'https://somewhere.cornflower.blue/';
+        return TextFactory.get('urlinput-placeholder-default');
     }
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!URIInput.isValid(this.value)) {
-                this.errors.push("This is an invalid web address.");
+                this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
             }
         }
     }

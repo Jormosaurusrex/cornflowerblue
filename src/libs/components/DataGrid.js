@@ -1,32 +1,5 @@
 class DataGrid extends Panel {
 
-    static get DEFAULT_STRINGS() {
-        return {
-            actions: 'Actions',
-            bulk_select: 'Bulk select',
-            columns: 'Columns',
-            configure_columns: 'Configure Columns',
-            datagrid_column_config_instructions: "Select which columns to show in the grid. This does not hide the columns during export.",
-            datagrid_filter_instructions: "Columns that are filterable are shown below. Set the value of the column to filter it.",
-            datagrid_no_visible_columns: 'No columns are visible in this table.',
-            export: 'Export',
-            filters: 'Filters',
-            items_label: 'Items:',
-            manage_filters: 'Manage Filters',
-            matches_hidden_columns: "Your search matches data in hidden columns.",
-            no_columns: 'No columns',
-            no_results: 'No results',
-            search: 'Search',
-            search_noresults: 'No entries were found matching your search terms.',
-            search_this_data: 'Search this data'
-        }
-    }
-
-
-    static string(identifier) {
-        return DataGrid.DEFAULT_STRINGS[identifier];
-    }
-
     static get DEFAULT_CONFIG() {
         return {
             title: null, // the title for the grid
@@ -60,16 +33,11 @@ class DataGrid extends Panel {
                 */
             ],
             data: [], // The data to throw into the grid
-
             savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
-
             demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
                                         // in the previous row.
-
             columnconfigurationicon: 'table',
-
-            searchable: true, // Data can be filtered
-
+            searchable: true, // Data can be searched
             exportable: true, // Data can be exported
             exporticon: "download",
             exportheaderrow: 'readable', // When exporting a CSV file, should a header row
@@ -89,8 +57,6 @@ class DataGrid extends Panel {
                       // No all fields are filtered by default.
                       // Whether or not a field can be filtered is defined in the field's definition.
             applyfiltersicon: 'checkmark-circle',
-
-
             actionsbuttonicon: 'menu',
 
             selectable: true, //  Data rows can be selected.
@@ -303,12 +269,12 @@ class DataGrid extends Panel {
 
         if (matches <= 0) {
             this.messagebox.innerHTML = "";
-            let warnings = [DataGrid.string('search_noresults')];
+            let warnings = [TextFactory.get('search_noresults')];
             if (matchesHiddenColumns) {
-                warnings.push(DataGrid.string('matches_hidden_columns'));
+                warnings.push(TextFactory.get('matches_hidden_columns'));
             }
             this.messagebox.append(new MessageBox({
-                warningstitle: DataGrid.string('no_results'),
+                warningstitle: TextFactory.get('no_results'),
                 warnings: warnings,
                 classes: ['hidden']
             }).container);
@@ -381,8 +347,8 @@ class DataGrid extends Panel {
 
         switch(type) {
             case 'column':
-                instructions = DataGrid.string('datagrid_column_config_instructions');
-                title = DataGrid.string('configure_columns');
+                instructions = TextFactory.get('datagrid-column-config-instructions');
+                title = TextFactory.get('configure_columns');
 
                 content = document.createElement('ul');
                 content.classList.add('elements');
@@ -409,8 +375,8 @@ class DataGrid extends Panel {
                 }
                 break;
             case 'filter':
-                instructions = DataGrid.string('datagrid_filter_instructions');
-                title = DataGrid.string('manage_filters');
+                instructions = TextFactory.get('datagrid-filter-instructions');
+                title = TextFactory.get('manage_filters');
 
                 content = document.createElement('ul');
                 content.classList.add('elements');
@@ -498,8 +464,8 @@ class DataGrid extends Panel {
         if (!colsvisible) {
             this.messagebox.innerHTML = "";
             this.messagebox.append(new MessageBox({
-                warningstitle: DataGrid.string('no_columns'),
-                warnings: [DataGrid.string('datagrid_no_visible_columns')],
+                warningstitle: TextFactory.get('no_columns'),
+                warnings: [TextFactory.get('datagrid-message-no_visible_columns')],
                 classes: ['hidden']
             }).container);
             this.messagebox.classList.remove('hidden');
@@ -514,8 +480,7 @@ class DataGrid extends Panel {
      */
     hideColumn(field) {
         field.hidden = true;
-        let cols = Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`));
-        for (let c of cols) {
+        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
             c.classList.add('hidden');
         }
         this.handleColumnPresences();
@@ -527,8 +492,7 @@ class DataGrid extends Panel {
      */
     showColumn(field) {
         field.hidden = false;
-        let cols = Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`));
-        for (let c of cols) {
+        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
             c.classList.remove('hidden');
         }
         this.handleColumnPresences();
@@ -884,7 +848,7 @@ class DataGrid extends Panel {
         this.gridinfo.classList.add('grid-info');
 
         this.itemcountlabel = document.createElement('label');
-        this.itemcountlabel.innerHTML = DataGrid.string('items_label');
+        this.itemcountlabel.innerHTML = TextFactory.get('items_label');
 
         this.itemcount = document.createElement('span');
         this.itemcount.classList.add('itemcount');
@@ -899,9 +863,9 @@ class DataGrid extends Panel {
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
-                arialabel: DataGrid.string('search_this_data'),
-                placeholder: DataGrid.string('search_this_data'),
-                searchtext: DataGrid.string('search'),
+                arialabel: TextFactory.get('search_this_data'),
+                placeholder: TextFactory.get('search_this_data'),
+                searchtext: TextFactory.get('search'),
                 action: function(value, searchcontrol) {
                     me.search(value);
                 }
@@ -912,7 +876,7 @@ class DataGrid extends Panel {
         if (this.filterable) {
             this.filterbutton  = new SimpleButton({
                 mute: true,
-                text: DataGrid.string('filters'),
+                text: TextFactory.get('filters'),
                 icon: this.filterbuttonicon,
                 classes: ['filter'],
                 action: function() {
@@ -925,7 +889,7 @@ class DataGrid extends Panel {
         let items = [];
         if (this.multiselect) {
             items.push({
-                label: DataGrid.string('bulk_select'),
+                label: TextFactory.get('bulk_select'),
                 icon: this.multiselecticon,
                 action: function() {
                     me.selectmodetoggle();
@@ -933,7 +897,7 @@ class DataGrid extends Panel {
             });
         }
         items.push({
-            label: DataGrid.string('columns'),
+            label: TextFactory.get('columns'),
             icon: this.columnconfigurationicon,
             action: function() {
                 me.configurator('column');
@@ -941,7 +905,7 @@ class DataGrid extends Panel {
         });
         if (this.exportable) {
             items.push({
-                label: DataGrid.string('export'),
+                label: TextFactory.get('export'),
                 icon: this.exporticon,
                 action: function() {
                     me.export();
@@ -953,7 +917,7 @@ class DataGrid extends Panel {
             mute: true,
             shape: 'square',
             secondicon: null,
-            text: DataGrid.string('actions'),
+            text: TextFactory.get('actions'),
             icon: this.actionsbuttonicon,
             classes: ['actions'],
             items: items
@@ -1019,17 +983,11 @@ class DataGrid extends Panel {
         cell.classList.add(field.type);
         cell.appendChild(div);
 
-        if (field.resize) {
-            cell.classList.add('resize');
-        }
+        if (field.resize) { cell.classList.add('resize'); }
 
-        if (field.nodupe) {
-            cell.classList.add('nodupe');
-        }
+        if (field.nodupe) { cell.classList.add('nodupe'); }
 
-        if (field.hidden) {
-            cell.classList.add('hidden');
-        }
+        if (field.hidden) { cell.classList.add('hidden'); }
 
         if (field.description) {
             let celltip = new ToolTip({
@@ -1039,7 +997,7 @@ class DataGrid extends Panel {
         }
 
         if (this.sortable) {
-            // XXX Add "sort this" aria thing
+            // XXX Add "sort this" aria label
             cell.setAttribute('tabindex', '0');
             cell.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1224,32 +1182,14 @@ class DataGrid extends Panel {
     get actionsbuttonicon() { return this.config.actionsbuttonicon; }
     set actionsbuttonicon(actionsbuttonicon) { this.config.actionsbuttonicon = actionsbuttonicon; }
 
-    get actionsbuttontext() { return this.config.actionsbuttontext; }
-    set actionsbuttontext(actionsbuttontext) { this.config.actionsbuttontext = actionsbuttontext; }
-
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
-
-    get allfilteredtitle() { return this.config.allfilteredtitle; }
-    set allfilteredtitle(allfilteredtitle) { this.config.allfilteredtitle = allfilteredtitle; }
-
-    get allfilteredtext() { return this.config.allfilteredtext; }
-    set allfilteredtext(allfilteredtext) { this.config.allfilteredtext = allfilteredtext; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
 
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
-
-    get columnconfigurationinstructions() { return this.config.columnconfigurationinstructions; }
-    set columnconfigurationinstructions(columnconfigurationinstructions) { this.config.columnconfigurationinstructions = columnconfigurationinstructions; }
-
-    get columnconfigurationlabel() { return this.config.columnconfigurationlabel; }
-    set columnconfigurationlabel(columnconfigurationlabel) { this.config.columnconfigurationlabel = columnconfigurationlabel; }
-
-    get columnconfigurationtitle() { return this.config.columnconfigurationtitle; }
-    set columnconfigurationtitle(columnconfigurationtitle) { this.config.columnconfigurationtitle = columnconfigurationtitle; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
@@ -1265,9 +1205,6 @@ class DataGrid extends Panel {
 
     get exportbutton() { return this._exportbutton; }
     set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
-
-    get exportbuttontext() { return this.config.exportbuttontext; }
-    set exportbuttontext(exportbuttontext) { this.config.exportbuttontext = exportbuttontext; }
 
     get exportfilename() { return this.config.exportfilename; }
     set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
@@ -1290,38 +1227,14 @@ class DataGrid extends Panel {
     get filterbuttonicon() { return this.config.filterbuttonicon; }
     set filterbuttonicon(filterbuttonicon) { this.config.filterbuttonicon = filterbuttonicon; }
 
-    get filterbuttontext() { return this.config.filterbuttontext; }
-    set filterbuttontext(filterbuttontext) { this.config.filterbuttontext = filterbuttontext; }
-
-    get filterhelpcontaintext() { return this.config.filterhelpcontaintext; }
-    set filterhelpcontaintext(filterhelpcontaintext) { this.config.filterhelpcontaintext = filterhelpcontaintext; }
-
-    get filterhelpexacttext() { return this.config.filterhelpexacttext; }
-    set filterhelpexacttext(filterhelpexacttext) { this.config.filterhelpexacttext = filterhelpexacttext; }
-
     get filterinfo() {
         if (!this._filterinfo) { this.buildFilterInfo(); }
         return this._filterinfo;
     }
     set filterinfo(filterinfo) { this._filterinfo = filterinfo; }
 
-    get filterinstructions() { return this.config.filterinstructions; }
-    set filterinstructions(filterinstructions) { this.config.filterinstructions = filterinstructions; }
-
-    get filterlabel() { return this.config.filterlabel; }
-    set filterlabel(filterlabel) { this.config.filterlabel = filterlabel; }
-
-    get filterplaceholder() { return this.config.filterplaceholder; }
-    set filterplaceholder(filterplaceholder) { this.config.filterplaceholder = filterplaceholder; }
-
-    get filtertitle() { return this.config.filtertitle; }
-    set filtertitle(filtertitle) { this.config.filtertitle = filtertitle; }
-
     get filtertags() { return this._filtertags; }
     set filtertags(filtertags) { this._filtertags = filtertags; }
-
-    get filterunselectedvaluetext() { return this.config.filterunselectedvaluetext; }
-    set filterunselectedvaluetext(filterunselectedvaluetext) { this.config.filterunselectedvaluetext = filterunselectedvaluetext; }
 
     get footer() {
         if (!this._footer) { this.buildFooter(); }
@@ -1374,9 +1287,6 @@ class DataGrid extends Panel {
     get itemcountlabel()  { return this._itemcountlabel; }
     set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
 
-    get itemcountlabeltext()  { return this.config.itemcountlabeltext; }
-    set itemcountlabeltext(itemcountlabeltext) { this.config.itemcountlabeltext = itemcountlabeltext; }
-
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
 
@@ -1386,9 +1296,6 @@ class DataGrid extends Panel {
     get multiselectbutton() { return this._multiselectbutton; }
     set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
 
-    get multiselectbuttontext() { return this.config.multiselectbuttontext; }
-    set multiselectbuttontext(multiselectbuttontext) { this.config.multiselectbuttontext = multiselectbuttontext; }
-
     get multiselecticon() { return this.config.multiselecticon; }
     set multiselecticon(multiselecticon) { this.config.multiselecticon = multiselecticon; }
 
@@ -1397,18 +1304,6 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
-
-    get nocolumnstext() { return this.config.nocolumnstext; }
-    set nocolumnstext(nocolumnstext) { this.config.nocolumnstext = nocolumnstext; }
-
-    get nocolumnstitle() { return this.config.nocolumnstitle; }
-    set nocolumnstitle(nocolumnstitle) { this.config.nocolumnstitle = nocolumnstitle; }
-
-    get noresultstext() { return this.config.noresultstext; }
-    set noresultstext(noresultstext) { this.config.noresultstext = noresultstext; }
-
-    get noresultstitle() { return this.config.noresultstitle; }
-    set noresultstitle(noresultstitle) { this.config.noresultstitle = noresultstitle; }
 
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
@@ -1421,12 +1316,6 @@ class DataGrid extends Panel {
 
     get searchcontrol() { return this._searchcontrol; }
     set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
-
-    get searchbuttontext() { return this.config.searchbuttontext; }
-    set searchbuttontext(searchbuttontext) { this.config.searchbuttontext = searchbuttontext; }
-
-    get searchplaceholder() { return this.config.searchplaceholder; }
-    set searchplaceholder(searchplaceholder) { this.config.searchplaceholder = searchplaceholder; }
 
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }

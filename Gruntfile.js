@@ -21,6 +21,7 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'src/libs/Utils.js',
+                    'src/libs/factory/TextFactory.js',
                     'src/libs/factory/IconFactory.js',
                     'src/libs/factory/StateProvince.js',
                     'src/libs/factory/CountryCodes.js',

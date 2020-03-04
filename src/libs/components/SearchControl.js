@@ -5,9 +5,9 @@ class SearchControl {
             id : null, // the id
             autoexecute: true, // Cause the search's action to execute automatically on focusout
                                // or when there number of seed characters is reached
-            arialabel: 'Enter Search Terms', // The aria-label value.
+            arialabel: TextFactory.get('searchcontrol-instructions'), // The aria-label value.
             maxlength: null, // Value for maxlength.
-            searchtext: 'Search',
+            searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
             action: function(value, self) { // The search action. Passed the value of the input and the self
                 console.log(`Executing search action: ${value}`);

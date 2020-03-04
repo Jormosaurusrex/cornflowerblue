@@ -18,13 +18,13 @@ class InputElement {
 
 
             passive: false, // Start life in "passive" mode.
-            unsettext: "(Not Set)", // what to display in passive mode if the value is empty
+            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
 
             help: null, // Help text.
             helpwaittime: 5000, // How long to wait before automatically showing help tooltip
             required: false, // Is this a required field or not
-            requiredtext: 'required', // text to display on required items
-            requirederror: 'This field is required', // error to display if required item isn't filled.
+            requiredtext: TextFactory.get('required_lc'), // text to display on required items
+            requirederror: TextFactory.get('input-error-required'), // error to display if required item isn't filled.
             hidden: false, // Whether or not to be hidden
             autocomplete: 'off', // Enable browser autocomplete. Default is off.
             arialabel: null, // The aria-label value. If null, follows: label > title > null
@@ -218,11 +218,11 @@ class InputElement {
 
         let ctext = "";
         if (this.counter === 'limit') {
-            ctext = `${this.value.length} of ${this.maxlength} characters entered`;
+            ctext = TextFactory.get('input-counter-limit', this.value.length, this.maxlength);
         } else if (this.counter === 'sky') {
-            ctext = `${this.value.length} characters entered`;
+            ctext = TextFactory.get('input-counter-sky', this.value.length);
         } else { // remaining
-            ctext = `${(this.maxlength - this.value.length)} characters remaining`;
+            ctext = TextFactory.get('input-counter-remaining', (this.maxlength - this.value.length));
         }
 
         this.charactercounter.innerHTML = ctext;
@@ -387,10 +387,10 @@ class InputElement {
         this.input.setAttribute('aria-describedby', `msg-${this.id}`);
         this.input.setAttribute('role', 'textbox');
         this.input.setAttribute('tabindex', '0');
+        this.input.setAttribute('placeholder', this.placeholder);
 
         if (this.title) { this.input.setAttribute('title', this.title); }
         if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
-        if (this.placeholder) { this.input.setAttribute('placeholder', this.placeholder); }
         if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
         if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 

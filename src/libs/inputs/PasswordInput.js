@@ -35,7 +35,7 @@ class PasswordInput extends TextInput {
         if (this.visibilityswitch) {
             this.hidepwbutton = new SimpleButton({
                 classes: ['naked'],
-                text: "Hide Password",
+                text: TextFactory.get('hide_password'),
                 hidden: true,
                 notab: true,
                 icon: 'eye-slash',
@@ -45,7 +45,7 @@ class PasswordInput extends TextInput {
             });
             this.showpwbutton = new SimpleButton({
                 classes: ['naked'],
-                text: "Show Password",
+                text: TextFactory.get('show_password'),
                 hidden: true,
                 notab: true,
                 icon: 'eye',
@@ -89,11 +89,11 @@ class PasswordInput extends TextInput {
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (this.value.length < this.minlength) {
-                this.errors.push(`Password must be at least ${this.minlength} characters.`);
+                this.errors.push(TextFactory.get('passwordchanger-error-minlength', this.minlength));
             } else if (this.value.length < this.suggestedlength) {
-                this.warnings.push(`Password is less than the suggested length of ${this.suggestedlength} characters.`);
+                this.errors.push(TextFactory.get('passwordchanger-error-suggestedlength', this.suggestedlength));
             } else if (this.value.length > this.maxlength) {
-                this.errors.push(`Password must be less than ${this.maxlength} characters.`);
+                this.errors.push(TextFactory.get('passwordchanger-error-maxlength', this.maxlength));
             }
         }
     }

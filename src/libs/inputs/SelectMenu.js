@@ -2,7 +2,7 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            unselectedtext: "(Select value)",
+            unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
             minimal: false, // if true, build with the intent that it is part of a larger component.
@@ -10,12 +10,6 @@ class SelectMenu extends InputElement {
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onchange: null  // The change handler. Passed (self).
-        };
-    }
-
-    static get DEFAULT_STRINGS() {
-        return {
-            placeholder: 'Select value'
         };
     }
 
@@ -229,7 +223,7 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('tabindex', '0');
         this.triggerbox.setAttribute('aria-autocomplete', 'none');
         this.triggerbox.setAttribute('aria-activedescendant', '');
-        this.triggerbox.setAttribute('placeholder', this.calculatePlaceholder());
+        this.triggerbox.setAttribute('placeholder', this.placeholder);
 
         this.triggerbox.addEventListener('focusin', function(e) {
             if (me.disabled) {
@@ -273,7 +267,7 @@ class SelectMenu extends InputElement {
         if (this.unselectedtext) {
             return this.unselectedtext;
         }
-        return SelectMenu.DEFAULT_STRINGS.placeholder;
+        return TextFactory.get('selectmenu-placeholder-default');
     }
 
     buildOptions() {

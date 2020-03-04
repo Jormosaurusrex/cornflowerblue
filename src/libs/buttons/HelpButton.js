@@ -5,7 +5,7 @@ class HelpButton extends SimpleButton {
             action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
-            arialabel: 'Help',
+            arialabel: TextFactory.get('help'),
             iconclasses: ['helpicon'],
             help: null // help text to display
         };

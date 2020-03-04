@@ -29,13 +29,13 @@ class EmailInput extends TextInput {
     /* CORE METHODS_____________________________________________________________________ */
 
     calculatePlaceholder() {
-        return 'person@myemailaccount.net';
+        return TextFactory.get('emailinput-placeholder-default');
     }
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
             if (!EmailInput.isValid(this.value)) {
-                this.errors.push("This is an invalid email address.");
+                this.errors.push(TextFactory.get('emailinput-error-invalid_web_address'));
             }
         }
     }
