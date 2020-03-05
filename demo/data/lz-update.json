@@ -1,0 +1,11 @@
+{
+  "data" : [
+    { "id" : 1, "image" : "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
+    { "id" : 2, "album" : "Led Zeppelin 18" },
+    { "id" : 3, "label" : "Citnalta", "image" : "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
+    { "id" : 4, "released" : "1601-01-12", "image" : "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
+    { "id" : 5, "track" : 420, "album" : "Led Zeppelin 18", "writers" : ["Lennon", "McCartney"], "image" : "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
+    { "id" : 8, "image" : "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" },
+    { "id" : 9, "image" : "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" }
+  ]
+}
