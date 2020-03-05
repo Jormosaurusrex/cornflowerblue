@@ -930,15 +930,91 @@ class DataGrid extends Panel {
     /* SELECTION METHODS________________________________________________________________ */
 
     /**
-     * Select a row
+     * Select a row.  This method also handles shift+click selection.
      * @param row the row to select
+     * @parma event (optional) the click event
      */
-    select(row) {
-        row.setAttribute('aria-selected', 'true');
-        row.querySelector('input.selector').checked = true;
+    select(row, event) {
 
-        if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-            this.selectaction(this);
+        let deselectOthers = true;
+        let othersSelected = false;
+
+        if (this.multiselecting) {
+            deselectOthers = false;
+        } else if ((this.multiselect) && (event) && (event.type === 'click') && ((event.shiftKey) || (event.metaKey))) {
+            deselectOthers = false;
+        }
+
+        let sels = this.gridbody.querySelectorAll("[aria-selected='true'");
+
+        if ((sels) && (sels.length > 0)) {
+            othersSelected = true;
+        }
+
+        if (deselectOthers) {
+            othersSelected = false;
+            for (let r of sels) {
+                this.deselect(r);
+            }
+        }
+
+        if ((event) && (event.shiftKey) && (othersSelected)) {
+            // Here there be wyverns, which are much smaller than dragons.
+            // This isn't difficult; just tedious and you can get lost in the logic.
+            //     - We don't want to do this unless there's already one selected.
+            //     - We walk from the top until we find a selected row or ourselves.
+            //     - If we find either, that's where we start collecting.
+            //     - If the first found row was ourselves:
+            //         - Collect until we find a selected row
+            //         - Break
+            //     - If the first found row was not ourselves:
+            //         - Collect until we find ourselves and break - OR -
+            //         - If we find another selected row, we:
+            //             - Discard all collected ones
+            //             - Start collecting again.
+
+            let toBeSelected = [];
+            let gathering = false;
+            let foundSelf = false;
+
+            let allrows = this.gridbody.querySelectorAll('tr');
+            for (let r of allrows) {
+                if (r.getAttribute('data-rowid') === row.getAttribute('data-rowid')) {
+                    foundSelf = true;
+                    if (gathering) {
+                        break; // We're done here.
+                    }
+                    toBeSelected = []; // Reset and start gathering
+                    gathering = true;
+                } else if (r.getAttribute('aria-selected') === 'true') {
+                    if ((gathering) && (foundSelf)) {
+                        break; // We're done here.
+                    }
+                    if (gathering) {
+                        toBeSelected = []; // Reset
+                    } else {
+                        gathering = true;
+                    }
+                } else if (gathering) {
+                    toBeSelected.push(r); // Add it to the pile.
+                }
+            }
+
+            for (let r of toBeSelected) {
+                r.setAttribute('aria-selected', 'true');
+                r.querySelector('input.selector').checked = true;
+            }
+            row.setAttribute('aria-selected', 'true');
+            row.querySelector('input.selector').checked = true;
+
+        } else {
+
+            row.setAttribute('aria-selected', 'true');
+            row.querySelector('input.selector').checked = true;
+
+            if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+                this.selectaction(this);
+            }
         }
     }
 
@@ -1288,11 +1364,18 @@ class DataGrid extends Panel {
 
             if (this.identifier) {
                 row.setAttribute('data-rowid', `${this.id}-r-${rdata[this.identifier]}`);
+            } else {
+                row.setAttribute('data-rowid', `row-${CFBUtils.getUniqueKey(5)}`);
             }
 
             row.addEventListener('click', function(e) {
+                if (e.shiftKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    document.getSelection().removeAllRanges(); // remove cursor selection
+                }
                 if ((me.selectable) && (!me.multiselecting)) {
-                    me.select(row);
+                    me.select(row, e);
                 }
             });
 
@@ -1312,7 +1395,7 @@ class DataGrid extends Panel {
                         break;
                     case 13:
                     case 32:
-                        row.click();
+                        row.click()
                         break;
                     default:
                         break;
