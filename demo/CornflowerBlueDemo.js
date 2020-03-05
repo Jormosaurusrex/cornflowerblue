@@ -1885,7 +1885,7 @@ class CornflowerBlueDemo {
      * @param o the object to dump.
      */
     dumpConfig(o) {
-        this.writeConfig(o.constructor.name, Utils.prettyPrintConfig(o));
+        this.writeConfig(o.constructor.name, CFBUtils.prettyPrintConfig(o));
     }
 
     /**
@@ -1902,7 +1902,7 @@ class CornflowerBlueDemo {
      * @returns {string}
      */
     toString () {
-        return Utils.getConfig(this);
+        return CFBUtils.getConfig(this);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

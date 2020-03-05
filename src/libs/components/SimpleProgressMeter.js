@@ -46,7 +46,7 @@ class SimpleProgressMeter {
     constructor(config) {
         this.config = Object.assign({}, SimpleProgressMeter.DEFAULT_CONFIG, config);
 
-        if (!this.id) { this.id = `progress-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `progress-${CFBUtils.getUniqueKey(5)}`; }
         this.determineWidth();
     }
 
@@ -138,7 +138,7 @@ class SimpleProgressMeter {
             if (this.showcaps) {
                 let value = document.createElement('div');
                 value.classList.add('value');
-                value.innerHTML = (this.commaseparate ? Utils.readableNumber(this.minvalue) : this.minvalue);
+                value.innerHTML = (this.commaseparate ? CFBUtils.readableNumber(this.minvalue) : this.minvalue);
                 p.appendChild(value);
             }
             this.decallayer.append(p);
@@ -155,7 +155,7 @@ class SimpleProgressMeter {
             if (this.showcaps) {
                 let value = document.createElement('div');
                 value.classList.add('value');
-                value.innerHTML = (this.commaseparate ? Utils.readableNumber(this.maxvalue) : this.maxvalue);
+                value.innerHTML = (this.commaseparate ? CFBUtils.readableNumber(this.maxvalue) : this.maxvalue);
                 p.appendChild(value);
             }
             this.decallayer.appendChild(p);
@@ -191,7 +191,7 @@ class SimpleProgressMeter {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

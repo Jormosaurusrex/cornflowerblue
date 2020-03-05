@@ -26,7 +26,7 @@ class RadioGroup extends SelectMenu {
         config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
 
         if (!config.id) { // need to generate an id for label stuff
-            config.id = `radiogroup-${Utils.getUniqueKey(5)}`;
+            config.id = `radiogroup-${CFBUtils.getUniqueKey(5)}`;
         }
         if (!config.name) { config.name = config.id; }
 
@@ -106,7 +106,7 @@ class RadioGroup extends SelectMenu {
     buildOption(def) {
 
         const me = this;
-        const lId = `${this.id}-${Utils.getUniqueKey(5)}`;
+        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let op = document.createElement('input');
         op.setAttribute('id', lId);
         op.setAttribute('type', 'radio');

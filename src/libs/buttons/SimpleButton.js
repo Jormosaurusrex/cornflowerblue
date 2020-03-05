@@ -41,7 +41,7 @@ class SimpleButton {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleButton.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `button-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `button-${CFBUtils.getUniqueKey(5)}`; }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -209,7 +209,7 @@ class SimpleButton {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

@@ -26,7 +26,7 @@ class PasswordChangeForm {
     constructor(config) {
         this.config = Object.assign({}, PasswordChangeForm.DEFAULT_CONFIG, config);
 
-        if (!this.id) { this.id = `pwchange-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `pwchange-${CFBUtils.getUniqueKey(5)}`; }
     }
 
     /* ACTION METHODS___________________________________________________________________ */
@@ -180,7 +180,7 @@ class PasswordChangeForm {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

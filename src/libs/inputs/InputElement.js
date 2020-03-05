@@ -57,7 +57,7 @@ class InputElement {
             }
         }
 
-        if (!this.id) { this.id = `e-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `e-${CFBUtils.getUniqueKey(5)}`; }
 
         if (!this.name) { this.name = this.id; }
 
@@ -561,7 +561,7 @@ class InputElement {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

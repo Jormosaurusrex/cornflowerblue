@@ -1,7 +1,6 @@
-class Utils {
+class CFBUtils {
 
     /* GENERAL METHODS__________________________________________________________________ */
-
 
     /**
      * Change the timezone on a date.
@@ -14,8 +13,6 @@ class Utils {
         let invdate = new Date(date.toLocaleString(locale, {
             timeZone: tz
         }));
-        console.log(date);
-        console.log(invdate);
         let diff = date.getTime() - invdate.getTime();
         return new Date(date.getTime() + diff);
     }
@@ -26,8 +23,8 @@ class Utils {
      * @return {string} the value of the cookie
      */
     static getCookie(name) {
-        return ('; ' + document.cookie)
-            .split('; ' + name + '=')
+        return (`; ${document.cookie}`)
+            .split(`; ${name}=`)
             .pop()
             .split(';')
             .shift();
@@ -171,7 +168,7 @@ class Utils {
             } else {
                 line = `    <span class="key">${k}</span> : <span class="value">${obj[k]}</span>`;
             }
-            if ((Array.isArray(obj[k])) && (Utils.arrayEquals(obj[k], obj.constructor.DEFAULT_CONFIG[k]))) {
+            if ((Array.isArray(obj[k])) && (CFBUtils.arrayEquals(obj[k], obj.constructor.DEFAULT_CONFIG[k]))) {
                 line = `<span class="default">${line}</span>`;
             } else if (obj[k] === obj.constructor.DEFAULT_CONFIG[k]) {
                 line = `<span class="default">${line}</span>`;

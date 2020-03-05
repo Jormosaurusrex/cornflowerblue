@@ -24,7 +24,7 @@ class BooleanToggle {
             this.arialabel = this.label;
         }
 
-        if (!this.id) { this.id = `check-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `check-${CFBUtils.getUniqueKey(5)}`; }
         if (!this.name) { this.name = this.id; }
         this.origval = this.checked;
     }
@@ -159,7 +159,7 @@ class BooleanToggle {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

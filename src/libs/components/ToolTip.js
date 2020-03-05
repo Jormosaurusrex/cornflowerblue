@@ -20,7 +20,7 @@ class ToolTip {
      */
     constructor(config) {
         this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `tt-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `tt-${CFBUtils.getUniqueKey(5)}`; }
         return this;
     }
 
@@ -77,8 +77,8 @@ class ToolTip {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-        this.container.style.top = `${(offsetTop - me.container.clientHeight - (Utils.getSingleEmInPixels() / 2))}px`;
-        this.container.style.left = `${offsetLeft - Utils.getSingleEmInPixels()}px`;
+        this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+        this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
 
         if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;
@@ -148,7 +148,7 @@ class ToolTip {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

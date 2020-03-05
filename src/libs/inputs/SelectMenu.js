@@ -107,7 +107,7 @@ class SelectMenu extends InputElement {
             li.setAttribute('tabindex', '0');
         }
 
-        let vertpos = (Utils.getSingleEmInPixels() * 15); // menu height
+        let vertpos = (CFBUtils.getSingleEmInPixels() * 15); // menu height
         if (this.container) {
             vertpos += parseInt(this.container.getBoundingClientRect().top);
         } else {
@@ -311,7 +311,7 @@ class SelectMenu extends InputElement {
     buildOption(def, order) {
         const me = this;
 
-        const lId = `${this.id}-${Utils.getUniqueKey(5)}`;
+        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let next = order + 1,
             previous = order - 1;
         if (this.unselectedtext) {

@@ -27,9 +27,9 @@ class Panel {
 
     constructor(config) {
         this.config = Object.assign({}, Panel.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `panel-${Utils.getUniqueKey(5)}`; }
-        if (!this.contentid) { this.contentid = `panel-c-${Utils.getUniqueKey(5)}`; }
-        if (!this.headerid) { this.headerid = `panel-h-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `panel-${CFBUtils.getUniqueKey(5)}`; }
+        if (!this.contentid) { this.contentid = `panel-c-${CFBUtils.getUniqueKey(5)}`; }
+        if (!this.headerid) { this.headerid = `panel-h-${CFBUtils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -161,7 +161,7 @@ class Panel {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

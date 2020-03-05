@@ -100,7 +100,7 @@ class DataGrid extends Panel {
         if (this.id) {
             this.savekey = `grid-${this.id}`;
         } else {
-            this.id = `grid-${Utils.getUniqueKey(5)}`;
+            this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
         }
         for (let f of this.fields) {
             if (f.identifier) { this.identifier = f.name; }

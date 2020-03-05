@@ -58,7 +58,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
                 this.actualsize = 200;
             }
         } else if (this.size.toLowerCase().endsWith('em')) {
-            this.actualsize = (Utils.getSingleEmInPixels() * parseInt(this.size));
+            this.actualsize = (CFBUtils.getSingleEmInPixels() * parseInt(this.size));
             if (isNaN(this.actualsize)) {
                 console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
                 this.actualsize = 200;

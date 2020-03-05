@@ -30,7 +30,7 @@ class DialogWindow {
     constructor(config) {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
-        if (!this.id) { this.id = `dialog-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `dialog-${CFBUtils.getUniqueKey(5)}`; }
 
         this.build();
     }
@@ -213,7 +213,7 @@ class DialogWindow {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

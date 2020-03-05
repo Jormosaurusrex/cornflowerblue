@@ -57,7 +57,7 @@ class SimpleForm {
      */
     constructor(config) {
         this.config = Object.assign({}, SimpleForm.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `form-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `form-${CFBUtils.getUniqueKey(5)}`; }
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -361,7 +361,7 @@ class SimpleForm {
             if ((!element.id) && (element.name)) {
                 element.id = `${this.id}-${element.name}`;
             } else if (!element.id) {
-                element.id = `${this.id}-e-${Utils.getUniqueKey(5)}`;
+                element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
             }
             this.addElement(element);
             this.elementbox.appendChild(element.container);
@@ -427,7 +427,7 @@ class SimpleForm {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

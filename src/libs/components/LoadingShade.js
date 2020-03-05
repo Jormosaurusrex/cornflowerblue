@@ -14,7 +14,7 @@ class LoadingShade {
      */
     constructor(config) {
         this.config = Object.assign({}, LoadingShade.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `shade-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `shade-${CFBUtils.getUniqueKey(5)}`; }
         return this;
     }
 
@@ -69,7 +69,7 @@ class LoadingShade {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

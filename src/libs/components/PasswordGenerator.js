@@ -54,7 +54,7 @@ class PasswordGenerator {
     constructor(config) {
         this.config = Object.assign({}, PasswordGenerator.DEFAULT_CONFIG, config);
 
-        if (!this.id) { this.id = `pwgen-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `pwgen-${CFBUtils.getUniqueKey(5)}`; }
 
         this.setactuals = [];
     }
@@ -164,7 +164,7 @@ class PasswordGenerator {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

@@ -36,7 +36,7 @@ class TabBar {
     constructor(config) {
         this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
         this.tabmap = {};
-        if (!this.id) { this.id = `tabbar-${Utils.getUniqueKey(5)}`; }
+        if (!this.id) { this.id = `tabbar-${CFBUtils.getUniqueKey(5)}`; }
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -322,7 +322,7 @@ class TabBar {
      * Dump this object as a string.
      * @returns {string}
      */
-    toString () { return Utils.getConfig(this); }
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 

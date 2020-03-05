@@ -22,7 +22,7 @@ class HelpButton extends SimpleButton {
             config.classes = ['naked', 'help'];
         }
         if (!config.id) { // need to generate an id for aria stuff
-            config.id = `${Utils.getUniqueKey(5)}-help`;
+            config.id = `${CFBUtils.getUniqueKey(5)}-help`;
         }
         super(config);
         this.tooltip.attach(this);
