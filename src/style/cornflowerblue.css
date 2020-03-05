@@ -4825,10 +4825,24 @@ div.datagrid-container div.grid-info div.countbox {
   margin-right: auto;
   white-space: nowrap;
   padding-right: 1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 div.datagrid-container div.grid-info div.countbox label {
   display: inline-block;
   margin: 0 0.5em 0 0;
+}
+div.datagrid-container div.grid-info div.countbox div.activity {
+  margin-left: 0.5em;
+  color: var(--focus-color-half);
+}
+div.datagrid-container div.grid-info div.countbox div.activity > span.icon {
+  display: inline-block;
+  animation: cfb-localspin 2s infinite linear;
+}
+div.datagrid-container div.grid-info div.countbox div.activity[aria-hidden=true] {
+  display: none;
 }
 div.datagrid-container div.grid-info button:last-child {
   margin-right: 0;

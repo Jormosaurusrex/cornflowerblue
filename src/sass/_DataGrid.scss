@@ -31,9 +31,23 @@ div.datagrid-container {
       margin-right: auto;
       white-space: nowrap;
       padding-right: 1em;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
       label {
         display: inline-block;
         margin: 0 .5em 0 0;
+      }
+      div.activity {
+        margin-left: .5em;
+        color: var(--focus-color-half);
+        > span.icon {
+          display: inline-block;
+          animation: cfb-localspin 2s infinite linear;
+        }
+        &[aria-hidden=true] {
+          display: none;
+        }
       }
     }
     button:last-child {

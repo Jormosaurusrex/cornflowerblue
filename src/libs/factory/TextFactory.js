@@ -14,6 +14,7 @@ class TextFactory {
             "confirm_password" : 'Confirm Password',
             "countrymenu_select" : 'Select country',
             "current_password" : 'Current Password',
+            "datagrid-activitynotifier-text" : "Working...",
             "datagrid-column-config-instructions" : "Select which columns to show in the grid. This does not hide the columns during export.",
             "datagrid-filter-instructions" : "Columns that are filterable are shown below. Set the value of the column to filter it.",
             "datagrid-message-no_visible_columns" : 'No columns are visible in this table.',

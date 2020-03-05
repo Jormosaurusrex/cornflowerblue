@@ -14,6 +14,10 @@ class DataGrid extends Panel {
                     label: <string>,   // The human-readable name for the column
                     width: <number,    // The default width of the column
                     hidden: <boolean>, // Is the column hidden or not.
+                    identifier: <boolean> // If true, marks the field as the unique identifier
+                                          // for a data set.  An identifier is required if the
+                                          // grid is intended to update entries.  Without a unique
+                                          // field, data can only be appended, not updated.
                     type: <string>,    // The datatype of the column
                                        //   - string
                                        //   - number
@@ -75,6 +79,8 @@ class DataGrid extends Panel {
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
 
+            activitynotifiericon: 'gear-complex',
+            activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
             sorticon: 'chevron-down',
             classes: [] //Extra css classes to apply
@@ -96,6 +102,9 @@ class DataGrid extends Panel {
         } else {
             this.id = `grid-${Utils.getUniqueKey(5)}`;
         }
+        for (let f of this.fields) {
+            if (f.identifier) { this.identifier = f.name; }
+        }
         this.activefilters = {};
         this.loadstate();
 
@@ -104,11 +113,9 @@ class DataGrid extends Panel {
         }, 100);
     }
 
-    postLoad() {
-        this.applystate();
-        this.grindDuplicateCells();
-    }
-
+    /**
+     * Loads the initial data into the grid.
+     */
     fillData() {
         const me = this;
 
@@ -124,13 +131,19 @@ class DataGrid extends Panel {
             }, 100);
         } else if (this.source) {
             this.fetchData(this.source, function(data){
-                me.append(data);
-                setTimeout(function() {
-                    me.postLoad();
-                    me.shade.deactivate();
-                }, 100);
+                me.update(data);
+                me.postLoad();
+                me.shade.deactivate();
             });
         }
+    }
+
+    /**
+     * Do this once we're done loading data.  This only happens once.
+     */
+    postLoad() {
+        this.applystate();
+        this.grindDuplicateCells();
     }
 
     /* PSEUDO GETTERS___________________________________________________________________ */
@@ -156,7 +169,7 @@ class DataGrid extends Panel {
      * @param key the data key
      * @return {[]} and array of values
      */
-    getvalues(key) {
+    getValues(key) {
         let a = [];
         for (let d of this.data) {
             a.push(d[key]);
@@ -169,7 +182,7 @@ class DataGrid extends Panel {
      * @param key the data key
      * @return {[]} and array of values
      */
-    getuniquevalues(key) {
+    getUniqueValues(key) {
         let s = new Set();
         for (let d of this.data) {
             s.add(d[key]);
@@ -182,7 +195,7 @@ class DataGrid extends Panel {
      * @param fieldid the id of the field.
      * @return {*}
      */
-    getfield(fieldid) {
+    getField(fieldid) {
         let rf;
         for (let f of this.fields) {
             if (f.name === fieldid) {
@@ -327,7 +340,7 @@ class DataGrid extends Panel {
      * Sort the table based on a field.
      * @param field the field to sort
      */
-    sortfield(field, sort='asc') {
+    sortField(field, sort='asc') {
 
         let hCell = this.thead.querySelector(`[data-name='${field}']`);
 
@@ -381,7 +394,7 @@ class DataGrid extends Panel {
                 sort = "desc";
             }
         }
-        this.sortfield(fieldname, sort);
+        this.sortField(fieldname, sort);
     }
 
     /**
@@ -477,7 +490,7 @@ class DataGrid extends Panel {
             let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
             let cells = r.querySelectorAll("td:not(.mechanical)");
             for (let i = 0; i < cells.length; i++) {
-                if (!this.getfield(cells[i].getAttribute('data-name')).nodupe) {
+                if (!this.getField(cells[i].getAttribute('data-name')).nodupe) {
                     if (cells[i].innerHTML === pcells[i].innerHTML) {
                         cells[i].classList.add('duplicate');
                     } else {
@@ -490,19 +503,6 @@ class DataGrid extends Panel {
     }
 
     /* DATA METHODS_____________________________________________________________________ */
-
-    /**
-     * Append data into the grid.  Does not replace.
-     * @param data the data to append (an array of data rows)
-     */
-    append(data) {
-        if (!this.data) { this.data = []; }
-        for (let entry of data) {
-            this.gridbody.appendChild(this.buildRow(entry));
-            this.data.push(entry);
-        }
-        this.gridPostProcess();
-    }
 
     /**
      * Clears data from the grid. Completely flattens it.
@@ -524,7 +524,7 @@ class DataGrid extends Panel {
     gridPostProcess() {
         this.updateCount();
         if (this.currentsort) {
-            this.sortfield(this.currentsort.field, this.currentsort.direction);
+            this.sortField(this.currentsort.field, this.currentsort.direction);
         }
         this.applyFilters();
         this.search(this.searchcontrol.value);
@@ -533,10 +533,11 @@ class DataGrid extends Panel {
 
     /**
      * Load data from a URL and put it into the grid. Appends by default.
-     * @param url the URL to get the data from
-     * @callback (optional) do this instead of Appending data. Takes data as an argument
+     * @param url the URL to get the data from. Defaults to the source url
+     * @param callback (optional) do this instead of Appending data. Takes data as an argument
      */
-    fetchData(url, callback) {
+    fetchData(url=this.source, callback) {
+        this.activitynotifier.removeAttribute('aria-hidden');
         fetch(url, {
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
@@ -555,12 +556,97 @@ class DataGrid extends Panel {
                 } else {
                     this.append(data);
                 }
+                this.activitynotifier.setAttribute('aria-hidden', 'true');
             })
             .catch(err => {
                 console.error(`Error while fetching data from ${url}`);
                 console.error(err);
             });
+    }
 
+    /**
+     * Gets data and merges it in.  Updates entries that have changed and inserts new ones.
+     * @param url the url to get data from. Defaults to the source url.
+     */
+    mergeData(url=this.source) {
+        const me = this;
+        this.fetchData(url, function(data) {
+            me.update(data);
+        });
+    }
+
+    /**
+     * Get a specific entry from the data set
+     * @param id the id of the entry
+     * @return the entry dictionary, or null.
+     */
+    getEntry(id) {
+        if (!this.identifier) { return null; }
+        let entry;
+        for (let e of this.data) {
+            if ((e[this.identifier]) && (e[this.identifier] === id)) {
+                entry = e;
+                break;
+            }
+        }
+        return entry;
+    }
+
+    /**
+     * Update multiple rows of data.  Inserts if the value isn't there.
+     * @param data an array of entry informations
+     */
+    update(data) {
+        if (!this.data) { this.data = []; }
+        for (let entry of data) {
+            if (this.identifier) {
+                let id = entry[this.identifier];
+                let old = this.getEntry(id);
+                if (old) {
+                    this.updateEntry(entry); // Update the old row
+                } else {
+                    this.addEntry(entry); // This is a new row, so we append.
+                }
+            } else {
+                this.addEntry(entry); // We can only append
+            }
+        }
+        this.gridPostProcess();
+    }
+
+    /**
+     * Update a single entry in the data
+     * @param entry the entry to update.  MUST contain an identifier field.
+     */
+    updateEntry(entry) {
+        let id = entry[this.identifier];
+        let rowDOM = this.gridbody.querySelector(`[data-rowid=${this.id}-r-${id}]`);
+        for (let e of this.data) {
+            if ((e[this.identifier]) && (e[this.identifier] === id)) {
+                for (let k in entry) {
+                    e[k] = entry[k];
+                }
+                break;
+            }
+        }
+
+        for (let key in entry) {
+            if (key === this.identifier) {
+                continue;
+            }
+            let oldCell = rowDOM.querySelector(`[data-name=${key}`);
+            let c = this.buildCell(entry, this.getField(key));
+            rowDOM.replaceChild(c, oldCell);
+        }
+    }
+
+    /**
+     * Add an entry into the data
+     * @param entry the entry to add.
+     */
+    addEntry(entry) {
+        this.gridbody.appendChild(this.buildRow(entry));
+        this.data.push(entry);
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -657,9 +743,9 @@ class DataGrid extends Panel {
         if (this.state.fields) {
             for (let f of Object.values(this.state.fields)) {
                 if (f.hidden) {
-                    this.hideColumn(this.getfield(f.name));
+                    this.hideColumn(this.getField(f.name));
                 } else {
-                    this.showColumn(this.getfield(f.name));
+                    this.showColumn(this.getField(f.name));
                 }
             }
         }
@@ -704,7 +790,7 @@ class DataGrid extends Panel {
 
         let element;
 
-        let values = me.getuniquevalues(f.name);
+        let values = me.getUniqueValues(f.name);
 
         if (f.filterable === 'enum') {
             let options = [];
@@ -778,7 +864,7 @@ class DataGrid extends Panel {
             this.filterinfo.setAttribute('aria-expanded', true);
             for (let f of Object.values(this.activefilters)) {
                 f.tagbutton = new TagButton({
-                    text: this.getfield(f.field).label,
+                    text: this.getField(f.field).label,
                     help: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
                     action: function() {
                         me.removeFilter(f);
@@ -898,7 +984,6 @@ class DataGrid extends Panel {
      * @returns the grid container
      */
     buildContainer() {
-        const me = this;
 
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
@@ -992,10 +1077,23 @@ class DataGrid extends Panel {
         this.itemcount.classList.add('itemcount');
         this.updateCount();
 
+        this.activitynotifier = document.createElement('div');
+        this.activitynotifier.classList.add('activity');
+        this.activitynotifier.setAttribute('aria-hidden', 'true');
+        if (this.activitynotifiericon) {
+            this.activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
+        }
+        if (this.activitynotifiertext) {
+            let s = document.createElement('span');
+            s.innerHTML = this.activitynotifiertext;
+            this.activitynotifier.appendChild(s);
+        }
+
         this.itemcountbox = document.createElement('div');
         this.itemcountbox.classList.add('countbox');
         this.itemcountbox.appendChild(this.itemcountlabel);
         this.itemcountbox.appendChild(this.itemcount);
+        this.itemcountbox.appendChild(this.activitynotifier);
 
         this.gridinfo.appendChild(this.itemcountbox);
 
@@ -1188,6 +1286,10 @@ class DataGrid extends Panel {
 
             row.setAttribute('tabindex', '0');
 
+            if (this.identifier) {
+                row.setAttribute('data-rowid', `${this.id}-r-${rdata[this.identifier]}`);
+            }
+
             row.addEventListener('click', function(e) {
                 if ((me.selectable) && (!me.multiselecting)) {
                     me.select(row);
@@ -1323,6 +1425,14 @@ class DataGrid extends Panel {
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
 
+    get activitynotifier() { return this._activitynotifier; }
+    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
+
+    get activitynotifiericon() { return this.config.activitynotifiericon; }
+    set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
+    get activitynotifiertext() { return this.config.activitynotifiertext; }
+    set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
+
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
 
@@ -1421,6 +1531,9 @@ class DataGrid extends Panel {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get identifier() { return this._identifier; }
+    set identifier(identifier) { this._identifier = identifier; }
 
     get itemcount()  { return this._itemcount; }
     set itemcount(itemcount) { this._itemcount = itemcount; }

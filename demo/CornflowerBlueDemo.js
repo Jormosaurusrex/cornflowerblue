@@ -765,6 +765,15 @@ class CornflowerBlueDemo {
             title: 'Songs by Led Zeppelin',
             fields: [
                 {
+                    name: "id",
+                    label: "ID",
+                    width: 1,
+                    identifier: true,
+                    type: "number",
+                    nodupe: true,
+                    hidden: true,
+                    description: "The unique ID for this song"
+                },{
                     name: "track",
                     label: "Track",
                     width: 1,
@@ -844,16 +853,16 @@ class CornflowerBlueDemo {
         controls.classList.add('centered');
 
         controls.appendChild(new SimpleButton({
-            text: "Append Data from URL",
+            text: "Append Data",
             action: function() {
                 dg.fetchData('demo/data/coda.json');
             }
         }).container);
 
         controls.appendChild(new SimpleButton({
-            text: "Append Data Programmatically",
+            text: "Update Data",
             action: function() {
-                dg.append(me.getCoda());
+                dg.mergeData('demo/data/lz-update.json');
             }
         }).container);
 
