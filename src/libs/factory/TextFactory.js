@@ -14,6 +14,11 @@ class TextFactory {
             "confirm_password" : 'Confirm Password',
             "countrymenu_select" : 'Select country',
             "current_password" : 'Current Password',
+
+            "datagrid-tooltip-export" : "Export this grid as a comma separated value file.",
+            "datagrid-tooltip-configure_columns" : "Configure the visibility of individual columns.",
+            "datagrid-tooltip-bulk_select" : "Show bulk selection controls.",
+
             "datagrid-activitynotifier-text" : "Working...",
             "datagrid-column-config-instructions" : "Select which columns to show in the grid. This does not hide the columns during export.",
             "datagrid-filter-instructions" : "Columns that are filterable are shown below. Set the value of the column to filter it.",

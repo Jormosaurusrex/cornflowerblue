@@ -1199,9 +1199,18 @@ class DataGrid extends Panel {
         }
 
         let items = [];
+
+        // {
+        //    label: "Menu Text", // text
+        //    tooltip: null, // Tooltip text
+        //    icon: null, // Icon to use, if any
+        //    action: function() { } // what to do when the tab is clicked.
+        // }
+
         if (this.multiselect) {
             items.push({
                 label: TextFactory.get('bulk_select'),
+                tooltip: TextFactory.get('datagrid-tooltip-bulk_select'),
                 icon: this.multiselecticon,
                 action: function() {
                     me.selectmodetoggle();
@@ -1211,6 +1220,7 @@ class DataGrid extends Panel {
         items.push({
             label: TextFactory.get('columns'),
             icon: this.columnconfigurationicon,
+            tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
             action: function() {
                 me.configurator('column');
             }
@@ -1218,6 +1228,7 @@ class DataGrid extends Panel {
         if (this.exportable) {
             items.push({
                 label: TextFactory.get('export'),
+                tooltip: TextFactory.get('datagrid-tooltip-export'),
                 icon: this.exporticon,
                 action: function() {
                     me.export();
@@ -1304,8 +1315,7 @@ class DataGrid extends Panel {
         if (field.description) {
             let celltip = new ToolTip({
                 text: field.description
-            });
-            celltip.attach(div);
+            }).attach(div);
         }
 
         if (this.sortable) {

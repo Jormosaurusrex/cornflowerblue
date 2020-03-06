@@ -4,7 +4,6 @@ class ToolTip {
         return {
             id : null, // the id
             icon: 'help-circle',
-            tipicon: 'help-circle',
             iconclasses: [], // Classes to apply to the icon
             text: null, // The text to use,
             parent: null, // the parent object to fire off
@@ -113,8 +112,8 @@ class ToolTip {
             }
         }
 
-        if ((this.tipicon) && (this.tipicon !== '')) {
-            let icon = IconFactory.icon(this.tipicon);
+        if ((this.icon) && (this.icon !== '')) {
+            let icon = IconFactory.icon(this.icon);
             icon.classList.add('tipicon');
             if ((this.iconclasses) && (this.iconclasses.length > 0)) {
                 for (let ic of this.iconclasses) {
@@ -129,13 +128,6 @@ class ToolTip {
         this.tiptext.setAttribute('id', `${this.id}-text`);
         if (this.text) {
             this.tiptext.innerHTML = this.text;
-        }
-
-        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-            for (let ic of this.iconclasses) {
-                if (icon) { icon.classList.add(ic); }
-                if (secondicon) { secondicon.classList.add(ic); }
-            }
         }
 
         this.container.appendChild(this.tiptext);
@@ -161,20 +153,11 @@ class ToolTip {
     }
     set container(container) { this._container = container; }
 
-    get help() { return this.config.help; }
-    set help(help) { this.config.help = help; }
-
-    get helptext() { return this._helptext; }
-    set helptext(helptext) { this._helptext = helptext; }
-
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
 
     get iconclasses() { return this.config.iconclasses; }
     set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
-
-    get iconside() { return this.config.iconside; }
-    set iconside(iconside) { this.config.iconside = iconside; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -187,9 +170,6 @@ class ToolTip {
 
     get timer() { return this._timer; }
     set timer(timer) { this._timer = timer; }
-
-    get tipicon() { return this.config.tipicon; }
-    set tipicon(tipicon) { this.config.tipicon = tipicon; }
 
     get tiptext() { return this._tiptext; }
     set tiptext(tiptext) { this._tiptext = tiptext; }

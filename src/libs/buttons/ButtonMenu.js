@@ -15,7 +15,8 @@ class ButtonMenu extends SimpleButton {
                         // {
                         //    label: "Menu Text", // text
                         //    tooltip: null, // Tooltip text
-                        //    icon: null, // Icon to use, if any
+                        //    tipicon: null, // Tooltip icon, if any
+                        //    icon: null, // Icon to use in the menu, if any
                         //    action: function() { } // what to do when the tab is clicked.
                         // }
         };
@@ -193,6 +194,14 @@ class ButtonMenu extends SimpleButton {
             });
 
             menuitem.appendChild(anchor);
+
+            if (item.tooltip) {
+                let tt = new ToolTip({
+                    text: item.tooltip,
+                    icon: item.tipicon,
+                });
+                tt.attach(menuitem);
+            }
 
             this.menu.appendChild(menuitem);
 

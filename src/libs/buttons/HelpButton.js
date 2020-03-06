@@ -29,14 +29,6 @@ class HelpButton extends SimpleButton {
     }
 
     /**
-     * Force the tooltip to stay open.
-     */
-    stayopen() {
-        this.button.classList.add('stayopen');
-        this.open();
-    }
-
-    /**
      * Builds the help.
      */
     buildTooltip() {
