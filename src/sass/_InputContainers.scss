@@ -146,6 +146,24 @@ div.textarea-container {
     opacity: 0;
     display: none;
   }
+  &.minimal {
+    display: inline-block;
+    margin: 0 .5em 0 .5em;
+    div.wrap {
+      div.inputcontrol {
+        right: 1em;
+      }
+      &:after {
+        display: none;
+      }
+      &:before {
+        right: 1em;
+      }
+    }
+    input.trigger {
+      padding-right: 2em;
+    }
+  }
   &.mute {
     label {
       opacity: 0;

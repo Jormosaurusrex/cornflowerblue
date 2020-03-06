@@ -14,6 +14,7 @@ class StateMenu extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, StateMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 

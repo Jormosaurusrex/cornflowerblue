@@ -8,6 +8,7 @@ class TextArea extends InputElement {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, TextArea.DEFAULT_CONFIG, config);
         config.type = "textarea";
         super(config);

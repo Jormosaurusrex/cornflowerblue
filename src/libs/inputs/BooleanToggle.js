@@ -18,6 +18,7 @@ class BooleanToggle {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
         
         if ((!this.arialabel) && (this.label)) { // munch aria label.

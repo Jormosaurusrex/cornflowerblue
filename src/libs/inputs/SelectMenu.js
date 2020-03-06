@@ -5,8 +5,6 @@ class SelectMenu extends InputElement {
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
-            minimal: false, // if true, build with the intent that it is part of a larger component.
-                            // this removes things like the search controls and validation boxes.
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onchange: null  // The change handler. Passed (self).
@@ -19,6 +17,9 @@ class SelectMenu extends InputElement {
      */
     constructor(config) {
         config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
+        if (!config.name) {
+            config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
+        }
         super(config);
     }
 
@@ -38,13 +39,15 @@ class SelectMenu extends InputElement {
      */
     get selected() {
         let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);
-        if (sel.length > 0) { return sel; }
+        if (sel) { return sel; }
         return null;
     }
 
     get value() {
-        return this.triggerbox.value;
+        if (!this.selected) { return null; }
+        return this.selected.value;
     }
+
     set value(value) {
         this.config.value = value;
         this.triggerbox.value = value;
@@ -298,14 +301,20 @@ class SelectMenu extends InputElement {
         this.optionlist.setAttribute('tabindex', '-1');
 
         let order = 1;
+        let minchars = 5;
         for (let opt of this.options) {
             let o = this.buildOption(opt, order);
+            if ((opt.label) && (opt.label.length > minchars)) {
+                minchars = opt.label.length;
+            }
             if (opt.checked) {
                 this.selectedoption = opt;
             }
             order++;
             this.optionlist.appendChild(o);
         }
+        console.log(minchars);
+        this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
     }
 
     buildOption(def, order) {
@@ -321,12 +330,19 @@ class SelectMenu extends InputElement {
         }
         if (next > this.options.length) { next = this.options.length; }
 
+        let opt = document.createElement('input');
+        opt.setAttribute('type', 'radio');
+        opt.setAttribute('name', this.name);
+        opt.value = def.value;
+
         let li = document.createElement('li');
         li.setAttribute('tabindex', '-1');
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
         li.setAttribute('role', 'option');
         li.setAttribute('data-value', def.value);
+
+        li.appendChild(opt);
 
         li.addEventListener('keydown', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
@@ -364,13 +380,13 @@ class SelectMenu extends InputElement {
                         break;
                     case 8:  // Backspace
                     case 46:  // Delete
-                        me.value = me.value.substring(0, me.value.length - 1);
+                        me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
                         me.updateSearch();
                         break;
                     case 32: // space
                     default:
                         e.preventDefault();
-                        me.value = me.value + e.key;
+                        me.triggerbox.value = me.triggerbox.value + e.key;
                         me.updateSearch();
                         break;
                 }
@@ -379,11 +395,14 @@ class SelectMenu extends InputElement {
         });
 
         li.addEventListener('click', function() {
-            let opts = me.optionlist.querySelectorAll('li');
-            for (let o of opts) {
-                o.removeAttribute('aria-selected');
+            let listentries = me.optionlist.querySelectorAll('li');
+            for (let le of listentries) {
+                le.removeAttribute('aria-selected');
+                let opt = le.querySelector(`input[name=${me.name}]`);
+                if (opt) { opt.removeAttribute('checked') ; }
             }
             li.setAttribute('aria-selected', 'true');
+            li.querySelector(`input[name=${me.name}]`).setAttribute('checked', 'true');
 
             if (me.prefix) {
                 me.triggerbox.value = `${me.prefix} ${def.label}`;
@@ -410,7 +429,9 @@ class SelectMenu extends InputElement {
             }
         });
 
-        li.innerHTML = def.label;
+        let text = document.createElement('span');
+        text.innerHTML = def.label;
+        li.appendChild(text);
 
         if (def.checked) {
             this.origval = def.value;

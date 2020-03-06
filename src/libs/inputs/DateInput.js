@@ -22,6 +22,7 @@ class DateInput extends TextInput {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, DateInput.DEFAULT_CONFIG, config);
         super(config);
     }

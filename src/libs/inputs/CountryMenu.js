@@ -13,6 +13,7 @@ class CountryMenu extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 

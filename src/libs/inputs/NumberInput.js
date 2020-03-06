@@ -15,6 +15,7 @@ class NumberInput extends TextInput {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);
 
         /*
@@ -101,11 +102,11 @@ class NumberInput extends TextInput {
 
     calculatePlaceholder() {
         let text = TextFactory.get('numberinput-placeholder-basic');
-        if ((this.minnumber !== 'undefined') && (this.maxnumber !== 'undefined')) {
+        if ((this.minnumber) && (this.maxnumber)) {
             text = TextFactory.get('numberinput-placeholder-between_x_y', this.minnumber, this.maxnumber);
-        } else if (this.minnumber !== 'undefined') {
+        } else if (this.minnumber) {
             text = TextFactory.get('numberinput-placeholder-larger_than_x', this.minnumber);
-        } else if (this.maxnumber !== 'undefined') {
+        } else if (this.maxnumber) {
             text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
         }
         if (this.step) {

@@ -13,6 +13,7 @@ class TimezoneMenu extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
 
         let options = [];

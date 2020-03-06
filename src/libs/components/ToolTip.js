@@ -13,6 +13,12 @@ class ToolTip {
         };
     }
 
+    static closeOpen() {
+        if (ToolTip.activeTooltip) {
+            clearTimeout(ToolTip.activeTooltip.timer);
+            ToolTip.activeTooltip.close();
+        }
+    }
 
     /**
      * Define the element
@@ -65,9 +71,7 @@ class ToolTip {
     open() {
         const me = this;
 
-        if (ToolTip.activeTooltip) {
-            ToolTip.activeTooltip.close();
-        }
+        ToolTip.closeOpen();
 
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
@@ -102,8 +106,6 @@ class ToolTip {
                 this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
         }
-
-
 
         if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;

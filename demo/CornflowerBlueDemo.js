@@ -779,6 +779,7 @@ class CornflowerBlueDemo {
                     width: 1,
                     type: "number",
                     nodupe: true,
+                    filterable: true,
                     description: "The track number of the song.",
                     renderer: function(data) {
                         return `${data}.`;
@@ -796,13 +797,14 @@ class CornflowerBlueDemo {
                     width: 3,
                     resize: true,
                     type: "string",
-                    filterable: 'string',
+                    filterable: true,
                     description: "The album the song is on.",
                     classes: ['nowrap', 'italic']
                 }, {
                     name: "released",
                     label: "Released",
                     width: 1,
+                    filterable: true,
                     description: "The date the album was released.",
                     type: "date"
                 }, {
@@ -811,7 +813,7 @@ class CornflowerBlueDemo {
                     width: 3,
                     resize: true,
                     type: "string",
-                    filterable: 'string',
+                    filterable: true,
                     description: "The title of the song.",
                     classes: ['nowrap', 'italic']
                 }, {
@@ -820,7 +822,7 @@ class CornflowerBlueDemo {
                     width: 3,
                     resize: true,
                     nodupe: true,
-                    filterable: 'string',
+                    filterable: true,
                     type: "stringarray",
                     separator: " &middot; ",
                     description: "A list of the song's writers.",
@@ -829,7 +831,7 @@ class CornflowerBlueDemo {
                     name: "label",
                     label: "Label",
                     width: 1,
-                    filterable: 'enum',
+                    filterable: true,
                     description: "The record label the album was released by.",
                     type: "string"
                 }, {

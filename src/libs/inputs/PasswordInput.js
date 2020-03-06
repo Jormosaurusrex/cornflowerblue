@@ -17,6 +17,7 @@ class PasswordInput extends TextInput {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, PasswordInput.DEFAULT_CONFIG, config);
         super(config);
     }

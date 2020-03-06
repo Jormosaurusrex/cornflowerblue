@@ -18,6 +18,7 @@ class EmailInput extends TextInput {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, EmailInput.DEFAULT_CONFIG, config);
         super(config);
     }

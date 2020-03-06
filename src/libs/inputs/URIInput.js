@@ -27,6 +27,7 @@ class URIInput extends TextInput {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
 
         if ((config.value) && (URIInput.isEncoded(config.value))) {

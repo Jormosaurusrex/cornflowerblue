@@ -404,8 +404,37 @@ div.datagrid-configurator {
     }
   }
   &.filter {
-    div.filter-line {
+    ul.filter-list {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      padding: 0;
+      > li {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        div.primeselector {
 
+        }
+        div.filtervalues{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          justify-content: space-between;
+          div.comparator {
+
+          }
+          div.valueinput {
+
+          }
+        }
+        div.buttons {
+
+        }
+      }
     }
   }
 }

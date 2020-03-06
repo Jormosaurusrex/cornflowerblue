@@ -41,6 +41,8 @@ class DialogWindow {
     open() {
         const me = this;
 
+        ToolTip.closeOpen();
+
         this.prevfocus = document.querySelector(':focus');
 
         this.mask = document.createElement('div');

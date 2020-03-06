@@ -8,29 +8,6 @@ div.select-container {
       display: none;
     }
   }
-  div.searchdisplay {
-    transition: all .2s;
-    opacity: 1;
-    right: 0;
-    top: 1.5em;
-    padding: 0 .1em 0 0;
-    &:after {
-      font-family: "cornflowerblue", serif;
-      content: '\48'; // magnify
-      font-style: normal;
-    }
-    &.hidden {
-      opacity: 0;
-      &:after {
-        opacity: 0;
-      }
-    }
-  }
-  &.vert {
-    div.searchdisplay {
-      top: 3em;
-    }
-  }
   div.wrap {
     display: block;
     position: relative;
@@ -73,7 +50,7 @@ div.select-container {
       width: 100%;
       transition: all .2s;
       li {
-        display: block;
+        display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
@@ -82,6 +59,9 @@ div.select-container {
         margin: 0;
         white-space: nowrap;
         padding: .5em 1em .5em 1.5em;
+        > input[type='radio'] {
+          display: none;
+        }
         &:focus {
           outline: var(--selectmenu-menu-background-color) dashed .1em;
           outline-offset: -.3em;
@@ -134,21 +114,6 @@ div.select-container {
       }
     }
 
-  }
-  &.minimal {
-    display: inline-block;
-    margin: 0 .5em 0 .5em;
-    div.wrap {
-      &:after {
-        display: none;
-      }
-    }
-    input.trigger {
-      padding-right: 2em;
-      &:before {
-        right: .5em;
-      }
-    }
   }
   &.disabled {
     input.trigger {

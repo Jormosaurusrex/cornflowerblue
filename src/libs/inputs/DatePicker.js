@@ -20,6 +20,7 @@ class DatePicker {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
     }
 

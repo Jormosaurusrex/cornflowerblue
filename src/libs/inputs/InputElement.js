@@ -16,6 +16,8 @@ class InputElement {
             pattern: null,
             icon: null, // Use to define a specific icon, used in some specific controls.
 
+            minimal: false, // if true, build with the intent that it is part of a larger component.
+                            // this removes things like the search controls and validation boxes.
 
             passive: false, // Start life in "passive" mode.
             unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
@@ -47,6 +49,7 @@ class InputElement {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
 
         if (!this.arialabel) { // munch aria label.
@@ -244,7 +247,7 @@ class InputElement {
      * @return {null|*}
      */
     calculatePlaceholder() {
-        return null;
+        return '';
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -322,9 +325,12 @@ class InputElement {
         if (this.inputcontrol) { wrap.appendChild(this.inputcontrol); }
         this.container.appendChild(wrap);
 
-        this.container.appendChild(this.passivebox);
-        if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
-        this.container.appendChild(this.messagebox);
+        if (!this.minimal) {
+            this.container.appendChild(this.passivebox);
+            if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
+            this.container.appendChild(this.messagebox);
+        }
+        if (this.minimal) { this.container.classList.add('minimal'); }
 
         this.postContainerScrub();
 
@@ -661,6 +667,9 @@ class InputElement {
 
     get maxlength() { return this.config.maxlength; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get minimal() { return this.config.minimal; }
+    set minimal(minimal) { this.config.minimal = minimal; }
 
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }

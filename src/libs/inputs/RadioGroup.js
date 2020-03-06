@@ -23,6 +23,7 @@ class RadioGroup extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
 
         if (!config.id) { // need to generate an id for label stuff

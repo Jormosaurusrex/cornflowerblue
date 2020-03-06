@@ -11,6 +11,7 @@ class FileInput extends InputElement {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
         super(config);
     }
