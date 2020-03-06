@@ -4,6 +4,7 @@ class ToolTip {
         return {
             id : null, // the id
             icon: 'help-circle',
+            gravity: 'n',
             iconclasses: [], // Classes to apply to the icon
             text: null, // The text to use,
             parent: null, // the parent object to fire off
@@ -76,8 +77,33 @@ class ToolTip {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-        this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-        this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+
+
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.style.top = `${(offsetTop + me.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+            case 'w':
+            case 'west':
+                this.container.style.top = `${offsetTop}px`;
+                this.container.style.left = `${offsetLeft - this.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'e':
+            case 'east':
+                this.container.style.top = `${offsetTop}px`;
+                this.container.style.left = `${offsetLeft + this.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'n':
+            case 'north':
+            default:
+                this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+        }
+
+
 
         if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;
@@ -105,6 +131,25 @@ class ToolTip {
         this.container.classList.add('tooltip');
         this.container.setAttribute('aria-hidden', 'true');
         if (this.id) { this.container.setAttribute('id', this.id); }
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.classList.add('south');
+                break;
+            case 'w':
+            case 'west':
+                this.container.classList.add('west');
+                break;
+            case 'e':
+            case 'east':
+                this.container.classList.add('east');
+                break;
+            case 'n':
+            case 'north':
+            default:
+                this.container.classList.add('north');
+                break;
+        }
 
         if ((this.classes) && (this.classes.length > 0)) {
             for (let c of this.classes) {
@@ -152,6 +197,9 @@ class ToolTip {
         return this._container;
     }
     set container(container) { this._container = container; }
+
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

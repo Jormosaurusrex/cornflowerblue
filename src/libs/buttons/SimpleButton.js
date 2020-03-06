@@ -13,6 +13,9 @@ class SimpleButton {
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             hidden: false, // Start hidden or not.
+            tooltip: null, // An optional tooltip
+            tipicon: null, // An icon for the tooltip
+            tipgravity: 'n', // Tooltip gravity
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a DOM object
@@ -135,6 +138,14 @@ class SimpleButton {
                 me.hoverout(e, me);
             }
         });
+
+        if (this.tooltip) {
+            new ToolTip({
+                text: this.tooltip,
+                icon: this.tipicon,
+                gravity: this.tipgravity,
+            }).attach(this.button);
+        }
 
         if (this.notab) {
             this.button.setAttribute('tabindex', '-1');
@@ -324,5 +335,15 @@ class SimpleButton {
 
     get textobj() { return this._textobj; }
     set textobj(textobj) { this._textobj = textobj; }
+
+    get tipgravity() { return this.config.tipgravity; }
+    set tipgravity(tipgravity) { this.config.tipgravity = tipgravity; }
+
+    get tipicon() { return this.config.tipicon; }
+    set tipicon(tipicon) { this.config.tipicon = tipicon; }
+
+    get tooltip() { return this.config.tooltip; }
+    set tooltip(tooltip) { this.config.tooltip = tooltip; }
+
 
 }

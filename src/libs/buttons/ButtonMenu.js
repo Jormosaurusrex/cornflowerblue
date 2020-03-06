@@ -196,11 +196,11 @@ class ButtonMenu extends SimpleButton {
             menuitem.appendChild(anchor);
 
             if (item.tooltip) {
-                let tt = new ToolTip({
+                new ToolTip({
                     text: item.tooltip,
                     icon: item.tipicon,
-                });
-                tt.attach(menuitem);
+                    gravity: 'w'
+                }).attach(menuitem);
             }
 
             this.menu.appendChild(menuitem);

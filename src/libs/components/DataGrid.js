@@ -1190,6 +1190,7 @@ class DataGrid extends Panel {
                 mute: true,
                 text: TextFactory.get('filters'),
                 icon: this.filterbuttonicon,
+                tooltip: TextFactory.get('datagrid-tooltip-filters'),
                 classes: ['filter'],
                 action: function() {
                     me.configurator('filter');
@@ -1313,7 +1314,7 @@ class DataGrid extends Panel {
         if (field.hidden) { cell.classList.add('hidden'); }
 
         if (field.description) {
-            let celltip = new ToolTip({
+            new ToolTip({
                 text: field.description
             }).attach(div);
         }

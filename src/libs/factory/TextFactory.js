@@ -18,6 +18,7 @@ class TextFactory {
             "datagrid-tooltip-export" : "Export this grid as a comma separated value file.",
             "datagrid-tooltip-configure_columns" : "Configure the visibility of individual columns.",
             "datagrid-tooltip-bulk_select" : "Show bulk selection controls.",
+            "datagrid-tooltip-filters" : "Add, remove, or edit view filters.",
 
             "datagrid-activitynotifier-text" : "Working...",
             "datagrid-column-config-instructions" : "Select which columns to show in the grid. This does not hide the columns during export.",

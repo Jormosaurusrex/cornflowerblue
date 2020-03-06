@@ -26,11 +26,11 @@ div.tooltip {
     width: 0;
     height: 0;
     position: absolute;
+    border-style: solid;
+    border-color: var(--tooltip-background-color) transparent;
     left: 1em;
     bottom: -.5em;
     border-width: .5em .5em 0 .5em;
-    border-style: solid;
-    border-color: var(--tooltip-background-color) transparent;
   }
   span.tipicon {
     font-size: 1.2em;
@@ -50,6 +50,32 @@ div.tooltip {
   &.unfixed {
     div.tiptext{
       min-width: unset;
+    }
+  }
+  &.south {
+    &:before {
+      bottom: unset;
+      top: -.5em;
+      border-width: 0 .5em .5em .5em;
+    }
+  }
+  &.west {
+    &:before {
+      left: unset;
+      right: -.5em;
+      bottom: unset;
+      top: .5em;
+      border-color: transparent var(--tooltip-background-color);
+      border-width: .5em 0 .5em .5em;
+    }
+  }
+  &.east {
+    &:before {
+      left: -.5em;
+      bottom: unset;
+      top: .5em;
+      border-color: transparent var(--tooltip-background-color);
+      border-width: .5em .5em .5em 0;
     }
   }
 }
