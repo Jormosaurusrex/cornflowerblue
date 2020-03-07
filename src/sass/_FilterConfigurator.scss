@@ -10,25 +10,43 @@ div.filter-configurator {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
+      align-content: center;
       justify-content: space-between;
       div.primeselector {
         margin-left: 0;
       }
-      div.filtervalues{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+      div.comparator {
+
+      }
+      div.valueinput {
+
+      }
+      div.validmarker {
+        opacity: 0;
+        background-color: transparent;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1em;
+        font-size: 20pt;
+        text-shadow: var(--input-status-valid-icon-text-shadow);
+        color: var(--input-status-valid-icon-color);
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
         align-items: center;
-        justify-content: space-between;
-        div.comparator {
-
-        }
-        div.valueinput {
-
+        > span.icon {
+          &:before {
+            margin: 0;
+          }
         }
       }
       button.filterkiller {
         margin-right: 0;
+      }
+      &[data-valid='true'] {
+        div.validmarker {
+          opacity: 1;
+        }
       }
     }
   }

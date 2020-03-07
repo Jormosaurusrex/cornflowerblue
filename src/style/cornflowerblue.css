@@ -5183,20 +5183,34 @@ div.filter-configurator ul.filter-list > li {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  align-content: center;
   justify-content: space-between;
 }
 div.filter-configurator ul.filter-list > li div.primeselector {
   margin-left: 0;
 }
-div.filter-configurator ul.filter-list > li div.filtervalues {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+div.filter-configurator ul.filter-list > li div.validmarker {
+  opacity: 0;
+  background-color: transparent;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1em;
+  font-size: 20pt;
+  text-shadow: var(--input-status-valid-icon-text-shadow);
+  color: var(--input-status-valid-icon-color);
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
   align-items: center;
-  justify-content: space-between;
+}
+div.filter-configurator ul.filter-list > li div.validmarker > span.icon:before {
+  margin: 0;
 }
 div.filter-configurator ul.filter-list > li button.filterkiller {
   margin-right: 0;
+}
+div.filter-configurator ul.filter-list > li[data-valid=true] div.validmarker {
+  opacity: 1;
 }
 div.filter-configurator div.filter-actions {
   display: flex;

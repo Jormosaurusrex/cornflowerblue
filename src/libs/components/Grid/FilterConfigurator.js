@@ -87,7 +87,13 @@ class FilterConfigurator {
                 value = valueField.value;
 
             if ((field) && (comparator) && (value)) {
-                // XXX To Do: Deep error checking (e.g., does this field exist?)
+                /*
+                 * XXX TO DO: Should do deep error checking
+                 *   - Does the field exist in the list
+                 *   - Is the value provided valid within its datatype
+                 *   - Is the comparator one provided by the datatype
+                 *   - Is the comparator allowed
+                 */
                 valid = true;
             }
 
@@ -98,7 +104,7 @@ class FilterConfigurator {
                     comparator: comparator,
                     value: value
                 };
-                this.workingfilters[filterid] = filter;
+                this.workingfilters[filterId] = filter;
             }
         }
         return filter;
@@ -116,14 +122,6 @@ class FilterConfigurator {
          * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
          */
         const me = this;
-
-        this.applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
-            text: "Apply Filters",
-            disabled: true,
-            action: function() {
-
-            }
-        });
 
         this.container = document.createElement('div');
         this.container.classList.add('filter-configurator');
@@ -148,9 +146,7 @@ class FilterConfigurator {
                 }
             }
         }).button);
-
-        this.actions.appendChild(this.applyfiltersbutton.button);
-
+        
         this.container.append(this.actions);
 
         this.elements = document.createElement('ul');
@@ -186,10 +182,16 @@ class FilterConfigurator {
             li.appendChild(this.makeComparatorSelector(field, filter.comparator).container);
             li.appendChild(this.makeValueSelector(field, filter.value).container);
             this.workingfilters[filterId] = filter; // add; doesn't need validation
+            li.setAttribute('data-valid', 'true');
         } else {
             li.appendChild(this.makePrimeSelector().container);
             li.setAttribute('data-field', 'unset');
         }
+
+        let validmarker = document.createElement('div');
+        validmarker.classList.add('validmarker');
+        validmarker.appendChild(IconFactory.icon('checkmark-circle'));
+        li.appendChild(validmarker);
 
         li.appendChild(new DestructiveButton({
             icon: 'minus',
@@ -231,8 +233,10 @@ class FilterConfigurator {
             placeholder: TextFactory.get('filter-comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
+                console.log("SELFT");
+                console.log(self.container.parentElement);
                 let li = self.container.parentElement,
-                    button = li.querySelector('button.filterkiller'),
+                    validmarker = li.querySelector('div.validmarker'),
                     comparatorfield = li.querySelector('div.select-container.comparator'),
                     valuefield = li.querySelector('div.input-container.valueinput'),
                     field = me.getField(primeSelector.value);
@@ -246,8 +250,8 @@ class FilterConfigurator {
                 }
                 if (field) {
                     li.setAttribute('data-field', field.name);
-                    li.insertBefore(me.makeComparatorSelector(field).container, button);
-                    li.insertBefore(me.makeValueSelector(field).container, button);
+                    li.insertBefore(me.makeComparatorSelector(field).container, validmarker);
+                    li.insertBefore(me.makeValueSelector(field).container, validmarker);
                     me.checkValidity(li);
                 }
             }
@@ -307,7 +311,10 @@ class FilterConfigurator {
             name: 'comparator',
             minimal: true,
             classes: ['comparator'],
-            onchange: function() {
+            onchange: function(self) {
+                console.log("SELFU");
+                console.log(self.container.parentElement);
+
                 let li = self.container.parentElement;
                 me.checkValidity(li);
             }
@@ -335,7 +342,7 @@ class FilterConfigurator {
                     name: 'valuefield',
                     minimal: true,
                     classes: ['valueinput'],
-                    onchange: function() {
+                    onchange: function(self) {
                         let li = self.container.parentElement;
                         me.checkValidity(li);
                     }
@@ -347,7 +354,7 @@ class FilterConfigurator {
                     name: 'valuefield',
                     minimal: true,
                     classes: ['valueinput'],
-                    onchange: function() {
+                    onchange: function(self) {
                         let li = self.container.parentElement;
                         me.checkValidity(li);
                     }
@@ -359,7 +366,7 @@ class FilterConfigurator {
                     name: 'valuefield',
                     minimal: true,
                     classes: ['valueinput'],
-                    onchange: function() {
+                    onchange: function(self) {
                         let li = self.container.parentElement;
                         me.checkValidity(li);
                     }
@@ -372,7 +379,7 @@ class FilterConfigurator {
                     name: 'valuefield',
                     minimal: true,
                     classes: ['valueinput'],
-                    onchange: function() {
+                    onchange: function(self) {
                         let li = self.container.parentElement;
                         me.checkValidity(li);
                     }

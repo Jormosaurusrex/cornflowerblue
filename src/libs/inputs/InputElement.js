@@ -406,7 +406,7 @@ class InputElement {
         }
         this.input.addEventListener('change', function(e) {
             if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(e, me);
+                me.onchange(me);
             }
         });
 
