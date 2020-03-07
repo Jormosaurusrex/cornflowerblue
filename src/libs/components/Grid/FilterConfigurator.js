@@ -32,6 +32,7 @@ class FilterConfigurator {
         if (!config) { config = {}; }
         this.config = Object.assign({}, FilterConfigurator.DEFAULT_CONFIG, config);
         if (!this.id) { this.id = `fconfig-${CFBUtils.getUniqueKey(5)}`; }
+        this.workingfilters = {};
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -171,6 +172,8 @@ class FilterConfigurator {
      */
     addFilter(filter) {
 
+        const me = this;
+
         let li = document.createElement('li');
         let filterId = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
         li.setAttribute('data-filterid', filterId);
@@ -195,8 +198,7 @@ class FilterConfigurator {
             classes: ['filterkiller'],
             action: function() {
                 if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {
-
-                    me.workingfilters.delete(li.getAttribute('data-filterid'));
+                    delete me.workingfilters[li.getAttribute('data-filterid')];
                 }
                 li.parentNode.removeChild(li);
             }
