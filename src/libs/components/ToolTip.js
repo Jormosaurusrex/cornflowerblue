@@ -14,7 +14,11 @@ class ToolTip {
     }
 
     static closeOpen() {
+        console.log("tooltip closeOpen()");
+        console.log(`timer: ${ToolTip.activeTooltip}`);
+        clearTimeout(ToolTip.timer);
         if (ToolTip.activeTooltip) {
+            console.log(ToolTip.timer);
             clearTimeout(ToolTip.activeTooltip.timer);
             ToolTip.activeTooltip.close();
         }
@@ -44,21 +48,21 @@ class ToolTip {
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
         this.parent.addEventListener('mouseover', function() {
-            me.timer = setTimeout(function() {
+            ToolTip.timer = setTimeout(function() {
                 me.open();
             }, me.waittime);
         });
         this.parent.addEventListener('mouseout', function() {
-            clearTimeout(me.timer);
+            clearTimeout(ToolTip.timer);
             me.close();
         });
         this.parent.addEventListener('focusin', function() {
-            me.timer = setTimeout(function() {
+            ToolTip.timer = setTimeout(function() {
                 me.open();
             }, me.waittime);
         });
         this.parent.addEventListener('focusout', function() {
-            clearTimeout(me.timer);
+            clearTimeout(ToolTip.timer);
             me.close();
         });
     }

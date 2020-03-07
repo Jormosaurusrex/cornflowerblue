@@ -313,7 +313,6 @@ class SelectMenu extends InputElement {
             order++;
             this.optionlist.appendChild(o);
         }
-        console.log(minchars);
         this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
     }
 
