@@ -404,21 +404,23 @@ class DataGrid extends Panel {
     configurator(type) {
         const me = this;
 
-        let container = document.createElement('div');
-        container.classList.add('datagrid-configurator');
 
-        let instructions,
-            title,
-            content,
+        let title,
+            container,
             actions = [];
 
         switch(type) {
             case 'column':
-                container.classList.add('column');
-                instructions = TextFactory.get('datagrid-column-config-instructions');
                 title = TextFactory.get('configure_columns');
+                container = document.createElement('div');
+                container.classList.add('datagrid-configurator');
+                container.classList.add('column');
 
-                content = document.createElement('ul');
+                container.append(new InstructionBox({
+                    instructions: [TextFactory.get('datagrid-column-config-instructions')]
+                }).container);
+
+                let content = document.createElement('ul');
                 content.classList.add('elements');
                 for (let f of this.fields) {
                     let li = document.createElement('li');
@@ -441,34 +443,40 @@ class DataGrid extends Panel {
                     }
                     content.appendChild(li);
                 }
+
+                container.append(content);
                 break;
-            case 'filterold':
-                instructions = TextFactory.get('datagrid-filter-instructions');
-                title = TextFactory.get('manage_filters');
-
-                content = document.createElement('ul');
-                content.classList.add('elements');
-                for (let f of this.fields) {
-                    if (f.filterable) {
-                        let li = document.createElement('li');
-                        li.appendChild(this.getFilterLine(f).container);
-                        content.appendChild(li);
+            case 'filter':
+                let filters = {
+                    album: {
+                        field: 'album',
+                        comparator: 'contains',
+                        value: 'zeppelin'
                     }
-                }
+                };
 
+                let fc = new FilterConfigurator({
+                    fields: this.fields,
+                    filters: filters
+                });
+                container = fc.container;
+
+                let applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
+                    text: TextFactory.get('apply_filters'),
+                    action: function() {
+                        me.activefilters = fc.filters;
+                        me.applyFilters();
+                        dialog.close();
+                    }
+                });
+                actions.push(applyfiltersbutton);
+
+                title = TextFactory.get('manage_filters');
                 break;
             default:
                 break;
         }
 
-        // instructions
-        if (instructions) {
-            container.append(new InstructionBox({
-                instructions: [instructions]
-            }).container);
-        }
-        container.append(content);
-
         actions.push('closebutton');
         let dialog = new DialogWindow({
             title: title,
@@ -476,214 +484,6 @@ class DataGrid extends Panel {
             actions: actions
         });
         dialog.open();
-    }
-
-
-    filterconfigurator() {
-        /*
-         * This this is gigantic and ugly.  Don't @ me.
-         * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
-         */
-        const me = this;
-
-
-        let presentFilters = {};
-
-        this.applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
-            text: "Apply Filters",
-            disabled: true,
-            action: function() {
-
-            }
-        });
-
-        let container = document.createElement('div');
-        container.classList.add('datagrid-configurator');
-        container.classList.add('filter');
-
-        let instructions = TextFactory.get('datagrid-filter-instructions'),
-            title = TextFactory.get('manage_filters'),
-            content = document.createElement('div'),
-            actions = [];
-
-        content.classList.add('filtergroup');
-
-        // instructions
-        if (instructions) {
-            container.append(new InstructionBox({
-                instructions: [instructions]
-            }).container);
-        }
-
-        let elementlist = document.createElement('ul');
-        elementlist.classList.add('filter-list');
-        content.append(elementlist);
-        container.append(content);
-
-        actions.push(this.applyfiltersbutton);
-        actions.push(new SimpleButton({
-            icon: 'cfb-plus',
-            text: 'Add filter',
-            action: function() {
-                let li = document.createElement('li');
-                let options = [];
-                for (let f of me.fields) {
-                    if (f.filterable) {
-                        options.push({ value: f.name, label: f.label });
-                    }
-                }
-
-                let filtervalues = document.createElement('div');
-                filtervalues.classList.add('filtervalues');
-
-                let primeSelector = new SelectMenu({
-                    minimal: true,
-                    options: options,
-                    placeholder: TextFactory.get('filter-comparator-select_field'),
-                    classes: ['primeselector'],
-                    onchange: function() {
-
-                        console.log(`primeSelector.value: ${primeSelector.value}`);
-
-                        filtervalues.innerHTML = '';
-                        let field = me.getField(primeSelector.value);
-
-                        let comparators = [ // Default for strings.
-                            { value: 'contains', label: TextFactory.get('filter-comparator-contains') },
-                            { value: 'notcontains', label: TextFactory.get('filter-comparator-notcontains') },
-                            { value: 'equals', label: TextFactory.get('filter-comparator-equals') },
-                            { value: 'notequals', label: TextFactory.get('filter-comparator-doesnotequal') },
-                        ];
-
-                        let valueSelector;
-                        switch (field.type) {
-                            case 'date':
-                            case 'time':
-                                comparators = [
-                                    { value: 'equals', label: TextFactory.get('filter-comparator-equals') },
-                                    { value: 'notequals', label: TextFactory.get('filter-comparator-doesnotequal') },
-                                    { value: 'isbefore', label: TextFactory.get('filter-comparator-isbefore') },
-                                    { value: 'isafter', label: TextFactory.get('filter-comparator-isafter') }
-                                ];
-                                valueSelector = new DateInput({
-                                    minimal: true,
-                                    classes: ['valueinput']
-                                });
-                                break;
-                            case 'number':
-                                comparators = [
-                                    { value: 'equals', label: TextFactory.get('filter-comparator-equals') },
-                                    { value: 'notequals', label: TextFactory.get('filter-comparator-doesnotequal') },
-                                    { value: 'isgreaterthan', label: TextFactory.get('filter-comparator-greaterthan') },
-                                    { value: 'islessthan', label: TextFactory.get('filter-comparator-lessthan') }
-                                ];
-                                valueSelector = new NumberInput({
-                                    minimal: true,
-                                    classes: ['valueinput']
-                                });
-                                break;
-                            case 'imageurl':
-                                valueSelector = new URLInput({
-                                    minimal: true,
-                                    classes: ['valueinput']
-                                });
-                                break;
-                            case 'string':
-                            default:
-                                valueSelector = new TextInput({
-                                    minimal: true,
-                                    classes: ['valueinput']
-                                });
-                                break;
-                        }
-
-                        filtervalues.appendChild(new SelectMenu({
-                            options: comparators,
-                            placeholder: TextFactory.get('filter-comparator-comparator'),
-                            minimal: true,
-                            classes: ['comparator'],
-                        }).container);
-                        filtervalues.appendChild(valueSelector.container);
-                    }
-                });
-
-                li.appendChild(primeSelector.container);
-                li.appendChild(filtervalues);
-                let buttons = document.createElement('div');
-                buttons.classList.add('buttons');
-                buttons.appendChild(new SimpleButton({
-                    icon: 'minus',
-                    shape: 'square',
-                    ghost: true,
-                    action: function() {
-                        li.parentNode.removeChild(li);
-                    }
-                }).button);
-
-                li.appendChild(buttons);
-
-                elementlist.appendChild(li);
-            }
-        }));
-        actions.push('closebutton');
-
-        let dialog = new DialogWindow({
-            title: title,
-            content: container,
-            actions: actions
-        });
-        dialog.open();
-    }
-
-    newFilter() {
-        /*
-            - Don't allow selection of a field if it's already selected
-            - Don't allow new filter line if one is unset
-         */
-        const me = this;
-
-        return li;
-    }
-
-    /**
-     * Builds the filter manipulation controls
-     * @param f the field
-     * @return {TextInput|SelectMenu}
-     */
-    getFilterLine(f) {
-        const me = this;
-
-        let element;
-
-        let values = me.getUniqueValues(f.name);
-
-        if (f.filterable === 'enum') {
-            let options = [];
-            for (let v of values) {
-                options.push({
-                    label: v,
-                    value: v
-                })
-            }
-            element = new SelectMenu({
-                label: f.label,
-                unselectedtext: me.filterunselectedvaluetext,
-                options: options,
-                onchange: function(self) {
-                    me.addFilter(f.name, self.value, true);
-                }
-            });
-        } else {
-            element = new TextInput({
-                name: 'value',
-                label: f.label,
-                placeholder: me.filterplaceholder,
-                onkeyup: function(e, self) {
-                    me.addFilter(f.name, self.value, false);
-                }
-            });
-        }
-        return element;
     }
 
     /**
@@ -930,7 +730,7 @@ class DataGrid extends Panel {
     persist() {
         if (!this.ispersistable) { return; }
         this.state = this.grindstate(); // get a current copy of it.
-        localStorage.setItem(this.savekey, JSON.stringify(this.state));
+        //localStorage.setItem(this.savekey, JSON.stringify(this.state));
     }
 
     /**
@@ -994,16 +794,16 @@ class DataGrid extends Panel {
      * Add a filter to the active filters
      * @param field the field to affect
      * @param value the value of the field to match
-     * @param exact whether or not to be an exact match
+     * @param comparator the comparator value
      */
-    addFilter(field, value, exact) {
+    addFilter(field, value, comparator) {
         if ((!value) || (value === '')) {
             delete this.activefilters[field];
         } else {
             this.activefilters[field] = {
                 field: field,
                 value: value,
-                exact: exact
+                comparator: comparator
             };
         }
         this.persist();
@@ -1362,7 +1162,7 @@ class DataGrid extends Panel {
                 tooltip: TextFactory.get('datagrid-tooltip-filters'),
                 classes: ['filter'],
                 action: function() {
-                    me.filterconfigurator();
+                    me.configurator('filter');
                 }
             });
             this.gridinfo.append(this.filterbutton.button);
@@ -1688,9 +1488,6 @@ class DataGrid extends Panel {
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
     get activitynotifiertext() { return this.config.activitynotifiertext; }
     set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
-
-    get applyfiltersbutton() { return this._applyfiltersbutton; }
-    set applyfiltersbutton(applyfiltersbutton) { this._applyfiltersbutton = applyfiltersbutton; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }

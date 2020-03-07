@@ -5169,26 +5169,40 @@ div.datagrid-configurator.column ul.elements li div.checkbox {
 div.datagrid-configurator.column ul.elements li div.description {
   padding: 0.5em 1em 0.5em 3em;
 }
-div.datagrid-configurator.filter ul.filter-list {
+div.filter-configurator {
+  padding: 2em;
+}
+div.filter-configurator ul.filter-list {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   padding: 0;
 }
-div.datagrid-configurator.filter ul.filter-list > li {
+div.filter-configurator ul.filter-list > li {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
 }
-div.datagrid-configurator.filter ul.filter-list > li div.filtervalues {
+div.filter-configurator ul.filter-list > li div.primeselector {
+  margin-left: 0;
+}
+div.filter-configurator ul.filter-list > li div.filtervalues {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
 }
+div.filter-configurator ul.filter-list > li button.filterkiller {
+  margin-right: 0;
+}
+div.filter-configurator div.filter-actions {
+  display: flex;
+  flex-direction: row;
+}
+
 div.pwgenerator {
   --pwgenerator-background-color: transparent;
   --pwgenerator-checkbox-size: 2em;

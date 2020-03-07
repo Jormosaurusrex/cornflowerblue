@@ -111,7 +111,7 @@ class Panel {
     }
 
     /**
-     * Build the HTML elements of the Floating Panel
+     * Build the HTML elements of the Panel
      */
     buildContainer() {
 

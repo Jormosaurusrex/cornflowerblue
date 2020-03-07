@@ -57,7 +57,6 @@ module.exports = function(grunt) {
                     'src/libs/components/DialogWindow.js',
                     'src/libs/components/Panel.js',
                     'src/libs/components/FloatingPanel.js',
-                    'src/libs/components/DataGrid.js',
                     'src/libs/components/Growler.js',
                     'src/libs/components/InstructionBox.js',
                     'src/libs/components/MessageBox.js',
@@ -67,6 +66,8 @@ module.exports = function(grunt) {
                     'src/libs/components/SearchControl.js',
                     'src/libs/components/SimpleProgressMeter.js',
                     'src/libs/components/RadialProgressMeter.js',
+                    'src/libs/components/grid/DataGrid.js',
+                    'src/libs/components/grid/FilterConfigurator.js',
                     'src/libs/SimpleForm.js'
                 ],
                 dest: 'dist/lib/cornflowerblue.js'

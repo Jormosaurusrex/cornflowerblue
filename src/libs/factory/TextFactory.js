@@ -3,6 +3,7 @@ class TextFactory {
     static get DEFAULT_STRINGS() {
         return {
             "actions" : 'Actions',
+            "apply_filters" : 'Apply Filters',
             "bulk_select" : 'Bulk select',
             "cancel" : 'Cancel',
             "caution" : 'Caution',

@@ -5,6 +5,7 @@ class SelectMenu extends InputElement {
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
+            value: null,    // Use this to set the value of the item
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onchange: null  // The change handler. Passed (self).
@@ -21,6 +22,10 @@ class SelectMenu extends InputElement {
             config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
         }
         super(config);
+
+        if (config.value) {
+            this.origval = config.value;
+        }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -217,6 +222,10 @@ class SelectMenu extends InputElement {
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
 
+        if (this.value) {
+            this.select(value);
+        }
+
         this.postContainerScrub();
     }
 
@@ -303,12 +312,17 @@ class SelectMenu extends InputElement {
         let order = 1;
         let minchars = 5;
         for (let opt of this.options) {
+            if ((this.origval) && (this.origval === opt.value)) {
+                opt.checked = true;
+                this.selectedoption = opt;
+            } else {
+                delete opt.checked;
+            }
+
             let o = this.buildOption(opt, order);
+
             if ((opt.label) && (opt.label.length > minchars)) {
                 minchars = opt.label.length;
-            }
-            if (opt.checked) {
-                this.selectedoption = opt;
             }
             order++;
             this.optionlist.appendChild(o);

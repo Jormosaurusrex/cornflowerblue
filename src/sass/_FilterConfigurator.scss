@@ -1,0 +1,39 @@
+div.filter-configurator {
+  padding: 2em;
+  ul.filter-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 0;
+    > li {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      div.primeselector {
+        margin-left: 0;
+      }
+      div.filtervalues{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        div.comparator {
+
+        }
+        div.valueinput {
+
+        }
+      }
+      button.filterkiller {
+        margin-right: 0;
+      }
+    }
+  }
+  div.filter-actions {
+    display: flex;
+    flex-direction: row;
+  }
+}

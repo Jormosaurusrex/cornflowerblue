@@ -14,11 +14,8 @@ class ToolTip {
     }
 
     static closeOpen() {
-        console.log("tooltip closeOpen()");
-        console.log(`timer: ${ToolTip.activeTooltip}`);
         clearTimeout(ToolTip.timer);
         if (ToolTip.activeTooltip) {
-            console.log(ToolTip.timer);
             clearTimeout(ToolTip.activeTooltip.timer);
             ToolTip.activeTooltip.close();
         }
