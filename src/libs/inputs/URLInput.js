@@ -1,4 +1,4 @@
-class URIInput extends TextInput {
+class URLInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
@@ -28,9 +28,9 @@ class URIInput extends TextInput {
 
     constructor(config) {
         if (!config) { config = {}; }
-        config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
+        config = Object.assign({}, URLInput.DEFAULT_CONFIG, config);
 
-        if ((config.value) && (URIInput.isEncoded(config.value))) {
+        if ((config.value) && (URLInput.isEncoded(config.value))) {
             config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
         }
         super(config);
@@ -48,7 +48,7 @@ class URIInput extends TextInput {
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
-            if (!URIInput.isValid(this.value)) {
+            if (!URLInput.isValid(this.value)) {
                 this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
             }
         }

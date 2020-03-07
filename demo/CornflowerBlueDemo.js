@@ -1237,10 +1237,10 @@ class CornflowerBlueDemo {
         let uri = document.createElement('div');
         uri.classList.add('example');
         uri.classList.add('vert');
-        uri.appendChild(new URIInput({
+        uri.appendChild(new URLInput({
             label: "Web Page (valid required)"
         }).container);
-        uri.appendChild(new URIInput({
+        uri.appendChild(new URLInput({
             label: "Web Page (invalid allowed)",
             forceconstraints: false,
         }).container);

@@ -4,7 +4,7 @@ class FilterConfigurator {
         return {
             id : null, // The id
             classes: [], //Extra css classes to apply,
-            filters: {}, // Existing filters.
+            filters: [], // Existing filters.
             fields: [
                 /*
                  * An array of field definition dictionaries:
@@ -52,6 +52,58 @@ class FilterConfigurator {
         return rf;
     }
 
+    /**
+     * Test each filter in the list and replace the canonical filters with the valid one.
+     */
+    grindFilters() {
+        let flines = this.elements.querySelector('li[data-valid="true"');
+        let filters = [];
+        for (let li of flines) {
+            let f = this.checkValidity(li);
+            if (f) { filters.push(f); }
+        }
+        this.filters = filters;
+    }
+
+    /**
+     * Check the validity of a filter line.
+     * @param li the line of the filter
+     * @return a filter definition (if valid) or null (if invalid)
+     */
+    checkValidity(li) {
+        li.setAttribute('data-valid', 'false'); // ensure false at the start.
+
+        let filter,
+            filterId = li.getAttribute('data-filterid'),
+            fieldField = li.querySelector('input[name="primeselector"]'),
+            comparatorField = li.querySelector('input[name="comparator"]'),
+            valueField = li.querySelector('input[name="valuefield"]');
+
+        if ((fieldField) && (comparatorField) && (valueField)) {
+            let valid = false,
+                field = fieldField.value,
+                comparator = comparatorField.value,
+                value = valueField.value;
+
+            if ((field) && (comparator) && (value)) {
+                // XXX To Do: Deep error checking (e.g., does this field exist?)
+                valid = true;
+            }
+
+            if (valid) {
+                li.setAttribute('data-valid', 'true');
+                filter = {
+                    field: field,
+                    comparator: comparator,
+                    value: value
+                };
+                this.workingfilters[filterid] = filter;
+            }
+        }
+        return filter;
+    }
+
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -90,7 +142,6 @@ class FilterConfigurator {
             text: 'Add filter',
             action: function() {
                 let unsets = me.elements.querySelectorAll('[data-field="unset"]');
-                console.log(unsets);
                 if (unsets.length < 1) {
                     me.addFilter();
                 }
@@ -105,7 +156,7 @@ class FilterConfigurator {
         this.elements.classList.add('filter-list');
 
         if (this.filters) {
-            for (let f of Object.values(this.filters)) {
+            for (let f of this.filters) {
                 this.addFilter(f);
             }
         }
@@ -114,34 +165,38 @@ class FilterConfigurator {
 
     }
 
+    /**
+     * Add a filter line to the configurator.
+     * @param filter
+     */
     addFilter(filter) {
-        const me = this;
 
         let li = document.createElement('li');
-
-        let filtervalues = document.createElement('div');
-        filtervalues.classList.add('filtervalues');
+        let filterId = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
+        li.setAttribute('data-filterid', filterId);
+        li.setAttribute('data-valid', 'false');
 
         if (filter) {
             let field = this.getField(filter.field);
             li.setAttribute('data-field', filter.field);
             li.appendChild(this.makePrimeSelector(filter.field).container);
-            filtervalues.appendChild(this.makeComparatorSelector(field, filter.comparator).container);
-            filtervalues.appendChild(this.makeValueSelector(field, filter.value).container);
+            li.appendChild(this.makeComparatorSelector(field, filter.comparator).container);
+            li.appendChild(this.makeValueSelector(field, filter.value).container);
+            this.workingfilters[filterId] = filter; // add; doesn't need validation
         } else {
             li.appendChild(this.makePrimeSelector().container);
             li.setAttribute('data-field', 'unset');
         }
-        li.appendChild(filtervalues);
 
-        li.appendChild(new SimpleButton({
+        li.appendChild(new DestructiveButton({
             icon: 'minus',
             shape: 'square',
             ghost: true,
             classes: ['filterkiller'],
             action: function() {
                 if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {
-                    me.filters.delete(li.getAttribute('data-field'));
+
+                    me.workingfilters.delete(li.getAttribute('data-filterid'));
                 }
                 li.parentNode.removeChild(li);
             }
@@ -150,14 +205,18 @@ class FilterConfigurator {
         this.elements.appendChild(li);
     }
 
+    /**
+     * Make a 'field' selector.  This selector controls other selectors.
+     * @param fieldname (optional) the name of the field to pre-select.
+     * @return {SelectMenu}
+     */
     makePrimeSelector(fieldname) {
         const me = this;
+
         let options = [];
 
         for (let f of this.fields) {
-            if ((f.filterable) && (!this.filters[f.name])) {
-                options.push({ value: f.name, label: f.label });
-            } else if ((fieldname) && (f.name === fieldname)) {
+            if (f.filterable) {
                 options.push({ value: f.name, label: f.label });
             }
         }
@@ -165,24 +224,43 @@ class FilterConfigurator {
         let primeSelector = new SelectMenu({
             minimal: true,
             options: options,
+            name: 'primeselector',
             value: fieldname,
             placeholder: TextFactory.get('filter-comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
-                let filtervalues = self.container.parentElement.querySelector('.filtervalues');
-                let field = me.getField(primeSelector.value);
+                let li = self.container.parentElement,
+                    button = li.querySelector('button.filterkiller'),
+                    comparatorfield = li.querySelector('div.select-container.comparator'),
+                    valuefield = li.querySelector('div.input-container.valueinput'),
+                    field = me.getField(primeSelector.value);
 
-                filtervalues.innerHTML = '';
-                self.container.parentElement.setAttribute('data-field', field.name);
-
-                filtervalues.appendChild(me.makeComparatorSelector(field).container);
-                filtervalues.appendChild(me.makeValueSelector(field).container);
+                li.setAttribute('data-valid', 'false');
+                if (comparatorfield) {
+                    li.removeChild(comparatorfield);
+                }
+                if (valuefield) {
+                    li.removeChild(valuefield);
+                }
+                if (field) {
+                    li.setAttribute('data-field', field.name);
+                    li.insertBefore(me.makeComparatorSelector(field).container, button);
+                    li.insertBefore(me.makeValueSelector(field).container, button);
+                    me.checkValidity(li);
+                }
             }
         });
         return primeSelector;
     }
 
+    /**
+     * Make a 'comparator' selector.
+     * @param field the field definition we're making one for
+     * @param value (optional) the value to prefill with
+     * @return {SelectMenu}
+     */
     makeComparatorSelector(field, value) {
+        const me = this;
 
         let ourValue = 'contains';
         let comparators = [ // Default for strings.
@@ -224,45 +302,78 @@ class FilterConfigurator {
             options: comparators,
             placeholder: TextFactory.get('filter-comparator-comparator'),
             value: ourValue,
+            name: 'comparator',
             minimal: true,
-            classes: ['comparator']
+            classes: ['comparator'],
+            onchange: function() {
+                let li = self.container.parentElement;
+                me.checkValidity(li);
+            }
         });
         comparatorSelector.container.setAttribute('data-field', field.name);
 
         return comparatorSelector;
     }
 
+    /**
+     * Make a variable value selector
+     * @param field field the field definition we're making one for
+     * @param value  (optional) the value to prefill with
+     * @return {URLInput|TextInput}
+     */
     makeValueSelector(field, value) {
+        const me = this;
+
         let valueSelector;
         switch (field.type) {
             case 'date':
             case 'time':
                 valueSelector = new DateInput({
                     value: value,
+                    name: 'valuefield',
                     minimal: true,
-                    classes: ['valueinput']
+                    classes: ['valueinput'],
+                    onchange: function() {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
                 });
                 break;
             case 'number':
                 valueSelector = new NumberInput({
                     value: value,
+                    name: 'valuefield',
                     minimal: true,
-                    classes: ['valueinput']
+                    classes: ['valueinput'],
+                    onchange: function() {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
                 });
                 break;
             case 'imageurl':
                 valueSelector = new URLInput({
                     value: value,
+                    name: 'valuefield',
                     minimal: true,
-                    classes: ['valueinput']
+                    classes: ['valueinput'],
+                    onchange: function() {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
                 });
                 break;
             case 'string':
             default:
                 valueSelector = new TextInput({
                     value: value,
+                    name: 'valuefield',
                     minimal: true,
-                    classes: ['valueinput']
+                    classes: ['valueinput'],
+                    onchange: function() {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
                 });
                 break;
         }
@@ -312,4 +423,6 @@ class FilterConfigurator {
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }
 
+    get workingfilters() { return this._workingfilters; }
+    set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
 }

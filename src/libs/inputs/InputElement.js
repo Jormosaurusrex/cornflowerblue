@@ -34,6 +34,7 @@ class InputElement {
             value: '', // Value to use (pre-population).  Used during construction and then discarded.
             disabled: false, // If true, disable the field.
             classes: [], // Extra css classes to apply
+            onchange: null, // The change handler. Passed (self).
             onreturn: null, // action to execute on hitting the return key. Passed (event, self).
             ontab: null, // action to execute on hitting the tab key. Passed (event, self).
             onkeyup: null, // action to execute on key up. Passed (event, self).
@@ -403,6 +404,12 @@ class InputElement {
         for (let c of this.classes) {
             this.input.classList.add(c);
         }
+        this.input.addEventListener('change', function(e) {
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(e, me);
+            }
+        });
+
         this.input.addEventListener('keydown', function(e) {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
             me.input.removeAttribute('aria-invalid');
@@ -676,6 +683,14 @@ class InputElement {
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) {
+        if (typeof onchange !== 'function') {
+            console.error("Action provided for onchange is not a function!");
+        }
+        this.config.onchange = onchange;
+    }
 
     get onkeydown() { return this.config.onkeydown; }
     set onkeydown(onkeydown) {

@@ -182,7 +182,7 @@ class DialogWindow {
                     if (typeof a === 'string') { // it's a keyword
                         switch(a) {
                             case 'closebutton':
-                                this.actionbox.appendChild(new DestructiveButton({
+                                this.actionbox.appendChild(new SimpleButton({
                                     text: this.closetext,
                                     ghost: true,
                                     action: function() {

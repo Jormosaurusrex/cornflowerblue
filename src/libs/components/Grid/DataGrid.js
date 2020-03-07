@@ -447,13 +447,9 @@ class DataGrid extends Panel {
                 container.append(content);
                 break;
             case 'filter':
-                let filters = {
-                    album: {
-                        field: 'album',
-                        comparator: 'contains',
-                        value: 'zeppelin'
-                    }
-                };
+                let filters = [
+                    { field: 'album', comparator: 'contains',  value: 'zeppelin' }
+                ];
 
                 let fc = new FilterConfigurator({
                     fields: this.fields,
@@ -464,6 +460,7 @@ class DataGrid extends Panel {
                 let applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
                     action: function() {
+                        fc.grindFilters();
                         me.activefilters = fc.filters;
                         me.applyFilters();
                         dialog.close();

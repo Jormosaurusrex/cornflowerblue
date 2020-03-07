@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                     'src/libs/inputs/NumberInput.js',
                     'src/libs/inputs/DateInput.js',
                     'src/libs/inputs/EmailInput.js',
-                    'src/libs/inputs/URIInput.js',
+                    'src/libs/inputs/URLInput.js',
                     'src/libs/inputs/HiddenField.js',
                     'src/libs/inputs/PasswordInput.js',
                     'src/libs/inputs/SelectMenu.js',

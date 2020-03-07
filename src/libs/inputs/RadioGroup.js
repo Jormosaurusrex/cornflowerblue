@@ -13,7 +13,6 @@ class RadioGroup extends SelectMenu {
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
-            onchange: null, // The change handler. Passed (self).
             validator: null // A function to run to test validity. Passed the self; returns true or false.
         };
     }
@@ -171,17 +170,6 @@ class RadioGroup extends SelectMenu {
             }
             this.optionlist.appendChild(o);
         }
-    }
-
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) {
-        if (typeof onchange !== 'function') {
-            console.error("Action provided for onchange is not a function!");
-        }
-        this.config.onchange = onchange;
     }
 
 }
