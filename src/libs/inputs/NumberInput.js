@@ -3,7 +3,8 @@ class NumberInput extends TextInput {
     static get DEFAULT_CONFIG() {
         return {
             type: 'text',
-            //pattern:'[0-9.%+-]$',
+            pattern: '[0-9]*',
+            forcecontstraints: true,
             minnumber: null,
             maxnumber: null,
             downbuttonarialabel: TextFactory.get('decrement_number'),
@@ -54,22 +55,46 @@ class NumberInput extends TextInput {
             config.origkeydown = config.onkeydown;
         }
         config.onkeydown = function(e, self) {
-            if (e.keyCode === 38) { // up arrow
-                e.preventDefault();
-                e.stopPropagation();
-                self.increment();
-            } else if (e.keyCode === 40) { // down arrow
-                e.preventDefault();
-                e.stopPropagation();
-                self.decrement();
+            switch (e.key) {
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case '.':
+                case '-':
+                case '+':
+                case 'Enter':
+                case 'Tab':
+                    // Nothing.
+                    break;
+                case 'ArrowUp': // Up
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.increment();
+                    break;
+                case 'ArrowDown': // Down
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.decrement();
+                    break;
+                default:
+                    if (self.forceconstraints) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    break;
             }
+
             if ((self.origkeydown) && (typeof self.origkeydown === 'function')) {
                 self.origkeydown(e, self);
             }
         };
-        if (config.type === 'range') {
-            console.log(`type: ${config.type}`);
-        }
         super(config);
     }
 

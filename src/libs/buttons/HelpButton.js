@@ -29,16 +29,4 @@ class HelpButton extends SimpleButton {
 
     }
 
-    open() {
-        console.log('open');
-        if (!this.tooltipobj) { return; }
-        console.log('open2');
-        this.tooltipobj.open();
-    }
-
-    close() {
-        if (!this.tooltipobj) { return; }
-        this.tooltipobj.close();
-    }
-
 }

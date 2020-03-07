@@ -415,7 +415,7 @@ class InputElement {
         this.input.addEventListener('keyup', function(e) {
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
-                me.helpbutton.close();
+                me.helpbutton.closeTooltip();
             }
 
             if ((me.value) && (me.value.length > 0) && (me.container)) {
@@ -446,7 +446,7 @@ class InputElement {
             }
             if (me.help) {
                 me.helptimer = setTimeout(function() {
-                    me.helpbutton.open();
+                    me.helpbutton.openTooltip();
                 }, me.helpwaittime);
             }
             if ((me.focusin) && (typeof me.focusin === 'function')) {
@@ -461,7 +461,7 @@ class InputElement {
 
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
-                me.helpbutton.close();
+                me.helpbutton.closeTooltip();
             }
 
             if ((me.mute) && (me.label)) {
@@ -528,11 +528,10 @@ class InputElement {
             });
             this.labelobj.appendChild(this.helpbutton.button);
             this.labelobj.addEventListener('mouseover', function() {
-                console.log('foo');
-                me.helpbutton.open();
+                me.helpbutton.openTooltip();
             });
             this.labelobj.addEventListener('mouseout', function() {
-                me.helpbutton.close();
+                me.helpbutton.closeTooltip();
             });
         }
     }

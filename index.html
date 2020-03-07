@@ -322,8 +322,8 @@
                         <div class="demobox" id="inputs-number">
                             <h3 role="heading" aria-level="3">Number</h3>
                             <code class="invoker">new NumberInput({options});</code>
-                            <p>The input accepts non-numeric values but treats all of them as errors. It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
-                            <p>The input accepts non-numeric values but treats all of them as errors.</p>
+                            <p>By default, the input does not accept non-numeric values (only numbers, -, +, and periods). It will also fire validators that test against <code>minnumber</code> or <code>maxnumber</code>, and are divisible by any value given to <code>step</code>. If <code>wholenumbers</code> is true it will not accept decimals. The steppers can be turned off with <code>steppers: false</code>. If the input has focus, up and down arrows will change the values.</p>
+                            <p>If <code>forceconstraints</code> is set to false, the input will accept non-numeric values but treats them as errors.</p>
                         </div>
                         <div class="demobox" id="inputs-email">
                             <h3 role="heading" aria-level="3">Email</h3>

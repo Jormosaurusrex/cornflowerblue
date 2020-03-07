@@ -57,6 +57,60 @@ class SimpleButton {
      */
     get cansubmit() { return this.config.cansubmit; }
 
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Enable the button
+     */
+    disable() {
+        this.button.setAttribute('disabled', 'disabled');
+        this.disabled = true;
+        return this;
+    }
+
+    /**
+     * Disable the button
+     */
+    enable() {
+        this.button.removeAttribute('disabled');
+        this.disabled = false;
+        return this;
+    }
+
+    /**
+     * Show the button
+     */
+    show() {
+        this.button.classList.remove('hidden');
+        this.hidden = false;
+        return this;
+    }
+
+    /**
+     * Hide the button
+     */
+    hide() {
+        this.button.classList.add('hidden');
+        this.hidden = true;
+        return this;
+    }
+
+    /**
+     * Open the tooltip.
+     */
+    openTooltip() {
+        if (!this.tooltipobj) { return; }
+        this.tooltipobj.open();
+    }
+
+    /**
+     * Close the tooltip
+     */
+    closeTooltip() {
+        if (!this.tooltipobj) { return; }
+        this.tooltipobj.close();
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -176,44 +230,6 @@ class SimpleButton {
                 }
             });
         }
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Enable the button
-     */
-    disable() {
-        this.button.setAttribute('disabled', 'disabled');
-        this.disabled = true;
-        return this;
-    }
-
-    /**
-     * Disable the button
-     */
-    enable() {
-        this.button.removeAttribute('disabled');
-        this.disabled = false;
-        return this;
-    }
-
-    /**
-     * Show the button
-     */
-    show() {
-        this.button.classList.remove('hidden');
-        this.hidden = false;
-        return this;
-    }
-
-    /**
-     * Hide the button
-     */
-    hide() {
-        this.button.classList.add('hidden');
-        this.hidden = true;
-        return this;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -349,6 +365,5 @@ class SimpleButton {
 
     get tooltipobj() { return this._tooltipobj; }
     set tooltipobj(tooltipobj) { this._tooltipobj = tooltipobj; }
-
 
 }
