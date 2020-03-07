@@ -140,11 +140,13 @@ class SimpleButton {
         });
 
         if (this.tooltip) {
-            new ToolTip({
+            this.tooltipobj = new ToolTip({
+                id: `${this.id}-tt`,
                 text: this.tooltip,
                 icon: this.tipicon,
                 gravity: this.tipgravity,
-            }).attach(this.button);
+            });
+            this.tooltipobj.attach(this.button);
         }
 
         if (this.notab) {
@@ -344,6 +346,9 @@ class SimpleButton {
 
     get tooltip() { return this.config.tooltip; }
     set tooltip(tooltip) { this.config.tooltip = tooltip; }
+
+    get tooltipobj() { return this._tooltipobj; }
+    set tooltipobj(tooltipobj) { this._tooltipobj = tooltipobj; }
 
 
 }

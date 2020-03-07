@@ -5,9 +5,10 @@ class HelpButton extends SimpleButton {
             action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
+            tipgravity: 'n',
             arialabel: TextFactory.get('help'),
             iconclasses: ['helpicon'],
-            help: null // help text to display
+            tooltip: null // help text to display
         };
     }
 
@@ -25,39 +26,19 @@ class HelpButton extends SimpleButton {
             config.id = `${CFBUtils.getUniqueKey(5)}-help`;
         }
         super(config);
-        this.tooltip.attach(this);
+
     }
 
-    /**
-     * Builds the help.
-     */
-    buildTooltip() {
-        this.tooltip = new ToolTip({
-            id: `${this.id}-tt`,
-            icon: this.tipicon,
-            text: this.help
-        });
+    open() {
+        console.log('open');
+        if (!this.tooltipobj) { return; }
+        console.log('open2');
+        this.tooltipobj.open();
     }
 
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get button() {
-        if (!this._button) { this.buildButton(); }
-        if (!this.tooltip) { this.buildTooltip(); }
-        return this._button;
+    close() {
+        if (!this.tooltipobj) { return; }
+        this.tooltipobj.close();
     }
-    set button(button) { this._button = button; }
-
-    get help() { return this.config.help; }
-    set help(help) { this.config.help = help; }
-
-    get tipicon() { return this.config.tipicon; }
-    set tipicon(tipicon) { this.config.tipicon = tipicon; }
-
-    get tooltip() {
-        if (!this._tooltip) { this.buildTooltip(); }
-        return this._tooltip;
-    }
-    set tooltip(tooltip) { this._tooltip = tooltip; }
 
 }

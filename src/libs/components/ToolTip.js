@@ -82,8 +82,6 @@ class ToolTip {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-
-
         switch(this.gravity) {
             case 's':
             case 'south':

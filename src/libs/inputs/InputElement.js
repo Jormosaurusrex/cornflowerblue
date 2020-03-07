@@ -415,7 +415,7 @@ class InputElement {
         this.input.addEventListener('keyup', function(e) {
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
-                me.helpicon.close();
+                me.helpbutton.close();
             }
 
             if ((me.value) && (me.value.length > 0) && (me.container)) {
@@ -446,7 +446,7 @@ class InputElement {
             }
             if (me.help) {
                 me.helptimer = setTimeout(function() {
-                    me.helpicon.open();
+                    me.helpbutton.open();
                 }, me.helpwaittime);
             }
             if ((me.focusin) && (typeof me.focusin === 'function')) {
@@ -461,7 +461,7 @@ class InputElement {
 
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
-                me.helpicon.close();
+                me.helpbutton.close();
             }
 
             if ((me.mute) && (me.label)) {
@@ -522,16 +522,17 @@ class InputElement {
         }
 
         if (this.help) {
-            this.helpicon = new HelpButton({
+            this.helpbutton = new HelpButton({
                 id: `${this.id}-help`,
-                help: this.help
+                tooltip: this.help
             });
-            this.labelobj.appendChild(this.helpicon.button);
-            this.labelobj.addEventListener('onmouseover', function() {
-                me.helpicon.open();
+            this.labelobj.appendChild(this.helpbutton.button);
+            this.labelobj.addEventListener('mouseover', function() {
+                console.log('foo');
+                me.helpbutton.open();
             });
-            this.labelobj.addEventListener('onmouseout', function() {
-                me.helpicon.close();
+            this.labelobj.addEventListener('mouseout', function() {
+                me.helpbutton.close();
             });
         }
     }
@@ -638,8 +639,8 @@ class InputElement {
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
-    get helpicon() { return this._helpicon; }
-    set helpicon(helpicon) { this._helpicon = helpicon; }
+    get helpbutton() { return this._helpbutton; }
+    set helpbutton(helpbutton) { this._helpbutton = helpbutton; }
 
     get helpwaittime() { return this.config.helpwaittime; }
     set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
