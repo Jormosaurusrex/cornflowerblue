@@ -4,7 +4,7 @@ class NumberInput extends TextInput {
         return {
             type: 'text',
             pattern: '[0-9]*',
-            forcecontstraints: true,
+            forceconstraints: true,
             minnumber: null,
             maxnumber: null,
             downbuttonarialabel: TextFactory.get('decrement_number'),
@@ -144,15 +144,13 @@ class NumberInput extends TextInput {
      * Increment the number
      * @param step the amount to increment by.
      */
-    increment(step) {
-        if ((!step) || (isNaN(step))) {
-            step = 1;
-        }
-        let val = Number(this.value);
+    increment(step = 1) {
+        if (isNaN(step)) { step = 1; }
+        let val = parseInt(this.value);
         if (!val) { val = 0; }
         if (!isNaN(val)) {
             val += step;
-            if ((this.maxnumber !== 'undefined') && (val > this.maxnumber)) {
+            if ((this.maxnumber) && (val > this.maxnumber)) {
                 val = this.maxnumber;
             }
             this.value = val;
@@ -163,17 +161,17 @@ class NumberInput extends TextInput {
      * Decrement the number
      * @param step the amount to decrement by
      */
-    decrement(step) {
-        if ((!step) || (isNaN(step))) {
-            step = 1;
-        }
-        let val = Number(this.value);
+    decrement(step=1) {
+        console.log("dec");
+        if (isNaN(step)) { step = 1; }
+        let val = parseInt(this.value);
         if (!val) { val = 0; }
         if (!isNaN(val)) {
-            val -= step;
-            if ((this.minnumber !== 'undefined') && (val < this.minnumber)) {
+            val = (val - step);
+            if ((this.minnumber) && (val < this.minnumber)) {
                 val = this.minnumber;
             }
+            console.log(val);
             this.value = val;
         }
     }

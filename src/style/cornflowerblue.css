@@ -2310,6 +2310,9 @@ div.selectmenu-menu ul.selectmenu li {
   white-space: nowrap;
   padding: 0.5em 1em 0.5em 1.5em;
 }
+div.selectmenu-menu ul.selectmenu li > input[type=radio] {
+  display: none;
+}
 div.selectmenu-menu ul.selectmenu li:focus {
   outline: var(--selectmenu-menu-background-color) dashed 0.1em;
   outline-offset: -0.3em;
