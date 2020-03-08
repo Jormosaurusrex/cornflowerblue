@@ -223,10 +223,24 @@ class SelectMenu extends InputElement {
         if (this.minimal) { this.container.classList.add('minimal'); }
 
         if (this.value) {
-            this.select(value);
+            //this.select(this.value);
         }
 
         this.postContainerScrub();
+    }
+
+    select(value) {
+        let allopts = this.listbox.querySelectorAll('li');
+        for (let o of allopts) {
+            let radio = o.querySelector(`input[name=${this.name}`);
+            if (o.getAttribute('data-value') === value) {
+                o.setAttribute('aria-selected', true);
+                radio.checked = true;
+            } else {
+                o.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
     }
 
     /**
@@ -347,6 +361,9 @@ class SelectMenu extends InputElement {
         opt.setAttribute('type', 'radio');
         opt.setAttribute('name', this.name);
         opt.value = def.value;
+        if (def.checked) {
+            opt.checked = true;
+        }
 
         let li = document.createElement('li');
         li.setAttribute('tabindex', '-1');
@@ -415,7 +432,7 @@ class SelectMenu extends InputElement {
                 if (opt) { opt.removeAttribute('checked') ; }
             }
             li.setAttribute('aria-selected', 'true');
-            li.querySelector(`input[name=${me.name}]`).setAttribute('checked', 'true');
+            li.querySelector(`input[name=${me.name}]`).checked = true;
 
             if (me.prefix) {
                 me.triggerbox.value = `${me.prefix} ${def.label}`;

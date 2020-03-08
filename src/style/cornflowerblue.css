@@ -2289,9 +2289,6 @@ div.select-container div[role=listbox] ul.selectmenu li {
   white-space: nowrap;
   padding: 0.5em 1em 0.5em 1.5em;
 }
-div.select-container div[role=listbox] ul.selectmenu li > input[type=radio] {
-  display: none;
-}
 div.select-container div[role=listbox] ul.selectmenu li:focus {
   outline: var(--selectmenu-menu-background-color) dashed 0.1em;
   outline-offset: -0.3em;

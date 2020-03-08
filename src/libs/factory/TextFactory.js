@@ -35,6 +35,7 @@ class TextFactory {
             "export" : 'Export',
             "fileinput-placeholder-file" : 'Select file',
             "fileinput-placeholder-multiple" : 'Select files (multiple accepted)',
+            "filter-configurator-add_filter" : "Add filter",
             "filter-comparator-contains" : "Contains",
             "filter-comparator-notcontains" : "Does not contain",
             "filter-comparator-equals" : "Equals",

@@ -57,12 +57,13 @@ class FilterConfigurator {
      * Test each filter in the list and replace the canonical filters with the valid one.
      */
     grindFilters() {
-        let flines = this.elements.querySelector('li[data-valid="true"');
+        let flines = this.elements.querySelectorAll('li[data-valid="true"');
         let filters = [];
         for (let li of flines) {
             let f = this.checkValidity(li);
             if (f) { filters.push(f); }
         }
+        console.log(filters);
         this.filters = filters;
     }
 
@@ -75,9 +76,9 @@ class FilterConfigurator {
         li.setAttribute('data-valid', 'false'); // ensure false at the start.
 
         let filter,
-            filterId = li.getAttribute('data-filterid'),
-            fieldField = li.querySelector('input[name="primeselector"]'),
-            comparatorField = li.querySelector('input[name="comparator"]'),
+            filterid = li.getAttribute('data-filterid'),
+            fieldField = li.querySelector('input[name="primeselector"]:checked'),
+            comparatorField = li.querySelector('input[name="comparator"]:checked'),
             valueField = li.querySelector('input[name="valuefield"]');
 
         if ((fieldField) && (comparatorField) && (valueField)) {
@@ -100,11 +101,12 @@ class FilterConfigurator {
             if (valid) {
                 li.setAttribute('data-valid', 'true');
                 filter = {
+                    filterid: filterid,
                     field: field,
                     comparator: comparator,
                     value: value
                 };
-                this.workingfilters[filterId] = filter;
+                this.workingfilters[filterid] = filter;
             }
         }
         return filter;
@@ -138,7 +140,7 @@ class FilterConfigurator {
 
         this.actions.appendChild(new SimpleButton({
             icon: 'cfb-plus',
-            text: 'Add filter',
+            text: TextFactory.get('filter-configurator-add_filter'),
             action: function() {
                 let unsets = me.elements.querySelectorAll('[data-field="unset"]');
                 if (unsets.length < 1) {
@@ -146,13 +148,14 @@ class FilterConfigurator {
                 }
             }
         }).button);
-        
+
         this.container.append(this.actions);
 
         this.elements = document.createElement('ul');
         this.elements.classList.add('filter-list');
 
         if (this.filters) {
+            console.log(this.filters);
             for (let f of this.filters) {
                 this.addFilter(f);
             }
@@ -233,14 +236,12 @@ class FilterConfigurator {
             placeholder: TextFactory.get('filter-comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
-                console.log("SELFT");
-                console.log(self.container.parentElement);
                 let li = self.container.parentElement,
                     validmarker = li.querySelector('div.validmarker'),
                     comparatorfield = li.querySelector('div.select-container.comparator'),
                     valuefield = li.querySelector('div.input-container.valueinput'),
                     field = me.getField(primeSelector.value);
-
+                console.log(`primeSelectorvalue: ${primeSelector.value}`);
                 li.setAttribute('data-valid', 'false');
                 if (comparatorfield) {
                     li.removeChild(comparatorfield);
@@ -312,9 +313,6 @@ class FilterConfigurator {
             minimal: true,
             classes: ['comparator'],
             onchange: function(self) {
-                console.log("SELFU");
-                console.log(self.container.parentElement);
-
                 let li = self.container.parentElement;
                 me.checkValidity(li);
             }

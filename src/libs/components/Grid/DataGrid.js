@@ -98,14 +98,14 @@ class DataGrid extends Panel {
         const me = this;
 
         if (this.id) {
-            this.savekey = `grid-${this.id}`;
+            this.savekey = `grid-test-${this.id}`;
         } else {
             this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
         }
         for (let f of this.fields) {
             if (f.identifier) { this.identifier = f.name; }
         }
-        this.activefilters = {};
+        this.activefilters = [];
         this.loadstate();
 
         setTimeout(function() {
@@ -404,7 +404,6 @@ class DataGrid extends Panel {
     configurator(type) {
         const me = this;
 
-
         let title,
             container,
             actions = [];
@@ -453,7 +452,7 @@ class DataGrid extends Panel {
 
                 let fc = new FilterConfigurator({
                     fields: this.fields,
-                    filters: filters
+                    filters: this.activefilters
                 });
                 container = fc.container;
 
@@ -768,7 +767,7 @@ class DataGrid extends Panel {
     grindstate() {
         let state = {
             fields: {},
-            filters: {},
+            filters: [],
             search: null
         };
 
@@ -779,40 +778,26 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
-        for (let af of (Object.values(this.activefilters))) {
-            state.filters[af.field] = af;
-        }
+        state.filters = this.activefilters;
+
         return state;
     }
 
     /* FILTER METHODS___________________________________________________________________ */
 
     /**
-     * Add a filter to the active filters
-     * @param field the field to affect
-     * @param value the value of the field to match
-     * @param comparator the comparator value
-     */
-    addFilter(field, value, comparator) {
-        if ((!value) || (value === '')) {
-            delete this.activefilters[field];
-        } else {
-            this.activefilters[field] = {
-                field: field,
-                value: value,
-                comparator: comparator
-            };
-        }
-        this.persist();
-        this.applyFilters();
-    }
-
-    /**
      * Remove a filter from the active filter list
      * @param f the filter to drop
      */
     removeFilter(f) {
-        delete this.activefilters[f.field];
+        let filters = [];
+        for (let af of this.activefilters) {
+            if (af.filterid === f.filterid) {
+                continue;
+            }
+            filters.push(af);
+        }
+        this.activefilters = filters;
         this.persist();
         this.applyFilters();
     }
@@ -828,10 +813,10 @@ class DataGrid extends Panel {
 
         if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
             this.filterinfo.setAttribute('aria-expanded', true);
-            for (let f of Object.values(this.activefilters)) {
+            for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
                     text: this.getField(f.field).label,
-                    help: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
+                    // tooltip: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
                     action: function() {
                         me.removeFilter(f);
                     }
@@ -846,25 +831,85 @@ class DataGrid extends Panel {
             r.removeAttribute('data-matched-filters');
             r.classList.remove('filtered');
 
-            if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            if ((this.activefilters) && (this.activefilters.length > 0)) {
                 let matchedfilters = [];
 
-                for (let filter of Object.values(this.activefilters)) {
+                for (let filter of this.activefilters) {
+                    let field = this.getField(filter.field),
+                        matches = false,
+                        testVal,
+                        filterVal,
+                        c = r.querySelector(`[data-name='${filter.field}']`);
 
-                    let c = r.querySelector(`[data-name='${filter.field}']`);
+                    switch (field.type) {
+                        case 'date':
+                        case 'time':
+                            testVal = new Date(c.innerHTML);
+                            filterVal = new Date(filter.value);
 
-                    if (filter.exact) {
-                        if (c.innerHTML === filter.value) {
-                            matchedfilters.push(filter.field);
-                        } else {
-                            r.classList.add('filtered');
-                        }
+                            switch(filter.comparator) {
+                                case 'isbefore':
+                                    matches = (testVal.getTime() < filterVal.getTime());
+                                    break;
+                                case 'isafter':
+                                    matches = (testVal.getTime() > filterVal.getTime());
+                                    break;
+                                case 'notequals':
+                                    matches = (testVal.getTime() !== filterVal.getTime());
+                                    break;
+                                case 'equals':
+                                default:
+                                    matches = (testVal.getTime() === filterVal.getTime());
+                                    break;
+                            }
+
+                            break;
+                        case 'number':
+                            testVal = parseInt(c.innerHTML);
+                            filterVal = parseInt(filter.value);
+                            switch(filter.comparator) {
+                                case 'isgreaterthan':
+                                    matches = (testVal > filterVal);
+                                    break;
+                                case 'islessthan':
+                                    matches = (testVal < filterVal);
+                                    break;
+                                case 'notequals':
+                                    matches = (testVal !== filterVal);
+                                    break;
+                                case 'equals':
+                                default:
+                                    matches = (testVal === filterVal);
+                                    break;
+                            }
+                            break;
+                        case 'imageurl':
+                        case 'string':
+                        default:
+                            testVal = c.innerHTML;
+                            filterVal = filter.value;
+                            switch(filter.comparator) {
+                                case 'equals':
+                                    matches = (testVal === filterVal);
+                                    break;
+                                case 'notequals':
+                                    matches = (testVal !== filterVal);
+                                    break;
+                                case 'notcontains':
+                                    matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) === -1);
+                                    break;
+                                case 'contains':
+                                default:
+                                    matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1);
+                                    break;
+
+                            }
+                            break;
+                    }
+                    if (matches) {
+                        matchedfilters.push(filter.field);
                     } else {
-                        if (c.innerHTML.toLowerCase().indexOf(filter.value.toLowerCase()) !== -1) {
-                            matchedfilters.push(filter.field);
-                        } else {
-                            r.classList.add('filtered');
-                        }
+                        r.classList.add('filtered');
                     }
                 }
 
@@ -1085,7 +1130,7 @@ class DataGrid extends Panel {
         this.filterinfo.classList.add('grid-filterinfo');
 
         let label = document.createElement('label');
-        label.innerHTML = this.filterlabel;
+        label.innerHTML = TextFactory.get('filters');
         this.filterinfo.appendChild(label);
 
         this.filtertags = document.createElement('div');

@@ -60,7 +60,7 @@ div.select-container {
         white-space: nowrap;
         padding: .5em 1em .5em 1.5em;
         > input[type='radio'] {
-          display: none;
+          //display: none;
         }
         &:focus {
           outline: var(--selectmenu-menu-background-color) dashed .1em;
