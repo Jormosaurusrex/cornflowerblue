@@ -11,7 +11,7 @@ class NumberInput extends TextInput {
             upbuttonarialabel: TextFactory.get('increment_number'),
             wholenumbers: false, // Require whole numbers
             steppers: true,
-            step: null
+            step: 1
         };
     }
 
@@ -145,8 +145,8 @@ class NumberInput extends TextInput {
      * @param step the amount to increment by.
      */
     increment(step = 1) {
-        if (isNaN(step)) { step = 1; }
-        let val = parseInt(this.value);
+        if ((!step) || (isNaN(step))) { step = 1; }
+        let val = parseFloat(this.value);
         if (!val) { val = 0; }
         if (!isNaN(val)) {
             val += step;
@@ -162,18 +162,17 @@ class NumberInput extends TextInput {
      * @param step the amount to decrement by
      */
     decrement(step=1) {
-        console.log("dec");
-        if (isNaN(step)) { step = 1; }
-        let val = parseInt(this.value);
+        if ((!step) || (isNaN(step))) { step = 1; }
+        let val = parseFloat(this.value);
         if (!val) { val = 0; }
         if (!isNaN(val)) {
-            val = (val - step);
-            if ((this.minnumber) && (val < this.minnumber)) {
-                val = this.minnumber;
+            val -= step;
+            if ((this.maxnumber) && (val > this.maxnumber)) {
+                val = this.maxnumber;
             }
-            console.log(val);
             this.value = val;
         }
+
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
