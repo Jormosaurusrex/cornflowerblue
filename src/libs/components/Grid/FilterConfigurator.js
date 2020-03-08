@@ -41,8 +41,8 @@ class FilterConfigurator {
             'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
             'isbefore' : TextFactory.get('filter-comparator-isbefore'),
             'isafter' : TextFactory.get('filter-comparator-isafter'),
-            'greaterthan' : TextFactory.get('filter-comparator-greaterthan'),
-            'lessthan' : TextFactory.get('filter-comparator-lessthan')
+            'isgreaterthan' : TextFactory.get('filter-comparator-greaterthan'),
+            'islessthan' : TextFactory.get('filter-comparator-lessthan')
         }
     }
 
@@ -87,9 +87,14 @@ class FilterConfigurator {
     grindFilters() {
         let flines = this.elements.querySelectorAll('li[data-valid="true"');
         let filters = [];
+        console.log('grindfilters');
         for (let li of flines) {
+            console.log(li);
             let f = this.checkValidity(li);
-            if (f) { filters.push(f); }
+            console.log(f);
+            if (f) {
+                filters.push(f);
+            }
         }
         console.log(filters);
         this.filters = filters;
@@ -135,6 +140,8 @@ class FilterConfigurator {
                     value: value
                 };
                 this.workingfilters[filterid] = filter;
+            } else {
+                console.log(`not valid: ${filterid} ${field} ${comparator} ${value}`);
             }
         }
         return filter;
@@ -268,7 +275,7 @@ class FilterConfigurator {
                     comparatorfield = li.querySelector('div.select-container.comparator'),
                     valuefield = li.querySelector('div.input-container.valueinput'),
                     field = me.getField(primeSelector.value);
-                console.log(`primeSelectorvalue: ${primeSelector.value}`);
+
                 li.setAttribute('data-valid', 'false');
                 if (comparatorfield) {
                     li.removeChild(comparatorfield);
@@ -301,7 +308,7 @@ class FilterConfigurator {
             { value: 'contains', label: FilterConfigurator.getComparatorLabel('contains') },
             { value: 'notcontains', label: FilterConfigurator.getComparatorLabel('notcontains') },
             { value: 'equals', label: FilterConfigurator.getComparatorLabel('equals') },
-            { value: 'notequals', label: FilterConfigurator.getComparatorLabel('notequals') },
+            { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('notequals') },
         ];
 
         switch (field.type) {
@@ -310,7 +317,7 @@ class FilterConfigurator {
                 ourValue = 'equals';
                 comparators = [
                     { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
-                    { value: 'notequals', label: FilterConfigurator.getComparatorLabel('notequals') },
+                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
                     { value: 'isbefore', label: FilterConfigurator.getComparatorLabel('isbefore') },
                     { value: 'isafter', label: FilterConfigurator.getComparatorLabel('isafter') }
                 ];
@@ -319,7 +326,7 @@ class FilterConfigurator {
                 ourValue = 'equals';
                 comparators = [
                     { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
-                    { value: 'notequals', label: FilterConfigurator.getComparatorLabel('notequals') },
+                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
                     { value: 'isgreaterthan', label: FilterConfigurator.getComparatorLabel('isgreaterthan') },
                     { value: 'islessthan', label: FilterConfigurator.getComparatorLabel('islessthan') }
                 ];

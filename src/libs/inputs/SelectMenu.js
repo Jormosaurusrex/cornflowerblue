@@ -12,6 +12,12 @@ class SelectMenu extends InputElement {
         };
     }
 
+    static closeOpen() {
+        if (SelectMenu.activeMenu) {
+            SelectMenu.activeMenu.close();
+        }
+    }
+
     /**
      * Define the SelectMenu
      * @param config a dictionary object
@@ -103,6 +109,40 @@ class SelectMenu extends InputElement {
      */
     open() {
         const me = this;
+        SelectMenu.closeOpen(); // close open menus
+
+        document.body.appendChild(this.listbox);
+
+        this.listbox.removeAttribute('aria-hidden');
+        this.wrapper.setAttribute('aria-expanded', true);
+
+        for (let li of Array.from(this.optionlist.querySelector('li'))) {
+            li.setAttribute('tabindex', '0');
+        }
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = this.wrapper.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        this.listbox.style.top = `${(offsetTop + this.container.clientHeight)}px`;
+        this.listbox.style.left = `${offsetLeft}px`;
+        this.listbox.style.width = `${this.container.clientWidth}px`;
+
+
+        if (typeof SelectMenu.activeMenu === 'undefined' ) {
+            SelectMenu.activeMenu = this;
+        } else {
+            SelectMenu.activeMenu = this;
+        }
+
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 100);
+    }
+
+    openOld() {
+        const me = this;
 
         if (SelectMenu.activeMenu) { // close any spuriously open other ones
             SelectMenu.activeMenu.close();
@@ -142,6 +182,7 @@ class SelectMenu extends InputElement {
 
     }
 
+
     /**
      * Closes the option list.
      */
@@ -149,13 +190,11 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
-
         for (let li of Array.from(this.optionlist.querySelector('li'))) {
             li.setAttribute('tabindex', '-1');
         }
-
-        this.searchkeys = [];
         this.updateSearch();
+        this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
     }
 
@@ -212,6 +251,7 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('id', `${this.id}-options`);
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('role', 'listbox');
+        this.listbox.classList.add('selectmenu-menu')
         this.listbox.appendChild(this.optionlist);
 
         this.container.appendChild(this.listbox);

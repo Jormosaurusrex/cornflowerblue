@@ -111,7 +111,7 @@ class ToolTip {
                 break;
         }
 
-        if (!ToolTip.activeTooltip) {
+        if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;
         } else {
             ToolTip.activeTooltip = this;

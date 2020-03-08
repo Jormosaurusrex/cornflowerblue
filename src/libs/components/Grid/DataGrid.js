@@ -854,7 +854,7 @@ class DataGrid extends Panel {
                                 case 'isafter':
                                     matches = (testVal.getTime() > filterVal.getTime());
                                     break;
-                                case 'notequals':
+                                case 'doesnotequal':
                                     matches = (testVal.getTime() !== filterVal.getTime());
                                     break;
                                 case 'equals':
@@ -874,7 +874,7 @@ class DataGrid extends Panel {
                                 case 'islessthan':
                                     matches = (testVal < filterVal);
                                     break;
-                                case 'notequals':
+                                case 'doesnotequal':
                                     matches = (testVal !== filterVal);
                                     break;
                                 case 'equals':
@@ -892,7 +892,7 @@ class DataGrid extends Panel {
                                 case 'equals':
                                     matches = (testVal === filterVal);
                                     break;
-                                case 'notequals':
+                                case 'doesnotequal':
                                     matches = (testVal !== filterVal);
                                     break;
                                 case 'notcontains':
@@ -906,11 +906,13 @@ class DataGrid extends Panel {
                             }
                             break;
                     }
+
                     if (matches) {
                         matchedfilters.push(filter.field);
                     } else {
                         r.classList.add('filtered');
                     }
+
                 }
 
                 if (matchedfilters.length > 0) {

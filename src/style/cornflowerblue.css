@@ -2260,7 +2260,28 @@ div.select-container div.wrap[aria-expanded=true] input.trigger, div.select-cont
 div.select-container div.wrap[aria-expanded=true]:before {
   transform: rotate(180deg);
 }
-div.select-container div[role=listbox] ul.selectmenu {
+div.select-container.mute label {
+  opacity: 1;
+}
+div.select-container.mute[aria-expanded=true] input.trigger, div.select-container.mute:focus-within input.trigger {
+  border-bottom-color: var(--focus-color);
+  background-color: var(--input-focused-background-color);
+  box-shadow: var(--input-mute-focus-box-shadow);
+}
+div.select-container.disabled input.trigger:before {
+  opacity: 0.5;
+}
+div.select-container.disabled.mute input.trigger {
+  background-color: var(--input-mute-disabled-background-color);
+}
+
+div.selectmenu-menu {
+  animation: cfb-fadein 0.5s;
+  opacity: 1;
+  position: absolute;
+  z-index: 20000;
+}
+div.selectmenu-menu ul.selectmenu {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -2278,7 +2299,7 @@ div.select-container div[role=listbox] ul.selectmenu {
   width: 100%;
   transition: all 0.2s;
 }
-div.select-container div[role=listbox] ul.selectmenu li {
+div.selectmenu-menu ul.selectmenu li {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -2289,56 +2310,42 @@ div.select-container div[role=listbox] ul.selectmenu li {
   white-space: nowrap;
   padding: 0.5em 1em 0.5em 1.5em;
 }
-div.select-container div[role=listbox] ul.selectmenu li > input[type=radio] {
+div.selectmenu-menu ul.selectmenu li > input[type=radio] {
   display: none;
 }
-div.select-container div[role=listbox] ul.selectmenu li:focus {
+div.selectmenu-menu ul.selectmenu li:focus {
   outline: var(--selectmenu-menu-background-color) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
-div.select-container div[role=listbox] ul.selectmenu li[aria-selected=true] {
+div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
   box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
 }
-div.select-container div[role=listbox] ul.selectmenu li:nth-child(even) {
+div.selectmenu-menu ul.selectmenu li:nth-child(even) {
   background-color: var(--selectmenu-menu-alternate-background-color);
 }
-div.select-container div[role=listbox] ul.selectmenu li:focus {
+div.selectmenu-menu ul.selectmenu li:focus {
   background-color: var(--selectmenu-menu-item-hover-background-color);
   color: var(--selectmenu-menu-item-hover-text-color);
 }
 @media (hover: hover) and (pointer: fine) {
-  div.select-container div[role=listbox] ul.selectmenu li:hover {
+  div.selectmenu-menu ul.selectmenu li:hover {
     background-color: var(--selectmenu-menu-item-hover-background-color);
     color: var(--selectmenu-menu-item-hover-text-color);
   }
 }
-div.select-container div[role=listbox] ul.selectmenu.vert {
+div.selectmenu-menu ul.selectmenu.vert {
   bottom: 2.5em;
   box-shadow: var(--panel-shadow-light-inverse);
   border-top: 0.1em solid var(--input-default-border-color);
   border-bottom: none;
 }
-div.select-container div[role=listbox][aria-hidden=true] {
+div.selectmenu-menu[aria-hidden=true] {
   height: 0;
   max-height: 0;
   box-shadow: none;
   border: none;
   display: none;
-}
-div.select-container.mute label {
-  opacity: 1;
-}
-div.select-container.mute[aria-expanded=true] input.trigger, div.select-container.mute:focus-within input.trigger {
-  border-bottom-color: var(--focus-color);
-  background-color: var(--input-focused-background-color);
-  box-shadow: var(--input-mute-focus-box-shadow);
-}
-div.select-container.disabled input.trigger:before {
-  opacity: 0.5;
-}
-div.select-container.disabled.mute input.trigger {
-  background-color: var(--input-mute-disabled-background-color);
 }
 
 button {
