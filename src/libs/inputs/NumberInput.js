@@ -113,9 +113,9 @@ class NumberInput extends TextInput {
                 return;
             }
             let v = parseFloat(this.value);
-            if ((this.minnumber !== 'undefined') && (v < this.minnumber)) {
+            if ((this.minnumber) && (v < this.minnumber)) {
                 this.errors.push(TextFactory.get('numberinput-error-minimum_value', this.minnumber));
-            } else if ((this.maxnumber !== 'undefined') && (v > this.maxnumber)) {
+            } else if ((this.maxnumber) && (v > this.maxnumber)) {
                 this.errors.push(TextFactory.get('numberinput-error-maximum_value', this.maxnumber));
             } else if ((this.step) && (v % this.step !== 0)) {
                 this.errors.push(TextFactory.get('numberinput-error-values_divisible', this.step));
