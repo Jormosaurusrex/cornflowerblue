@@ -726,7 +726,7 @@ class DataGrid extends Panel {
     persist() {
         if (!this.ispersistable) { return; }
         this.state = this.grindstate(); // get a current copy of it.
-        //localStorage.setItem(this.savekey, JSON.stringify(this.state));
+        localStorage.setItem(this.savekey, JSON.stringify(this.state));
     }
 
     /**
@@ -816,7 +816,7 @@ class DataGrid extends Panel {
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
                     text: this.getField(f.field).label,
-                    // tooltip: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
+                    tooltip: `${this.getField(f.field).label} ${FilterConfigurator.getComparatorLabel(f.comparator)} ${f.value}`,
                     action: function() {
                         me.removeFilter(f);
                     }

@@ -28,6 +28,34 @@ class FilterConfigurator {
         };
     }
 
+    /**
+     * Supported comparators
+     * @return a comparator dictionary.
+     * @constructor
+     */
+    static get COMPARATORS() {
+        return {
+            'contains' : TextFactory.get('filter-comparator-contains'),
+            'notcontains' : TextFactory.get('filter-comparator-notcontains'),
+            'equals' : TextFactory.get('filter-comparator-equals'),
+            'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
+            'isbefore' : TextFactory.get('filter-comparator-isbefore'),
+            'isafter' : TextFactory.get('filter-comparator-isafter'),
+            'greaterthan' : TextFactory.get('filter-comparator-greaterthan'),
+            'lessthan' : TextFactory.get('filter-comparator-lessthan')
+        }
+    }
+
+    /**
+     * Get a comparator label
+     * @param comparator the comparator
+     * @return A string, or null
+     */
+    static getComparatorLabel(comparator) {
+        return FilterConfigurator.COMPARATORS[comparator];
+    }
+
+
     constructor(config) {
         if (!config) { config = {}; }
         this.config = Object.assign({}, FilterConfigurator.DEFAULT_CONFIG, config);
@@ -155,7 +183,6 @@ class FilterConfigurator {
         this.elements.classList.add('filter-list');
 
         if (this.filters) {
-            console.log(this.filters);
             for (let f of this.filters) {
                 this.addFilter(f);
             }
@@ -271,10 +298,10 @@ class FilterConfigurator {
 
         let ourValue = 'contains';
         let comparators = [ // Default for strings.
-            { value: 'contains', label: TextFactory.get('filter-comparator-contains') },
-            { value: 'notcontains', label: TextFactory.get('filter-comparator-notcontains') },
-            { value: 'equals', label: TextFactory.get('filter-comparator-equals') },
-            { value: 'notequals', label: TextFactory.get('filter-comparator-doesnotequal') },
+            { value: 'contains', label: FilterConfigurator.getComparatorLabel('contains') },
+            { value: 'notcontains', label: FilterConfigurator.getComparatorLabel('notcontains') },
+            { value: 'equals', label: FilterConfigurator.getComparatorLabel('equals') },
+            { value: 'notequals', label: FilterConfigurator.getComparatorLabel('notequals') },
         ];
 
         switch (field.type) {
@@ -282,19 +309,19 @@ class FilterConfigurator {
             case 'time':
                 ourValue = 'equals';
                 comparators = [
-                    { value: 'equals', checked: true, label: TextFactory.get('filter-comparator-equals') },
-                    { value: 'notequals', label: TextFactory.get('filter-comparator-doesnotequal') },
-                    { value: 'isbefore', label: TextFactory.get('filter-comparator-isbefore') },
-                    { value: 'isafter', label: TextFactory.get('filter-comparator-isafter') }
+                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
+                    { value: 'notequals', label: FilterConfigurator.getComparatorLabel('notequals') },
+                    { value: 'isbefore', label: FilterConfigurator.getComparatorLabel('isbefore') },
+                    { value: 'isafter', label: FilterConfigurator.getComparatorLabel('isafter') }
                 ];
                 break;
             case 'number':
                 ourValue = 'equals';
                 comparators = [
-                    { value: 'equals', checked: true, label: TextFactory.get('filter-comparator-equals') },
-                    { value: 'notequals', label: TextFactory.get('filter-comparator-doesnotequal') },
-                    { value: 'isgreaterthan', label: TextFactory.get('filter-comparator-greaterthan') },
-                    { value: 'islessthan', label: TextFactory.get('filter-comparator-lessthan') }
+                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
+                    { value: 'notequals', label: FilterConfigurator.getComparatorLabel('notequals') },
+                    { value: 'isgreaterthan', label: FilterConfigurator.getComparatorLabel('isgreaterthan') },
+                    { value: 'islessthan', label: FilterConfigurator.getComparatorLabel('islessthan') }
                 ];
                 break;
             default:

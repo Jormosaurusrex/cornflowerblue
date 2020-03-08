@@ -45,18 +45,14 @@ class ToolTip {
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
         this.parent.addEventListener('mouseover', function() {
-            ToolTip.timer = setTimeout(function() {
-                me.open();
-            }, me.waittime);
+            me.open();
         });
         this.parent.addEventListener('mouseout', function() {
             clearTimeout(ToolTip.timer);
             me.close();
         });
         this.parent.addEventListener('focusin', function() {
-            ToolTip.timer = setTimeout(function() {
-                me.open();
-            }, me.waittime);
+            me.open();
         });
         this.parent.addEventListener('focusout', function() {
             clearTimeout(ToolTip.timer);
@@ -68,8 +64,17 @@ class ToolTip {
 
     /**
      * Opens the help tooltip
+     * This actually only starts a timer.  The actual opening happens in openGuts()
      */
     open() {
+        const me = this;
+        ToolTip.closeOpen();
+        ToolTip.timer = setTimeout(function() {
+            me.openGuts();
+        }, this.waittime);
+    }
+
+    openGuts() {
         const me = this;
 
         ToolTip.closeOpen();
@@ -106,7 +111,7 @@ class ToolTip {
                 break;
         }
 
-        if (typeof ToolTip.activeTooltip === 'undefined' ) {
+        if (!ToolTip.activeTooltip) {
             ToolTip.activeTooltip = this;
         } else {
             ToolTip.activeTooltip = this;
