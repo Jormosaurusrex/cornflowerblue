@@ -67,11 +67,22 @@ class NumberInput extends TextInput {
                 case '8':
                 case '9':
                 case '.':
+                case '*':
+                case '%':
+                case '$':
                 case '-':
+                case '!':
+                case '#':
                 case '+':
+                case '=':
+                case '>':
+                case '<':
+                case '?':
+                case 'Backspace':
+                case 'Delete':
                 case 'Enter':
                 case 'Tab':
-                    // Nothing.
+                    // Nothing.  These are characters that could be conceivably used
                     break;
                 case 'ArrowUp': // Up
                     e.preventDefault();
