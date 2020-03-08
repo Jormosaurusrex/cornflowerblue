@@ -48,7 +48,7 @@ div#container header {
   position: sticky;
   top: -3em;
   height: var(--banner-height);
-  z-index: 500;
+  z-index: 60500;
   background-image: url("../image/cfb-banner.png");
   background-size: cover;
   background-position: bottom;

@@ -116,7 +116,7 @@ class SelectMenu extends InputElement {
         this.listbox.removeAttribute('aria-hidden');
         this.wrapper.setAttribute('aria-expanded', true);
 
-        for (let li of Array.from(this.optionlist.querySelector('li'))) {
+        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '0');
         }
 
@@ -190,7 +190,7 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
-        for (let li of Array.from(this.optionlist.querySelector('li'))) {
+        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
         }
         this.updateSearch();

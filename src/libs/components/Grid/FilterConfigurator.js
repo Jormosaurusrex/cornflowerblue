@@ -85,18 +85,14 @@ class FilterConfigurator {
      * Test each filter in the list and replace the canonical filters with the valid one.
      */
     grindFilters() {
-        let flines = this.elements.querySelectorAll('li[data-valid="true"');
+        let flines = this.elements.querySelectorAll('li.filterline');
         let filters = [];
-        console.log('grindfilters');
         for (let li of flines) {
-            console.log(li);
             let f = this.checkValidity(li);
-            console.log(f);
             if (f) {
                 filters.push(f);
             }
         }
-        console.log(filters);
         this.filters = filters;
     }
 
@@ -110,9 +106,9 @@ class FilterConfigurator {
 
         let filter,
             filterid = li.getAttribute('data-filterid'),
-            fieldField = li.querySelector('input[name="primeselector"]:checked'),
-            comparatorField = li.querySelector('input[name="comparator"]:checked'),
-            valueField = li.querySelector('input[name="valuefield"]');
+            fieldField = li.querySelector(`input[name="primeselector-${filterid}"]:checked`),
+            comparatorField = li.querySelector(`input[name="comparator-${filterid}"]:checked`),
+            valueField = li.querySelector(`input[name="valuefield-${filterid}"]`);
 
         if ((fieldField) && (comparatorField) && (valueField)) {
             let valid = false,
@@ -140,13 +136,10 @@ class FilterConfigurator {
                     value: value
                 };
                 this.workingfilters[filterid] = filter;
-            } else {
-                console.log(`not valid: ${filterid} ${field} ${comparator} ${value}`);
             }
         }
         return filter;
     }
-
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
@@ -208,20 +201,21 @@ class FilterConfigurator {
         const me = this;
 
         let li = document.createElement('li');
-        let filterId = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
-        li.setAttribute('data-filterid', filterId);
+        let filterid = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
+        li.classList.add('filterline');
+        li.setAttribute('data-filterid', filterid);
         li.setAttribute('data-valid', 'false');
 
         if (filter) {
             let field = this.getField(filter.field);
             li.setAttribute('data-field', filter.field);
-            li.appendChild(this.makePrimeSelector(filter.field).container);
-            li.appendChild(this.makeComparatorSelector(field, filter.comparator).container);
-            li.appendChild(this.makeValueSelector(field, filter.value).container);
+            li.appendChild(this.makePrimeSelector(filterid, filter.field).container);
+            li.appendChild(this.makeComparatorSelector(filterid, field, filter.comparator).container);
+            li.appendChild(this.makeValueSelector(filterid, field, filter.value).container);
             this.workingfilters[filterId] = filter; // add; doesn't need validation
             li.setAttribute('data-valid', 'true');
         } else {
-            li.appendChild(this.makePrimeSelector().container);
+            li.appendChild(this.makePrimeSelector(filterid).container);
             li.setAttribute('data-field', 'unset');
         }
 
@@ -248,10 +242,11 @@ class FilterConfigurator {
 
     /**
      * Make a 'field' selector.  This selector controls other selectors.
+     * @param filterid the filter id
      * @param fieldname (optional) the name of the field to pre-select.
      * @return {SelectMenu}
      */
-    makePrimeSelector(fieldname) {
+    makePrimeSelector(filterid, fieldname) {
         const me = this;
 
         let options = [];
@@ -265,7 +260,7 @@ class FilterConfigurator {
         let primeSelector = new SelectMenu({
             minimal: true,
             options: options,
-            name: 'primeselector',
+            name: `primeselector-${filterid}`,
             value: fieldname,
             placeholder: TextFactory.get('filter-comparator-select_field'),
             classes: ['primeselector'],
@@ -285,8 +280,8 @@ class FilterConfigurator {
                 }
                 if (field) {
                     li.setAttribute('data-field', field.name);
-                    li.insertBefore(me.makeComparatorSelector(field).container, validmarker);
-                    li.insertBefore(me.makeValueSelector(field).container, validmarker);
+                    li.insertBefore(me.makeComparatorSelector(filterid, field).container, validmarker);
+                    li.insertBefore(me.makeValueSelector(filterid, field).container, validmarker);
                     me.checkValidity(li);
                 }
             }
@@ -296,11 +291,12 @@ class FilterConfigurator {
 
     /**
      * Make a 'comparator' selector.
+     * @param filterid the filter id
      * @param field the field definition we're making one for
      * @param value (optional) the value to prefill with
      * @return {SelectMenu}
      */
-    makeComparatorSelector(field, value) {
+    makeComparatorSelector(filterid, field, value) {
         const me = this;
 
         let ourValue = 'contains';
@@ -343,7 +339,7 @@ class FilterConfigurator {
             options: comparators,
             placeholder: TextFactory.get('filter-comparator-comparator'),
             value: ourValue,
-            name: 'comparator',
+            name: `comparator-${filterid}`,
             minimal: true,
             classes: ['comparator'],
             onchange: function(self) {
@@ -358,11 +354,12 @@ class FilterConfigurator {
 
     /**
      * Make a variable value selector
+     * @param filterid the filter id
      * @param field field the field definition we're making one for
      * @param value  (optional) the value to prefill with
      * @return {URLInput|TextInput}
      */
-    makeValueSelector(field, value) {
+    makeValueSelector(filterid, field, value) {
         const me = this;
 
         let valueSelector;
@@ -371,7 +368,7 @@ class FilterConfigurator {
             case 'time':
                 valueSelector = new DateInput({
                     value: value,
-                    name: 'valuefield',
+                    name: `valuefield-${filterid}`,
                     minimal: true,
                     classes: ['valueinput'],
                     onchange: function(self) {
@@ -383,7 +380,7 @@ class FilterConfigurator {
             case 'number':
                 valueSelector = new NumberInput({
                     value: value,
-                    name: 'valuefield',
+                    name: `valuefield-${filterid}`,
                     minimal: true,
                     classes: ['valueinput'],
                     onchange: function(self) {
@@ -395,7 +392,7 @@ class FilterConfigurator {
             case 'imageurl':
                 valueSelector = new URLInput({
                     value: value,
-                    name: 'valuefield',
+                    name: `valuefield-${filterid}`,
                     minimal: true,
                     classes: ['valueinput'],
                     onchange: function(self) {
@@ -408,7 +405,7 @@ class FilterConfigurator {
             default:
                 valueSelector = new TextInput({
                     value: value,
-                    name: 'valuefield',
+                    name: `valuefield-${filterid}`,
                     minimal: true,
                     classes: ['valueinput'],
                     onchange: function(self) {
