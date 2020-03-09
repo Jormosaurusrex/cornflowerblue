@@ -1568,6 +1568,11 @@ class DataGrid extends Panel {
 
     /* UTILITY METHODS__________________________________________________________________ */
 
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
