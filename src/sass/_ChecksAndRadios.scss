@@ -77,13 +77,24 @@ input[type="radio"] {
   &:checked {
     border-color: var(--checkbox-checked-border-color);
     background-color: var(--checkbox-checked-background-color);
-    &:before,
-    &:focus {
+    &:before {
       opacity: 1;
       display: inline-block;
-    }
-    &:before {
       color: var(--checkbox-checked-checkmark-text-color);
+    }
+    &:focus {
+      &:before {
+        opacity: 1;
+        display: inline-block;
+        color: var(--checkbox-checked-checkmark-hover-text-color);
+      }
+    }
+    @include for-hover-only {
+      &:hover {
+        &:before {
+          color: var(--checkbox-checked-checkmark-hover-text-color);
+        }
+      }
     }
   }
   &:focus,

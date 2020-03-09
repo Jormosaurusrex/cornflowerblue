@@ -238,9 +238,10 @@
   --checkbox-switch-offset: .2em;
 
   --checkbox-checked-border-color: var(--input-default-border-color);
-  --checkbox-checked-background-color: var(--input-default-background-color);
+  --checkbox-checked-background-color: var(--focus-color);
   --checkbox-checked-checkmark-border-color: var(--checkbox-checked-border-color);
-  --checkbox-checked-checkmark-text-color: var(--focus-color);
+  --checkbox-checked-checkmark-text-color: var(--ultralight);
+  --checkbox-checked-checkmark-hover-text-color: var(--focus-colo);
 
   --checkbox-focus-color: var(--focus-color);
   --checkbox-focus-color-translucent: var(--focus-color-translucent);

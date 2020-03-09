@@ -196,9 +196,10 @@
   --checkbox-switch-toggle-size: 2em;
   --checkbox-switch-offset: .2em;
   --checkbox-checked-border-color: var(--input-default-border-color);
-  --checkbox-checked-background-color: var(--input-default-background-color);
+  --checkbox-checked-background-color: var(--focus-color);
   --checkbox-checked-checkmark-border-color: var(--checkbox-checked-border-color);
-  --checkbox-checked-checkmark-text-color: var(--focus-color);
+  --checkbox-checked-checkmark-text-color: var(--ultralight);
+  --checkbox-checked-checkmark-hover-text-color: var(--focus-colo);
   --checkbox-focus-color: var(--focus-color);
   --checkbox-focus-color-translucent: var(--focus-color-translucent);
   --checkbox-border-color: var(--input-default-border-color);
@@ -3026,15 +3027,23 @@ input[type=radio]:checked {
   border-color: var(--checkbox-checked-border-color);
   background-color: var(--checkbox-checked-background-color);
 }
-input[type=checkbox]:checked:before, input[type=checkbox]:checked:focus,
-input[type=radio]:checked:before,
-input[type=radio]:checked:focus {
-  opacity: 1;
-  display: inline-block;
-}
 input[type=checkbox]:checked:before,
 input[type=radio]:checked:before {
+  opacity: 1;
+  display: inline-block;
   color: var(--checkbox-checked-checkmark-text-color);
+}
+input[type=checkbox]:checked:focus:before,
+input[type=radio]:checked:focus:before {
+  opacity: 1;
+  display: inline-block;
+  color: var(--checkbox-checked-checkmark-hover-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  input[type=checkbox]:checked:hover:before,
+input[type=radio]:checked:hover:before {
+    color: var(--checkbox-checked-checkmark-hover-text-color);
+  }
 }
 input[type=checkbox]:focus, input[type=checkbox].focus,
 input[type=radio]:focus,
