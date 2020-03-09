@@ -389,6 +389,10 @@
   --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
   --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
 
+  --input-focus-warning-box-shadow: inset .5em 0 0 var(--warning-color), inset .1em -.1em 0 0 var(--warning-color), inset -.1em .1em 0 0 var(--warning-color), inset .1em .1em 0 0 var(--warning-color);
+
+  --input-focus-error-box-shadow: inset .5em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
+
   --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
   --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--focus-color);
 
