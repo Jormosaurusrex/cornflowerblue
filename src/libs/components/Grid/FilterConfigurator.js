@@ -212,7 +212,7 @@ class FilterConfigurator {
             li.appendChild(this.makePrimeSelector(filterid, filter.field).container);
             li.appendChild(this.makeComparatorSelector(filterid, field, filter.comparator).container);
             li.appendChild(this.makeValueSelector(filterid, field, filter.value).container);
-            this.workingfilters[filterId] = filter; // add; doesn't need validation
+            this.workingfilters[filterid] = filter; // add; doesn't need validation
             li.setAttribute('data-valid', 'true');
         } else {
             li.appendChild(this.makePrimeSelector(filterid).container);
@@ -304,7 +304,7 @@ class FilterConfigurator {
             { value: 'contains', label: FilterConfigurator.getComparatorLabel('contains') },
             { value: 'notcontains', label: FilterConfigurator.getComparatorLabel('notcontains') },
             { value: 'equals', label: FilterConfigurator.getComparatorLabel('equals') },
-            { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('notequals') },
+            { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
         ];
 
         switch (field.type) {
