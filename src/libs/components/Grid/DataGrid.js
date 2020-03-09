@@ -210,14 +210,12 @@ class DataGrid extends Panel {
 
     /**
      * Export the data in the grid as a CSV
+     * @param obeyView (optional) if true, export the view
      */
-    export() {
-        let lineDivider = '\r\n', // line divider
-            cellDivider = ',', // cell divider
-            rows = [],
-            fname;
+    export(obeyView) {
+        let fname;
 
-        if (this.expoortbutton) {
+        if (this.exportbutton) {
             this.exportbutton.disable();
         }
 
@@ -226,6 +224,31 @@ class DataGrid extends Panel {
         } else {
             fname = this.exportfilename;
         }
+
+        let csvdata = this.compileCSV(obeyView);
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csvdata)}`);
+        hiddenElement.setAttribute('id', 'downloadLink');
+        hiddenElement.setAttribute('target', '_blank');
+        hiddenElement.setAttribute('download', fname);
+        hiddenElement.click();
+
+        if (this.exportbutton) {
+            this.exportbutton.enable();
+        }
+    }
+
+    /**
+     * Compile the CSV file
+     * @param obeyView if true, only include visible data rows and cells
+     * @return {string} a csv clob
+     */
+    compileCSV(obeyView) {
+        let lineDivider = '\r\n', // line divider
+            cellDivider = ',', // cell divider
+            rows = [];
+
         // XXX TODO: Don't export hidden fields
 
         // Include the header row, if required.
@@ -233,6 +256,9 @@ class DataGrid extends Panel {
             let colTitles = [],
                 colData = [];
             for (let f of this.fields) {
+                if ((obeyView) && (f.hidden)) {
+                    continue; // Skip hidden
+                }
                 colTitles.push(`\"${f.label.replace(/"/g,"\\\"")}\"`);
                 colData.push(`\"${f.name.replace(/"/g,"\\\"")}\"`);
             }
@@ -243,9 +269,27 @@ class DataGrid extends Panel {
             }
         }
 
+        // XXX TODO Apply Sort?
+
         for (let d of this.data) {
+
+            let include = true;
+            if ((obeyView) && ((this.activefilters) && (this.activefilters.length > 0))) {
+                for (let filter of this.activefilters) {
+                    let field = this.getField(filter.field);
+                    include = this.testFilter(field, filter, d[filter.field]);
+                }
+            }
+
+            if (!include) {
+                continue;
+            }
+
             let cells = [];
             for (let f of this.fields) { // do mapping by field
+                if ((obeyView) && (f.hidden)) {
+                    continue; // Skip hidden
+                }
                 let val;
                 switch (f.type) {
                     case 'date':
@@ -269,18 +313,7 @@ class DataGrid extends Panel {
             rows.push(cells.join(cellDivider));
         }
 
-        let csv = rows.join(lineDivider);
-
-        let hiddenElement = document.createElement('a');
-        hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csv)}`);
-        hiddenElement.setAttribute('id', 'downloadLink');
-        hiddenElement.setAttribute('target', '_blank');
-        hiddenElement.setAttribute('download', fname);
-        hiddenElement.click();
-
-        if (this.exportbutton) {
-            this.exportbutton.enable();
-        }
+        return rows.join(lineDivider);
     }
 
     /**
@@ -446,10 +479,6 @@ class DataGrid extends Panel {
                 container.append(content);
                 break;
             case 'filter':
-                let filters = [
-                    { field: 'album', comparator: 'contains',  value: 'zeppelin' }
-                ];
-
                 let fc = new FilterConfigurator({
                     fields: this.fields,
                     filters: this.activefilters
@@ -830,82 +859,15 @@ class DataGrid extends Panel {
         for (let r of rows) {
             r.removeAttribute('data-matched-filters');
             r.classList.remove('filtered');
-
             if ((this.activefilters) && (this.activefilters.length > 0)) {
                 let matchedfilters = [];
 
                 for (let filter of this.activefilters) {
                     let field = this.getField(filter.field),
                         matches = false,
-                        testVal,
-                        filterVal,
                         c = r.querySelector(`[data-name='${filter.field}']`);
 
-                    switch (field.type) {
-                        case 'date':
-                        case 'time':
-                            testVal = new Date(c.innerHTML);
-                            filterVal = new Date(filter.value);
-
-                            switch(filter.comparator) {
-                                case 'isbefore':
-                                    matches = (testVal.getTime() < filterVal.getTime());
-                                    break;
-                                case 'isafter':
-                                    matches = (testVal.getTime() > filterVal.getTime());
-                                    break;
-                                case 'doesnotequal':
-                                    matches = (testVal.getTime() !== filterVal.getTime());
-                                    break;
-                                case 'equals':
-                                default:
-                                    matches = (testVal.getTime() === filterVal.getTime());
-                                    break;
-                            }
-
-                            break;
-                        case 'number':
-                            testVal = parseInt(c.innerHTML);
-                            filterVal = parseInt(filter.value);
-                            switch(filter.comparator) {
-                                case 'isgreaterthan':
-                                    matches = (testVal > filterVal);
-                                    break;
-                                case 'islessthan':
-                                    matches = (testVal < filterVal);
-                                    break;
-                                case 'doesnotequal':
-                                    matches = (testVal !== filterVal);
-                                    break;
-                                case 'equals':
-                                default:
-                                    matches = (testVal === filterVal);
-                                    break;
-                            }
-                            break;
-                        case 'imageurl':
-                        case 'string':
-                        default:
-                            testVal = c.innerHTML;
-                            filterVal = filter.value;
-                            switch(filter.comparator) {
-                                case 'equals':
-                                    matches = (testVal === filterVal);
-                                    break;
-                                case 'doesnotequal':
-                                    matches = (testVal !== filterVal);
-                                    break;
-                                case 'notcontains':
-                                    matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) === -1);
-                                    break;
-                                case 'contains':
-                                default:
-                                    matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1);
-                                    break;
-
-                            }
-                            break;
-                    }
+                    matches = this.testFilter(field, filter, c.innerHTML);
 
                     if (matches) {
                         matchedfilters.push(filter.field);
@@ -938,6 +900,83 @@ class DataGrid extends Panel {
         }
        
 
+    }
+
+    /**
+     * Test a value against a field's filters
+     * @param field the field definition
+     * @param filter the filter definition
+     * @param testVal the value to test
+     * @return {boolean} true if it matches the filter, false if not.
+     */
+    testFilter(field, filter, testVal) {
+        let matches,
+            filterVal = filter.value;
+
+        switch (field.type) {
+            case 'date':
+            case 'time':
+                testVal = new Date(testVal);
+                filterVal = new Date(filterVal);
+
+                switch(filter.comparator) {
+                    case 'isbefore':
+                        matches = (testVal.getTime() < filterVal.getTime());
+                        break;
+                    case 'isafter':
+                        matches = (testVal.getTime() > filterVal.getTime());
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal.getTime() !== filterVal.getTime());
+                        break;
+                    case 'equals':
+                    default:
+                        matches = (testVal.getTime() === filterVal.getTime());
+                        break;
+                }
+
+                break;
+            case 'number':
+                testVal = parseInt(testVal);
+                filterVal = parseInt(filterVal);
+                switch(filter.comparator) {
+                    case 'isgreaterthan':
+                        matches = (testVal > filterVal);
+                        break;
+                    case 'islessthan':
+                        matches = (testVal < filterVal);
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal !== filterVal);
+                        break;
+                    case 'equals':
+                    default:
+                        matches = (testVal === filterVal);
+                        break;
+                }
+                break;
+            case 'imageurl':
+            case 'string':
+            default:
+                switch(filter.comparator) {
+                    case 'equals':
+                        matches = (testVal === filterVal);
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal !== filterVal);
+                        break;
+                    case 'notcontains':
+                        matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) === -1);
+                        break;
+                    case 'contains':
+                    default:
+                        matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1);
+                        break;
+
+                }
+                break;
+        }
+        return matches;
     }
 
     /* SELECTION METHODS________________________________________________________________ */
@@ -1239,6 +1278,14 @@ class DataGrid extends Panel {
                 icon: this.exporticon,
                 action: function() {
                     me.export();
+                }
+            });
+            items.push({
+                label: TextFactory.get('export-current_view'),
+                tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
+                icon: this.exporticon,
+                action: function() {
+                    me.export(true);
                 }
             });
         }

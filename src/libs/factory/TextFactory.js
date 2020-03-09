@@ -16,7 +16,8 @@ class TextFactory {
             "countrymenu_select" : 'Select country',
             "current_password" : 'Current Password',
 
-            "datagrid-tooltip-export" : "Export this grid as a comma separated value file.",
+            "datagrid-tooltip-export" : "Export all data in this grid as a comma separated value file.",
+            "datagrid-tooltip-export-current_view" : "Export the data in the current view as a comma separated value file.",
             "datagrid-tooltip-configure_columns" : "Configure the visibility of individual columns.",
             "datagrid-tooltip-bulk_select" : "Show bulk selection controls.",
             "datagrid-tooltip-filters" : "Add, remove, or edit view filters.",
@@ -33,6 +34,7 @@ class TextFactory {
             "emailinput-error-invalid_web_address" : 'This is an invalid email address.',
             "error" : 'Error',
             "export" : 'Export',
+            "export-current_view" : "Export current view",
             "fileinput-placeholder-file" : 'Select file',
             "fileinput-placeholder-multiple" : 'Select files (multiple accepted)',
             "filter-configurator-add_filter" : "Add filter",
