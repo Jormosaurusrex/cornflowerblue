@@ -491,6 +491,7 @@ class DataGrid extends Panel {
                         fc.grindFilters();
                         me.activefilters = fc.filters;
                         me.applyFilters();
+                        me.persist();
                         dialog.close();
                     }
                 });
@@ -764,10 +765,13 @@ class DataGrid extends Panel {
     loadstate() {
         if (this.ispersistable) {
             this.state = JSON.parse(localStorage.getItem(this.savekey));
+            if (!this.state) {
+                this.state = this.grindstate();
+            }
+        } else if (!this.state) {
+            this.state = this.grindstate();
         }
-        if (!this.state) {
-            this.state = this.grindstate(); // this will be the default
-        }
+
     }
 
     /**
@@ -794,6 +798,7 @@ class DataGrid extends Panel {
      * Figures out the state of the grid and generates the state object
      */
     grindstate() {
+
         let state = {
             fields: {},
             filters: [],
@@ -807,7 +812,14 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
-        state.filters = this.activefilters;
+        for (let f of this.activefilters) {
+            state.filters.push({
+                filterid: f.filterid,
+                field: f.field,
+                comparator: f.comparator,
+                value: f.value
+            });
+        }
 
         return state;
     }
@@ -874,7 +886,6 @@ class DataGrid extends Panel {
                     } else {
                         r.classList.add('filtered');
                     }
-
                 }
 
                 if (matchedfilters.length > 0) {
@@ -884,7 +895,6 @@ class DataGrid extends Panel {
                 }
             }
         }
-
 
         let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
         if ((!visible) || (visible.length === 0)) {
@@ -898,8 +908,6 @@ class DataGrid extends Panel {
         } else {
             this.messagebox.classList.add('hidden');
         }
-       
-
     }
 
     /**
