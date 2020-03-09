@@ -145,7 +145,7 @@ class NumberInput extends TextInput {
         } else if (this.maxnumber) {
             text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
         }
-        if (this.step) {
+        if ((this.step) && (this.step > 1)) {
             text += TextFactory.get('numberinput-placeholder-fragment_increments', this.step);
         }
         return text;
