@@ -112,7 +112,7 @@ class ButtonMenu extends SimpleButton {
         const me = this;
 
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) { me.close(); }
+            if (e.key === 'Escape') { me.close(); }
         }, { once: true });
 
         window.addEventListener('click', function(e) {
@@ -155,21 +155,21 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('data-order', order);
 
             menuitem.addEventListener('keyup', function(e) {
-                switch (e.keyCode) {
-                    case 9: // Tab
-                    case 27: // Escape
+                switch (e.key) {
+                    case 'Tab':
+                    case 'Escape':
                         me.close();
                         break;
-                    case 38: // Up Arrow
+                    case 'ArrowUp':
                         e.preventDefault();
                         me.menu.querySelector(`[data-order='${previous}']`).focus();
                         break;
-                    case 40: // Down Arrow
+                    case 'ArrowDown':
                         e.preventDefault();
                         me.menu.querySelector(`[data-order='${next}']`).focus();
                         break;
-                    case 13: // Enter
-                    case 32: // Space
+                    case 'Enter': // Enter
+                    case ' ': // Space
                         me.querySelector('a').click(); // click the one inside
                         break;
 
@@ -220,7 +220,7 @@ class ButtonMenu extends SimpleButton {
         this.menu.classList.add('menu');
         this.button.appendChild(this.menu);
         this.menu.addEventListener('keyup', function(e) {
-            if (e.keyCode === 27) { // Escape
+            if (e.key === 'Escape') {
                 me.close();
             }
         });

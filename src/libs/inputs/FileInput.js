@@ -92,10 +92,16 @@ class FileInput extends InputElement {
             me.labelobj.click();
         });
         this.triggerbox.addEventListener('keydown', function(e) {
-            if (e.keyCode === 9) { // Tab
-                me.triggerbox.blur();
-            } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                me.labelobj.click();
+            switch (e.key) {
+                case 'Tab':
+                    me.triggerbox.blur();
+                    break;
+                case 'Enter':
+                case ' ':
+                    me.labelobj.click();
+                    break;
+                default:
+                    break;
             }
         });
 

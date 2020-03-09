@@ -435,7 +435,7 @@ class InputElement {
                 && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
                 if (me.form) { me.form.validate(); }
             }
-            if ((e.keyCode === 13) // Return key
+            if ((e.key === 'Enter') // Return key
                 && (me.onreturn) && (typeof me.onreturn === 'function')) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -519,10 +519,6 @@ class InputElement {
         this.labelobj.setAttribute('for', this.id);
         this.labelobj.setAttribute('id', `${this.id}-label`);
         this.labelobj.innerHTML = this.label;
-        this.labelobj.addEventListener('click', function() {
-            // XXX JQUERY
-            //$('#' + $(this).attr('for')).focus();
-        });
 
         if (this.form) {
             this.labelobj.setAttribute('form', this.form.id);

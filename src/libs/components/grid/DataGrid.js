@@ -1381,9 +1381,9 @@ class DataGrid extends Panel {
             });
             cell.addEventListener('keyup', function(e) {
                 e.preventDefault();
-                switch (e.keyCode) {
-                    case 13: // enter
-                    case 32: // 32
+                switch (e.key) {
+                    case 'Enter':
+                    case ' ':
                         me.togglesort(field.name);
                         break;
                     default:
@@ -1444,21 +1444,21 @@ class DataGrid extends Panel {
             });
 
             row.addEventListener('keydown', function(e) {
-                switch(e.keyCode) {
-                    case 37:
-                    case 38:
+                switch(e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
                         e.preventDefault();
                         let previous = row.parentNode.rows[row.rowIndex - 2];
                         if (previous) { previous.focus(); }
                         break;
-                    case 39:
-                    case 40:
+                    case 'ArrowRight':
+                    case 'ArrowDown':
                         e.preventDefault();
                         let next = row.parentNode.rows[row.rowIndex];
                         if (next) { next.focus(); }
                         break;
-                    case 13:
-                    case 32:
+                    case 'Enter':
+                    case ' ':
                         row.click()
                         break;
                     default:

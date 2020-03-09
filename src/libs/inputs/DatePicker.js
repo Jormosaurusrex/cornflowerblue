@@ -181,25 +181,25 @@ class DatePicker {
                     let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
                     let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
 
-                    switch (e.keyCode) {
-                        case 37: // Left Arrow
-                        case 38:  // Up Arrow
+                    switch (e.key) {
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
                             let p = tbody.querySelector(`[data-cellno='${pcell}'`);
                             if (p) {
                                 p.focus();
                             }
                             e.stopPropagation();
                             break;
-                        case 39: // Right Arrow
-                        case 40: // Down Arrow
+                        case 'ArrowRight':
+                        case 'ArrowDown':
                             let n = tbody.querySelector(`[data-cellno='${ncell}'`);
                             if (n) {
                                 n.focus();
                             }
                             e.stopPropagation();
                             break;
-                        case 13: // Return
-                        case 32: // Space
+                        case 'Enter':
+                        case ' ':
                             me.select(link);
                             e.stopPropagation();
                             break;

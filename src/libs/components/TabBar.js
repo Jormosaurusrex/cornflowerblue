@@ -213,21 +213,21 @@ class TabBar {
         } else {
             // set link events here.
             link.addEventListener('keydown', function (e) {
-                switch (e.keyCode) {
-                    case 37: // Left Arrow
-                    case 38: // Up Arrow
+                switch (e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
                         e.preventDefault();
                         e.stopPropagation();
                         me.list.querySelector(`[data-tabno='${previous}']`).focus();
                         break;
-                    case 39: // Right Arrow
-                    case 40: // Down Arrow
+                    case 'ArrowRight':
+                    case 'ArrowDown':
                         e.preventDefault();
                         e.stopPropagation();
                         me.list.querySelector(`[data-tabno='${next}']`).focus();
                         break;
-                    case 13: // Enter
-                    case 32: // Space
+                    case 'Enter':
+                    case 'Space':
                         link.click();
                         break;
 
@@ -304,7 +304,7 @@ class TabBar {
         const me = this;
 
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) { me.close(); }
+            if (e.key === 'Escape') { me.close(); }
         }, { once: true });
 
         window.addEventListener('click', function(e) {

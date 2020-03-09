@@ -306,40 +306,38 @@ class SelectMenu extends InputElement {
         });
 
         this.triggerbox.addEventListener('keyup', function(e) {
-            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+            if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
                 me.close();
             } else {
-                switch (e.keyCode) {
-                    case 13: // Return
-                    case 16: // shift
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 19: // break
-                    case 20: // capslock
-                    case 33: // page up
-                    case 34: // page down
-                    case 35: // end
-                    case 36: // home
-                    case 45: // insert
-                    case 91: // command
-                    case 93: // command (right)
+                switch (e.key) {
+                    case 'Enter':
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
                         // Nothing.
                         break;
-                    case 9:  // Tab
-                    case 27: // Escape
-                    case 38: // Up
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
                         me.close();
                         break;
-                    case 40: // Down
+                    case 'ArrowDown': // Down
                         e.preventDefault();
                         me.open();
                         me.jumptoSelected(true);
                         break;
-                    case 8:  // Backspace
-                    case 46:  // Delete
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
                         me.updateSearch();
                         break;
-                    case 32: // space
+                    case ' ': // space
                     default:
                         me.updateSearch();
                         break;
@@ -415,45 +413,41 @@ class SelectMenu extends InputElement {
         li.appendChild(opt);
 
         li.addEventListener('keydown', function(e) {
-            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+            if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
                 me.close();
             } else {
-                switch (e.keyCode) {
-                    case 16: // shift
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 19: // break
-                    case 20: // capslock
-                    case 33: // page up
-                    case 34: // page down
-                    case 35: // end
-                    case 36: // home
-                    case 45: // insert
-                    case 91: // command
-                    case 93: // command (right)
+                switch (e.key) {
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
                         // Nothing.
                         break;
-                    case 9:  // Tab
-                    case 27: // Escape
-                        me.close();
-                        break;
-                    case 38: // Up
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
                         e.preventDefault();
                         me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
                         break;
-                    case 40: // Down
+                    case 'ArrowDown': // Down
                         e.preventDefault();
                         me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
                         break;
-                    case 13: // Return
+                    case 'Enter':
                         li.click(); // click the one inside
                         break;
-                    case 8:  // Backspace
-                    case 46:  // Delete
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
                         me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
                         me.updateSearch();
                         break;
-                    case 32: // space
+                    case ' ': // space
                     default:
                         e.preventDefault();
                         me.triggerbox.value = me.triggerbox.value + e.key;
@@ -547,7 +541,7 @@ class SelectMenu extends InputElement {
         const me = this;
 
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) { me.close(); }
+            if (e.key === 'Escape') { me.close(); }
         }, { once: true });
 
         window.addEventListener('click', function(e) {

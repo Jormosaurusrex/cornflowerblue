@@ -95,15 +95,15 @@ class SearchControl {
         }
 
         this.searchinput.addEventListener('keyup', function(e) {
-            switch (e.keyCode) {
-                case 9:
+            switch (e.key) {
+                case 'Tab':
                     if (me.autoexecute) {
                         if ((me.action) && (typeof me.action === 'function')) {
                             me.action(me.value, me);
                         }
                     }
                     break;
-                case 13:
+                case 'Enter':
                     if ((me.action) && (typeof me.action === 'function')) {
                         me.action(me.value, me);
                     }
