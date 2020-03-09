@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-04
+/*! Cornflower Blue - v0.1.1 - 2020-03-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -472,6 +472,7 @@ class TextFactory {
     static get DEFAULT_STRINGS() {
         return {
             "actions" : 'Actions',
+            "apply_filters" : 'Apply Filters',
             "bulk_select" : 'Bulk select',
             "cancel" : 'Cancel',
             "caution" : 'Caution',
@@ -483,6 +484,13 @@ class TextFactory {
             "confirm_password" : 'Confirm Password',
             "countrymenu_select" : 'Select country',
             "current_password" : 'Current Password',
+
+            "datagrid-tooltip-export" : "Export all data in this grid as a comma separated value file.",
+            "datagrid-tooltip-export-current_view" : "Export the data in the current view as a comma separated value file.",
+            "datagrid-tooltip-configure_columns" : "Configure the visibility of individual columns.",
+            "datagrid-tooltip-bulk_select" : "Show bulk selection controls.",
+            "datagrid-tooltip-filters" : "Add, remove, or edit view filters.",
+
             "datagrid-activitynotifier-text" : "Working...",
             "datagrid-column-config-instructions" : "Select which columns to show in the grid. This does not hide the columns during export.",
             "datagrid-filter-instructions" : "Columns that are filterable are shown below. Set the value of the column to filter it.",
@@ -495,8 +503,20 @@ class TextFactory {
             "emailinput-error-invalid_web_address" : 'This is an invalid email address.',
             "error" : 'Error',
             "export" : 'Export',
+            "export-current_view" : "Export current view",
             "fileinput-placeholder-file" : 'Select file',
             "fileinput-placeholder-multiple" : 'Select files (multiple accepted)',
+            "filter-configurator-add_filter" : "Add filter",
+            "filter-comparator-contains" : "Contains",
+            "filter-comparator-notcontains" : "Does not contain",
+            "filter-comparator-equals" : "Equals",
+            "filter-comparator-doesnotequal" : "Does not equal",
+            "filter-comparator-isbefore" : "Is before",
+            "filter-comparator-isafter" : "Is after",
+            "filter-comparator-greaterthan" : "Is greater than",
+            "filter-comparator-lessthan" : "Is less than",
+            "filter-comparator-select_field" : "Select field",
+            "filter-comparator-comparator" : "Comparator",
             "filters" : 'Filters',
             "generate_password" : 'Generate password',
             "help" : 'Help',
@@ -1653,7 +1673,7 @@ class ToolTip {
         return {
             id : null, // the id
             icon: 'help-circle',
-            tipicon: 'help-circle',
+            gravity: 'n',
             iconclasses: [], // Classes to apply to the icon
             text: null, // The text to use,
             parent: null, // the parent object to fire off
@@ -1662,6 +1682,13 @@ class ToolTip {
         };
     }
 
+    static closeOpen() {
+        clearTimeout(ToolTip.timer);
+        if (ToolTip.activeTooltip) {
+            clearTimeout(ToolTip.activeTooltip.timer);
+            ToolTip.activeTooltip.close();
+        }
+    }
 
     /**
      * Define the element
@@ -1687,21 +1714,17 @@ class ToolTip {
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
         this.parent.addEventListener('mouseover', function() {
-            me.timer = setTimeout(function() {
-                me.open();
-            }, me.waittime);
+            me.open();
         });
         this.parent.addEventListener('mouseout', function() {
-            clearTimeout(me.timer);
+            clearTimeout(ToolTip.timer);
             me.close();
         });
         this.parent.addEventListener('focusin', function() {
-            me.timer = setTimeout(function() {
-                me.open();
-            }, me.waittime);
+            me.open();
         });
         this.parent.addEventListener('focusout', function() {
-            clearTimeout(me.timer);
+            clearTimeout(ToolTip.timer);
             me.close();
         });
     }
@@ -1710,13 +1733,20 @@ class ToolTip {
 
     /**
      * Opens the help tooltip
+     * This actually only starts a timer.  The actual opening happens in openGuts()
      */
     open() {
         const me = this;
+        ToolTip.closeOpen();
+        ToolTip.timer = setTimeout(function() {
+            me.openGuts();
+        }, this.waittime);
+    }
 
-        if (ToolTip.activeTooltip) {
-            ToolTip.activeTooltip.close();
-        }
+    openGuts() {
+        const me = this;
+
+        ToolTip.closeOpen();
 
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
@@ -1726,8 +1756,29 @@ class ToolTip {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-        this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-        this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.style.top = `${(offsetTop + me.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+            case 'w':
+            case 'west':
+                this.container.style.top = `${offsetTop}px`;
+                this.container.style.left = `${offsetLeft - this.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'e':
+            case 'east':
+                this.container.style.top = `${offsetTop}px`;
+                this.container.style.left = `${offsetLeft + this.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'n':
+            case 'north':
+            default:
+                this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+        }
 
         if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;
@@ -1755,6 +1806,25 @@ class ToolTip {
         this.container.classList.add('tooltip');
         this.container.setAttribute('aria-hidden', 'true');
         if (this.id) { this.container.setAttribute('id', this.id); }
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.classList.add('south');
+                break;
+            case 'w':
+            case 'west':
+                this.container.classList.add('west');
+                break;
+            case 'e':
+            case 'east':
+                this.container.classList.add('east');
+                break;
+            case 'n':
+            case 'north':
+            default:
+                this.container.classList.add('north');
+                break;
+        }
 
         if ((this.classes) && (this.classes.length > 0)) {
             for (let c of this.classes) {
@@ -1762,8 +1832,8 @@ class ToolTip {
             }
         }
 
-        if ((this.tipicon) && (this.tipicon !== '')) {
-            let icon = IconFactory.icon(this.tipicon);
+        if ((this.icon) && (this.icon !== '')) {
+            let icon = IconFactory.icon(this.icon);
             icon.classList.add('tipicon');
             if ((this.iconclasses) && (this.iconclasses.length > 0)) {
                 for (let ic of this.iconclasses) {
@@ -1778,13 +1848,6 @@ class ToolTip {
         this.tiptext.setAttribute('id', `${this.id}-text`);
         if (this.text) {
             this.tiptext.innerHTML = this.text;
-        }
-
-        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-            for (let ic of this.iconclasses) {
-                if (icon) { icon.classList.add(ic); }
-                if (secondicon) { secondicon.classList.add(ic); }
-            }
         }
 
         this.container.appendChild(this.tiptext);
@@ -1810,20 +1873,14 @@ class ToolTip {
     }
     set container(container) { this._container = container; }
 
-    get help() { return this.config.help; }
-    set help(help) { this.config.help = help; }
-
-    get helptext() { return this._helptext; }
-    set helptext(helptext) { this._helptext = helptext; }
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
 
     get iconclasses() { return this.config.iconclasses; }
     set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
-
-    get iconside() { return this.config.iconside; }
-    set iconside(iconside) { this.config.iconside = iconside; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -1836,9 +1893,6 @@ class ToolTip {
 
     get timer() { return this._timer; }
     set timer(timer) { this._timer = timer; }
-
-    get tipicon() { return this.config.tipicon; }
-    set tipicon(tipicon) { this.config.tipicon = tipicon; }
 
     get tiptext() { return this._tiptext; }
     set tiptext(tiptext) { this._tiptext = tiptext; }
@@ -1866,6 +1920,9 @@ class SimpleButton {
             size : 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             hidden: false, // Start hidden or not.
+            tooltip: null, // An optional tooltip
+            tipicon: null, // An icon for the tooltip
+            tipgravity: 'n', // Tooltip gravity
             classes: [], //Extra css classes to apply
             icon : null, // If present, will be attached to the text inside the button
                          // This can be passed a DOM object
@@ -1906,6 +1963,60 @@ class SimpleButton {
      * @return {boolean}
      */
     get cansubmit() { return this.config.cansubmit; }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Enable the button
+     */
+    disable() {
+        this.button.setAttribute('disabled', 'disabled');
+        this.disabled = true;
+        return this;
+    }
+
+    /**
+     * Disable the button
+     */
+    enable() {
+        this.button.removeAttribute('disabled');
+        this.disabled = false;
+        return this;
+    }
+
+    /**
+     * Show the button
+     */
+    show() {
+        this.button.classList.remove('hidden');
+        this.hidden = false;
+        return this;
+    }
+
+    /**
+     * Hide the button
+     */
+    hide() {
+        this.button.classList.add('hidden');
+        this.hidden = true;
+        return this;
+    }
+
+    /**
+     * Open the tooltip.
+     */
+    openTooltip() {
+        if (!this.tooltipobj) { return; }
+        this.tooltipobj.open();
+    }
+
+    /**
+     * Close the tooltip
+     */
+    closeTooltip() {
+        if (!this.tooltipobj) { return; }
+        this.tooltipobj.close();
+    }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
@@ -1989,6 +2100,16 @@ class SimpleButton {
             }
         });
 
+        if (this.tooltip) {
+            this.tooltipobj = new ToolTip({
+                id: `${this.id}-tt`,
+                text: this.tooltip,
+                icon: this.tipicon,
+                gravity: this.tipgravity,
+            });
+            this.tooltipobj.attach(this.button);
+        }
+
         if (this.notab) {
             this.button.setAttribute('tabindex', '-1');
         } else {
@@ -2016,44 +2137,6 @@ class SimpleButton {
                 }
             });
         }
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Enable the button
-     */
-    disable() {
-        this.button.setAttribute('disabled', 'disabled');
-        this.disabled = true;
-        return this;
-    }
-
-    /**
-     * Disable the button
-     */
-    enable() {
-        this.button.removeAttribute('disabled');
-        this.disabled = false;
-        return this;
-    }
-
-    /**
-     * Show the button
-     */
-    show() {
-        this.button.classList.remove('hidden');
-        this.hidden = false;
-        return this;
-    }
-
-    /**
-     * Hide the button
-     */
-    hide() {
-        this.button.classList.add('hidden');
-        this.hidden = true;
-        return this;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -2178,6 +2261,18 @@ class SimpleButton {
     get textobj() { return this._textobj; }
     set textobj(textobj) { this._textobj = textobj; }
 
+    get tipgravity() { return this.config.tipgravity; }
+    set tipgravity(tipgravity) { this.config.tipgravity = tipgravity; }
+
+    get tipicon() { return this.config.tipicon; }
+    set tipicon(tipicon) { this.config.tipicon = tipicon; }
+
+    get tooltip() { return this.config.tooltip; }
+    set tooltip(tooltip) { this.config.tooltip = tooltip; }
+
+    get tooltipobj() { return this._tooltipobj; }
+    set tooltipobj(tooltipobj) { this._tooltipobj = tooltipobj; }
+
 }
 
 class ConstructiveButton extends SimpleButton {
@@ -2217,7 +2312,8 @@ class ButtonMenu extends SimpleButton {
                         // {
                         //    label: "Menu Text", // text
                         //    tooltip: null, // Tooltip text
-                        //    icon: null, // Icon to use, if any
+                        //    tipicon: null, // Tooltip icon, if any
+                        //    icon: null, // Icon to use in the menu, if any
                         //    action: function() { } // what to do when the tab is clicked.
                         // }
         };
@@ -2396,6 +2492,14 @@ class ButtonMenu extends SimpleButton {
 
             menuitem.appendChild(anchor);
 
+            if (item.tooltip) {
+                new ToolTip({
+                    text: item.tooltip,
+                    icon: item.tipicon,
+                    gravity: 'w'
+                }).attach(menuitem);
+            }
+
             this.menu.appendChild(menuitem);
 
             order++;
@@ -2458,9 +2562,10 @@ class HelpButton extends SimpleButton {
             action: function(e, self) { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
+            tipgravity: 'n',
             arialabel: TextFactory.get('help'),
             iconclasses: ['helpicon'],
-            help: null // help text to display
+            tooltip: null // help text to display
         };
     }
 
@@ -2478,48 +2583,8 @@ class HelpButton extends SimpleButton {
             config.id = `${CFBUtils.getUniqueKey(5)}-help`;
         }
         super(config);
-        this.tooltip.attach(this);
+
     }
-
-    /**
-     * Force the tooltip to stay open.
-     */
-    stayopen() {
-        this.button.classList.add('stayopen');
-        this.open();
-    }
-
-    /**
-     * Builds the help.
-     */
-    buildTooltip() {
-        this.tooltip = new ToolTip({
-            id: `${this.id}-tt`,
-            icon: this.tipicon,
-            text: this.help
-        });
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get button() {
-        if (!this._button) { this.buildButton(); }
-        if (!this.tooltip) { this.buildTooltip(); }
-        return this._button;
-    }
-    set button(button) { this._button = button; }
-
-    get help() { return this.config.help; }
-    set help(help) { this.config.help = help; }
-
-    get tipicon() { return this.config.tipicon; }
-    set tipicon(tipicon) { this.config.tipicon = tipicon; }
-
-    get tooltip() {
-        if (!this._tooltip) { this.buildTooltip(); }
-        return this._tooltip;
-    }
-    set tooltip(tooltip) { this._tooltip = tooltip; }
 
 }
 
@@ -2690,6 +2755,7 @@ class DatePicker {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
     }
 
@@ -2987,6 +3053,8 @@ class InputElement {
             pattern: null,
             icon: null, // Use to define a specific icon, used in some specific controls.
 
+            minimal: false, // if true, build with the intent that it is part of a larger component.
+                            // this removes things like the search controls and validation boxes.
 
             passive: false, // Start life in "passive" mode.
             unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
@@ -3003,6 +3071,7 @@ class InputElement {
             value: '', // Value to use (pre-population).  Used during construction and then discarded.
             disabled: false, // If true, disable the field.
             classes: [], // Extra css classes to apply
+            onchange: null, // The change handler. Passed (self).
             onreturn: null, // action to execute on hitting the return key. Passed (event, self).
             ontab: null, // action to execute on hitting the tab key. Passed (event, self).
             onkeyup: null, // action to execute on key up. Passed (event, self).
@@ -3018,6 +3087,7 @@ class InputElement {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
 
         if (!this.arialabel) { // munch aria label.
@@ -3215,7 +3285,7 @@ class InputElement {
      * @return {null|*}
      */
     calculatePlaceholder() {
-        return null;
+        return '';
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -3293,9 +3363,12 @@ class InputElement {
         if (this.inputcontrol) { wrap.appendChild(this.inputcontrol); }
         this.container.appendChild(wrap);
 
-        this.container.appendChild(this.passivebox);
-        if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
-        this.container.appendChild(this.messagebox);
+        if (!this.minimal) {
+            this.container.appendChild(this.passivebox);
+            if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
+            this.container.appendChild(this.messagebox);
+        }
+        if (this.minimal) { this.container.classList.add('minimal'); }
 
         this.postContainerScrub();
 
@@ -3368,6 +3441,12 @@ class InputElement {
         for (let c of this.classes) {
             this.input.classList.add(c);
         }
+        this.input.addEventListener('change', function(e) {
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+
         this.input.addEventListener('keydown', function(e) {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
             me.input.removeAttribute('aria-invalid');
@@ -3380,7 +3459,7 @@ class InputElement {
         this.input.addEventListener('keyup', function(e) {
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
-                me.helpicon.close();
+                me.helpbutton.closeTooltip();
             }
 
             if ((me.value) && (me.value.length > 0) && (me.container)) {
@@ -3411,7 +3490,7 @@ class InputElement {
             }
             if (me.help) {
                 me.helptimer = setTimeout(function() {
-                    me.helpicon.open();
+                    me.helpbutton.openTooltip();
                 }, me.helpwaittime);
             }
             if ((me.focusin) && (typeof me.focusin === 'function')) {
@@ -3426,7 +3505,7 @@ class InputElement {
 
             if (me.helptimer) {
                 clearTimeout(me.helptimer);
-                me.helpicon.close();
+                me.helpbutton.closeTooltip();
             }
 
             if ((me.mute) && (me.label)) {
@@ -3487,16 +3566,16 @@ class InputElement {
         }
 
         if (this.help) {
-            this.helpicon = new HelpButton({
+            this.helpbutton = new HelpButton({
                 id: `${this.id}-help`,
-                help: this.help
+                tooltip: this.help
             });
-            this.labelobj.appendChild(this.helpicon.button);
-            this.labelobj.addEventListener('onmouseover', function() {
-                me.helpicon.open();
+            this.labelobj.appendChild(this.helpbutton.button);
+            this.labelobj.addEventListener('mouseover', function() {
+                me.helpbutton.openTooltip();
             });
-            this.labelobj.addEventListener('onmouseout', function() {
-                me.helpicon.close();
+            this.labelobj.addEventListener('mouseout', function() {
+                me.helpbutton.closeTooltip();
             });
         }
     }
@@ -3603,8 +3682,8 @@ class InputElement {
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
-    get helpicon() { return this._helpicon; }
-    set helpicon(helpicon) { this._helpicon = helpicon; }
+    get helpbutton() { return this._helpbutton; }
+    set helpbutton(helpbutton) { this._helpbutton = helpbutton; }
 
     get helpwaittime() { return this.config.helpwaittime; }
     set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
@@ -3633,11 +3712,22 @@ class InputElement {
     get maxlength() { return this.config.maxlength; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }
 
+    get minimal() { return this.config.minimal; }
+    set minimal(minimal) { this.config.minimal = minimal; }
+
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) {
+        if (typeof onchange !== 'function') {
+            console.error("Action provided for onchange is not a function!");
+        }
+        this.config.onchange = onchange;
+    }
 
     get onkeydown() { return this.config.onkeydown; }
     set onkeydown(onkeydown) {
@@ -3731,6 +3821,7 @@ class InputElement {
 }
 class TextInput extends InputElement {
     constructor(config) {
+        if (!config) { config = {}; }
         config.type = "text";
         super(config);
     }
@@ -3756,6 +3847,7 @@ class BooleanToggle {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
         
         if ((!this.arialabel) && (this.label)) { // munch aria label.
@@ -3982,18 +4074,20 @@ class NumberInput extends TextInput {
     static get DEFAULT_CONFIG() {
         return {
             type: 'text',
-            //pattern:'[0-9.%+-]$',
+            pattern: '[0-9]*',
+            forceconstraints: true,
             minnumber: null,
             maxnumber: null,
             downbuttonarialabel: TextFactory.get('decrement_number'),
             upbuttonarialabel: TextFactory.get('increment_number'),
             wholenumbers: false, // Require whole numbers
             steppers: true,
-            step: null
+            step: 1
         };
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);
 
         /*
@@ -4032,22 +4126,57 @@ class NumberInput extends TextInput {
             config.origkeydown = config.onkeydown;
         }
         config.onkeydown = function(e, self) {
-            if (e.keyCode === 38) { // up arrow
-                e.preventDefault();
-                e.stopPropagation();
-                self.increment();
-            } else if (e.keyCode === 40) { // down arrow
-                e.preventDefault();
-                e.stopPropagation();
-                self.decrement();
+            switch (e.key) {
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case '.':
+                case '*':
+                case '%':
+                case '$':
+                case '-':
+                case '!':
+                case '#':
+                case '+':
+                case '=':
+                case '>':
+                case '<':
+                case '?':
+                case 'Backspace':
+                case 'Delete':
+                case 'Enter':
+                case 'Tab':
+                    // Nothing.  These are characters that could be conceivably used
+                    break;
+                case 'ArrowUp': // Up
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.increment();
+                    break;
+                case 'ArrowDown': // Down
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.decrement();
+                    break;
+                default:
+                    if (self.forceconstraints) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    break;
             }
+
             if ((self.origkeydown) && (typeof self.origkeydown === 'function')) {
                 self.origkeydown(e, self);
             }
         };
-        if (config.type === 'range') {
-            console.log(`type: ${config.type}`);
-        }
         super(config);
     }
 
@@ -4066,9 +4195,9 @@ class NumberInput extends TextInput {
                 return;
             }
             let v = parseFloat(this.value);
-            if ((this.minnumber !== 'undefined') && (v < this.minnumber)) {
+            if ((this.minnumber) && (v < this.minnumber)) {
                 this.errors.push(TextFactory.get('numberinput-error-minimum_value', this.minnumber));
-            } else if ((this.maxnumber !== 'undefined') && (v > this.maxnumber)) {
+            } else if ((this.maxnumber) && (v > this.maxnumber)) {
                 this.errors.push(TextFactory.get('numberinput-error-maximum_value', this.maxnumber));
             } else if ((this.step) && (v % this.step !== 0)) {
                 this.errors.push(TextFactory.get('numberinput-error-values_divisible', this.step));
@@ -4080,14 +4209,14 @@ class NumberInput extends TextInput {
 
     calculatePlaceholder() {
         let text = TextFactory.get('numberinput-placeholder-basic');
-        if ((this.minnumber !== 'undefined') && (this.maxnumber !== 'undefined')) {
+        if ((this.minnumber) && (this.maxnumber)) {
             text = TextFactory.get('numberinput-placeholder-between_x_y', this.minnumber, this.maxnumber);
-        } else if (this.minnumber !== 'undefined') {
+        } else if (this.minnumber) {
             text = TextFactory.get('numberinput-placeholder-larger_than_x', this.minnumber);
-        } else if (this.maxnumber !== 'undefined') {
+        } else if (this.maxnumber) {
             text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
         }
-        if (this.step) {
+        if ((this.step) && (this.step > 1)) {
             text += TextFactory.get('numberinput-placeholder-fragment_increments', this.step);
         }
         return text;
@@ -4097,15 +4226,13 @@ class NumberInput extends TextInput {
      * Increment the number
      * @param step the amount to increment by.
      */
-    increment(step) {
-        if ((!step) || (isNaN(step))) {
-            step = 1;
-        }
-        let val = Number(this.value);
+    increment(step = 1) {
+        if ((!step) || (isNaN(step))) { step = 1; }
+        let val = parseFloat(this.value);
         if (!val) { val = 0; }
         if (!isNaN(val)) {
             val += step;
-            if ((this.maxnumber !== 'undefined') && (val > this.maxnumber)) {
+            if ((this.maxnumber) && (val > this.maxnumber)) {
                 val = this.maxnumber;
             }
             this.value = val;
@@ -4116,19 +4243,18 @@ class NumberInput extends TextInput {
      * Decrement the number
      * @param step the amount to decrement by
      */
-    decrement(step) {
-        if ((!step) || (isNaN(step))) {
-            step = 1;
-        }
-        let val = Number(this.value);
+    decrement(step=1) {
+        if ((!step) || (isNaN(step))) { step = 1; }
+        let val = parseFloat(this.value);
         if (!val) { val = 0; }
         if (!isNaN(val)) {
             val -= step;
-            if ((this.minnumber !== 'undefined') && (val < this.minnumber)) {
-                val = this.minnumber;
+            if ((this.maxnumber) && (val > this.maxnumber)) {
+                val = this.maxnumber;
             }
             this.value = val;
         }
+
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -4237,6 +4363,7 @@ class DateInput extends TextInput {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, DateInput.DEFAULT_CONFIG, config);
         super(config);
     }
@@ -4384,6 +4511,7 @@ class EmailInput extends TextInput {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, EmailInput.DEFAULT_CONFIG, config);
         super(config);
     }
@@ -4409,7 +4537,7 @@ class EmailInput extends TextInput {
 }
 
 
-class URIInput extends TextInput {
+class URLInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
@@ -4438,9 +4566,10 @@ class URIInput extends TextInput {
     }
 
     constructor(config) {
-        config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
+        if (!config) { config = {}; }
+        config = Object.assign({}, URLInput.DEFAULT_CONFIG, config);
 
-        if ((config.value) && (URIInput.isEncoded(config.value))) {
+        if ((config.value) && (URLInput.isEncoded(config.value))) {
             config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
         }
         super(config);
@@ -4458,7 +4587,7 @@ class URIInput extends TextInput {
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
-            if (!URIInput.isValid(this.value)) {
+            if (!URLInput.isValid(this.value)) {
                 this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
             }
         }
@@ -4472,6 +4601,7 @@ class HiddenField extends TextInput {
      * HiddenFields should not be used for elements that may become visible at some time.
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config.hidden = true;
         config.type = "hidden";
         super(config);
@@ -4500,6 +4630,7 @@ class PasswordInput extends TextInput {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, PasswordInput.DEFAULT_CONFIG, config);
         super(config);
     }
@@ -4619,12 +4750,17 @@ class SelectMenu extends InputElement {
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
-            minimal: false, // if true, build with the intent that it is part of a larger component.
-                            // this removes things like the search controls and validation boxes.
+            value: null,    // Use this to set the value of the item
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onchange: null  // The change handler. Passed (self).
         };
+    }
+
+    static closeOpen() {
+        if (SelectMenu.activeMenu) {
+            SelectMenu.activeMenu.close();
+        }
     }
 
     /**
@@ -4633,7 +4769,14 @@ class SelectMenu extends InputElement {
      */
     constructor(config) {
         config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
+        if (!config.name) {
+            config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
+        }
         super(config);
+
+        if (config.value) {
+            this.origval = config.value;
+        }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -4652,13 +4795,15 @@ class SelectMenu extends InputElement {
      */
     get selected() {
         let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);
-        if (sel.length > 0) { return sel; }
+        if (sel) { return sel; }
         return null;
     }
 
     get value() {
-        return this.triggerbox.value;
+        if (!this.selected) { return null; }
+        return this.selected.value;
     }
+
     set value(value) {
         this.config.value = value;
         this.triggerbox.value = value;
@@ -4709,6 +4854,40 @@ class SelectMenu extends InputElement {
      */
     open() {
         const me = this;
+        SelectMenu.closeOpen(); // close open menus
+
+        document.body.appendChild(this.listbox);
+
+        this.listbox.removeAttribute('aria-hidden');
+        this.wrapper.setAttribute('aria-expanded', true);
+
+        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
+            li.setAttribute('tabindex', '0');
+        }
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = this.wrapper.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        this.listbox.style.top = `${(offsetTop + this.container.clientHeight)}px`;
+        this.listbox.style.left = `${offsetLeft}px`;
+        this.listbox.style.width = `${this.container.clientWidth}px`;
+
+
+        if (typeof SelectMenu.activeMenu === 'undefined' ) {
+            SelectMenu.activeMenu = this;
+        } else {
+            SelectMenu.activeMenu = this;
+        }
+
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 100);
+    }
+
+    openOld() {
+        const me = this;
 
         if (SelectMenu.activeMenu) { // close any spuriously open other ones
             SelectMenu.activeMenu.close();
@@ -4748,6 +4927,7 @@ class SelectMenu extends InputElement {
 
     }
 
+
     /**
      * Closes the option list.
      */
@@ -4755,13 +4935,11 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
-
-        for (let li of Array.from(this.optionlist.querySelector('li'))) {
+        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
         }
-
-        this.searchkeys = [];
         this.updateSearch();
+        this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
     }
 
@@ -4818,6 +4996,7 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('id', `${this.id}-options`);
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('role', 'listbox');
+        this.listbox.classList.add('selectmenu-menu')
         this.listbox.appendChild(this.optionlist);
 
         this.container.appendChild(this.listbox);
@@ -4828,7 +5007,25 @@ class SelectMenu extends InputElement {
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
 
+        if (this.value) {
+            //this.select(this.value);
+        }
+
         this.postContainerScrub();
+    }
+
+    select(value) {
+        let allopts = this.listbox.querySelectorAll('li');
+        for (let o of allopts) {
+            let radio = o.querySelector(`input[name=${this.name}`);
+            if (o.getAttribute('data-value') === value) {
+                o.setAttribute('aria-selected', true);
+                radio.checked = true;
+            } else {
+                o.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
     }
 
     /**
@@ -4912,14 +5109,24 @@ class SelectMenu extends InputElement {
         this.optionlist.setAttribute('tabindex', '-1');
 
         let order = 1;
+        let minchars = 5;
         for (let opt of this.options) {
-            let o = this.buildOption(opt, order);
-            if (opt.checked) {
+            if ((this.origval) && (this.origval === opt.value)) {
+                opt.checked = true;
                 this.selectedoption = opt;
+            } else {
+                delete opt.checked;
+            }
+
+            let o = this.buildOption(opt, order);
+
+            if ((opt.label) && (opt.label.length > minchars)) {
+                minchars = opt.label.length;
             }
             order++;
             this.optionlist.appendChild(o);
         }
+        this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
     }
 
     buildOption(def, order) {
@@ -4935,12 +5142,22 @@ class SelectMenu extends InputElement {
         }
         if (next > this.options.length) { next = this.options.length; }
 
+        let opt = document.createElement('input');
+        opt.setAttribute('type', 'radio');
+        opt.setAttribute('name', this.name);
+        opt.value = def.value;
+        if (def.checked) {
+            opt.checked = true;
+        }
+
         let li = document.createElement('li');
         li.setAttribute('tabindex', '-1');
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
         li.setAttribute('role', 'option');
         li.setAttribute('data-value', def.value);
+
+        li.appendChild(opt);
 
         li.addEventListener('keydown', function(e) {
             if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
@@ -4978,13 +5195,13 @@ class SelectMenu extends InputElement {
                         break;
                     case 8:  // Backspace
                     case 46:  // Delete
-                        me.value = me.value.substring(0, me.value.length - 1);
+                        me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
                         me.updateSearch();
                         break;
                     case 32: // space
                     default:
                         e.preventDefault();
-                        me.value = me.value + e.key;
+                        me.triggerbox.value = me.triggerbox.value + e.key;
                         me.updateSearch();
                         break;
                 }
@@ -4993,11 +5210,14 @@ class SelectMenu extends InputElement {
         });
 
         li.addEventListener('click', function() {
-            let opts = me.optionlist.querySelectorAll('li');
-            for (let o of opts) {
-                o.removeAttribute('aria-selected');
+            let listentries = me.optionlist.querySelectorAll('li');
+            for (let le of listentries) {
+                le.removeAttribute('aria-selected');
+                let opt = le.querySelector(`input[name=${me.name}]`);
+                if (opt) { opt.removeAttribute('checked') ; }
             }
             li.setAttribute('aria-selected', 'true');
+            li.querySelector(`input[name=${me.name}]`).checked = true;
 
             if (me.prefix) {
                 me.triggerbox.value = `${me.prefix} ${def.label}`;
@@ -5024,7 +5244,9 @@ class SelectMenu extends InputElement {
             }
         });
 
-        li.innerHTML = def.label;
+        let text = document.createElement('span');
+        text.innerHTML = def.label;
+        li.appendChild(text);
 
         if (def.checked) {
             this.origval = def.value;
@@ -5142,7 +5364,6 @@ class RadioGroup extends SelectMenu {
             disabled: false, // If true, make this disabled.
             options: [], // Array of option dictionary objects.  Printed in order given.
                          // { label: "Label to show", value: "v", checked: true }
-            onchange: null, // The change handler. Passed (self).
             validator: null // A function to run to test validity. Passed the self; returns true or false.
         };
     }
@@ -5152,6 +5373,7 @@ class RadioGroup extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
 
         if (!config.id) { // need to generate an id for label stuff
@@ -5301,17 +5523,6 @@ class RadioGroup extends SelectMenu {
         }
     }
 
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) {
-        if (typeof onchange !== 'function') {
-            console.error("Action provided for onchange is not a function!");
-        }
-        this.config.onchange = onchange;
-    }
-
 }
 
 class StateMenu extends SelectMenu {
@@ -5330,6 +5541,7 @@ class StateMenu extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, StateMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 
@@ -5368,6 +5580,7 @@ class CountryMenu extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 
@@ -5406,6 +5619,7 @@ class TimezoneMenu extends SelectMenu {
      * @param config a dictionary object
      */
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
 
         let options = [];
@@ -5437,6 +5651,7 @@ class TextArea extends InputElement {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, TextArea.DEFAULT_CONFIG, config);
         config.type = "textarea";
         super(config);
@@ -5477,6 +5692,7 @@ class FileInput extends InputElement {
     }
 
     constructor(config) {
+        if (!config) { config = {}; }
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
         super(config);
     }
@@ -5768,6 +5984,8 @@ class DialogWindow {
     open() {
         const me = this;
 
+        ToolTip.closeOpen();
+
         this.prevfocus = document.querySelector(':focus');
 
         this.mask = document.createElement('div');
@@ -5909,6 +6127,7 @@ class DialogWindow {
                             case 'closebutton':
                                 this.actionbox.appendChild(new SimpleButton({
                                     text: this.closetext,
+                                    ghost: true,
                                     action: function() {
                                         me.close();
                                     }
@@ -5917,6 +6136,7 @@ class DialogWindow {
                             case 'cancelbutton':
                                 this.actionbox.appendChild(new DestructiveButton({
                                     text: this.canceltext,
+                                    mute: true,
                                     action: function() {
                                         me.close();
                                     }
@@ -6125,7 +6345,7 @@ class Panel {
     }
 
     /**
-     * Build the HTML elements of the Floating Panel
+     * Build the HTML elements of the Panel
      */
     buildContainer() {
 
@@ -6300,1620 +6520,6 @@ class FloatingPanel extends Panel {
     set style(style) { this.config.style = style; }
 
 }
-class DataGrid extends Panel {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            title: null, // the title for the grid
-            id: null, // The id. An id is required to save a grid's state.
-            sortable: true, //  Data columns can be sorted
-
-            fields: [  // The data fields for the grid and how they behave.
-                /*
-                 * An array of field definition dictionaries:
-                 *
-                    name: <string>,    // The variable name for this field (computer readable)
-                    label: <string>,   // The human-readable name for the column
-                    width: <number,    // The default width of the column
-                    hidden: <boolean>, // Is the column hidden or not.
-                    identifier: <boolean> // If true, marks the field as the unique identifier
-                                          // for a data set.  An identifier is required if the
-                                          // grid is intended to update entries.  Without a unique
-                                          // field, data can only be appended, not updated.
-                    type: <string>,    // The datatype of the column
-                                       //   - string
-                                       //   - number
-                                       //   - date
-                                       //   - time
-                                       //   - stringarray
-                                       //   - paragraph
-                    separator: <string>, // Used when rendering array values
-                    nodupe: false, // If true, this column is ignored when deemphasizing duplicate rows.
-                    resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
-                    description: <string>>,  // A string that describes the data in the column
-                    classes: <string array>, // Additional classes to apply to cells of this field
-                    filterable: <null|string|enum> // Is the field filterable? if so, how?
-                    renderer: function(data) {     // A function that can be used to
-                        return `${data}.`;
-                    }
-                */
-            ],
-            data: null,   // The data to throw into the grid on load. This is an array of rows.
-            source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
-            dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
-                                 // This is a function that data is passed through to massage.
-                                 // Must accept a JSON blob as it's argument and return an array
-                                 // of row definitions.
-            savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
-            demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
-                                        // in the previous row.
-            columnconfigurationicon: 'table',
-            searchable: true, // Data can be searched
-            exportable: true, // Data can be exported
-            exporticon: "download",
-            exportheaderrow: 'readable', // When exporting a CSV file, should a header row
-                                         // be included?  Possible values:
-                                         // 'readable' : Uses the header labels (human readable)
-                                         // 'data' : Uses the data labels
-                                         // 'no' or null: don't include a header row
-            exportfilename: function(self) { // the filename to name the exported data.
-                if (self.title) {
-                    return `${self.title}-export.csv`;
-                }
-                return 'export.csv';     // This can be a string or a function, but must return a string
-            },
-            exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
-
-            filterable: true, // Can the datagrid be filtered?
-                      // No all fields are filtered by default.
-                      // Whether or not a field can be filtered is defined in the field's definition.
-            applyfiltersicon: 'checkmark-circle',
-            actionsbuttonicon: 'menu',
-
-            selectable: true, //  Data rows can be selected.
-            selectaction: function(self) {  // What to do when a single row is selected.
-                //console.log("row clicked");
-            },
-            spinnerstyle: 'spin', //
-            spinnertext: TextFactory.get('datagrid-spinnertext'), //
-
-            multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
-            multiselectactions: [], // Array of button actions to multiselects
-            multiselecticon: 'checkmark',
-
-            activitynotifiericon: 'gear-complex',
-            activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
-            texttotal: 'total',
-            sorticon: 'chevron-down',
-            classes: [] //Extra css classes to apply
-        };
-    }
-
-    /**
-     * Define a DataGrid
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
-        super(config);
-
-        const me = this;
-
-        if (this.id) {
-            this.savekey = `grid-${this.id}`;
-        } else {
-            this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
-        }
-        for (let f of this.fields) {
-            if (f.identifier) { this.identifier = f.name; }
-        }
-        this.activefilters = {};
-        this.loadstate();
-
-        setTimeout(function() {
-           me.fillData();
-        }, 100);
-    }
-
-    /**
-     * Loads the initial data into the grid.
-     */
-    fillData() {
-        const me = this;
-
-        this.shade.activate();
-
-        if (this.data) {
-            for (let rdata of this.data) {
-                this.gridbody.appendChild(this.buildRow(rdata));
-            }
-            setTimeout(function() {
-                me.postLoad();
-                me.shade.deactivate();
-            }, 100);
-        } else if (this.source) {
-            this.fetchData(this.source, function(data){
-                me.update(data);
-                me.postLoad();
-                me.shade.deactivate();
-            });
-        }
-    }
-
-    /**
-     * Do this once we're done loading data.  This only happens once.
-     */
-    postLoad() {
-        this.applystate();
-        this.grindDuplicateCells();
-    }
-
-    /* PSEUDO GETTERS___________________________________________________________________ */
-
-    /**
-     * Are we in multi-select mode or not?
-     * @return {boolean}
-     */
-    get multiselecting() {
-        return this.grid.classList.contains('multiselecting');
-    }
-
-    /**
-     * Test if the grid can be persisted.
-     * @return {boolean}
-     */
-    get ispersistable() {
-        return !!((this.savestate) && (this.savekey) && (window.localStorage));
-    }
-
-    /**
-     * Get all values for a given field key
-     * @param key the data key
-     * @return {[]} and array of values
-     */
-    getValues(key) {
-        let a = [];
-        for (let d of this.data) {
-            a.push(d[key]);
-        }
-        return a;
-    }
-
-    /**
-     * Get all unique values for a given field key
-     * @param key the data key
-     * @return {[]} and array of values
-     */
-    getUniqueValues(key) {
-        let s = new Set();
-        for (let d of this.data) {
-            s.add(d[key]);
-        }
-        return Array.from(s).sort();
-    }
-
-    /**
-     * Get a field definition
-     * @param fieldid the id of the field.
-     * @return {*}
-     */
-    getField(fieldid) {
-        let rf;
-        for (let f of this.fields) {
-            if (f.name === fieldid) {
-                rf = f;
-                break;
-            }
-        }
-        return rf;
-    }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    /**
-     * Export the data in the grid as a CSV
-     */
-    export() {
-        let lineDivider = '\r\n', // line divider
-            cellDivider = ',', // cell divider
-            rows = [],
-            fname;
-
-        if (this.expoortbutton) {
-            this.exportbutton.disable();
-        }
-
-        if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
-            fname = this.exportfilename(this);
-        } else {
-            fname = this.exportfilename;
-        }
-        // XXX TODO: Don't export hidden fields
-
-        // Include the header row, if required.
-        if ((this.exportheaderrow) && (this.exportheaderrow !== 'no')) {
-            let colTitles = [],
-                colData = [];
-            for (let f of this.fields) {
-                colTitles.push(`\"${f.label.replace(/"/g,"\\\"")}\"`);
-                colData.push(`\"${f.name.replace(/"/g,"\\\"")}\"`);
-            }
-            if (this.exportheaderrow === 'readable') {
-                rows.push(`${colTitles.join(cellDivider)}`);
-            } else {
-                rows.push(`${colData.join(cellDivider)}`);
-            }
-        }
-
-        for (let d of this.data) {
-            let cells = [];
-            for (let f of this.fields) { // do mapping by field
-                let val;
-                switch (f.type) {
-                    case 'date':
-                        val = d[f.name].toString().replace(/"/g,"\\\"");
-                        break;
-                    case 'stringarray':
-                        val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
-                        break;
-                    case 'number':
-                    case 'time':
-                        val = d[f.name];
-                        break;
-                    case 'string':
-                    case 'paragraph':
-                    default:
-                        val = d[f.name].replace(/"/g,"\\\"");
-                        break;
-                }
-                cells.push(`\"${val}\"`);
-            }
-            rows.push(cells.join(cellDivider));
-        }
-
-        let csv = rows.join(lineDivider);
-
-        let hiddenElement = document.createElement('a');
-        hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csv)}`);
-        hiddenElement.setAttribute('id', 'downloadLink');
-        hiddenElement.setAttribute('target', '_blank');
-        hiddenElement.setAttribute('download', fname);
-        hiddenElement.click();
-
-        if (this.exportbutton) {
-            this.exportbutton.enable();
-        }
-    }
-
-    /**
-     * Search the grid for the value provided.
-     * @param value
-     */
-    search(value) {
-        this.messagebox.classList.add('hidden');
-
-        let rows = Array.from(this.gridbody.childNodes);
-
-        let matches = 0;
-        let matchesHiddenColumns = false;
-        for (let r of rows) {
-            let show = false;
-            r.setAttribute('data-search-hidden', true,);
-
-            if ((!value) || (value === '')) {
-                show = true;
-            } else {
-                let cells = Array.from(r.childNodes);
-                for (let c of cells) {
-                    if (show) { break; }
-                    if (!c.classList.contains('mechanical')) {
-                        if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-                            if (c.classList.contains('hidden')) {
-                                matchesHiddenColumns = true;
-                            } else {
-                                show = true;
-                            }
-                        }
-                    }
-                }
-            }
-            if (show) {
-                matches++;
-                r.removeAttribute('data-search-hidden');
-            }
-        }
-
-        if (matches <= 0) {
-            this.messagebox.innerHTML = "";
-            let warnings = [TextFactory.get('search_noresults')];
-            if (matchesHiddenColumns) {
-                warnings.push(TextFactory.get('matches_hidden_columns'));
-            }
-            this.messagebox.append(new MessageBox({
-                warningstitle: TextFactory.get('no_results'),
-                warnings: warnings,
-                classes: ['hidden']
-            }).container);
-            this.messagebox.classList.remove('hidden');
-        }
-    }
-
-    /**
-     * Sort the table based on a field.
-     * @param field the field to sort
-     */
-    sortField(field, sort='asc') {
-
-        let hCell = this.thead.querySelector(`[data-name='${field}']`);
-
-        let hchildren = this.thead.querySelectorAll('th');
-        for (let hc of hchildren) {
-            hc.removeAttribute('data-sort');
-        }
-
-        hCell.setAttribute('data-sort', sort);
-
-        let elements = Array.from(this.gridbody.childNodes);
-
-        elements.sort(function(a, b) {
-            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
-            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
-
-            if (sort === 'asc') {
-                if (textA < textB) return -1;
-                if (textA > textB) return 1;
-            } else {
-                if (textA > textB) return -1;
-                if (textA < textB) return 1;
-            }
-
-            return 0;
-        });
-
-        this.gridbody.innerHTML = "";
-
-        for (let row of elements) {
-            this.gridbody.appendChild(row);
-        }
-
-        this.currentsort = {
-            field: field,
-            direction: sort
-        };
-
-        this.grindDuplicateCells();
-    }
-
-    /**
-     * Toggle sort direction on a header cell
-     * @param fieldname
-     */
-    togglesort(fieldname) {
-        let hCell = this.gridheader.querySelector(`[data-name='${fieldname}'`);
-        let sort = 'asc';
-        if ((hCell) && (hCell.getAttribute('data-sort'))) {
-            if (hCell.getAttribute('data-sort') === 'asc') {
-                sort = "desc";
-            }
-        }
-        this.sortField(fieldname, sort);
-    }
-
-    /**
-     * Opens a configuration dialog.
-     * @param type the type of dialog configurator
-     */
-    configurator(type) {
-        const me = this;
-
-        let container = document.createElement('div');
-        container.classList.add('datagrid-configurator');
-        container.classList.add('column');
-
-        let instructions,
-            title,
-            content;
-
-        switch(type) {
-            case 'column':
-                instructions = TextFactory.get('datagrid-column-config-instructions');
-                title = TextFactory.get('configure_columns');
-
-                content = document.createElement('ul');
-                content.classList.add('elements');
-                for (let f of this.fields) {
-                    let li = document.createElement('li');
-
-                    let cbox = new BooleanToggle({
-                        label: f.label,
-                        checked: !f.hidden,
-                        classes: ['column'],
-                        onchange: function() {
-                            me.toggleColumn(f);
-                        }
-                    });
-                    li.appendChild(cbox.container);
-
-                    if (f.description) {
-                        let desc = document.createElement('div');
-                        desc.classList.add('description');
-                        desc.innerHTML = f.description;
-                        li.appendChild(desc);
-                    }
-                    content.appendChild(li);
-                }
-                break;
-            case 'filter':
-                instructions = TextFactory.get('datagrid-filter-instructions');
-                title = TextFactory.get('manage_filters');
-
-                content = document.createElement('ul');
-                content.classList.add('elements');
-                for (let f of this.fields) {
-                    if (f.filterable) {
-                        let li = document.createElement('li');
-                        li.appendChild(this.getFilterLine(f).container);
-                        content.appendChild(li);
-                    }
-                }
-
-                break;
-            default:
-                break;
-        }
-
-        // instructions
-        if (instructions) {
-            container.append(new InstructionBox({
-                instructions: [instructions]
-            }).container);
-        }
-        container.append(content);
-
-        let dialog = new DialogWindow({
-            title: title,
-            content: container,
-            actions: ["closebutton"]
-        });
-        dialog.open();
-    }
-
-    /**
-     * Grind through duplicate cells if configured to do so.
-     */
-    grindDuplicateCells() {
-        if (!this.demphasizeduplicates) return;
-        let previousRow;
-        for (let r of this.gridbody.querySelectorAll('tr')) {
-            if (!previousRow) {
-                previousRow = r;
-                continue;
-            }
-            let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
-            let cells = r.querySelectorAll("td:not(.mechanical)");
-            for (let i = 0; i < cells.length; i++) {
-                if (!this.getField(cells[i].getAttribute('data-name')).nodupe) {
-                    if (cells[i].innerHTML === pcells[i].innerHTML) {
-                        cells[i].classList.add('duplicate');
-                    } else {
-                        cells[i].classList.remove('duplicate');
-                    }
-                }
-            }
-            previousRow = r;
-        }
-    }
-
-    /* DATA METHODS_____________________________________________________________________ */
-
-    /**
-     * Clears data from the grid. Completely flattens it.
-     */
-    clear() {
-        this.data = [];
-        this.gridbody.innerHTML = "";
-        this.gridPostProcess();
-    }
-
-    /**
-     * Things to do after the data in the grid has been manipulated, like
-     *    - Updates row counts
-     *    - Applies sort
-     *    - Applies filters
-     *    - Applies search
-     *    - Grinds duplicate cells
-     */
-    gridPostProcess() {
-        this.updateCount();
-        if (this.currentsort) {
-            this.sortField(this.currentsort.field, this.currentsort.direction);
-        }
-        this.applyFilters();
-        this.search(this.searchcontrol.value);
-        this.grindDuplicateCells();
-    }
-
-    /**
-     * Load data from a URL and put it into the grid. Appends by default.
-     * @param url the URL to get the data from. Defaults to the source url
-     * @param callback (optional) do this instead of Appending data. Takes data as an argument
-     */
-    fetchData(url=this.source, callback) {
-        this.activitynotifier.removeAttribute('aria-hidden');
-        fetch(url, {
-            headers: { "Content-Type": "application/json; charset=utf-8" }
-        })
-            .then(response => response.json()) // response -> json
-            .then(data => { // do the thing.
-                // Expects data in json format like this:
-                // { data: [] }, where each row is a table row.
-                if ((this.dataprocessor) && (typeof this.dataprocessor === 'function')) {
-                    data = this.dataprocessor(data);
-                } else {
-                    data = data.data; // by default, a data package assumes its rows are in "data"
-                                      // e.g.:  { data: [ row array ] }
-                }
-                if ((callback) && (typeof callback === 'function')) {
-                    callback(data);
-                } else {
-                    this.append(data);
-                }
-                this.activitynotifier.setAttribute('aria-hidden', 'true');
-            })
-            .catch(err => {
-                console.error(`Error while fetching data from ${url}`);
-                console.error(err);
-            });
-    }
-
-    /**
-     * Gets data and merges it in.  Updates entries that have changed and inserts new ones.
-     * @param url the url to get data from. Defaults to the source url.
-     */
-    mergeData(url=this.source) {
-        const me = this;
-        this.fetchData(url, function(data) {
-            me.update(data);
-        });
-    }
-
-    /**
-     * Get a specific entry from the data set
-     * @param id the id of the entry
-     * @return the entry dictionary, or null.
-     */
-    getEntry(id) {
-        if (!this.identifier) { return null; }
-        let entry;
-        for (let e of this.data) {
-            if ((e[this.identifier]) && (e[this.identifier] === id)) {
-                entry = e;
-                break;
-            }
-        }
-        return entry;
-    }
-
-    /**
-     * Update multiple rows of data.  Inserts if the value isn't there.
-     * @param data an array of entry informations
-     */
-    update(data) {
-        if (!this.data) { this.data = []; }
-        for (let entry of data) {
-            if (this.identifier) {
-                let id = entry[this.identifier];
-                let old = this.getEntry(id);
-                if (old) {
-                    this.updateEntry(entry); // Update the old row
-                } else {
-                    this.addEntry(entry); // This is a new row, so we append.
-                }
-            } else {
-                this.addEntry(entry); // We can only append
-            }
-        }
-        this.gridPostProcess();
-    }
-
-    /**
-     * Update a single entry in the data
-     * @param entry the entry to update.  MUST contain an identifier field.
-     */
-    updateEntry(entry) {
-        let id = entry[this.identifier];
-        let rowDOM = this.gridbody.querySelector(`[data-rowid=${this.id}-r-${id}]`);
-        for (let e of this.data) {
-            if ((e[this.identifier]) && (e[this.identifier] === id)) {
-                for (let k in entry) {
-                    e[k] = entry[k];
-                }
-                break;
-            }
-        }
-
-        for (let key in entry) {
-            if (key === this.identifier) {
-                continue;
-            }
-            let oldCell = rowDOM.querySelector(`[data-name=${key}`);
-            let c = this.buildCell(entry, this.getField(key));
-            rowDOM.replaceChild(c, oldCell);
-        }
-    }
-
-    /**
-     * Add an entry into the data
-     * @param entry the entry to add.
-     */
-    addEntry(entry) {
-        this.gridbody.appendChild(this.buildRow(entry));
-        this.data.push(entry);
-    }
-
-    /* COLUMN METHODS___________________________________________________________________ */
-
-    /**
-     * Toggle a column on or off
-     * @param f
-     */
-    toggleColumn(f) {
-        if (f.hidden) {
-            this.showColumn(f);
-        } else {
-            this.hideColumn(f);
-        }
-        this.persist();
-    }
-
-    /**
-     * Check to see that at least one column is visible, and if not, show a warning.
-     */
-    handleColumnPresences() {
-        let colsvisible = false;
-        for (let field of Object.values(this.fields)) {
-            if (!field.hidden) {
-                colsvisible = true;
-                break;
-            }
-        }
-        if (!colsvisible) {
-            this.messagebox.innerHTML = "";
-            this.messagebox.append(new MessageBox({
-                warningstitle: TextFactory.get('no_columns'),
-                warnings: [TextFactory.get('datagrid-message-no_visible_columns')],
-                classes: ['hidden']
-            }).container);
-            this.messagebox.classList.remove('hidden');
-        } else {
-            this.messagebox.classList.add('hidden');
-        }
-    }
-
-    /**
-     * Hide a column from the view.
-     * @param field the field to hide.
-     */
-    hideColumn(field) {
-        field.hidden = true;
-        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
-            c.classList.add('hidden');
-        }
-        this.handleColumnPresences();
-    }
-
-    /**
-     * Show a hidden column in the view.
-     * @param field
-     */
-    showColumn(field) {
-        field.hidden = false;
-        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
-            c.classList.remove('hidden');
-        }
-        this.handleColumnPresences();
-    }
-
-    /* PERSISTENCE METHODS______________________________________________________________ */
-
-    /**
-     * Persist the grid state
-     */
-    persist() {
-        if (!this.ispersistable) { return; }
-        this.state = this.grindstate(); // get a current copy of it.
-        localStorage.setItem(this.savekey, JSON.stringify(this.state));
-    }
-
-    /**
-     * Load a saved state from local storage
-     */
-    loadstate() {
-        if (this.ispersistable) {
-            this.state = JSON.parse(localStorage.getItem(this.savekey));
-        }
-        if (!this.state) {
-            this.state = this.grindstate(); // this will be the default
-        }
-    }
-
-    /**
-     * Apply the saved state to the grid
-     */
-    applystate() {
-        if (!this.state) { return; }
-        if (this.state.fields) {
-            for (let f of Object.values(this.state.fields)) {
-                if (f.hidden) {
-                    this.hideColumn(this.getField(f.name));
-                } else {
-                    this.showColumn(this.getField(f.name));
-                }
-            }
-        }
-        if (this.state.filters) {
-            this.activefilters = this.state.filters;
-        }
-        this.applyFilters();
-    }
-
-    /**
-     * Figures out the state of the grid and generates the state object
-     */
-    grindstate() {
-        let state = {
-            fields: {},
-            filters: {},
-            search: null
-        };
-
-        for (let f of this.fields) {
-            if (f.hidden === undefined) { f.hidden = false; }
-            state.fields[f.name] = {
-                name: f.name,
-                hidden: f.hidden
-            };
-        }
-        for (let af of (Object.values(this.activefilters))) {
-            state.filters[af.field] = af;
-        }
-        return state;
-    }
-
-    /* FILTER METHODS___________________________________________________________________ */
-
-    /**
-     * Builds the filter manipulation controls
-     * @param f the field
-     * @return {TextInput|SelectMenu}
-     */
-    getFilterLine(f) {
-        const me = this;
-
-        let element;
-
-        let values = me.getUniqueValues(f.name);
-
-        if (f.filterable === 'enum') {
-            let options = [];
-            for (let v of values) {
-                options.push({
-                    label: v,
-                    value: v
-                })
-            }
-            element = new SelectMenu({
-                label: f.label,
-                unselectedtext: me.filterunselectedvaluetext,
-                options: options,
-                onchange: function(self) {
-                    me.addFilter(f.name, self.value, true);
-                }
-            });
-        } else {
-            element = new TextInput({
-                name: 'value',
-                label: f.label,
-                placeholder: me.filterplaceholder,
-                onkeyup: function(e, self) {
-                    me.addFilter(f.name, self.value, false);
-                }
-            });
-        }
-        return element;
-    }
-
-    /**
-     * Add a filter to the active filters
-     * @param field the field to affect
-     * @param value the value of the field to match
-     * @param exact whether or not to be an exact match
-     */
-    addFilter(field, value, exact) {
-        if ((!value) || (value === '')) {
-            delete this.activefilters[field];
-        } else {
-            this.activefilters[field] = {
-                field: field,
-                value: value,
-                exact: exact
-            };
-        }
-        this.persist();
-        this.applyFilters();
-    }
-
-    /**
-     * Remove a filter from the active filter list
-     * @param f the filter to drop
-     */
-    removeFilter(f) {
-        delete this.activefilters[f.field];
-        this.persist();
-        this.applyFilters();
-    }
-
-    /**
-     * Apply all filters
-     */
-    applyFilters() {
-        const me = this;
-        let rows = Array.from(this.gridbody.childNodes);
-
-        this.filtertags.innerHTML = '';
-
-        if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
-            this.filterinfo.setAttribute('aria-expanded', true);
-            for (let f of Object.values(this.activefilters)) {
-                f.tagbutton = new TagButton({
-                    text: this.getField(f.field).label,
-                    help: `${(f.exact ? this.filterhelpexacttext : this.filterhelpcontaintext)} ${f.value}`,
-                    action: function() {
-                        me.removeFilter(f);
-                    }
-                });
-                this.filtertags.appendChild(f.tagbutton.button);
-            }
-        } else {
-            this.filterinfo.removeAttribute('aria-expanded');
-        }
-
-        for (let r of rows) {
-            r.removeAttribute('data-matched-filters');
-            r.classList.remove('filtered');
-
-            if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
-                let matchedfilters = [];
-
-                for (let filter of Object.values(this.activefilters)) {
-
-                    let c = r.querySelector(`[data-name='${filter.field}']`);
-
-                    if (filter.exact) {
-                        if (c.innerHTML === filter.value) {
-                            matchedfilters.push(filter.field);
-                        } else {
-                            r.classList.add('filtered');
-                        }
-                    } else {
-                        if (c.innerHTML.toLowerCase().indexOf(filter.value.toLowerCase()) !== -1) {
-                            matchedfilters.push(filter.field);
-                        } else {
-                            r.classList.add('filtered');
-                        }
-                    }
-                }
-
-                if (matchedfilters.length > 0) {
-                    r.setAttribute('data-matched-filters', matchedfilters.join(','));
-                } else {
-                    r.removeAttribute('data-matched-filters');
-                }
-            }
-        }
-
-
-        let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
-        if ((!visible) || (visible.length === 0)) {
-            this.messagebox.innerHTML = "";
-            this.messagebox.append(new MessageBox({
-                warningstitle: this.allfilteredtitle,
-                warnings: [this.allfilteredtext],
-                classes: ['hidden']
-            }).container);
-            this.messagebox.classList.remove('hidden');
-        } else {
-            this.messagebox.classList.add('hidden');
-        }
-       
-
-    }
-
-    /* SELECTION METHODS________________________________________________________________ */
-
-    /**
-     * Select a row
-     * @param row the row to select
-     */
-    select(row) {
-        row.setAttribute('aria-selected', 'true');
-        row.querySelector('input.selector').checked = true;
-
-        if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-            this.selectaction(this);
-        }
-    }
-
-    /**
-     * Deselect a row
-     * @param row the row to deselect
-     */
-    deselect(row) {
-        row.removeAttribute('aria-selected');
-        row.querySelector('input.selector').checked = false;
-    }
-
-    /**
-     * Toggle all/none selection
-     * @param select if true, select all; if false, deselect all.
-     */
-    toggleallselect(select) {
-        let rows = this.gridbody.querySelectorAll('tr');
-        for (let r of rows) {
-            if (select) {
-                this.select(r);
-            } else {
-                this.deselect(r);
-            }
-        }
-    }
-
-    /**
-     * Toggle the select mode
-     */
-    selectmodetoggle() {
-        if (this.multiselecting) {
-            this.grid.classList.remove('multiselecting');
-            return;
-        }
-        this.grid.classList.add('multiselecting');
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Builds the total DOM.
-     * @returns the grid container
-     */
-    buildContainer() {
-
-        this.container = document.createElement('div');
-        this.container.classList.add('datagrid-container');
-        this.container.classList.add('panel');
-        this.container.setAttribute('id', this.id);
-        this.container.setAttribute('aria-expanded', 'true');
-
-        if (this.title) {
-            this.container.append(this.header);
-        }
-
-        this.container.append(this.gridinfo);
-
-        if (this.filterable) {
-            this.container.append(this.filterinfo);
-        }
-
-        this.grid.appendChild(this.thead);
-        this.grid.appendChild(this.gridbody);
-
-        this.gridwrapper = document.createElement('div');
-        this.gridwrapper.classList.add('grid-wrapper');
-        this.gridwrapper.appendChild(this.shade.container);
-        this.gridwrapper.appendChild(this.grid);
-        this.container.append(this.gridwrapper);
-
-        this.messagebox = document.createElement('div');
-        this.messagebox.classList.add('messages');
-        this.messagebox.classList.add('hidden');
-        this.container.append(this.messagebox);
-
-        if (this.minimized) { // don't call close() to avoid the callbacks.
-            this.container.setAttribute('aria-expanded', 'false');
-            this.minimized = true;
-        }
-
-        if (this.hidden) { this.hide(); }
-
-    }
-
-    /**
-     * Build the form shade
-     */
-    buildShade() {
-        this.shade = new LoadingShade({
-            spinnertext: this.spinnertext,
-            spinnerstyle: this.spinnerstyle
-        });
-    }
-
-    /**
-     * Build the grid filters bit
-     */
-    buildFilterInfo() {
-
-        this.filterinfo = document.createElement('div');
-        this.filterinfo.classList.add('grid-filterinfo');
-
-        let label = document.createElement('label');
-        label.innerHTML = this.filterlabel;
-        this.filterinfo.appendChild(label);
-
-        this.filtertags = document.createElement('div');
-        this.filtertags.classList.add('grid-filtertags');
-
-        this.filterinfo.appendChild(this.filtertags);
-    }
-
-    /**
-     * Update the count of elements in the data grid.
-     */
-    updateCount() {
-        if (this.data) {
-            this.itemcount.innerHTML = this.data.length;
-        }
-    }
-
-    /**
-     * Build the grid info bit
-     */
-    buildGridInfo() {
-        const me = this;
-
-        this.gridinfo = document.createElement('div');
-        this.gridinfo.classList.add('grid-info');
-
-        this.itemcountlabel = document.createElement('label');
-        this.itemcountlabel.innerHTML = TextFactory.get('items_label');
-
-        this.itemcount = document.createElement('span');
-        this.itemcount.classList.add('itemcount');
-        this.updateCount();
-
-        this.activitynotifier = document.createElement('div');
-        this.activitynotifier.classList.add('activity');
-        this.activitynotifier.setAttribute('aria-hidden', 'true');
-        if (this.activitynotifiericon) {
-            this.activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
-        }
-        if (this.activitynotifiertext) {
-            let s = document.createElement('span');
-            s.innerHTML = this.activitynotifiertext;
-            this.activitynotifier.appendChild(s);
-        }
-
-        this.itemcountbox = document.createElement('div');
-        this.itemcountbox.classList.add('countbox');
-        this.itemcountbox.appendChild(this.itemcountlabel);
-        this.itemcountbox.appendChild(this.itemcount);
-        this.itemcountbox.appendChild(this.activitynotifier);
-
-        this.gridinfo.appendChild(this.itemcountbox);
-
-        if (this.searchable) {
-            this.searchcontrol = new SearchControl({
-                arialabel: TextFactory.get('search_this_data'),
-                placeholder: TextFactory.get('search_this_data'),
-                searchtext: TextFactory.get('search'),
-                action: function(value, searchcontrol) {
-                    me.search(value);
-                }
-            });
-            this.gridinfo.append(this.searchcontrol.container);
-        }
-
-        if (this.filterable) {
-            this.filterbutton  = new SimpleButton({
-                mute: true,
-                text: TextFactory.get('filters'),
-                icon: this.filterbuttonicon,
-                classes: ['filter'],
-                action: function() {
-                    me.configurator('filter');
-                }
-            });
-            this.gridinfo.append(this.filterbutton.button);
-        }
-
-        let items = [];
-        if (this.multiselect) {
-            items.push({
-                label: TextFactory.get('bulk_select'),
-                icon: this.multiselecticon,
-                action: function() {
-                    me.selectmodetoggle();
-                }
-            });
-        }
-        items.push({
-            label: TextFactory.get('columns'),
-            icon: this.columnconfigurationicon,
-            action: function() {
-                me.configurator('column');
-            }
-        });
-        if (this.exportable) {
-            items.push({
-                label: TextFactory.get('export'),
-                icon: this.exporticon,
-                action: function() {
-                    me.export();
-                }
-            });
-        }
-
-        this.actionsbutton  = new ButtonMenu({
-            mute: true,
-            shape: 'square',
-            secondicon: null,
-            text: TextFactory.get('actions'),
-            icon: this.actionsbuttonicon,
-            classes: ['actions'],
-            items: items
-        });
-
-        this.gridinfo.append(this.actionsbutton.button);
-    }
-
-    /**
-     * Build the actual grid table.
-     */
-    buildGrid() {
-        this.grid = document.createElement('table');
-        this.grid.classList.add('grid');
-        if (this.selectable) {
-            this.grid.classList.add('selectable');
-        }
-    }
-
-    /**
-     * Build the table header
-     */
-    buildTableHead() {
-        const me = this;
-        if (this.multiselect) {
-            this.masterselector = new BooleanToggle({
-                onchange: function(self) {
-                    me.toggleallselect(self.checked);
-                }
-            });
-            let cell = document.createElement('th');
-            cell.classList.add('selector');
-            cell.classList.add('mechanical');
-            cell.appendChild(this.masterselector.naked);
-            this.gridheader.appendChild(cell);
-        }
-
-        for (let f of this.fields) {
-            this.gridheader.appendChild(this.buildHeaderCell(f));
-        }
-
-        this.thead = document.createElement('thead');
-        this.thead.appendChild(this.gridheader);
-    }
-
-    /**
-     * Build a single header cell
-     * @param field the field definition dictionary
-     * @return {HTMLTableHeaderCellElement}
-     */
-    buildHeaderCell(field) {
-        const me = this;
-
-        let div = document.createElement('div');
-        div.classList.add('th');
-        div.innerHTML = field.label;
-        if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
-
-        let cell = document.createElement('th');
-        cell.setAttribute('id', `${this.id}-h-c-${field.name}`);
-        cell.setAttribute('data-name', field.name);
-        cell.setAttribute('data-datatype', field.type);
-        cell.classList.add(field.type);
-        cell.appendChild(div);
-
-        if (field.resize) { cell.classList.add('resize'); }
-
-        if (field.nodupe) { cell.classList.add('nodupe'); }
-
-        if (field.hidden) { cell.classList.add('hidden'); }
-
-        if (field.description) {
-            let celltip = new ToolTip({
-                text: field.description
-            });
-            celltip.attach(div);
-        }
-
-        if (this.sortable) {
-            // XXX Add "sort this" aria label
-            cell.setAttribute('tabindex', '0');
-            cell.addEventListener('click', function(e) {
-                e.preventDefault();
-                me.togglesort(field.name);
-            });
-            cell.addEventListener('keyup', function(e) {
-                e.preventDefault();
-                switch (e.keyCode) {
-                    case 13: // enter
-                    case 32: // 32
-                        me.togglesort(field.name);
-                        break;
-                    default:
-                        break;
-
-                }
-            });
-        }
-
-        this.headercells[field.name] = cell;
-
-        return cell;
-    }
-
-    /**
-     * Builds the table body
-     */
-    buildGridBody() {
-        this.gridbody = document.createElement('tbody');
-    }
-
-    /**
-     * Builds the table header row.
-     */
-    buildGridHeader() {
-        this.gridheader = document.createElement('tr');
-        this.gridheader.classList.add('header');
-    }
-
-    /**
-     * Build a single row
-     * @param rdata the row data
-     * @return {HTMLTableRowElement}
-     */
-    buildRow(rdata) {
-        const me = this;
-        let row = document.createElement('tr');
-
-        if (this.selectable) {
-
-            row.setAttribute('tabindex', '0');
-
-            if (this.identifier) {
-                row.setAttribute('data-rowid', `${this.id}-r-${rdata[this.identifier]}`);
-            }
-
-            row.addEventListener('click', function(e) {
-                if ((me.selectable) && (!me.multiselecting)) {
-                    me.select(row);
-                }
-            });
-
-            row.addEventListener('keydown', function(e) {
-                switch(e.keyCode) {
-                    case 37:
-                    case 38:
-                        e.preventDefault();
-                        let previous = row.parentNode.rows[row.rowIndex - 2];
-                        if (previous) { previous.focus(); }
-                        break;
-                    case 39:
-                    case 40:
-                        e.preventDefault();
-                        let next = row.parentNode.rows[row.rowIndex];
-                        if (next) { next.focus(); }
-                        break;
-                    case 13:
-                    case 32:
-                        row.click();
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
-
-        if (this.multiselect) {
-            let selector = new BooleanToggle({
-                classes: ['selector'],
-                onchange: function(self) {
-                    if (row.getAttribute('aria-selected') === 'true') {
-                        row.removeAttribute('aria-selected');
-                    } else {
-                        row.setAttribute('aria-selected', 'true');
-                    }
-                }
-            });
-            let cell = document.createElement('td');
-            cell.classList.add('selector');
-            cell.classList.add('mechanical');
-            cell.appendChild(selector.naked);
-            row.appendChild(cell);
-        }
-
-        for (let f of this.fields) {
-            row.appendChild(this.buildCell(rdata, f));
-        }
-
-        return row;
-    }
-
-    /**
-     * Builds a single data cell
-     * @param data the data dictionary
-     * @param field the field definition dictionary
-     * @return {HTMLTableDataCellElement}
-     */
-    buildCell(data, field) {
-        let content;
-        let d = data[field.name];
-
-        if ((field.renderer) && (typeof field.renderer === 'function')) {
-            content = field.renderer(d);
-        } else {
-            switch(field.type) {
-                case 'number':
-                    content = d;
-                    break;
-                case 'time':
-                    content = d;
-                    break;
-                case 'imageurl':
-                    content = `<a href="${d}"><img src="${d}" /></a>`;
-                    break;
-                case 'date':
-                    content = d.toString();
-                    break;
-                case 'stringarray':
-                    content = d.join(field.separator);
-                    break;
-                case 'paragraph':
-                    content = d.join(field.separator);
-                    break;
-                case 'string':
-                default:
-                    content = d;
-                    break;
-            }
-        }
-
-        let cell = document.createElement('td');
-        cell.setAttribute('data-name', field.name);
-        cell.setAttribute('data-datatype', field.type);
-        cell.classList.add(field.name);
-        cell.classList.add(field.type);
-        cell.innerHTML = content;
-
-        if (field.classes) {
-            for (let c of field.classes) {
-                cell.classList.add(c);
-            }
-        }
-        if (field.hidden) {
-            cell.classList.add('hidden');
-        }
-
-        return cell;
-    }
-
-    /**
-     * Build the footer element
-     */
-    buildFooter() {
-        this.footer = document.createElement('div');
-        this.footer.classList.add('footer');
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get actionsbutton() { return this._actionsbutton; }
-    set actionsbutton(actionsbutton) { this._actionsbutton = actionsbutton; }
-
-    get actionsbuttonicon() { return this.config.actionsbuttonicon; }
-    set actionsbuttonicon(actionsbuttonicon) { this.config.actionsbuttonicon = actionsbuttonicon; }
-
-    get activefilters() { return this._activefilters; }
-    set activefilters(activefilters) { this._activefilters = activefilters; }
-
-    get activitynotifier() { return this._activitynotifier; }
-    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
-
-    get activitynotifiericon() { return this.config.activitynotifiericon; }
-    set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
-    get activitynotifiertext() { return this.config.activitynotifiertext; }
-    set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
-
-    get columnconfigbutton() { return this._columnconfigbutton; }
-    set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
-
-    get columnconfigurationicon() { return this.config.columnconfigurationicon; }
-    set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
-
-    get currentsort() { return this._currentsort; }
-    set currentsort(currentsort) { this._currentsort = currentsort; }
-
-    get data() { return this.config.data; }
-    set data(data) { this.config.data = data; }
-
-    get dataprocessor() { return this.config.dataprocessor; }
-    set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
-
-    get demphasizeduplicates() { return this.config.demphasizeduplicates; }
-    set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
-
-    get exportable() { return this.config.exportable; }
-    set exportable(exportable) { this.config.exportable = exportable; }
-
-    get exportarrayseparator() { return this.config.exportarrayseparator; }
-    set exportarrayseparator(exportarrayseparator) { this.config.exportarrayseparator = exportarrayseparator; }
-
-    get exportbutton() { return this._exportbutton; }
-    set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
-
-    get exportfilename() { return this.config.exportfilename; }
-    set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
-
-    get exportheaderrow() { return this.config.exportheaderrow; }
-    set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
-
-    get exporticon() { return this.config.exporticon; }
-    set exporticon(exporticon) { this.config.exporticon = exporticon; }
-
-    get fields() { return this.config.fields; }
-    set fields(fields) { this.config.fields = fields; }
-
-    get filterable() { return this.config.filterable; }
-    set filterable(filterable) { this.config.filterable = filterable; }
-
-    get filterbutton() { return this._filterbutton; }
-    set filterbutton(filterbutton) { this._filterbutton = filterbutton; }
-
-    get filterbuttonicon() { return this.config.filterbuttonicon; }
-    set filterbuttonicon(filterbuttonicon) { this.config.filterbuttonicon = filterbuttonicon; }
-
-    get filterinfo() {
-        if (!this._filterinfo) { this.buildFilterInfo(); }
-        return this._filterinfo;
-    }
-    set filterinfo(filterinfo) { this._filterinfo = filterinfo; }
-
-    get filtertags() { return this._filtertags; }
-    set filtertags(filtertags) { this._filtertags = filtertags; }
-
-    get footer() {
-        if (!this._footer) { this.buildFooter(); }
-        return this._footer;
-    }
-    set footer(footer) { this._footer = footer; }
-
-    get grid() {
-        if (!this._grid) { this.buildGrid(); }
-        return this._grid;
-    }
-    set grid(grid) { this._grid = grid; }
-
-    get gridinfo() {
-        if (!this._gridinfo) { this.buildGridInfo(); }
-        return this._gridinfo;
-    }
-    set gridinfo(gridinfo) { this._gridinfo = gridinfo; }
-
-    get gridbody() {
-        if (!this._gridbody) { this.buildGridBody(); }
-        return this._gridbody;
-    }
-    set gridbody(gridbody) { this._gridbody = gridbody; }
-
-    get gridheader() {
-        if (!this._gridheader) { this.buildGridHeader(); }
-        return this._gridheader;
-    }
-    set gridheader(gridheader) { this._gridheader = gridheader; }
-
-    get gridwrapper() { return this._gridwrapper; }
-    set gridwrapper(gridwrapper) { this._gridwrapper = gridwrapper; }
-
-    get headercells() {
-        if (!this._headercells) { this._headercells = {} ; }
-        return this._headercells;
-    }
-    set headercells(headercells) { this._headercells = headercells; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get identifier() { return this._identifier; }
-    set identifier(identifier) { this._identifier = identifier; }
-
-    get itemcount()  { return this._itemcount; }
-    set itemcount(itemcount) { this._itemcount = itemcount; }
-
-    get itemcountbox()  { return this._itemcountbox; }
-    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
-
-    get itemcountlabel()  { return this._itemcountlabel; }
-    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
-
-    get masterselector() { return this._masterselector; }
-    set masterselector(masterselector) { this._masterselector = masterselector; }
-
-    get multiselect() { return this.config.multiselect; }
-    set multiselect(multiselect) { this.config.multiselect = multiselect; }
-
-    get multiselectbutton() { return this._multiselectbutton; }
-    set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
-
-    get multiselecticon() { return this.config.multiselecticon; }
-    set multiselecticon(multiselecticon) { this.config.multiselecticon = multiselecticon; }
-
-    get multiselectactions() { return this.config.multiselectactions; }
-    set multiselectactions(multiselectactions) { this.config.multiselectactions = multiselectactions; }
-
-    get messagebox() { return this._messagebox; }
-    set messagebox(messagebox) { this._messagebox = messagebox; }
-
-    get savekey() { return this._savekey; }
-    set savekey(savekey) { this._savekey = savekey; }
-
-    get savestate() { return this.config.savestate; }
-    set savestate(savestate) { this.config.savestate = savestate; }
-
-    get searchable() { return this.config.searchable; }
-    set searchable(searchable) { this.config.searchable = searchable; }
-
-    get searchcontrol() { return this._searchcontrol; }
-    set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
-
-    get selectable() { return this.config.selectable; }
-    set selectable(selectable) { this.config.selectable = selectable; }
-
-    get selectaction() { return this.config.selectaction; }
-    set selectaction(selectaction) { this.config.selectaction = selectaction; }
-
-    get shade() {
-        if (!this._shade) { this.buildShade(); }
-        return this._shade;
-    }
-    set shade(shade) { this._shade = shade; }
-
-    get sortable() { return this.config.sortable; }
-    set sortable(sortable) { this.config.sortable = sortable; }
-
-    get source() { return this.config.source; }
-    set source(source) { this.config.source = source; }
-
-    get sorticon() { return this.config.sorticon; }
-    set sorticon(sorticon) { this.config.sorticon = sorticon; }
-
-    get spinnerstyle() { return this.config.spinnerstyle; }
-    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
-
-    get spinnertext() { return this.config.spinnertext; }
-    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
-
-    get state() { return this._state; }
-    set state(state) { this._state = state; }
-
-    get thead() {
-        if (!this._thead) { this.buildTableHead(); }
-        return this._thead;
-    }
-    set thead(thead) { this._thead = thead; }
-
-}
-
 class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
@@ -9994,4 +8600,2231 @@ class RadialProgressMeter extends SimpleProgressMeter {
     set wrap(wrap) { this._wrap = wrap; }
 
 
+}
+class DataGrid extends Panel {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            title: null, // the title for the grid
+            id: null, // The id. An id is required to save a grid's state.
+            sortable: true, //  Data columns can be sorted
+
+            fields: [  // The data fields for the grid and how they behave.
+                /*
+                 * An array of field definition dictionaries:
+                 *
+                    name: <string>,    // The variable name for this field (computer readable)
+                    label: <string>,   // The human-readable name for the column
+                    width: <number,    // The default width of the column
+                    hidden: <boolean>, // Is the column hidden or not.
+                    identifier: <boolean> // If true, marks the field as the unique identifier
+                                          // for a data set.  An identifier is required if the
+                                          // grid is intended to update entries.  Without a unique
+                                          // field, data can only be appended, not updated.
+                    type: <string>,    // The datatype of the column
+                                       //   - string
+                                       //   - number
+                                       //   - date
+                                       //   - time
+                                       //   - stringarray
+                                       //   - paragraph
+                    separator: <string>, // Used when rendering array values
+                    nodupe: false, // If true, this column is ignored when deemphasizing duplicate rows.
+                    resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
+                    description: <string>>,  // A string that describes the data in the column
+                    classes: <string array>, // Additional classes to apply to cells of this field
+                    filterable: <null|string|enum> // Is the field filterable? if so, how?
+                    renderer: function(data) {     // A function that can be used to
+                        return `${data}.`;
+                    }
+                */
+            ],
+            data: null,   // The data to throw into the grid on load. This is an array of rows.
+            source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
+            dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
+                                 // This is a function that data is passed through to massage.
+                                 // Must accept a JSON blob as it's argument and return an array
+                                 // of row definitions.
+            savestate: true, // Attempt to save the grid's state. Will not work unless an ID is defined.
+            demphasizeduplicates: true, // de-emphasize cells that are identical to the same cell
+                                        // in the previous row.
+            columnconfigurationicon: 'table',
+            searchable: true, // Data can be searched
+            exportable: true, // Data can be exported
+            exporticon: "download",
+            exportheaderrow: 'readable', // When exporting a CSV file, should a header row
+                                         // be included?  Possible values:
+                                         // 'readable' : Uses the header labels (human readable)
+                                         // 'data' : Uses the data labels
+                                         // 'no' or null: don't include a header row
+            exportfilename: function(self) { // the filename to name the exported data.
+                if (self.title) {
+                    return `${self.title}-export.csv`;
+                }
+                return 'export.csv';     // This can be a string or a function, but must return a string
+            },
+            exportarrayseparator: "\, ", // What to use when exporting fields with arrays as a separator.  Do not use '\n' as this breaks CSV encoding.
+
+            filterable: true, // Can the datagrid be filtered?
+                      // No all fields are filtered by default.
+                      // Whether or not a field can be filtered is defined in the field's definition.
+            applyfiltersicon: 'checkmark-circle',
+            actionsbuttonicon: 'menu',
+
+            selectable: true, //  Data rows can be selected.
+            selectaction: function(self) {  // What to do when a single row is selected.
+                //console.log("row clicked");
+            },
+            spinnerstyle: 'spin', //
+            spinnertext: TextFactory.get('datagrid-spinnertext'), //
+
+            multiselect: true, // Can multiple rows be selected? If true, overrides "selectable: false"
+            multiselectactions: [], // Array of button actions to multiselects
+            multiselecticon: 'checkmark',
+
+            activitynotifiericon: 'gear-complex',
+            activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
+            texttotal: 'total',
+            sorticon: 'chevron-down',
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define a DataGrid
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
+        super(config);
+
+        const me = this;
+
+        if (this.id) {
+            this.savekey = `grid-test-${this.id}`;
+        } else {
+            this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
+        }
+        for (let f of this.fields) {
+            if (f.identifier) { this.identifier = f.name; }
+        }
+        this.activefilters = [];
+        this.loadstate();
+
+        setTimeout(function() {
+           me.fillData();
+        }, 100);
+    }
+
+    /**
+     * Loads the initial data into the grid.
+     */
+    fillData() {
+        const me = this;
+
+        this.shade.activate();
+
+        if (this.data) {
+            for (let rdata of this.data) {
+                this.gridbody.appendChild(this.buildRow(rdata));
+            }
+            setTimeout(function() {
+                me.postLoad();
+                me.shade.deactivate();
+            }, 100);
+        } else if (this.source) {
+            this.fetchData(this.source, function(data){
+                me.update(data);
+                me.postLoad();
+                me.shade.deactivate();
+            });
+        }
+    }
+
+    /**
+     * Do this once we're done loading data.  This only happens once.
+     */
+    postLoad() {
+        this.applystate();
+        this.grindDuplicateCells();
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    /**
+     * Are we in multi-select mode or not?
+     * @return {boolean}
+     */
+    get multiselecting() {
+        return this.grid.classList.contains('multiselecting');
+    }
+
+    /**
+     * Test if the grid can be persisted.
+     * @return {boolean}
+     */
+    get ispersistable() {
+        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+    }
+
+    /**
+     * Get all values for a given field key
+     * @param key the data key
+     * @return {[]} and array of values
+     */
+    getValues(key) {
+        let a = [];
+        for (let d of this.data) {
+            a.push(d[key]);
+        }
+        return a;
+    }
+
+    /**
+     * Get all unique values for a given field key
+     * @param key the data key
+     * @return {[]} and array of values
+     */
+    getUniqueValues(key) {
+        let s = new Set();
+        for (let d of this.data) {
+            s.add(d[key]);
+        }
+        return Array.from(s).sort();
+    }
+
+    /**
+     * Get a field definition
+     * @param fieldid the id of the field.
+     * @return {*}
+     */
+    getField(fieldid) {
+        let rf;
+        for (let f of this.fields) {
+            if (f.name === fieldid) {
+                rf = f;
+                break;
+            }
+        }
+        return rf;
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Export the data in the grid as a CSV
+     * @param obeyView (optional) if true, export the view
+     */
+    export(obeyView) {
+        let fname;
+
+        if (this.exportbutton) {
+            this.exportbutton.disable();
+        }
+
+        if ((this.exportfilename) && (typeof this.exportfilename === 'function')) {
+            fname = this.exportfilename(this);
+        } else {
+            fname = this.exportfilename;
+        }
+
+        let csvdata = this.compileCSV(obeyView);
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURI(csvdata)}`);
+        hiddenElement.setAttribute('id', 'downloadLink');
+        hiddenElement.setAttribute('target', '_blank');
+        hiddenElement.setAttribute('download', fname);
+        hiddenElement.click();
+
+        if (this.exportbutton) {
+            this.exportbutton.enable();
+        }
+    }
+
+    /**
+     * Compile the CSV file
+     * @param obeyView if true, only include visible data rows and cells
+     * @return {string} a csv clob
+     */
+    compileCSV(obeyView) {
+        let lineDivider = '\r\n', // line divider
+            cellDivider = ',', // cell divider
+            rows = [];
+
+        // XXX TODO: Don't export hidden fields
+
+        // Include the header row, if required.
+        if ((this.exportheaderrow) && (this.exportheaderrow !== 'no')) {
+            let colTitles = [],
+                colData = [];
+            for (let f of this.fields) {
+                if ((obeyView) && (f.hidden)) {
+                    continue; // Skip hidden
+                }
+                colTitles.push(`\"${f.label.replace(/"/g,"\\\"")}\"`);
+                colData.push(`\"${f.name.replace(/"/g,"\\\"")}\"`);
+            }
+            if (this.exportheaderrow === 'readable') {
+                rows.push(`${colTitles.join(cellDivider)}`);
+            } else {
+                rows.push(`${colData.join(cellDivider)}`);
+            }
+        }
+
+        // XXX TODO Apply Sort?
+
+        for (let d of this.data) {
+
+            let include = true;
+            if ((obeyView) && ((this.activefilters) && (this.activefilters.length > 0))) {
+                for (let filter of this.activefilters) {
+                    let field = this.getField(filter.field);
+                    include = this.testFilter(field, filter, d[filter.field]);
+                }
+            }
+
+            if (!include) {
+                continue;
+            }
+
+            let cells = [];
+            for (let f of this.fields) { // do mapping by field
+                if ((obeyView) && (f.hidden)) {
+                    continue; // Skip hidden
+                }
+                let val;
+                switch (f.type) {
+                    case 'date':
+                        val = d[f.name].toString().replace(/"/g,"\\\"");
+                        break;
+                    case 'stringarray':
+                        val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
+                        break;
+                    case 'number':
+                    case 'time':
+                        val = d[f.name];
+                        break;
+                    case 'string':
+                    case 'paragraph':
+                    default:
+                        val = d[f.name].replace(/"/g,"\\\"");
+                        break;
+                }
+                cells.push(`\"${val}\"`);
+            }
+            rows.push(cells.join(cellDivider));
+        }
+
+        return rows.join(lineDivider);
+    }
+
+    /**
+     * Search the grid for the value provided.
+     * @param value
+     */
+    search(value) {
+        this.messagebox.classList.add('hidden');
+
+        let rows = Array.from(this.gridbody.childNodes);
+
+        let matches = 0;
+        let matchesHiddenColumns = false;
+        for (let r of rows) {
+            let show = false;
+            r.setAttribute('data-search-hidden', true,);
+
+            if ((!value) || (value === '')) {
+                show = true;
+            } else {
+                let cells = Array.from(r.childNodes);
+                for (let c of cells) {
+                    if (show) { break; }
+                    if (!c.classList.contains('mechanical')) {
+                        if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                            if (c.classList.contains('hidden')) {
+                                matchesHiddenColumns = true;
+                            } else {
+                                show = true;
+                            }
+                        }
+                    }
+                }
+            }
+            if (show) {
+                matches++;
+                r.removeAttribute('data-search-hidden');
+            }
+        }
+
+        if (matches <= 0) {
+            this.messagebox.innerHTML = "";
+            let warnings = [TextFactory.get('search_noresults')];
+            if (matchesHiddenColumns) {
+                warnings.push(TextFactory.get('matches_hidden_columns'));
+            }
+            this.messagebox.append(new MessageBox({
+                warningstitle: TextFactory.get('no_results'),
+                warnings: warnings,
+                classes: ['hidden']
+            }).container);
+            this.messagebox.classList.remove('hidden');
+        }
+    }
+
+    /**
+     * Sort the table based on a field.
+     * @param field the field to sort
+     */
+    sortField(field, sort='asc') {
+
+        let hCell = this.thead.querySelector(`[data-name='${field}']`);
+
+        let hchildren = this.thead.querySelectorAll('th');
+        for (let hc of hchildren) {
+            hc.removeAttribute('data-sort');
+        }
+
+        hCell.setAttribute('data-sort', sort);
+
+        let elements = Array.from(this.gridbody.childNodes);
+
+        elements.sort(function(a, b) {
+            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
+            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
+
+            if (sort === 'asc') {
+                if (textA < textB) return -1;
+                if (textA > textB) return 1;
+            } else {
+                if (textA > textB) return -1;
+                if (textA < textB) return 1;
+            }
+
+            return 0;
+        });
+
+        this.gridbody.innerHTML = "";
+
+        for (let row of elements) {
+            this.gridbody.appendChild(row);
+        }
+
+        this.currentsort = {
+            field: field,
+            direction: sort
+        };
+
+        this.grindDuplicateCells();
+    }
+
+    /**
+     * Toggle sort direction on a header cell
+     * @param fieldname
+     */
+    togglesort(fieldname) {
+        let hCell = this.gridheader.querySelector(`[data-name='${fieldname}'`);
+        let sort = 'asc';
+        if ((hCell) && (hCell.getAttribute('data-sort'))) {
+            if (hCell.getAttribute('data-sort') === 'asc') {
+                sort = "desc";
+            }
+        }
+        this.sortField(fieldname, sort);
+    }
+
+    /**
+     * Opens a configuration dialog.
+     * @param type the type of dialog configurator
+     */
+    configurator(type) {
+        const me = this;
+
+        let title,
+            container,
+            actions = [];
+
+        switch(type) {
+            case 'column':
+                title = TextFactory.get('configure_columns');
+                container = document.createElement('div');
+                container.classList.add('datagrid-configurator');
+                container.classList.add('column');
+
+                container.append(new InstructionBox({
+                    instructions: [TextFactory.get('datagrid-column-config-instructions')]
+                }).container);
+
+                let content = document.createElement('ul');
+                content.classList.add('elements');
+                for (let f of this.fields) {
+                    let li = document.createElement('li');
+
+                    let cbox = new BooleanToggle({
+                        label: f.label,
+                        checked: !f.hidden,
+                        classes: ['column'],
+                        onchange: function() {
+                            me.toggleColumn(f);
+                        }
+                    });
+                    li.appendChild(cbox.container);
+
+                    if (f.description) {
+                        let desc = document.createElement('div');
+                        desc.classList.add('description');
+                        desc.innerHTML = f.description;
+                        li.appendChild(desc);
+                    }
+                    content.appendChild(li);
+                }
+
+                container.append(content);
+                break;
+            case 'filter':
+                let fc = new FilterConfigurator({
+                    fields: this.fields,
+                    filters: this.activefilters
+                });
+                container = fc.container;
+
+                let applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
+                    text: TextFactory.get('apply_filters'),
+                    action: function() {
+                        fc.grindFilters();
+                        me.activefilters = fc.filters;
+                        me.applyFilters();
+                        dialog.close();
+                    }
+                });
+                actions.push(applyfiltersbutton);
+
+                title = TextFactory.get('manage_filters');
+                break;
+            default:
+                break;
+        }
+
+        actions.push('closebutton');
+        let dialog = new DialogWindow({
+            title: title,
+            content: container,
+            actions: actions
+        });
+        dialog.open();
+    }
+
+    /**
+     * Grind through duplicate cells if configured to do so.
+     */
+    grindDuplicateCells() {
+        if (!this.demphasizeduplicates) return;
+        let previousRow;
+        for (let r of this.gridbody.querySelectorAll('tr')) {
+            if (!previousRow) {
+                previousRow = r;
+                continue;
+            }
+            let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
+            let cells = r.querySelectorAll("td:not(.mechanical)");
+            for (let i = 0; i < cells.length; i++) {
+                if (!this.getField(cells[i].getAttribute('data-name')).nodupe) {
+                    if (cells[i].innerHTML === pcells[i].innerHTML) {
+                        cells[i].classList.add('duplicate');
+                    } else {
+                        cells[i].classList.remove('duplicate');
+                    }
+                }
+            }
+            previousRow = r;
+        }
+    }
+
+    /* DATA METHODS_____________________________________________________________________ */
+
+    /**
+     * Clears data from the grid. Completely flattens it.
+     */
+    clear() {
+        this.data = [];
+        this.gridbody.innerHTML = "";
+        this.gridPostProcess();
+    }
+
+    /**
+     * Things to do after the data in the grid has been manipulated, like
+     *    - Updates row counts
+     *    - Applies sort
+     *    - Applies filters
+     *    - Applies search
+     *    - Grinds duplicate cells
+     */
+    gridPostProcess() {
+        this.updateCount();
+        if (this.currentsort) {
+            this.sortField(this.currentsort.field, this.currentsort.direction);
+        }
+        this.applyFilters();
+        this.search(this.searchcontrol.value);
+        this.grindDuplicateCells();
+    }
+
+    /**
+     * Load data from a URL and put it into the grid. Appends by default.
+     * @param url the URL to get the data from. Defaults to the source url
+     * @param callback (optional) do this instead of Appending data. Takes data as an argument
+     */
+    fetchData(url=this.source, callback) {
+        this.activitynotifier.removeAttribute('aria-hidden');
+        fetch(url, {
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+            .then(response => response.json()) // response -> json
+            .then(data => { // do the thing.
+                // Expects data in json format like this:
+                // { data: [] }, where each row is a table row.
+                if ((this.dataprocessor) && (typeof this.dataprocessor === 'function')) {
+                    data = this.dataprocessor(data);
+                } else {
+                    data = data.data; // by default, a data package assumes its rows are in "data"
+                                      // e.g.:  { data: [ row array ] }
+                }
+                if ((callback) && (typeof callback === 'function')) {
+                    callback(data);
+                } else {
+                    this.append(data);
+                }
+                this.activitynotifier.setAttribute('aria-hidden', 'true');
+            })
+            .catch(err => {
+                console.error(`Error while fetching data from ${url}`);
+                console.error(err);
+            });
+    }
+
+    /**
+     * Gets data and merges it in.  Updates entries that have changed and inserts new ones.
+     * @param url the url to get data from. Defaults to the source url.
+     */
+    mergeData(url=this.source) {
+        const me = this;
+        this.fetchData(url, function(data) {
+            me.update(data);
+        });
+    }
+
+    /**
+     * Get a specific entry from the data set
+     * @param id the id of the entry
+     * @return the entry dictionary, or null.
+     */
+    getEntry(id) {
+        if (!this.identifier) { return null; }
+        let entry;
+        for (let e of this.data) {
+            if ((e[this.identifier]) && (e[this.identifier] === id)) {
+                entry = e;
+                break;
+            }
+        }
+        return entry;
+    }
+
+    /**
+     * Update multiple rows of data.  Inserts if the value isn't there.
+     * @param data an array of entry informations
+     */
+    update(data) {
+        if (!this.data) { this.data = []; }
+        for (let entry of data) {
+            if (this.identifier) {
+                let id = entry[this.identifier];
+                let old = this.getEntry(id);
+                if (old) {
+                    this.updateEntry(entry); // Update the old row
+                } else {
+                    this.addEntry(entry); // This is a new row, so we append.
+                }
+            } else {
+                this.addEntry(entry); // We can only append
+            }
+        }
+        this.gridPostProcess();
+    }
+
+    /**
+     * Update a single entry in the data
+     * @param entry the entry to update.  MUST contain an identifier field.
+     */
+    updateEntry(entry) {
+        let id = entry[this.identifier];
+        let rowDOM = this.gridbody.querySelector(`[data-rowid=${this.id}-r-${id}]`);
+        for (let e of this.data) {
+            if ((e[this.identifier]) && (e[this.identifier] === id)) {
+                for (let k in entry) {
+                    e[k] = entry[k];
+                }
+                break;
+            }
+        }
+
+        for (let key in entry) {
+            if (key === this.identifier) {
+                continue;
+            }
+            let oldCell = rowDOM.querySelector(`[data-name=${key}`);
+            let c = this.buildCell(entry, this.getField(key));
+            rowDOM.replaceChild(c, oldCell);
+        }
+    }
+
+    /**
+     * Add an entry into the data
+     * @param entry the entry to add.
+     */
+    addEntry(entry) {
+        this.gridbody.appendChild(this.buildRow(entry));
+        this.data.push(entry);
+    }
+
+    /* COLUMN METHODS___________________________________________________________________ */
+
+    /**
+     * Toggle a column on or off
+     * @param f
+     */
+    toggleColumn(f) {
+        if (f.hidden) {
+            this.showColumn(f);
+        } else {
+            this.hideColumn(f);
+        }
+        this.persist();
+    }
+
+    /**
+     * Check to see that at least one column is visible, and if not, show a warning.
+     */
+    handleColumnPresences() {
+        let colsvisible = false;
+        for (let field of Object.values(this.fields)) {
+            if (!field.hidden) {
+                colsvisible = true;
+                break;
+            }
+        }
+        if (!colsvisible) {
+            this.messagebox.innerHTML = "";
+            this.messagebox.append(new MessageBox({
+                warningstitle: TextFactory.get('no_columns'),
+                warnings: [TextFactory.get('datagrid-message-no_visible_columns')],
+                classes: ['hidden']
+            }).container);
+            this.messagebox.classList.remove('hidden');
+        } else {
+            this.messagebox.classList.add('hidden');
+        }
+    }
+
+    /**
+     * Hide a column from the view.
+     * @param field the field to hide.
+     */
+    hideColumn(field) {
+        field.hidden = true;
+        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
+            c.classList.add('hidden');
+        }
+        this.handleColumnPresences();
+    }
+
+    /**
+     * Show a hidden column in the view.
+     * @param field
+     */
+    showColumn(field) {
+        field.hidden = false;
+        for (let c of Array.from(this.grid.querySelectorAll(`[data-name='${field.name}']`))) {
+            c.classList.remove('hidden');
+        }
+        this.handleColumnPresences();
+    }
+
+    /* PERSISTENCE METHODS______________________________________________________________ */
+
+    /**
+     * Persist the grid state
+     */
+    persist() {
+        if (!this.ispersistable) { return; }
+        this.state = this.grindstate(); // get a current copy of it.
+        localStorage.setItem(this.savekey, JSON.stringify(this.state));
+    }
+
+    /**
+     * Load a saved state from local storage
+     */
+    loadstate() {
+        if (this.ispersistable) {
+            this.state = JSON.parse(localStorage.getItem(this.savekey));
+        }
+        if (!this.state) {
+            this.state = this.grindstate(); // this will be the default
+        }
+    }
+
+    /**
+     * Apply the saved state to the grid
+     */
+    applystate() {
+        if (!this.state) { return; }
+        if (this.state.fields) {
+            for (let f of Object.values(this.state.fields)) {
+                if (f.hidden) {
+                    this.hideColumn(this.getField(f.name));
+                } else {
+                    this.showColumn(this.getField(f.name));
+                }
+            }
+        }
+        if (this.state.filters) {
+            this.activefilters = this.state.filters;
+        }
+        this.applyFilters();
+    }
+
+    /**
+     * Figures out the state of the grid and generates the state object
+     */
+    grindstate() {
+        let state = {
+            fields: {},
+            filters: [],
+            search: null
+        };
+
+        for (let f of this.fields) {
+            if (f.hidden === undefined) { f.hidden = false; }
+            state.fields[f.name] = {
+                name: f.name,
+                hidden: f.hidden
+            };
+        }
+        state.filters = this.activefilters;
+
+        return state;
+    }
+
+    /* FILTER METHODS___________________________________________________________________ */
+
+    /**
+     * Remove a filter from the active filter list
+     * @param f the filter to drop
+     */
+    removeFilter(f) {
+        let filters = [];
+        for (let af of this.activefilters) {
+            if (af.filterid === f.filterid) {
+                continue;
+            }
+            filters.push(af);
+        }
+        this.activefilters = filters;
+        this.persist();
+        this.applyFilters();
+    }
+
+    /**
+     * Apply all filters
+     */
+    applyFilters() {
+        const me = this;
+        let rows = Array.from(this.gridbody.childNodes);
+
+        this.filtertags.innerHTML = '';
+
+        if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            this.filterinfo.setAttribute('aria-expanded', true);
+            for (let f of this.activefilters) {
+                f.tagbutton = new TagButton({
+                    text: this.getField(f.field).label,
+                    tooltip: `${this.getField(f.field).label} ${FilterConfigurator.getComparatorLabel(f.comparator)} ${f.value}`,
+                    action: function() {
+                        me.removeFilter(f);
+                    }
+                });
+                this.filtertags.appendChild(f.tagbutton.button);
+            }
+        } else {
+            this.filterinfo.removeAttribute('aria-expanded');
+        }
+
+        for (let r of rows) {
+            r.removeAttribute('data-matched-filters');
+            r.classList.remove('filtered');
+            if ((this.activefilters) && (this.activefilters.length > 0)) {
+                let matchedfilters = [];
+
+                for (let filter of this.activefilters) {
+                    let field = this.getField(filter.field),
+                        matches = false,
+                        c = r.querySelector(`[data-name='${filter.field}']`);
+
+                    matches = this.testFilter(field, filter, c.innerHTML);
+
+                    if (matches) {
+                        matchedfilters.push(filter.field);
+                    } else {
+                        r.classList.add('filtered');
+                    }
+
+                }
+
+                if (matchedfilters.length > 0) {
+                    r.setAttribute('data-matched-filters', matchedfilters.join(','));
+                } else {
+                    r.removeAttribute('data-matched-filters');
+                }
+            }
+        }
+
+
+        let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
+        if ((!visible) || (visible.length === 0)) {
+            this.messagebox.innerHTML = "";
+            this.messagebox.append(new MessageBox({
+                warningstitle: this.allfilteredtitle,
+                warnings: [this.allfilteredtext],
+                classes: ['hidden']
+            }).container);
+            this.messagebox.classList.remove('hidden');
+        } else {
+            this.messagebox.classList.add('hidden');
+        }
+       
+
+    }
+
+    /**
+     * Test a value against a field's filters
+     * @param field the field definition
+     * @param filter the filter definition
+     * @param testVal the value to test
+     * @return {boolean} true if it matches the filter, false if not.
+     */
+    testFilter(field, filter, testVal) {
+        let matches,
+            filterVal = filter.value;
+
+        switch (field.type) {
+            case 'date':
+            case 'time':
+                testVal = new Date(testVal);
+                filterVal = new Date(filterVal);
+
+                switch(filter.comparator) {
+                    case 'isbefore':
+                        matches = (testVal.getTime() < filterVal.getTime());
+                        break;
+                    case 'isafter':
+                        matches = (testVal.getTime() > filterVal.getTime());
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal.getTime() !== filterVal.getTime());
+                        break;
+                    case 'equals':
+                    default:
+                        matches = (testVal.getTime() === filterVal.getTime());
+                        break;
+                }
+
+                break;
+            case 'number':
+                testVal = parseInt(testVal);
+                filterVal = parseInt(filterVal);
+                switch(filter.comparator) {
+                    case 'isgreaterthan':
+                        matches = (testVal > filterVal);
+                        break;
+                    case 'islessthan':
+                        matches = (testVal < filterVal);
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal !== filterVal);
+                        break;
+                    case 'equals':
+                    default:
+                        matches = (testVal === filterVal);
+                        break;
+                }
+                break;
+            case 'imageurl':
+            case 'string':
+            default:
+                switch(filter.comparator) {
+                    case 'equals':
+                        matches = (testVal === filterVal);
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal !== filterVal);
+                        break;
+                    case 'notcontains':
+                        matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) === -1);
+                        break;
+                    case 'contains':
+                    default:
+                        matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1);
+                        break;
+
+                }
+                break;
+        }
+        return matches;
+    }
+
+    /* SELECTION METHODS________________________________________________________________ */
+
+    /**
+     * Select a row.  This method also handles shift+click selection.
+     * @param row the row to select
+     * @parma event (optional) the click event
+     */
+    select(row, event) {
+
+        let deselectOthers = true;
+        let othersSelected = false;
+
+        if (this.multiselecting) {
+            deselectOthers = false;
+        } else if ((this.multiselect) && (event) && (event.type === 'click') && ((event.shiftKey) || (event.metaKey))) {
+            deselectOthers = false;
+        }
+
+        let sels = this.gridbody.querySelectorAll("[aria-selected='true'");
+
+        if ((sels) && (sels.length > 0)) {
+            othersSelected = true;
+        }
+
+        if (deselectOthers) {
+            othersSelected = false;
+            for (let r of sels) {
+                this.deselect(r);
+            }
+        }
+
+        if ((event) && (event.shiftKey) && (othersSelected)) {
+            // Here there be wyverns, which are much smaller than dragons.
+            // This isn't difficult; just tedious and you can get lost in the logic.
+            //     - We don't want to do this unless there's already one selected.
+            //     - We walk from the top until we find a selected row or ourselves.
+            //     - If we find either, that's where we start collecting.
+            //     - If the first found row was ourselves:
+            //         - Collect until we find a selected row
+            //         - Break
+            //     - If the first found row was not ourselves:
+            //         - Collect until we find ourselves and break - OR -
+            //         - If we find another selected row, we:
+            //             - Discard all collected ones
+            //             - Start collecting again.
+
+            let toBeSelected = [];
+            let gathering = false;
+            let foundSelf = false;
+
+            let allrows = this.gridbody.querySelectorAll('tr');
+            for (let r of allrows) {
+                if (r.getAttribute('data-rowid') === row.getAttribute('data-rowid')) {
+                    foundSelf = true;
+                    if (gathering) {
+                        break; // We're done here.
+                    }
+                    toBeSelected = []; // Reset and start gathering
+                    gathering = true;
+                } else if (r.getAttribute('aria-selected') === 'true') {
+                    if ((gathering) && (foundSelf)) {
+                        break; // We're done here.
+                    }
+                    if (gathering) {
+                        toBeSelected = []; // Reset
+                    } else {
+                        gathering = true;
+                    }
+                } else if (gathering) {
+                    toBeSelected.push(r); // Add it to the pile.
+                }
+            }
+
+            for (let r of toBeSelected) {
+                r.setAttribute('aria-selected', 'true');
+                r.querySelector('input.selector').checked = true;
+            }
+            row.setAttribute('aria-selected', 'true');
+            row.querySelector('input.selector').checked = true;
+
+        } else {
+
+            row.setAttribute('aria-selected', 'true');
+            row.querySelector('input.selector').checked = true;
+
+            if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+                this.selectaction(this);
+            }
+        }
+    }
+
+    /**
+     * Deselect a row
+     * @param row the row to deselect
+     */
+    deselect(row) {
+        row.removeAttribute('aria-selected');
+        row.querySelector('input.selector').checked = false;
+    }
+
+    /**
+     * Toggle all/none selection
+     * @param select if true, select all; if false, deselect all.
+     */
+    toggleallselect(select) {
+        let rows = this.gridbody.querySelectorAll('tr');
+        for (let r of rows) {
+            if (select) {
+                this.select(r);
+            } else {
+                this.deselect(r);
+            }
+        }
+    }
+
+    /**
+     * Toggle the select mode
+     */
+    selectmodetoggle() {
+        if (this.multiselecting) {
+            this.grid.classList.remove('multiselecting');
+            return;
+        }
+        this.grid.classList.add('multiselecting');
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds the total DOM.
+     * @returns the grid container
+     */
+    buildContainer() {
+
+        this.container = document.createElement('div');
+        this.container.classList.add('datagrid-container');
+        this.container.classList.add('panel');
+        this.container.setAttribute('id', this.id);
+        this.container.setAttribute('aria-expanded', 'true');
+
+        if (this.title) {
+            this.container.append(this.header);
+        }
+
+        this.container.append(this.gridinfo);
+
+        if (this.filterable) {
+            this.container.append(this.filterinfo);
+        }
+
+        this.grid.appendChild(this.thead);
+        this.grid.appendChild(this.gridbody);
+
+        this.gridwrapper = document.createElement('div');
+        this.gridwrapper.classList.add('grid-wrapper');
+        this.gridwrapper.appendChild(this.shade.container);
+        this.gridwrapper.appendChild(this.grid);
+        this.container.append(this.gridwrapper);
+
+        this.messagebox = document.createElement('div');
+        this.messagebox.classList.add('messages');
+        this.messagebox.classList.add('hidden');
+        this.container.append(this.messagebox);
+
+        if (this.minimized) { // don't call close() to avoid the callbacks.
+            this.container.setAttribute('aria-expanded', 'false');
+            this.minimized = true;
+        }
+
+        if (this.hidden) { this.hide(); }
+
+    }
+
+    /**
+     * Build the form shade
+     */
+    buildShade() {
+        this.shade = new LoadingShade({
+            spinnertext: this.spinnertext,
+            spinnerstyle: this.spinnerstyle
+        });
+    }
+
+    /**
+     * Build the grid filters bit
+     */
+    buildFilterInfo() {
+
+        this.filterinfo = document.createElement('div');
+        this.filterinfo.classList.add('grid-filterinfo');
+
+        let label = document.createElement('label');
+        label.innerHTML = TextFactory.get('filters');
+        this.filterinfo.appendChild(label);
+
+        this.filtertags = document.createElement('div');
+        this.filtertags.classList.add('grid-filtertags');
+
+        this.filterinfo.appendChild(this.filtertags);
+    }
+
+    /**
+     * Update the count of elements in the data grid.
+     */
+    updateCount() {
+        if (this.data) {
+            this.itemcount.innerHTML = this.data.length;
+        }
+    }
+
+    /**
+     * Build the grid info bit
+     */
+    buildGridInfo() {
+        const me = this;
+
+        this.gridinfo = document.createElement('div');
+        this.gridinfo.classList.add('grid-info');
+
+        this.itemcountlabel = document.createElement('label');
+        this.itemcountlabel.innerHTML = TextFactory.get('items_label');
+
+        this.itemcount = document.createElement('span');
+        this.itemcount.classList.add('itemcount');
+        this.updateCount();
+
+        this.activitynotifier = document.createElement('div');
+        this.activitynotifier.classList.add('activity');
+        this.activitynotifier.setAttribute('aria-hidden', 'true');
+        if (this.activitynotifiericon) {
+            this.activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
+        }
+        if (this.activitynotifiertext) {
+            let s = document.createElement('span');
+            s.innerHTML = this.activitynotifiertext;
+            this.activitynotifier.appendChild(s);
+        }
+
+        this.itemcountbox = document.createElement('div');
+        this.itemcountbox.classList.add('countbox');
+        this.itemcountbox.appendChild(this.itemcountlabel);
+        this.itemcountbox.appendChild(this.itemcount);
+        this.itemcountbox.appendChild(this.activitynotifier);
+
+        this.gridinfo.appendChild(this.itemcountbox);
+
+        if (this.searchable) {
+            this.searchcontrol = new SearchControl({
+                arialabel: TextFactory.get('search_this_data'),
+                placeholder: TextFactory.get('search_this_data'),
+                searchtext: TextFactory.get('search'),
+                action: function(value, searchcontrol) {
+                    me.search(value);
+                }
+            });
+            this.gridinfo.append(this.searchcontrol.container);
+        }
+
+        if (this.filterable) {
+            this.filterbutton  = new SimpleButton({
+                mute: true,
+                text: TextFactory.get('filters'),
+                icon: this.filterbuttonicon,
+                tooltip: TextFactory.get('datagrid-tooltip-filters'),
+                classes: ['filter'],
+                action: function() {
+                    me.configurator('filter');
+                }
+            });
+            this.gridinfo.append(this.filterbutton.button);
+        }
+
+        let items = [];
+
+        if (this.multiselect) {
+            items.push({
+                label: TextFactory.get('bulk_select'),
+                tooltip: TextFactory.get('datagrid-tooltip-bulk_select'),
+                icon: this.multiselecticon,
+                action: function() {
+                    me.selectmodetoggle();
+                }
+            });
+        }
+        items.push({
+            label: TextFactory.get('columns'),
+            icon: this.columnconfigurationicon,
+            tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
+            action: function() {
+                me.configurator('column');
+            }
+        });
+        if (this.exportable) {
+            items.push({
+                label: TextFactory.get('export'),
+                tooltip: TextFactory.get('datagrid-tooltip-export'),
+                icon: this.exporticon,
+                action: function() {
+                    me.export();
+                }
+            });
+            items.push({
+                label: TextFactory.get('export-current_view'),
+                tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
+                icon: this.exporticon,
+                action: function() {
+                    me.export(true);
+                }
+            });
+        }
+
+        this.actionsbutton  = new ButtonMenu({
+            mute: true,
+            shape: 'square',
+            secondicon: null,
+            text: TextFactory.get('actions'),
+            icon: this.actionsbuttonicon,
+            classes: ['actions'],
+            items: items
+        });
+
+        this.gridinfo.append(this.actionsbutton.button);
+    }
+
+    /**
+     * Build the actual grid table.
+     */
+    buildGrid() {
+        this.grid = document.createElement('table');
+        this.grid.classList.add('grid');
+        if (this.selectable) {
+            this.grid.classList.add('selectable');
+        }
+    }
+
+    /**
+     * Build the table header
+     */
+    buildTableHead() {
+        const me = this;
+        if (this.multiselect) {
+            this.masterselector = new BooleanToggle({
+                onchange: function(self) {
+                    me.toggleallselect(self.checked);
+                }
+            });
+            let cell = document.createElement('th');
+            cell.classList.add('selector');
+            cell.classList.add('mechanical');
+            cell.appendChild(this.masterselector.naked);
+            this.gridheader.appendChild(cell);
+        }
+
+        for (let f of this.fields) {
+            this.gridheader.appendChild(this.buildHeaderCell(f));
+        }
+
+        this.thead = document.createElement('thead');
+        this.thead.appendChild(this.gridheader);
+    }
+
+    /**
+     * Build a single header cell
+     * @param field the field definition dictionary
+     * @return {HTMLTableHeaderCellElement}
+     */
+    buildHeaderCell(field) {
+        const me = this;
+
+        let div = document.createElement('div');
+        div.classList.add('th');
+        div.innerHTML = field.label;
+        if (this.sorticon) { div.classList.add(`cfb-${this.sorticon}`); }
+
+        let cell = document.createElement('th');
+        cell.setAttribute('id', `${this.id}-h-c-${field.name}`);
+        cell.setAttribute('data-name', field.name);
+        cell.setAttribute('data-datatype', field.type);
+        cell.classList.add(field.type);
+        cell.appendChild(div);
+
+        if (field.resize) { cell.classList.add('resize'); }
+
+        if (field.nodupe) { cell.classList.add('nodupe'); }
+
+        if (field.hidden) { cell.classList.add('hidden'); }
+
+        if (field.description) {
+            new ToolTip({
+                text: field.description
+            }).attach(div);
+        }
+
+        if (this.sortable) {
+            // XXX Add "sort this" aria label
+            cell.setAttribute('tabindex', '0');
+            cell.addEventListener('click', function(e) {
+                e.preventDefault();
+                me.togglesort(field.name);
+            });
+            cell.addEventListener('keyup', function(e) {
+                e.preventDefault();
+                switch (e.keyCode) {
+                    case 13: // enter
+                    case 32: // 32
+                        me.togglesort(field.name);
+                        break;
+                    default:
+                        break;
+
+                }
+            });
+        }
+
+        this.headercells[field.name] = cell;
+
+        return cell;
+    }
+
+    /**
+     * Builds the table body
+     */
+    buildGridBody() {
+        this.gridbody = document.createElement('tbody');
+    }
+
+    /**
+     * Builds the table header row.
+     */
+    buildGridHeader() {
+        this.gridheader = document.createElement('tr');
+        this.gridheader.classList.add('header');
+    }
+
+    /**
+     * Build a single row
+     * @param rdata the row data
+     * @return {HTMLTableRowElement}
+     */
+    buildRow(rdata) {
+        const me = this;
+        let row = document.createElement('tr');
+
+        if (this.selectable) {
+
+            row.setAttribute('tabindex', '0');
+
+            if (this.identifier) {
+                row.setAttribute('data-rowid', `${this.id}-r-${rdata[this.identifier]}`);
+            } else {
+                row.setAttribute('data-rowid', `row-${CFBUtils.getUniqueKey(5)}`);
+            }
+
+            row.addEventListener('click', function(e) {
+                if (e.shiftKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    document.getSelection().removeAllRanges(); // remove cursor selection
+                }
+                if ((me.selectable) && (!me.multiselecting)) {
+                    me.select(row, e);
+                }
+            });
+
+            row.addEventListener('keydown', function(e) {
+                switch(e.keyCode) {
+                    case 37:
+                    case 38:
+                        e.preventDefault();
+                        let previous = row.parentNode.rows[row.rowIndex - 2];
+                        if (previous) { previous.focus(); }
+                        break;
+                    case 39:
+                    case 40:
+                        e.preventDefault();
+                        let next = row.parentNode.rows[row.rowIndex];
+                        if (next) { next.focus(); }
+                        break;
+                    case 13:
+                    case 32:
+                        row.click()
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+
+        if (this.multiselect) {
+            let selector = new BooleanToggle({
+                classes: ['selector'],
+                onchange: function(self) {
+                    if (row.getAttribute('aria-selected') === 'true') {
+                        row.removeAttribute('aria-selected');
+                    } else {
+                        row.setAttribute('aria-selected', 'true');
+                    }
+                }
+            });
+            let cell = document.createElement('td');
+            cell.classList.add('selector');
+            cell.classList.add('mechanical');
+            cell.appendChild(selector.naked);
+            row.appendChild(cell);
+        }
+
+        for (let f of this.fields) {
+            row.appendChild(this.buildCell(rdata, f));
+        }
+
+        return row;
+    }
+
+    /**
+     * Builds a single data cell
+     * @param data the data dictionary
+     * @param field the field definition dictionary
+     * @return {HTMLTableDataCellElement}
+     */
+    buildCell(data, field) {
+        let content;
+        let d = data[field.name];
+
+        if ((field.renderer) && (typeof field.renderer === 'function')) {
+            content = field.renderer(d);
+        } else {
+            switch(field.type) {
+                case 'number':
+                    content = d;
+                    break;
+                case 'time':
+                    content = d;
+                    break;
+                case 'imageurl':
+                    content = `<a href="${d}"><img src="${d}" /></a>`;
+                    break;
+                case 'date':
+                    content = d.toString();
+                    break;
+                case 'stringarray':
+                    content = d.join(field.separator);
+                    break;
+                case 'paragraph':
+                    content = d.join(field.separator);
+                    break;
+                case 'string':
+                default:
+                    content = d;
+                    break;
+            }
+        }
+
+        let cell = document.createElement('td');
+        cell.setAttribute('data-name', field.name);
+        cell.setAttribute('data-datatype', field.type);
+        cell.classList.add(field.name);
+        cell.classList.add(field.type);
+        cell.innerHTML = content;
+
+        if (field.classes) {
+            for (let c of field.classes) {
+                cell.classList.add(c);
+            }
+        }
+        if (field.hidden) {
+            cell.classList.add('hidden');
+        }
+
+        return cell;
+    }
+
+    /**
+     * Build the footer element
+     */
+    buildFooter() {
+        this.footer = document.createElement('div');
+        this.footer.classList.add('footer');
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actionsbutton() { return this._actionsbutton; }
+    set actionsbutton(actionsbutton) { this._actionsbutton = actionsbutton; }
+
+    get actionsbuttonicon() { return this.config.actionsbuttonicon; }
+    set actionsbuttonicon(actionsbuttonicon) { this.config.actionsbuttonicon = actionsbuttonicon; }
+
+    get activefilters() { return this._activefilters; }
+    set activefilters(activefilters) { this._activefilters = activefilters; }
+
+    get activitynotifier() { return this._activitynotifier; }
+    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
+
+    get activitynotifiericon() { return this.config.activitynotifiericon; }
+    set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
+    get activitynotifiertext() { return this.config.activitynotifiertext; }
+    set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
+
+    get columnconfigbutton() { return this._columnconfigbutton; }
+    set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
+
+    get columnconfigurationicon() { return this.config.columnconfigurationicon; }
+    set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
+
+    get currentsort() { return this._currentsort; }
+    set currentsort(currentsort) { this._currentsort = currentsort; }
+
+    get data() { return this.config.data; }
+    set data(data) { this.config.data = data; }
+
+    get dataprocessor() { return this.config.dataprocessor; }
+    set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
+
+    get demphasizeduplicates() { return this.config.demphasizeduplicates; }
+    set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
+
+    get exportable() { return this.config.exportable; }
+    set exportable(exportable) { this.config.exportable = exportable; }
+
+    get exportarrayseparator() { return this.config.exportarrayseparator; }
+    set exportarrayseparator(exportarrayseparator) { this.config.exportarrayseparator = exportarrayseparator; }
+
+    get exportbutton() { return this._exportbutton; }
+    set exportbutton(exportbutton) { this._exportbutton = exportbutton; }
+
+    get exportfilename() { return this.config.exportfilename; }
+    set exportfilename(exportfilename) { this.config.exportfilename = exportfilename; }
+
+    get exportheaderrow() { return this.config.exportheaderrow; }
+    set exportheaderrow(exportheaderrow) { this.config.exportheaderrow = exportheaderrow; }
+
+    get exporticon() { return this.config.exporticon; }
+    set exporticon(exporticon) { this.config.exporticon = exporticon; }
+
+    get fields() { return this.config.fields; }
+    set fields(fields) { this.config.fields = fields; }
+
+    get filterable() { return this.config.filterable; }
+    set filterable(filterable) { this.config.filterable = filterable; }
+
+    get filterbutton() { return this._filterbutton; }
+    set filterbutton(filterbutton) { this._filterbutton = filterbutton; }
+
+    get filterbuttonicon() { return this.config.filterbuttonicon; }
+    set filterbuttonicon(filterbuttonicon) { this.config.filterbuttonicon = filterbuttonicon; }
+
+    get filterinfo() {
+        if (!this._filterinfo) { this.buildFilterInfo(); }
+        return this._filterinfo;
+    }
+    set filterinfo(filterinfo) { this._filterinfo = filterinfo; }
+
+    get filtertags() { return this._filtertags; }
+    set filtertags(filtertags) { this._filtertags = filtertags; }
+
+    get footer() {
+        if (!this._footer) { this.buildFooter(); }
+        return this._footer;
+    }
+    set footer(footer) { this._footer = footer; }
+
+    get grid() {
+        if (!this._grid) { this.buildGrid(); }
+        return this._grid;
+    }
+    set grid(grid) { this._grid = grid; }
+
+    get gridinfo() {
+        if (!this._gridinfo) { this.buildGridInfo(); }
+        return this._gridinfo;
+    }
+    set gridinfo(gridinfo) { this._gridinfo = gridinfo; }
+
+    get gridbody() {
+        if (!this._gridbody) { this.buildGridBody(); }
+        return this._gridbody;
+    }
+    set gridbody(gridbody) { this._gridbody = gridbody; }
+
+    get gridheader() {
+        if (!this._gridheader) { this.buildGridHeader(); }
+        return this._gridheader;
+    }
+    set gridheader(gridheader) { this._gridheader = gridheader; }
+
+    get gridwrapper() { return this._gridwrapper; }
+    set gridwrapper(gridwrapper) { this._gridwrapper = gridwrapper; }
+
+    get headercells() {
+        if (!this._headercells) { this._headercells = {} ; }
+        return this._headercells;
+    }
+    set headercells(headercells) { this._headercells = headercells; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get identifier() { return this._identifier; }
+    set identifier(identifier) { this._identifier = identifier; }
+
+    get itemcount()  { return this._itemcount; }
+    set itemcount(itemcount) { this._itemcount = itemcount; }
+
+    get itemcountbox()  { return this._itemcountbox; }
+    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
+
+    get itemcountlabel()  { return this._itemcountlabel; }
+    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
+
+    get masterselector() { return this._masterselector; }
+    set masterselector(masterselector) { this._masterselector = masterselector; }
+
+    get multiselect() { return this.config.multiselect; }
+    set multiselect(multiselect) { this.config.multiselect = multiselect; }
+
+    get multiselectbutton() { return this._multiselectbutton; }
+    set multiselectbutton(multiselectbutton) { this._multiselectbutton = multiselectbutton; }
+
+    get multiselecticon() { return this.config.multiselecticon; }
+    set multiselecticon(multiselecticon) { this.config.multiselecticon = multiselecticon; }
+
+    get multiselectactions() { return this.config.multiselectactions; }
+    set multiselectactions(multiselectactions) { this.config.multiselectactions = multiselectactions; }
+
+    get messagebox() { return this._messagebox; }
+    set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get savekey() { return this._savekey; }
+    set savekey(savekey) { this._savekey = savekey; }
+
+    get savestate() { return this.config.savestate; }
+    set savestate(savestate) { this.config.savestate = savestate; }
+
+    get searchable() { return this.config.searchable; }
+    set searchable(searchable) { this.config.searchable = searchable; }
+
+    get searchcontrol() { return this._searchcontrol; }
+    set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
+
+    get selectable() { return this.config.selectable; }
+    set selectable(selectable) { this.config.selectable = selectable; }
+
+    get selectaction() { return this.config.selectaction; }
+    set selectaction(selectaction) { this.config.selectaction = selectaction; }
+
+    get shade() {
+        if (!this._shade) { this.buildShade(); }
+        return this._shade;
+    }
+    set shade(shade) { this._shade = shade; }
+
+    get sortable() { return this.config.sortable; }
+    set sortable(sortable) { this.config.sortable = sortable; }
+
+    get source() { return this.config.source; }
+    set source(source) { this.config.source = source; }
+
+    get sorticon() { return this.config.sorticon; }
+    set sorticon(sorticon) { this.config.sorticon = sorticon; }
+
+    get spinnerstyle() { return this.config.spinnerstyle; }
+    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
+
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
+
+    get state() { return this._state; }
+    set state(state) { this._state = state; }
+
+    get thead() {
+        if (!this._thead) { this.buildTableHead(); }
+        return this._thead;
+    }
+    set thead(thead) { this._thead = thead; }
+
+}
+
+class FilterConfigurator {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The id
+            classes: [], //Extra css classes to apply,
+            filters: [], // Existing filters.
+            fields: [
+                /*
+                 * An array of field definition dictionaries:
+                 *
+                    name: <string>,    // The variable name for this field (computer readable)
+                    label: <string>,   // The human-readable name for the column
+                    type: <string>,    // The datatype of the column
+                                       //   - string
+                                       //   - number
+                                       //   - date
+                                       //   - time
+                                       //   - stringarray
+                                       //   - paragraph
+                    description: <string>>,  // A string that describes the data in the column
+                    classes: <string array>, // Additional classes to apply to cells of this field
+                    filterable: <null|string|enum> // Is the field filterable? if so, how?
+                */
+            ],
+            instructions: TextFactory.get('datagrid-filter-instructions')
+
+        };
+    }
+
+    /**
+     * Supported comparators
+     * @return a comparator dictionary.
+     * @constructor
+     */
+    static get COMPARATORS() {
+        return {
+            'contains' : TextFactory.get('filter-comparator-contains'),
+            'notcontains' : TextFactory.get('filter-comparator-notcontains'),
+            'equals' : TextFactory.get('filter-comparator-equals'),
+            'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
+            'isbefore' : TextFactory.get('filter-comparator-isbefore'),
+            'isafter' : TextFactory.get('filter-comparator-isafter'),
+            'isgreaterthan' : TextFactory.get('filter-comparator-greaterthan'),
+            'islessthan' : TextFactory.get('filter-comparator-lessthan')
+        }
+    }
+
+    /**
+     * Get a comparator label
+     * @param comparator the comparator
+     * @return A string, or null
+     */
+    static getComparatorLabel(comparator) {
+        return FilterConfigurator.COMPARATORS[comparator];
+    }
+
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        this.config = Object.assign({}, FilterConfigurator.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `fconfig-${CFBUtils.getUniqueKey(5)}`; }
+        this.workingfilters = {};
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Get a field definition
+     * @param fieldid the id of the field.
+     * @return {*}
+     */
+    getField(fieldid) {
+        let rf;
+        for (let f of this.fields) {
+            if (f.name === fieldid) {
+                rf = f;
+                break;
+            }
+        }
+        return rf;
+    }
+
+    /**
+     * Test each filter in the list and replace the canonical filters with the valid one.
+     */
+    grindFilters() {
+        let flines = this.elements.querySelectorAll('li.filterline');
+        let filters = [];
+        for (let li of flines) {
+            let f = this.checkValidity(li);
+            if (f) {
+                filters.push(f);
+            }
+        }
+        this.filters = filters;
+    }
+
+    /**
+     * Check the validity of a filter line.
+     * @param li the line of the filter
+     * @return a filter definition (if valid) or null (if invalid)
+     */
+    checkValidity(li) {
+        li.setAttribute('data-valid', 'false'); // ensure false at the start.
+
+        let filter,
+            filterid = li.getAttribute('data-filterid'),
+            fieldField = li.querySelector(`input[name="primeselector-${filterid}"]:checked`),
+            comparatorField = li.querySelector(`input[name="comparator-${filterid}"]:checked`),
+            valueField = li.querySelector(`input[name="valuefield-${filterid}"]`);
+
+        if ((fieldField) && (comparatorField) && (valueField)) {
+            let valid = false,
+                field = fieldField.value,
+                comparator = comparatorField.value,
+                value = valueField.value;
+
+            if ((field) && (comparator) && (value)) {
+                /*
+                 * XXX TO DO: Should do deep error checking
+                 *   - Does the field exist in the list
+                 *   - Is the value provided valid within its datatype
+                 *   - Is the comparator one provided by the datatype
+                 *   - Is the comparator allowed
+                 */
+                valid = true;
+            }
+
+            if (valid) {
+                li.setAttribute('data-valid', 'true');
+                filter = {
+                    filterid: filterid,
+                    field: field,
+                    comparator: comparator,
+                    value: value
+                };
+                this.workingfilters[filterid] = filter;
+            }
+        }
+        return filter;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the thing.
+     */
+    buildContainer() {
+        /*
+         * This this is gigantic and ugly.  Don't @ me.
+         * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
+         */
+        const me = this;
+
+        this.container = document.createElement('div');
+        this.container.classList.add('filter-configurator');
+
+        // instructions
+        if (this.instructions) {
+            this.container.append(new InstructionBox({
+                instructions: [this.instructions]
+            }).container);
+        }
+
+        this.actions = document.createElement('div');
+        this.actions.classList.add('filter-actions');
+
+        this.actions.appendChild(new SimpleButton({
+            icon: 'cfb-plus',
+            text: TextFactory.get('filter-configurator-add_filter'),
+            action: function() {
+                let unsets = me.elements.querySelectorAll('[data-field="unset"]');
+                if (unsets.length < 1) {
+                    me.addFilter();
+                }
+            }
+        }).button);
+
+        this.container.append(this.actions);
+
+        this.elements = document.createElement('ul');
+        this.elements.classList.add('filter-list');
+
+        if (this.filters) {
+            for (let f of this.filters) {
+                this.addFilter(f);
+            }
+        }
+
+        this.container.append(this.elements);
+
+    }
+
+    /**
+     * Add a filter line to the configurator.
+     * @param filter
+     */
+    addFilter(filter) {
+
+        const me = this;
+
+        let li = document.createElement('li');
+        let filterid = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
+        li.classList.add('filterline');
+        li.setAttribute('data-filterid', filterid);
+        li.setAttribute('data-valid', 'false');
+
+        if (filter) {
+            let field = this.getField(filter.field);
+            li.setAttribute('data-field', filter.field);
+            li.appendChild(this.makePrimeSelector(filterid, filter.field).container);
+            li.appendChild(this.makeComparatorSelector(filterid, field, filter.comparator).container);
+            li.appendChild(this.makeValueSelector(filterid, field, filter.value).container);
+            this.workingfilters[filterid] = filter; // add; doesn't need validation
+            li.setAttribute('data-valid', 'true');
+        } else {
+            li.appendChild(this.makePrimeSelector(filterid).container);
+            li.setAttribute('data-field', 'unset');
+        }
+
+        let validmarker = document.createElement('div');
+        validmarker.classList.add('validmarker');
+        validmarker.appendChild(IconFactory.icon('checkmark-circle'));
+        li.appendChild(validmarker);
+
+        li.appendChild(new DestructiveButton({
+            icon: 'minus',
+            shape: 'square',
+            ghost: true,
+            classes: ['filterkiller'],
+            action: function() {
+                if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {
+                    delete me.workingfilters[li.getAttribute('data-filterid')];
+                }
+                li.parentNode.removeChild(li);
+            }
+        }).button);
+
+        this.elements.appendChild(li);
+    }
+
+    /**
+     * Make a 'field' selector.  This selector controls other selectors.
+     * @param filterid the filter id
+     * @param fieldname (optional) the name of the field to pre-select.
+     * @return {SelectMenu}
+     */
+    makePrimeSelector(filterid, fieldname) {
+        const me = this;
+
+        let options = [];
+
+        for (let f of this.fields) {
+            if (f.filterable) {
+                options.push({ value: f.name, label: f.label });
+            }
+        }
+
+        let primeSelector = new SelectMenu({
+            minimal: true,
+            options: options,
+            name: `primeselector-${filterid}`,
+            value: fieldname,
+            placeholder: TextFactory.get('filter-comparator-select_field'),
+            classes: ['primeselector'],
+            onchange: function(self) {
+                let li = self.container.parentElement,
+                    validmarker = li.querySelector('div.validmarker'),
+                    comparatorfield = li.querySelector('div.select-container.comparator'),
+                    valuefield = li.querySelector('div.input-container.valueinput'),
+                    field = me.getField(primeSelector.value);
+
+                li.setAttribute('data-valid', 'false');
+                if (comparatorfield) {
+                    li.removeChild(comparatorfield);
+                }
+                if (valuefield) {
+                    li.removeChild(valuefield);
+                }
+                if (field) {
+                    li.setAttribute('data-field', field.name);
+                    li.insertBefore(me.makeComparatorSelector(filterid, field).container, validmarker);
+                    li.insertBefore(me.makeValueSelector(filterid, field).container, validmarker);
+                    me.checkValidity(li);
+                }
+            }
+        });
+        return primeSelector;
+    }
+
+    /**
+     * Make a 'comparator' selector.
+     * @param filterid the filter id
+     * @param field the field definition we're making one for
+     * @param value (optional) the value to prefill with
+     * @return {SelectMenu}
+     */
+    makeComparatorSelector(filterid, field, value) {
+        const me = this;
+
+        let ourValue = 'contains';
+        let comparators = [ // Default for strings.
+            { value: 'contains', label: FilterConfigurator.getComparatorLabel('contains') },
+            { value: 'notcontains', label: FilterConfigurator.getComparatorLabel('notcontains') },
+            { value: 'equals', label: FilterConfigurator.getComparatorLabel('equals') },
+            { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
+        ];
+
+        switch (field.type) {
+            case 'date':
+            case 'time':
+                ourValue = 'equals';
+                comparators = [
+                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
+                    { value: 'isbefore', label: FilterConfigurator.getComparatorLabel('isbefore') },
+                    { value: 'isafter', label: FilterConfigurator.getComparatorLabel('isafter') }
+                ];
+                break;
+            case 'number':
+                ourValue = 'equals';
+                comparators = [
+                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
+                    { value: 'isgreaterthan', label: FilterConfigurator.getComparatorLabel('isgreaterthan') },
+                    { value: 'islessthan', label: FilterConfigurator.getComparatorLabel('islessthan') }
+                ];
+                break;
+            default:
+                break;
+        }
+
+        if (value) {
+            ourValue = value;
+        }
+
+        let comparatorSelector = new SelectMenu({
+            options: comparators,
+            placeholder: TextFactory.get('filter-comparator-comparator'),
+            value: ourValue,
+            name: `comparator-${filterid}`,
+            minimal: true,
+            classes: ['comparator'],
+            onchange: function(self) {
+                let li = self.container.parentElement;
+                me.checkValidity(li);
+            }
+        });
+        comparatorSelector.container.setAttribute('data-field', field.name);
+
+        return comparatorSelector;
+    }
+
+    /**
+     * Make a variable value selector
+     * @param filterid the filter id
+     * @param field field the field definition we're making one for
+     * @param value  (optional) the value to prefill with
+     * @return {URLInput|TextInput}
+     */
+    makeValueSelector(filterid, field, value) {
+        const me = this;
+
+        let valueSelector;
+        switch (field.type) {
+            case 'date':
+            case 'time':
+                valueSelector = new DateInput({
+                    value: value,
+                    name: `valuefield-${filterid}`,
+                    minimal: true,
+                    classes: ['valueinput'],
+                    onchange: function(self) {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
+                });
+                break;
+            case 'number':
+                valueSelector = new NumberInput({
+                    value: value,
+                    name: `valuefield-${filterid}`,
+                    minimal: true,
+                    classes: ['valueinput'],
+                    onchange: function(self) {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
+                });
+                break;
+            case 'imageurl':
+                valueSelector = new URLInput({
+                    value: value,
+                    name: `valuefield-${filterid}`,
+                    minimal: true,
+                    classes: ['valueinput'],
+                    onchange: function(self) {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
+                });
+                break;
+            case 'string':
+            default:
+                valueSelector = new TextInput({
+                    value: value,
+                    name: `valuefield-${filterid}`,
+                    minimal: true,
+                    classes: ['valueinput'],
+                    onchange: function(self) {
+                        let li = self.container.parentElement;
+                        me.checkValidity(li);
+                    }
+                });
+                break;
+        }
+
+        valueSelector.container.setAttribute('data-field', field.name);
+        return valueSelector;
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actions() { return this._actions; }
+    set actions(actions) { this._actions = actions; }
+
+    get applyfiltersbutton() { return this._applyfiltersbutton; }
+    set applyfiltersbutton(applyfiltersbutton) { this._applyfiltersbutton = applyfiltersbutton; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get elements() { return this._elements; }
+    set elements(elements) { this._elements = elements; }
+
+    get fields() { return this.config.fields; }
+    set fields(fields) { this.config.fields = fields; }
+
+    get filters() { return this.config.filters; }
+    set filters(filters) { this.config.filters = filters; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get instructions() { return this.config.instructions; }
+    set instructions(instructions) { this.config.instructions = instructions; }
+
+    get workingfilters() { return this._workingfilters; }
+    set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
 }
