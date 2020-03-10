@@ -1,7 +1,30 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-08
+/*! Cornflower Blue - v0.1.1 - 2020-03-09
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
+
+    /* GLOBAL METHODS___________________________________________________________________ */
+
+    static closeOpen() {
+        // Tooltips
+        clearTimeout(ToolTip.timer);
+        if (ToolTip.activeTooltip) {
+            clearTimeout(ToolTip.activeTooltip.timer);
+            ToolTip.activeTooltip.close();
+        }
+
+        // SelectMenus
+        if (SelectMenu.activeMenu) {
+            SelectMenu.activeMenu.close();
+        }
+
+        // ButtonMenus
+        if (ButtonMenu.activeMenu) {
+            ButtonMenu.activeMenu.close();
+        }
+
+    }
+
 
     /* GENERAL METHODS__________________________________________________________________ */
 
@@ -469,137 +492,169 @@ class CFBUtils {
 
 class TextFactory {
 
-    static get DEFAULT_STRINGS() {
+    /**
+     * This is the actual library of text.  It can be modified through other methods.
+     * @private
+     */
+    static get _libraryBase() {
         return {
-            "actions" : 'Actions',
-            "apply_filters" : 'Apply Filters',
-            "bulk_select" : 'Bulk select',
-            "cancel" : 'Cancel',
-            "caution" : 'Caution',
-            "change_password" : 'Change Password',
-            "close" : 'Close',
-            "columns" : 'Columns',
-            "configure_columns" : 'Configure Columns',
-            "configure_generator" : 'Configure generator',
-            "confirm_password" : 'Confirm Password',
-            "countrymenu_select" : 'Select country',
-            "current_password" : 'Current Password',
-
-            "datagrid-tooltip-export" : "Export all data in this grid as a comma separated value file.",
-            "datagrid-tooltip-export-current_view" : "Export the data in the current view as a comma separated value file.",
-            "datagrid-tooltip-configure_columns" : "Configure the visibility of individual columns.",
-            "datagrid-tooltip-bulk_select" : "Show bulk selection controls.",
-            "datagrid-tooltip-filters" : "Add, remove, or edit view filters.",
-
-            "datagrid-activitynotifier-text" : "Working...",
-            "datagrid-column-config-instructions" : "Select which columns to show in the grid. This does not hide the columns during export.",
-            "datagrid-filter-instructions" : "Columns that are filterable are shown below. Set the value of the column to filter it.",
-            "datagrid-message-no_visible_columns" : 'No columns are visible in this table.',
-            "dateinput-error-invalid" : 'This is an invalid date.',
-            "datagrid-spinnertext" : 'Loading',
-            "dateinput-trigger-arialabel" : 'Open date picker',
-            "decrement_number" : 'Decrement number',
-            "emailinput-placeholder-default" : 'person@myemailaccount.net',
-            "emailinput-error-invalid_web_address" : 'This is an invalid email address.',
-            "error" : 'Error',
-            "export" : 'Export',
-            "export-current_view" : "Export current view",
-            "fileinput-placeholder-file" : 'Select file',
-            "fileinput-placeholder-multiple" : 'Select files (multiple accepted)',
-            "filter-configurator-add_filter" : "Add filter",
-            "filter-comparator-contains" : "Contains",
-            "filter-comparator-notcontains" : "Does not contain",
-            "filter-comparator-equals" : "Equals",
-            "filter-comparator-doesnotequal" : "Does not equal",
-            "filter-comparator-isbefore" : "Is before",
-            "filter-comparator-isafter" : "Is after",
-            "filter-comparator-greaterthan" : "Is greater than",
-            "filter-comparator-lessthan" : "Is less than",
-            "filter-comparator-select_field" : "Select field",
-            "filter-comparator-comparator" : "Comparator",
-            "filters" : 'Filters',
-            "generate_password" : 'Generate password',
-            "help" : 'Help',
-            "hide_password" : 'Hide password',
-            "increment_number" : 'Increment number',
-            "input-counter-limit" : '$1 of $2 characters entered',
-            "input-counter-sky" : '$1 characters entered',
-            "input-counter-remaining" : '$1 characters remaining',
-            "input-error-required" : 'This field is required',
-            "items_label" : 'Items:',
-            "lowercase" : 'Lowercase',
-            "manage_filters" : 'Manage Filters',
-            "matches_hidden_columns" : "Your search matches data in hidden columns.",
-            "new_password" : 'New Password',
-            "no_columns" : 'No columns',
-            "no_provided_content" : 'No provided content',
-            "no_results" : 'No results',
-            "not_set" : "(Not Set)",
-            "numberinput-error-maximum_value" : "The maximum value for this field is '$1'.",
-            "numberinput-error-minimum_value" : "The minimum value for this field is '$1'.",
-            "numberinput-error-must_be_whole_numbers" : 'Values must be whole numbers.',
-            "numberinput-error-nan" : 'This is not a number.',
-            "numberinput-error-values_divisible" : 'Values must be divisible by $1',
-            "numberinput-placeholder-basic" : 'Enter a number',
-            "numberinput-placeholder-between_x_y" : 'Enter a number between $1 and $2',
-            "numberinput-placeholder-fragment_increments" : ' (increments of $1)',
-            "numberinput-placeholder-larger_than_x" : 'Enter a number larger than $1',
-            "numberinput-placeholder-smaller_than_y" : 'Enter a number smaller than $1',
-            "numbers" : 'Numbers',
-            "open_menu" : 'Open menu',
-            "passwordchanger-currentpw-help" : 'This is your current password. We need to confirm that you are who you are.',
-            "passwordchanger-currentpw-placeholder" : 'Your current password',
-            "passwordchanger-error-cannot_be_used_as_pw" : 'This cannot be used as a password.',
-            "passwordchanger-error-passwords_must_match" : 'Passwords must match.',
-            "passwordchanger-form-instructions" : 'Change your password here.',
-            "passwordchanger-placeholder-minlength" : 'Must be at least $1 characters',
-            "passwordchanger-placeholder-suggested" : 'Should be at least $1 characters',
-            "passwordchanger-results-changed_successfully" : 'Your password has been changed successfully!',
-            "passwordchanger-error-maxlength" : 'Password must be less than $1 characters.',
-            "passwordchanger-error-minlength" : 'Password must be at least $1 characters.',
-            "passwordchanger-error-suggestedlength" : 'Password is less than the suggested length of $1 characters.',
-            "primary" : 'Primary',
-            "punctuation" : 'Punctuation',
-            "required_lc" : 'required',
-            "search" : 'Search',
-            "search_noresults" : 'No entries were found matching your search terms.',
-            "search_this_data" : 'Search this data',
-            "searchcontrol-instructions" : 'Enter search terms',
-            "selectmenu-placeholder-default" : 'Select value',
-            "show_password" : 'Show password',
-            "simpleform-spinnertext" : 'Please wait',
-            "skip_to_content" : 'Skip to content',
-            "statemenu_select" : 'Select state or province',
-            "success" : 'Success',
-            "timezone_select" : 'Select timezone',
-            "toggle_menu" : 'Toggle menu',
-            "uppercase" : 'Uppercase',
-            "urlinput-placeholder-default" : 'https://somewhere.cornflower.blue/',
-            "urlinput-error-invalid_web_address" : 'This is an invalid web address.',
-            "warning" : 'Warning'
-
-        }
+            "actions": 'Actions',
+            "apply_filters": 'Apply Filters',
+            "bulk_select": 'Bulk select',
+            "cancel": 'Cancel',
+            "caution": 'Caution',
+            "change_password": 'Change Password',
+            "close": 'Close',
+            "columns": 'Columns',
+            "configure_columns": 'Configure Columns',
+            "configure_generator": 'Configure generator',
+            "confirm_password": 'Confirm Password',
+            "countrymenu_select": 'Select country',
+            "current_password": 'Current Password',
+            "datagrid-tooltip-export": "Export all data in this grid as a comma separated value file.",
+            "datagrid-tooltip-export-current_view": "Export the data in the current view as a comma separated value file.",
+            "datagrid-tooltip-configure_columns": "Configure the visibility of individual columns.",
+            "datagrid-tooltip-bulk_select": "Show bulk selection controls.",
+            "datagrid-tooltip-filters": "Add, remove, or edit view filters.",
+            "datagrid-activitynotifier-text": "Working...",
+            "datagrid-column-config-instructions": "Select which columns to show in the grid. This does not hide the columns during export.",
+            "datagrid-filter-instructions": "Columns that are filterable are shown below. Set the value of the column to filter it.",
+            "datagrid-message-no_visible_columns": 'No columns are visible in this table.',
+            "dateinput-error-invalid": 'This is an invalid date.',
+            "datagrid-spinnertext": 'Loading',
+            "dateinput-trigger-arialabel": 'Open date picker',
+            "decrement_number": 'Decrement number',
+            "emailinput-placeholder-default": 'person@myemailaccount.net',
+            "emailinput-error-invalid_web_address": 'This is an invalid email address.',
+            "error": 'Error',
+            "export": 'Export',
+            "export-current_view": "Export current view",
+            "fileinput-placeholder-file": 'Select file',
+            "fileinput-placeholder-multiple": 'Select files (multiple accepted)',
+            "filter-configurator-add_filter": "Add filter",
+            "filter-comparator-contains": "Contains",
+            "filter-comparator-notcontains": "Does not contain",
+            "filter-comparator-equals": "Equals",
+            "filter-comparator-doesnotequal": "Does not equal",
+            "filter-comparator-isbefore": "Is before",
+            "filter-comparator-isafter": "Is after",
+            "filter-comparator-greaterthan": "Is greater than",
+            "filter-comparator-lessthan": "Is less than",
+            "filter-comparator-select_field": "Select field",
+            "filter-comparator-comparator": "Comparator",
+            "filters": 'Filters',
+            "generate_password": 'Generate password',
+            "help": 'Help',
+            "hide_password": 'Hide password',
+            "increment_number": 'Increment number',
+            "input-counter-limit": '$1 of $2 characters entered',
+            "input-counter-sky": '$1 characters entered',
+            "input-counter-remaining": '$1 characters remaining',
+            "input-error-required": 'This field is required',
+            "items_label": 'Items:',
+            "lowercase": 'Lowercase',
+            "manage_filters": 'Manage Filters',
+            "matches_hidden_columns": "Your search matches data in hidden columns.",
+            "new_password": 'New Password',
+            "no_columns": 'No columns',
+            "no_provided_content": 'No provided content',
+            "no_results": 'No results',
+            "not_set": "(Not Set)",
+            "numberinput-error-maximum_value": "The maximum value for this field is '$1'.",
+            "numberinput-error-minimum_value": "The minimum value for this field is '$1'.",
+            "numberinput-error-must_be_whole_numbers": 'Values must be whole numbers.',
+            "numberinput-error-nan": 'This is not a number.',
+            "numberinput-error-values_divisible": 'Values must be divisible by $1',
+            "numberinput-placeholder-basic": 'Enter a number',
+            "numberinput-placeholder-between_x_y": 'Enter a number between $1 and $2',
+            "numberinput-placeholder-fragment_increments": ' (increments of $1)',
+            "numberinput-placeholder-larger_than_x": 'Enter a number larger than $1',
+            "numberinput-placeholder-smaller_than_y": 'Enter a number smaller than $1',
+            "numbers": 'Numbers',
+            "open_menu": 'Open menu',
+            "passwordchanger-currentpw-help": 'This is your current password. We need to confirm that you are who you are.',
+            "passwordchanger-currentpw-placeholder": 'Your current password',
+            "passwordchanger-error-cannot_be_used_as_pw": 'This cannot be used as a password.',
+            "passwordchanger-error-passwords_must_match": 'Passwords must match.',
+            "passwordchanger-form-instructions": 'Change your password here.',
+            "passwordchanger-placeholder-minlength": 'Must be at least $1 characters',
+            "passwordchanger-placeholder-suggested": 'Should be at least $1 characters',
+            "passwordchanger-results-changed_successfully": 'Your password has been changed successfully!',
+            "passwordchanger-error-maxlength": 'Password must be less than $1 characters.',
+            "passwordchanger-error-minlength": 'Password must be at least $1 characters.',
+            "passwordchanger-error-suggestedlength": 'Password is less than the suggested length of $1 characters.',
+            "primary": 'Primary',
+            "punctuation": 'Punctuation',
+            "required_lc": 'required',
+            "search": 'Search',
+            "search_noresults": 'No entries were found matching your search terms.',
+            "search_this_data": 'Search this data',
+            "searchcontrol-instructions": 'Enter search terms',
+            "selectmenu-placeholder-default": 'Select value',
+            "show_password": 'Show password',
+            "simpleform-spinnertext": 'Please wait',
+            "skip_to_content": 'Skip to content',
+            "statemenu_select": 'Select state or province',
+            "success": 'Success',
+            "timezone_select": 'Select timezone',
+            "toggle_menu": 'Toggle menu',
+            "uppercase": 'Uppercase',
+            "urlinput-placeholder-default": 'https://somewhere.cornflower.blue/',
+            "urlinput-error-invalid_web_address": 'This is an invalid web address.',
+            "warning": 'Warning'
+        };
     }
 
-    /**
+    static get library() {
+        if (typeof TextFactory._library === 'undefined' ) {
+            TextFactory.library = TextFactory._libraryBase;
+        }
+        return TextFactory._library;
+    }
+    static set library(library) { TextFactory._library = library; }
+
+        /**
      * Get a text value by key
      * @return {null|*}
      */
     static get() {
         if (!arguments) { return null; }
         if (arguments.length > 1) {
-            let t = TextFactory.DEFAULT_STRINGS[arguments[0]];
+            let t = TextFactory.library[arguments[0]];
             for (let acount = 1; acount <= arguments.length; acount++) {
                 t = t.replace(`$${acount}`, arguments[acount]);
             }
             return t;
         }
-        if (!TextFactory.DEFAULT_STRINGS[arguments[0]]) {
+        if (!TextFactory.library[arguments[0]]) {
             console.error(`Text key not found: ${arguments[0]}`);
+            return arguments[0];
         }
-        return TextFactory.DEFAULT_STRINGS[arguments[0]];
+        return TextFactory.library[arguments[0]];
     }
 
+    /**
+     * Load additional text elements from a url.  This will replace any existing values if the keys
+     * are the same.
+     * @param url the URL to fetch.
+     */
+    static load(url) {
+        if (!url) {
+            console.error('TextFactory.load() called without a URL');
+            return;
+        }
+        fetch(url, {
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+            .then(response => response.json()) // response -> json
+            .then(data => { // do the thing.
+                TextFactory.library = Object.assign({}, TextFactory.library, data);
+            })
+            .catch(err => {
+                console.error(`Error while fetching data from ${url}`);
+                console.error(err);
+            });
+    }
 }
 class IconFactory {
 
@@ -1746,7 +1801,7 @@ class ToolTip {
     openGuts() {
         const me = this;
 
-        CFBUtils.closeOpen();
+        ToolTip.closeOpen();
 
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
@@ -2305,6 +2360,7 @@ class ButtonMenu extends SimpleButton {
                     self.open();
                 }
             },
+            gravity: 's',
             secondicon: 'triangle-down', // this is passed up as a secondicon
             autoclose: true, // don't close on outside clicks
             menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
@@ -2317,6 +2373,13 @@ class ButtonMenu extends SimpleButton {
                         //    action: function() { } // what to do when the tab is clicked.
                         // }
         };
+    }
+
+
+    static closeOpen() {
+        if (ButtonMenu.activeMenu) {
+            ButtonMenu.activeMenu.close();
+        }
     }
 
     constructor(config) {
@@ -2365,6 +2428,9 @@ class ButtonMenu extends SimpleButton {
 
         if (this.isopen) { return; }
 
+        ButtonMenu.closeOpen(); // close open menus
+
+        document.body.appendChild(this.menu);
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
 
@@ -2375,11 +2441,68 @@ class ButtonMenu extends SimpleButton {
             }
         }
 
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = this.button.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top,
+            offsetRight = bodyRect.right - elemRect.right,
+            offsetBottom = elemRect.bottom - bodyRect.bottom;
+
+        //this.gravity = 's';
+        this.menu.classList.add(this.gravity);
+
+        switch(this.gravity) {
+            case 'w':
+            case 'west':
+                this.menu.style.top = `${offsetTop}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'e':
+            case 'east':
+                this.menu.style.top = `${offsetTop}px`;
+                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'n':
+            case 'north':
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
+                break;
+            case 'nw':
+            case 'northwest':
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft}px`;
+                break;
+            case 'se':
+            case 'southeast':
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft}px`;
+                break;
+            case 's':
+            case 'south':
+            case 'southwest':
+            default:
+                this.menu.style.top = `${(offsetTop + me.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.right = `${offsetRight}px`;
+                break;
+        }
+
+        if (typeof ButtonMenu.activeTooltip === 'undefined' ) {
+            ButtonMenu.activeTooltip = this;
+        } else {
+            ButtonMenu.activeTooltip = this;
+        }
+
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
         if ((focusable) && (focusable.length > 0)) {
             focusable[0].focus();
         }
 
+        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
+            ButtonMenu.activeMenu = this;
+        } else {
+            ButtonMenu.activeMenu = this;
+        }
         if (this.autoclose) {
             window.setTimeout(function() { // Set this after, or else we'll get bouncing.
                 me.setCloseListener();
@@ -2400,6 +2523,10 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '-1');
             }
         }
+
+        this.button.appendChild(this.menu);
+        ButtonMenu.activeMenu = null;
+
     }
 
     /**
@@ -2409,7 +2536,7 @@ class ButtonMenu extends SimpleButton {
         const me = this;
 
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) { me.close(); }
+            if (e.key === 'Escape') { me.close(); }
         }, { once: true });
 
         window.addEventListener('click', function(e) {
@@ -2435,9 +2562,10 @@ class ButtonMenu extends SimpleButton {
     buildMenu() {
         const me = this;
         this.menu = document.createElement('ul');
-        this.menu.classList.add('menu');
+        this.menu.classList.add('button-menu');
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
+
         let order = 1;
 
         for (let item of this.items) {
@@ -2452,21 +2580,21 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('data-order', order);
 
             menuitem.addEventListener('keyup', function(e) {
-                switch (e.keyCode) {
-                    case 9: // Tab
-                    case 27: // Escape
+                switch (e.key) {
+                    case 'Tab':
+                    case 'Escape':
                         me.close();
                         break;
-                    case 38: // Up Arrow
+                    case 'ArrowUp':
                         e.preventDefault();
                         me.menu.querySelector(`[data-order='${previous}']`).focus();
                         break;
-                    case 40: // Down Arrow
+                    case 'ArrowDown':
                         e.preventDefault();
                         me.menu.querySelector(`[data-order='${next}']`).focus();
                         break;
-                    case 13: // Enter
-                    case 32: // Space
+                    case 'Enter': // Enter
+                    case ' ': // Space
                         me.querySelector('a').click(); // click the one inside
                         break;
 
@@ -2514,10 +2642,10 @@ class ButtonMenu extends SimpleButton {
         const me = this;
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
-        this.menu.classList.add('menu');
+        this.menu.classList.add('button-menu');
         this.button.appendChild(this.menu);
         this.menu.addEventListener('keyup', function(e) {
-            if (e.keyCode === 27) { // Escape
+            if (e.key === 'Escape') {
                 me.close();
             }
         });
@@ -2527,6 +2655,9 @@ class ButtonMenu extends SimpleButton {
 
     get autoclose() { return this.config.autoclose; }
     set autoclose(autoclose) { this.config.autoclose = autoclose; }
+
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
@@ -2916,25 +3047,25 @@ class DatePicker {
                     let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
                     let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
 
-                    switch (e.keyCode) {
-                        case 37: // Left Arrow
-                        case 38:  // Up Arrow
+                    switch (e.key) {
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
                             let p = tbody.querySelector(`[data-cellno='${pcell}'`);
                             if (p) {
                                 p.focus();
                             }
                             e.stopPropagation();
                             break;
-                        case 39: // Right Arrow
-                        case 40: // Down Arrow
+                        case 'ArrowRight':
+                        case 'ArrowDown':
                             let n = tbody.querySelector(`[data-cellno='${ncell}'`);
                             if (n) {
                                 n.focus();
                             }
                             e.stopPropagation();
                             break;
-                        case 13: // Return
-                        case 32: // Space
+                        case 'Enter':
+                        case ' ':
                             me.select(link);
                             e.stopPropagation();
                             break;
@@ -3472,7 +3603,7 @@ class InputElement {
                 && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
                 if (me.form) { me.form.validate(); }
             }
-            if ((e.keyCode === 13) // Return key
+            if ((e.key === 'Enter') // Return key
                 && (me.onreturn) && (typeof me.onreturn === 'function')) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -3556,10 +3687,6 @@ class InputElement {
         this.labelobj.setAttribute('for', this.id);
         this.labelobj.setAttribute('id', `${this.id}-label`);
         this.labelobj.innerHTML = this.label;
-        this.labelobj.addEventListener('click', function() {
-            // XXX JQUERY
-            //$('#' + $(this).attr('for')).focus();
-        });
 
         if (this.form) {
             this.labelobj.setAttribute('form', this.form.id);
@@ -4346,6 +4473,7 @@ class DateInput extends TextInput {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
             type: 'date',
+            gravity: 's', // The direction to open the datepicker
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             dateicon: 'calendar'
@@ -4359,7 +4487,7 @@ class DateInput extends TextInput {
      */
     static isValid(date) {
         let d = new Date(date);
-        return d instanceof Date && !isNaN(d);
+        return d instanceof Date && !isNaN(d.getTime());
     }
 
     constructor(config) {
@@ -4389,6 +4517,9 @@ class DateInput extends TextInput {
         this.updateDateDisplay();
     }
 
+    /**
+     * Update the upper date display
+     */
     updateDateDisplay() {
         if ((!this.value) || (this.value === '')) {
             this.datedisplay.classList.add('hidden');
@@ -4407,8 +4538,8 @@ class DateInput extends TextInput {
      */
     buildCalendarButton() {
         const me = this;
-
         this.datepicker = new DatePicker({
+            classes: ['menu'],
             onselect: function(value) {
                 me.value = value;
                 me.triggerbutton.close();
@@ -4420,6 +4551,7 @@ class DateInput extends TextInput {
         this.triggerbutton = new ButtonMenu({
             classes: ['naked'],
             shape: 'square',
+            gravity: 'n',
             icon: this.dateicon,
             arialabel: this.triggerarialabel,
             menu: this.datepicker.container,
@@ -4478,6 +4610,9 @@ class DateInput extends TextInput {
 
     get datepicker() { return this._datepicker; }
     set datepicker(datepicker) { this._datepicker = datepicker; }
+
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }
@@ -4854,6 +4989,7 @@ class SelectMenu extends InputElement {
      */
     open() {
         const me = this;
+
         SelectMenu.closeOpen(); // close open menus
 
         document.body.appendChild(this.listbox);
@@ -4885,48 +5021,6 @@ class SelectMenu extends InputElement {
             me.setCloseListener();
         }, 100);
     }
-
-    openOld() {
-        const me = this;
-
-        if (SelectMenu.activeMenu) { // close any spuriously open other ones
-            SelectMenu.activeMenu.close();
-        }
-
-        this.listbox.removeAttribute('aria-hidden');
-        this.wrapper.setAttribute('aria-expanded', true);
-
-        for (let li of Array.from(this.optionlist.querySelector('li'))) {
-            li.setAttribute('tabindex', '0');
-        }
-
-        let vertpos = (CFBUtils.getSingleEmInPixels() * 15); // menu height
-        if (this.container) {
-            vertpos += parseInt(this.container.getBoundingClientRect().top);
-        } else {
-            vertpos += parseInt(this.optionlist.getBoundingClientRect().top);
-        }
-
-        if (vertpos > window.innerHeight) {
-            this.wrapper.classList.add('vert');
-            if (this.container) { this.container.classList.add('vert'); }
-        } else {
-            this.optionlist.classList.remove('vert');
-            if (this.container) { this.container.classList.remove('vert'); }
-        }
-
-        if (typeof SelectMenu.activeMenu === 'undefined' ) {
-            SelectMenu.activeMenu = this;
-        } else {
-            SelectMenu.activeMenu = this;
-        }
-
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
-        }, 100);
-
-    }
-
 
     /**
      * Closes the option list.
@@ -5051,40 +5145,38 @@ class SelectMenu extends InputElement {
         });
 
         this.triggerbox.addEventListener('keyup', function(e) {
-            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+            if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
                 me.close();
             } else {
-                switch (e.keyCode) {
-                    case 13: // Return
-                    case 16: // shift
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 19: // break
-                    case 20: // capslock
-                    case 33: // page up
-                    case 34: // page down
-                    case 35: // end
-                    case 36: // home
-                    case 45: // insert
-                    case 91: // command
-                    case 93: // command (right)
+                switch (e.key) {
+                    case 'Enter':
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
                         // Nothing.
                         break;
-                    case 9:  // Tab
-                    case 27: // Escape
-                    case 38: // Up
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
                         me.close();
                         break;
-                    case 40: // Down
+                    case 'ArrowDown': // Down
                         e.preventDefault();
                         me.open();
                         me.jumptoSelected(true);
                         break;
-                    case 8:  // Backspace
-                    case 46:  // Delete
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
                         me.updateSearch();
                         break;
-                    case 32: // space
+                    case ' ': // space
                     default:
                         me.updateSearch();
                         break;
@@ -5160,45 +5252,41 @@ class SelectMenu extends InputElement {
         li.appendChild(opt);
 
         li.addEventListener('keydown', function(e) {
-            if ((e.shiftKey) && (e.keyCode === 9)) {  // Shift + Tab
+            if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
                 me.close();
             } else {
-                switch (e.keyCode) {
-                    case 16: // shift
-                    case 17: // ctrl
-                    case 18: // alt
-                    case 19: // break
-                    case 20: // capslock
-                    case 33: // page up
-                    case 34: // page down
-                    case 35: // end
-                    case 36: // home
-                    case 45: // insert
-                    case 91: // command
-                    case 93: // command (right)
+                switch (e.key) {
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
                         // Nothing.
                         break;
-                    case 9:  // Tab
-                    case 27: // Escape
-                        me.close();
-                        break;
-                    case 38: // Up
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
                         e.preventDefault();
                         me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
                         break;
-                    case 40: // Down
+                    case 'ArrowDown': // Down
                         e.preventDefault();
                         me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
                         break;
-                    case 13: // Return
+                    case 'Enter':
                         li.click(); // click the one inside
                         break;
-                    case 8:  // Backspace
-                    case 46:  // Delete
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
                         me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
                         me.updateSearch();
                         break;
-                    case 32: // space
+                    case ' ': // space
                     default:
                         e.preventDefault();
                         me.triggerbox.value = me.triggerbox.value + e.key;
@@ -5292,7 +5380,7 @@ class SelectMenu extends InputElement {
         const me = this;
 
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) { me.close(); }
+            if (e.key === 'Escape') { me.close(); }
         }, { once: true });
 
         window.addEventListener('click', function(e) {
@@ -5773,10 +5861,16 @@ class FileInput extends InputElement {
             me.labelobj.click();
         });
         this.triggerbox.addEventListener('keydown', function(e) {
-            if (e.keyCode === 9) { // Tab
-                me.triggerbox.blur();
-            } else if ((e.keyCode === 13) || (e.keyCode === 32)) { // return or space
-                me.labelobj.click();
+            switch (e.key) {
+                case 'Tab':
+                    me.triggerbox.blur();
+                    break;
+                case 'Enter':
+                case ' ':
+                    me.labelobj.click();
+                    break;
+                default:
+                    break;
             }
         });
 
@@ -5984,7 +6078,7 @@ class DialogWindow {
     open() {
         const me = this;
 
-        ToolTip.closeOpen();
+        CFBUtils.closeOpen();
 
         this.prevfocus = document.querySelector(':focus');
 
@@ -7721,21 +7815,21 @@ class TabBar {
         } else {
             // set link events here.
             link.addEventListener('keydown', function (e) {
-                switch (e.keyCode) {
-                    case 37: // Left Arrow
-                    case 38: // Up Arrow
+                switch (e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
                         e.preventDefault();
                         e.stopPropagation();
                         me.list.querySelector(`[data-tabno='${previous}']`).focus();
                         break;
-                    case 39: // Right Arrow
-                    case 40: // Down Arrow
+                    case 'ArrowRight':
+                    case 'ArrowDown':
                         e.preventDefault();
                         e.stopPropagation();
                         me.list.querySelector(`[data-tabno='${next}']`).focus();
                         break;
-                    case 13: // Enter
-                    case 32: // Space
+                    case 'Enter':
+                    case 'Space':
                         link.click();
                         break;
 
@@ -7812,7 +7906,7 @@ class TabBar {
         const me = this;
 
         document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 27) { me.close(); }
+            if (e.key === 'Escape') { me.close(); }
         }, { once: true });
 
         window.addEventListener('click', function(e) {
@@ -7994,15 +8088,15 @@ class SearchControl {
         }
 
         this.searchinput.addEventListener('keyup', function(e) {
-            switch (e.keyCode) {
-                case 9:
+            switch (e.key) {
+                case 'Tab':
                     if (me.autoexecute) {
                         if ((me.action) && (typeof me.action === 'function')) {
                             me.action(me.value, me);
                         }
                     }
                     break;
-                case 13:
+                case 'Enter':
                     if ((me.action) && (typeof me.action === 'function')) {
                         me.action(me.value, me);
                     }
@@ -9094,6 +9188,7 @@ class DataGrid extends Panel {
                         fc.grindFilters();
                         me.activefilters = fc.filters;
                         me.applyFilters();
+                        me.persist();
                         dialog.close();
                     }
                 });
@@ -9367,10 +9462,13 @@ class DataGrid extends Panel {
     loadstate() {
         if (this.ispersistable) {
             this.state = JSON.parse(localStorage.getItem(this.savekey));
+            if (!this.state) {
+                this.state = this.grindstate();
+            }
+        } else if (!this.state) {
+            this.state = this.grindstate();
         }
-        if (!this.state) {
-            this.state = this.grindstate(); // this will be the default
-        }
+
     }
 
     /**
@@ -9397,6 +9495,7 @@ class DataGrid extends Panel {
      * Figures out the state of the grid and generates the state object
      */
     grindstate() {
+
         let state = {
             fields: {},
             filters: [],
@@ -9410,7 +9509,14 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
-        state.filters = this.activefilters;
+        for (let f of this.activefilters) {
+            state.filters.push({
+                filterid: f.filterid,
+                field: f.field,
+                comparator: f.comparator,
+                value: f.value
+            });
+        }
 
         return state;
     }
@@ -9477,7 +9583,6 @@ class DataGrid extends Panel {
                     } else {
                         r.classList.add('filtered');
                     }
-
                 }
 
                 if (matchedfilters.length > 0) {
@@ -9487,7 +9592,6 @@ class DataGrid extends Panel {
                 }
             }
         }
-
 
         let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
         if ((!visible) || (visible.length === 0)) {
@@ -9501,8 +9605,6 @@ class DataGrid extends Panel {
         } else {
             this.messagebox.classList.add('hidden');
         }
-       
-
     }
 
     /**
@@ -9984,9 +10086,9 @@ class DataGrid extends Panel {
             });
             cell.addEventListener('keyup', function(e) {
                 e.preventDefault();
-                switch (e.keyCode) {
-                    case 13: // enter
-                    case 32: // 32
+                switch (e.key) {
+                    case 'Enter':
+                    case ' ':
                         me.togglesort(field.name);
                         break;
                     default:
@@ -10047,21 +10149,21 @@ class DataGrid extends Panel {
             });
 
             row.addEventListener('keydown', function(e) {
-                switch(e.keyCode) {
-                    case 37:
-                    case 38:
+                switch(e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
                         e.preventDefault();
                         let previous = row.parentNode.rows[row.rowIndex - 2];
                         if (previous) { previous.focus(); }
                         break;
-                    case 39:
-                    case 40:
+                    case 'ArrowRight':
+                    case 'ArrowDown':
                         e.preventDefault();
                         let next = row.parentNode.rows[row.rowIndex];
                         if (next) { next.focus(); }
                         break;
-                    case 13:
-                    case 32:
+                    case 'Enter':
+                    case ' ':
                         row.click()
                         break;
                     default:
@@ -10163,6 +10265,11 @@ class DataGrid extends Panel {
 
     /* UTILITY METHODS__________________________________________________________________ */
 
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
