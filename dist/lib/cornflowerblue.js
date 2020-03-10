@@ -605,15 +605,7 @@ class TextFactory {
         };
     }
 
-    static get library() {
-        if (typeof TextFactory._library === 'undefined' ) {
-            TextFactory.library = TextFactory._libraryBase;
-        }
-        return TextFactory._library;
-    }
-    static set library(library) { TextFactory._library = library; }
-
-        /**
+    /**
      * Get a text value by key
      * @return {null|*}
      */
@@ -621,8 +613,8 @@ class TextFactory {
         if (!arguments) { return null; }
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
-            for (let acount = 1; acount <= arguments.length; acount++) {
-                t = t.replace(`$${acount}`, arguments[acount]);
+            for (let arg = 1; arg <= arguments.length; arg++) {
+                t = t.replace(`$${arg}`, arguments[arg]);
             }
             return t;
         }
@@ -655,7 +647,19 @@ class TextFactory {
                 console.error(err);
             });
     }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    static get library() {
+        if (typeof TextFactory._library === 'undefined' ) {
+            TextFactory.library = TextFactory._libraryBase;
+        }
+        return TextFactory._library;
+    }
+    static set library(library) { TextFactory._library = library; }
+
 }
+
 class IconFactory {
 
     static get LIST() {
@@ -2890,6 +2894,11 @@ class DatePicker {
         this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
     }
 
+    /**
+     * Get the month name.
+     * @param m month id
+     * @return {*} string
+     */
     getMonthName(m) {
         return this.months[m];
     }
@@ -2908,15 +2917,19 @@ class DatePicker {
         this.container.addEventListener('click', function(e) {
             e.stopPropagation();
         });
+
+        this.monthbox = document.createElement('div');
+        this.monthbox.classList.add('monthbox');
+
+        this.renderMonth(this.startdate); // initial
+
         this.container.appendChild(this.monthbox);
     }
 
-    buildMonthBox() {
-        this.monthbox = document.createElement('div');
-        this.monthbox.classList.add('monthbox');
-        this.renderMonth(this.startdate); // initial
-    }
-
+    /**
+     * Render a month
+     * @param startDate the date to center the month around. If null, uses today.
+     */
     renderMonth(startDate) {
         const me = this;
 
@@ -3109,6 +3122,10 @@ class DatePicker {
         this.monthbox.appendChild(month);
     }
 
+    /**
+     * Select a date.
+     * @param link the date with the link
+     */
     select(link) {
         this.startdate = new Date(link.getAttribute('data-day'));
         if ((this.onselect) && (typeof this.onselect === 'function')) {
@@ -3140,10 +3157,7 @@ class DatePicker {
     get locale() { return this.config.locale; }
     set locale(locale) { this.config.locale = locale; }
 
-    get monthbox() {
-        if (!this._monthbox) { this.buildMonthBox(); }
-        return this._monthbox;
-    }
+    get monthbox() { return this._monthbox; }
     set monthbox(monthbox) { this._monthbox = monthbox; }
 
     get months() { return this.config.months; }

@@ -231,7 +231,7 @@ class CornflowerBlueDemo {
             { label: 'Radio Buttons', id: 'radiobuttons' },
             { label: 'Toggles', id: 'toggles' },
             { label: 'Message Boxes', id: 'messageboxes' },
-            { label: 'Tabs and Menus', id: 'tabsmenus' },
+            { label: 'Tabs and menu', id: 'tabsmenus' },
             { label: 'Forms', id: 'forms' },
             { label: 'Dialogs', id: 'dialogs' },
             { label: 'Growlers', id: 'growlers' },
@@ -259,7 +259,7 @@ class CornflowerBlueDemo {
         ];
         let complextabs = [
             { label: 'Message Boxes', id: 'messageboxes' },
-            { label: 'Tabs and Menus', id: 'tabsmenus' },
+            { label: 'Tabs and menu', id: 'tabsmenus' },
             { label: 'Forms', id: 'forms' },
             { label: 'Dialogs', id: 'dialogs' },
             { label: 'Growlers', id: 'growlers' },
@@ -289,7 +289,7 @@ class CornflowerBlueDemo {
                 label: 'Complex Components',
                 id: 'complex',
                 subtabs: [
-                    { label: 'Tabs and Menus', id: 'tabsmenus' },
+                    { label: 'Tabs and menu', id: 'tabsmenus' },
                     { label: 'Forms', id: 'forms' },
                     { label: 'Dialogs', id: 'dialogs',
                         action: function(tabid, self) {
