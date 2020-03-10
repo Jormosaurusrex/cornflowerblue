@@ -548,7 +548,6 @@ form.button-menu {
   overflow: visible;
   z-index: 20000;
   border-radius: var(--button-border-radius);
-  border: .1em solid var(--button-menu-border-color);
   background-color: var(--button-menu-background-color);
   color: var(--button-menu-item-text-color);
   box-shadow: var(--button-menu-box-shadow);
@@ -564,7 +563,7 @@ form.button-menu {
     top: -.8em;
     border-width: 0 .7em .7em .7em;
     border-style: solid;
-    border-color: var(--button-menu-border-color) transparent;
+    border-color: var(--button-menu-background-color) transparent;
   }
   &.southeast,
   &.se {
@@ -602,7 +601,7 @@ form.button-menu {
       right: -.5em;
       bottom: unset;
       top: .5em;
-      border-color: transparent var(--button-menu-border-color);
+      border-color: transparent var(--button-menu-background-color);
       border-width: .5em 0 .5em .5em;
     }
   }
@@ -612,7 +611,7 @@ form.button-menu {
       left: -.5em;
       bottom: unset;
       top: .5em;
-      border-color: transparent var(--button-menu-border-color);
+      border-color: transparent var(--button-menu-background-color);
       border-width: .5em .5em .5em 0;
     }
   }

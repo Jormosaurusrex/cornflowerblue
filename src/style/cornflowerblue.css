@@ -181,7 +181,6 @@
   --button-disabled-text-color: var(--disabled-highlight-color);
   --button-menu-box-shadow: var(--panel-shadow);
   --button-menu-background-color: var(--canvas-color-primary);
-  --button-menu-border-color: var(--canvas-color-primary);
   --button-menu-item-text-color: var(--button-default-color);
   --button-menu-item-text-shadow: none;
   --button-menu-item-hover-background-color: var(--button-default-color);
@@ -2850,7 +2849,6 @@ form.button-menu {
   overflow: visible;
   z-index: 20000;
   border-radius: var(--button-border-radius);
-  border: 0.1em solid var(--button-menu-border-color);
   background-color: var(--button-menu-background-color);
   color: var(--button-menu-item-text-color);
   box-shadow: var(--button-menu-box-shadow);
@@ -2871,7 +2869,7 @@ form.button-menu:before {
   top: -0.8em;
   border-width: 0 0.7em 0.7em 0.7em;
   border-style: solid;
-  border-color: var(--button-menu-border-color) transparent;
+  border-color: var(--button-menu-background-color) transparent;
 }
 ul.button-menu.southeast:before, ul.button-menu.se:before,
 div.button-menu.southeast:before,
@@ -2915,7 +2913,7 @@ form.button-menu.w:before {
   right: -0.5em;
   bottom: unset;
   top: 0.5em;
-  border-color: transparent var(--button-menu-border-color);
+  border-color: transparent var(--button-menu-background-color);
   border-width: 0.5em 0 0.5em 0.5em;
 }
 ul.button-menu.east:before, ul.button-menu.e:before,
@@ -2926,7 +2924,7 @@ form.button-menu.e:before {
   left: -0.5em;
   bottom: unset;
   top: 0.5em;
-  border-color: transparent var(--button-menu-border-color);
+  border-color: transparent var(--button-menu-background-color);
   border-width: 0.5em 0.5em 0.5em 0;
 }
 
