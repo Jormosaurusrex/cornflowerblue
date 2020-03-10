@@ -186,6 +186,7 @@
   --button-menu-item-hover-background-color: var(--button-default-color);
   --button-menu-item-hover-text-color: var(--hot-text-color);
   --button-menu-item-hover-text-shadow: var(--text-shadow);
+  --button-ghost-box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
   --checkbox-size: 2.4em;
   --checkbox-font-size: 3em;
   --checkbox-toggle-size: 1.6em;
@@ -237,6 +238,18 @@
   --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
   --datagrid-title-background-color: var(--darkblue);
   --datagrid-title-text-color: var(--ultralight);
+  --datepicker-cell-dimensions: 2.5em;
+  --datepicker-header-color: var(--blue);
+  --datepicker-background-color: var(--canvas-color-primary);
+  --datepicker-month-header-background-color: var(--canvas-color-tertiary);
+  --datepicker-month-header-text-color: var(--grey-darkest);
+  --datepicker-day-today-background-color: var(--blue);
+  --datepicker-day-today-text-color: var(--ultralight);
+  --datepicker-day-past-text-color: var(--grey-medium);
+  --datepicker-day-background-color: var(--canvas-color-secondary);
+  --datepicker-day-text-color: var(--blue);
+  --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
+  --datepicker-day-currentmonth-text-color: var(--blue);
   --dialog-background-color: var(--ultralight);
   --dialog-border-radius: var(--border-radius);
   --dialog-box-shadow: var(--panel-shadow);
@@ -2458,7 +2471,7 @@ button.ghost {
   --button-border-color: var(--button-default-color);
   color: var(--button-default-color);
   background-color: transparent;
-  box-shadow: inset -0.1em -0.1em 0 0 var(--button-border-color), inset 0.1em -0.1em 0 0 var(--button-border-color), inset -0.1em 0.1em 0 0 var(--button-border-color), inset 0.1em 0.1em 0 0 var(--button-border-color);
+  box-shadow: var(--button-ghost-box-shadow);
 }
 button:focus, button:active, button.focus, button.active {
   color: var(--button-hover-text-color);
@@ -2866,7 +2879,7 @@ form.button-menu:before {
   height: 0;
   position: absolute;
   right: 0.25em;
-  top: -0.8em;
+  top: -0.7em;
   border-width: 0 0.7em 0.7em 0.7em;
   border-style: solid;
   border-color: var(--button-menu-background-color) transparent;
@@ -2877,7 +2890,7 @@ div.button-menu.se:before,
 form.button-menu.southeast:before,
 form.button-menu.se:before {
   left: 0.2em;
-  top: -0.8em;
+  top: -0.7em;
 }
 ul.button-menu.north:before, ul.button-menu.n:before, ul.button-menu.ne:before, ul.button-menu.northeast:before,
 div.button-menu.north:before,
@@ -2888,7 +2901,7 @@ form.button-menu.north:before,
 form.button-menu.n:before,
 form.button-menu.ne:before,
 form.button-menu.northeast:before {
-  bottom: -0.8em;
+  bottom: -0.7em;
   right: 0.2em;
   left: unset;
   top: unset;
@@ -2899,7 +2912,7 @@ div.button-menu.nw:before,
 div.button-menu.northwest:before,
 form.button-menu.nw:before,
 form.button-menu.northwest:before {
-  bottom: -0.8em;
+  bottom: -0.7em;
   left: 0.2em;
   top: unset;
   border-width: 0.7em 0.7em 0 0.7em;
@@ -4754,18 +4767,6 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
 }
 
 div.datepicker {
-  --datepicker-cell-dimensions: 2.5em;
-  --datepicker-header-color: var(--blue);
-  --datepicker-background-color: var(--canvas-color-primary);
-  --datepicker-month-header-background-color: var(--canvas-color-tertiary);
-  --datepicker-month-header-text-color: var(--grey-darkest);
-  --datepicker-day-today-background-color: var(--blue);
-  --datepicker-day-today-text-color: var(--ultralight);
-  --datepicker-day-past-text-color: var(--grey-medium);
-  --datepicker-day-background-color: var(--canvas-color-secondary);
-  --datepicker-day-text-color: var(--blue);
-  --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
-  --datepicker-day-currentmonth-text-color: var(--blue);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -5028,7 +5029,7 @@ div.datagrid-container table.grid thead tr th:focus, div.datagrid-container tabl
     outline: none;
     text-decoration: underline;
   }
-  div.datagrid-container table.grid thead tr th:hover:not(.selector), div.datagrid-container table.grid thead tr th.hover:not(.selector) {
+  div.datagrid-container table.grid thead tr th:hover:not(.mechanical), div.datagrid-container table.grid thead tr th.hover:not(.mechanical) {
     color: var(--datagrid-gridheader-hover-text-color);
     text-shadow: var(--datagrid-gridheader-hover-text-shadow);
     background-color: var(--datagrid-gridheader-hover-background-color);
@@ -5074,6 +5075,27 @@ div.datagrid-container table.grid tbody tr.hidden, div.datagrid-container table.
 }
 div.datagrid-container table.grid tbody tr[data-matched-filters][data-search-hidden=true] {
   display: none;
+}
+div.datagrid-container table.grid tbody tr button {
+  background-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid tbody tr button:hover {
+    background-image: none;
+    box-shadow: none;
+  }
+}
+div.datagrid-container table.grid tbody tr button.menu[aria-expanded=true] {
+  --button-border-color: var(--focus-color);
+  --button-default-color: var(--focus-color);
+  --button-default-text-color: var(--focus-color);
+  opacity: 1;
+  background-image: none;
+  box-shadow: var(--button-ghost-box-shadow);
+}
+div.datagrid-container table.grid tbody tr:focus-within button {
+  box-shadow: none;
+  background-color: transparent;
 }
 div.datagrid-container table.grid th.hidden,
 div.datagrid-container table.grid td.hidden {
@@ -5131,10 +5153,13 @@ div.datagrid-container table.grid th.center,
 div.datagrid-container table.grid td.center {
   text-align: center;
 }
-div.datagrid-container table.grid th.selector,
-div.datagrid-container table.grid td.selector {
+div.datagrid-container table.grid th.mechanical,
+div.datagrid-container table.grid td.mechanical {
   transition: all 0.2s;
   resize: none;
+}
+div.datagrid-container table.grid th.mechanical.selector,
+div.datagrid-container table.grid td.mechanical.selector {
   overflow: hidden;
   text-align: center;
   vertical-align: middle;
@@ -5144,9 +5169,31 @@ div.datagrid-container table.grid td.selector {
   --checkbox-size: 2em;
   --checkbox-font-size: 2em;
 }
-div.datagrid-container table.grid th.selector input,
-div.datagrid-container table.grid td.selector input {
+div.datagrid-container table.grid th.mechanical.selector input,
+div.datagrid-container table.grid td.mechanical.selector input {
   display: none;
+}
+div.datagrid-container table.grid th.mechanical.actions,
+div.datagrid-container table.grid td.mechanical.actions {
+  padding: 0 1em 0 1em;
+}
+div.datagrid-container table.grid th.mechanical.actions button,
+div.datagrid-container table.grid td.mechanical.actions button {
+  font-size: 0.8em;
+  opacity: 0.5;
+  margin: 0;
+}
+div.datagrid-container table.grid th.mechanical.actions button:focus,
+div.datagrid-container table.grid td.mechanical.actions button:focus {
+  opacity: 1;
+  box-shadow: none;
+  background-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid th.mechanical.actions button:hover,
+div.datagrid-container table.grid td.mechanical.actions button:hover {
+    opacity: 1;
+  }
 }
 div.datagrid-container table.grid.multiselecting th.selector,
 div.datagrid-container table.grid.multiselecting td.selector {
@@ -5195,6 +5242,11 @@ div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:focus 
     color: var(--datagrid-grid-hover-text-color);
     text-shadow: var(--datagrid-grid-hover-text-shadow);
   }
+  div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr:hover td button {
+    --button-default-color: var(--hot-text-color);
+    --button-default-text-color: var(--hot-text-color);
+    --button-border-color: var(--hot-text-color);
+  }
 }
 div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr:focus {
   outline: var(--datagrid-grid-selected-background-color) dashed 0.1em;
@@ -5205,6 +5257,11 @@ div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-
 }
 div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-selected=true]:focus {
   outline: var(--datagrid-grid-selected-text-color) dashed 0.1em;
+}
+div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-selected=true] td button {
+  --button-default-color: var(--hot-text-color);
+  --button-default-text-color: var(--hot-text-color);
+  --button-border-color: var(--hot-text-color);
 }
 div.datagrid-container div.messages.hidden {
   display: none;

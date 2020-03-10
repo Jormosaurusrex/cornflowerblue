@@ -7,6 +7,7 @@ class ButtonMenu extends SimpleButton {
                 if ((focused) && (!self.isopen)) {
                     self.open();
                 }
+                e.stopPropagation();
             },
             gravity: 's',
             secondicon: 'triangle-down', // this is passed up as a secondicon
@@ -23,7 +24,9 @@ class ButtonMenu extends SimpleButton {
         };
     }
 
-
+    /**
+     * Close any open ButtonMenus
+     */
     static closeOpen() {
         if (ButtonMenu.activeMenu) {
             ButtonMenu.activeMenu.close();
@@ -88,7 +91,6 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '0');
             }
         }
-
 
         let bodyRect = document.body.getBoundingClientRect(),
             elemRect = this.button.getBoundingClientRect(),

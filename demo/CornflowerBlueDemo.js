@@ -845,6 +845,32 @@ class CornflowerBlueDemo {
             ],
             //minimized: true,
             //data: this.getLZDiscograpy(),
+            rowactions: [
+                {
+                    label: 'Edit',
+                    icon: 'pencil',
+                    tooltip: '',
+                    action: function(element) {
+
+                    }
+                },
+                {
+                    label: 'Duplicate',
+                    icon: 'document',
+                    tooltip: '',
+                    action: function(element) {
+
+                    }
+                },
+                {
+                    label: 'Delete',
+                    icon: 'trashcan',
+                    tooltip: '',
+                    action: function(element) {
+
+                    }
+                }
+            ],
             source: 'demo/data/lz.json'
         });
 

@@ -117,7 +117,7 @@ button {
     --button-border-color: var(--button-default-color);
     color: var(--button-default-color);
     background-color: transparent;
-    box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
+    box-shadow: var(--button-ghost-box-shadow);
   }
   &:focus,
   &:active,
@@ -560,7 +560,7 @@ form.button-menu {
     height: 0;
     position: absolute;
     right: .25em;
-    top: -.8em;
+    top: -.7em;
     border-width: 0 .7em .7em .7em;
     border-style: solid;
     border-color: var(--button-menu-background-color) transparent;
@@ -569,7 +569,7 @@ form.button-menu {
   &.se {
     &:before {
       left: .2em;
-      top: -.8em;
+      top: -.7em;
     }
   }
   &.north,
@@ -577,7 +577,7 @@ form.button-menu {
   &.ne,
   &.northeast {
     &:before {
-      bottom: -.8em;
+      bottom: -.7em;
       right: .2em;
       left: unset;
       top: unset;
@@ -587,11 +587,10 @@ form.button-menu {
   &.nw,
   &.northwest {
     &:before {
-      bottom: -.8em;
+      bottom: -.7em;
       left: .2em;
       top: unset;
       border-width: .7em .7em 0 .7em;
-
     }
   }
   &.west,

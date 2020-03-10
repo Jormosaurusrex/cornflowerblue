@@ -93,7 +93,6 @@ div.datagrid-container {
   }
   table.grid {
     width: 100%;
-    //min-width: 100%;
     padding: 0;
     margin: 0;
     border-spacing: 0;
@@ -143,7 +142,7 @@ div.datagrid-container {
             &.hover {
               outline: none;
               text-decoration: underline;
-              &:not(.selector) {
+              &:not(.mechanical) {
                 color: var(--datagrid-gridheader-hover-text-color);
                 text-shadow: var(--datagrid-gridheader-hover-text-shadow);
                 background-color: var(--datagrid-gridheader-hover-background-color);
@@ -210,6 +209,31 @@ div.datagrid-container {
             display: none;
           }
         }
+        button {
+          background-color: transparent;
+          @include for-hover-only {
+            &:hover {
+              background-image: none;
+              box-shadow: none;
+            }
+          }
+          &.menu {
+            &[aria-expanded=true] {
+              --button-border-color: var(--focus-color);
+              --button-default-color: var(--focus-color);
+              --button-default-text-color: var(--focus-color);
+              opacity: 1;
+              background-image: none;
+              box-shadow: var(--button-ghost-box-shadow);
+            }
+          }
+        }
+        &:focus-within {
+          button {
+            box-shadow: none;
+            background-color: transparent;
+          }
+        }
       }
     }
     th,
@@ -255,19 +279,40 @@ div.datagrid-container {
       &.center {
         text-align: center;
       }
-      &.selector {
+
+      &.mechanical {
         transition: all .2s;
         resize: none;
-        overflow: hidden;
-        text-align: center;
-        vertical-align: middle;
-        width: 0;
-        max-width: 0;
-        padding: 0;
-        --checkbox-size: 2em;
-        --checkbox-font-size: 2em;
-        input {
-          display: none;
+        &.selector {
+          overflow: hidden;
+          text-align: center;
+          vertical-align: middle;
+          width: 0;
+          max-width: 0;
+          padding: 0;
+          --checkbox-size: 2em;
+          --checkbox-font-size: 2em;
+          input {
+            display: none;
+          }
+        }
+        &.actions {
+          padding: 0 1em 0 1em;
+          button {
+            font-size: .8em;
+            opacity: .5;
+            margin: 0;
+            &:focus {
+              opacity: 1;
+              box-shadow: none;
+              background-color: transparent;
+            }
+            @include for-hover-only {
+              &:hover {
+                opacity: 1;
+              }
+            }
+          }
         }
       }
     }
@@ -326,6 +371,13 @@ div.datagrid-container {
                 background-color: var(--datagrid-grid-hover-background-color);
                 color: var(--datagrid-grid-hover-text-color);
                 text-shadow: var(--datagrid-grid-hover-text-shadow);
+                td {
+                  button {
+                    --button-default-color: var(--hot-text-color);
+                    --button-default-text-color: var(--hot-text-color);
+                    --button-border-color: var(--hot-text-color);
+                  }
+                }
               }
             }
             &:focus {
@@ -336,6 +388,13 @@ div.datagrid-container {
               color: var(--datagrid-grid-selected-text-color);
               &:focus {
                 outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+              }
+              td {
+                button {
+                  --button-default-color: var(--hot-text-color);
+                  --button-default-text-color: var(--hot-text-color);
+                  --button-border-color: var(--hot-text-color);
+                }
               }
             }
           }

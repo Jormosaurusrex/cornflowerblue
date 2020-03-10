@@ -79,6 +79,8 @@ class DataGrid extends Panel {
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
 
+            rowactions: null, // an array of actions that can be used on items.
+
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -771,7 +773,6 @@ class DataGrid extends Panel {
         } else if (!this.state) {
             this.state = this.grindstate();
         }
-
     }
 
     /**
@@ -992,7 +993,7 @@ class DataGrid extends Panel {
     /**
      * Select a row.  This method also handles shift+click selection.
      * @param row the row to select
-     * @parma event (optional) the click event
+     * @param event (optional) the click event
      */
     select(row, event) {
 
@@ -1238,7 +1239,7 @@ class DataGrid extends Panel {
                 arialabel: TextFactory.get('search_this_data'),
                 placeholder: TextFactory.get('search_this_data'),
                 searchtext: TextFactory.get('search'),
-                action: function(value, searchcontrol) {
+                action: function(value) {
                     me.search(value);
                 }
             });
@@ -1339,6 +1340,13 @@ class DataGrid extends Panel {
             cell.appendChild(this.masterselector.naked);
             this.gridheader.appendChild(cell);
         }
+        if ((this.rowactions) && (this.rowactions.length > 0)) {
+            let cell = document.createElement('th');
+            cell.classList.add('actions');
+            cell.classList.add('mechanical');
+            cell.innerHTML = "";
+            this.gridheader.appendChild(cell);
+        }
 
         for (let f of this.fields) {
             this.gridheader.appendChild(this.buildHeaderCell(f));
@@ -1430,6 +1438,10 @@ class DataGrid extends Panel {
         const me = this;
         let row = document.createElement('tr');
 
+        if (this.identifier) {
+            row.setAttribute('data-id', rdata[this.identifier]);
+        }
+
         if (this.selectable) {
 
             row.setAttribute('tabindex', '0');
@@ -1441,6 +1453,9 @@ class DataGrid extends Panel {
             }
 
             row.addEventListener('click', function(e) {
+
+                if (e.target.classList.contains('mechanical')) { return; }
+
                 if (e.shiftKey) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1490,6 +1505,27 @@ class DataGrid extends Panel {
             cell.classList.add('selector');
             cell.classList.add('mechanical');
             cell.appendChild(selector.naked);
+            row.appendChild(cell);
+        }
+
+        if ((this.rowactions) && (this.rowactions.length > 0)) {
+
+            
+
+
+            let cell = document.createElement('td');
+            cell.classList.add('actions');
+            cell.classList.add('mechanical');
+            cell.appendChild(new ButtonMenu({
+                ghost: true,
+                shape: 'square',
+                secondicon: null,
+                gravity: 'east',
+                text: TextFactory.get('actions'),
+                icon: this.actionsbuttonicon,
+                classes: ['actions'],
+                items: this.rowactions
+            }).button);
             row.appendChild(cell);
         }
 
@@ -1721,6 +1757,9 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get rowactions() { return this.config.rowactions; }
+    set rowactions(rowactions) { this.config.rowactions = rowactions; }
 
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
