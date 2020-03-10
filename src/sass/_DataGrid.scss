@@ -184,8 +184,9 @@ div.datagrid-container {
       tr {
         background-color: var(--datagrid-grid-background-color);
         color: var(--datagrid-grid-text-color);
+        //box-shadow: inset 0 -.1em 0 0 var(--grey-medium);
         td {
-          padding: .5em 1em .5em 1em;
+          padding: 1em;
           white-space: nowrap;
           &.italic {
             font-style: oblique;
@@ -193,10 +194,19 @@ div.datagrid-container {
           &.smaller {
             font-size: .8em;
           }
+          &.mechanical {
+            //background-color: var(--datagrid-background-color);
+          }
         }
         &:nth-child(even) {
           background-color: var(--datagrid-grid-alternate-background-color);
+          //border-bottom: .1em solid red;
+          //border-bottom: .1em solid var(--datagrid-grid-alternate-background-color);
           td {
+            //background-color: var(--datagrid-grid-alternate-background-color);
+            &.mechanical {
+              //background-color: var(--datagrid-grid-alternate-background-color);
+            }
           }
         }
         &.hidden,
@@ -283,6 +293,8 @@ div.datagrid-container {
       &.mechanical {
         transition: all .2s;
         resize: none;
+        //position: sticky;
+        //left: 0;
         &.selector {
           overflow: hidden;
           text-align: center;

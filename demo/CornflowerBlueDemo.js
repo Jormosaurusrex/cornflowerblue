@@ -757,6 +757,10 @@ class CornflowerBlueDemo {
         ]
     }
 
+    doTheThing(element) {
+        console.log(element);
+    }
+
     grindDataGrids() {
         const me = this;
 
@@ -849,25 +853,25 @@ class CornflowerBlueDemo {
                 {
                     label: 'Edit',
                     icon: 'pencil',
-                    tooltip: '',
-                    action: function(element) {
-
+                    tooltip: 'Edit this item.',
+                    action: function(e, self) {
+                        console.log(self.data);
                     }
                 },
                 {
                     label: 'Duplicate',
                     icon: 'document',
-                    tooltip: '',
-                    action: function(element) {
-
+                    tooltip: 'Duplicate this item.',
+                    action: function(e, self) {
+                        console.log(self.data);
                     }
                 },
                 {
                     label: 'Delete',
                     icon: 'trashcan',
-                    tooltip: '',
-                    action: function(element) {
-
+                    tooltip: 'Delete this item.',
+                    action: function(e, self) {
+                        console.log(self.data);
                     }
                 }
             ],

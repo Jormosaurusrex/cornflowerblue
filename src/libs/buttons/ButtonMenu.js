@@ -9,7 +9,11 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
-            gravity: 's',
+            gravity: 's', // Gravity direction for the menu
+            tooltipgravity: 'e', // Gravity direction for the tooltips
+            data: null, // A place to store information that the button actions may need, if the menu is
+                        // constructed in a closed setting (like inside of a DataGrid row).
+                        // Typically set by the calling system
             secondicon: 'triangle-down', // this is passed up as a secondicon
             autoclose: true, // don't close on outside clicks
             menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
@@ -263,7 +267,7 @@ class ButtonMenu extends SimpleButton {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
-                    item.action(e);
+                    item.action(e, me);
                 }
                 me.close();
             });
@@ -274,7 +278,7 @@ class ButtonMenu extends SimpleButton {
                 new ToolTip({
                     text: item.tooltip,
                     icon: item.tipicon,
-                    gravity: 'w'
+                    gravity: this.tooltipgravity
                 }).attach(menuitem);
             }
 
@@ -306,6 +310,9 @@ class ButtonMenu extends SimpleButton {
     get autoclose() { return this.config.autoclose; }
     set autoclose(autoclose) { this.config.autoclose = autoclose; }
 
+    get data() { return this.config.data; }
+    set data(data) { this.config.data = data; }
+
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
 
@@ -314,5 +321,8 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get tooltipgravity() { return this.config.tooltipgravity; }
+    set tooltipgravity(tooltipgravity) { this.config.tooltipgravity = tooltipgravity; }
 
 }

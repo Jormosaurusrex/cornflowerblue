@@ -1510,15 +1510,13 @@ class DataGrid extends Panel {
 
         if ((this.rowactions) && (this.rowactions.length > 0)) {
 
-            
-
-
             let cell = document.createElement('td');
             cell.classList.add('actions');
             cell.classList.add('mechanical');
             cell.appendChild(new ButtonMenu({
                 ghost: true,
                 shape: 'square',
+                data: rdata,
                 secondicon: null,
                 gravity: 'east',
                 text: TextFactory.get('actions'),
