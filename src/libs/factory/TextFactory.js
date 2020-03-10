@@ -113,7 +113,7 @@ class TextFactory {
         };
     }
 
-        /**
+    /**
      * Get a text value by key
      * @return {null|*}
      */
@@ -121,8 +121,8 @@ class TextFactory {
         if (!arguments) { return null; }
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
-            for (let acount = 1; acount <= arguments.length; acount++) {
-                t = t.replace(`$${acount}`, arguments[acount]);
+            for (let arg = 1; arg <= arguments.length; arg++) {
+                t = t.replace(`$${arg}`, arguments[arg]);
             }
             return t;
         }
