@@ -155,8 +155,9 @@ class TextFactory {
                 console.error(err);
             });
     }
-    
+
     /* ACCESSOR METHODS_________________________________________________________________ */
+
     static get library() {
         if (typeof TextFactory._library === 'undefined' ) {
             TextFactory.library = TextFactory._libraryBase;
