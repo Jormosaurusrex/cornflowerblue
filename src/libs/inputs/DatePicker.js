@@ -24,6 +24,11 @@ class DatePicker {
         this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
     }
 
+    /**
+     * Get the month name.
+     * @param m month id
+     * @return {*} string
+     */
     getMonthName(m) {
         return this.months[m];
     }
@@ -42,15 +47,19 @@ class DatePicker {
         this.container.addEventListener('click', function(e) {
             e.stopPropagation();
         });
+
+        this.monthbox = document.createElement('div');
+        this.monthbox.classList.add('monthbox');
+
+        this.renderMonth(this.startdate); // initial
+
         this.container.appendChild(this.monthbox);
     }
 
-    buildMonthBox() {
-        this.monthbox = document.createElement('div');
-        this.monthbox.classList.add('monthbox');
-        this.renderMonth(this.startdate); // initial
-    }
-
+    /**
+     * Render a month
+     * @param startDate the date to center the month around. If null, uses today.
+     */
     renderMonth(startDate) {
         const me = this;
 
@@ -243,6 +252,10 @@ class DatePicker {
         this.monthbox.appendChild(month);
     }
 
+    /**
+     * Select a date.
+     * @param link the date with the link
+     */
     select(link) {
         this.startdate = new Date(link.getAttribute('data-day'));
         if ((this.onselect) && (typeof this.onselect === 'function')) {
@@ -274,10 +287,7 @@ class DatePicker {
     get locale() { return this.config.locale; }
     set locale(locale) { this.config.locale = locale; }
 
-    get monthbox() {
-        if (!this._monthbox) { this.buildMonthBox(); }
-        return this._monthbox;
-    }
+    get monthbox() { return this._monthbox; }
     set monthbox(monthbox) { this._monthbox = monthbox; }
 
     get months() { return this.config.months; }
