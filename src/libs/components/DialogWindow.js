@@ -41,7 +41,7 @@ class DialogWindow {
     open() {
         const me = this;
 
-        ToolTip.closeOpen();
+        CFBUtils.closeOpen();
 
         this.prevfocus = document.querySelector(':focus');
 

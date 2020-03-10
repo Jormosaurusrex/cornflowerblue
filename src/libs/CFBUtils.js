@@ -1,5 +1,28 @@
 class CFBUtils {
 
+    /* GLOBAL METHODS___________________________________________________________________ */
+
+    static closeOpen() {
+        // Tooltips
+        clearTimeout(ToolTip.timer);
+        if (ToolTip.activeTooltip) {
+            clearTimeout(ToolTip.activeTooltip.timer);
+            ToolTip.activeTooltip.close();
+        }
+
+        // SelectMenus
+        if (SelectMenu.activeMenu) {
+            SelectMenu.activeMenu.close();
+        }
+
+        // ButtonMenus
+        if (ButtonMenu.activeMenu) {
+            ButtonMenu.activeMenu.close();
+        }
+
+    }
+
+
     /* GENERAL METHODS__________________________________________________________________ */
 
     /**

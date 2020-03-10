@@ -5,6 +5,7 @@ class DateInput extends TextInput {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
             type: 'date',
+            gravity: 's', // The direction to open the datepicker
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             dateicon: 'calendar'
@@ -18,7 +19,7 @@ class DateInput extends TextInput {
      */
     static isValid(date) {
         let d = new Date(date);
-        return d instanceof Date && !isNaN(d);
+        return d instanceof Date && !isNaN(d.getTime());
     }
 
     constructor(config) {
@@ -48,6 +49,9 @@ class DateInput extends TextInput {
         this.updateDateDisplay();
     }
 
+    /**
+     * Update the upper date display
+     */
     updateDateDisplay() {
         if ((!this.value) || (this.value === '')) {
             this.datedisplay.classList.add('hidden');
@@ -66,8 +70,8 @@ class DateInput extends TextInput {
      */
     buildCalendarButton() {
         const me = this;
-
         this.datepicker = new DatePicker({
+            classes: ['menu'],
             onselect: function(value) {
                 me.value = value;
                 me.triggerbutton.close();
@@ -79,6 +83,7 @@ class DateInput extends TextInput {
         this.triggerbutton = new ButtonMenu({
             classes: ['naked'],
             shape: 'square',
+            gravity: 'n',
             icon: this.dateicon,
             arialabel: this.triggerarialabel,
             menu: this.datepicker.container,
@@ -137,6 +142,9 @@ class DateInput extends TextInput {
 
     get datepicker() { return this._datepicker; }
     set datepicker(datepicker) { this._datepicker = datepicker; }
+
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }

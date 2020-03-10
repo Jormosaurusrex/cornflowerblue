@@ -1746,7 +1746,7 @@ class ToolTip {
     openGuts() {
         const me = this;
 
-        ToolTip.closeOpen();
+        CFBUtils.closeOpen();
 
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');

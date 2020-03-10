@@ -2812,114 +2812,6 @@ button.tagbutton.righticon span.tagicon {
 button.menu {
   overflow: visible;
 }
-button.menu ul.menu,
-button.menu div.menu,
-button.menu form.menu {
-  flex-direction: column;
-  flex-wrap: nowrap;
-  list-style-type: none;
-  position: absolute;
-  right: 0;
-  top: 2.5em;
-  margin: 0;
-  padding: 0;
-  min-width: 50%;
-  overflow: visible;
-  z-index: 220;
-  border-radius: var(--button-border-radius);
-  border: 0.1em solid var(--button-menu-border-color);
-  background-color: var(--button-menu-background-color);
-  color: var(--button-menu-item-text-color);
-  box-shadow: var(--button-menu-box-shadow);
-}
-button.menu ul.menu:before,
-button.menu div.menu:before,
-button.menu form.menu:before {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  right: 0.7em;
-  top: -0.8em;
-  border-width: 0 0.7em 0.7em 0.7em;
-  border-style: solid;
-  border-color: var(--button-menu-border-color) transparent;
-}
-button.menu ul.menu[aria-hidden=true],
-button.menu div.menu[aria-hidden=true],
-button.menu form.menu[aria-hidden=true] {
-  display: none;
-}
-button.menu ul.menu li {
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-button.menu ul.menu li:active, button.menu ul.menu li:focus {
-  background-color: var(--button-menu-item-hover-background-color);
-  color: var(--button-menu-item-hover-text-color);
-  text-shadow: var(--button-menu-item-hover-text-shadow);
-}
-button.menu ul.menu li:active a, button.menu ul.menu li:focus a {
-  color: var(--button-menu-item-hover-text-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  button.menu ul.menu li:hover {
-    background-color: var(--button-menu-item-hover-background-color);
-    color: var(--button-menu-item-hover-text-color);
-    text-shadow: var(--button-menu-item-hover-text-shadow);
-  }
-  button.menu ul.menu li:hover a {
-    color: var(--button-menu-item-hover-text-color);
-  }
-}
-button.menu ul.menu li a {
-  padding: 0.6em 1em 0.6em 1em;
-  white-space: nowrap;
-  background-color: transparent;
-  font-size: 1em;
-  color: var(--button-menu-item-text-color);
-  text-shadow: var(--button-menu-item-text-shadow);
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-grow: 1;
-}
-button.menu ul.menu li a:active {
-  color: var(--button-menu-item-hover-text-color);
-  filter: none;
-}
-button.menu ul.menu li a:focus {
-  margin: 0.3em;
-  outline: var(--hot-text-color) dashed 0.1em;
-  outline-offset: 0.2em;
-  text-decoration: underline double;
-}
-button.menu ul.menu li a span.icon {
-  margin-right: 1em;
-}
-button.menu form.menu {
-  min-width: 20em;
-}
-button.menu form.menu div.elements {
-  text-align: unset;
-}
-button.menu form.menu div.elements div.input-container {
-  margin-top: 0;
-}
-button.menu form.menu div.elements div.select-container {
-  margin-top: 0;
-}
-button.menu form.menu div.elements div.select-container ul.selectmenu {
-  top: unset;
-}
-button.menu form.menu.noactions div.header {
-  display: none;
-}
 button.menu.square ul.menu,
 button.menu.square form.menu,
 button.menu.square div.menu, button.menu.circle ul.menu,
@@ -2944,6 +2836,173 @@ button.menu[aria-expanded=true] {
 }
 button.menu[aria-expanded=true] ul.menu {
   display: flex;
+}
+
+ul.button-menu,
+div.button-menu,
+form.button-menu {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  list-style-type: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  z-index: 20000;
+  border-radius: var(--button-border-radius);
+  border: 0.1em solid var(--button-menu-border-color);
+  background-color: var(--button-menu-background-color);
+  color: var(--button-menu-item-text-color);
+  box-shadow: var(--button-menu-box-shadow);
+}
+ul.button-menu[aria-hidden=true],
+div.button-menu[aria-hidden=true],
+form.button-menu[aria-hidden=true] {
+  display: none;
+}
+ul.button-menu:before,
+div.button-menu:before,
+form.button-menu:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 0.25em;
+  top: -0.8em;
+  border-width: 0 0.7em 0.7em 0.7em;
+  border-style: solid;
+  border-color: var(--button-menu-border-color) transparent;
+}
+ul.button-menu.southeast:before, ul.button-menu.se:before,
+div.button-menu.southeast:before,
+div.button-menu.se:before,
+form.button-menu.southeast:before,
+form.button-menu.se:before {
+  left: 0.2em;
+  top: -0.8em;
+}
+ul.button-menu.north:before, ul.button-menu.n:before, ul.button-menu.ne:before, ul.button-menu.northeast:before,
+div.button-menu.north:before,
+div.button-menu.n:before,
+div.button-menu.ne:before,
+div.button-menu.northeast:before,
+form.button-menu.north:before,
+form.button-menu.n:before,
+form.button-menu.ne:before,
+form.button-menu.northeast:before {
+  bottom: -0.8em;
+  right: 0.2em;
+  left: unset;
+  top: unset;
+  border-width: 0.7em 0.7em 0 0.7em;
+}
+ul.button-menu.nw:before, ul.button-menu.northwest:before,
+div.button-menu.nw:before,
+div.button-menu.northwest:before,
+form.button-menu.nw:before,
+form.button-menu.northwest:before {
+  bottom: -0.8em;
+  left: 0.2em;
+  top: unset;
+  border-width: 0.7em 0.7em 0 0.7em;
+}
+ul.button-menu.west:before, ul.button-menu.w:before,
+div.button-menu.west:before,
+div.button-menu.w:before,
+form.button-menu.west:before,
+form.button-menu.w:before {
+  left: unset;
+  right: -0.5em;
+  bottom: unset;
+  top: 0.5em;
+  border-color: transparent var(--button-menu-border-color);
+  border-width: 0.5em 0 0.5em 0.5em;
+}
+ul.button-menu.east:before, ul.button-menu.e:before,
+div.button-menu.east:before,
+div.button-menu.e:before,
+form.button-menu.east:before,
+form.button-menu.e:before {
+  left: -0.5em;
+  bottom: unset;
+  top: 0.5em;
+  border-color: transparent var(--button-menu-border-color);
+  border-width: 0.5em 0.5em 0.5em 0;
+}
+
+ul.button-menu {
+  display: flex;
+}
+ul.button-menu li {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+ul.button-menu li:active, ul.button-menu li:focus {
+  background-color: var(--button-menu-item-hover-background-color);
+  color: var(--button-menu-item-hover-text-color);
+  text-shadow: var(--button-menu-item-hover-text-shadow);
+}
+ul.button-menu li:active a, ul.button-menu li:focus a {
+  color: var(--button-menu-item-hover-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  ul.button-menu li:hover {
+    background-color: var(--button-menu-item-hover-background-color);
+    color: var(--button-menu-item-hover-text-color);
+    text-shadow: var(--button-menu-item-hover-text-shadow);
+  }
+  ul.button-menu li:hover a {
+    color: var(--button-menu-item-hover-text-color);
+  }
+}
+ul.button-menu li a {
+  padding: 0.6em 1em 0.6em 1em;
+  white-space: nowrap;
+  background-color: transparent;
+  font-size: 1em;
+  color: var(--button-menu-item-text-color);
+  text-shadow: var(--button-menu-item-text-shadow);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+ul.button-menu li a:active {
+  color: var(--button-menu-item-hover-text-color);
+  filter: none;
+}
+ul.button-menu li a:focus {
+  margin: 0.3em;
+  outline: var(--hot-text-color) dashed 0.1em;
+  outline-offset: 0.2em;
+  text-decoration: underline double;
+}
+ul.button-menu li a span.icon {
+  margin-right: 1em;
+}
+
+form.button-menu {
+  min-width: 20em;
+}
+form.button-menu div.elements {
+  text-align: unset;
+}
+form.button-menu div.elements div.input-container {
+  margin-top: 0;
+}
+form.button-menu div.elements div.select-container {
+  margin-top: 0;
+}
+form.button-menu div.elements div.select-container ul.selectmenu {
+  top: unset;
+}
+form.button-menu.noactions div.header {
+  display: none;
 }
 
 div.checkbox {
@@ -3967,7 +4026,7 @@ div.tooltip {
   margin: 0;
   padding: 0.5em;
   overflow: visible;
-  z-index: 20000;
+  z-index: 21000;
   border-radius: var(--tooltip-border-radius);
   background-color: var(--tooltip-background-color);
   color: var(--tooltip-text-color);
@@ -4717,9 +4776,6 @@ div.datepicker {
   z-index: 4000;
   margin: 1em;
 }
-div.datepicker.menu {
-  padding: 1em;
-}
 div.datepicker div.monthbox {
   padding: 0.5em;
 }
@@ -4815,6 +4871,21 @@ div.datepicker div.monthbox div.month table.month td a:active, div.datepicker di
 div.datepicker div.monthbox div.month table.month td a:disabled {
   color: var(--button-disabled-text-color);
   text-shadow: none;
+}
+div.datepicker.button-menu {
+  padding: 0;
+  position: absolute;
+  margin: 0 0 0 0.3em;
+  overflow: visible;
+  z-index: 20000;
+  border-radius: var(--button-border-radius);
+  border: 0.1em solid var(--button-menu-border-color);
+  background-color: var(--button-menu-background-color);
+  color: var(--button-menu-item-text-color);
+  box-shadow: var(--button-menu-box-shadow);
+}
+div.datepicker.button-menu div.monthbox {
+  padding: 0;
 }
 
 div.datagrid-container {

@@ -109,6 +109,7 @@ class SelectMenu extends InputElement {
      */
     open() {
         const me = this;
+
         SelectMenu.closeOpen(); // close open menus
 
         document.body.appendChild(this.listbox);
@@ -140,48 +141,6 @@ class SelectMenu extends InputElement {
             me.setCloseListener();
         }, 100);
     }
-
-    openOld() {
-        const me = this;
-
-        if (SelectMenu.activeMenu) { // close any spuriously open other ones
-            SelectMenu.activeMenu.close();
-        }
-
-        this.listbox.removeAttribute('aria-hidden');
-        this.wrapper.setAttribute('aria-expanded', true);
-
-        for (let li of Array.from(this.optionlist.querySelector('li'))) {
-            li.setAttribute('tabindex', '0');
-        }
-
-        let vertpos = (CFBUtils.getSingleEmInPixels() * 15); // menu height
-        if (this.container) {
-            vertpos += parseInt(this.container.getBoundingClientRect().top);
-        } else {
-            vertpos += parseInt(this.optionlist.getBoundingClientRect().top);
-        }
-
-        if (vertpos > window.innerHeight) {
-            this.wrapper.classList.add('vert');
-            if (this.container) { this.container.classList.add('vert'); }
-        } else {
-            this.optionlist.classList.remove('vert');
-            if (this.container) { this.container.classList.remove('vert'); }
-        }
-
-        if (typeof SelectMenu.activeMenu === 'undefined' ) {
-            SelectMenu.activeMenu = this;
-        } else {
-            SelectMenu.activeMenu = this;
-        }
-
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
-        }, 100);
-
-    }
-
 
     /**
      * Closes the option list.

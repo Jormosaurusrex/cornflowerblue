@@ -19,9 +19,6 @@ div.datepicker {
   background-color: var(--canvas-color-callout-lightweight);
   z-index: 4000;
   margin: 1em;
-  &.menu {
-    padding: 1em;
-  }
   div.monthbox {
     padding: .5em;
     div.month {
@@ -126,6 +123,21 @@ div.datepicker {
           }
         }
       }
+    }
+  }
+  &.button-menu {
+    padding: 0;
+    position: absolute;
+    margin: 0 0 0 .3em;
+    overflow: visible;
+    z-index: 20000;
+    border-radius: var(--button-border-radius);
+    border: .1em solid var(--button-menu-border-color);
+    background-color: var(--button-menu-background-color);
+    color: var(--button-menu-item-text-color);
+    box-shadow: var(--button-menu-box-shadow);
+    div.monthbox {
+      padding: 0;
     }
   }
 }
