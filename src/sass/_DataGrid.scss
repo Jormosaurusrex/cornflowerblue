@@ -110,7 +110,7 @@ div.datagrid-container {
           position: sticky;
           vertical-align: top;
           top: 0;
-          z-index: 10;
+          z-index: 100;
           div.th {
             padding: .75em 1.5em .75em 1em;
             position: relative;
@@ -160,13 +160,15 @@ div.datagrid-container {
             outline-offset: -.3em;
             text-decoration: underline double;
           }
+          &.mechanical {
+            z-index: 101;
+          }
           &[data-sort='asc'],
           &[data-sort='desc']{
             div.th {
               box-shadow: inset 0px -.2em 0 0 var(--datagrid-gridheader-sort-highlight-color);
               &:before {
                 opacity: 1;
-
               }
             }
           }
@@ -195,7 +197,9 @@ div.datagrid-container {
             font-size: .8em;
           }
           &.mechanical {
-            //background-color: var(--datagrid-background-color);
+            background-color: var(--datagrid-background-color);
+            z-index: 99;
+            opacity: 1;
           }
         }
         &:nth-child(even) {
@@ -205,7 +209,7 @@ div.datagrid-container {
           td {
             //background-color: var(--datagrid-grid-alternate-background-color);
             &.mechanical {
-              //background-color: var(--datagrid-grid-alternate-background-color);
+              background-color: var(--datagrid-grid-alternate-background-color);
             }
           }
         }
@@ -289,12 +293,12 @@ div.datagrid-container {
       &.center {
         text-align: center;
       }
-
       &.mechanical {
-        transition: all .2s;
+        transition: width .2s;
         resize: none;
-        //position: sticky;
-        //left: 0;
+        position: sticky;
+        left: -1;
+        box-shadow: inset -.1em 0 0 0 var(--grey-medium);
         &.selector {
           overflow: hidden;
           text-align: center;
@@ -340,6 +344,14 @@ div.datagrid-container {
             display: inline-block;
           }
         }
+        &.actions {
+          width: 0;
+          max-width: 0;
+          padding: 0;
+          button {
+            display: none;
+          }
+        }
       }
     }
     &.selectable {
@@ -353,6 +365,7 @@ div.datagrid-container {
               text-shadow: var(--datagrid-grid-hover-text-shadow);
               > td {
                 opacity: 1;
+                background-color: var(--datagrid-grid-hover-background-color);
               }
             }
           }

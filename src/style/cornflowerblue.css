@@ -113,6 +113,7 @@
   --focus-color-half: var(--green-half);
   --focus-color-quarter: var(--green-quarter);
   --focus-color-translucent: var(--green-translucent);
+  --focus-color-half-solid: #39784a;
   --constructive-color: var(--green);
   --constructive-color-half: var(--green-half);
   --constructive-color-quarter: var(--green-quarter);
@@ -228,8 +229,8 @@
   --datagrid-grid-multiselected-selected-background-color: var(--focus-color-quarter);
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
   --datagrid-grid-background-color: var(--ultralight);
-  --datagrid-grid-alternate-background-color: var(--grey-translucent);
-  --datagrid-grid-hover-background-color: var(--focus-color-half);
+  --datagrid-grid-alternate-background-color: var(--morelight);
+  --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
@@ -4999,7 +5000,7 @@ div.datagrid-container table.grid thead tr th {
   position: sticky;
   vertical-align: top;
   top: 0;
-  z-index: 10;
+  z-index: 100;
 }
 div.datagrid-container table.grid thead tr th div.th {
   padding: 0.75em 1.5em 0.75em 1em;
@@ -5044,6 +5045,9 @@ div.datagrid-container table.grid thead tr th:focus, div.datagrid-container tabl
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
+div.datagrid-container table.grid thead tr th.mechanical {
+  z-index: 101;
+}
 div.datagrid-container table.grid thead tr th[data-sort=asc] div.th, div.datagrid-container table.grid thead tr th[data-sort=desc] div.th {
   box-shadow: inset 0px -0.2em 0 0 var(--datagrid-gridheader-sort-highlight-color);
 }
@@ -5067,7 +5071,15 @@ div.datagrid-container table.grid tbody tr td.italic {
 div.datagrid-container table.grid tbody tr td.smaller {
   font-size: 0.8em;
 }
+div.datagrid-container table.grid tbody tr td.mechanical {
+  background-color: var(--datagrid-background-color);
+  z-index: 99;
+  opacity: 1;
+}
 div.datagrid-container table.grid tbody tr:nth-child(even) {
+  background-color: var(--datagrid-grid-alternate-background-color);
+}
+div.datagrid-container table.grid tbody tr:nth-child(even) td.mechanical {
   background-color: var(--datagrid-grid-alternate-background-color);
 }
 div.datagrid-container table.grid tbody tr.hidden, div.datagrid-container table.grid tbody tr.filtered, div.datagrid-container table.grid tbody tr[data-search-hidden=true] {
@@ -5155,8 +5167,11 @@ div.datagrid-container table.grid td.center {
 }
 div.datagrid-container table.grid th.mechanical,
 div.datagrid-container table.grid td.mechanical {
-  transition: all 0.2s;
+  transition: width 0.2s;
   resize: none;
+  position: sticky;
+  left: -1;
+  box-shadow: inset -0.1em 0 0 0 var(--grey-medium);
 }
 div.datagrid-container table.grid th.mechanical.selector,
 div.datagrid-container table.grid td.mechanical.selector {
@@ -5206,6 +5221,16 @@ div.datagrid-container table.grid.multiselecting th.selector input,
 div.datagrid-container table.grid.multiselecting td.selector input {
   display: inline-block;
 }
+div.datagrid-container table.grid.multiselecting th.actions,
+div.datagrid-container table.grid.multiselecting td.actions {
+  width: 0;
+  max-width: 0;
+  padding: 0;
+}
+div.datagrid-container table.grid.multiselecting th.actions button,
+div.datagrid-container table.grid.multiselecting td.actions button {
+  display: none;
+}
 div.datagrid-container table.grid.selectable tbody tr {
   cursor: pointer;
 }
@@ -5217,6 +5242,7 @@ div.datagrid-container table.grid.selectable tbody tr {
   }
   div.datagrid-container table.grid.selectable tbody tr:hover > td {
     opacity: 1;
+    background-color: var(--datagrid-grid-hover-background-color);
   }
 }
 div.datagrid-container table.grid.selectable tbody tr:focus {

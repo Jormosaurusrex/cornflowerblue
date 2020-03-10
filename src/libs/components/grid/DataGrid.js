@@ -523,6 +523,10 @@ class DataGrid extends Panel {
         for (let r of this.gridbody.querySelectorAll('tr')) {
             if (!previousRow) {
                 previousRow = r;
+                let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
+                for (let c of pcells) {
+                    c.classList.remove('duplicate'); // clear
+                }
                 continue;
             }
             let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
@@ -685,6 +689,24 @@ class DataGrid extends Panel {
     addEntry(entry) {
         this.gridbody.appendChild(this.buildRow(entry));
         this.data.push(entry);
+    }
+
+    /**
+     * Delete a row from the grid.
+     * @param rowid
+     */
+    deleteRow(rowid) {
+        
+        let index = 0;
+        for (let d of this.data) {
+            if ((d.rowid) && (d.rowid === rowid)) { break; }
+            index++;
+        }
+        this.data.splice(index, 1);
+
+        this.gridbody.removeChild(this.gridbody.querySelector(`[data-rowid='${rowid}'`));
+
+        this.gridPostProcess();
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -1328,6 +1350,7 @@ class DataGrid extends Panel {
      */
     buildTableHead() {
         const me = this;
+
         if (this.multiselect) {
             this.masterselector = new BooleanToggle({
                 onchange: function(self) {
@@ -1340,6 +1363,7 @@ class DataGrid extends Panel {
             cell.appendChild(this.masterselector.naked);
             this.gridheader.appendChild(cell);
         }
+
         if ((this.rowactions) && (this.rowactions.length > 0)) {
             let cell = document.createElement('th');
             cell.classList.add('actions');
@@ -1451,6 +1475,7 @@ class DataGrid extends Panel {
             } else {
                 row.setAttribute('data-rowid', `row-${CFBUtils.getUniqueKey(5)}`);
             }
+            rdata.rowid = row.getAttribute('data-rowid'); // pop this into the row data.
 
             row.addEventListener('click', function(e) {
 

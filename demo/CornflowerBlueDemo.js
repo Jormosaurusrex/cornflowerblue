@@ -872,6 +872,7 @@ class CornflowerBlueDemo {
                     tooltip: 'Delete this item.',
                     action: function(e, self) {
                         console.log(self.data);
+                        dg.deleteRow(self.data.rowid);
                     }
                 }
             ],

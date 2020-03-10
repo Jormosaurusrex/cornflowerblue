@@ -132,6 +132,7 @@
   --focus-color-half: var(--green-half);
   --focus-color-quarter: var(--green-quarter);
   --focus-color-translucent: var(--green-translucent);
+  --focus-color-half-solid: #39784a;
 
   --constructive-color: var(--green);
   --constructive-color-half: var(--green-half);
@@ -282,8 +283,8 @@
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
 
   --datagrid-grid-background-color: var(--ultralight);
-  --datagrid-grid-alternate-background-color: var(--grey-translucent);
-  --datagrid-grid-hover-background-color: var(--focus-color-half);
+  --datagrid-grid-alternate-background-color: var(--morelight);
+  --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
 
