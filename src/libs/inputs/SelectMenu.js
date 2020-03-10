@@ -126,7 +126,7 @@ class SelectMenu extends InputElement {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-        this.listbox.style.top = `${(offsetTop + this.container.clientHeight)}px`;
+        this.listbox.style.top = `${(offsetTop + this.wrapper.clientHeight)}px`;
         this.listbox.style.left = `${offsetLeft}px`;
         this.listbox.style.width = `${this.container.clientWidth}px`;
 
