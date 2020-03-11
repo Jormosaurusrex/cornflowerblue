@@ -99,7 +99,10 @@ class IconFactory {
             'flag-pointed-angle',
             'flag-rectangle-angle',
             'filter',
-            'table'
+            'table',
+            'duplicate',
+            'dots-horizontal',
+            'dots-vertical'
         ];
     }
 

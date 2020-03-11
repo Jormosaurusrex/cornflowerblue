@@ -97,3 +97,6 @@
 .cfb-table:before { content: '\e801'; } /* '' */
 .cfb-filter:before { content: '\e802'; } /* '' */
 .cfb-clock:before { content: '\e803'; } /* '' */
+.cfb-duplicate:before { content: '\e804'; } /* '' */
+.cfb-dots-vertical:before { content: '\e805'; } /* '' */
+.cfb-dots-horizontal:before { content: '\e806'; } /* '' */
