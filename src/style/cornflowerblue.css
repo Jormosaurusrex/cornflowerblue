@@ -233,6 +233,7 @@
   --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
+  --datagrid-line-color: var(--sublight);
   --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
   --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
   --datagrid-filter-border-color: var(--light);
@@ -5060,6 +5061,7 @@ div.datagrid-container table.grid thead tr th[data-sort=desc] div.th:before {
 div.datagrid-container table.grid tbody tr {
   background-color: var(--datagrid-grid-background-color);
   color: var(--datagrid-grid-text-color);
+  box-shadow: inset 0 -0.1em 0 0 var(--datagrid-line-color);
 }
 div.datagrid-container table.grid tbody tr td {
   padding: 1em;
@@ -5075,12 +5077,6 @@ div.datagrid-container table.grid tbody tr td.mechanical {
   background-color: var(--datagrid-background-color);
   z-index: 99;
   opacity: 1;
-}
-div.datagrid-container table.grid tbody tr:nth-child(even) {
-  background-color: var(--datagrid-grid-alternate-background-color);
-}
-div.datagrid-container table.grid tbody tr:nth-child(even) td.mechanical {
-  background-color: var(--datagrid-grid-alternate-background-color);
 }
 div.datagrid-container table.grid tbody tr.hidden, div.datagrid-container table.grid tbody tr.filtered, div.datagrid-container table.grid tbody tr[data-search-hidden=true] {
   display: none;
@@ -5108,6 +5104,10 @@ div.datagrid-container table.grid tbody tr button.menu[aria-expanded=true] {
 div.datagrid-container table.grid tbody tr:focus-within button {
   box-shadow: none;
   background-color: transparent;
+}
+div.datagrid-container table.grid th,
+div.datagrid-container table.grid td {
+  box-shadow: inset 0 -0.1em 0 0 var(--datagrid-line-color);
 }
 div.datagrid-container table.grid th.hidden,
 div.datagrid-container table.grid td.hidden {
@@ -5170,8 +5170,8 @@ div.datagrid-container table.grid td.mechanical {
   transition: width 0.2s;
   resize: none;
   position: sticky;
-  left: -1;
-  box-shadow: inset -0.1em 0 0 0 var(--grey-medium);
+  left: 0;
+  box-shadow: inset -0.1em 0 0 0 var(--datagrid-line-color);
 }
 div.datagrid-container table.grid th.mechanical.selector,
 div.datagrid-container table.grid td.mechanical.selector {

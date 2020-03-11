@@ -186,7 +186,7 @@ div.datagrid-container {
       tr {
         background-color: var(--datagrid-grid-background-color);
         color: var(--datagrid-grid-text-color);
-        //box-shadow: inset 0 -.1em 0 0 var(--grey-medium);
+        box-shadow: inset 0 -.1em 0 0 var(--datagrid-line-color);
         td {
           padding: 1em;
           white-space: nowrap;
@@ -203,13 +203,11 @@ div.datagrid-container {
           }
         }
         &:nth-child(even) {
-          background-color: var(--datagrid-grid-alternate-background-color);
-          //border-bottom: .1em solid red;
-          //border-bottom: .1em solid var(--datagrid-grid-alternate-background-color);
+          //background-color: var(--datagrid-grid-alternate-background-color);
           td {
             //background-color: var(--datagrid-grid-alternate-background-color);
             &.mechanical {
-              background-color: var(--datagrid-grid-alternate-background-color);
+              //background-color: var(--datagrid-grid-alternate-background-color);
             }
           }
         }
@@ -252,6 +250,7 @@ div.datagrid-container {
     }
     th,
     td {
+      box-shadow: inset 0 -.1em 0 0 var(--datagrid-line-color);
       &.hidden {
         display: none;
       }
@@ -297,8 +296,8 @@ div.datagrid-container {
         transition: width .2s;
         resize: none;
         position: sticky;
-        left: -1;
-        box-shadow: inset -.1em 0 0 0 var(--grey-medium);
+        left: 0;
+        box-shadow: inset -.1em 0 0 0 var(--datagrid-line-color);
         &.selector {
           overflow: hidden;
           text-align: center;

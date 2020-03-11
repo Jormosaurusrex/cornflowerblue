@@ -696,7 +696,7 @@ class DataGrid extends Panel {
      * @param rowid
      */
     deleteRow(rowid) {
-        
+
         let index = 0;
         for (let d of this.data) {
             if ((d.rowid) && (d.rowid === rowid)) { break; }
