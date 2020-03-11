@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-09
+/*! Cornflower Blue - v0.1.1 - 2020-03-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -761,7 +761,10 @@ class IconFactory {
             'flag-pointed-angle',
             'flag-rectangle-angle',
             'filter',
-            'table'
+            'table',
+            'duplicate',
+            'dots-horizontal',
+            'dots-vertical'
         ];
     }
 
@@ -2363,8 +2366,13 @@ class ButtonMenu extends SimpleButton {
                 if ((focused) && (!self.isopen)) {
                     self.open();
                 }
+                e.stopPropagation();
             },
-            gravity: 's',
+            gravity: 's', // Gravity direction for the menu
+            tooltipgravity: 'e', // Gravity direction for the tooltips
+            data: null, // A place to store information that the button actions may need, if the menu is
+                        // constructed in a closed setting (like inside of a DataGrid row).
+                        // Typically set by the calling system
             secondicon: 'triangle-down', // this is passed up as a secondicon
             autoclose: true, // don't close on outside clicks
             menu: null, // can be passed a dom object to display in the menu. If present, ignores items.
@@ -2379,7 +2387,9 @@ class ButtonMenu extends SimpleButton {
         };
     }
 
-
+    /**
+     * Close any open ButtonMenus
+     */
     static closeOpen() {
         if (ButtonMenu.activeMenu) {
             ButtonMenu.activeMenu.close();
@@ -2444,7 +2454,6 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '0');
             }
         }
-
 
         let bodyRect = document.body.getBoundingClientRect(),
             elemRect = this.button.getBoundingClientRect(),
@@ -2617,7 +2626,7 @@ class ButtonMenu extends SimpleButton {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
-                    item.action(e);
+                    item.action(e, me);
                 }
                 me.close();
             });
@@ -2628,7 +2637,7 @@ class ButtonMenu extends SimpleButton {
                 new ToolTip({
                     text: item.tooltip,
                     icon: item.tipicon,
-                    gravity: 'w'
+                    gravity: this.tooltipgravity
                 }).attach(menuitem);
             }
 
@@ -2660,6 +2669,9 @@ class ButtonMenu extends SimpleButton {
     get autoclose() { return this.config.autoclose; }
     set autoclose(autoclose) { this.config.autoclose = autoclose; }
 
+    get data() { return this.config.data; }
+    set data(data) { this.config.data = data; }
+
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
 
@@ -2668,6 +2680,9 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get tooltipgravity() { return this.config.tooltipgravity; }
+    set tooltipgravity(tooltipgravity) { this.config.tooltipgravity = tooltipgravity; }
 
 }
 
@@ -5020,7 +5035,7 @@ class SelectMenu extends InputElement {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
-        this.listbox.style.top = `${(offsetTop + this.container.clientHeight)}px`;
+        this.listbox.style.top = `${(offsetTop + this.wrapper.clientHeight)}px`;
         this.listbox.style.left = `${offsetLeft}px`;
         this.listbox.style.width = `${this.container.clientWidth}px`;
 
@@ -8790,6 +8805,8 @@ class DataGrid extends Panel {
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
 
+            rowactions: null, // an array of actions that can be used on items.
+
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -9232,6 +9249,10 @@ class DataGrid extends Panel {
         for (let r of this.gridbody.querySelectorAll('tr')) {
             if (!previousRow) {
                 previousRow = r;
+                let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
+                for (let c of pcells) {
+                    c.classList.remove('duplicate'); // clear
+                }
                 continue;
             }
             let pcells = previousRow.querySelectorAll("td:not(.mechanical)");
@@ -9396,6 +9417,24 @@ class DataGrid extends Panel {
         this.data.push(entry);
     }
 
+    /**
+     * Delete a row from the grid.
+     * @param rowid
+     */
+    deleteRow(rowid) {
+
+        let index = 0;
+        for (let d of this.data) {
+            if ((d.rowid) && (d.rowid === rowid)) { break; }
+            index++;
+        }
+        this.data.splice(index, 1);
+
+        this.gridbody.removeChild(this.gridbody.querySelector(`[data-rowid='${rowid}'`));
+
+        this.gridPostProcess();
+    }
+
     /* COLUMN METHODS___________________________________________________________________ */
 
     /**
@@ -9482,7 +9521,6 @@ class DataGrid extends Panel {
         } else if (!this.state) {
             this.state = this.grindstate();
         }
-
     }
 
     /**
@@ -9703,7 +9741,7 @@ class DataGrid extends Panel {
     /**
      * Select a row.  This method also handles shift+click selection.
      * @param row the row to select
-     * @parma event (optional) the click event
+     * @param event (optional) the click event
      */
     select(row, event) {
 
@@ -9743,7 +9781,6 @@ class DataGrid extends Panel {
             //         - If we find another selected row, we:
             //             - Discard all collected ones
             //             - Start collecting again.
-
             let toBeSelected = [];
             let gathering = false;
             let foundSelf = false;
@@ -9831,7 +9868,7 @@ class DataGrid extends Panel {
      * @returns the grid container
      */
     buildContainer() {
-
+        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
         this.container.classList.add('panel');
@@ -9856,6 +9893,19 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
+
+        this.gridwrapper.onscroll = function(e) {
+            if (me.gridwrapper.scrollLeft > 0) {
+                me.grid.classList.add('schoriz');
+            } else {
+                me.grid.classList.remove('schoriz');
+            }
+            if (me.gridwrapper.scrollTop > 0) {
+                me.grid.classList.add('scvert');
+            } else {
+                me.grid.classList.remove('scvert');
+            }
+        };
 
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
@@ -9949,7 +9999,7 @@ class DataGrid extends Panel {
                 arialabel: TextFactory.get('search_this_data'),
                 placeholder: TextFactory.get('search_this_data'),
                 searchtext: TextFactory.get('search'),
-                action: function(value, searchcontrol) {
+                action: function(value) {
                     me.search(value);
                 }
             });
@@ -10038,6 +10088,7 @@ class DataGrid extends Panel {
      */
     buildTableHead() {
         const me = this;
+
         if (this.multiselect) {
             this.masterselector = new BooleanToggle({
                 onchange: function(self) {
@@ -10048,6 +10099,14 @@ class DataGrid extends Panel {
             cell.classList.add('selector');
             cell.classList.add('mechanical');
             cell.appendChild(this.masterselector.naked);
+            this.gridheader.appendChild(cell);
+        }
+
+        if ((this.rowactions) && (this.rowactions.length > 0)) {
+            let cell = document.createElement('th');
+            cell.classList.add('actions');
+            cell.classList.add('mechanical');
+            cell.innerHTML = "";
             this.gridheader.appendChild(cell);
         }
 
@@ -10141,6 +10200,10 @@ class DataGrid extends Panel {
         const me = this;
         let row = document.createElement('tr');
 
+        if (this.identifier) {
+            row.setAttribute('data-id', rdata[this.identifier]);
+        }
+
         if (this.selectable) {
 
             row.setAttribute('tabindex', '0');
@@ -10150,14 +10213,18 @@ class DataGrid extends Panel {
             } else {
                 row.setAttribute('data-rowid', `row-${CFBUtils.getUniqueKey(5)}`);
             }
+            rdata.rowid = row.getAttribute('data-rowid'); // pop this into the row data.
 
             row.addEventListener('click', function(e) {
+
+                if (e.target.classList.contains('mechanical')) { return; }
+
                 if (e.shiftKey) {
                     e.preventDefault();
                     e.stopPropagation();
                     document.getSelection().removeAllRanges(); // remove cursor selection
                 }
-                if ((me.selectable) && (!me.multiselecting)) {
+                if (me.selectable) {
                     me.select(row, e);
                 }
             });
@@ -10201,6 +10268,25 @@ class DataGrid extends Panel {
             cell.classList.add('selector');
             cell.classList.add('mechanical');
             cell.appendChild(selector.naked);
+            row.appendChild(cell);
+        }
+
+        if ((this.rowactions) && (this.rowactions.length > 0)) {
+
+            let cell = document.createElement('td');
+            cell.classList.add('actions');
+            cell.classList.add('mechanical');
+            cell.appendChild(new ButtonMenu({
+                ghost: true,
+                shape: 'square',
+                data: rdata,
+                secondicon: null,
+                gravity: 'east',
+                text: TextFactory.get('actions'),
+                icon: this.actionsbuttonicon,
+                classes: ['actions'],
+                items: this.rowactions
+            }).button);
             row.appendChild(cell);
         }
 
@@ -10432,6 +10518,9 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get rowactions() { return this.config.rowactions; }
+    set rowactions(rowactions) { this.config.rowactions = rowactions; }
 
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
