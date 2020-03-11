@@ -83,10 +83,11 @@ input[type="radio"] {
       color: var(--checkbox-checked-checkmark-text-color);
     }
     &:focus {
+      background-color: var(--checkbox-checked-background-color);
       &:before {
         opacity: 1;
         display: inline-block;
-        color: var(--checkbox-checked-checkmark-hover-text-color);
+        color: var(--checkbox-checked-checkmark-text-color);
       }
     }
     @include for-hover-only {

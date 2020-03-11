@@ -1055,7 +1055,6 @@ class DataGrid extends Panel {
             //         - If we find another selected row, we:
             //             - Discard all collected ones
             //             - Start collecting again.
-
             let toBeSelected = [];
             let gathering = false;
             let foundSelf = false;
@@ -1168,7 +1167,6 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
-
 
         this.gridwrapper.onscroll = function(e) {
             if (me.gridwrapper.scrollLeft > 0) {
@@ -1500,7 +1498,7 @@ class DataGrid extends Panel {
                     e.stopPropagation();
                     document.getSelection().removeAllRanges(); // remove cursor selection
                 }
-                if ((me.selectable) && (!me.multiselecting)) {
+                if (me.selectable) {
                     me.select(row, e);
                 }
             });

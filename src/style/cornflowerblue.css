@@ -3107,11 +3107,15 @@ input[type=radio]:checked:before {
   display: inline-block;
   color: var(--checkbox-checked-checkmark-text-color);
 }
+input[type=checkbox]:checked:focus,
+input[type=radio]:checked:focus {
+  background-color: var(--checkbox-checked-background-color);
+}
 input[type=checkbox]:checked:focus:before,
 input[type=radio]:checked:focus:before {
   opacity: 1;
   display: inline-block;
-  color: var(--checkbox-checked-checkmark-hover-text-color);
+  color: var(--checkbox-checked-checkmark-text-color);
 }
 @media (hover: hover) and (pointer: fine) {
   input[type=checkbox]:checked:hover:before,
@@ -5239,6 +5243,12 @@ div.datagrid-container table.grid.selectable tbody tr {
     opacity: 1;
     background-color: var(--datagrid-grid-hover-background-color);
     box-shadow: none;
+  }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical input[type=checkbox] {
+    --checkbox-checked-checkmark-hover-text-color: var(--hot-text-color);
+    --checkbox-checked-checkmark-text-color: var(--hot-text-color);
+    --checkbox-checkmark-text-color: var(--hot-text-color);
+    border-color: var(--hot-text-color);
   }
 }
 div.datagrid-container table.grid.selectable tbody tr:focus {

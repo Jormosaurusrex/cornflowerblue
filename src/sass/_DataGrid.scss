@@ -364,6 +364,14 @@ div.datagrid-container {
                 opacity: 1;
                 background-color: var(--datagrid-grid-hover-background-color);
                 box-shadow: none;
+                &.mechanical {
+                  input[type='checkbox'] {
+                    --checkbox-checked-checkmark-hover-text-color: var(--hot-text-color);
+                    --checkbox-checked-checkmark-text-color: var(--hot-text-color);
+                    --checkbox-checkmark-text-color: var(--hot-text-color);
+                    border-color: var(--hot-text-color);
+                  }
+                }
               }
             }
           }
