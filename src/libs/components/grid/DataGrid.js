@@ -1143,7 +1143,7 @@ class DataGrid extends Panel {
      * @returns the grid container
      */
     buildContainer() {
-
+        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
         this.container.classList.add('panel');
@@ -1168,6 +1168,20 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.append(this.gridwrapper);
+
+
+        this.gridwrapper.onscroll = function(e) {
+            if (me.gridwrapper.scrollLeft > 0) {
+                me.grid.classList.add('schoriz');
+            } else {
+                me.grid.classList.remove('schoriz');
+            }
+            if (me.gridwrapper.scrollTop > 0) {
+                me.grid.classList.add('scvert');
+            } else {
+                me.grid.classList.remove('scvert');
+            }
+        };
 
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');

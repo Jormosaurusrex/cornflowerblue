@@ -17,7 +17,7 @@ div.tooltip {
   background-color: var(--tooltip-background-color);
   color: var(--tooltip-text-color);
   text-shadow: var(--tooltip-text-shadow);
-  box-shadow: var(--panel-shadow-light);
+  filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
   &[aria-hidden='true'] {
     display: none;
   }
