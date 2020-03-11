@@ -63,6 +63,7 @@ div.panel {
   }
   &[aria-expanded=false] {
     h3 {
+      border-radius: var(--border-radius);
       button.headerbutton {
         span.icon {
           transform: rotate(-180deg);

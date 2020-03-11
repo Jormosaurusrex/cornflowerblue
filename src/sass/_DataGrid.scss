@@ -110,7 +110,7 @@ div.datagrid-container {
           position: sticky;
           vertical-align: top;
           top: 0;
-          z-index: 100;
+          z-index: 105;
           div.th {
             padding: .75em 1.5em .75em 1em;
             position: relative;
@@ -161,7 +161,7 @@ div.datagrid-container {
             text-decoration: underline double;
           }
           &.mechanical {
-            z-index: 103;
+            z-index: 106;
           }
           &[data-sort='asc'],
           &[data-sort='desc']{
@@ -432,10 +432,9 @@ div.datagrid-container {
       }
     }
     &.schoriz {
-      tbody {
-        td.mechanical {
-          box-shadow: .1em 0 .1em -.05em rgba(0, 0, 0, 0.25)
-        }
+      td.mechanical,
+      th.mechanical {
+        box-shadow: .1em 0 .1em -.05em rgba(0, 0, 0, 0.25)
       }
     }
     &.scvert {
@@ -469,7 +468,6 @@ div.datagrid-container {
       }
     }
   }
-
   &[aria-expanded=false] {
     div.grid-info,
     div.grid-actions,
