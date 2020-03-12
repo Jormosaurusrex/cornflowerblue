@@ -35,3 +35,4 @@ class TextArea extends InputElement {
     }
 
 }
+window.TextArea = TextArea;

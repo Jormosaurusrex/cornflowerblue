@@ -55,4 +55,4 @@ class URLInput extends TextInput {
     }
 
 }
-
+window.URLInput = URLInput;

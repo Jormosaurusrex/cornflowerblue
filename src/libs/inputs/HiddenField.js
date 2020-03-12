@@ -13,3 +13,4 @@ class HiddenField extends TextInput {
         return this.input;
     }
 }
+window.HiddenField = HiddenField;

@@ -8,3 +8,4 @@ class ConstructiveButton extends SimpleButton {
         super(config);
     }
 }
+window.ConstructiveButton = ConstructiveButton;

@@ -778,3 +778,4 @@ class InputElement {
 
 
 }
+window.InputElement = InputElement;

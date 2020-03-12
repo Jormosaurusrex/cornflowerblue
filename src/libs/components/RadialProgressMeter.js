@@ -1,5 +1,3 @@
-
-
 class RadialProgressMeter extends SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {
@@ -246,3 +244,4 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
 
 }
+window.RadialProgressMeter = RadialProgressMeter;

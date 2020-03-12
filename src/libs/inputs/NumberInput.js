@@ -266,4 +266,4 @@ class NumberInput extends TextInput {
     set wholenumbers(wholenumbers) { this.config.wholenumbers = wholenumbers; }
 
 }
-
+window.NumberInput = NumberInput;

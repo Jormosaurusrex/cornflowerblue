@@ -488,8 +488,7 @@ class CFBUtils {
         return (this.isAndroid() || this.isBlackBerry() || this.isIOS() || this.isOperaMobile() || this.isWindowsMobile());
     }
 }
-
-
+window.CFBUtils = CFBUtils;
 class TextFactory {
 
     /**
@@ -659,7 +658,7 @@ class TextFactory {
     static set library(library) { TextFactory._library = library; }
 
 }
-
+window.TextFactory = TextFactory;
 class IconFactory {
 
     static get LIST() {
@@ -768,7 +767,6 @@ class IconFactory {
         ];
     }
 
-
     /**
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
@@ -819,7 +817,7 @@ class IconFactory {
         return i;
     }
 }
-
+window.IconFactory = IconFactory;
 class StateProvince {
 
     /**
@@ -981,8 +979,8 @@ class StateProvince {
     }
 
 }
+window.StateProvince = StateProvince;
 class CountryCodes {
-
 
     static get MAP() {
         return {
@@ -1265,8 +1263,8 @@ class CountryCodes {
     }
 
 }
+window.CountryCodes = CountryCodes;
 class TimezoneDB {
-
 
     /**
      * Get the dictionary of the timezones.
@@ -1729,6 +1727,7 @@ class TimezoneDB {
     }
     
 }
+window.TimezoneDB = TimezoneDB;
 class ToolTip {
 
     static get DEFAULT_CONFIG() {
@@ -1966,7 +1965,7 @@ class ToolTip {
     set waittime(waittime) { this.config.waittime = waittime; }
 
 }
-
+window.ToolTip = ToolTip;
 class SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2336,7 +2335,7 @@ class SimpleButton {
     set tooltipobj(tooltipobj) { this._tooltipobj = tooltipobj; }
 
 }
-
+window.SimpleButton = SimpleButton;
 class ConstructiveButton extends SimpleButton {
     constructor(config) {
         if (config.classes) {
@@ -2347,6 +2346,7 @@ class ConstructiveButton extends SimpleButton {
         super(config);
     }
 }
+window.ConstructiveButton = ConstructiveButton;
 class DestructiveButton extends SimpleButton {
     constructor(config) {
         if (config.classes) {
@@ -2357,6 +2357,7 @@ class DestructiveButton extends SimpleButton {
         super(config);
     }
 }
+window.DestructiveButton = DestructiveButton;
 class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2685,9 +2686,8 @@ class ButtonMenu extends SimpleButton {
     set tooltipgravity(tooltipgravity) { this.config.tooltipgravity = tooltipgravity; }
 
 }
-
+window.ButtonMenu = ButtonMenu;
 class CloseButton extends SimpleButton {
-
     static get DEFAULT_CONFIG() {
         return {
             icon: 'echx',
@@ -2702,9 +2702,8 @@ class CloseButton extends SimpleButton {
         config = Object.assign({}, CloseButton.DEFAULT_CONFIG, config);
         super(config);
     }
-
 }
-
+window.CloseButton = CloseButton;
 class HelpButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2737,9 +2736,7 @@ class HelpButton extends SimpleButton {
     }
 
 }
-
-
-
+window.HelpButton = HelpButton;
 class SkipButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2778,7 +2775,7 @@ class SkipButton extends SimpleButton {
     set contentstart(contentstart) { this.config.contentstart = contentstart; }
 
 }
-
+window.SkipButton = SkipButton;
 class HamburgerButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2854,7 +2851,7 @@ class HamburgerButton extends SimpleButton {
     set toggletarget(toggletarget) { this.config.toggletarget = toggletarget; }
 
 }
-
+window.HamburgerButton = HamburgerButton;
 class TagButton extends HelpButton {
 
     static get DEFAULT_CONFIG() {
@@ -2882,7 +2879,7 @@ class TagButton extends HelpButton {
     }
 
 }
-
+window.TagButton = TagButton;
 class DatePicker {
 
     static get DEFAULT_CONFIG() {
@@ -3195,6 +3192,7 @@ class DatePicker {
 
 
 }
+window.DatePicker = DatePicker;
 class InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -3975,6 +3973,7 @@ class InputElement {
 
 
 }
+window.InputElement = InputElement;
 class TextInput extends InputElement {
     constructor(config) {
         if (!config) { config = {}; }
@@ -3982,7 +3981,7 @@ class TextInput extends InputElement {
         super(config);
     }
 }
-
+window.TextInput = TextInput;
 class BooleanToggle {
 
     static get DEFAULT_CONFIG() {
@@ -4493,8 +4492,7 @@ class NumberInput extends TextInput {
     set wholenumbers(wholenumbers) { this.config.wholenumbers = wholenumbers; }
 
 }
-
-
+window.NumberInput = NumberInput;
 class DateInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
@@ -4758,8 +4756,7 @@ class URLInput extends TextInput {
     }
 
 }
-
-
+window.URLInput = URLInput;
 class HiddenField extends TextInput {
     /*
      * HiddenFields should not be used for elements that may become visible at some time.
@@ -4775,6 +4772,7 @@ class HiddenField extends TextInput {
         return this.input;
     }
 }
+window.HiddenField = HiddenField;
 class PasswordInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
@@ -4906,7 +4904,7 @@ class PasswordInput extends TextInput {
     set visibilityswitcher(visibilityswitcher) { this._visibilityswitcher = visibilityswitcher; }
 
 }
-
+window.PasswordInput = PasswordInput;
 class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -5463,9 +5461,7 @@ class SelectMenu extends InputElement {
     set wrapper(wrapper) { this._wrapper = wrapper; }
 
 }
-
-
-
+window.SelectMenu = SelectMenu;
 class RadioGroup extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
@@ -5641,7 +5637,7 @@ class RadioGroup extends SelectMenu {
     }
 
 }
-
+window.RadioGroup = RadioGroup;
 class StateMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
@@ -5682,6 +5678,7 @@ class StateMenu extends SelectMenu {
 
     }
 }
+window.StateMenu = StateMenu;
 class CountryMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
@@ -5721,6 +5718,7 @@ class CountryMenu extends SelectMenu {
 
     }
 }
+window.CountryMenu = CountryMenu;
 class TimezoneMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
@@ -5758,6 +5756,7 @@ class TimezoneMenu extends SelectMenu {
 
     }
 }
+window.TimezoneMenu = TimezoneMenu;
 class TextArea extends InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -5795,7 +5794,7 @@ class TextArea extends InputElement {
     }
 
 }
-
+window.TextArea = TextArea;
 class FileInput extends InputElement {
 
     static get DEFAULT_CONFIG() {
@@ -5967,9 +5966,7 @@ class FileInput extends InputElement {
     set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
 
 }
-
-
-
+window.FileInput = FileInput;
 class LoadingShade {
     static get DEFAULT_CONFIG() {
         return {
@@ -6064,6 +6061,7 @@ class LoadingShade {
     set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
 }
+window.LoadingShade = LoadingShade;
 class DialogWindow {
 
     static get DEFAULT_CONFIG() {
@@ -6354,7 +6352,7 @@ class DialogWindow {
     set window(window) { this._window = window; }
 
 }
-
+window.DialogWindow = DialogWindow;
 class Panel {
 
     static get DEFAULT_CONFIG() {
@@ -6608,6 +6606,7 @@ class Panel {
     set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }
 
 }
+window.Panel = Panel;
 class FloatingPanel extends Panel {
 
     static get DEFAULT_CONFIG() {
@@ -6643,6 +6642,7 @@ class FloatingPanel extends Panel {
     set style(style) { this.config.style = style; }
 
 }
+window.FloatingPanel = FloatingPanel;
 class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
@@ -6883,8 +6883,7 @@ class Growler extends FloatingPanel {
     set timer(timer) { this._timer = timer; }
 
 }
-
-
+window.Growler = Growler;
 class InstructionBox {
 
     static get DEFAULT_CONFIG() {
@@ -6995,7 +6994,7 @@ class InstructionBox {
     set title(title) { this.config.title = title; }
 
 }
-
+window.InstructionBox = InstructionBox;
 class MessageBox {
 
     static get DEFAULT_CONFIG() {
@@ -7160,7 +7159,7 @@ class MessageBox {
     set warningicon(warningicon) { this.config.warningicon = warningicon; }
 
 }
-
+window.MessageBox = MessageBox;
 class PasswordGenerator {
 
     static get DEFAULT_CONFIG() {
@@ -7368,6 +7367,7 @@ class PasswordGenerator {
     set setactuals(setactuals) { this._setactuals = setactuals; }
 
 }
+window.PasswordGenerator = PasswordGenerator;
 class PasswordChangeForm {
 
     static get DEFAULT_CONFIG() {
@@ -7629,6 +7629,7 @@ class PasswordChangeForm {
     set value(value) { this.pwactual.val(value); }
 
 }
+window.PasswordChangeForm = PasswordChangeForm;
 class TabBar {
 
     static get DEFAULT_CONFIG() {
@@ -8018,7 +8019,7 @@ class TabBar {
     set vertical(vertical) { this.config.vertical = vertical; }
 
 }
-
+window.TabBar = TabBar;
 
 class SearchControl {
 
@@ -8208,6 +8209,7 @@ class SearchControl {
     set searchicon(searchicon) { this.config.searchicon = searchicon; }
 
 }
+window.SearchControl = SearchControl;
 
 class SimpleProgressMeter {
 
@@ -8474,9 +8476,7 @@ class SimpleProgressMeter {
     get width() { return this.config.width; }
     set width(width) { this.config.width = width; }
 }
-
-
-
+window.SimpleProgressMeter = SimpleProgressMeter;
 
 class RadialProgressMeter extends SimpleProgressMeter {
 
@@ -8724,6 +8724,8 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
 
 }
+window.RadialProgressMeter = RadialProgressMeter;
+
 class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
@@ -8806,6 +8808,7 @@ class DataGrid extends Panel {
             multiselecticon: 'checkmark',
 
             rowactions: null, // an array of actions that can be used on items.
+            rowactionsicon: 'menu', // Icon to use for row-actions button
 
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
@@ -9322,7 +9325,7 @@ class DataGrid extends Panel {
                 if ((callback) && (typeof callback === 'function')) {
                     callback(data);
                 } else {
-                    this.append(data);
+                    this.update(data);
                 }
                 this.activitynotifier.setAttribute('aria-hidden', 'true');
             })
@@ -10283,7 +10286,7 @@ class DataGrid extends Panel {
                 secondicon: null,
                 gravity: 'east',
                 text: TextFactory.get('actions'),
-                icon: this.actionsbuttonicon,
+                icon: this.rowactionsicon,
                 classes: ['actions'],
                 items: this.rowactions
             }).button);
@@ -10522,6 +10525,9 @@ class DataGrid extends Panel {
     get rowactions() { return this.config.rowactions; }
     set rowactions(rowactions) { this.config.rowactions = rowactions; }
 
+    get rowactionsicon() { return this.config.rowactionsicon; }
+    set rowactionsicon(rowactionsicon) { this.config.rowactionsicon = rowactionsicon; }
+
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
 
@@ -10571,7 +10577,7 @@ class DataGrid extends Panel {
     set thead(thead) { this._thead = thead; }
 
 }
-
+window.DataGrid = DataGrid;
 class FilterConfigurator {
 
     static get DEFAULT_CONFIG() {
@@ -11038,3 +11044,4 @@ class FilterConfigurator {
     get workingfilters() { return this._workingfilters; }
     set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
 }
+window.FilterConfigurator = FilterConfigurator;

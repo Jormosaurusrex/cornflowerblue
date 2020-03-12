@@ -612,3 +612,4 @@ class SimpleForm {
 
 
 }
+window.SimpleForm = SimpleForm;

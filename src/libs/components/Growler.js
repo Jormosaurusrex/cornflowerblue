@@ -238,4 +238,4 @@ class Growler extends FloatingPanel {
     set timer(timer) { this._timer = timer; }
 
 }
-
+window.Growler = Growler;

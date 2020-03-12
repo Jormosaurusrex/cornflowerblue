@@ -167,3 +167,4 @@ class TextFactory {
     static set library(library) { TextFactory._library = library; }
 
 }
+window.TextFactory = TextFactory;

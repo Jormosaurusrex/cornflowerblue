@@ -310,3 +310,4 @@ class DatePicker {
 
 
 }
+window.DatePicker = DatePicker;

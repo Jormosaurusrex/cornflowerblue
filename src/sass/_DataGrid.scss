@@ -197,17 +197,16 @@ div.datagrid-container {
             font-size: .8em;
           }
           &.mechanical {
-            background-color: var(--datagrid-background-color);
+            background-color: var(--datagrid-grid-mechanical-background-color);
             z-index: 102;
             opacity: 1;
           }
         }
         &:nth-child(even) {
-          //background-color: var(--datagrid-grid-alternate-background-color);
+          background-color: var(--datagrid-grid-alternate-background-color);
           td {
-            //background-color: var(--datagrid-grid-alternate-background-color);
             &.mechanical {
-              //background-color: var(--datagrid-grid-alternate-background-color);
+              background-color: var(--datagrid-grid-mechanical-background-color);
             }
           }
         }
@@ -455,8 +454,8 @@ div.datagrid-container {
     }
     div.messagebox {
       div.box.warnings {
-        --color-base: var(--datagrid-searchresults-noresults-color-base);
-        --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
+        --color-base: var(--datagrid-messagebox-color-base);
+        --stripe-base: var(--datagrid-messagebox-stripes-base);
         h4 {
           display: none;
           background-color: transparent;

@@ -8,3 +8,4 @@ class DestructiveButton extends SimpleButton {
         super(config);
     }
 }
+window.DestructiveButton = DestructiveButton;

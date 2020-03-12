@@ -259,3 +259,4 @@ class PasswordChangeForm {
     set value(value) { this.pwactual.val(value); }
 
 }
+window.PasswordChangeForm = PasswordChangeForm;

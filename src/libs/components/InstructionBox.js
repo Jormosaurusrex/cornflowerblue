@@ -108,3 +108,4 @@ class InstructionBox {
     set title(title) { this.config.title = title; }
 
 }
+window.InstructionBox = InstructionBox;

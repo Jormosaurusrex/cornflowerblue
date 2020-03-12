@@ -80,6 +80,7 @@ class DataGrid extends Panel {
             multiselecticon: 'checkmark',
 
             rowactions: null, // an array of actions that can be used on items.
+            rowactionsicon: 'menu', // Icon to use for row-actions button
 
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
@@ -596,7 +597,7 @@ class DataGrid extends Panel {
                 if ((callback) && (typeof callback === 'function')) {
                     callback(data);
                 } else {
-                    this.append(data);
+                    this.update(data);
                 }
                 this.activitynotifier.setAttribute('aria-hidden', 'true');
             })
@@ -1557,7 +1558,7 @@ class DataGrid extends Panel {
                 secondicon: null,
                 gravity: 'east',
                 text: TextFactory.get('actions'),
-                icon: this.actionsbuttonicon,
+                icon: this.rowactionsicon,
                 classes: ['actions'],
                 items: this.rowactions
             }).button);
@@ -1796,6 +1797,9 @@ class DataGrid extends Panel {
     get rowactions() { return this.config.rowactions; }
     set rowactions(rowactions) { this.config.rowactions = rowactions; }
 
+    get rowactionsicon() { return this.config.rowactionsicon; }
+    set rowactionsicon(rowactionsicon) { this.config.rowactionsicon = rowactionsicon; }
+
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
 
@@ -1845,3 +1849,4 @@ class DataGrid extends Panel {
     set thead(thead) { this._thead = thead; }
 
 }
+window.DataGrid = DataGrid;

@@ -288,3 +288,4 @@ class DialogWindow {
     set window(window) { this._window = window; }
 
 }
+window.DialogWindow = DialogWindow;

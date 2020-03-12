@@ -387,4 +387,4 @@ class TabBar {
     set vertical(vertical) { this.config.vertical = vertical; }
 
 }
-
+window.TabBar = TabBar;

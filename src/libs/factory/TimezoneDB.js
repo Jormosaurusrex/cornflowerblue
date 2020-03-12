@@ -1,6 +1,5 @@
 class TimezoneDB {
 
-
     /**
      * Get the dictionary of the timezones.
      * @return a dictionary.
@@ -462,3 +461,4 @@ class TimezoneDB {
     }
     
 }
+window.TimezoneDB = TimezoneDB;

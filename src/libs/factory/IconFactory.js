@@ -106,7 +106,6 @@ class IconFactory {
         ];
     }
 
-
     /**
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
@@ -157,3 +156,4 @@ class IconFactory {
         return i;
     }
 }
+window.IconFactory = IconFactory;

@@ -35,3 +35,4 @@ class TimezoneMenu extends SelectMenu {
 
     }
 }
+window.TimezoneMenu = TimezoneMenu;

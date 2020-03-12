@@ -464,3 +464,4 @@ class FilterConfigurator {
     get workingfilters() { return this._workingfilters; }
     set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
 }
+window.FilterConfigurator = FilterConfigurator;

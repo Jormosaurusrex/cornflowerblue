@@ -860,7 +860,7 @@ class CornflowerBlueDemo {
                 },
                 {
                     label: 'Duplicate',
-                    icon: 'document',
+                    icon: 'duplicate',
                     tooltip: 'Duplicate this item.',
                     action: function(e, self) {
                         console.log(self.data);

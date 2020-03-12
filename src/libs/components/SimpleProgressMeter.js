@@ -263,4 +263,4 @@ class SimpleProgressMeter {
     get width() { return this.config.width; }
     set width(width) { this.config.width = width; }
 }
-
+window.SimpleProgressMeter = SimpleProgressMeter;

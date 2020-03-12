@@ -485,4 +485,4 @@ class CFBUtils {
         return (this.isAndroid() || this.isBlackBerry() || this.isIOS() || this.isOperaMobile() || this.isWindowsMobile());
     }
 }
-
+window.CFBUtils = CFBUtils;

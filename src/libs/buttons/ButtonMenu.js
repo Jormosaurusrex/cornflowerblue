@@ -326,3 +326,4 @@ class ButtonMenu extends SimpleButton {
     set tooltipgravity(tooltipgravity) { this.config.tooltipgravity = tooltipgravity; }
 
 }
+window.ButtonMenu = ButtonMenu;

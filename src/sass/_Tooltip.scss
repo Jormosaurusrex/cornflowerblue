@@ -17,7 +17,7 @@ div.tooltip {
   background-color: var(--tooltip-background-color);
   color: var(--tooltip-text-color);
   text-shadow: var(--tooltip-text-shadow);
-  filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  filter: var(--tooltip-box-shadow);
   &[aria-hidden='true'] {
     display: none;
   }
@@ -43,9 +43,6 @@ div.tooltip {
     line-height: 1;
     text-align: left;
     font-size: 1em;
-    a {
-      color: var(--hot-text-color);
-    }
   }
   &.unfixed {
     div.tiptext{

@@ -73,3 +73,4 @@ class HamburgerButton extends SimpleButton {
     set toggletarget(toggletarget) { this.config.toggletarget = toggletarget; }
 
 }
+window.HamburgerButton = HamburgerButton;

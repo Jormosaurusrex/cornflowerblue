@@ -129,3 +129,4 @@ class PasswordInput extends TextInput {
     set visibilityswitcher(visibilityswitcher) { this._visibilityswitcher = visibilityswitcher; }
 
 }
+window.PasswordInput = PasswordInput;

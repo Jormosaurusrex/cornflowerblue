@@ -169,5 +169,4 @@ class FileInput extends InputElement {
     set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
 
 }
-
-
+window.FileInput = FileInput;

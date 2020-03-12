@@ -38,3 +38,4 @@ class StateMenu extends SelectMenu {
 
     }
 }
+window.StateMenu = StateMenu;

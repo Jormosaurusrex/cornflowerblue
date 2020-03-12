@@ -173,3 +173,4 @@ class RadioGroup extends SelectMenu {
     }
 
 }
+window.RadioGroup = RadioGroup;

@@ -162,3 +162,4 @@ class MessageBox {
     set warningicon(warningicon) { this.config.warningicon = warningicon; }
 
 }
+window.MessageBox = MessageBox;

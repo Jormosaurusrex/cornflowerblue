@@ -186,3 +186,4 @@ class SearchControl {
     set searchicon(searchicon) { this.config.searchicon = searchicon; }
 
 }
+window.SearchControl = SearchControl;

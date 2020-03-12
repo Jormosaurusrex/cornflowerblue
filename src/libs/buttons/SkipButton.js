@@ -1,5 +1,3 @@
-
-
 class SkipButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -38,3 +36,4 @@ class SkipButton extends SimpleButton {
     set contentstart(contentstart) { this.config.contentstart = contentstart; }
 
 }
+window.SkipButton = SkipButton;

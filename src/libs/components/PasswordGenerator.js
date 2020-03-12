@@ -205,3 +205,4 @@ class PasswordGenerator {
     set setactuals(setactuals) { this._setactuals = setactuals; }
 
 }
+window.PasswordGenerator = PasswordGenerator;

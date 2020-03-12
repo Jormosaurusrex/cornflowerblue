@@ -30,3 +30,4 @@ class HelpButton extends SimpleButton {
     }
 
 }
+window.HelpButton = HelpButton;

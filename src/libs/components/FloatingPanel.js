@@ -33,3 +33,4 @@ class FloatingPanel extends Panel {
     set style(style) { this.config.style = style; }
 
 }
+window.FloatingPanel = FloatingPanel;

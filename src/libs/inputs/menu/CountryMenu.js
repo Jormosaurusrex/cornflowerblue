@@ -37,3 +37,4 @@ class CountryMenu extends SelectMenu {
 
     }
 }
+window.CountryMenu = CountryMenu;

@@ -229,13 +229,14 @@
   --datagrid-grid-multiselected-selected-background-color: var(--focus-color-quarter);
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
   --datagrid-grid-background-color: var(--ultralight);
-  --datagrid-grid-alternate-background-color: var(--morelight);
+  --datagrid-grid-alternate-background-color: var(--ultralight);
+  --datagrid-grid-mechanical-background-color: var(--ultralight);
   --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   --datagrid-line-color: var(--sublight);
-  --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
-  --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
+  --datagrid-messagebox-color-base: var(--grey-darkest);
+  --datagrid-messagebox-stripes-base: var(--grey-translucent);
   --datagrid-filter-border-color: var(--light);
   --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
   --datagrid-title-background-color: var(--sublight);
@@ -462,10 +463,10 @@
   --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
   --tabbar-collapsed-title-color: var(--grey-meddark);
   --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--grey-darkest);
-  --tooltip-text-color: var(--ultralight);
+  --tooltip-background-color: var(--ultralight);
+  --tooltip-text-color: var(--grey-darkest);
   --tooltip-text-shadow: var(--text-shadow);
-  --tooltip-box-shadow: var(--panel-shadow);
+  --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
 }
 
 @keyframes cfb-localspin {
@@ -4066,7 +4067,7 @@ div.tooltip {
   background-color: var(--tooltip-background-color);
   color: var(--tooltip-text-color);
   text-shadow: var(--tooltip-text-shadow);
-  filter: drop-shadow(0 0.5em 0.5em rgba(0, 0, 0, 0.4));
+  filter: var(--tooltip-box-shadow);
 }
 div.tooltip[aria-hidden=true] {
   display: none;
@@ -4093,9 +4094,6 @@ div.tooltip div.tiptext {
   line-height: 1;
   text-align: left;
   font-size: 1em;
-}
-div.tooltip div.tiptext a {
-  color: var(--hot-text-color);
 }
 div.tooltip.unfixed div.tiptext {
   min-width: unset;
@@ -5096,9 +5094,15 @@ div.datagrid-container table.grid tbody tr td.smaller {
   font-size: 0.8em;
 }
 div.datagrid-container table.grid tbody tr td.mechanical {
-  background-color: var(--datagrid-background-color);
+  background-color: var(--datagrid-grid-mechanical-background-color);
   z-index: 102;
   opacity: 1;
+}
+div.datagrid-container table.grid tbody tr:nth-child(even) {
+  background-color: var(--datagrid-grid-alternate-background-color);
+}
+div.datagrid-container table.grid tbody tr:nth-child(even) td.mechanical {
+  background-color: var(--datagrid-grid-mechanical-background-color);
 }
 div.datagrid-container table.grid tbody tr.hidden, div.datagrid-container table.grid tbody tr.filtered, div.datagrid-container table.grid tbody tr[data-search-hidden=true] {
   display: none;
@@ -5317,8 +5321,8 @@ div.datagrid-container div.messages.hidden {
   display: none;
 }
 div.datagrid-container div.messages div.messagebox div.box.warnings {
-  --color-base: var(--datagrid-searchresults-noresults-color-base);
-  --stripe-base: var(--datagrid-searchresults-noresults-stripes-base);
+  --color-base: var(--datagrid-messagebox-color-base);
+  --stripe-base: var(--datagrid-messagebox-stripes-base);
 }
 div.datagrid-container div.messages div.messagebox div.box.warnings h4 {
   display: none;

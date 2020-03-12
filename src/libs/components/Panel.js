@@ -251,3 +251,4 @@ class Panel {
     set titlecontainer(titlecontainer) { this._titlecontainer = titlecontainer; }
 
 }
+window.Panel = Panel;

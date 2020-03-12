@@ -92,3 +92,4 @@ class LoadingShade {
     set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
 }
+window.LoadingShade = LoadingShade;

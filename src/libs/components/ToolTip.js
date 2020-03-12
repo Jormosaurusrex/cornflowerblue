@@ -235,3 +235,4 @@ class ToolTip {
     set waittime(waittime) { this.config.waittime = waittime; }
 
 }
+window.ToolTip = ToolTip;

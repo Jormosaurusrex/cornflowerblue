@@ -1,5 +1,4 @@
 class CloseButton extends SimpleButton {
-
     static get DEFAULT_CONFIG() {
         return {
             icon: 'echx',
@@ -14,5 +13,5 @@ class CloseButton extends SimpleButton {
         config = Object.assign({}, CloseButton.DEFAULT_CONFIG, config);
         super(config);
     }
-
 }
+window.CloseButton = CloseButton;

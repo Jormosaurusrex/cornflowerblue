@@ -1,6 +1,5 @@
 class CountryCodes {
 
-
     static get MAP() {
         return {
             AF: { code: "AF", country: "Afghanistan" },
@@ -282,3 +281,4 @@ class CountryCodes {
     }
 
 }
+window.CountryCodes = CountryCodes;

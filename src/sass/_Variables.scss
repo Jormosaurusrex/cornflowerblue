@@ -203,7 +203,6 @@
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--darkblue);
 
-  //--button-default-text-color: var(--button-default-color);
   --button-default-text-color: var(--hot-text-color);
   --button-hover-text-color: var(--hot-text-color);
   --button-hover-highlight-color: var(--white-half);
@@ -228,7 +227,6 @@
   --button-menu-item-hover-text-shadow: var(--text-shadow);
 
   --button-ghost-box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
-
 
   // Checkbox keys
   --checkbox-size: 2.4em;
@@ -283,19 +281,18 @@
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
 
   --datagrid-grid-background-color: var(--ultralight);
-  --datagrid-grid-alternate-background-color: var(--morelight);
+  --datagrid-grid-alternate-background-color: var(--ultralight);
+  --datagrid-grid-mechanical-background-color: var(--ultralight);
   --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
   --datagrid-grid-hover-text-color: var(--hot-text-color);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
 
   --datagrid-line-color: var(--sublight);
 
-
-  --datagrid-searchresults-noresults-color-base: var(--grey-darkest);
-  --datagrid-searchresults-noresults-stripes-base: var(--grey-translucent);
+  --datagrid-messagebox-color-base: var(--grey-darkest);
+  --datagrid-messagebox-stripes-base: var(--grey-translucent);
 
   --datagrid-filter-border-color: var(--light);
-
   --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
 
   --datagrid-title-background-color: var(--sublight);
@@ -589,8 +586,8 @@
 
   // Tooltip
   --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--grey-darkest);
-  --tooltip-text-color: var(--ultralight);
+  --tooltip-background-color: var(--ultralight);
+  --tooltip-text-color: var(--grey-darkest);
   --tooltip-text-shadow: var(--text-shadow);
-  --tooltip-box-shadow: var(--panel-shadow);
+  --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
 }

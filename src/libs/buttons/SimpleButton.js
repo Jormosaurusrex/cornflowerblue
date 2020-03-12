@@ -367,3 +367,4 @@ class SimpleButton {
     set tooltipobj(tooltipobj) { this._tooltipobj = tooltipobj; }
 
 }
+window.SimpleButton = SimpleButton;

@@ -25,3 +25,4 @@ class TagButton extends HelpButton {
     }
 
 }
+window.TagButton = TagButton;

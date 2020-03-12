@@ -5,3 +5,4 @@ class TextInput extends InputElement {
         super(config);
     }
 }
+window.TextInput = TextInput;

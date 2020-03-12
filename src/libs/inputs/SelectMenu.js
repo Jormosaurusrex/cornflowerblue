@@ -554,5 +554,4 @@ class SelectMenu extends InputElement {
     set wrapper(wrapper) { this._wrapper = wrapper; }
 
 }
-
-
+window.SelectMenu = SelectMenu;
