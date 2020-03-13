@@ -1338,6 +1338,7 @@ class DataGrid extends Panel {
             mute: true,
             shape: 'square',
             secondicon: null,
+            tooltipgravity: 'w',
             text: TextFactory.get('actions'),
             icon: this.actionsbuttonicon,
             classes: ['actions'],

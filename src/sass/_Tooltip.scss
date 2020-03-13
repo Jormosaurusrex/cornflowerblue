@@ -10,7 +10,8 @@ div.tooltip {
   align-content: center;
   list-style-type: none;
   margin: 0;
-  padding: .5em;
+  padding: .5em 1em .5em 1em;
+  min-height: 2.7em;
   overflow: visible;
   z-index: 21000;
   border-radius: var(--tooltip-border-radius);
@@ -33,14 +34,14 @@ div.tooltip {
     border-width: .5em .5em 0 .5em;
   }
   span.tipicon {
-    font-size: 1.2em;
-    margin-right: .5em;
+    padding: 0;
+    margin: 0 1em 0 0;
   }
   div.tiptext {
     max-width: 33em;
-    min-width: 15em;
+    //min-width: 15em;
     white-space: normal;
-    line-height: 1;
+    line-height: 1.2;
     text-align: left;
     font-size: 1em;
   }

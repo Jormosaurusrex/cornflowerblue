@@ -463,7 +463,7 @@
   --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
   --tabbar-collapsed-title-color: var(--grey-meddark);
   --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--ultralight);
+  --tooltip-background-color: var(--cornflowerblue-translucent);
   --tooltip-text-color: var(--grey-darkest);
   --tooltip-text-shadow: var(--text-shadow);
   --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
@@ -4060,7 +4060,8 @@ div.tooltip {
   align-content: center;
   list-style-type: none;
   margin: 0;
-  padding: 0.5em;
+  padding: 0.5em 1em 0.5em 1em;
+  min-height: 2.7em;
   overflow: visible;
   z-index: 21000;
   border-radius: var(--tooltip-border-radius);
@@ -4084,14 +4085,13 @@ div.tooltip:before {
   border-width: 0.5em 0.5em 0 0.5em;
 }
 div.tooltip span.tipicon {
-  font-size: 1.2em;
-  margin-right: 0.5em;
+  padding: 0;
+  margin: 0 1em 0 0;
 }
 div.tooltip div.tiptext {
   max-width: 33em;
-  min-width: 15em;
   white-space: normal;
-  line-height: 1;
+  line-height: 1.2;
   text-align: left;
   font-size: 1em;
 }
