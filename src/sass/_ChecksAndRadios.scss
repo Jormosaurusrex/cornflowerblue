@@ -92,6 +92,7 @@ input[type="radio"] {
     }
     @include for-hover-only {
       &:hover {
+        background-color: var(--checkbox-focus-color-translucent);
         &:before {
           color: var(--checkbox-checked-checkmark-hover-text-color);
         }

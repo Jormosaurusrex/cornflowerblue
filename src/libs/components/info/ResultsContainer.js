@@ -1,18 +1,10 @@
-class MessageBox {
+class ResultsContainer extends MessageBox {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
             errors: null, // array of errors
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings
-            errorstitle: TextFactory.get('error'),
-            successtitle: TextFactory.get('success'),
-            warningstitle: TextFactory.get('warning'),
-            erroricon: 'warn-hex', // If present, will be displayed large next to texts
-            warningicon : 'warn-triangle', // If present, will be displayed large next to texts
-            successicon: 'disc-check', // If present, will be displayed large next to texts
-            classes: [] //Extra css classes to apply
         };
     }
 
@@ -21,8 +13,8 @@ class MessageBox {
      * @param config a dictionary object
      */
     constructor(config) {
-        this.config = Object.assign({}, MessageBox.DEFAULT_CONFIG, config);
-        return this;
+        config = Object.assign({}, ResultsBox.DEFAULT_CONFIG, config);
+        super(config);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -31,11 +23,9 @@ class MessageBox {
      * Build the full messagebox container
      */
     buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('messagebox');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
+        super.buildContainer();
+
+        this.container.classList.add('resultsbox');
 
         if ((this.errors) && (this.errors.length > 0)) {
             this.container.appendChild(this.buildBox("errors"));
@@ -112,27 +102,7 @@ class MessageBox {
         return box;
     }
 
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
     /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
 
     get errors() { return this.config.errors; }
     set errors(errors) { this.config.errors = errors; }
@@ -162,4 +132,4 @@ class MessageBox {
     set warningicon(warningicon) { this.config.warningicon = warningicon; }
 
 }
-window.MessageBox = MessageBox;
+window.ResultsContainer = ResultsContainer;

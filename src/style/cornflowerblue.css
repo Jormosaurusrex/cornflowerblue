@@ -200,7 +200,7 @@
   --checkbox-checked-background-color: var(--focus-color);
   --checkbox-checked-checkmark-border-color: var(--checkbox-checked-border-color);
   --checkbox-checked-checkmark-text-color: var(--ultralight);
-  --checkbox-checked-checkmark-hover-text-color: var(--focus-colo);
+  --checkbox-checked-checkmark-hover-text-color: var(--focus-color);
   --checkbox-focus-color: var(--focus-color);
   --checkbox-focus-color-translucent: var(--focus-color-translucent);
   --checkbox-border-color: var(--input-default-border-color);
@@ -370,12 +370,6 @@
   --input-passivebox-background-color: transparent;
   --input-passivebox-text-color: var(--grey-dark);
   --input-passivebox-text-shadow: var(--text-shadow);
-  --instructions-background-color: var(--morelight);
-  --instructions-border-color: var(--light);
-  --instructions-text-color: var(--grey-darkest);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--grey-medium);
   --label-color: var(--darkblue);
   --label-text-shadow: var(--text-shadow);
   --label-required-marker-color: var(--required-color);
@@ -421,20 +415,6 @@
   --radio-toggle-offset: 0.3em;
   --radio-element-label-color: var(--grey-darker);
   --radio-element-label-text-shadow: var(--text-shadow);
-  --resultsbox-margin: 0;
-  --resultsbox-background-color: var(--ultralight);
-  --resultsbox-icon-color: var(--ultralight);
-  --resultsbox-icon-tex-shadow: var(--text-shadow);
-  --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --resultsbox-header-text-color: var(--ultralight);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-success-color-base: var(--success-color);
-  --resultsbox-error-color-base: var(--error-color);
-  --resultsbox-warning-color-base: var(--warning-color);
-  --resultsbox-success-stripes: var(--success-stripes);
-  --resultsbox-error-stripes: var(--error-stripes);
-  --resultsbox-warning-stripes: var(--warning-stripes);
   --selectmenu-menu-background-color: var(--ultralight);
   --selectmenu-menu-alternate-background-color: var(--grey-translucent);
   --selectmenu-menu-item-hover-background-color: var(--focus-color);
@@ -3134,6 +3114,10 @@ input[type=radio]:checked:focus:before {
   color: var(--checkbox-checked-checkmark-text-color);
 }
 @media (hover: hover) and (pointer: fine) {
+  input[type=checkbox]:checked:hover,
+input[type=radio]:checked:hover {
+    background-color: var(--checkbox-focus-color-translucent);
+  }
   input[type=checkbox]:checked:hover:before,
 input[type=radio]:checked:hover:before {
     color: var(--checkbox-checked-checkmark-hover-text-color);
@@ -4119,33 +4103,74 @@ div.tooltip.east:before {
   border-width: 0.5em 0.5em 0.5em 0;
 }
 
-div.instructions {
+:root {
+  --resultsbox-margin: 0;
+  --resultsbox-background-color: var(--ultralight);
+  --resultsbox-icon-color: var(--ultralight);
+  --resultsbox-icon-tex-shadow: var(--text-shadow);
+  --resultsbox-default-text-color: var(--grey-darkest);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --resultsbox-header-text-color: var(--ultralight);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-success-color-base: var(--success-color);
+  --resultsbox-error-color-base: var(--error-color);
+  --resultsbox-warning-color-base: var(--warning-color);
+  --resultsbox-success-stripes: var(--success-stripes);
+  --resultsbox-error-stripes: var(--error-stripes);
+  --resultsbox-warning-stripes: var(--warning-stripes);
+  --instructions-background-color: var(--morelight);
+  --instructions-border-color: var(--light);
+  --instructions-text-color: var(--grey-darkest);
+  --instructions-text-shadow: var(--text-shadow);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--grey-medium);
+}
+
+div.messagebox {
+  --messagebox-background-color: var(--canvas-color-colored);
+  --messagebox-text-color: var(--standard-color);
+  --messagebox-text-shadow: var(--text-shadow);
+  --messagebox-icon-color: var(--standard-color);
+  --messagebox-icon-text-shadow: none;
   margin: 1em 0 1em 0;
   padding: 1em;
-  border: 0.1em dotted var(--instructions-border-color);
-  background-color: var(--instructions-background-color);
+  background-color: var(--messagebox-background-color);
+  color: var(--messagebox-text-color);
+  text-shadow: var(--messagebox-text-shadow);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
-  align-items: flex-start;
   align-content: flex-start;
 }
-div.instructions span.icon {
+div.messagebox h3 {
+  margin: 0;
+}
+div.messagebox div.payload {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+div.messagebox div.payload > span.icon {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: 72pt;
   margin: 0;
-  color: var(--instructions-icon-color);
-  text-shadow: var(--instructions-icon-text-shadow);
+  color: var(--messagebox-icon-color);
+  text-shadow: var(--messagebox-icon-text-shadow);
 }
-@media (max-width: 599px) {
-  div.instructions span.icon {
-    display: none;
-  }
+div.messagebox div.payload .content p:last-child {
+  margin-bottom: 0;
 }
-div.instructions ul {
+div.messagebox.instructions {
+  border: 0.1em dotted var(--instructions-border-color);
+  background-color: var(--instructions-background-color);
+}
+div.messagebox.instructions div.payload ul {
   flex-grow: 2;
   display: flex;
   flex-direction: column;
@@ -4155,29 +4180,55 @@ div.instructions ul {
   color: var(--instructions-text-color);
   text-shadow: var(--instructions-text-shadow);
 }
-div.instructions.size-1 {
-  align-items: flex-start;
+div.messagebox.instructions.size-1 div.payload {
+  align-items: center;
 }
-div.instructions.size-1 span.icon {
+div.messagebox.instructions.size-1 div.payload > span.icon {
   font-size: 24pt;
-  margin-right: 0.5em;
 }
-div.instructions.size-1 ul {
+div.messagebox.instructions.size-1 div.payload ul {
   list-style-type: none;
 }
-div.instructions.size-2 {
+div.messagebox.instructions.size-2 div.payload {
   align-items: flex-start;
 }
-div.instructions.size-2 span.icon {
+div.messagebox.instructions.size-2 div.payload > span.icon {
   font-size: 40pt;
-  margin-right: 0.5em;
 }
-div.instructions.size-3 span.icon {
+div.messagebox.instructions.size-3 div.payload > span.icon {
   font-size: 50pt;
-  margin-right: 0.2em;
+}
+div.messagebox.results {
+  --color-base: var(--resultsbox-success-color-base);
+  --stripe-base: var(--resultsbox-success-stripes);
+  background-color: var(--resultsbox-background-color);
+  border: 0.1em solid var(--color-base);
+  background-image: var(--stripe-base);
+  padding: 0;
+}
+div.messagebox.results h3 {
+  padding: 0.5em 1em 0.5em 1em;
+  background-color: var(--color-base);
+  color: var(--resultsbox-header-text-color);
+  text-shadow: var(--resultsbox-header-text-shadow);
+}
+div.messagebox.results div.payload {
+  padding: 1em;
+}
+div.messagebox.results div.payload > span.icon {
+  color: var(--color-base);
+  text-shadow: var(--resultsbox-icon-text-shadow);
+}
+div.messagebox.results.errors {
+  --color-base: var(--resultsbox-error-color-base);
+  --stripe-base: var(--resultsbox-error-stripes);
+}
+div.messagebox.results.warnings {
+  --color-base: var(--resultsbox-warning-color-base);
+  --stripe-base: var(--resultsbox-warning-stripes);
 }
 
-div.messagebox {
+div.resultsbox {
   margin: 1em 0 1em 0;
   padding: 0;
   display: flex;
@@ -4186,32 +4237,17 @@ div.messagebox {
   align-items: stretch;
   align-content: flex-start;
 }
-div.messagebox div.box {
-  --color-base: var(--resultsbox-success-color-base);
-  --stripe-base: var(--resultsbox-success-stripes);
-  background-color: var(--resultsbox-background-color);
+div.resultsbox div.box {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
 }
 @media (max-width: 599px) {
-  div.messagebox div.box {
+  div.resultsbox div.box {
     overflow: auto;
   }
 }
-div.messagebox div.box h4 {
-  font-weight: normal;
-  font-size: 15pt;
-  border: none;
-  margin: 0;
-  padding: 0.5em;
-  flex-grow: 0;
-  text-transform: none;
-  background-color: var(--color-base);
-  color: var(--resultsbox-header-text-color);
-  text-shadow: var(--resultsbox-header-text-shadow);
-}
-div.messagebox div.box div.lbox {
+div.resultsbox div.box div.lbox {
   margin: 0;
   padding: 1em;
   border: 0.1em solid var(--color-base);
@@ -4222,7 +4258,7 @@ div.messagebox div.box div.lbox {
   align-items: flex-start;
   align-content: flex-start;
 }
-div.messagebox div.box div.lbox span.icon {
+div.resultsbox div.box div.lbox span.icon {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -4233,11 +4269,11 @@ div.messagebox div.box div.lbox span.icon {
   text-shadow: var(--resultsbox-icon-text-shadow);
 }
 @media (max-width: 599px) {
-  div.messagebox div.box div.lbox span.icon {
+  div.resultsbox div.box div.lbox span.icon {
     display: none;
   }
 }
-div.messagebox div.box div.lbox ul {
+div.resultsbox div.box div.lbox ul {
   flex-grow: 2;
   display: flex;
   flex-direction: column;
@@ -4247,34 +4283,26 @@ div.messagebox div.box div.lbox ul {
   text-shadow: var(--resultsbox-text-shadow);
   color: var(--resultsbox-default-text-color);
 }
-div.messagebox div.box div.lbox.size-1 {
+div.resultsbox div.box div.lbox.size-1 {
   align-items: center;
 }
-div.messagebox div.box div.lbox.size-1 ul {
+div.resultsbox div.box div.lbox.size-1 ul {
   list-style-type: none;
 }
-div.messagebox div.box div.lbox.size-1 span.icon {
+div.resultsbox div.box div.lbox.size-1 span.icon {
   font-size: 24pt;
   margin-right: 0.5em;
 }
-div.messagebox div.box div.lbox.size-2 {
+div.resultsbox div.box div.lbox.size-2 {
   align-items: center;
 }
-div.messagebox div.box div.lbox.size-2 span.icon {
+div.resultsbox div.box div.lbox.size-2 span.icon {
   font-size: 40pt;
   margin-right: 0.5em;
 }
-div.messagebox div.box div.lbox.size-3 span.icon {
+div.resultsbox div.box div.lbox.size-3 span.icon {
   font-size: 50pt;
   margin-right: 0.2em;
-}
-div.messagebox div.box.errors {
-  --color-base: var(--resultsbox-error-color-base);
-  --stripe-base: var(--resultsbox-error-stripes);
-}
-div.messagebox div.box.warnings {
-  --color-base: var(--resultsbox-warning-color-base);
-  --stripe-base: var(--resultsbox-warning-stripes);
 }
 
 body.modalopen {

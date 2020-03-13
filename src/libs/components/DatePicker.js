@@ -36,7 +36,7 @@ class DatePicker {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build the full messagebox container
+     * Build the full container
      */
     buildContainer() {
         this.container = document.createElement('div');

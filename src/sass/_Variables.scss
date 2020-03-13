@@ -242,7 +242,7 @@
   --checkbox-checked-background-color: var(--focus-color);
   --checkbox-checked-checkmark-border-color: var(--checkbox-checked-border-color);
   --checkbox-checked-checkmark-text-color: var(--ultralight);
-  --checkbox-checked-checkmark-hover-text-color: var(--focus-colo);
+  --checkbox-checked-checkmark-hover-text-color: var(--focus-color);
 
   --checkbox-focus-color: var(--focus-color);
   --checkbox-focus-color-translucent: var(--focus-color-translucent);
@@ -464,14 +464,6 @@
   --input-passivebox-text-color: var(--grey-dark);
   --input-passivebox-text-shadow: var(--text-shadow);
 
-  // Instruction box keys
-  --instructions-background-color: var(--morelight);
-  --instructions-border-color: var(--light);
-  --instructions-text-color: var(--grey-darkest);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--grey-medium);
-
   // Labels
   --label-color: var(--darkblue);
   --label-text-shadow: var(--text-shadow);
@@ -532,22 +524,6 @@
   --radio-toggle-offset: 0.3em;
   --radio-element-label-color: var(--grey-darker);
   --radio-element-label-text-shadow: var(--text-shadow);
-
-  // Results box keys
-  --resultsbox-margin: 0;
-  --resultsbox-background-color: var(--ultralight);
-  --resultsbox-icon-color: var(--ultralight);
-  --resultsbox-icon-tex-shadow: var(--text-shadow);
-  --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --resultsbox-header-text-color: var(--ultralight);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-success-color-base: var(--success-color);
-  --resultsbox-error-color-base: var(--error-color);
-  --resultsbox-warning-color-base: var(--warning-color);
-  --resultsbox-success-stripes: var(--success-stripes);
-  --resultsbox-error-stripes: var(--error-stripes);
-  --resultsbox-warning-stripes: var(--warning-stripes);
 
   // Select menu inputs
   --selectmenu-menu-background-color: var(--ultralight);

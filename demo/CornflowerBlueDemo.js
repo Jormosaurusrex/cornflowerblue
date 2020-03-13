@@ -1302,6 +1302,19 @@ class CornflowerBlueDemo {
 
     grindMessageBoxes() {
 
+        let messages = document.createElement('div');
+        messages.classList.add('example');
+        messages.classList.add('vert');
+
+        let content = document.createElement('p');
+        content.innerHTML = 'The content of a message box is raw html or any other element.';
+        messages.appendChild(new MessageBox({
+            title: 'This is a title',
+            content: content
+        }).container);
+        document.getElementById('boxes-message').appendChild(messages);
+
+
         let instructions = document.createElement('div');
         instructions.classList.add('example');
         instructions.classList.add('vert');
@@ -1329,20 +1342,20 @@ class CornflowerBlueDemo {
         responses.classList.add('example');
         responses.classList.add('vert');
 
-        responses.appendChild(new MessageBox({
+        responses.appendChild(new SuccessBox({
             results: [
                 "The file was imported successfully!"
             ]
         }).container);
 
-        responses.appendChild(new MessageBox({
+        responses.appendChild(new WarningBox({
             warnings: [
                 "The file was imported successfully, but some of the data was duplicated.",
                 "Duplicate entries have been removed."
             ]
         }).container);
 
-        responses.appendChild(new MessageBox({
+        responses.appendChild(new ErrorBox({
             errors: [
                 "The file was not imported.",
                 "The file's size was larger than can be accepted."

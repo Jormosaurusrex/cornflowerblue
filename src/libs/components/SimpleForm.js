@@ -184,9 +184,9 @@ class SimpleForm {
      * @param noexecution Don't execute onsuccess or onfailure.
      */
     handleResults(results, noexecution) {
-        if (this.messagebox) { this.messagebox.remove(); }
-        this.messagebox = new MessageBox(results).container;
-        this.headerbox.append(this.messagebox);
+        if (this.resultscontainer) { this.resultscontainer.remove(); }
+        this.resultscontainer = new ResultsContainer(results).container;
+        this.headerbox.append(this.resultscontainer);
         this.shade.deactivate();
 
         if (!noexecution) {
@@ -537,8 +537,8 @@ class SimpleForm {
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }
 
-    get messagebox() { return this._messagebox; }
-    set messagebox(messagebox) { this._messagebox = messagebox; }
+    get resultscontainer() { return this._resultscontainer; }
+    set resultscontainer(resultscontainer) { this._resultscontainer = resultscontainer; }
 
     get method() { return this.config.method; }
     set method(method) { this.config.method = method; }

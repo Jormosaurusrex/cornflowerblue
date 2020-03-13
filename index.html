@@ -62,8 +62,12 @@
         <script type="text/javascript" src="src/libs/components/Panel.js"></script>
         <script type="text/javascript" src="src/libs/components/FloatingPanel.js"></script>
         <script type="text/javascript" src="src/libs/components/Growler.js"></script>
-        <script type="text/javascript" src="src/libs/components/InstructionBox.js"></script>
-        <script type="text/javascript" src="src/libs/components/MessageBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/info/MessageBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/info/InstructionBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/info/ErrorBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/info/SuccessBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/info/WarningBox.js"></script>
+        <script type="text/javascript" src="src/libs/components/info/ResultsContainer.js"></script>
         <script type="text/javascript" src="src/libs/components/PasswordGenerator.js"></script>
         <script type="text/javascript" src="src/libs/components/PasswordChangeForm.js"></script>
         <script type="text/javascript" src="src/libs/components/TabBar.js"></script>
@@ -204,6 +208,11 @@
                     <article aria-hidden="true" tabindex="-1" id="t-messageboxes" aria-labelledby="messageboxes">
                         <h2 role="heading" aria-level="2">Message Boxes</h2>
                         <p>Information boxes are simple. The size of the icons changes based on how many lines of text are present.</p>
+                        <div class="demobox" id="boxes-message">
+                            <h3 role="heading" aria-level="3">Standard</h3>
+                            <code class="invoker">new MessageBox({options});</code>
+                            <p>An MessageBox is used to display basic information to a user.  This is mostly a base class.</p>
+                        </div>
                         <div class="demobox" id="boxes-instructions">
                             <h3 role="heading" aria-level="3">Standard</h3>
                             <code class="invoker">new InstructionBox({options});</code>
@@ -211,9 +220,8 @@
                         </div>
                         <div class="demobox" id="boxes-responses">
                             <h3 role="heading" aria-level="3">Form Response</h3>
-                            <code class="invoker">new MessageBox({options});</code>
                             <p>When submitted, forms can succeed or fail. In doing so, they can return messages (results, errors, and warnings).  Warnings alone do not prevent a form's success. These messages are returned and displayed automagically when using a <code>SimpleForm</code>, so these shouldn't be invoked alone.</p>
-                            <p>A <code>MessageBox</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain both <code>results</code> and <code>warnings</code> or <code>errors</code> and <code>warnings</code>.</p>
+                            <p>A <code>ResultsContainer</code> is actually a <em>container</em> for multiple information boxes, as a form submission can contain a <code>SuccessBox</code>, <code>WarningBox</code>, or <code>ErrorBox</code>.</p>
                         </div>
                     </article>
                     <article aria-hidden="true" tabindex="-1" id="t-buttons" aria-labelledby="buttons">
