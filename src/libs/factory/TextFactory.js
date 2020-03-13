@@ -94,6 +94,8 @@ class TextFactory {
             "primary": 'Primary',
             "punctuation": 'Punctuation',
             "required_lc": 'required',
+            "save" : "Save",
+            "save_columns" : "Save columns",
             "search": 'Search',
             "search_noresults": 'No entries were found matching your search terms.',
             "search_this_data": 'Search this data',

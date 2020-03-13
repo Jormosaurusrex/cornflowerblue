@@ -1,0 +1,23 @@
+div.column-configurator {
+  padding: 2em;
+  ul.column-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 0;
+    > li {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      margin-bottom: 1em;
+      div.checkbox {
+        margin: 0;
+      }
+      div.description {
+        padding: .5em 1em .5em 3em;
+        font-size: .8em;
+
+      }
+    }
+  }
+}

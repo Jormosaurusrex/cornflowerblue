@@ -72,6 +72,9 @@ class DataGrid extends Panel {
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
+            doubleclick: function(e, self) { // Action to take on double click
+                console.log('doubleclick');
+            },
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
@@ -447,49 +450,33 @@ class DataGrid extends Panel {
         switch(type) {
             case 'column':
                 title = TextFactory.get('configure_columns');
-                container = document.createElement('div');
-                container.classList.add('datagrid-configurator');
-                container.classList.add('column');
 
-                container.append(new InstructionBox({
-                    instructions: [TextFactory.get('datagrid-column-config-instructions')]
-                }).container);
+                let cc = new ColumnConfigurator({
+                    grid: me
+                });
+                container = cc.container;
 
-                let content = document.createElement('ul');
-                content.classList.add('elements');
-                for (let f of this.fields) {
-                    let li = document.createElement('li');
-
-                    let cbox = new BooleanToggle({
-                        label: f.label,
-                        checked: !f.hidden,
-                        classes: ['column'],
-                        onchange: function() {
-                            me.toggleColumn(f);
-                        }
-                    });
-                    li.appendChild(cbox.container);
-
-                    if (f.description) {
-                        let desc = document.createElement('div');
-                        desc.classList.add('description');
-                        desc.innerHTML = f.description;
-                        li.appendChild(desc);
+                let savecolumns = new ConstructiveButton({ // need to pass this to sub-routines
+                    text: TextFactory.get('save_columns'),
+                    icon: 'disc-check',
+                    action: function() {
+                        dialog.close();
                     }
-                    content.appendChild(li);
-                }
-
-                container.append(content);
+                });
+                actions.push(savecolumns);
                 break;
             case 'filter':
+                title = TextFactory.get('manage_filters');
+
                 let fc = new FilterConfigurator({
                     fields: this.fields,
                     filters: this.activefilters
                 });
                 container = fc.container;
 
-                let applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
+                let applyfiltersbutton = new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
+                    icon: 'disc-check',
                     action: function() {
                         fc.grindFilters();
                         me.activefilters = fc.filters;
@@ -500,7 +487,6 @@ class DataGrid extends Panel {
                 });
                 actions.push(applyfiltersbutton);
 
-                title = TextFactory.get('manage_filters');
                 break;
             default:
                 break;
@@ -724,6 +710,7 @@ class DataGrid extends Panel {
         }
         this.persist();
     }
+
 
     /**
      * Check to see that at least one column is visible, and if not, show a warning.
@@ -1019,6 +1006,11 @@ class DataGrid extends Panel {
      * @param event (optional) the click event
      */
     select(row, event) {
+
+        if (row.getAttribute('aria-selected') === 'true') {
+            this.deselect(row);
+            return;
+        }
 
         let deselectOthers = true;
         let othersSelected = false;
@@ -1503,6 +1495,12 @@ class DataGrid extends Panel {
                 if (me.selectable) {
                     me.select(row, e);
                 }
+
+            });
+            row.addEventListener('dblclick', function(e, self) {
+                if ((me.doubleclick) && (typeof me.doubleclick === 'function')) {
+                    me.doubleclick(e, self);
+                }
             });
 
             row.addEventListener('keydown', function(e) {
@@ -1663,6 +1661,7 @@ class DataGrid extends Panel {
 
     get activitynotifiericon() { return this.config.activitynotifiericon; }
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
+
     get activitynotifiertext() { return this.config.activitynotifiertext; }
     set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
 
@@ -1683,6 +1682,9 @@ class DataGrid extends Panel {
 
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
+
+    get doubleclick() { return this.config.doubleclick; }
+    set doubleclick(doubleclick) { this.config.doubleclick = doubleclick; }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }

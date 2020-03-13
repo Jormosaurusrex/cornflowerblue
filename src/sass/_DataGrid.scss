@@ -447,37 +447,3 @@ div.datagrid-container {
     }
   }
 }
-
-div.datagrid-configurator {
-  padding: 2em;
-  ul.elements {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    padding: 0;
-    li {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      div.description {
-        padding: .5em 0 .5em 0;
-        font-size: .8em;
-      }
-    }
-  }
-  &.column {
-    ul.elements {
-      li {
-        margin-bottom: 1em;
-        div.checkbox {
-          margin: 0;
-        }
-        div.description {
-          padding: .5em 1em .5em 3em;
-        }
-      }
-    }
-  }
-  &.filter {
-  }
-}

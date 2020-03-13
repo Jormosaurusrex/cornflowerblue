@@ -5357,33 +5357,29 @@ div.datagrid-container[aria-expanded=false] div.messagebox {
   display: none;
 }
 
-div.datagrid-configurator {
+div.column-configurator {
   padding: 2em;
 }
-div.datagrid-configurator ul.elements {
+div.column-configurator ul.column-list {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   padding: 0;
 }
-div.datagrid-configurator ul.elements li {
+div.column-configurator ul.column-list > li {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-}
-div.datagrid-configurator ul.elements li div.description {
-  padding: 0.5em 0 0.5em 0;
-  font-size: 0.8em;
-}
-div.datagrid-configurator.column ul.elements li {
   margin-bottom: 1em;
 }
-div.datagrid-configurator.column ul.elements li div.checkbox {
+div.column-configurator ul.column-list > li div.checkbox {
   margin: 0;
 }
-div.datagrid-configurator.column ul.elements li div.description {
+div.column-configurator ul.column-list > li div.description {
   padding: 0.5em 1em 0.5em 3em;
+  font-size: 0.8em;
 }
+
 div.filter-configurator {
   padding: 2em;
 }

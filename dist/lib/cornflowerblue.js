@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-11
+/*! Cornflower Blue - v0.1.1 - 2020-03-13
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2352,7 +2352,7 @@ class DestructiveButton extends SimpleButton {
         if (config.classes) {
             config.classes.push('destructive');
         } else {
-            config.classes = ['destructive', 'foobar'];
+            config.classes = ['destructive'];
         }
         super(config);
     }
@@ -2918,7 +2918,7 @@ class DatePicker {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build the full messagebox container
+     * Build the full container
      */
     buildContainer() {
         this.container = document.createElement('div');
@@ -6884,131 +6884,14 @@ class Growler extends FloatingPanel {
 
 }
 window.Growler = Growler;
-class InstructionBox {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            icon : 'help-circle', // If present, will be displayed large next to texts
-            id : null, // the id
-            instructions: [], // An array of instruction texts
-            classes: [] //Extra css classes to apply
-        };
-    }
-
-    /**
-     * Define the element
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        this.config = Object.assign({}, InstructionBox.DEFAULT_CONFIG, config);
-        if ((!this.instructions) || (this.instructions.length < 1)) { console.warn("No instructions provided to InstructionBox"); }
-        return this;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the actual DOM container.
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('instructions');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-
-        if (this.icon) {
-            this.container.appendChild(IconFactory.icon(this.icon));
-        }
-        if ((this.instructions) && (this.instructions.length > 0)) {
-            this.setInstructions(this.instructions);
-            this.container.appendChild(this.list);
-            // Apply specific style based on how many lines there are
-        }
-    }
-
-    /**
-     * Build the list object.  This is the dumbest method I've ever written.
-     */
-    buildList() {
-        this.list = document.createElement('ul');
-    }
-
-    /**
-     * Build in the instructions.  This method can also be used to re-write them in a new list, as with forms being activated and pacifyd
-     * @param instructions an array of strings.
-     */
-    setInstructions(instructions) {
-        this.container.classList.remove('size-1');
-        this.container.classList.remove('size-2');
-        this.container.classList.remove('size-3');
-        this.list.innerHTML = '';
-
-        for (let text of instructions) {
-            let li = document.createElement('li');
-            li.innerHTML = text;
-            this.list.appendChild(li);
-        }
-
-        if ((instructions.length > 0) && (instructions.length < 4)) {
-            this.container.classList.add(`size-${instructions.length}`);
-        }
-    }
-
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get instructions() { return this.config.instructions; }
-    set instructions(instructions) { this.config.instructions = instructions; }
-
-    get list() {
-        if (!this._list) { this.buildList(); }
-        return this._list;
-    }
-    set list(list) { this._list = list;  }
-
-    get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
-
-}
-window.InstructionBox = InstructionBox;
 class MessageBox {
 
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
-            errors: null, // array of errors
-            warnings: null, // array of warning strings
-            results: null, // array of result or success message strings
-            errorstitle: TextFactory.get('error'),
-            successtitle: TextFactory.get('success'),
-            warningstitle: TextFactory.get('warning'),
-            erroricon: 'warn-hex', // If present, will be displayed large next to texts
-            warningicon : 'warn-triangle', // If present, will be displayed large next to texts
-            successicon: 'disc-check', // If present, will be displayed large next to texts
+            icon: null,
+            title: null,
+            content: null,
             classes: [] //Extra css classes to apply
         };
     }
@@ -7019,13 +6902,12 @@ class MessageBox {
      */
     constructor(config) {
         this.config = Object.assign({}, MessageBox.DEFAULT_CONFIG, config);
-        return this;
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build the full messagebox container
+     * Build the full container
      */
     buildContainer() {
         this.container = document.createElement('div');
@@ -7033,80 +6915,24 @@ class MessageBox {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-
-        if ((this.errors) && (this.errors.length > 0)) {
-            this.container.appendChild(this.buildBox("errors"));
+        if (this.title) {
+            this.header = document.createElement('h3');
+            this.header.innerHTML = this.title;
+            this.container.appendChild(this.header);
         }
-
-        if ((this.results) && (this.results.length > 0)) {
-            this.container.appendChild(this.buildBox("results"));
+        if (this.content) {
+            if (this.icon) {
+                this.payload.appendChild(IconFactory.icon(this.icon));
+            }
+            this.content.classList.add('content');
+            this.payload.appendChild(this.content);
+            this.container.appendChild(this.payload);
         }
-
-        if ((this.warnings) && (this.warnings.length > 0)) {
-            this.container.appendChild(this.buildBox("warnings"));
-        }
-
     }
 
-    /**
-     * Build the specific box.
-     * @param type the type of box to create (errors|warnings|results)
-     * @return a DOM element
-     */
-    buildBox(type = 'results') {
-        let list,
-            icon,
-            title;
-
-        let box = document.createElement('div');
-        box.classList.add('box');
-        box.classList.add(type);
-
-        switch(type) {
-            case 'errors':
-                list = this.errors;
-                icon = this.erroricon;
-                title = this.errorstitle;
-                break;
-            case 'warnings':
-                list = this.warnings;
-                icon = this.warningicon;
-                title = this.warningstitle;
-                break;
-            case 'results':
-            default:
-                list = this.results;
-                icon = this.successicon;
-                title = this.successtitle;
-                break;
-        }
-
-        if (title) {
-            let telem = document.createElement('h4');
-            telem.innerHTML = title;
-            box.appendChild(telem);
-        }
-
-        let lbox = document.createElement('div');
-        lbox.classList.add('lbox');
-
-
-        if (icon) { lbox.appendChild(IconFactory.icon(icon)); }
-
-
-        let mlist = document.createElement('ul');
-        for (let text of list) {
-            let li = document.createElement('li');
-            li.innerHTML = text;
-            mlist.appendChild(li);
-        }
-
-        lbox.appendChild(mlist);
-
-        lbox.classList.add(`size-${list.length}`);
-
-        box.appendChild(lbox);
-        return box;
+    buildPayload() {
+        this.payload = document.createElement('div');
+        this.payload.classList.add('payload');
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -7131,35 +6957,123 @@ class MessageBox {
     }
     set container(container) { this._container = container; }
 
-    get errors() { return this.config.errors; }
-    set errors(errors) { this.config.errors = errors; }
+    get content() { return this.config.content; }
+    set content(content) { this.config.content = content; }
 
-    get errorstitle() { return this.config.errorstitle; }
-    set errorstitle(errorstitle) { this.config.errorstitle = errorstitle; }
+    get header() { return this._header; }
+    set header(header) { this._header = header; }
 
-    get erroricon() { return this.config.erroricon; }
-    set erroricon(erroricon) { this.config.erroricon = erroricon; }
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
 
-    get results() { return this.config.results; }
-    set results(results) { this.config.results = results; }
+    get payload() {
+        if (!this._payload) { this.buildPayload(); }
+        return this._payload;
+    }
+    set payload(payload) { this._payload = payload; }
 
-    get successtitle() { return this.config.successtitle; }
-    set successtitle(successtitle) { this.config.successtitle = successtitle; }
-
-    get successicon() { return this.config.successicon; }
-    set successicon(successicon) { this.config.successicon = successicon; }
-
-    get warnings() { return this.config.warnings; }
-    set warnings(warnings) { this.config.warnings = warnings; }
-
-    get warningstitle() { return this.config.warningstitle; }
-    set warningstitle(warningstitle) { this.config.warningstitle = warningstitle; }
-
-    get warningicon() { return this.config.warningicon; }
-    set warningicon(warningicon) { this.config.warningicon = warningicon; }
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
 
 }
 window.MessageBox = MessageBox;
+class InstructionBox extends MessageBox {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            icon : 'help-circle', // If present, will be displayed large next to texts
+            instructions: [] // An array of instruction texts
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, InstructionBox.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('instructions');
+        } else {
+            config.classes = ['instructions'];
+        }
+        super(config);
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get infolist() { return this.instructions; }
+    set infolist(infolist) { this.instructions = infolist; }
+
+    setInstructions(instructions) {
+        this.setInfolist(instructions);
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Replace existing infolist with some different ones
+     * @param infolist an array of info items
+     */
+    setInfolist(infolist) {
+        this.container.classList.remove('size-1');
+        this.container.classList.remove('size-2');
+        this.container.classList.remove('size-3');
+        this.list.innerHTML = '';
+
+        for (let text of infolist) {
+            let li = document.createElement('li');
+            li.innerHTML = text;
+            this.list.appendChild(li);
+        }
+
+        if ((infolist.length > 0) && (infolist.length < 4)) {
+            this.container.classList.add(`size-${infolist.length}`);
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the actual DOM container.
+     */
+    buildContainer() {
+        if ((this.infolist) && (this.infolist.length > 0)) {
+            for (let text of this.infolist) {
+                let li = document.createElement('li');
+                li.innerHTML = text;
+                this.list.appendChild(li);
+            }
+            this.content = this.list;
+        }
+
+        super.buildContainer();
+
+        if ((this.infolist.length > 0) && (this.infolist.length < 4)) {
+            this.container.classList.add(`size-${this.infolist.length}`);
+        }
+    }
+
+    /**
+     * Build the list object.  This is the dumbest method I've ever written.
+     */
+    buildList() {
+        this.list = document.createElement('ul');
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get instructions() { return this.config.instructions; }
+    set instructions(instructions) { this.config.instructions = instructions; }
+
+    get list() {
+        if (!this._list) { this.buildList(); }
+        return this._list;
+    }
+    set list(list) { this._list = list;  }
+
+}
+window.InstructionBox = InstructionBox;
 class PasswordGenerator {
 
     static get DEFAULT_CONFIG() {
@@ -10066,6 +9980,7 @@ class DataGrid extends Panel {
             mute: true,
             shape: 'square',
             secondicon: null,
+            tooltipgravity: 'w',
             text: TextFactory.get('actions'),
             icon: this.actionsbuttonicon,
             classes: ['actions'],
