@@ -5288,6 +5288,7 @@ div.datagrid-container table.grid.multiselecting td.actions button {
 }
 div.datagrid-container table.grid.selectable tbody tr {
   cursor: pointer;
+  background-color: var(--ultralight);
 }
 @media (hover: hover) and (pointer: fine) {
   div.datagrid-container table.grid.selectable tbody tr:hover {
@@ -5306,6 +5307,11 @@ div.datagrid-container table.grid.selectable tbody tr {
     --checkbox-checkmark-text-color: var(--hot-text-color);
     border-color: var(--hot-text-color);
   }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical button {
+    --button-default-color: var(--hot-text-color);
+    --button-default-text-color: var(--hot-text-color);
+    --button-border-color: var(--hot-text-color);
+  }
 }
 div.datagrid-container table.grid.selectable tbody tr:focus {
   outline: var(--datagrid-grid-selected-background-color) dashed 0.1em;
@@ -5322,29 +5328,6 @@ div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] > td {
   opacity: 1;
 }
 div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:focus {
-  outline: var(--datagrid-grid-selected-text-color) dashed 0.1em;
-}
-@media (hover: hover) and (pointer: fine) {
-  div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr:hover {
-    background-color: var(--datagrid-grid-hover-background-color);
-    color: var(--datagrid-grid-hover-text-color);
-    text-shadow: var(--datagrid-grid-hover-text-shadow);
-  }
-  div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr:hover td button {
-    --button-default-color: var(--hot-text-color);
-    --button-default-text-color: var(--hot-text-color);
-    --button-border-color: var(--hot-text-color);
-  }
-}
-div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr:focus {
-  outline: var(--datagrid-grid-selected-background-color) dashed 0.1em;
-}
-div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-selected=true] {
-  background-color: var(--datagrid-grid-selected-background-color);
-  color: var(--datagrid-grid-selected-text-color);
-  box-shadow: none;
-}
-div.datagrid-container table.grid.selectable:not(.multiselecting) tbody tr[aria-selected=true]:focus {
   outline: var(--datagrid-grid-selected-text-color) dashed 0.1em;
 }
 div.datagrid-container table.grid.schoriz td.mechanical,

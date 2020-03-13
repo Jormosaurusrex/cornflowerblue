@@ -354,6 +354,7 @@ div.datagrid-container {
       tbody {
         tr {
           cursor: pointer;
+          background-color: var(--ultralight);
           @include for-hover-only {
             &:hover {
               background-color: var(--datagrid-grid-hover-background-color);
@@ -369,6 +370,11 @@ div.datagrid-container {
                     --checkbox-checked-checkmark-text-color: var(--hot-text-color);
                     --checkbox-checkmark-text-color: var(--hot-text-color);
                     border-color: var(--hot-text-color);
+                  }
+                  button {
+                    --button-default-color: var(--hot-text-color);
+                    --button-default-text-color: var(--hot-text-color);
+                    --button-border-color: var(--hot-text-color);
                   }
                 }
               }
@@ -389,42 +395,6 @@ div.datagrid-container {
             }
             &:focus {
               outline: var(--datagrid-grid-selected-text-color) dashed .1em;
-            }
-          }
-        }
-      }
-      &:not(.multiselecting) {
-        tbody {
-          tr {
-            @include for-hover-only {
-              &:hover {
-                background-color: var(--datagrid-grid-hover-background-color);
-                color: var(--datagrid-grid-hover-text-color);
-                text-shadow: var(--datagrid-grid-hover-text-shadow);
-                td {
-                  button {
-                    --button-default-color: var(--hot-text-color);
-                    --button-default-text-color: var(--hot-text-color);
-                    --button-border-color: var(--hot-text-color);
-                  }
-                }
-              }
-            }
-            &:focus {
-              outline: var(--datagrid-grid-selected-background-color) dashed .1em;
-            }
-            &[aria-selected=true] {
-              background-color: var(--datagrid-grid-selected-background-color);
-              color: var(--datagrid-grid-selected-text-color);
-              box-shadow: none;
-              &:focus {
-                outline: var(--datagrid-grid-selected-text-color) dashed .1em;
-              }
-              > td {
-                &.mechanical {
-
-                }
-              }
             }
           }
         }
