@@ -562,8 +562,42 @@
 
   // Tooltip
   --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--cornflowerblue-translucent);
-  --tooltip-text-color: var(--grey-darkest);
+  --tooltip-background-color: var(--canvas-color-colored);
+  --tooltip-text-color: var(--standard-color);
   --tooltip-text-shadow: var(--text-shadow);
   --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+
+  // Boxes
+  // MessageBoxen
+  --messagebox-background-color: var(--canvas-color-colored);
+  --messagebox-text-color: var(--standard-color);
+  --messagebox-text-shadow: var(--text-shadow);
+
+  --messagebox-icon-color: var(--standard-color);
+  --messagebox-icon-text-shadow: none;
+
+  // Results box keys
+  --resultsbox-header-text-color: var(--hot-text-color);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-background-color: var(--canvas-color-primary);
+  --resultsbox-icon-text-shadow: var(--text-shadow);
+  --resultsbox-text-shadow: var(--text-shadow);
+
+  --successbox-color-base: var(--success-color);
+  --successbox-stripes: var(--success-stripes);
+
+  --warningbox-title-color: var(--grey-darkest);
+  --warningbox-color-base: var(--warning-color);
+  --warningbox-stripes: var(--warning-stripes);
+
+  --errorbox-color-base: var(--error-color);
+  --errorbox-stripes: var(--error-stripes);
+
+  // Instruction box keys
+  --instructions-background-color: var(--canvas-color-secondary);
+  --instructions-border-color: var(--canvas-color-tertiary);
+  --instructions-text-color: var(--standard-color);
+  --instructions-text-shadow: var(--text-shadow);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--standard-color);
 }

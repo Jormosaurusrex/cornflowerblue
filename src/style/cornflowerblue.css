@@ -443,10 +443,33 @@
   --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
   --tabbar-collapsed-title-color: var(--grey-meddark);
   --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--cornflowerblue-translucent);
-  --tooltip-text-color: var(--grey-darkest);
+  --tooltip-background-color: var(--canvas-color-colored);
+  --tooltip-text-color: var(--standard-color);
   --tooltip-text-shadow: var(--text-shadow);
   --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  --messagebox-background-color: var(--canvas-color-colored);
+  --messagebox-text-color: var(--standard-color);
+  --messagebox-text-shadow: var(--text-shadow);
+  --messagebox-icon-color: var(--standard-color);
+  --messagebox-icon-text-shadow: none;
+  --resultsbox-header-text-color: var(--hot-text-color);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-background-color: var(--canvas-color-primary);
+  --resultsbox-icon-text-shadow: var(--text-shadow);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --successbox-color-base: var(--success-color);
+  --successbox-stripes: var(--success-stripes);
+  --warningbox-title-color: var(--grey-darkest);
+  --warningbox-color-base: var(--warning-color);
+  --warningbox-stripes: var(--warning-stripes);
+  --errorbox-color-base: var(--error-color);
+  --errorbox-stripes: var(--error-stripes);
+  --instructions-background-color: var(--canvas-color-secondary);
+  --instructions-border-color: var(--canvas-color-tertiary);
+  --instructions-text-color: var(--standard-color);
+  --instructions-text-shadow: var(--text-shadow);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--standard-color);
 }
 
 @keyframes cfb-localspin {
@@ -4103,35 +4126,7 @@ div.tooltip.east:before {
   border-width: 0.5em 0.5em 0.5em 0;
 }
 
-:root {
-  --resultsbox-margin: 0;
-  --resultsbox-background-color: var(--ultralight);
-  --resultsbox-icon-color: var(--ultralight);
-  --resultsbox-icon-tex-shadow: var(--text-shadow);
-  --resultsbox-default-text-color: var(--grey-darkest);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --resultsbox-header-text-color: var(--ultralight);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-success-color-base: var(--success-color);
-  --resultsbox-error-color-base: var(--error-color);
-  --resultsbox-warning-color-base: var(--warning-color);
-  --resultsbox-success-stripes: var(--success-stripes);
-  --resultsbox-error-stripes: var(--error-stripes);
-  --resultsbox-warning-stripes: var(--warning-stripes);
-  --instructions-background-color: var(--morelight);
-  --instructions-border-color: var(--light);
-  --instructions-text-color: var(--grey-darkest);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--grey-medium);
-}
-
 div.messagebox {
-  --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--standard-color);
-  --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--standard-color);
-  --messagebox-icon-text-shadow: none;
   margin: 1em 0 1em 0;
   padding: 1em;
   background-color: var(--messagebox-background-color);
@@ -4199,8 +4194,8 @@ div.messagebox.instructions.size-3 div.payload > span.icon {
   font-size: 50pt;
 }
 div.messagebox.results {
-  --color-base: var(--resultsbox-success-color-base);
-  --stripe-base: var(--resultsbox-success-stripes);
+  --color-base: var(--successbox-color-base);
+  --stripe-base: var(--successbox-stripes);
   background-color: var(--resultsbox-background-color);
   border: 0.1em solid var(--color-base);
   background-image: var(--stripe-base);
@@ -4220,15 +4215,26 @@ div.messagebox.results div.payload > span.icon {
   text-shadow: var(--resultsbox-icon-text-shadow);
 }
 div.messagebox.results.errors {
-  --color-base: var(--resultsbox-error-color-base);
-  --stripe-base: var(--resultsbox-error-stripes);
+  --color-base: var(--errorbox-color-base);
+  --stripe-base: var(--errorbox-stripes);
 }
 div.messagebox.results.warnings {
-  --color-base: var(--resultsbox-warning-color-base);
-  --stripe-base: var(--resultsbox-warning-stripes);
+  --color-base: var(--warningbox-color-base);
+  --stripe-base: var(--warningbox-stripes);
+  --resultsbox-header-text-color: var(--warningbox-title-color);
 }
 
 div.resultsbox {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  align-content: flex-start;
+}
+
+div.resultsboxold {
   margin: 1em 0 1em 0;
   padding: 0;
   display: flex;
@@ -4237,17 +4243,17 @@ div.resultsbox {
   align-items: stretch;
   align-content: flex-start;
 }
-div.resultsbox div.box {
+div.resultsboxold div.box {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
 }
 @media (max-width: 599px) {
-  div.resultsbox div.box {
+  div.resultsboxold div.box {
     overflow: auto;
   }
 }
-div.resultsbox div.box div.lbox {
+div.resultsboxold div.box div.lbox {
   margin: 0;
   padding: 1em;
   border: 0.1em solid var(--color-base);
@@ -4258,7 +4264,7 @@ div.resultsbox div.box div.lbox {
   align-items: flex-start;
   align-content: flex-start;
 }
-div.resultsbox div.box div.lbox span.icon {
+div.resultsboxold div.box div.lbox span.icon {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -4269,11 +4275,11 @@ div.resultsbox div.box div.lbox span.icon {
   text-shadow: var(--resultsbox-icon-text-shadow);
 }
 @media (max-width: 599px) {
-  div.resultsbox div.box div.lbox span.icon {
+  div.resultsboxold div.box div.lbox span.icon {
     display: none;
   }
 }
-div.resultsbox div.box div.lbox ul {
+div.resultsboxold div.box div.lbox ul {
   flex-grow: 2;
   display: flex;
   flex-direction: column;
@@ -4283,24 +4289,24 @@ div.resultsbox div.box div.lbox ul {
   text-shadow: var(--resultsbox-text-shadow);
   color: var(--resultsbox-default-text-color);
 }
-div.resultsbox div.box div.lbox.size-1 {
+div.resultsboxold div.box div.lbox.size-1 {
   align-items: center;
 }
-div.resultsbox div.box div.lbox.size-1 ul {
+div.resultsboxold div.box div.lbox.size-1 ul {
   list-style-type: none;
 }
-div.resultsbox div.box div.lbox.size-1 span.icon {
+div.resultsboxold div.box div.lbox.size-1 span.icon {
   font-size: 24pt;
   margin-right: 0.5em;
 }
-div.resultsbox div.box div.lbox.size-2 {
+div.resultsboxold div.box div.lbox.size-2 {
   align-items: center;
 }
-div.resultsbox div.box div.lbox.size-2 span.icon {
+div.resultsboxold div.box div.lbox.size-2 span.icon {
   font-size: 40pt;
   margin-right: 0.5em;
 }
-div.resultsbox div.box div.lbox.size-3 span.icon {
+div.resultsboxold div.box div.lbox.size-3 span.icon {
   font-size: 50pt;
   margin-right: 0.2em;
 }
