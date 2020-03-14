@@ -255,8 +255,6 @@ class DataGrid extends Panel {
             cellDivider = ',', // cell divider
             rows = [];
 
-        // XXX TODO: Don't export hidden fields
-
         // Include the header row, if required.
         if ((this.exportheaderrow) && (this.exportheaderrow !== 'no')) {
             let colTitles = [],
