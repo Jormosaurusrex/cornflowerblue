@@ -12,6 +12,7 @@ class DataGrid extends Panel {
                  *
                     name: <string>,    // The variable name for this field (computer readable)
                     label: <string>,   // The human-readable name for the column
+                    readonly: false, // if true, this value cannot be changed
                     width: <number,    // The default width of the column
                     hidden: <boolean>, // Is the column hidden or not.
                     identifier: <boolean> // If true, marks the field as the unique identifier
@@ -72,9 +73,7 @@ class DataGrid extends Panel {
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
-            doubleclick: function(e, self) { // Action to take on double click
-                console.log('doubleclick');
-            },
+            doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
@@ -82,9 +81,40 @@ class DataGrid extends Panel {
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
 
-            rowactions: null, // an array of actions that can be used on items.
+            allowedits: true, // If true, the user can edit rows
+            edititeminstructions: [TextFactory.get('datagrid-dialog-item-edit-instructions')],
+            passiveeditinstructions: [TextFactory.get('datagrid-dialog-item-edit-passiveinstructions')],
+            rowactions: null, // an array of row action definition
+            //{
+            // label: <string>,
+            // icon: <iconid>,
+            // tooltip: <tooltip string>,
+            // tipicon: <iconid>, // if you want to change the tooltip icon
+            // type: <string>     // Action types are:
+            //                    // view - loads the item into a view window.
+            //                    //        If allowedits=true, this window has an edit toggle
+            //                    // edit - loads the row into an edit form. Sent to the createhook on save.
+            //                    // delete - deletes the row/item (asks for confirmation). Sent to deletehook.
+            //                    // duplicate - loads a copy of the item into an edit window.
+            //                    //             New item does not have an identifier field.  Sent to createhook.
+            //                    // function - passes the row to an external action, defined in the 'action' parameter
+            // action: function(e, self) {}  // Only used if type = 'function';  self in this case is the ButtonMenu
+            //                               // object, which has the rowdata itself set as it's .data()
+            //},
             rowactionsicon: 'menu', // Icon to use for row-actions button
+            updatehook: function(rowdata, self) { // Function fired when a data row is edited and then saved
+                self.datawindow('edit', rowdata);
 
+            },
+            deletehook: function(rowdata, self) { // function fired when a data row is deleted
+                self.datawindow('delete', rowdata);
+            },
+            duplicatehook: function(rowdata, self) { // function fired when a new data row is created
+                self.datawindow('duplicate', rowdata);
+            },
+            createhook: function(rowdata, self) { // function fired when a new data row is created
+                self.datawindow('create', rowdata);
+            },
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -441,38 +471,36 @@ class DataGrid extends Panel {
     configurator(type) {
         const me = this;
 
-        let title,
-            container,
-            actions = [];
+        let dialogconfig = {
+                actions: []
+            };
 
         switch(type) {
             case 'column':
-                title = TextFactory.get('configure_columns');
+                dialogconfig.title = TextFactory.get('configure_columns');
 
                 let cc = new ColumnConfigurator({
                     grid: me
                 });
-                container = cc.container;
-
-                let savecolumns = new ConstructiveButton({ // need to pass this to sub-routines
+                dialogconfig.content = cc.container;
+                dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('save_columns'),
                     icon: 'disc-check',
                     action: function() {
                         dialog.close();
                     }
-                });
-                actions.push(savecolumns);
+                }));
                 break;
             case 'filter':
-                title = TextFactory.get('manage_filters');
+                dialogconfig.title = TextFactory.get('manage_filters');
 
                 let fc = new FilterConfigurator({
                     fields: this.fields,
                     filters: this.activefilters
                 });
-                container = fc.container;
+                dialogconfig.container = fc.container;
 
-                let applyfiltersbutton = new ConstructiveButton({ // need to pass this to sub-routines
+                dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
                     icon: 'disc-check',
                     action: function() {
@@ -482,21 +510,146 @@ class DataGrid extends Panel {
                         me.persist();
                         dialog.close();
                     }
-                });
-                actions.push(applyfiltersbutton);
+                }));
 
                 break;
             default:
                 break;
         }
 
-        actions.push('closebutton');
-        let dialog = new DialogWindow({
-            title: title,
-            content: container,
-            actions: actions
-        });
+        dialogconfig.actions.push('closebutton');
+        let dialog = new DialogWindow(dialogconfig);
         dialog.open();
+    }
+
+    datawindow(mode, rowdata) {
+
+        let dialogconfig = {
+            actions: []
+        };
+
+        switch(mode) {
+            case 'edit':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-edit', this.elementname);
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata));
+                break;
+            case 'view':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-view', this.elementname);
+                dialogconfig.actions = ['closebutton'];
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, true));
+                break;
+            case 'create':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-create', this.elementname);
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata));
+                break;
+            case 'duplicate':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-duplicate', this.elementname);
+                if (this.identifier) {
+                    delete rowdata[this.identifier];
+                }
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata));
+                break;
+            case 'delete':
+                break;
+            default:
+                break;
+        }
+
+        dialogconfig.actions.push('closebutton');
+        let dialog = new DialogWindow(dialogconfig);
+        dialog.open();
+    }
+
+    buildForm(rowdata, asview) {
+        let form = {
+            passive: false,
+            elements: [],
+            actions: [],
+            handler: function() {}
+        };
+
+        for (let f of this.fields) {
+            let e,
+                config = {
+                    name: f.name,
+                    label: f.label,
+                    help: f.description,
+                    classes: f.classes,
+                    value: rowdata[f.name],
+                    renderer: f.renderer
+                };
+            //console.log(`${f.name}: ${rowdata[f.name]}`);
+            if (f.readonly) {
+                e = new HiddenField(config);
+            } else {
+                switch (f.type) {
+                    case 'number':
+                        e = new NumberInput(config);
+                        break;
+                    case 'date':
+                        e = new DateInput(config);
+                        break;
+                    case 'time':
+                        e = new DateInput(config);
+                        break;
+                    case 'boolean':
+                        e = new BooleanToggle(config);
+                        break;
+                    case 'url':
+                        e = new URLInput(config);
+                        break;
+                    case 'imageurl':
+                        e = new URLInput(config);
+                        break;
+                    case 'email':
+                        e = new EmailInput(config);
+                        break;
+                    case 'stringarray':
+                        e = new TextInput(config);
+                        break;
+                    case 'paragraph':
+                        e = new TextArea(config);
+                        break;
+                    case 'string':
+                    default:
+                        e = new TextInput(config);
+                        break;
+                }
+            }
+            form.elements.push(e);
+        }
+
+        if (!this.allowedits) { asview = true; } // always true in this
+
+        if (asview) {
+            form.passive = true;
+        } else {
+            if (this.edititeminstructions) {
+                form.instructions = {
+                    icon: 'help-circle',
+                    instructions: this.edititeminstructions
+                }
+            }
+            form.actions = [
+                new ConstructiveButton({
+                    text: TextFactory.get('save_changes'),
+                    icon: "check-circle",
+                    submits: true,
+                    disabled: true  // No action needed.
+                }),
+                new DestructiveButton({
+                    text: TextFactory.get('cancel_changes'),
+                    icon: "echx-circle",
+                    mute: true,
+                    action: function(e, self) {
+                        e.preventDefault();
+                        self.form.pacify();
+                    }
+                })
+            ];
+
+        }
+        return form;
     }
 
     /**
@@ -708,7 +861,6 @@ class DataGrid extends Panel {
         }
         this.persist();
     }
-
 
     /**
      * Check to see that at least one column is visible, and if not, show a warning.
@@ -1493,12 +1645,6 @@ class DataGrid extends Panel {
                 if (me.selectable) {
                     me.select(row, e);
                 }
-
-            });
-            row.addEventListener('dblclick', function(e, self) {
-                if ((me.doubleclick) && (typeof me.doubleclick === 'function')) {
-                    me.doubleclick(e, self);
-                }
             });
 
             row.addEventListener('keydown', function(e) {
@@ -1543,11 +1689,71 @@ class DataGrid extends Panel {
             row.appendChild(cell);
         }
 
+        row.addEventListener('dblclick', function(e, self) {
+            if ((me.doubleclick) && (typeof me.doubleclick === 'function')) {
+                me.doubleclick(e, self);
+            } else {
+                me.datawindow('view', rdata);
+            }
+        });
+
         if ((this.rowactions) && (this.rowactions.length > 0)) {
 
             let cell = document.createElement('td');
             cell.classList.add('actions');
             cell.classList.add('mechanical');
+
+            /*
+                        //    label: "Menu Text", // text
+                        //    tooltip: null, // Tooltip text
+                        //    tipicon: null, // Tooltip icon, if any
+                        //    icon: null, // Icon to use in the menu, if any
+                        //    action: function() { } // what to do when the tab is clicked.
+                        // }
+             */
+            let rowactions = [];
+
+            for (let ra of this.rowactions) {
+                let myaction = {
+                    label: ra.label,
+                    toolip: ra.tooltip,
+                    icon: ra.icon,
+                    tipicon: ra.tipicon
+                };
+
+                switch(ra.type) {
+                    case 'edit':
+                        myaction.action = function(event, buttonmenu) {
+                            if ((me.updatehook) && (typeof me.updatehook === 'function')) {
+                                me.updatehook(rdata, me);
+                            }
+                        };
+                        break;
+                    case 'delete':
+                        myaction.action = function(event, buttonmenu) {
+                            if ((me.deletehook) && (typeof me.deletehook === 'function')) {
+                                me.deletehook(rdata, me);
+                            }
+                        };
+                        break;
+                    case 'duplicate':
+                        myaction.action = function(event, buttonmenu) {
+                            if ((me.duplicatehook) && (typeof me.duplicatehook === 'function')) {
+                                me.duplicatehook(rdata, me);
+                            }
+                        };
+                        break;
+                    case 'function':
+                        myaction.action = ra.action;
+                        break;
+                    case 'view':
+                    default:
+                        break;
+                }
+
+                rowactions.push(myaction);
+            }
+
             cell.appendChild(new ButtonMenu({
                 ghost: true,
                 shape: 'square',
@@ -1557,7 +1763,7 @@ class DataGrid extends Panel {
                 text: TextFactory.get('actions'),
                 icon: this.rowactionsicon,
                 classes: ['actions'],
-                items: this.rowactions
+                items: rowactions
             }).button);
             row.appendChild(cell);
         }
@@ -1663,14 +1869,39 @@ class DataGrid extends Panel {
     get activitynotifiertext() { return this.config.activitynotifiertext; }
     set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
 
+    get allowedits() { return this.config.allowedits; }
+    set allowedits(allowedits) { this.config.allowedits = allowedits; }
+
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
 
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
 
+    get createhook() { return this.config.createhook; }
+    set createhook(createhook) {
+        if (typeof createhook !== 'function') {
+            console.error("Value provided to createhook is not a function!");
+        }
+        this.config.createhook = createhook;
+    }
+
     get currentsort() { return this._currentsort; }
     set currentsort(currentsort) { this._currentsort = currentsort; }
+
+    get duplicatehook() { return this.config.duplicatehook; }
+    set duplicatehook(duplicatehook) {
+        if (typeof duplicatehook !== 'function') {
+            console.error("Value provided to duplicatehook is not a function!");
+        }
+        this.config.duplicatehook = duplicatehook;
+    }
+
+    get edititeminstructions() { return this.config.edititeminstructions; }
+    set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
+
+    get elementname() { return this.config.elementname; }
+    set elementname(elementname) { this.config.elementname = elementname; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
@@ -1678,11 +1909,24 @@ class DataGrid extends Panel {
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
 
+    get deletehook() { return this.config.deletehook; }
+    set deletehook(deletehook) {
+        if (typeof deletehook !== 'function') {
+            console.error("Value provided to deletehook is not a function!");
+        }
+        this.config.deletehook = deletehook;
+    }
+
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
 
     get doubleclick() { return this.config.doubleclick; }
-    set doubleclick(doubleclick) { this.config.doubleclick = doubleclick; }
+    set doubleclick(doubleclick) {
+        if (typeof doubleclick !== 'function') {
+            console.error("Value provided to doubleclick is not a function!");
+        }
+        this.config.doubleclick = doubleclick;
+    }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }
@@ -1795,6 +2039,9 @@ class DataGrid extends Panel {
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
 
+    get passiveeditinstructions() { return this.config.passiveeditinstructions; }
+    set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }
+
     get rowactions() { return this.config.rowactions; }
     set rowactions(rowactions) { this.config.rowactions = rowactions; }
 
@@ -1817,7 +2064,12 @@ class DataGrid extends Panel {
     set selectable(selectable) { this.config.selectable = selectable; }
 
     get selectaction() { return this.config.selectaction; }
-    set selectaction(selectaction) { this.config.selectaction = selectaction; }
+    set selectaction(selectaction) {
+        if (typeof selectaction !== 'function') {
+            console.error("Value provided to selectaction is not a function!");
+        }
+        this.config.selectaction = selectaction;
+    }
 
     get shade() {
         if (!this._shade) { this.buildShade(); }
@@ -1848,6 +2100,14 @@ class DataGrid extends Panel {
         return this._thead;
     }
     set thead(thead) { this._thead = thead; }
+
+    get updatehook() { return this.config.updatehook; }
+    set updatehook(updatehook) {
+        if (typeof updatehook !== 'function') {
+            console.error("Value provided to updatehook is not a function!");
+        }
+        this.config.updatehook = updatehook;
+    }
 
 }
 window.DataGrid = DataGrid;

@@ -133,6 +133,7 @@ div.window-container {
             z-index: 10;
             div.header,
             div.elements {
+              min-width: 35em;
               padding: 0;
             }
           }

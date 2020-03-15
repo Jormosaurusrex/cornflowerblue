@@ -767,12 +767,14 @@ class CornflowerBlueDemo {
         let dg = new DataGrid({
             id: 'cfb-demo-grid-lz',
             title: 'Songs by Led Zeppelin',
+            elementname: 'Song',
             fields: [
                 {
                     name: "id",
                     label: "ID",
                     width: 1,
                     identifier: true,
+                    readonly: true,
                     type: "number",
                     nodupe: true,
                     hidden: true,
@@ -854,26 +856,19 @@ class CornflowerBlueDemo {
                     label: 'Edit',
                     icon: 'pencil',
                     tooltip: 'Edit this item.',
-                    action: function(e, self) {
-                        console.log(self.data);
-                    }
+                    type: 'edit'
                 },
                 {
                     label: 'Duplicate',
                     icon: 'duplicate',
                     tooltip: 'Duplicate this item.',
-                    action: function(e, self) {
-                        console.log(self.data);
-                    }
+                    type: 'duplicate'
                 },
                 {
                     label: 'Delete',
                     icon: 'trashcan',
                     tooltip: 'Delete this item.',
-                    action: function(e, self) {
-                        console.log(self.data);
-                        dg.deleteRow(self.data.rowid);
-                    }
+                    type: 'delete'
                 }
             ],
             source: 'demo/data/lz.json'

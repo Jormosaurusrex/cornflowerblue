@@ -315,8 +315,10 @@ class InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
         }
         if (this.label) { this.container.appendChild(this.labelobj); }
 
@@ -401,8 +403,10 @@ class InputElement {
         if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
         if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 
-        for (let c of this.classes) {
-            this.input.classList.add(c);
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.input.classList.add(c);
+            }
         }
         this.input.addEventListener('change', function(e) {
             if ((me.onchange) && (typeof me.onchange === 'function')) {

@@ -4452,6 +4452,7 @@ div.window-container div.dialog.isform div.content form div.contentbox {
 }
 div.window-container div.dialog.isform div.content form div.contentbox div.header,
 div.window-container div.dialog.isform div.content form div.contentbox div.elements {
+  min-width: 35em;
   padding: 0;
 }
 div.window-container div.dialog.isform div.content form div.actions {
