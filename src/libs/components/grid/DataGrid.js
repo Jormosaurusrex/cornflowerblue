@@ -82,8 +82,11 @@ class DataGrid extends Panel {
             multiselecticon: 'checkmark',
 
             allowedits: true, // If true, the user can edit rows
-            edititeminstructions: [TextFactory.get('datagrid-dialog-item-edit-instructions')],
-            passiveeditinstructions: [TextFactory.get('datagrid-dialog-item-edit-passiveinstructions')],
+            instructionsicon: 'help-circle',
+            edititeminstructions: 'datagrid-dialog-item-edit-instructions',
+            createiteminstructions: 'datagrid-dialog-item-create-instructions',
+            deleteiteminstructions: 'datagrid-dialog-item-delete-instructions',
+            duplicateiteminstructions: 'datagrid-dialog-item-duplicate-instructions',
             rowactions: null, // an array of row action definition
             //{
             // label: <string>,
@@ -531,25 +534,28 @@ class DataGrid extends Panel {
         switch(mode) {
             case 'edit':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-edit', this.elementname);
-                dialogconfig.form = new SimpleForm(this.buildForm(rowdata));
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             case 'view':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-view', this.elementname);
                 dialogconfig.actions = ['closebutton'];
-                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, true));
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             case 'create':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-create', this.elementname);
-                dialogconfig.form = new SimpleForm(this.buildForm(rowdata));
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             case 'duplicate':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-duplicate', this.elementname);
                 if (this.identifier) {
                     delete rowdata[this.identifier];
                 }
-                dialogconfig.form = new SimpleForm(this.buildForm(rowdata));
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             case 'delete':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-delete', this.elementname);
+                dialogconfig.actions = ['cancelbutton'];
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             default:
                 break;
@@ -560,12 +566,19 @@ class DataGrid extends Panel {
         dialog.open();
     }
 
-    buildForm(rowdata, asview) {
+    buildForm(rowdata, mode) {
+        const me = this;
         let form = {
             passive: false,
             elements: [],
             actions: [],
-            handler: function() {}
+            handler: function(self, callback) {
+                let results = {
+                    success: false,
+                    errors: ['Handler is not defined.']
+                };
+                callback(results);
+            }
         };
 
         for (let f of this.fields) {
@@ -578,7 +591,6 @@ class DataGrid extends Panel {
                     value: rowdata[f.name],
                     renderer: f.renderer
                 };
-            //console.log(`${f.name}: ${rowdata[f.name]}`);
             if (f.readonly) {
                 e = new HiddenField(config);
             } else {
@@ -619,36 +631,106 @@ class DataGrid extends Panel {
             form.elements.push(e);
         }
 
-        if (!this.allowedits) { asview = true; } // always true in this
+        if (!this.allowedits) { mode = 'view'; } // always true in this
 
-        if (asview) {
-            form.passive = true;
-        } else {
-            if (this.edititeminstructions) {
-                form.instructions = {
-                    icon: 'help-circle',
-                    instructions: this.edititeminstructions
-                }
-            }
-            form.actions = [
-                new ConstructiveButton({
-                    text: TextFactory.get('save_changes'),
-                    icon: "check-circle",
-                    submits: true,
-                    disabled: true  // No action needed.
-                }),
-                new DestructiveButton({
-                    text: TextFactory.get('cancel_changes'),
-                    icon: "echx-circle",
-                    mute: true,
-                    action: function(e, self) {
-                        e.preventDefault();
-                        self.form.pacify();
+        switch(mode) {
+            case 'edit':
+                if (this.edititeminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.edititeminstructions, this.elementname)]
                     }
-                })
-            ];
-
+                }
+                if ((this.updatehook) && (typeof this.updatehook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.updatehook(self);
+                    };
+                }
+                form.actions = [
+                    new ConstructiveButton({
+                        text: TextFactory.get('datagrid-dialog-item-save', this.elementname),
+                        icon: "check-circle",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'duplicate':
+                if (this.duplicateiteminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.duplicateiteminstructions, this.elementname)]
+                    }
+                }
+                if ((this.createhook) && (typeof this.createhook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.createhook(self);
+                    };
+                }
+                form.actions = [
+                    new ConstructiveButton({
+                        text: TextFactory.get('datagrid-dialog-item-duplicate', this.elementname),
+                        icon: "duplicate",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'create':
+                if (this.createiteminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.createiteminstructions, this.elementname)]
+                    }
+                }
+                if ((this.createhook) && (typeof this.createhook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.createhook(self);
+                    };
+                }
+                form.actions = [
+                    new ConstructiveButton({
+                        text: TextFactory.get('datagrid-dialog-item-create', this.elementname),
+                        icon: "plus-circle",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'delete':
+                if (this.deleteiteminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.deleteiteminstructions, this.elementname)]
+                    }
+                }
+                if ((this.deletehook) && (typeof this.deletehook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.deletehook(self);
+                    };
+                }
+                form.passive = true;
+                form.elements = [
+                    new HiddenField({
+                        name: this.identifier,
+                        hidden: true,
+                        value: rowdata[this.identifier],
+                    })
+                ];
+                form.actions = [
+                    new ConstructiveButton({
+                        text: [TextFactory.get('datagrid-dialog-item-delete', this.elementname)],
+                        icon: "trashcan",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'view':
+                form.passive = true;
+                break;
         }
+
         return form;
     }
 
@@ -1724,23 +1806,17 @@ class DataGrid extends Panel {
                 switch(ra.type) {
                     case 'edit':
                         myaction.action = function(event, buttonmenu) {
-                            if ((me.updatehook) && (typeof me.updatehook === 'function')) {
-                                me.updatehook(rdata, me);
-                            }
+                            me.datawindow('edit', rdata);
                         };
                         break;
                     case 'delete':
                         myaction.action = function(event, buttonmenu) {
-                            if ((me.deletehook) && (typeof me.deletehook === 'function')) {
-                                me.deletehook(rdata, me);
-                            }
+                            me.datawindow('delete', rdata);
                         };
                         break;
                     case 'duplicate':
                         myaction.action = function(event, buttonmenu) {
-                            if ((me.duplicatehook) && (typeof me.duplicatehook === 'function')) {
-                                me.duplicatehook(rdata, me);
-                            }
+                            me.datawindow('duplicate', rdata);
                         };
                         break;
                     case 'function':
@@ -1886,8 +1962,22 @@ class DataGrid extends Panel {
         this.config.createhook = createhook;
     }
 
+    get createiteminstructions() { return this.config.createiteminstructions; }
+    set createiteminstructions(createiteminstructions) { this.config.createiteminstructions = createiteminstructions; }
+
     get currentsort() { return this._currentsort; }
     set currentsort(currentsort) { this._currentsort = currentsort; }
+
+    get deletehook() { return this.config.deletehook; }
+    set deletehook(deletehook) {
+        if (typeof deletehook !== 'function') {
+            console.error("Value provided to deletehook is not a function!");
+        }
+        this.config.deletehook = deletehook;
+    }
+
+    get deleteiteminstructions() { return this.config.deleteiteminstructions; }
+    set deleteiteminstructions(deleteiteminstructions) { this.config.deleteiteminstructions = deleteiteminstructions; }
 
     get duplicatehook() { return this.config.duplicatehook; }
     set duplicatehook(duplicatehook) {
@@ -1896,6 +1986,9 @@ class DataGrid extends Panel {
         }
         this.config.duplicatehook = duplicatehook;
     }
+
+    get duplicateiteminstructions() { return this.config.duplicateiteminstructions; }
+    set duplicateiteminstructions(duplicateiteminstructions) { this.config.duplicateiteminstructions = duplicateiteminstructions; }
 
     get edititeminstructions() { return this.config.edititeminstructions; }
     set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
@@ -2011,6 +2104,9 @@ class DataGrid extends Panel {
 
     get identifier() { return this._identifier; }
     set identifier(identifier) { this._identifier = identifier; }
+
+    get instructionsicon() { return this.config.instructionsicon; }
+    set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
 
     get itemcount()  { return this._itemcount; }
     set itemcount(itemcount) { this._itemcount = itemcount; }
