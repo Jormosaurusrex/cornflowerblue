@@ -68,6 +68,7 @@ module.exports = function(grunt) {
                     'src/libs/components/SimpleProgressMeter.js',
                     'src/libs/components/RadialProgressMeter.js',
                     'src/libs/components/grid/DataGrid.js',
+                    'src/libs/components/grid/GridField.js',
                     'src/libs/components/grid/FilterConfigurator.js',
                     'src/libs/components/grid/ColumnConfigurator.js',
                     'src/libs/SimpleForm.js'

@@ -772,7 +772,6 @@ class CornflowerBlueDemo {
                 {
                     name: "id",
                     label: "ID",
-                    width: 1,
                     identifier: true,
                     readonly: true,
                     type: "number",
@@ -782,7 +781,6 @@ class CornflowerBlueDemo {
                 },{
                     name: "track",
                     label: "Track",
-                    width: 1,
                     type: "number",
                     nodupe: true,
                     filterable: true,
@@ -793,14 +791,12 @@ class CornflowerBlueDemo {
                 }, {
                     name: "image",
                     label: "Cover",
-                    width: 2,
                     resize: true,
                     type: "imageurl",
                     description: "The album cover."
                 }, {
                     name: "album",
                     label: "Album",
-                    width: 3,
                     resize: true,
                     type: "string",
                     filterable: true,
@@ -809,14 +805,12 @@ class CornflowerBlueDemo {
                 }, {
                     name: "released",
                     label: "Released",
-                    width: 1,
                     filterable: true,
                     description: "The date the album was released.",
                     type: "date"
                 }, {
                     name: "title",
                     label: "Title",
-                    width: 3,
                     resize: true,
                     type: "string",
                     filterable: true,
@@ -825,7 +819,6 @@ class CornflowerBlueDemo {
                 }, {
                     name: "writers",
                     label: "Writers",
-                    width: 3,
                     resize: true,
                     nodupe: true,
                     filterable: true,
@@ -836,14 +829,12 @@ class CornflowerBlueDemo {
                 }, {
                     name: "label",
                     label: "Label",
-                    width: 1,
                     filterable: true,
                     description: "The record label the album was released by.",
                     type: "string"
                 }, {
                     name: "length",
                     label: "Length",
-                    width: 1,
                     nodupe: true,
                     description: "The time length of the song.",
                     type: "time"

@@ -13,7 +13,6 @@ class DataGrid extends Panel {
                     name: <string>,    // The variable name for this field (computer readable)
                     label: <string>,   // The human-readable name for the column
                     readonly: false, // if true, this value cannot be changed
-                    width: <number,    // The default width of the column
                     hidden: <boolean>, // Is the column hidden or not.
                     identifier: <boolean> // If true, marks the field as the unique identifier
                                           // for a data set.  An identifier is required if the
