@@ -160,6 +160,38 @@ class DialogWindow {
 
             this.form.dialog = this;
 
+            if ((this.actions) && (this.actions.length > 0)) {
+                for (let a of this.actions) {
+                    if (typeof a === 'string') { // it's a keyword
+                        switch(a) {
+                            case 'closebutton':
+                                this.form.actions.push(new SimpleButton({
+                                    text: this.closetext,
+                                    ghost: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }));
+                                break;
+                            case 'cancelbutton':
+                                this.form.actions.push(new DestructiveButton({
+                                    text: this.canceltext,
+                                    mute: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }));
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        this.form.actions.push(a);
+                    }
+                }
+            }
+
+
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.form.form);

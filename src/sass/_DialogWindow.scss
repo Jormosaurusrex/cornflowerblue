@@ -119,17 +119,21 @@ div.window-container {
       div.content {
         margin: 0;
         padding: 0;
+        overflow: hidden;
         form {
           position: relative;
           margin: 0;
           border: 0;
           padding: 0;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
           div.contentbox {
             position: relative;
             flex-grow: 1;
-            max-height: 30%;
+            //max-height: 30%;
             padding: .5em 1.5em .5em 1.5em;
-            overflow: visible;
+            overflow: auto;
             z-index: 10;
             div.header,
             div.elements {

@@ -190,6 +190,25 @@ div.datagrid-container {
         td {
           padding: 1em;
           white-space: nowrap;
+          button {
+            background-color: transparent;
+            @include for-hover-only {
+              &:hover {
+                background-image: none;
+                box-shadow: none;
+              }
+            }
+            &.menu {
+              &[aria-expanded=true] {
+                --button-border-color: var(--focus-color);
+                --button-default-color: var(--focus-color);
+                --button-default-text-color: var(--focus-color);
+                opacity: 1;
+                background-image: none;
+                box-shadow: var(--button-ghost-box-shadow);
+              }
+            }
+          }
           &.italic {
             font-style: oblique;
           }
@@ -218,25 +237,6 @@ div.datagrid-container {
         &[data-matched-filters] {
           &[data-search-hidden=true] {
             display: none;
-          }
-        }
-        button {
-          background-color: transparent;
-          @include for-hover-only {
-            &:hover {
-              background-image: none;
-              box-shadow: none;
-            }
-          }
-          &.menu {
-            &[aria-expanded=true] {
-              --button-border-color: var(--focus-color);
-              --button-default-color: var(--focus-color);
-              --button-default-text-color: var(--focus-color);
-              opacity: 1;
-              background-image: none;
-              box-shadow: var(--button-ghost-box-shadow);
-            }
           }
         }
         &:focus-within {
@@ -395,6 +395,18 @@ div.datagrid-container {
             }
             &:focus {
               outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+            }
+            @include for-hover-only {
+              &:hover {
+                background-color: var(--datagrid-grid-hover-background-color);
+                color: var(--datagrid-grid-hover-text-color);
+                text-shadow: var(--datagrid-grid-hover-text-shadow);
+                > td {
+                  opacity: 1;
+                  background-color: var(--datagrid-grid-hover-background-color);
+                  box-shadow: none;
+                }
+              }
             }
           }
         }

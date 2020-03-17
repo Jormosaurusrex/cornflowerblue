@@ -514,7 +514,8 @@ class DataGrid extends Panel {
      */
     datawindow(mode, rowdata) {
 
-        let dialogconfig = {
+        let dialog,
+            dialogconfig = {
             actions: []
         };
 
@@ -522,16 +523,19 @@ class DataGrid extends Panel {
             case 'edit':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-edit', this.elementname);
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                dialogconfig.actions = ['cancelbutton'];
                 break;
             case 'create':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-create', this.elementname);
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                dialogconfig.actions = ['cancelbutton'];
                 break;
             case 'duplicate':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-duplicate', this.elementname);
                 if (this.identifier) {
                     delete rowdata[this.identifier];
                 }
+                dialogconfig.actions = ['cancelbutton'];
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             case 'delete':
@@ -546,9 +550,7 @@ class DataGrid extends Panel {
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
         }
-
-        dialogconfig.actions.push('closebutton');
-        let dialog = new DialogWindow(dialogconfig);
+        dialog = new DialogWindow(dialogconfig);
         dialog.open();
     }
 
