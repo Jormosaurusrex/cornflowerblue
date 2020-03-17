@@ -2,6 +2,9 @@ div.input-container,
 div.textarea-container {
   margin: .5em 0 .5em 0;
   position: relative;
+  label {
+    margin-top: 0;
+  }
   div.wrap {
     position: relative;
     div.inputcontrol {
@@ -92,7 +95,7 @@ div.textarea-container {
   div.topcontrol {
     position: absolute;
     right: 0;
-    top: 1.3em;
+    top: 0;
     z-index: 10;
     transition: all .2s;
     --button-default-color: var(--input-subline-text-color);
@@ -137,9 +140,8 @@ div.textarea-container {
   div.passivebox {
     transition: all .2s;
     background-color: var(--input-passivebox-background-color);
-    border: .1em solid var(--input-passivebox-background-color);
-    border-radius: var(--input-border-radius);
     padding: var(--input-default-padding);
+    padding-left: 0;
     vertical-align: middle;
     color: var(--input-passivebox-text-color);
     width: 100%;
@@ -338,6 +340,12 @@ div.textarea-container {
     div.passivebox {
       display: block;
       opacity: 1;
+      a {
+        img {
+          height: 3em;
+          max-height: 3em;
+        }
+      }
     }
   }
 }

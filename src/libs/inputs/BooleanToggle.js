@@ -13,7 +13,10 @@ class BooleanToggle {
             style: null, // Default to box
             onchange: null, // The change handler. Passed (self).
             validator: null, // A function to run to test validity. Passed the self; returns true or false.,
-            value: null // the value of the checkbox
+            value: null, // the value of the checkbox
+            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+                return `${data}`;
+            }
         };
     }
 
@@ -219,6 +222,14 @@ class BooleanToggle {
 
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
+
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
 
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }

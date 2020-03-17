@@ -41,7 +41,11 @@ class InputElement {
             onkeydown: null, // action to execute on key down. Passed (event, self).
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
-            validator: null // A function to run to test validity. Passed the self.
+            validator: null, // A function to run to test validity. Passed the self.
+            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+                return `${data}`;
+            }
+
         };
     }
 
@@ -301,8 +305,19 @@ class InputElement {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     get passivetext() {
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
+        let v;
+        if (this.value) {
+            v = this.value;
+        } else if (this.config.value) {
+            v = this.config.value;
+        }
+        if (v) {
+            if (this.renderer) {
+                return this.renderer(v);
+            }
+            return v;
+        }
+
         return this.unsettext;
     }
 
@@ -745,6 +760,14 @@ class InputElement {
     }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
 
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
+
     get required() { return this.config.required; }
     set required(required) { this.config.required = required; }
 
@@ -778,8 +801,6 @@ class InputElement {
 
     get warnings() { return this._warnings; }
     set warnings(warnings) { this._warnings = warnings; }
-
-
 
 }
 window.InputElement = InputElement;

@@ -140,6 +140,12 @@ class DataGrid extends Panel {
         } else {
             this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
         }
+        let nf = [];
+        for (let f of this.fields) {
+            nf.push(new GridField(f));
+        }
+        this.fields = nf;
+
         for (let f of this.fields) {
             if (f.identifier) { this.identifier = f.name; }
         }
@@ -327,7 +333,7 @@ class DataGrid extends Panel {
                     continue; // Skip hidden
                 }
                 let val;
-                switch (f.type) {
+                switch (f.type) {  // XXX Change to GridField
                     case 'date':
                         val = d[f.name].toString().replace(/"/g,"\\\"");
                         break;
@@ -524,6 +530,12 @@ class DataGrid extends Panel {
         dialog.open();
     }
 
+    /**
+     * Opens a data window about the row for various purposes
+     * @param mode the mode of the window (view|edit|create|duplicate|delete)
+     *
+     * @param rowdata the data for the row
+     */
     datawindow(mode, rowdata) {
 
         let dialogconfig = {
@@ -533,11 +545,6 @@ class DataGrid extends Panel {
         switch(mode) {
             case 'edit':
                 dialogconfig.title = TextFactory.get('datagrid-dialog-item-edit', this.elementname);
-                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
-                break;
-            case 'view':
-                dialogconfig.title = TextFactory.get('datagrid-dialog-item-view', this.elementname);
-                dialogconfig.actions = ['closebutton'];
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
             case 'create':
@@ -556,7 +563,11 @@ class DataGrid extends Panel {
                 dialogconfig.actions = ['cancelbutton'];
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
+            case 'view':
             default:
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-view', this.elementname);
+                dialogconfig.actions = ['closebutton'];
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
         }
 
@@ -581,52 +592,7 @@ class DataGrid extends Panel {
         };
 
         for (let f of this.fields) {
-            let e,
-                config = {
-                    name: f.name,
-                    label: f.label,
-                    help: f.description,
-                    classes: f.classes,
-                    value: rowdata[f.name],
-                    renderer: f.renderer
-                };
-            if (f.readonly) {
-                e = new HiddenField(config);
-            } else {
-                switch (f.type) {
-                    case 'number':
-                        e = new NumberInput(config);
-                        break;
-                    case 'date':
-                        e = new DateInput(config);
-                        break;
-                    case 'time':
-                        e = new DateInput(config);
-                        break;
-                    case 'boolean':
-                        e = new BooleanToggle(config);
-                        break;
-                    case 'url':
-                        e = new URLInput(config);
-                        break;
-                    case 'imageurl':
-                        e = new URLInput(config);
-                        break;
-                    case 'email':
-                        e = new EmailInput(config);
-                        break;
-                    case 'stringarray':
-                        e = new TextInput(config);
-                        break;
-                    case 'paragraph':
-                        e = new TextArea(config);
-                        break;
-                    case 'string':
-                    default:
-                        e = new TextInput(config);
-                        break;
-                }
-            }
+            let e = f.getElement(rowdata[f.name]);
             form.elements.push(e);
         }
 
@@ -948,8 +914,8 @@ class DataGrid extends Panel {
      */
     handleColumnPresences() {
         let colsvisible = false;
-        for (let field of Object.values(this.fields)) {
-            if (!field.hidden) {
+        for (let f of this.fields) {
+            if (!f.hidden) {
                 colsvisible = true;
                 break;
             }
@@ -1853,13 +1819,16 @@ class DataGrid extends Panel {
     /**
      * Builds a single data cell
      * @param data the data dictionary
-     * @param field the field definition dictionary
+     * @param field the GridField object
      * @return {HTMLTableDataCellElement}
      */
     buildCell(data, field) {
         let content;
         let d = data[field.name];
 
+        content = field.renderer(d);
+
+        /*
         if ((field.renderer) && (typeof field.renderer === 'function')) {
             content = field.renderer(d);
         } else {
@@ -1888,6 +1857,8 @@ class DataGrid extends Panel {
                     break;
             }
         }
+
+         */
 
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
