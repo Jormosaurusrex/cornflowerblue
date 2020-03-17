@@ -5,24 +5,7 @@ class FilterConfigurator {
             id : null, // The id
             classes: [], //Extra css classes to apply,
             filters: [], // Existing filters.
-            fields: [
-                /*
-                 * An array of field definition dictionaries:
-                 *
-                    name: <string>,    // The variable name for this field (computer readable)
-                    label: <string>,   // The human-readable name for the column
-                    type: <string>,    // The datatype of the column
-                                       //   - string
-                                       //   - number
-                                       //   - date
-                                       //   - time
-                                       //   - stringarray
-                                       //   - paragraph
-                    description: <string>>,  // A string that describes the data in the column
-                    classes: <string array>, // Additional classes to apply to cells of this field
-                    filterable: <null|string|enum> // Is the field filterable? if so, how?
-                */
-            ],
+            fields: [], // Field definitions
             instructions: TextFactory.get('datagrid-filter-instructions')
 
         };
@@ -224,10 +207,9 @@ class FilterConfigurator {
         validmarker.appendChild(IconFactory.icon('checkmark-circle'));
         li.appendChild(validmarker);
 
-        li.appendChild(new DestructiveButton({
+        li.appendChild(new SimpleButton({
             icon: 'minus',
             shape: 'square',
-            ghost: true,
             classes: ['filterkiller'],
             action: function() {
                 if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {

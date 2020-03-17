@@ -549,12 +549,6 @@ class InputElement {
                 tooltip: this.help
             });
             this.labelobj.appendChild(this.helpbutton.button);
-            this.labelobj.addEventListener('mouseover', function() {
-                me.helpbutton.openTooltip();
-            });
-            this.labelobj.addEventListener('mouseout', function() {
-                me.helpbutton.closeTooltip();
-            });
         }
     }
 

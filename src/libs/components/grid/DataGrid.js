@@ -6,36 +6,7 @@ class DataGrid extends Panel {
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
 
-            fields: [  // The data fields for the grid and how they behave.
-                /*
-                 * An array of field definition dictionaries:
-                 *
-                    name: <string>,    // The variable name for this field (computer readable)
-                    label: <string>,   // The human-readable name for the column
-                    readonly: false, // if true, this value cannot be changed
-                    hidden: <boolean>, // Is the column hidden or not.
-                    identifier: <boolean> // If true, marks the field as the unique identifier
-                                          // for a data set.  An identifier is required if the
-                                          // grid is intended to update entries.  Without a unique
-                                          // field, data can only be appended, not updated.
-                    type: <string>,    // The datatype of the column
-                                       //   - string
-                                       //   - number
-                                       //   - date
-                                       //   - time
-                                       //   - stringarray
-                                       //   - paragraph
-                    separator: <string>, // Used when rendering array values
-                    nodupe: false, // If true, this column is ignored when deemphasizing duplicate rows.
-                    resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
-                    description: <string>>,  // A string that describes the data in the column
-                    classes: <string array>, // Additional classes to apply to cells of this field
-                    filterable: <null|string|enum> // Is the field filterable? if so, how?
-                    renderer: function(data) {     // A function that can be used to
-                        return `${data}.`;
-                    }
-                */
-            ],
+            fields: [],  // The data fields for the grid and how they behave.
             data: null,   // The data to throw into the grid on load. This is an array of rows.
             source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
             dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
@@ -140,11 +111,16 @@ class DataGrid extends Panel {
         } else {
             this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
         }
-        let nf = [];
-        for (let f of this.fields) {
-            nf.push(new GridField(f));
+
+        // Need to turn these into GridFields if they aren't already
+        if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
+            let nf = [];
+            for (let f of this.fields) {
+                let x = new GridField(f);
+                nf.push(new GridField(f));
+            }
+            this.fields = nf;
         }
-        this.fields = nf;
 
         for (let f of this.fields) {
             if (f.identifier) { this.identifier = f.name; }
@@ -506,7 +482,7 @@ class DataGrid extends Panel {
                     fields: this.fields,
                     filters: this.activefilters
                 });
-                dialogconfig.container = fc.container;
+                dialogconfig.content = fc.container;
 
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
@@ -1827,38 +1803,6 @@ class DataGrid extends Panel {
         let d = data[field.name];
 
         content = field.renderer(d);
-
-        /*
-        if ((field.renderer) && (typeof field.renderer === 'function')) {
-            content = field.renderer(d);
-        } else {
-            switch(field.type) {
-                case 'number':
-                    content = d;
-                    break;
-                case 'time':
-                    content = d;
-                    break;
-                case 'imageurl':
-                    content = `<a href="${d}"><img src="${d}" /></a>`;
-                    break;
-                case 'date':
-                    content = d.toString();
-                    break;
-                case 'stringarray':
-                    content = d.join(field.separator);
-                    break;
-                case 'paragraph':
-                    content = d.join(field.separator);
-                    break;
-                case 'string':
-                default:
-                    content = d;
-                    break;
-            }
-        }
-
-         */
 
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
