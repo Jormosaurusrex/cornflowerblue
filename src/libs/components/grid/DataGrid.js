@@ -1038,7 +1038,7 @@ class DataGrid extends Panel {
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
                     text: this.getField(f.field).label,
-                    tooltip: `${this.getField(f.field).label} ${FilterConfigurator.getComparatorLabel(f.comparator)} ${f.value}`,
+                    tooltip: `${this.getField(f.field).label} ${GridField.getComparatorLabel(f.comparator)} ${f.value}`,
                     action: function() {
                         me.removeFilter(f);
                     }

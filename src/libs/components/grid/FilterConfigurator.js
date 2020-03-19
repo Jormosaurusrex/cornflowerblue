@@ -11,34 +11,6 @@ class FilterConfigurator {
         };
     }
 
-    /**
-     * Supported comparators
-     * @return a comparator dictionary.
-     * @constructor
-     */
-    static get COMPARATORS() {
-        return {
-            'contains' : TextFactory.get('filter-comparator-contains'),
-            'notcontains' : TextFactory.get('filter-comparator-notcontains'),
-            'equals' : TextFactory.get('filter-comparator-equals'),
-            'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
-            'isbefore' : TextFactory.get('filter-comparator-isbefore'),
-            'isafter' : TextFactory.get('filter-comparator-isafter'),
-            'isgreaterthan' : TextFactory.get('filter-comparator-greaterthan'),
-            'islessthan' : TextFactory.get('filter-comparator-lessthan')
-        }
-    }
-
-    /**
-     * Get a comparator label
-     * @param comparator the comparator
-     * @return A string, or null
-     */
-    static getComparatorLabel(comparator) {
-        return FilterConfigurator.COMPARATORS[comparator];
-    }
-
-
     constructor(config) {
         if (!config) { config = {}; }
         this.config = Object.assign({}, FilterConfigurator.DEFAULT_CONFIG, config);
@@ -282,32 +254,14 @@ class FilterConfigurator {
         const me = this;
 
         let ourValue = 'contains';
-        let comparators = [ // Default for strings.
-            { value: 'contains', label: FilterConfigurator.getComparatorLabel('contains') },
-            { value: 'notcontains', label: FilterConfigurator.getComparatorLabel('notcontains') },
-            { value: 'equals', label: FilterConfigurator.getComparatorLabel('equals') },
-            { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
-        ];
+        let comparators = field.getComparators();
 
         switch (field.type) {
             case 'date':
             case 'time':
-                ourValue = 'equals';
-                comparators = [
-                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
-                    { value: 'isbefore', label: FilterConfigurator.getComparatorLabel('isbefore') },
-                    { value: 'isafter', label: FilterConfigurator.getComparatorLabel('isafter') }
-                ];
-                break;
             case 'number':
+            case 'enumeration':
                 ourValue = 'equals';
-                comparators = [
-                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
-                    { value: 'isgreaterthan', label: FilterConfigurator.getComparatorLabel('isgreaterthan') },
-                    { value: 'islessthan', label: FilterConfigurator.getComparatorLabel('islessthan') }
-                ];
                 break;
             default:
                 break;
@@ -344,59 +298,18 @@ class FilterConfigurator {
     makeValueSelector(filterid, field, value) {
         const me = this;
 
-        let valueSelector;
-        switch (field.type) {
-            case 'date':
-            case 'time':
-                valueSelector = new DateInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-            case 'number':
-                valueSelector = new NumberInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-            case 'imageurl':
-                valueSelector = new URLInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-            case 'string':
-            default:
-                valueSelector = new TextInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-        }
+        let config = {
+            value: value,
+            name: `valuefield-${filterid}`,
+            minimal: true,
+            classes: ['valueinput'],
+            onchange: function(self) {
+                let li = self.container.parentElement;
+                me.checkValidity(li);
+            }
+        };
+
+        let valueSelector = field.getElement(value, config);
 
         valueSelector.container.setAttribute('data-field', field.name);
         return valueSelector;

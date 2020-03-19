@@ -831,7 +831,11 @@ class CornflowerBlueDemo {
                     label: "Label",
                     filterable: true,
                     description: "The record label the album was released by.",
-                    type: "string"
+                    type: "enumeration",
+                    values: [
+                        { label: 'Atlantic', value: 'Atlantic', default: true },
+                        { label: 'Swan Song', value: 'Swan Song', default: true }
+                    ]
                 }, {
                     name: "length",
                     label: "Length",

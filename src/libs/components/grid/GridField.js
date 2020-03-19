@@ -19,16 +19,52 @@ class GridField {
                                //   - time
                                //   - stringarray
                                //   - paragraph
+                               //   - enumeration
+            values: null,      // An array of option values for an enumeration data type. Ignored if not
+                               // an enumeration
+                               // [
+                               //   { label: "Label to show", value: "v", default: false }
+                               //  ]
             separator: ', ',   // Used when rendering array values
             nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
             resize: false,     // Whether or not to allow resizing of the column (default: false)
             description: null, // A string that describes the data in the column
             classes: [],       // Additional classes to apply to cells of this field
-            filterable: true,  // Is the field filterable?
-            renderer: null    // A function that can be used to format the in the field. Overrides native
+            filterable: false, // Is the field filterable?
+            renderer: null     // A function that can be used to format the in the field. Overrides native
                                // renderer.  Takes "data" as an argument.
         };
     }
+
+
+
+    /**
+     * Supported comparators
+     * @return a comparator dictionary.
+     * @constructor
+     */
+    static get COMPARATORS() {
+        return {
+            'contains' : TextFactory.get('filter-comparator-contains'),
+            'notcontains' : TextFactory.get('filter-comparator-notcontains'),
+            'equals' : TextFactory.get('filter-comparator-equals'),
+            'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
+            'isbefore' : TextFactory.get('filter-comparator-isbefore'),
+            'isafter' : TextFactory.get('filter-comparator-isafter'),
+            'isgreaterthan' : TextFactory.get('filter-comparator-greaterthan'),
+            'islessthan' : TextFactory.get('filter-comparator-lessthan')
+        }
+    }
+
+    /**
+     * Get a comparator label
+     * @param comparator the comparator
+     * @return A string, or null
+     */
+    static getComparatorLabel(comparator) {
+        return GridField.COMPARATORS[comparator];
+    }
+
 
     /**
      * Define the gridfield
@@ -112,11 +148,13 @@ class GridField {
     /**
      * Get a form element for this data field.
      * @param value The value of the input field (optional)
+     * @param config (optional) the config to use
      * @return {HiddenField|NumberInput|DateInput|BooleanToggle|EmailInput}
      */
-    getElement(value) {
+    getElement(value, config) {
         const me = this;
-        let e,
+        let e;
+        if (!config) {
             config = {
                 name: this.name,
                 label: this.label,
@@ -125,7 +163,7 @@ class GridField {
                 value: value,
                 renderer: this.renderer
             };
-
+        }
 
         if (this.readonly) {
             e = new HiddenField(config);
@@ -137,6 +175,13 @@ class GridField {
                 case 'date':
                 case 'time':
                     e = new DateInput(config);
+                    break;
+                case 'enumeration':
+                    config.options = [];
+                    for (let o of this.values) {
+                        config.options.push({ label: o.label, value: o.value, checked: o.default });
+                    }
+                    e = new SelectMenu(config);
                     break;
                 case 'boolean':
                     e = new BooleanToggle(config);
@@ -165,6 +210,58 @@ class GridField {
 
 
         return e;
+    }
+
+    /**
+     * Get the valid comparators for this datatypes
+     * @return an array of comparator definitions.
+     */
+    getComparators() {
+
+        let comparators;
+
+        switch (this.type) {
+            case 'number':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
+                    { value: 'isgreaterthan', label: GridField.getComparatorLabel('isgreaterthan') },
+                    { value: 'islessthan', label: GridField.getComparatorLabel('islessthan') }
+                ];
+                break;
+            case 'date':
+            case 'time':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
+                    { value: 'isbefore', label: GridField.getComparatorLabel('isbefore') },
+                    { value: 'isafter', label: GridField.getComparatorLabel('isafter') }
+                ];
+                break;
+            case 'boolean':
+            case 'enumeration':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') }
+                ];
+                break;
+            case 'url':
+            case 'imageurl':
+            case 'email':
+            case 'paragraph':
+            case 'stringarray':
+            case 'string':
+            default:
+                comparators = [ // Default for strings.
+                    {value: 'contains', label: GridField.getComparatorLabel('contains')},
+                    {value: 'notcontains', label: GridField.getComparatorLabel('notcontains')},
+                    {value: 'equals', label: GridField.getComparatorLabel('equals')},
+                    {value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal')},
+                ];
+                break;
+        }
+
+        return comparators;
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
@@ -212,5 +309,8 @@ class GridField {
 
     get type() { return this.config.type ; }
     set type(type) { this.config.type = type; }
+
+    get values() { return this.config.values ; }
+    set values(values) { this.config.values = values; }
 
 }
