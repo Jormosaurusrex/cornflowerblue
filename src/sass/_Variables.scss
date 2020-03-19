@@ -53,7 +53,7 @@
   --darkblue-quarter: rgba(0, 84, 166, 0.25); // #0054a6
   --darkblue-translucent: rgba(0, 84, 166, 0.1); // #0054a6
   --green-threequarter: rgba(0, 94, 32, 0.75); // #005e20
-  --green-half: rgba(0, 94, 32, 0.5); // #005e20
+  --green-half: #6ea07d; // #005e20
   --green-quarter: rgba(0, 94, 32, 0.25); // #005e20
   --green-translucent: rgba(0, 94, 32, 0.1); // #005e20
   --red-threequarter: rgba(145, 0, 0, 0.75); // #910000
@@ -277,7 +277,7 @@
   --datagrid-grid-selected-background-color: var(--focus-color);
   --datagrid-grid-selected-text-color: var(--hot-text-color);
 
-  --datagrid-grid-multiselected-selected-background-color: var(--focus-color-quarter);
+  --datagrid-grid-multiselected-selected-background-color: var(--focus-color-half);
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
 
   --datagrid-grid-background-color: var(--ultralight);

@@ -219,6 +219,7 @@ div.datagrid-container {
             background-color: var(--datagrid-grid-mechanical-background-color);
             z-index: 102;
             opacity: 1;
+            box-shadow: inset 0 -.05em 0 0 var(--datagrid-line-color), inset 0 .05em 0 0 var(--datagrid-line-color);
           }
         }
         &:nth-child(even) {
@@ -385,16 +386,33 @@ div.datagrid-container {
             outline-offset: -.3em;
             > td {
               opacity: 1;
+              &.mechanical {
+                outline: var(--datagrid-grid-selected-background-color) dashed .1em;
+                outline-offset: -.3em;
+              }
             }
           }
           &[aria-selected=true] {
             background-color: var(--datagrid-grid-multiselected-selected-background-color);
             color: var(--datagrid-grid-multiselected-selected-text-color);
+            box-shadow: inset 0 -.05em 0 0 var(--datagrid-grid-multiselected-selected-background-color), inset 0 .05em 0 0 var(--datagrid-grid-multiselected-selected-background-color);
             > td {
               opacity: 1;
+              &.mechanical {
+                box-shadow: inset 0 -.05em 0 0 var(--datagrid-grid-multiselected-selected-background-color), inset 0 .05em 0 0 var(--datagrid-grid-multiselected-selected-background-color);
+                background-color: var(--datagrid-grid-multiselected-selected-background-color);
+                button {
+                  color: var(--datagrid-grid-selected-text-color);
+                  opacity: 1;
+                }
+              }
             }
             &:focus {
               outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+              > td.mechanical {
+                outline: var(--datagrid-grid-selected-text-color) dashed .1em;
+                outline-offset: -.3em;
+              }
             }
             @include for-hover-only {
               &:hover {
@@ -405,6 +423,9 @@ div.datagrid-container {
                   opacity: 1;
                   background-color: var(--datagrid-grid-hover-background-color);
                   box-shadow: none;
+                  &.mechanical {
+                    //background-color: transparent;
+                  }
                 }
               }
             }

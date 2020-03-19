@@ -76,17 +76,12 @@ class DataGrid extends Panel {
             //},
             rowactionsicon: 'menu', // Icon to use for row-actions button
             updatehook: function(rowdata, self) { // Function fired when a data row is edited and then saved
-                self.datawindow('edit', rowdata);
-
             },
             deletehook: function(rowdata, self) { // function fired when a data row is deleted
-                self.datawindow('delete', rowdata);
             },
             duplicatehook: function(rowdata, self) { // function fired when a new data row is created
-                self.datawindow('duplicate', rowdata);
             },
             createhook: function(rowdata, self) { // function fired when a new data row is created
-                self.datawindow('create', rowdata);
             },
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
