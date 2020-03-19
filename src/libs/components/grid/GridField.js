@@ -120,6 +120,13 @@ class GridField {
                     }
                 }
                 break;
+            case 'enumeration':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return this.getValue(d);
+                    }
+                }
+                break;
             case 'paragraph':
                 if (!this.renderer) {
                     this.renderer = function(d) { return d; }
@@ -143,6 +150,19 @@ class GridField {
                 break;
         }
 
+    }
+
+    getValue(key) {
+        let value;
+        if ((this.values) && (this.values.length > 0)) {
+            for (let def of this.values) {
+                if (def.key === 'key') {
+                    value = def.value;
+                    break;
+                }
+            }
+        }
+        return value;
     }
 
     /**
