@@ -3,7 +3,7 @@ class SkipButton extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             text: TextFactory.get('skip_to_content'),
-            classes: ['visually-hidden'],
+            classes: ['visually-hidden', 'skipbutton'],
             id: 'content-jump',
             hot: true,
             contentstart: "#content-start",

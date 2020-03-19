@@ -45,14 +45,16 @@ class GridField {
      */
     static get COMPARATORS() {
         return {
-            'contains' : TextFactory.get('filter-comparator-contains'),
-            'notcontains' : TextFactory.get('filter-comparator-notcontains'),
-            'equals' : TextFactory.get('filter-comparator-equals'),
-            'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
-            'isbefore' : TextFactory.get('filter-comparator-isbefore'),
-            'isafter' : TextFactory.get('filter-comparator-isafter'),
-            'isgreaterthan' : TextFactory.get('filter-comparator-greaterthan'),
-            'islessthan' : TextFactory.get('filter-comparator-lessthan')
+            'startswith' : TextFactory.get('comparator-startswith'),
+            'endswith' : TextFactory.get('comparator-endswith'),
+            'contains' : TextFactory.get('comparator-contains'),
+            'notcontains' : TextFactory.get('comparator-notcontains'),
+            'equals' : TextFactory.get('comparator-equals'),
+            'doesnotequal' : TextFactory.get('comparator-doesnotequal'),
+            'isbefore' : TextFactory.get('comparator-isbefore'),
+            'isafter' : TextFactory.get('comparator-isafter'),
+            'isgreaterthan' : TextFactory.get('comparator-greaterthan'),
+            'islessthan' : TextFactory.get('comparator-lessthan')
         }
     }
 
@@ -277,6 +279,8 @@ class GridField {
                     {value: 'notcontains', label: GridField.getComparatorLabel('notcontains')},
                     {value: 'equals', label: GridField.getComparatorLabel('equals')},
                     {value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal')},
+                    {value: 'startswith', label: GridField.getComparatorLabel('startswith')},
+                    {value: 'endswith', label: GridField.getComparatorLabel('endswith')}
                 ];
                 break;
         }

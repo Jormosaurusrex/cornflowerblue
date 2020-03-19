@@ -216,7 +216,7 @@ class FilterConfigurator {
             options: options,
             name: `primeselector-${filterid}`,
             value: fieldname,
-            placeholder: TextFactory.get('filter-comparator-select_field'),
+            placeholder: TextFactory.get('comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
                 let li = self.container.parentElement,
@@ -273,7 +273,7 @@ class FilterConfigurator {
 
         let comparatorSelector = new SelectMenu({
             options: comparators,
-            placeholder: TextFactory.get('filter-comparator-comparator'),
+            placeholder: TextFactory.get('comparator-comparator'),
             value: ourValue,
             name: `comparator-${filterid}`,
             minimal: true,

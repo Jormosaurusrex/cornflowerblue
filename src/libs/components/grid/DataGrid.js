@@ -1144,15 +1144,31 @@ class DataGrid extends Panel {
                         break;
                 }
                 break;
-            case 'imageurl':
-            case 'string':
-            default:
+            case 'boolean':
                 switch(filter.comparator) {
                     case 'equals':
                         matches = (testVal === filterVal);
                         break;
                     case 'doesnotequal':
                         matches = (testVal !== filterVal);
+                        break;
+                }
+                break;
+            default: // all the others can use raw test comparators
+                testVal = testVal.toLowerCase();
+                filterVal = filterVal.toLowerCase();
+                switch(filter.comparator) {
+                    case 'equals':
+                        matches = (testVal === filterVal);
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal !== filterVal);
+                        break;
+                    case 'startswith':
+                        matches = (testVal.startsWith(filterVal));
+                        break;
+                    case 'endswith':
+                        matches = (testVal.endsWith(filterVal));
                         break;
                     case 'notcontains':
                         matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) === -1);
