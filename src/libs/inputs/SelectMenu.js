@@ -2,6 +2,7 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
+            combobox: false,
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
@@ -12,6 +13,9 @@ class SelectMenu extends InputElement {
         };
     }
 
+    /**
+     * Close open menus
+     */
     static closeOpen() {
         if (SelectMenu.activeMenu) {
             SelectMenu.activeMenu.close();
@@ -149,10 +153,15 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
+
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
         }
-        this.updateSearch();
+
+        if (!this.combobox) {
+            this.triggerbox.value = this.value;
+        }
+
         this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
     }
@@ -228,6 +237,10 @@ class SelectMenu extends InputElement {
         this.postContainerScrub();
     }
 
+    /**
+     * Select a specific entry, given a value
+     * @param value the value to select
+     */
     select(value) {
         let allopts = this.listbox.querySelectorAll('li');
         for (let o of allopts) {
@@ -453,6 +466,7 @@ class SelectMenu extends InputElement {
         });
 
         let text = document.createElement('span');
+        text.classList.add('text');
         text.innerHTML = def.label;
         li.appendChild(text);
 
@@ -478,7 +492,8 @@ class SelectMenu extends InputElement {
     findByString(s) {
         if ((!s) || (typeof s !== 'string')) { return; }
         for (let li of this.optionlist.querySelectorAll('li')) {
-            if (li.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
                 this.scrollto(li);
                 li.focus();
                 break;
@@ -490,7 +505,7 @@ class SelectMenu extends InputElement {
      * Updates the counter
      */
     updateSearch() {
-        this.findByString(this.value);
+        this.findByString(this.triggerbox.value);
     }
 
     /**
@@ -513,6 +528,9 @@ class SelectMenu extends InputElement {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get combobox() { return this.config.combobox; }
+    set combobox(combobox) { this.config.combobox = combobox; }
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
