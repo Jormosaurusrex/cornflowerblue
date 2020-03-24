@@ -14,6 +14,7 @@ div.textarea-container {
       top: 0;
       bottom: 0;
       &.stepbuttons,
+      &.visbutton,
       &.calbutton {
         --button-default-color: var(--standard-color);
         display: flex;

@@ -113,6 +113,22 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
+    setIcon(newicon) {
+        let i = IconFactory.icon(newicon);
+        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+            for (let ic of this.iconclasses) {
+                if (i) { i.classList.add(ic); }
+            }
+        }
+        if (this.icon) {
+            this.button.replaceChild(i, this.iconactual);
+            this.iconactual = i;
+        } else {
+            this.iconactual = i;
+            this.button.prepend(this.iconactual);
+        }
+    }
+
     /**
      * Builds the button's DOM.
      * @returns DOM representation of the SimpleButton
@@ -128,34 +144,31 @@ class SimpleButton {
 
         this.button = document.createElement('button');
 
-        let icon,
-            secondicon;
-
         if (this.icon) {
-            icon = IconFactory.icon(this.icon);
+            this.iconactual = IconFactory.icon(this.icon);
         }
         if (this.secondicon) {
-            secondicon = IconFactory.icon(this.secondicon);
-            secondicon.classList.add('secondicon');
+            this.secondiconactual = IconFactory.icon(this.secondicon);
+            this.secondiconactual.classList.add('secondicon');
         }
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
-                if (icon) { icon.classList.add(ic); }
-                if (secondicon) { secondicon.classList.add(ic); }
+                if (this.iconactual) { this.iconactual.classList.add(ic); }
+                if (this.secondiconactual) { this.secondiconactual.classList.add(ic); }
             }
         }
 
         if ((this.iconside) && (this.iconside === 'right')) {
             this.button.classList.add('righticon');
         }
-        if (icon) {
-            this.button.appendChild(icon);
+        if (this.iconactual) {
+            this.button.appendChild(this.iconactual);
         }
         if (this.textobj) {
             this.button.appendChild(this.textobj);
         }
-        if (secondicon) {
-            this.button.appendChild(secondicon);
+        if (this.secondiconactual) {
+            this.button.appendChild(this.secondiconactual);
         }
 
         if (this.arialabel) {
@@ -312,6 +325,9 @@ class SimpleButton {
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
 
+    get iconactual() { return this._iconactual; }
+    set iconactual(iconactual) { this._iconactual = iconactual; }
+
     get iconclasses() { return this.config.iconclasses; }
     set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
 
@@ -335,6 +351,9 @@ class SimpleButton {
 
     get secondicon() { return this.config.secondicon; }
     set secondicon(secondicon) { this.config.secondicon = secondicon; }
+
+    get secondiconactual() { return this._secondiconactual; }
+    set secondiconactual(secondiconactual) { this._secondiconactual = secondiconactual; }
 
     get shape() { return this.config.shape; }
     set shape(shape) { this.config.shape = shape; }

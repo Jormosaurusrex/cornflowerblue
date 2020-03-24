@@ -103,6 +103,7 @@ class TextFactory {
             "passwordchanger-error-maxlength": 'Password must be less than $1 characters.',
             "passwordchanger-error-minlength": 'Password must be at least $1 characters.',
             "passwordchanger-error-suggestedlength": 'Password is less than the suggested length of $1 characters.',
+            "passwordinput-change_visibility": "Toggle value visibility.",
             "primary": 'Primary',
             "punctuation": 'Punctuation',
             "required_lc": 'required',

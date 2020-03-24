@@ -5,8 +5,9 @@ class PasswordInput extends TextInput {
             minlength: 5,
             suggestedlength: 8,
             maxlength: 30,
-            visibilityswitch: true, // Show the visibility switch
-            startvisible: false, // If true, start with password visible already.
+            hideicon: 'eye-slash',
+            showicon: 'eye',
+            obscured: false, // If true, start with password hidden
             forceconstraints: false,
             type: 'password'
         };
@@ -28,45 +29,52 @@ class PasswordInput extends TextInput {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    /**
-     * Draws the visibility switcher.
-     */
-    buildVisibilitySwitcher() {
+    buildVisibilityControl() {
         const me = this;
-        if (this.visibilityswitch) {
-            this.hidepwbutton = new SimpleButton({
-                classes: ['naked'],
-                text: TextFactory.get('hide_password'),
-                hidden: true,
-                notab: true,
-                icon: 'eye-slash',
-                action: function() {
-                    me.setVisibility(false);
-                }
-            });
-            this.showpwbutton = new SimpleButton({
-                classes: ['naked'],
-                text: TextFactory.get('show_password'),
-                hidden: true,
-                notab: true,
-                icon: 'eye',
-                action: function() {
-                    me.setVisibility(true);
-                }
-            });
 
-            this.visibilityswitcher = document.createElement('div');
-            this.visibilityswitcher.classList.add('visibilityswitch');
-            this.visibilityswitcher.classList.add('topcontrol');
-            this.visibilityswitcher.appendChild(this.hidepwbutton.button);
-            this.visibilityswitcher.appendChild(this.showpwbutton.button);
+        let icon = this.hideicon,
+            arialabel = TextFactory.get('hide_password');
 
-            this.setVisibility(this.startvisible);
-
+        if (this.obscured) {
+            icon = this.showicon;
+            arialabel = TextFactory.get('show_password');
         }
+
+        this.eyebutton = new SimpleButton({
+            classes: ['naked'],
+            shape: 'square',
+            icon: icon,
+            arialabel: arialabel,
+            tooltip: TextFactory.get('passwordinput-change_visibility'),
+            action: function(e, self) {
+                me.toggleVisibility();
+                e.stopPropagation();
+            },
+        });
+
+        this.visibilitycontrol = document.createElement('div');
+        this.visibilitycontrol.classList.add('visbutton');
+        this.visibilitycontrol.classList.add('inputcontrol');
+        this.visibilitycontrol.appendChild(this.eyebutton.button);
+
+        this.visibilitycontrol.addEventListener('mousedown', function(e) {
+            e.preventDefault(); // Prevents focus shifting.
+        });
+
     }
 
     /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Toggle the visibility of the password
+     */
+    toggleVisibility() {
+        if (this.input.getAttribute('type') === 'text') {
+            this.setVisibility(false);
+        } else {
+            this.setVisibility(true);
+        }
+    }
 
     /**
      * Set the visibility of the user's password.
@@ -74,15 +82,15 @@ class PasswordInput extends TextInput {
      */
     setVisibility(visible) {
         if (visible) {
-            this.mode = false;
+            this.obscured = false;
             this.input.setAttribute('type', 'text');
-            this.hidepwbutton.show();
-            this.showpwbutton.hide();
+            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('hide_password'));
+            this.eyebutton.setIcon(this.hideicon);
         } else {
-            this.mode = true;
+            this.obscured = true;
             this.input.setAttribute('type', 'password');
-            this.hidepwbutton.hide();
-            this.showpwbutton.show();
+            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('show_password'));
+            this.eyebutton.setIcon(this.showicon);
         }
         this.input.focus();
     }
@@ -100,33 +108,31 @@ class PasswordInput extends TextInput {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
-    
+
+    get eyebutton() { return this._eyebutton; }
+    set eyebutton(eyebutton) { this._eyebutton = eyebutton; }
+
     get minlength() { return this.config.minlength; }
     set minlength(minlength) { this.config.minlength = minlength; }
 
-    get hidepwbutton() { return this._hidepwbutton; }
-    set hidepwbutton(hidepwbutton) { this._hidepwbutton = hidepwbutton; }
+    get hideicon() { return this.config.hideicon; }
+    set hideicon(hideicon) { this.config.hideicon = hideicon; }
 
-    get showpwbutton() { return this._showpwbutton; }
-    set showpwbutton(showpwbutton) { this._showpwbutton = showpwbutton; }
+    get obscured() { return this.config.obscured; }
+    set obscured(obscured) { this.config.obscured = obscured; }
 
-    get mode() { return this._mode; }
-    set mode(mode) { this._mode = mode; }
-
-    get startvisible() { return this.config.startvisible; }
-    set startvisible(startvisible) { this.config.startvisible = startvisible; }
+    get showicon() { return this.config.showicon; }
+    set showicon(showicon) { this.config.showicon = showicon; }
 
     get suggestedlength() { return this.config.suggestedlength; }
     set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
 
-    get visibilityswitch() { return this.config.visibilityswitch; }
-    set visibilityswitch(visibilityswitch) { this.config.visibilityswitch = visibilityswitch; }
-
-    get visibilityswitcher() {
-        if (!this._visibilityswitcher) { this.buildVisibilitySwitcher(); }
-        return this._visibilityswitcher;
+    get visibilitycontrol() {
+        if (!this._visibilitycontrol) { this.buildVisibilityControl(); }
+        return this._visibilitycontrol;
     }
-    set visibilityswitcher(visibilityswitcher) { this._visibilityswitcher = visibilityswitcher; }
+    set visibilitycontrol(visibilitycontrol) { this._visibilitycontrol = visibilitycontrol; }
+
 
 }
 window.PasswordInput = PasswordInput;
