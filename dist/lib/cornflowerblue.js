@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-13
+/*! Cornflower Blue - v0.1.1 - 2020-03-24
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -510,6 +510,16 @@ class TextFactory {
             "confirm_password": 'Confirm Password',
             "countrymenu_select": 'Select country',
             "current_password": 'Current Password',
+            "datagrid-dialog-item-save": "Save $1",
+            "datagrid-dialog-item-view": "View $1",
+            "datagrid-dialog-item-create": "Create $1",
+            "datagrid-dialog-item-duplicate": "Duplicate $1",
+            "datagrid-dialog-item-edit": "Edit $1",
+            "datagrid-dialog-item-delete": "Delete $1",
+            "datagrid-dialog-item-edit-instructions": "Edit this $1 using the form below.",
+            "datagrid-dialog-item-create-instructions": "Fill out the form below to create a new $1.",
+            "datagrid-dialog-item-delete-instructions": "Are you sure you want to delete this $1?",
+            "datagrid-dialog-item-duplicate-instructions": "The $1 has been duplicated. Saving it will create a new instance with these values.",
             "datagrid-tooltip-export": "Export all data in this grid as a comma separated value file.",
             "datagrid-tooltip-export-current_view": "Export the data in the current view as a comma separated value file.",
             "datagrid-tooltip-configure_columns": "Configure the visibility of individual columns.",
@@ -531,16 +541,18 @@ class TextFactory {
             "fileinput-placeholder-file": 'Select file',
             "fileinput-placeholder-multiple": 'Select files (multiple accepted)',
             "filter-configurator-add_filter": "Add filter",
-            "filter-comparator-contains": "Contains",
-            "filter-comparator-notcontains": "Does not contain",
-            "filter-comparator-equals": "Equals",
-            "filter-comparator-doesnotequal": "Does not equal",
-            "filter-comparator-isbefore": "Is before",
-            "filter-comparator-isafter": "Is after",
-            "filter-comparator-greaterthan": "Is greater than",
-            "filter-comparator-lessthan": "Is less than",
-            "filter-comparator-select_field": "Select field",
-            "filter-comparator-comparator": "Comparator",
+            "comparator-contains": "Contains",
+            "comparator-notcontains": "Does not contain",
+            "comparator-equals": "Equals",
+            "comparator-doesnotequal": "Does not equal",
+            "comparator-isbefore": "Is before",
+            "comparator-isafter": "Is after",
+            "comparator-greaterthan": "Is greater than",
+            "comparator-lessthan": "Is less than",
+            "comparator-startswith": "Starts with",
+            "comparator-endswith": "Ends with",
+            "comparator-select_field": "Select field",
+            "comparator-comparator": "Comparator",
             "filters": 'Filters',
             "generate_password": 'Generate password',
             "help": 'Help',
@@ -582,9 +594,15 @@ class TextFactory {
             "passwordchanger-error-maxlength": 'Password must be less than $1 characters.',
             "passwordchanger-error-minlength": 'Password must be at least $1 characters.',
             "passwordchanger-error-suggestedlength": 'Password is less than the suggested length of $1 characters.',
+            "passwordinput-change_visibility": "Toggle value visibility.",
             "primary": 'Primary',
             "punctuation": 'Punctuation',
             "required_lc": 'required',
+            "save" : "Save",
+            "save_changes" : "Save changes",
+            "cancel_changes" : "Cancel changes",
+            "make_changes" : "Make changes",
+            "save_columns" : "Save columns",
             "search": 'Search',
             "search_noresults": 'No entries were found matching your search terms.',
             "search_this_data": 'Search this data',
@@ -2081,6 +2099,22 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
+    setIcon(newicon) {
+        let i = IconFactory.icon(newicon);
+        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+            for (let ic of this.iconclasses) {
+                if (i) { i.classList.add(ic); }
+            }
+        }
+        if (this.icon) {
+            this.button.replaceChild(i, this.iconactual);
+            this.iconactual = i;
+        } else {
+            this.iconactual = i;
+            this.button.prepend(this.iconactual);
+        }
+    }
+
     /**
      * Builds the button's DOM.
      * @returns DOM representation of the SimpleButton
@@ -2096,34 +2130,31 @@ class SimpleButton {
 
         this.button = document.createElement('button');
 
-        let icon,
-            secondicon;
-
         if (this.icon) {
-            icon = IconFactory.icon(this.icon);
+            this.iconactual = IconFactory.icon(this.icon);
         }
         if (this.secondicon) {
-            secondicon = IconFactory.icon(this.secondicon);
-            secondicon.classList.add('secondicon');
+            this.secondiconactual = IconFactory.icon(this.secondicon);
+            this.secondiconactual.classList.add('secondicon');
         }
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
-                if (icon) { icon.classList.add(ic); }
-                if (secondicon) { secondicon.classList.add(ic); }
+                if (this.iconactual) { this.iconactual.classList.add(ic); }
+                if (this.secondiconactual) { this.secondiconactual.classList.add(ic); }
             }
         }
 
         if ((this.iconside) && (this.iconside === 'right')) {
             this.button.classList.add('righticon');
         }
-        if (icon) {
-            this.button.appendChild(icon);
+        if (this.iconactual) {
+            this.button.appendChild(this.iconactual);
         }
         if (this.textobj) {
             this.button.appendChild(this.textobj);
         }
-        if (secondicon) {
-            this.button.appendChild(secondicon);
+        if (this.secondiconactual) {
+            this.button.appendChild(this.secondiconactual);
         }
 
         if (this.arialabel) {
@@ -2280,6 +2311,9 @@ class SimpleButton {
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
 
+    get iconactual() { return this._iconactual; }
+    set iconactual(iconactual) { this._iconactual = iconactual; }
+
     get iconclasses() { return this.config.iconclasses; }
     set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
 
@@ -2303,6 +2337,9 @@ class SimpleButton {
 
     get secondicon() { return this.config.secondicon; }
     set secondicon(secondicon) { this.config.secondicon = secondicon; }
+
+    get secondiconactual() { return this._secondiconactual; }
+    set secondiconactual(secondiconactual) { this._secondiconactual = secondiconactual; }
 
     get shape() { return this.config.shape; }
     set shape(shape) { this.config.shape = shape; }
@@ -2742,7 +2779,7 @@ class SkipButton extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             text: TextFactory.get('skip_to_content'),
-            classes: ['visually-hidden'],
+            classes: ['visually-hidden', 'skipbutton'],
             id: 'content-jump',
             hot: true,
             contentstart: "#content-start",
@@ -3236,7 +3273,11 @@ class InputElement {
             onkeydown: null, // action to execute on key down. Passed (event, self).
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
-            validator: null // A function to run to test validity. Passed the self.
+            validator: null, // A function to run to test validity. Passed the self.
+            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+                return `${data}`;
+            }
+
         };
     }
 
@@ -3496,8 +3537,19 @@ class InputElement {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     get passivetext() {
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
+        let v;
+        if (this.value) {
+            v = this.value;
+        } else if (this.config.value) {
+            v = this.config.value;
+        }
+        if (v) {
+            if (this.renderer) {
+                return this.renderer(v);
+            }
+            return v;
+        }
+
         return this.unsettext;
     }
 
@@ -3510,8 +3562,10 @@ class InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
         }
         if (this.label) { this.container.appendChild(this.labelobj); }
 
@@ -3596,8 +3650,10 @@ class InputElement {
         if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
         if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 
-        for (let c of this.classes) {
-            this.input.classList.add(c);
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.input.classList.add(c);
+            }
         }
         this.input.addEventListener('change', function(e) {
             if ((me.onchange) && (typeof me.onchange === 'function')) {
@@ -3725,12 +3781,6 @@ class InputElement {
                 tooltip: this.help
             });
             this.labelobj.appendChild(this.helpbutton.button);
-            this.labelobj.addEventListener('mouseover', function() {
-                me.helpbutton.openTooltip();
-            });
-            this.labelobj.addEventListener('mouseout', function() {
-                me.helpbutton.closeTooltip();
-            });
         }
     }
 
@@ -3936,6 +3986,14 @@ class InputElement {
     }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
 
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
+
     get required() { return this.config.required; }
     set required(required) { this.config.required = required; }
 
@@ -3970,8 +4028,6 @@ class InputElement {
     get warnings() { return this._warnings; }
     set warnings(warnings) { this._warnings = warnings; }
 
-
-
 }
 window.InputElement = InputElement;
 class TextInput extends InputElement {
@@ -3997,7 +4053,10 @@ class BooleanToggle {
             style: null, // Default to box
             onchange: null, // The change handler. Passed (self).
             validator: null, // A function to run to test validity. Passed the self; returns true or false.,
-            value: null // the value of the checkbox
+            value: null, // the value of the checkbox
+            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+                return `${data}`;
+            }
         };
     }
 
@@ -4203,6 +4262,14 @@ class BooleanToggle {
 
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
+
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
 
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }
@@ -4780,8 +4847,9 @@ class PasswordInput extends TextInput {
             minlength: 5,
             suggestedlength: 8,
             maxlength: 30,
-            visibilityswitch: true, // Show the visibility switch
-            startvisible: false, // If true, start with password visible already.
+            hideicon: 'eye-slash',
+            showicon: 'eye',
+            obscured: false, // If true, start with password hidden
             forceconstraints: false,
             type: 'password'
         };
@@ -4803,45 +4871,52 @@ class PasswordInput extends TextInput {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    /**
-     * Draws the visibility switcher.
-     */
-    buildVisibilitySwitcher() {
+    buildVisibilityControl() {
         const me = this;
-        if (this.visibilityswitch) {
-            this.hidepwbutton = new SimpleButton({
-                classes: ['naked'],
-                text: TextFactory.get('hide_password'),
-                hidden: true,
-                notab: true,
-                icon: 'eye-slash',
-                action: function() {
-                    me.setVisibility(false);
-                }
-            });
-            this.showpwbutton = new SimpleButton({
-                classes: ['naked'],
-                text: TextFactory.get('show_password'),
-                hidden: true,
-                notab: true,
-                icon: 'eye',
-                action: function() {
-                    me.setVisibility(true);
-                }
-            });
 
-            this.visibilityswitcher = document.createElement('div');
-            this.visibilityswitcher.classList.add('visibilityswitch');
-            this.visibilityswitcher.classList.add('topcontrol');
-            this.visibilityswitcher.appendChild(this.hidepwbutton.button);
-            this.visibilityswitcher.appendChild(this.showpwbutton.button);
+        let icon = this.hideicon,
+            arialabel = TextFactory.get('hide_password');
 
-            this.setVisibility(this.startvisible);
-
+        if (this.obscured) {
+            icon = this.showicon;
+            arialabel = TextFactory.get('show_password');
         }
+
+        this.eyebutton = new SimpleButton({
+            classes: ['naked'],
+            shape: 'square',
+            icon: icon,
+            arialabel: arialabel,
+            tooltip: TextFactory.get('passwordinput-change_visibility'),
+            action: function(e, self) {
+                me.toggleVisibility();
+                e.stopPropagation();
+            },
+        });
+
+        this.visibilitycontrol = document.createElement('div');
+        this.visibilitycontrol.classList.add('visbutton');
+        this.visibilitycontrol.classList.add('inputcontrol');
+        this.visibilitycontrol.appendChild(this.eyebutton.button);
+
+        this.visibilitycontrol.addEventListener('mousedown', function(e) {
+            e.preventDefault(); // Prevents focus shifting.
+        });
+
     }
 
     /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Toggle the visibility of the password
+     */
+    toggleVisibility() {
+        if (this.input.getAttribute('type') === 'text') {
+            this.setVisibility(false);
+        } else {
+            this.setVisibility(true);
+        }
+    }
 
     /**
      * Set the visibility of the user's password.
@@ -4849,15 +4924,15 @@ class PasswordInput extends TextInput {
      */
     setVisibility(visible) {
         if (visible) {
-            this.mode = false;
+            this.obscured = false;
             this.input.setAttribute('type', 'text');
-            this.hidepwbutton.show();
-            this.showpwbutton.hide();
+            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('hide_password'));
+            this.eyebutton.setIcon(this.hideicon);
         } else {
-            this.mode = true;
+            this.obscured = true;
             this.input.setAttribute('type', 'password');
-            this.hidepwbutton.hide();
-            this.showpwbutton.show();
+            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('show_password'));
+            this.eyebutton.setIcon(this.showicon);
         }
         this.input.focus();
     }
@@ -4875,33 +4950,31 @@ class PasswordInput extends TextInput {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
-    
+
+    get eyebutton() { return this._eyebutton; }
+    set eyebutton(eyebutton) { this._eyebutton = eyebutton; }
+
     get minlength() { return this.config.minlength; }
     set minlength(minlength) { this.config.minlength = minlength; }
 
-    get hidepwbutton() { return this._hidepwbutton; }
-    set hidepwbutton(hidepwbutton) { this._hidepwbutton = hidepwbutton; }
+    get hideicon() { return this.config.hideicon; }
+    set hideicon(hideicon) { this.config.hideicon = hideicon; }
 
-    get showpwbutton() { return this._showpwbutton; }
-    set showpwbutton(showpwbutton) { this._showpwbutton = showpwbutton; }
+    get obscured() { return this.config.obscured; }
+    set obscured(obscured) { this.config.obscured = obscured; }
 
-    get mode() { return this._mode; }
-    set mode(mode) { this._mode = mode; }
-
-    get startvisible() { return this.config.startvisible; }
-    set startvisible(startvisible) { this.config.startvisible = startvisible; }
+    get showicon() { return this.config.showicon; }
+    set showicon(showicon) { this.config.showicon = showicon; }
 
     get suggestedlength() { return this.config.suggestedlength; }
     set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
 
-    get visibilityswitch() { return this.config.visibilityswitch; }
-    set visibilityswitch(visibilityswitch) { this.config.visibilityswitch = visibilityswitch; }
-
-    get visibilityswitcher() {
-        if (!this._visibilityswitcher) { this.buildVisibilitySwitcher(); }
-        return this._visibilityswitcher;
+    get visibilitycontrol() {
+        if (!this._visibilitycontrol) { this.buildVisibilityControl(); }
+        return this._visibilitycontrol;
     }
-    set visibilityswitcher(visibilityswitcher) { this._visibilityswitcher = visibilityswitcher; }
+    set visibilitycontrol(visibilitycontrol) { this._visibilitycontrol = visibilitycontrol; }
+
 
 }
 window.PasswordInput = PasswordInput;
@@ -4909,6 +4982,7 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
+            combobox: false,
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
@@ -4919,6 +4993,9 @@ class SelectMenu extends InputElement {
         };
     }
 
+    /**
+     * Close open menus
+     */
     static closeOpen() {
         if (SelectMenu.activeMenu) {
             SelectMenu.activeMenu.close();
@@ -5056,10 +5133,15 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
+
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
         }
-        this.updateSearch();
+
+        if (!this.combobox) {
+            this.triggerbox.value = this.value;
+        }
+
         this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
     }
@@ -5135,6 +5217,10 @@ class SelectMenu extends InputElement {
         this.postContainerScrub();
     }
 
+    /**
+     * Select a specific entry, given a value
+     * @param value the value to select
+     */
     select(value) {
         let allopts = this.listbox.querySelectorAll('li');
         for (let o of allopts) {
@@ -5360,6 +5446,7 @@ class SelectMenu extends InputElement {
         });
 
         let text = document.createElement('span');
+        text.classList.add('text');
         text.innerHTML = def.label;
         li.appendChild(text);
 
@@ -5385,7 +5472,8 @@ class SelectMenu extends InputElement {
     findByString(s) {
         if ((!s) || (typeof s !== 'string')) { return; }
         for (let li of this.optionlist.querySelectorAll('li')) {
-            if (li.innerHTML.toUpperCase().startsWith(s.toUpperCase())) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
                 this.scrollto(li);
                 li.focus();
                 break;
@@ -5397,7 +5485,7 @@ class SelectMenu extends InputElement {
      * Updates the counter
      */
     updateSearch() {
-        this.findByString(this.value);
+        this.findByString(this.triggerbox.value);
     }
 
     /**
@@ -5420,6 +5508,9 @@ class SelectMenu extends InputElement {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get combobox() { return this.config.combobox; }
+    set combobox(combobox) { this.config.combobox = combobox; }
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
@@ -6223,6 +6314,38 @@ class DialogWindow {
         if (this.form) { // it's a SimpleForm
 
             this.form.dialog = this;
+
+            if ((this.actions) && (this.actions.length > 0)) {
+                for (let a of this.actions) {
+                    if (typeof a === 'string') { // it's a keyword
+                        switch(a) {
+                            case 'closebutton':
+                                this.form.actions.push(new SimpleButton({
+                                    text: this.closetext,
+                                    ghost: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }));
+                                break;
+                            case 'cancelbutton':
+                                this.form.actions.push(new DestructiveButton({
+                                    text: this.canceltext,
+                                    mute: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }));
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        this.form.actions.push(a);
+                    }
+                }
+            }
+
 
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
@@ -8648,36 +8771,7 @@ class DataGrid extends Panel {
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
 
-            fields: [  // The data fields for the grid and how they behave.
-                /*
-                 * An array of field definition dictionaries:
-                 *
-                    name: <string>,    // The variable name for this field (computer readable)
-                    label: <string>,   // The human-readable name for the column
-                    width: <number,    // The default width of the column
-                    hidden: <boolean>, // Is the column hidden or not.
-                    identifier: <boolean> // If true, marks the field as the unique identifier
-                                          // for a data set.  An identifier is required if the
-                                          // grid is intended to update entries.  Without a unique
-                                          // field, data can only be appended, not updated.
-                    type: <string>,    // The datatype of the column
-                                       //   - string
-                                       //   - number
-                                       //   - date
-                                       //   - time
-                                       //   - stringarray
-                                       //   - paragraph
-                    separator: <string>, // Used when rendering array values
-                    nodupe: false, // If true, this column is ignored when deemphasizing duplicate rows.
-                    resize: <boolean>,   // Whether or not to allow resizing of the column (default: false)
-                    description: <string>>,  // A string that describes the data in the column
-                    classes: <string array>, // Additional classes to apply to cells of this field
-                    filterable: <null|string|enum> // Is the field filterable? if so, how?
-                    renderer: function(data) {     // A function that can be used to
-                        return `${data}.`;
-                    }
-                */
-            ],
+            fields: [],  // The data fields for the grid and how they behave.
             data: null,   // The data to throw into the grid on load. This is an array of rows.
             source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
             dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
@@ -8714,6 +8808,7 @@ class DataGrid extends Panel {
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
+            doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
@@ -8721,9 +8816,38 @@ class DataGrid extends Panel {
             multiselectactions: [], // Array of button actions to multiselects
             multiselecticon: 'checkmark',
 
-            rowactions: null, // an array of actions that can be used on items.
+            allowedits: true, // If true, the user can edit rows
+            instructionsicon: 'help-circle',
+            edititeminstructions: 'datagrid-dialog-item-edit-instructions',
+            createiteminstructions: 'datagrid-dialog-item-create-instructions',
+            deleteiteminstructions: 'datagrid-dialog-item-delete-instructions',
+            duplicateiteminstructions: 'datagrid-dialog-item-duplicate-instructions',
+            rowactions: null, // an array of row action definition
+            //{
+            // label: <string>,
+            // icon: <iconid>,
+            // tooltip: <tooltip string>,
+            // tipicon: <iconid>, // if you want to change the tooltip icon
+            // type: <string>     // Action types are:
+            //                    // view - loads the item into a view window.
+            //                    //        If allowedits=true, this window has an edit toggle
+            //                    // edit - loads the row into an edit form. Sent to the createhook on save.
+            //                    // delete - deletes the row/item (asks for confirmation). Sent to deletehook.
+            //                    // duplicate - loads a copy of the item into an edit window.
+            //                    //             New item does not have an identifier field.  Sent to createhook.
+            //                    // function - passes the row to an external action, defined in the 'action' parameter
+            // action: function(e, self) {}  // Only used if type = 'function';  self in this case is the ButtonMenu
+            //                               // object, which has the rowdata itself set as it's .data()
+            //},
             rowactionsicon: 'menu', // Icon to use for row-actions button
-
+            updatehook: function(rowdata, self) { // Function fired when a data row is edited and then saved
+            },
+            deletehook: function(rowdata, self) { // function fired when a data row is deleted
+            },
+            duplicatehook: function(rowdata, self) { // function fired when a new data row is created
+            },
+            createhook: function(rowdata, self) { // function fired when a new data row is created
+            },
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -8747,6 +8871,17 @@ class DataGrid extends Panel {
         } else {
             this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
         }
+
+        // Need to turn these into GridFields if they aren't already
+        if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
+            let nf = [];
+            for (let f of this.fields) {
+                let x = new GridField(f);
+                nf.push(new GridField(f));
+            }
+            this.fields = nf;
+        }
+
         for (let f of this.fields) {
             if (f.identifier) { this.identifier = f.name; }
         }
@@ -8894,8 +9029,6 @@ class DataGrid extends Panel {
             cellDivider = ',', // cell divider
             rows = [];
 
-        // XXX TODO: Don't export hidden fields
-
         // Include the header row, if required.
         if ((this.exportheaderrow) && (this.exportheaderrow !== 'no')) {
             let colTitles = [],
@@ -8936,7 +9069,7 @@ class DataGrid extends Panel {
                     continue; // Skip hidden
                 }
                 let val;
-                switch (f.type) {
+                switch (f.type) {  // XXX Change to GridField
                     case 'date':
                         val = d[f.name].toString().replace(/"/g,"\\\"");
                         break;
@@ -9082,56 +9215,38 @@ class DataGrid extends Panel {
     configurator(type) {
         const me = this;
 
-        let title,
-            container,
-            actions = [];
+        let dialogconfig = {
+                actions: []
+            };
 
         switch(type) {
             case 'column':
-                title = TextFactory.get('configure_columns');
-                container = document.createElement('div');
-                container.classList.add('datagrid-configurator');
-                container.classList.add('column');
+                dialogconfig.title = TextFactory.get('configure_columns');
 
-                container.append(new InstructionBox({
-                    instructions: [TextFactory.get('datagrid-column-config-instructions')]
-                }).container);
-
-                let content = document.createElement('ul');
-                content.classList.add('elements');
-                for (let f of this.fields) {
-                    let li = document.createElement('li');
-
-                    let cbox = new BooleanToggle({
-                        label: f.label,
-                        checked: !f.hidden,
-                        classes: ['column'],
-                        onchange: function() {
-                            me.toggleColumn(f);
-                        }
-                    });
-                    li.appendChild(cbox.container);
-
-                    if (f.description) {
-                        let desc = document.createElement('div');
-                        desc.classList.add('description');
-                        desc.innerHTML = f.description;
-                        li.appendChild(desc);
+                let cc = new ColumnConfigurator({
+                    grid: me
+                });
+                dialogconfig.content = cc.container;
+                dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
+                    text: TextFactory.get('save_columns'),
+                    icon: 'disc-check',
+                    action: function() {
+                        dialog.close();
                     }
-                    content.appendChild(li);
-                }
-
-                container.append(content);
+                }));
                 break;
             case 'filter':
+                dialogconfig.title = TextFactory.get('manage_filters');
+
                 let fc = new FilterConfigurator({
                     fields: this.fields,
                     filters: this.activefilters
                 });
-                container = fc.container;
+                dialogconfig.content = fc.container;
 
-                let applyfiltersbutton = new SimpleButton({ // need to pass this to sub-routines
+                dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
+                    icon: 'disc-check',
                     action: function() {
                         fc.grindFilters();
                         me.activefilters = fc.filters;
@@ -9139,22 +9254,187 @@ class DataGrid extends Panel {
                         me.persist();
                         dialog.close();
                     }
-                });
-                actions.push(applyfiltersbutton);
+                }));
 
-                title = TextFactory.get('manage_filters');
                 break;
             default:
                 break;
         }
 
-        actions.push('closebutton');
-        let dialog = new DialogWindow({
-            title: title,
-            content: container,
-            actions: actions
-        });
+        dialogconfig.actions.push('closebutton');
+        let dialog = new DialogWindow(dialogconfig);
         dialog.open();
+    }
+
+    /**
+     * Opens a data window about the row for various purposes
+     * @param mode the mode of the window (view|edit|create|duplicate|delete)
+     *
+     * @param rowdata the data for the row
+     */
+    datawindow(mode, rowdata) {
+
+        let dialog,
+            dialogconfig = {
+            actions: []
+        };
+
+        switch(mode) {
+            case 'edit':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-edit', this.elementname);
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                dialogconfig.actions = ['cancelbutton'];
+                break;
+            case 'create':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-create', this.elementname);
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                dialogconfig.actions = ['cancelbutton'];
+                break;
+            case 'duplicate':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-duplicate', this.elementname);
+                if (this.identifier) {
+                    delete rowdata[this.identifier];
+                }
+                dialogconfig.actions = ['cancelbutton'];
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                break;
+            case 'delete':
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-delete', this.elementname);
+                dialogconfig.actions = ['cancelbutton'];
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                break;
+            case 'view':
+            default:
+                dialogconfig.title = TextFactory.get('datagrid-dialog-item-view', this.elementname);
+                dialogconfig.actions = ['closebutton'];
+                dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
+                break;
+        }
+        dialog = new DialogWindow(dialogconfig);
+        dialog.open();
+    }
+
+    buildForm(rowdata, mode) {
+        const me = this;
+        let form = {
+            passive: false,
+            elements: [],
+            actions: [],
+            handler: function(self, callback) {
+                let results = {
+                    success: false,
+                    errors: ['Handler is not defined.']
+                };
+                callback(results);
+            }
+        };
+
+        for (let f of this.fields) {
+            let e = f.getElement(rowdata[f.name]);
+            form.elements.push(e);
+        }
+
+        if (!this.allowedits) { mode = 'view'; } // always true in this
+
+        switch(mode) {
+            case 'edit':
+                if (this.edititeminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.edititeminstructions, this.elementname)]
+                    }
+                }
+                if ((this.updatehook) && (typeof this.updatehook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.updatehook(self);
+                    };
+                }
+                form.actions = [
+                    new ConstructiveButton({
+                        text: TextFactory.get('datagrid-dialog-item-save', this.elementname),
+                        icon: "check-circle",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'duplicate':
+                if (this.duplicateiteminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.duplicateiteminstructions, this.elementname)]
+                    }
+                }
+                if ((this.createhook) && (typeof this.createhook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.createhook(self);
+                    };
+                }
+                form.actions = [
+                    new ConstructiveButton({
+                        text: TextFactory.get('datagrid-dialog-item-duplicate', this.elementname),
+                        icon: "duplicate",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'create':
+                if (this.createiteminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.createiteminstructions, this.elementname)]
+                    }
+                }
+                if ((this.createhook) && (typeof this.createhook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.createhook(self);
+                    };
+                }
+                form.actions = [
+                    new ConstructiveButton({
+                        text: TextFactory.get('datagrid-dialog-item-create', this.elementname),
+                        icon: "plus-circle",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'delete':
+                if (this.deleteiteminstructions) {
+                    form.instructions = {
+                        icon: this.instructionsicon,
+                        instructions: [TextFactory.get(this.deleteiteminstructions, this.elementname)]
+                    }
+                }
+                if ((this.deletehook) && (typeof this.deletehook === 'function')) {
+                    form.handler = function(self, callback) {
+                        me.deletehook(self);
+                    };
+                }
+                form.passive = true;
+                form.elements = [
+                    new HiddenField({
+                        name: this.identifier,
+                        hidden: true,
+                        value: rowdata[this.identifier],
+                    })
+                ];
+                form.actions = [
+                    new ConstructiveButton({
+                        text: [TextFactory.get('datagrid-dialog-item-delete', this.elementname)],
+                        icon: "trashcan",
+                        submits: true,
+                        disabled: true  // No action needed.
+                    })
+                ];
+                break;
+            case 'view':
+                form.passive = true;
+                break;
+        }
+
+        return form;
     }
 
     /**
@@ -9372,8 +9652,8 @@ class DataGrid extends Panel {
      */
     handleColumnPresences() {
         let colsvisible = false;
-        for (let field of Object.values(this.fields)) {
-            if (!field.hidden) {
+        for (let f of this.fields) {
+            if (!f.hidden) {
                 colsvisible = true;
                 break;
             }
@@ -9523,7 +9803,7 @@ class DataGrid extends Panel {
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
                     text: this.getField(f.field).label,
-                    tooltip: `${this.getField(f.field).label} ${FilterConfigurator.getComparatorLabel(f.comparator)} ${f.value}`,
+                    tooltip: `${this.getField(f.field).label} ${GridField.getComparatorLabel(f.comparator)} ${f.value}`,
                     action: function() {
                         me.removeFilter(f);
                     }
@@ -9629,15 +9909,31 @@ class DataGrid extends Panel {
                         break;
                 }
                 break;
-            case 'imageurl':
-            case 'string':
-            default:
+            case 'boolean':
                 switch(filter.comparator) {
                     case 'equals':
                         matches = (testVal === filterVal);
                         break;
                     case 'doesnotequal':
                         matches = (testVal !== filterVal);
+                        break;
+                }
+                break;
+            default: // all the others can use raw test comparators
+                testVal = testVal.toLowerCase();
+                filterVal = filterVal.toLowerCase();
+                switch(filter.comparator) {
+                    case 'equals':
+                        matches = (testVal === filterVal);
+                        break;
+                    case 'doesnotequal':
+                        matches = (testVal !== filterVal);
+                        break;
+                    case 'startswith':
+                        matches = (testVal.startsWith(filterVal));
+                        break;
+                    case 'endswith':
+                        matches = (testVal.endsWith(filterVal));
                         break;
                     case 'notcontains':
                         matches = (testVal.toLowerCase().indexOf(filterVal.toLowerCase()) === -1);
@@ -9661,6 +9957,11 @@ class DataGrid extends Panel {
      * @param event (optional) the click event
      */
     select(row, event) {
+
+        if (row.getAttribute('aria-selected') === 'true') {
+            this.deselect(row);
+            return;
+        }
 
         let deselectOthers = true;
         let othersSelected = false;
@@ -10189,11 +10490,65 @@ class DataGrid extends Panel {
             row.appendChild(cell);
         }
 
+        row.addEventListener('dblclick', function(e, self) {
+            if ((me.doubleclick) && (typeof me.doubleclick === 'function')) {
+                me.doubleclick(e, self);
+            } else {
+                me.datawindow('view', rdata);
+            }
+        });
+
         if ((this.rowactions) && (this.rowactions.length > 0)) {
 
             let cell = document.createElement('td');
             cell.classList.add('actions');
             cell.classList.add('mechanical');
+
+            /*
+                        //    label: "Menu Text", // text
+                        //    tooltip: null, // Tooltip text
+                        //    tipicon: null, // Tooltip icon, if any
+                        //    icon: null, // Icon to use in the menu, if any
+                        //    action: function() { } // what to do when the tab is clicked.
+                        // }
+             */
+            let rowactions = [];
+
+            for (let ra of this.rowactions) {
+                let myaction = {
+                    label: ra.label,
+                    toolip: ra.tooltip,
+                    icon: ra.icon,
+                    tipicon: ra.tipicon
+                };
+
+                switch(ra.type) {
+                    case 'edit':
+                        myaction.action = function(event, buttonmenu) {
+                            me.datawindow('edit', rdata);
+                        };
+                        break;
+                    case 'delete':
+                        myaction.action = function(event, buttonmenu) {
+                            me.datawindow('delete', rdata);
+                        };
+                        break;
+                    case 'duplicate':
+                        myaction.action = function(event, buttonmenu) {
+                            me.datawindow('duplicate', rdata);
+                        };
+                        break;
+                    case 'function':
+                        myaction.action = ra.action;
+                        break;
+                    case 'view':
+                    default:
+                        break;
+                }
+
+                rowactions.push(myaction);
+            }
+
             cell.appendChild(new ButtonMenu({
                 ghost: true,
                 shape: 'square',
@@ -10203,7 +10558,7 @@ class DataGrid extends Panel {
                 text: TextFactory.get('actions'),
                 icon: this.rowactionsicon,
                 classes: ['actions'],
-                items: this.rowactions
+                items: rowactions
             }).button);
             row.appendChild(cell);
         }
@@ -10218,41 +10573,14 @@ class DataGrid extends Panel {
     /**
      * Builds a single data cell
      * @param data the data dictionary
-     * @param field the field definition dictionary
+     * @param field the GridField object
      * @return {HTMLTableDataCellElement}
      */
     buildCell(data, field) {
         let content;
         let d = data[field.name];
 
-        if ((field.renderer) && (typeof field.renderer === 'function')) {
-            content = field.renderer(d);
-        } else {
-            switch(field.type) {
-                case 'number':
-                    content = d;
-                    break;
-                case 'time':
-                    content = d;
-                    break;
-                case 'imageurl':
-                    content = `<a href="${d}"><img src="${d}" /></a>`;
-                    break;
-                case 'date':
-                    content = d.toString();
-                    break;
-                case 'stringarray':
-                    content = d.join(field.separator);
-                    break;
-                case 'paragraph':
-                    content = d.join(field.separator);
-                    break;
-                case 'string':
-                default:
-                    content = d;
-                    break;
-            }
-        }
+        content = field.renderer(d);
 
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
@@ -10305,8 +10633,12 @@ class DataGrid extends Panel {
 
     get activitynotifiericon() { return this.config.activitynotifiericon; }
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
+
     get activitynotifiertext() { return this.config.activitynotifiertext; }
     set activitynotifiertext(activitynotifiertext) { this.config.activitynotifiertext = activitynotifiertext; }
+
+    get allowedits() { return this.config.allowedits; }
+    set allowedits(allowedits) { this.config.allowedits = allowedits; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
@@ -10314,8 +10646,47 @@ class DataGrid extends Panel {
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
 
+    get createhook() { return this.config.createhook; }
+    set createhook(createhook) {
+        if (typeof createhook !== 'function') {
+            console.error("Value provided to createhook is not a function!");
+        }
+        this.config.createhook = createhook;
+    }
+
+    get createiteminstructions() { return this.config.createiteminstructions; }
+    set createiteminstructions(createiteminstructions) { this.config.createiteminstructions = createiteminstructions; }
+
     get currentsort() { return this._currentsort; }
     set currentsort(currentsort) { this._currentsort = currentsort; }
+
+    get deletehook() { return this.config.deletehook; }
+    set deletehook(deletehook) {
+        if (typeof deletehook !== 'function') {
+            console.error("Value provided to deletehook is not a function!");
+        }
+        this.config.deletehook = deletehook;
+    }
+
+    get deleteiteminstructions() { return this.config.deleteiteminstructions; }
+    set deleteiteminstructions(deleteiteminstructions) { this.config.deleteiteminstructions = deleteiteminstructions; }
+
+    get duplicatehook() { return this.config.duplicatehook; }
+    set duplicatehook(duplicatehook) {
+        if (typeof duplicatehook !== 'function') {
+            console.error("Value provided to duplicatehook is not a function!");
+        }
+        this.config.duplicatehook = duplicatehook;
+    }
+
+    get duplicateiteminstructions() { return this.config.duplicateiteminstructions; }
+    set duplicateiteminstructions(duplicateiteminstructions) { this.config.duplicateiteminstructions = duplicateiteminstructions; }
+
+    get edititeminstructions() { return this.config.edititeminstructions; }
+    set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
+
+    get elementname() { return this.config.elementname; }
+    set elementname(elementname) { this.config.elementname = elementname; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
@@ -10323,8 +10694,24 @@ class DataGrid extends Panel {
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
 
+    get deletehook() { return this.config.deletehook; }
+    set deletehook(deletehook) {
+        if (typeof deletehook !== 'function') {
+            console.error("Value provided to deletehook is not a function!");
+        }
+        this.config.deletehook = deletehook;
+    }
+
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
+
+    get doubleclick() { return this.config.doubleclick; }
+    set doubleclick(doubleclick) {
+        if (typeof doubleclick !== 'function') {
+            console.error("Value provided to doubleclick is not a function!");
+        }
+        this.config.doubleclick = doubleclick;
+    }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }
@@ -10410,6 +10797,9 @@ class DataGrid extends Panel {
     get identifier() { return this._identifier; }
     set identifier(identifier) { this._identifier = identifier; }
 
+    get instructionsicon() { return this.config.instructionsicon; }
+    set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
+
     get itemcount()  { return this._itemcount; }
     set itemcount(itemcount) { this._itemcount = itemcount; }
 
@@ -10437,6 +10827,9 @@ class DataGrid extends Panel {
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
 
+    get passiveeditinstructions() { return this.config.passiveeditinstructions; }
+    set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }
+
     get rowactions() { return this.config.rowactions; }
     set rowactions(rowactions) { this.config.rowactions = rowactions; }
 
@@ -10459,7 +10852,12 @@ class DataGrid extends Panel {
     set selectable(selectable) { this.config.selectable = selectable; }
 
     get selectaction() { return this.config.selectaction; }
-    set selectaction(selectaction) { this.config.selectaction = selectaction; }
+    set selectaction(selectaction) {
+        if (typeof selectaction !== 'function') {
+            console.error("Value provided to selectaction is not a function!");
+        }
+        this.config.selectaction = selectaction;
+    }
 
     get shade() {
         if (!this._shade) { this.buildShade(); }
@@ -10491,37 +10889,55 @@ class DataGrid extends Panel {
     }
     set thead(thead) { this._thead = thead; }
 
+    get updatehook() { return this.config.updatehook; }
+    set updatehook(updatehook) {
+        if (typeof updatehook !== 'function') {
+            console.error("Value provided to updatehook is not a function!");
+        }
+        this.config.updatehook = updatehook;
+    }
+
 }
 window.DataGrid = DataGrid;
-class FilterConfigurator {
+class GridField {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            classes: [], //Extra css classes to apply,
-            filters: [], // Existing filters.
-            fields: [
-                /*
-                 * An array of field definition dictionaries:
-                 *
-                    name: <string>,    // The variable name for this field (computer readable)
-                    label: <string>,   // The human-readable name for the column
-                    type: <string>,    // The datatype of the column
-                                       //   - string
-                                       //   - number
-                                       //   - date
-                                       //   - time
-                                       //   - stringarray
-                                       //   - paragraph
-                    description: <string>>,  // A string that describes the data in the column
-                    classes: <string array>, // Additional classes to apply to cells of this field
-                    filterable: <null|string|enum> // Is the field filterable? if so, how?
-                */
-            ],
-            instructions: TextFactory.get('datagrid-filter-instructions')
-
+            name: null,        // The variable name for this field (computer readable)
+            label: null,       // The human-readable name for the column
+            readonly: false,   // if true, this value cannot be changed. Useful for identifiers.
+            hidden: false,     // Is the column hidden or not.
+            identifier: false, // If true, marks the field as the unique identifier for a data set.
+                               // An identifier is required in a grid if you want to update entries.
+            type: 'string',    // The datatype of the column
+                               //   - string
+                               //   - url
+                               //   - imageurl
+                               //   - email
+                               //   - boolean
+                               //   - number
+                               //   - date
+                               //   - time
+                               //   - stringarray
+                               //   - paragraph
+                               //   - enumeration
+            values: null,      // An array of option values for an enumeration data type. Ignored if not
+                               // an enumeration
+                               // [
+                               //   { label: "Label to show", value: "v", default: false }
+                               //  ]
+            separator: ', ',   // Used when rendering array values
+            nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
+            resize: false,     // Whether or not to allow resizing of the column (default: false)
+            description: null, // A string that describes the data in the column
+            classes: [],       // Additional classes to apply to cells of this field
+            filterable: false, // Is the field filterable?
+            renderer: null     // A function that can be used to format the in the field. Overrides native
+                               // renderer.  Takes "data" as an argument.
         };
     }
+
+
 
     /**
      * Supported comparators
@@ -10530,14 +10946,16 @@ class FilterConfigurator {
      */
     static get COMPARATORS() {
         return {
-            'contains' : TextFactory.get('filter-comparator-contains'),
-            'notcontains' : TextFactory.get('filter-comparator-notcontains'),
-            'equals' : TextFactory.get('filter-comparator-equals'),
-            'doesnotequal' : TextFactory.get('filter-comparator-doesnotequal'),
-            'isbefore' : TextFactory.get('filter-comparator-isbefore'),
-            'isafter' : TextFactory.get('filter-comparator-isafter'),
-            'isgreaterthan' : TextFactory.get('filter-comparator-greaterthan'),
-            'islessthan' : TextFactory.get('filter-comparator-lessthan')
+            'startswith' : TextFactory.get('comparator-startswith'),
+            'endswith' : TextFactory.get('comparator-endswith'),
+            'contains' : TextFactory.get('comparator-contains'),
+            'notcontains' : TextFactory.get('comparator-notcontains'),
+            'equals' : TextFactory.get('comparator-equals'),
+            'doesnotequal' : TextFactory.get('comparator-doesnotequal'),
+            'isbefore' : TextFactory.get('comparator-isbefore'),
+            'isafter' : TextFactory.get('comparator-isafter'),
+            'isgreaterthan' : TextFactory.get('comparator-greaterthan'),
+            'islessthan' : TextFactory.get('comparator-lessthan')
         }
     }
 
@@ -10547,9 +10965,292 @@ class FilterConfigurator {
      * @return A string, or null
      */
     static getComparatorLabel(comparator) {
-        return FilterConfigurator.COMPARATORS[comparator];
+        return GridField.COMPARATORS[comparator];
     }
 
+
+    /**
+     * Define the gridfield
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, GridField.DEFAULT_CONFIG, config);
+        this.setRenderer();
+    }
+
+    /**
+     * Set the renderer for the field, if one isn't provided.
+     */
+    setRenderer() {
+        const me = this;
+        switch (this.type) {
+            case 'number':
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+            case 'date':
+            case 'time':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return d.toString();
+                    }
+                }
+                break;
+            case 'boolean':
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+            case 'url':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return `<a href="${d}">${d}</a>`;
+                    }
+                }
+                break;
+            case 'imageurl':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return `<a href="${d}"><img src="${d}" /></a>`;
+                    }
+                }
+                break;
+            case 'email':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return `<a href="mailto:${d}">${d}</a>`;
+                    }
+                }
+                break;
+            case 'enumeration':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return this.getValue(d);
+                    }
+                }
+                break;
+            case 'paragraph':
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+            case 'stringarray':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        if (Array.isArray(d)) {
+                            return d.join(me.separator);
+                        }
+                        return d;
+                    }
+                }
+                break;
+            case 'string':
+            default:
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+        }
+
+    }
+
+    getValue(key) {
+        let value;
+        if ((this.values) && (this.values.length > 0)) {
+            for (let def of this.values) {
+                if (def.key === 'key') {
+                    value = def.value;
+                    break;
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Get a form element for this data field.
+     * @param value The value of the input field (optional)
+     * @param config (optional) the config to use
+     * @return {HiddenField|NumberInput|DateInput|BooleanToggle|EmailInput}
+     */
+    getElement(value, config) {
+        const me = this;
+        let e;
+        if (!config) {
+            config = {
+                name: this.name,
+                label: this.label,
+                help: this.description,
+                classes: this.classes,
+                value: value,
+                renderer: this.renderer
+            };
+        }
+
+        if (this.readonly) {
+            e = new HiddenField(config);
+        } else {
+            switch (this.type) {
+                case 'number':
+                    e = new NumberInput(config);
+                    break;
+                case 'date':
+                case 'time':
+                    e = new DateInput(config);
+                    break;
+                case 'enumeration':
+                    config.options = [];
+                    for (let o of this.values) {
+                        config.options.push({ label: o.label, value: o.value, checked: o.default });
+                    }
+                    e = new SelectMenu(config);
+                    break;
+                case 'boolean':
+                    e = new BooleanToggle(config);
+                    break;
+                case 'url':
+                    e = new URLInput(config);
+                    break;
+                case 'imageurl':
+                    e = new URLInput(config);
+                    break;
+                case 'email':
+                    e = new EmailInput(config);
+                    break;
+                case 'paragraph':
+                    e = new TextArea(config);
+                    break;
+                case 'stringarray':
+                    e = new TextInput(config);
+                    break;
+                case 'string':
+                default:
+                    e = new TextInput(config);
+                    break;
+            }
+        }
+
+
+        return e;
+    }
+
+    /**
+     * Get the valid comparators for this datatypes
+     * @return an array of comparator definitions.
+     */
+    getComparators() {
+
+        let comparators;
+
+        switch (this.type) {
+            case 'number':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
+                    { value: 'isgreaterthan', label: GridField.getComparatorLabel('isgreaterthan') },
+                    { value: 'islessthan', label: GridField.getComparatorLabel('islessthan') }
+                ];
+                break;
+            case 'date':
+            case 'time':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
+                    { value: 'isbefore', label: GridField.getComparatorLabel('isbefore') },
+                    { value: 'isafter', label: GridField.getComparatorLabel('isafter') }
+                ];
+                break;
+            case 'boolean':
+            case 'enumeration':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') }
+                ];
+                break;
+            case 'url':
+            case 'imageurl':
+            case 'email':
+            case 'paragraph':
+            case 'stringarray':
+            case 'string':
+            default:
+                comparators = [ // Default for strings.
+                    {value: 'contains', label: GridField.getComparatorLabel('contains')},
+                    {value: 'notcontains', label: GridField.getComparatorLabel('notcontains')},
+                    {value: 'equals', label: GridField.getComparatorLabel('equals')},
+                    {value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal')},
+                    {value: 'startswith', label: GridField.getComparatorLabel('startswith')},
+                    {value: 'endswith', label: GridField.getComparatorLabel('endswith')}
+                ];
+                break;
+        }
+
+        return comparators;
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes ; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get description() { return this.config.description ; }
+    set description(description) { this.config.description = description; }
+
+    get filterable() { return this.config.filterable ; }
+    set filterable(filterable) { this.config.filterable = filterable; }
+
+    get hidden() { return this.config.hidden ; }
+    set hidden(hidden) { this.config.hidden = hidden; }
+
+    get identifier() { return this.config.identifier ; }
+    set identifier(identifier) { this.config.identifier = identifier; }
+
+    get label() { return this.config.label ; }
+    set label(label) { this.config.label = label; }
+
+    get name() { return this.config.name ; }
+    set name(name) { this.config.name = name; }
+
+    get nodupe() { return this.config.nodupe ; }
+    set nodupe(nodupe) { this.config.nodupe = nodupe; }
+
+    get readonly() { return this.config.readonly ; }
+    set readonly(readonly) { this.config.readonly = readonly; }
+
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
+
+    get resize() { return this.config.resize ; }
+    set resize(resize) { this.config.resize = resize; }
+
+    get separator() { return this.config.separator ; }
+    set separator(separator) { this.config.separator = separator; }
+
+    get type() { return this.config.type ; }
+    set type(type) { this.config.type = type; }
+
+    get values() { return this.config.values ; }
+    set values(values) { this.config.values = values; }
+
+}
+class FilterConfigurator {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The id
+            classes: [], //Extra css classes to apply,
+            filters: [], // Existing filters.
+            fields: [], // Field definitions
+            instructions: TextFactory.get('datagrid-filter-instructions')
+
+        };
+    }
 
     constructor(config) {
         if (!config) { config = {}; }
@@ -10719,10 +11420,9 @@ class FilterConfigurator {
         validmarker.appendChild(IconFactory.icon('checkmark-circle'));
         li.appendChild(validmarker);
 
-        li.appendChild(new DestructiveButton({
+        li.appendChild(new SimpleButton({
             icon: 'minus',
             shape: 'square',
-            ghost: true,
             classes: ['filterkiller'],
             action: function() {
                 if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {
@@ -10757,7 +11457,7 @@ class FilterConfigurator {
             options: options,
             name: `primeselector-${filterid}`,
             value: fieldname,
-            placeholder: TextFactory.get('filter-comparator-select_field'),
+            placeholder: TextFactory.get('comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
                 let li = self.container.parentElement,
@@ -10795,32 +11495,14 @@ class FilterConfigurator {
         const me = this;
 
         let ourValue = 'contains';
-        let comparators = [ // Default for strings.
-            { value: 'contains', label: FilterConfigurator.getComparatorLabel('contains') },
-            { value: 'notcontains', label: FilterConfigurator.getComparatorLabel('notcontains') },
-            { value: 'equals', label: FilterConfigurator.getComparatorLabel('equals') },
-            { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
-        ];
+        let comparators = field.getComparators();
 
         switch (field.type) {
             case 'date':
             case 'time':
-                ourValue = 'equals';
-                comparators = [
-                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
-                    { value: 'isbefore', label: FilterConfigurator.getComparatorLabel('isbefore') },
-                    { value: 'isafter', label: FilterConfigurator.getComparatorLabel('isafter') }
-                ];
-                break;
             case 'number':
+            case 'enumeration':
                 ourValue = 'equals';
-                comparators = [
-                    { value: 'equals', checked: true, label: FilterConfigurator.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: FilterConfigurator.getComparatorLabel('doesnotequal') },
-                    { value: 'isgreaterthan', label: FilterConfigurator.getComparatorLabel('isgreaterthan') },
-                    { value: 'islessthan', label: FilterConfigurator.getComparatorLabel('islessthan') }
-                ];
                 break;
             default:
                 break;
@@ -10832,7 +11514,7 @@ class FilterConfigurator {
 
         let comparatorSelector = new SelectMenu({
             options: comparators,
-            placeholder: TextFactory.get('filter-comparator-comparator'),
+            placeholder: TextFactory.get('comparator-comparator'),
             value: ourValue,
             name: `comparator-${filterid}`,
             minimal: true,
@@ -10857,59 +11539,18 @@ class FilterConfigurator {
     makeValueSelector(filterid, field, value) {
         const me = this;
 
-        let valueSelector;
-        switch (field.type) {
-            case 'date':
-            case 'time':
-                valueSelector = new DateInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-            case 'number':
-                valueSelector = new NumberInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-            case 'imageurl':
-                valueSelector = new URLInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-            case 'string':
-            default:
-                valueSelector = new TextInput({
-                    value: value,
-                    name: `valuefield-${filterid}`,
-                    minimal: true,
-                    classes: ['valueinput'],
-                    onchange: function(self) {
-                        let li = self.container.parentElement;
-                        me.checkValidity(li);
-                    }
-                });
-                break;
-        }
+        let config = {
+            value: value,
+            name: `valuefield-${filterid}`,
+            minimal: true,
+            classes: ['valueinput'],
+            onchange: function(self) {
+                let li = self.container.parentElement;
+                me.checkValidity(li);
+            }
+        };
+
+        let valueSelector = field.getElement(value, config);
 
         valueSelector.container.setAttribute('data-field', field.name);
         return valueSelector;
@@ -10960,3 +11601,111 @@ class FilterConfigurator {
     set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
 }
 window.FilterConfigurator = FilterConfigurator;
+class ColumnConfigurator {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The id
+            classes: [], //Extra css classes to apply,
+            fields: [],
+            grid: null, // the datagrid to control.
+            instructions: TextFactory.get('datagrid-column-config-instructions')
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        this.config = Object.assign({}, ColumnConfigurator.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `cconfig-${CFBUtils.getUniqueKey(5)}`; }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the thing.
+     */
+    buildContainer() {
+        /*
+         * This this is gigantic and ugly.  Don't @ me.
+         * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
+         */
+        const me = this;
+
+        this.container = document.createElement('div');
+        this.container.classList.add('column-configurator');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        // instructions
+        if (this.instructions) {
+            this.container.append(new InstructionBox({
+                instructions: [this.instructions]
+            }).container);
+        }
+
+        this.elements = document.createElement('ul');
+        this.elements.classList.add('column-list');
+
+        for (let f of this.grid.fields) {
+            let li = document.createElement('li');
+
+            let cbox = new BooleanToggle({
+                label: f.label,
+                checked: !f.hidden,
+                classes: ['column'],
+                onchange: function() {
+                    me.grid.toggleColumn(f);
+                }
+            });
+
+            li.appendChild(cbox.container);
+
+            if (f.description) {
+                let desc = document.createElement('div');
+                desc.classList.add('description');
+                desc.innerHTML = f.description;
+                li.appendChild(desc);
+            }
+            this.elements.appendChild(li);
+        }
+
+        this.container.append(this.elements);
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get elements() { return this._elements; }
+    set elements(elements) { this._elements = elements; }
+
+    get fields() { return this.config.fields; }
+    set fields(fields) { this.config.fields = fields; }
+
+    get grid() { return this.config.grid; }
+    set grid(grid) { this.config.grid = grid; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get instructions() { return this.config.instructions; }
+    set instructions(instructions) { this.config.instructions = instructions; }
+}
+window.ColumnConfigurator = ColumnConfigurator;
