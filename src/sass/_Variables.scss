@@ -121,7 +121,7 @@
   // Misc Values
   --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
-  --border-radius: .2em;
+  --border-radius: .2rem;
 
   // Semantic colors
   --standard-color: var(--grey-dark);
@@ -482,7 +482,7 @@
   // Panels
   --panel-max-width: 22em;
   --panel-border-radius: var(--border-radius);
-  --panel-background-color: var(--canvas-color-secondary);
+  --panel-background-color: var(--canvas-color-primary);
   --panel-box-shadow: var(--panel-shadow);
   --panel-text-color: var(--grey-darkest);
   --panel-text-shadow: var(--text-shadow);
