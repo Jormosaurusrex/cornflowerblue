@@ -72,7 +72,7 @@ module.exports = function(grunt) {
                     'src/libs/components/grid/GridField.js',
                     'src/libs/components/grid/FilterConfigurator.js',
                     'src/libs/components/grid/ColumnConfigurator.js',
-                    'src/libs/SimpleForm.js'
+                    'src/libs/components/SimpleForm.js'
                 ],
                 dest: 'dist/lib/cornflowerblue.js'
             }

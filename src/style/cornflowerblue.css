@@ -472,6 +472,251 @@
   --instructions-icon-color: var(--standard-color);
 }
 
+div.selectmenu-menu {
+  animation: cfb-fadein 0.5s;
+  opacity: 1;
+  position: absolute;
+  z-index: 20000;
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+}
+div.selectmenu-menu ul.selectmenu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: var(--selectmenu-menu-background-color);
+  border: 0.1em solid var(--input-default-border-color);
+  border-top: none;
+  padding: 0;
+  overflow: auto;
+  max-height: 10em;
+  z-index: 201;
+  position: absolute;
+  margin: 0;
+  box-shadow: var(--panel-shadow-light);
+  width: 100%;
+  transition: all 0.2s;
+}
+div.selectmenu-menu ul.selectmenu li {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+  white-space: nowrap;
+  padding: 0.5em 1em 0.5em 1.5em;
+}
+div.selectmenu-menu ul.selectmenu li > input[type=radio] {
+  display: none;
+}
+div.selectmenu-menu ul.selectmenu li:focus {
+  outline: var(--selectmenu-menu-background-color) dashed 0.1em;
+  outline-offset: -0.3em;
+  text-decoration: underline double;
+}
+div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
+  box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
+}
+div.selectmenu-menu ul.selectmenu li:nth-child(even) {
+  background-color: var(--selectmenu-menu-alternate-background-color);
+}
+div.selectmenu-menu ul.selectmenu li:focus {
+  background-color: var(--selectmenu-menu-item-hover-background-color);
+  color: var(--selectmenu-menu-item-hover-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.selectmenu-menu ul.selectmenu li:hover {
+    background-color: var(--selectmenu-menu-item-hover-background-color);
+    color: var(--selectmenu-menu-item-hover-text-color);
+  }
+}
+div.selectmenu-menu ul.selectmenu.vert {
+  bottom: 2.5em;
+  box-shadow: var(--panel-shadow-light-inverse);
+  border-top: 0.1em solid var(--input-default-border-color);
+  border-bottom: none;
+}
+div.selectmenu-menu[aria-hidden=true] {
+  height: 0;
+  max-height: 0;
+  box-shadow: none;
+  border: none;
+  display: none;
+}
+
+ul.button-menu,
+div.button-menu,
+form.button-menu {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  list-style-type: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  z-index: 20000;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-menu-background-color);
+  color: var(--button-menu-item-text-color);
+  filter: drop-shadow(0 0.5em 0.5em rgba(0, 0, 0, 0.4));
+}
+ul.button-menu[aria-hidden=true],
+div.button-menu[aria-hidden=true],
+form.button-menu[aria-hidden=true] {
+  display: none;
+}
+ul.button-menu:before,
+div.button-menu:before,
+form.button-menu:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 0.25em;
+  top: -0.7em;
+  border-width: 0 0.7em 0.7em 0.7em;
+  border-style: solid;
+  border-color: var(--button-menu-background-color) transparent;
+}
+ul.button-menu.southeast:before, ul.button-menu.se:before,
+div.button-menu.southeast:before,
+div.button-menu.se:before,
+form.button-menu.southeast:before,
+form.button-menu.se:before {
+  left: 0.2em;
+  top: -0.7em;
+}
+ul.button-menu.north:before, ul.button-menu.n:before, ul.button-menu.ne:before, ul.button-menu.northeast:before,
+div.button-menu.north:before,
+div.button-menu.n:before,
+div.button-menu.ne:before,
+div.button-menu.northeast:before,
+form.button-menu.north:before,
+form.button-menu.n:before,
+form.button-menu.ne:before,
+form.button-menu.northeast:before {
+  bottom: -0.7em;
+  right: 0.2em;
+  left: unset;
+  top: unset;
+  border-width: 0.7em 0.7em 0 0.7em;
+}
+ul.button-menu.nw:before, ul.button-menu.northwest:before,
+div.button-menu.nw:before,
+div.button-menu.northwest:before,
+form.button-menu.nw:before,
+form.button-menu.northwest:before {
+  bottom: -0.7em;
+  left: 0.2em;
+  top: unset;
+  border-width: 0.7em 0.7em 0 0.7em;
+}
+ul.button-menu.west:before, ul.button-menu.w:before,
+div.button-menu.west:before,
+div.button-menu.w:before,
+form.button-menu.west:before,
+form.button-menu.w:before {
+  left: unset;
+  right: -0.5em;
+  bottom: unset;
+  top: 0.5em;
+  border-color: transparent var(--button-menu-background-color);
+  border-width: 0.5em 0 0.5em 0.5em;
+}
+ul.button-menu.east:before, ul.button-menu.e:before,
+div.button-menu.east:before,
+div.button-menu.e:before,
+form.button-menu.east:before,
+form.button-menu.e:before {
+  left: -0.5em;
+  bottom: unset;
+  top: 0.5em;
+  border-color: transparent var(--button-menu-background-color);
+  border-width: 0.5em 0.5em 0.5em 0;
+}
+
+ul.button-menu {
+  display: flex;
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+}
+ul.button-menu li {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+ul.button-menu li:active, ul.button-menu li:focus {
+  background-color: var(--button-menu-item-hover-background-color);
+  color: var(--button-menu-item-hover-text-color);
+  text-shadow: var(--button-menu-item-hover-text-shadow);
+}
+ul.button-menu li:active a, ul.button-menu li:focus a {
+  color: var(--button-menu-item-hover-text-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  ul.button-menu li:hover {
+    background-color: var(--button-menu-item-hover-background-color);
+    color: var(--button-menu-item-hover-text-color);
+    text-shadow: var(--button-menu-item-hover-text-shadow);
+  }
+  ul.button-menu li:hover a {
+    color: var(--button-menu-item-hover-text-color);
+  }
+}
+ul.button-menu li a {
+  padding: 0.6em 1em 0.6em 1em;
+  white-space: nowrap;
+  background-color: transparent;
+  font-size: 1em;
+  color: var(--button-menu-item-text-color);
+  text-shadow: var(--button-menu-item-text-shadow);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+ul.button-menu li a:active {
+  color: var(--button-menu-item-hover-text-color);
+  filter: none;
+}
+ul.button-menu li a:focus {
+  margin: 0.3em;
+  outline: var(--hot-text-color) dashed 0.1em;
+  outline-offset: 0.2em;
+  text-decoration: underline double;
+}
+ul.button-menu li a span.icon {
+  margin-right: 1em;
+}
+
+form.button-menu {
+  min-width: 20em;
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+}
+form.button-menu div.elements {
+  text-align: unset;
+}
+form.button-menu div.elements div.input-container {
+  margin-top: 0;
+}
+form.button-menu div.elements div.select-container {
+  margin-top: 0;
+}
+form.button-menu div.elements div.select-container ul.selectmenu {
+  top: unset;
+}
+form.button-menu.noactions div.header {
+  display: none;
+}
+
 @keyframes cfb-localspin {
   0% {
     transform: rotate(0deg);
@@ -2324,79 +2569,6 @@ div.select-container.disabled.mute input.trigger {
   background-color: var(--input-mute-disabled-background-color);
 }
 
-div.selectmenu-menu {
-  animation: cfb-fadein 0.5s;
-  opacity: 1;
-  position: absolute;
-  z-index: 20000;
-}
-div.selectmenu-menu ul.selectmenu {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  background-color: var(--selectmenu-menu-background-color);
-  border: 0.1em solid var(--input-default-border-color);
-  border-top: none;
-  padding: 0;
-  overflow: auto;
-  max-height: 10em;
-  z-index: 201;
-  position: absolute;
-  margin: 0;
-  box-shadow: var(--panel-shadow-light);
-  width: 100%;
-  transition: all 0.2s;
-}
-div.selectmenu-menu ul.selectmenu li {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-  margin: 0;
-  white-space: nowrap;
-  padding: 0.5em 1em 0.5em 1.5em;
-}
-div.selectmenu-menu ul.selectmenu li > input[type=radio] {
-  display: none;
-}
-div.selectmenu-menu ul.selectmenu li:focus {
-  outline: var(--selectmenu-menu-background-color) dashed 0.1em;
-  outline-offset: -0.3em;
-  text-decoration: underline double;
-}
-div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
-  box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
-}
-div.selectmenu-menu ul.selectmenu li:nth-child(even) {
-  background-color: var(--selectmenu-menu-alternate-background-color);
-}
-div.selectmenu-menu ul.selectmenu li:focus {
-  background-color: var(--selectmenu-menu-item-hover-background-color);
-  color: var(--selectmenu-menu-item-hover-text-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  div.selectmenu-menu ul.selectmenu li:hover {
-    background-color: var(--selectmenu-menu-item-hover-background-color);
-    color: var(--selectmenu-menu-item-hover-text-color);
-  }
-}
-div.selectmenu-menu ul.selectmenu.vert {
-  bottom: 2.5em;
-  box-shadow: var(--panel-shadow-light-inverse);
-  border-top: 0.1em solid var(--input-default-border-color);
-  border-bottom: none;
-}
-div.selectmenu-menu[aria-hidden=true] {
-  height: 0;
-  max-height: 0;
-  box-shadow: none;
-  border: none;
-  display: none;
-}
-
 button {
   display: flex;
   align-items: center;
@@ -2882,172 +3054,6 @@ button.menu[aria-expanded=true] {
 }
 button.menu[aria-expanded=true] ul.menu {
   display: flex;
-}
-
-ul.button-menu,
-div.button-menu,
-form.button-menu {
-  flex-direction: column;
-  flex-wrap: nowrap;
-  list-style-type: none;
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  overflow: visible;
-  z-index: 20000;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-menu-background-color);
-  color: var(--button-menu-item-text-color);
-  filter: drop-shadow(0 0.5em 0.5em rgba(0, 0, 0, 0.4));
-}
-ul.button-menu[aria-hidden=true],
-div.button-menu[aria-hidden=true],
-form.button-menu[aria-hidden=true] {
-  display: none;
-}
-ul.button-menu:before,
-div.button-menu:before,
-form.button-menu:before {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  right: 0.25em;
-  top: -0.7em;
-  border-width: 0 0.7em 0.7em 0.7em;
-  border-style: solid;
-  border-color: var(--button-menu-background-color) transparent;
-}
-ul.button-menu.southeast:before, ul.button-menu.se:before,
-div.button-menu.southeast:before,
-div.button-menu.se:before,
-form.button-menu.southeast:before,
-form.button-menu.se:before {
-  left: 0.2em;
-  top: -0.7em;
-}
-ul.button-menu.north:before, ul.button-menu.n:before, ul.button-menu.ne:before, ul.button-menu.northeast:before,
-div.button-menu.north:before,
-div.button-menu.n:before,
-div.button-menu.ne:before,
-div.button-menu.northeast:before,
-form.button-menu.north:before,
-form.button-menu.n:before,
-form.button-menu.ne:before,
-form.button-menu.northeast:before {
-  bottom: -0.7em;
-  right: 0.2em;
-  left: unset;
-  top: unset;
-  border-width: 0.7em 0.7em 0 0.7em;
-}
-ul.button-menu.nw:before, ul.button-menu.northwest:before,
-div.button-menu.nw:before,
-div.button-menu.northwest:before,
-form.button-menu.nw:before,
-form.button-menu.northwest:before {
-  bottom: -0.7em;
-  left: 0.2em;
-  top: unset;
-  border-width: 0.7em 0.7em 0 0.7em;
-}
-ul.button-menu.west:before, ul.button-menu.w:before,
-div.button-menu.west:before,
-div.button-menu.w:before,
-form.button-menu.west:before,
-form.button-menu.w:before {
-  left: unset;
-  right: -0.5em;
-  bottom: unset;
-  top: 0.5em;
-  border-color: transparent var(--button-menu-background-color);
-  border-width: 0.5em 0 0.5em 0.5em;
-}
-ul.button-menu.east:before, ul.button-menu.e:before,
-div.button-menu.east:before,
-div.button-menu.e:before,
-form.button-menu.east:before,
-form.button-menu.e:before {
-  left: -0.5em;
-  bottom: unset;
-  top: 0.5em;
-  border-color: transparent var(--button-menu-background-color);
-  border-width: 0.5em 0.5em 0.5em 0;
-}
-
-ul.button-menu {
-  display: flex;
-}
-ul.button-menu li {
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-ul.button-menu li:active, ul.button-menu li:focus {
-  background-color: var(--button-menu-item-hover-background-color);
-  color: var(--button-menu-item-hover-text-color);
-  text-shadow: var(--button-menu-item-hover-text-shadow);
-}
-ul.button-menu li:active a, ul.button-menu li:focus a {
-  color: var(--button-menu-item-hover-text-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  ul.button-menu li:hover {
-    background-color: var(--button-menu-item-hover-background-color);
-    color: var(--button-menu-item-hover-text-color);
-    text-shadow: var(--button-menu-item-hover-text-shadow);
-  }
-  ul.button-menu li:hover a {
-    color: var(--button-menu-item-hover-text-color);
-  }
-}
-ul.button-menu li a {
-  padding: 0.6em 1em 0.6em 1em;
-  white-space: nowrap;
-  background-color: transparent;
-  font-size: 1em;
-  color: var(--button-menu-item-text-color);
-  text-shadow: var(--button-menu-item-text-shadow);
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-grow: 1;
-}
-ul.button-menu li a:active {
-  color: var(--button-menu-item-hover-text-color);
-  filter: none;
-}
-ul.button-menu li a:focus {
-  margin: 0.3em;
-  outline: var(--hot-text-color) dashed 0.1em;
-  outline-offset: 0.2em;
-  text-decoration: underline double;
-}
-ul.button-menu li a span.icon {
-  margin-right: 1em;
-}
-
-form.button-menu {
-  min-width: 20em;
-}
-form.button-menu div.elements {
-  text-align: unset;
-}
-form.button-menu div.elements div.input-container {
-  margin-top: 0;
-}
-form.button-menu div.elements div.select-container {
-  margin-top: 0;
-}
-form.button-menu div.elements div.select-container ul.selectmenu {
-  top: unset;
-}
-form.button-menu.noactions div.header {
-  display: none;
 }
 
 div.checkbox {

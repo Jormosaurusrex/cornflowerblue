@@ -26,6 +26,9 @@ class GridField {
                                //   { label: "Label to show", value: "v", default: false }
                                //  ]
             separator: ', ',   // Used when rendering array values
+            placeholder: null, // The placeholder to use in the field
+            minnumber: null,   // The minnumber to use in the field
+            maxnumber: null,   // The maxnumber to use in the field
             nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
             resize: false,     // Whether or not to allow resizing of the column (default: false)
             description: null, // A string that describes the data in the column
@@ -169,68 +172,68 @@ class GridField {
 
     /**
      * Get a form element for this data field.
-     * @param value The value of the input field (optional)
+     * @param value (optional) The value of the input field
      * @param config (optional) the config to use
      * @return {HiddenField|NumberInput|DateInput|BooleanToggle|EmailInput}
      */
     getElement(value, config) {
-        const me = this;
         let e;
         if (!config) {
             config = {
                 name: this.name,
                 label: this.label,
+                disabled: this.readonly,
                 help: this.description,
+                placeholder: this.placeholder,
+                maxnumber: this.maxnumber,
+                minnumber: this.minnumber,
                 classes: this.classes,
                 value: value,
                 renderer: this.renderer
             };
         }
 
-        if (this.readonly) {
-            e = new HiddenField(config);
-        } else {
-            switch (this.type) {
-                case 'number':
-                    e = new NumberInput(config);
-                    break;
-                case 'date':
-                case 'time':
-                    e = new DateInput(config);
-                    break;
-                case 'enumeration':
-                    config.options = [];
-                    for (let o of this.values) {
-                        config.options.push({ label: o.label, value: o.value, checked: o.default });
-                    }
-                    e = new SelectMenu(config);
-                    break;
-                case 'boolean':
-                    e = new BooleanToggle(config);
-                    break;
-                case 'url':
-                    e = new URLInput(config);
-                    break;
-                case 'imageurl':
-                    e = new URLInput(config);
-                    break;
-                case 'email':
-                    e = new EmailInput(config);
-                    break;
-                case 'paragraph':
-                    e = new TextArea(config);
-                    break;
-                case 'stringarray':
-                    e = new TextInput(config);
-                    break;
-                case 'string':
-                default:
-                    e = new TextInput(config);
-                    break;
-            }
+        switch (this.type) {
+            case 'number':
+                e = new NumberInput(config);
+                break;
+            case 'date':
+            case 'time':
+                e = new DateInput(config);
+                break;
+            case 'enumeration':
+                config.options = [];
+                for (let o of this.values) {
+                    config.options.push({ label: o.label, value: o.value, checked: o.default });
+                }
+                e = new SelectMenu(config);
+                break;
+            case 'boolean':
+                e = new BooleanToggle(config);
+                break;
+            case 'timezone':
+                e = new TimezoneMenu(config);
+                break;
+            case 'url':
+                e = new URLInput(config);
+                break;
+            case 'imageurl':
+                e = new URLInput(config);
+                break;
+            case 'email':
+                e = new EmailInput(config);
+                break;
+            case 'paragraph':
+                e = new TextArea(config);
+                break;
+            case 'stringarray':
+                e = new TextInput(config);
+                break;
+            case 'string':
+            default:
+                e = new TextInput(config);
+                break;
         }
-
-
         return e;
     }
 
@@ -308,11 +311,20 @@ class GridField {
     get label() { return this.config.label ; }
     set label(label) { this.config.label = label; }
 
+    get maxnumber() { return this.config.maxnumber ; }
+    set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
+
+    get minnumber() { return this.config.minnumber ; }
+    set minnumber(minnumber) { this.config.minnumber = minnumber; }
+
     get name() { return this.config.name ; }
     set name(name) { this.config.name = name; }
 
     get nodupe() { return this.config.nodupe ; }
     set nodupe(nodupe) { this.config.nodupe = nodupe; }
+
+    get placeholder() { return this.config.placeholder ; }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
 
     get readonly() { return this.config.readonly ; }
     set readonly(readonly) { this.config.readonly = readonly; }
@@ -338,3 +350,4 @@ class GridField {
     set values(values) { this.config.values = values; }
 
 }
+window.GridField = GridField;

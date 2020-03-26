@@ -147,6 +147,18 @@ class SimpleForm {
     }
 
     /**
+     * Get the form value as a dictionary
+     * @return the values of the form as a key=value dictionary
+     */
+    dictionary() {
+        let dictionary = {};
+        for (let i of this.elements) {
+            dictionary[i.name] = i.value;
+        }
+        return dictionary;
+    }
+
+    /**
      * Execute an ajax call
      * @param callback the callback to fire when done
      */

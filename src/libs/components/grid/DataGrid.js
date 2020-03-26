@@ -111,7 +111,6 @@ class DataGrid extends Panel {
         if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
             let nf = [];
             for (let f of this.fields) {
-                let x = new GridField(f);
                 nf.push(new GridField(f));
             }
             this.fields = nf;
@@ -120,6 +119,7 @@ class DataGrid extends Panel {
         for (let f of this.fields) {
             if (f.identifier) { this.identifier = f.name; }
         }
+
         this.activefilters = [];
         this.loadstate();
 

@@ -1,11 +1,10 @@
 class LZSong extends BusinessObject {
-
     static get CONFIG() {
         return {
             identifier: 'id',
             source: 'demo/data/lz.json',
             fields: [
-                {
+                new GridField({
                     name: "id",
                     label: "ID",
                     identifier: true,
@@ -14,7 +13,8 @@ class LZSong extends BusinessObject {
                     nodupe: true,
                     hidden: true,
                     description: "The unique ID for this song"
-                },{
+                }),
+                new GridField({
                     name: "track",
                     label: "Track",
                     type: "number",
@@ -24,13 +24,15 @@ class LZSong extends BusinessObject {
                     renderer: function(data) {
                         return `${data}.`;
                     }
-                }, {
+                }),
+                new GridField({
                     name: "image",
                     label: "Cover",
                     resize: true,
                     type: "imageurl",
                     description: "The album cover."
-                }, {
+                }),
+                new GridField({
                     name: "album",
                     label: "Album",
                     resize: true,
@@ -38,13 +40,15 @@ class LZSong extends BusinessObject {
                     filterable: true,
                     description: "The album the song is on.",
                     classes: ['nowrap', 'italic']
-                }, {
+                }),
+                new GridField({
                     name: "released",
                     label: "Released",
                     filterable: true,
                     description: "The date the album was released.",
                     type: "date"
-                }, {
+                }),
+                new GridField({
                     name: "title",
                     label: "Title",
                     resize: true,
@@ -52,7 +56,8 @@ class LZSong extends BusinessObject {
                     filterable: true,
                     description: "The title of the song.",
                     classes: ['nowrap', 'italic']
-                }, {
+                }),
+                new GridField({
                     name: "writers",
                     label: "Writers",
                     resize: true,
@@ -62,7 +67,8 @@ class LZSong extends BusinessObject {
                     separator: " &middot; ",
                     description: "A list of the song's writers.",
                     classes: ['smaller']
-                }, {
+                }),
+                new GridField({
                     name: "label",
                     label: "Label",
                     filterable: true,
@@ -72,13 +78,14 @@ class LZSong extends BusinessObject {
                         { label: 'Atlantic', value: 'Atlantic', default: true },
                         { label: 'Swan Song', value: 'Swan Song', default: true }
                     ]
-                }, {
+                }),
+                new GridField({
                     name: "length",
                     label: "Length",
                     nodupe: true,
                     description: "The time length of the song.",
                     type: "time"
-                }
+                })
             ],
             sortfunction: function(a, b) {
                 if (a.title > b.title) { return 1 }
