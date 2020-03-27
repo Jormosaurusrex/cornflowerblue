@@ -1,4 +1,5 @@
 class LZSong extends BusinessObject {
+
     static get CONFIG() {
         return {
             identifier: 'id',
@@ -99,13 +100,17 @@ class LZSong extends BusinessObject {
 
     constructor() {
         super();
+        const me = this;
         if (!LZSong.instance) {
             this.config = Object.assign({}, this.config, LZSong.CONFIG);
-            console.log(this.config);
+            if ((this.cadence) && (this.cadence > 0)) {
+                setInterval(function () {
+                    me.update();
+                }, this.cadence);
+            }
             LZSong.instance = this;
         }
         return LZSong.instance;
     }
-
 
 }

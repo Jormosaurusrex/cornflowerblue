@@ -4,7 +4,8 @@ class BusinessObject {
         return {
             identifier: 'id', // The name of the identifier field
             source: null,
-            cadence: (1000 * 60 * 10), // Time between update heartbeats in milliseconds
+            //cadence: (1000 * 60 * 10), // Time between update heartbeats in milliseconds
+            cadence: (1000 * 60), // Time between update heartbeats in milliseconds
                                        // Set to -1 to disable heartbeat
             dataprocessor: null,
             sortfunction: function(a, b) {
@@ -22,9 +23,14 @@ class BusinessObject {
         this.config = BusinessObject.CONFIG;
         this.initialized = false;
 
-        /*  This is the model you want
+        /*  This is the model for subclassing
         if (!BusinessObject.instance) {
             BusinessObject.instance = this;
+            if ((this.cadence) && (this.cadence > 0)) {
+                setInterval(function() {
+                    me.update();
+                }, this.cadence);
+        }
         }
         return BusinessObject.instance;
         */
@@ -32,6 +38,10 @@ class BusinessObject {
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
+    /**
+     * Returns an array of option definitions, used in SelectMenus
+     * @return an array of option definitions
+     */
     get options() {
         let options = [];
         for (let o of Object.values(this.cache)) {
@@ -45,6 +55,10 @@ class BusinessObject {
         return options;
     }
 
+    /**
+     * Get a list of the objects in the cache, sorted by the sort function (usually name)
+     * @return an array of the objects, sorted
+     */
     get list() {
         const me = this;
         let list = [];
@@ -56,7 +70,6 @@ class BusinessObject {
         });
         return list;
     }
-
 
     /* CONTROL METHODS__________________________________________________________________ */
 
@@ -98,13 +111,37 @@ class BusinessObject {
         return results;
     }
 
+    /**
+     * Update the cache.  Does basically a load();
+     * @param callback
+     * @return {Promise<void>}
+     */
     async update(callback) {
         this.load(callback);
     }
 
+    /**
+     * Does this need to be updated
+     * @return {boolean} true or false, depending.
+     */
+    needsupdate() {
+        if ((this.cadence) && (this.cadence < 1)) { return false; }
+        if (!this.updated) { return true; }
+        return ((new Date().getTime() - this.updated) > this.cadence);
+    }
+
+    /**
+     * Load data for this business object.
+     * @param callback
+     * @return {Promise<void>}
+     */
     async load(callback) {
         if (this.updating) { return; }
-        if (this.source) { return; }
+        if (!this.source) { return; }
+        if ((this.initialized) && (!this.needsupdate())) {
+            return;
+        }
+
         this.updating = true;
         await fetch(this.source, {
             headers: { "Content-Type": "application/json; charset=utf-8" }
@@ -139,15 +176,38 @@ class BusinessObject {
 
     /* CACHE METHODS____________________________________________________________________ */
 
+    /**
+     * Get an element from the cache
+     * @param id the id of the element
+     * @return {*}
+     */
     get(id) { return this.cache[id]; }
 
+    /**
+     * Put an object in the cache
+     * @param obj the object to add
+     */
     put(obj) {
         if (!this.cache) { this.cache = {}; }
         this.cache[obj[this.identifier]] = obj;
     }
 
-    remove(id) { delete this.cache[id]; }
+    /**
+     * Remove an element from the data cache
+     * @param id the id of the item to remove
+     */
+    remove(id) {
+        if (!id) { return; }
+        if (Object.getPrototypeOf(id).isPrototypeOf(Object)) {
+            delete this.cache[id[this.identifier]];
+            return;
+        }
+        delete this.cache[id];
+    }
 
+    /**
+     * Clear the cache completely
+     */
     clear() { this.cache = {}; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */

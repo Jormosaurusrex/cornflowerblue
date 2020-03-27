@@ -3,6 +3,7 @@ class CountryMenu extends SelectMenu {
     static get DEFAULT_CONFIG() {
         return {
             unselectedtext: TextFactory.get('countrymenu_select'),
+            options: new CountryCode().options,
             valuesas: 'code' // What to stick in the value for the elements.
                              // "code" or "name".
         };
@@ -17,24 +18,22 @@ class CountryMenu extends SelectMenu {
         config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 
-        let countries = CountryCodes.list();
-        let options = [];
-        for (let c of countries) {
-            let d = { label: c.country };
-            if ((config.valuesas) && (config.valuesas === 'name')) {
-                d.value = c.country;
-            } else {
-                d.value = c.code;
+        if ((config.valuesas) && (config.valuesas === 'name')) {
+            config.options = [];
+            let countries = new CountryCode().list;
+            for (let c of countries) {
+                config.options.push({ label: c.name, value: c.name });
             }
-            if ((config.value) && ((config.value.toUpperCase() === c.code) || (config.value.toUpperCase() === c.country))) {
-                d.checked = true;
+        }
+        if (config.value) {
+            for (let o of config.options) {
+                if ((config.value.toUpperCase() === o.value) || (config.value.toUpperCase() === o.label)) {
+                    o.checked = true;
+                }
             }
-            options.push(d);
         }
 
-        config.options = options;
         super(config);
-
     }
 }
 window.CountryMenu = CountryMenu;

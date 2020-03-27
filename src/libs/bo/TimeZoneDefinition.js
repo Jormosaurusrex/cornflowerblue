@@ -490,6 +490,20 @@ class TimeZoneDefinition extends BusinessObject {
         }
         return TimeZoneDefinition.instance;
     }
+
+    get options() {
+        let options = [];
+        for (let o of Object.values(this.cache)) {
+            options.push({ value: o[this.identifier], label: `${o.name} (${o.offset})` });
+        }
+        options.sort(function(a, b) {
+            if (a.label > b.label) { return 1 }
+            if (a.label < b.label) { return -1 }
+            return 0;
+        });
+        return options;
+    }
+
 }
 
 window.TimeZoneDefinition = TimeZoneDefinition;
