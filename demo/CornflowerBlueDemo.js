@@ -114,6 +114,11 @@ class CornflowerBlueDemo {
                     autocomplete: 'off',
                     required: true
                 }),
+                new StateMenu({
+                    label: "State",
+                    autocomplete: 'off',
+                    required: true
+                }),
                 new PasswordInput({
                     label: "Password",
                     forceconstraints: false,

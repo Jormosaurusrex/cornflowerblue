@@ -125,21 +125,15 @@ class SelectMenu extends InputElement {
             li.setAttribute('tabindex', '0');
         }
 
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = this.wrapper.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top;
-
-        this.listbox.style.top = `${(offsetTop + this.wrapper.clientHeight)}px`;
-        this.listbox.style.left = `${offsetLeft}px`;
-        this.listbox.style.width = `${this.container.clientWidth}px`;
-
-
         if (typeof SelectMenu.activeMenu === 'undefined' ) {
             SelectMenu.activeMenu = this;
         } else {
             SelectMenu.activeMenu = this;
         }
+
+        this.setPosition();
+
+        window.addEventListener('scroll', this.setPosition, true);
 
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
@@ -147,9 +141,29 @@ class SelectMenu extends InputElement {
     }
 
     /**
+     * Set the position of the open menu on the screen
+     */
+    setPosition() {
+        console.log('set position');
+        if (!SelectMenu.activeMenu) { return; }
+        let self = SelectMenu.activeMenu;
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.wrapper.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        self.listbox.style.top = `${(offsetTop + self.wrapper.clientHeight)}px`;
+        self.listbox.style.left = `${offsetLeft}px`;
+        self.listbox.style.width = `${self.container.clientWidth}px`;
+    }
+
+    /**
      * Closes the option list.
      */
     close() {
+        window.removeEventListener('scroll', this.setPosition, true);
+
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
@@ -159,9 +173,11 @@ class SelectMenu extends InputElement {
         }
 
         if (!this.combobox) {
-            let seltext = this.selected.parentNode.querySelector('span.text');
-            if (seltext) {
-                this.triggerbox.value = seltext.innerHTML;
+            if (this.selected) {
+                let seltext = this.selected.parentNode.querySelector('span.text');
+                if (seltext) {
+                    this.triggerbox.value = seltext.innerHTML;
+                }
             }
         }
 
