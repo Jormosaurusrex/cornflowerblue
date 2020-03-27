@@ -19,12 +19,16 @@ class LoadingShade {
     }
 
     activate() {
-        this.container.parentNode.classList.add('shaded');
+        if (this.container.parentNode) {
+            this.container.parentNode.classList.add('shaded');
+        }
         this.container.removeAttribute('aria-hidden');
     }
 
     deactivate() {
-        this.container.parentNode.classList.remove('shaded');
+        if (this.container.parentNode) {
+            this.container.parentNode.classList.remove('shaded');
+        }
         this.container.setAttribute('aria-hidden', 'true');
     }
 

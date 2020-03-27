@@ -5,6 +5,7 @@ class StateMenu extends SelectMenu {
             unselectedtext: TextFactory.get('statemenu_select'),
             valuesas: 'code', // What to stick in the value for the elements.
                             // "code" or "name".
+            options: new StateProvince().options,
             set: null // Empty, or "US" or "CA". If empty, fills with all states.
         };
     }
@@ -18,8 +19,8 @@ class StateMenu extends SelectMenu {
         config = Object.assign({}, StateMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 
-        let states = StateProvince.list(config.set);
-        let options = [];
+        let states = new StateProvince().set(config.set);
+        config.options = [];
         for (let s of states) {
             let d = { label: s.name };
             if ((config.valuesas) && (config.valuesas === 'name')) {
@@ -30,10 +31,9 @@ class StateMenu extends SelectMenu {
             if ((config.value) && ((config.value.toUpperCase() === s.id) || (config.value.toUpperCase() === s.name))) {
                 d.checked = true;
             }
-            options.push(d);
+            config.options.push(d);
         }
 
-        config.options = options;
         super(config);
 
     }

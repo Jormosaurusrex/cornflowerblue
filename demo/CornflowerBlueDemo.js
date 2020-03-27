@@ -761,13 +761,40 @@ class CornflowerBlueDemo {
         console.log(element);
     }
 
-    grindDataGrids() {
-        let songSingleton = new LZSong();
-        songSingleton.load(function() {
-            console.log(songSingleton.list);
-        });
+    grindDataGrids() {;
 
         let dg = new DataGrid({
+            id: 'cfb-demo-grid-lz',
+            title: 'Songs by Led Zeppelin',
+            elementname: 'Song',
+            warehouse: new LZSong(),
+            //minimized: true,
+            //data: this.getLZDiscograpy(),
+            rowactions: [
+                {
+                    label: 'Edit',
+                    icon: 'pencil',
+                    tooltip: 'Edit this item.',
+                    type: 'edit'
+                },
+                {
+                    label: 'Duplicate',
+                    icon: 'duplicate',
+                    tooltip: 'Duplicate this item.',
+                    type: 'duplicate'
+                },
+                {
+                    label: 'Delete',
+                    icon: 'trashcan',
+                    tooltip: 'Delete this item.',
+                    type: 'delete'
+                }
+            ],
+            source: 'demo/data/lz.json'
+        });
+
+        /*
+        let dgsimple = new DataGrid({
             id: 'cfb-demo-grid-lz',
             title: 'Songs by Led Zeppelin',
             elementname: 'Song',
@@ -796,6 +823,7 @@ class CornflowerBlueDemo {
             ],
             source: 'demo/data/lz.json'
         });
+         */
 
         document.getElementById('datagrid-basic').appendChild(dg.container);
 

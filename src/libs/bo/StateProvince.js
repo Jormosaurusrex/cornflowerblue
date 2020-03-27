@@ -1,10 +1,43 @@
-class StateProvince {
+class StateProvince extends BusinessObject {
+    static get CONFIG() {
+        return {
+            identifier: 'id',
+            cadence: -1,
+            fields: [
+                new GridField({
+                    name: "id",
+                    label: TextFactory.get('code'),
+                    identifier: true,
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "name",
+                    label: TextFactory.get('name'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "country",
+                    label: TextFactory.get('country'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "alt",
+                    label: TextFactory.get('alternate_names'),
+                    readonly: true,
+                    type: "stringarray"
+                })
+            ]
+        };
+    }
 
     /**
      * A map of states in US and canada
      * @return {*} a dictionary
      */
-    static get STATEMAP() {
+    static get MAP() {
         return {
             AL: { id: "AL", name: "Alabama", country: "US" },
             AK: { id: "AK", name: "Alaska", country: "US" },
@@ -97,42 +130,42 @@ class StateProvince {
     }
 
     /**
-     * Get a specific state by the id
-     * @param id the id to get
-     * @return {*} the state definition, or null
-     */
-    static get(id) {
-        return StateProvince.STATEMAP[id];
-    }
-
-    /**
      * Get a list of state dictionary elements.
      * @param filter Optional, either US or CA. If empty, returns all.
      * @return {Array} an array of state object definitions
      */
-    static list(filter) {
-        let list = [];
-        if ((filter) && (filter.toLowerCase() === 'us')) {
-            for (let s of StateProvince.US_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-        } else if ((filter) && (filter.toLowerCase() === 'ca')) {
-            for (let s of StateProvince.CA_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-        } else {
-            for (let s of StateProvince.US_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-            for (let s of StateProvince.CA_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
+    set(filter) {
+        const me = this;
+        let set = [];
+        switch (filter) {
+            case 'US':
+                for (let s of StateProvince.US_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+            case 'CA':
+                for (let s of StateProvince.CA_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+            default:
+                for (let s of StateProvince.US_STATES) {
+                    set.push(this.get(s));
+                }
+                for (let s of StateProvince.CA_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
         }
-        return list;
+
+        set.sort(function(a, b) {
+            return me.sortfunction(a, b);
+        });
+        return set;
     }
 
     /**
-     * Search the State dictionary
+     * Search the cache
      * @param text the text to search on.
      */
     static search(text) {
@@ -140,8 +173,8 @@ class StateProvince {
 
         let results = [];
 
-        for (let k of Object.keys(StateProvince.STATEMAP)) {
-            let s = StateProvince.STATEMAP[k];
+        for (let k of Object.keys(StateProvince.MAP)) {
+            let s = StateProvince.MAP[k];
             if (text.toUpperCase() === k) { // if the code matches, just slot it.
                 results.push(s);
             } else if (s.name.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
@@ -158,5 +191,18 @@ class StateProvince {
         return results;
     }
 
+    static instance;
+
+    constructor() {
+        super();
+        if (!StateProvince.instance) {
+            this.config = Object.assign({}, this.config, StateProvince.CONFIG);
+            this.cache = StateProvince.MAP;
+            this.initialized = true;
+            StateProvince.instance = this;
+        }
+        return StateProvince.instance;
+    }
 }
+
 window.StateProvince = StateProvince;

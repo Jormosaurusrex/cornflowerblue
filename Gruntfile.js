@@ -22,11 +22,11 @@ module.exports = function(grunt) {
                 src: [
                     'src/libs/CFBUtils.js',
                     'src/libs/bo/BusinessObject.js',
+                    'src/libs/bo/TimeZoneDefinition.js',
+                    'src/libs/bo/StateProvince.js',
                     'src/libs/factory/TextFactory.js',
                     'src/libs/factory/IconFactory.js',
-                    'src/libs/factory/StateProvince.js',
                     'src/libs/factory/CountryCodes.js',
-                    'src/libs/factory/TimezoneDB.js',
                     'src/libs/components/ToolTip.js',
                     'src/libs/buttons/SimpleButton.js',
                     'src/libs/buttons/ConstructiveButton.js',

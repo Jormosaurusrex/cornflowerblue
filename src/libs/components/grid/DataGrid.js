@@ -6,6 +6,11 @@ class DataGrid extends Panel {
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
 
+            warehouse: null, // A BusinessObject singleton.  If present,
+                             // the grid will ignore any values in fields, data, and source
+                             // and will instead pull all information from the warehouse
+                             // The grid will be registered with the warehouse and will
+                             // be updated when the warehouse updates
             fields: [],  // The data fields for the grid and how they behave.
             data: null,   // The data to throw into the grid on load. This is an array of rows.
             source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
@@ -108,21 +113,24 @@ class DataGrid extends Panel {
         }
 
         // Need to turn these into GridFields if they aren't already
-        if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
+        if (this.warehouse) {
+            this.fields = this.warehouse.fields;
+            this.identifier = this.warehouse.identifier;
+        } else if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
             let nf = [];
             for (let f of this.fields) {
                 nf.push(new GridField(f));
             }
             this.fields = nf;
-        }
-
-        for (let f of this.fields) {
-            if (f.identifier) { this.identifier = f.name; }
+            for (let f of this.fields) {
+                if (f.identifier) { this.identifier = f.name; }
+            }
         }
 
         this.activefilters = [];
         this.loadstate();
 
+        this.shade.activate();
         setTimeout(function() {
            me.fillData();
         }, 100);
@@ -133,10 +141,13 @@ class DataGrid extends Panel {
      */
     fillData() {
         const me = this;
-
-        this.shade.activate();
-
-        if (this.data) {
+        if (this.warehouse) {
+            this.warehouse.load(function(data) {
+                me.update(data);
+                me.postLoad();
+                me.shade.deactivate();
+            });
+        } else if (this.data) {
             for (let rdata of this.data) {
                 this.gridbody.appendChild(this.buildRow(rdata));
             }
@@ -549,6 +560,12 @@ class DataGrid extends Panel {
         dialog.open();
     }
 
+    /**
+     * Build a form for a data row.
+     * @param rowdata the row data
+     * @param mode the type of form to create (edit|duplicate|create|delete|view)
+     * @return a SimpleForm configuration
+     */
     buildForm(rowdata, mode) {
         const me = this;
         let form = {
@@ -2131,6 +2148,9 @@ class DataGrid extends Panel {
         }
         this.config.updatehook = updatehook;
     }
+
+    get warehouse() { return this.config.warehouse; }
+    set warehouse(warehouse) { this.config.warehouse = warehouse; }
 
 }
 window.DataGrid = DataGrid;

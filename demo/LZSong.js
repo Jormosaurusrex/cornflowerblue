@@ -100,7 +100,8 @@ class LZSong extends BusinessObject {
     constructor() {
         super();
         if (!LZSong.instance) {
-            this.config = LZSong.CONFIG;
+            this.config = Object.assign({}, this.config, LZSong.CONFIG);
+            console.log(this.config);
             LZSong.instance = this;
         }
         return LZSong.instance;

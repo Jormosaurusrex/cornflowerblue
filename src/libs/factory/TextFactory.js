@@ -75,6 +75,7 @@ class TextFactory {
             "lowercase": 'Lowercase',
             "manage_filters": 'Manage Filters',
             "matches_hidden_columns": "Your search matches data in hidden columns.",
+            "name" : 'Name',
             "new_password": 'New Password',
             "no_columns": 'No columns',
             "no_provided_content": 'No provided content',
@@ -127,7 +128,13 @@ class TextFactory {
             "uppercase": 'Uppercase',
             "urlinput-placeholder-default": 'https://somewhere.cornflower.blue/',
             "urlinput-error-invalid_web_address": 'This is an invalid web address.',
-            "warning": 'Warning'
+            "warning": 'Warning',
+            "country_code" : "Country Code",
+            "country" : "Country",
+            "time_zone" : "Time zone",
+            "offset" : "Offset",
+            "code" : "Code",
+            "alternate_names" : "Alternate names"
         };
     }
 

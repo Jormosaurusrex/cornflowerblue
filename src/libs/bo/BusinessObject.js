@@ -4,6 +4,8 @@ class BusinessObject {
         return {
             identifier: 'id', // The name of the identifier field
             source: null,
+            cadence: (1000 * 60 * 10), // Time between update heartbeats in milliseconds
+                                       // Set to -1 to disable heartbeat
             dataprocessor: null,
             sortfunction: function(a, b) {
                 if (a.name > b.name) { return 1 }
@@ -18,6 +20,8 @@ class BusinessObject {
 
     constructor() {
         this.config = BusinessObject.CONFIG;
+        this.initialized = false;
+
         /*  This is the model you want
         if (!BusinessObject.instance) {
             BusinessObject.instance = this;
@@ -27,6 +31,7 @@ class BusinessObject {
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
     get options() {
         let options = [];
         for (let o of Object.values(this.cache)) {
@@ -52,10 +57,55 @@ class BusinessObject {
         return list;
     }
 
+
     /* CONTROL METHODS__________________________________________________________________ */
 
+    /**
+     * Search the cache
+     * @param text the text to search on.
+     */
+    static search(text) {
+        if ((!text) || (text.length() < 1)) { return []; }
+
+        let results = [];
+
+        for (let o of Object.values(this.cache)) {
+            for (let f of this.fields) {
+                switch (f.type) {
+                    case 'number':
+                        if (Number(text) === o[f.name]) {
+                            results.push(o);
+                        }
+                        break;
+                    case 'stringarray':
+                        for (let s of o[f.name]) {
+                            if (s.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
+                                results.push(o);
+                                break;
+                            }
+                        }
+                        break;
+                    case 'string':
+                        if (o[f.name].toUpperCase().indexOf(text.toUpperCase()) >= 0) {
+                            results.push(o);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return results;
+    }
+
+    async update(callback) {
+        this.load(callback);
+    }
 
     async load(callback) {
+        if (this.updating) { return; }
+        if (this.source) { return; }
+        this.updating = true;
         await fetch(this.source, {
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
@@ -69,9 +119,14 @@ class BusinessObject {
                     data = data.data; // by default, a data package assumes its rows are in "data"
                                       // e.g.:  { data: [ row array ] }
                 }
-                for (let o of data) {
-                    this.put(o);
+                if (this.identifier) {
+                    for (let o of data) { this.put(o); }
                 }
+
+                this.updated = new Date().getTime();
+                this.initialized = true;
+                this.updating = false;
+
                 if ((callback) && (typeof callback === 'function')) {
                     callback(data);
                 }
@@ -81,7 +136,6 @@ class BusinessObject {
                 console.error(err);
             });
     }
-
 
     /* CACHE METHODS____________________________________________________________________ */
 
@@ -105,11 +159,17 @@ class BusinessObject {
     get cache() { return this._cache; }
     set cache(cache) { this._cache = cache; }
 
+    get cadence() { return this.config.cadence; }
+    set cadence(cadence) { this.config.cadence = cadence; }
+
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
 
     get identifier() { return this.config.identifier; }
     set identifier(identifier) { this.config.identifier = identifier; }
+
+    get initialized() { return this._initialized; }
+    set initialized(initialized) { this._initialized = initialized; }
 
     get fields() { return this.config.fields; }
     set fields(fields) { this.config.fields = fields; }
@@ -119,5 +179,11 @@ class BusinessObject {
 
     get source() { return this.config.source; }
     set source(source) { this.config.source = source; }
+
+    get updated() { return this._updated; }
+    set updated(updated) { this._updated = updated; }
+
+    get updating() { return this._updating; }
+    set updating(updating) { this._updating = updating; }
 
 }

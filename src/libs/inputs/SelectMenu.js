@@ -159,7 +159,10 @@ class SelectMenu extends InputElement {
         }
 
         if (!this.combobox) {
-            this.triggerbox.value = this.value;
+            let seltext = this.selected.parentNode.querySelector('span.text');
+            if (seltext) {
+                this.triggerbox.value = seltext.innerHTML;
+            }
         }
 
         this.container.appendChild(this.listbox);

@@ -3753,7 +3753,6 @@ form div.passiveactions {
   flex-direction: row;
   align-items: flex-start;
   align-content: center;
-  justify-content: space-between;
   box-sizing: border-box;
   background-color: var(--form-actions-background-color);
   border-top: 0.1em solid var(--form-actions-border-color);
@@ -3770,22 +3769,6 @@ form div.passiveactions button.fill {
 form div.actions button:first-child,
 form div.passiveactions button:first-child {
   margin-left: 0;
-}
-form div.actions button:last-child:not(:only-of-type),
-form div.passiveactions button:last-child:not(:only-of-type) {
-  align-self: flex-end;
-  margin-left: auto;
-  margin-right: 1em;
-}
-form div.actions button:last-child:not(:only-of-type):first-child,
-form div.passiveactions button:last-child:not(:only-of-type):first-child {
-  margin-left: 0;
-}
-form div.actions button:last-child:not(:only-of-type):last-child:not(:only-of-type),
-form div.passiveactions button:last-child:not(:only-of-type):last-child:not(:only-of-type) {
-  align-self: flex-end;
-  margin-left: auto;
-  margin-right: 1em;
 }
 form div.passiveactions {
   display: none;
