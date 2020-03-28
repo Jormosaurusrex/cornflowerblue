@@ -74,8 +74,10 @@ class ToolTip {
         }, this.waittime);
     }
 
+    /**
+     * Do the actual opening.
+     */
     openGuts() {
-        const me = this;
 
         ToolTip.closeOpen();
 

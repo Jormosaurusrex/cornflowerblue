@@ -96,7 +96,6 @@ class ButtonMenu extends SimpleButton {
             }
         }
 
-        this.gravity = 's';
         this.menu.classList.add(this.gravity);
 
         if (typeof ButtonMenu.activeMenu === 'undefined' ) {
@@ -104,10 +103,7 @@ class ButtonMenu extends SimpleButton {
         } else {
             ButtonMenu.activeMenu = this;
         }
-        this.setPosition();
-        window.addEventListener('scroll', this.setPosition, true);
 
-        this.menu.style.width = this.menu.clientWidth;
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
         if ((focusable) && (focusable.length > 0)) {
             focusable[0].focus();
@@ -118,6 +114,14 @@ class ButtonMenu extends SimpleButton {
                 me.setCloseListener();
             }, 200);
         }
+        window.addEventListener('scroll', this.setPosition, true);
+
+        if (this.autoclose) {
+            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
+                me.setPosition();
+            }, 50);
+        }
+
     }
 
     setPosition() {
