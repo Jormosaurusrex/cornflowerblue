@@ -68,7 +68,7 @@ div.textarea-container {
       opacity: 0;
       display: flex;
       position: absolute;
-      transition: all .2s;
+      transition: all .5s;
       right: 0;
       top: 0;
       bottom: 0;
@@ -122,12 +122,10 @@ div.textarea-container {
     transition: all .2s;
     font-size: .9em;
     margin: 0;
+    opacity: 1;
     height: auto;
     padding: .5em 1em .5em 2em;
     background-color: var(--input-messages-background-color);
-    &[aria-hidden=true] {
-      display: none;
-    }
     li {
       margin: .5em 0 .5em 0;
       &.error {
@@ -135,6 +133,14 @@ div.textarea-container {
       }
       &.warning {
         color: var(--input-messages-warning-text-color);
+      }
+    }
+    &[aria-hidden=true] {
+      opacity: 0;
+      padding: 0 0 0 0;
+      height: 0;
+      li {
+        display: none;
       }
     }
   }
@@ -253,7 +259,7 @@ div.textarea-container {
     input[type="number"],
     input[type="password"],
     textarea {
-      border-color: var(--error-color);
+      box-shadow: var(--input-border-error-box-shadow);
       &:focus {
         border-color: var(--error-color);
         box-shadow: var(--input-focus-error-box-shadow);

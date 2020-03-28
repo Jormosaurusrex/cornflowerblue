@@ -325,6 +325,7 @@
   --input-border-radius: .1em;
   --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
   --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
+  --input-border-error-box-shadow: inset -.1em -.1em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
   --input-focus-warning-box-shadow: inset .5em 0 0 var(--warning-color), inset .1em -.1em 0 0 var(--warning-color), inset -.1em .1em 0 0 var(--warning-color), inset .1em .1em 0 0 var(--warning-color);
   --input-focus-error-box-shadow: inset .5em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
   --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
@@ -1934,7 +1935,7 @@ div.textarea-container div.wrap:after {
   opacity: 0;
   display: flex;
   position: absolute;
-  transition: all 0.2s;
+  transition: all 0.5s;
   right: 0;
   top: 0;
   bottom: 0;
@@ -2002,13 +2003,10 @@ div.textarea-container ul.messagebox {
   transition: all 0.2s;
   font-size: 0.9em;
   margin: 0;
+  opacity: 1;
   height: auto;
   padding: 0.5em 1em 0.5em 2em;
   background-color: var(--input-messages-background-color);
-}
-div.input-container ul.messagebox[aria-hidden=true],
-div.textarea-container ul.messagebox[aria-hidden=true] {
-  display: none;
 }
 div.input-container ul.messagebox li,
 div.textarea-container ul.messagebox li {
@@ -2021,6 +2019,16 @@ div.textarea-container ul.messagebox li.error {
 div.input-container ul.messagebox li.warning,
 div.textarea-container ul.messagebox li.warning {
   color: var(--input-messages-warning-text-color);
+}
+div.input-container ul.messagebox[aria-hidden=true],
+div.textarea-container ul.messagebox[aria-hidden=true] {
+  opacity: 0;
+  padding: 0 0 0 0;
+  height: 0;
+}
+div.input-container ul.messagebox[aria-hidden=true] li,
+div.textarea-container ul.messagebox[aria-hidden=true] li {
+  display: none;
 }
 div.input-container div.passivebox,
 div.textarea-container div.passivebox {
@@ -2144,7 +2152,7 @@ div.textarea-container.error input[type=text],
 div.textarea-container.error input[type=number],
 div.textarea-container.error input[type=password],
 div.textarea-container.error textarea {
-  border-color: var(--error-color);
+  box-shadow: var(--input-border-error-box-shadow);
 }
 div.input-container.error input[type=text]:focus,
 div.input-container.error input[type=number]:focus,
@@ -4069,7 +4077,7 @@ div.tooltip {
   align-content: center;
   list-style-type: none;
   margin: 0;
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.5em 0.75em 0.5em 0.75em;
   min-height: 2.7em;
   overflow: visible;
   z-index: 21000;
