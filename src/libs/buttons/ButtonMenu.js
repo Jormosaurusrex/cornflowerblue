@@ -96,7 +96,7 @@ class ButtonMenu extends SimpleButton {
             }
         }
 
-        this.gravity = 'nw';
+        this.gravity = 's';
         this.menu.classList.add(this.gravity);
 
         if (typeof ButtonMenu.activeMenu === 'undefined' ) {
@@ -131,15 +131,15 @@ class ButtonMenu extends SimpleButton {
             offsetRight = bodyRect.right - elemRect.right,
             offsetBottom = elemRect.bottom - bodyRect.bottom;
 
-        switch(this.gravity) {
+        switch(self.gravity) {
             case 'w':
             case 'west':
-                self.menu.style.top = `${offsetTop}px`;
+                self.menu.style.top = `${offsetTop - (self.button.clientHeight / 2)}px`;
                 self.menu.style.left = `${offsetLeft - self.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'e':
             case 'east':
-                self.menu.style.top = `${offsetTop}px`;
+                self.menu.style.top = `${offsetTop - (self.button.clientHeight / 2)}px`;
                 self.menu.style.left = `${offsetLeft + self.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'n':
@@ -150,20 +150,19 @@ class ButtonMenu extends SimpleButton {
             case 'nw':
             case 'northwest':
                 self.menu.style.top = `${(offsetTop - self.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft}px`;
+                self.menu.style.left = `${offsetLeft - (self.button.clientWidth / 2)}px`;
                 break;
             case 'se':
             case 'southeast':
                 self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft}px`;
+                self.menu.style.left = `${offsetLeft - (self.button.clientWidth / 2)}px`;
                 break;
             case 's':
             case 'south':
             case 'southwest':
             default:
                 self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft}px`;
-                //self.menu.style.right = `${offsetRight}px`;
+                self.menu.style.right = `${offsetRight - (self.button.clientWidth / 2)}px`;
                 break;
         }
 
