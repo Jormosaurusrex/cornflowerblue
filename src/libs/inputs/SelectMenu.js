@@ -144,7 +144,6 @@ class SelectMenu extends InputElement {
      * Set the position of the open menu on the screen
      */
     setPosition() {
-        console.log('set position');
         if (!SelectMenu.activeMenu) { return; }
         let self = SelectMenu.activeMenu;
 

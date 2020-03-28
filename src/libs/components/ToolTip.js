@@ -82,48 +82,63 @@ class ToolTip {
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
 
+        if (typeof ToolTip.activeTooltip === 'undefined' ) {
+            ToolTip.activeTooltip = this;
+        } else {
+            ToolTip.activeTooltip = this;
+        }
+
+        this.setPosition();
+
+        window.addEventListener('scroll', this.setPosition, true);
+
+    }
+
+    /**
+     * Set the position of the tooltip.
+     */
+    setPosition() {
+        if (!ToolTip.activeTooltip) { return; }
+        let self = ToolTip.activeTooltip;
+
         let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = this.parent.getBoundingClientRect(),
+            elemRect = self.parent.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
         switch(this.gravity) {
             case 's':
             case 'south':
-                this.container.style.top = `${(offsetTop + me.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
             case 'w':
             case 'west':
-                this.container.style.top = `${offsetTop}px`;
-                this.container.style.left = `${offsetLeft - this.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                self.container.style.top = `${offsetTop}px`;
+                self.container.style.left = `${offsetLeft - self.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'e':
             case 'east':
-                this.container.style.top = `${offsetTop}px`;
-                this.container.style.left = `${offsetLeft + this.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                self.container.style.top = `${offsetTop}px`;
+                self.container.style.left = `${offsetLeft + self.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'n':
             case 'north':
             default:
-                this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
         }
 
-        if (typeof ToolTip.activeTooltip === 'undefined' ) {
-            ToolTip.activeTooltip = this;
-        } else {
-            ToolTip.activeTooltip = this;
-        }
     }
 
     /**
      * Closes the help tooltip.
      */
     close() {
-        this.container.setAttribute('aria-hidden', 'true');
         this.parent.appendChild(this.container);
+        window.removeEventListener('scroll', this.setPosition, true);
+        this.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
     }
 

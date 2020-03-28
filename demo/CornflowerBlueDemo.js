@@ -114,8 +114,9 @@ class CornflowerBlueDemo {
                     autocomplete: 'off',
                     required: true
                 }),
-                new StateMenu({
+                new DateInput({
                     label: "State",
+                    help: "this is a test tooltip",
                     autocomplete: 'off',
                     required: true
                 }),
