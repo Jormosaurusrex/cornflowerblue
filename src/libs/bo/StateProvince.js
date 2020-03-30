@@ -191,7 +191,7 @@ class StateProvince extends BusinessObject {
         return results;
     }
 
-    static instance;
+    //static instance;
 
     constructor() {
         super();

@@ -474,11 +474,11 @@ class TimeZoneDefinition extends BusinessObject {
             "Asia/Aden": { id: "Asia/Aden", countrycode: "YE", country: "Yemen", name: "Asia/Aden", offset: "UTC +03:00" },
             "Africa/Lusaka": { id: "Africa/Lusaka", countrycode: "ZM", country: "Zambia", name: "Africa/Lusaka", offset: "UTC +02:00" },
             "Africa/Harare": { id: "Africa/Harare", countrycode: "ZW", country: "Zimbabwe", name: "Africa/Harare", offset: "UTC +02:00" },
-            "Europe/Mariehamn": { id: "Europe/Mariehamn", countrycode: "AX", country: "Åland Islands", name: "Europe/Mariehamn", offset: "UTC +02:00" },
+            "Europe/Mariehamn": { id: "Europe/Mariehamn", countrycode: "AX", country: "Åland Islands", name: "Europe/Mariehamn", offset: "UTC +02:00" }
         }
     }
 
-    static instance;
+    //static instance;
 
     constructor() {
         super();

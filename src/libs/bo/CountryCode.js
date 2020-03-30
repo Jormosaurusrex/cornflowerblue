@@ -276,7 +276,7 @@ class CountryCode extends BusinessObject {
         }
     }
 
-    static instance;
+    //static instance;
 
     constructor() {
         super();

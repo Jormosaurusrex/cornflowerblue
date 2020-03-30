@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-25
+/*! Cornflower Blue - v0.1.1 - 2020-03-28
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -495,6 +495,9 @@ class BusinessObject {
         return {
             identifier: 'id', // The name of the identifier field
             source: null,
+            //cadence: (1000 * 60 * 10), // Time between update heartbeats in milliseconds
+            cadence: (1000 * 60), // Time between update heartbeats in milliseconds
+                                       // Set to -1 to disable heartbeat
             dataprocessor: null,
             sortfunction: function(a, b) {
                 if (a.name > b.name) { return 1 }
@@ -509,15 +512,27 @@ class BusinessObject {
 
     constructor() {
         this.config = BusinessObject.CONFIG;
-        /*  This is the model you want
+        this.initialized = false;
+
+        /*  This is the model for subclassing
         if (!BusinessObject.instance) {
             BusinessObject.instance = this;
+            if ((this.cadence) && (this.cadence > 0)) {
+                setInterval(function() {
+                    me.update();
+                }, this.cadence);
+        }
         }
         return BusinessObject.instance;
         */
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Returns an array of option definitions, used in SelectMenus
+     * @return an array of option definitions
+     */
     get options() {
         let options = [];
         for (let o of Object.values(this.cache)) {
@@ -531,6 +546,10 @@ class BusinessObject {
         return options;
     }
 
+    /**
+     * Get a list of the objects in the cache, sorted by the sort function (usually name)
+     * @return an array of the objects, sorted
+     */
     get list() {
         const me = this;
         let list = [];
@@ -545,8 +564,76 @@ class BusinessObject {
 
     /* CONTROL METHODS__________________________________________________________________ */
 
+    /**
+     * Search the cache
+     * @param text the text to search on.
+     */
+    static search(text) {
+        if ((!text) || (text.length() < 1)) { return []; }
 
+        let results = [];
+
+        for (let o of Object.values(this.cache)) {
+            for (let f of this.fields) {
+                switch (f.type) {
+                    case 'number':
+                        if (Number(text) === o[f.name]) {
+                            results.push(o);
+                        }
+                        break;
+                    case 'stringarray':
+                        for (let s of o[f.name]) {
+                            if (s.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
+                                results.push(o);
+                                break;
+                            }
+                        }
+                        break;
+                    case 'string':
+                        if (o[f.name].toUpperCase().indexOf(text.toUpperCase()) >= 0) {
+                            results.push(o);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Update the cache.  Does basically a load();
+     * @param callback
+     * @return {Promise<void>}
+     */
+    async update(callback) {
+        this.load(callback);
+    }
+
+    /**
+     * Does this need to be updated
+     * @return {boolean} true or false, depending.
+     */
+    needsupdate() {
+        if ((this.cadence) && (this.cadence < 1)) { return false; }
+        if (!this.updated) { return true; }
+        return ((new Date().getTime() - this.updated) > this.cadence);
+    }
+
+    /**
+     * Load data for this business object.
+     * @param callback
+     * @return {Promise<void>}
+     */
     async load(callback) {
+        if (this.updating) { return; }
+        if (!this.source) { return; }
+        if ((this.initialized) && (!this.needsupdate())) {
+            return;
+        }
+
+        this.updating = true;
         await fetch(this.source, {
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
@@ -560,9 +647,14 @@ class BusinessObject {
                     data = data.data; // by default, a data package assumes its rows are in "data"
                                       // e.g.:  { data: [ row array ] }
                 }
-                for (let o of data) {
-                    this.put(o);
+                if (this.identifier) {
+                    for (let o of data) { this.put(o); }
                 }
+
+                this.updated = new Date().getTime();
+                this.initialized = true;
+                this.updating = false;
+
                 if ((callback) && (typeof callback === 'function')) {
                     callback(data);
                 }
@@ -573,18 +665,40 @@ class BusinessObject {
             });
     }
 
-
     /* CACHE METHODS____________________________________________________________________ */
 
+    /**
+     * Get an element from the cache
+     * @param id the id of the element
+     * @return {*}
+     */
     get(id) { return this.cache[id]; }
 
+    /**
+     * Put an object in the cache
+     * @param obj the object to add
+     */
     put(obj) {
         if (!this.cache) { this.cache = {}; }
         this.cache[obj[this.identifier]] = obj;
     }
 
-    remove(id) { delete this.cache[id]; }
+    /**
+     * Remove an element from the data cache
+     * @param id the id of the item to remove
+     */
+    remove(id) {
+        if (!id) { return; }
+        if (Object.getPrototypeOf(id).isPrototypeOf(Object)) {
+            delete this.cache[id[this.identifier]];
+            return;
+        }
+        delete this.cache[id];
+    }
 
+    /**
+     * Clear the cache completely
+     */
     clear() { this.cache = {}; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -596,11 +710,17 @@ class BusinessObject {
     get cache() { return this._cache; }
     set cache(cache) { this._cache = cache; }
 
+    get cadence() { return this.config.cadence; }
+    set cadence(cadence) { this.config.cadence = cadence; }
+
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
 
     get identifier() { return this.config.identifier; }
     set identifier(identifier) { this.config.identifier = identifier; }
+
+    get initialized() { return this._initialized; }
+    set initialized(initialized) { this._initialized = initialized; }
 
     get fields() { return this.config.fields; }
     set fields(fields) { this.config.fields = fields; }
@@ -611,8 +731,1024 @@ class BusinessObject {
     get source() { return this.config.source; }
     set source(source) { this.config.source = source; }
 
+    get updated() { return this._updated; }
+    set updated(updated) { this._updated = updated; }
+
+    get updating() { return this._updating; }
+    set updating(updating) { this._updating = updating; }
+
 }
 
+class TimeZoneDefinition extends BusinessObject {
+    static get CONFIG() {
+        return {
+            identifier: 'id',
+            cadence: -1,
+            fields: [
+                new GridField({
+                    name: "id",
+                    label: TextFactory.get('name'),
+                    identifier: true,
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "countrycode",
+                    label: TextFactory.get('country_code'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "country",
+                    label: TextFactory.get('country'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "name",
+                    label: TextFactory.get('time_zone'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "offset",
+                    label: TextFactory.get('offset'),
+                    readonly: true,
+                    type: "string"
+                })
+            ],
+            sortfunction: function(a, b) {
+                if (a.tz > b.tz) { return 1 }
+                if (a.tz < b.tz) { return -1 }
+                return 0;
+            }
+        };
+    }
+
+    /**
+     * Get the dictionary of the timezones.
+     * @return a dictionary.
+     */
+    static get MAP() {
+        return {
+            "Asia/Kabul": { id: "Asia/Kabul", countrycode: "AF", country: "Afghanistan", name: "Asia/Kabul", offset: "UTC +04:30" },
+            "Europe/Tirane": { id: "Europe/Tirane", countrycode: "AL", country: "Albania", name: "Europe/Tirane", offset: "UTC +01:00" },
+            "Africa/Algiers": { id: "Africa/Algiers", countrycode: "DZ", country: "Algeria", name: "Africa/Algiers", offset: "UTC +01:00" },
+            "Pacific/Pago_Pago": { id: "Pacific/Pago_Pago", countrycode: "AS", country: "American Samoa", name: "Pacific/Pago_Pago", offset: "UTC -11:00" },
+            "Europe/Andorra": { id: "Europe/Andorra", countrycode: "AD", country: "Andorra", name: "Europe/Andorra", offset: "UTC +01:00" },
+            "Africa/Luanda": { id: "Africa/Luanda", countrycode: "AO", country: "Angola", name: "Africa/Luanda", offset: "UTC +01:00" },
+            "America/Anguilla": { id: "America/Anguilla", countrycode: "AI", country: "Anguilla", name: "America/Anguilla", offset: "UTC -04:00" },
+            "Antarctica/Casey": { id: "Antarctica/Casey", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Casey", offset: "UTC +08:00" },
+            "Antarctica/Davis": { id: "Antarctica/Davis", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Davis", offset: "UTC +07:00" },
+            "Antarctica/DumontDUrville": { id: "Antarctica/DumontDUrville", countrycode: "AQ", country: "Antarctica", name: "Antarctica/DumontDUrville", offset: "UTC +10:00" },
+            "Antarctica/Mawson": { id: "Antarctica/Mawson", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Mawson", offset: "UTC +05:00" },
+            "Antarctica/McMurdo": { id: "Antarctica/McMurdo", countrycode: "AQ", country: "Antarctica", name: "Antarctica/McMurdo", offset: "UTC +13:00" },
+            "Antarctica/Palmer": { id: "Antarctica/Palmer", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Palmer", offset: "UTC -03:00" },
+            "Antarctica/Rothera": { id: "Antarctica/Rothera", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Rothera", offset: "UTC -03:00" },
+            "Antarctica/Syowa": { id: "Antarctica/Syowa", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Syowa", offset: "UTC +03:00" },
+            "Antarctica/Troll": { id: "Antarctica/Troll", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Troll", offset: "UTC" },
+            "Antarctica/Vostok": { id: "Antarctica/Vostok", countrycode: "AQ", country: "Antarctica", name: "Antarctica/Vostok", offset: "UTC +06:00" },
+            "America/Antigua": { id: "America/Antigua", countrycode: "AG", country: "Antigua and Barbuda", name: "America/Antigua", offset: "UTC -04:00" },
+            "America/Argentina/Buenos_Aires": { id: "America/Argentina/Buenos_Aires", countrycode: "AR", country: "Argentina", name: "America/Argentina/Buenos_Aires", offset: "UTC -03:00" },
+            "America/Argentina/Catamarca": { id: "America/Argentina/Catamarca", countrycode: "AR", country: "Argentina", name: "America/Argentina/Catamarca", offset: "UTC -03:00" },
+            "America/Argentina/Cordoba": { id: "America/Argentina/Cordoba", countrycode: "AR", country: "Argentina", name: "America/Argentina/Cordoba", offset: "UTC -03:00" },
+            "America/Argentina/Jujuy": { id: "America/Argentina/Jujuy", countrycode: "AR", country: "Argentina", name: "America/Argentina/Jujuy", offset: "UTC -03:00" },
+            "America/Argentina/La_Rioja": { id: "America/Argentina/La_Rioja", countrycode: "AR", country: "Argentina", name: "America/Argentina/La_Rioja", offset: "UTC -03:00" },
+            "America/Argentina/Mendoza": { id: "America/Argentina/Mendoza", countrycode: "AR", country: "Argentina", name: "America/Argentina/Mendoza", offset: "UTC -03:00" },
+            "America/Argentina/Rio_Gallegos": { id: "America/Argentina/Rio_Gallegos", countrycode: "AR", country: "Argentina", name: "America/Argentina/Rio_Gallegos", offset: "UTC -03:00" },
+            "America/Argentina/Salta": { id: "America/Argentina/Salta", countrycode: "AR", country: "Argentina", name: "America/Argentina/Salta", offset: "UTC -03:00" },
+            "America/Argentina/San_Juan": { id: "America/Argentina/San_Juan", countrycode: "AR", country: "Argentina", name: "America/Argentina/San_Juan", offset: "UTC -03:00" },
+            "America/Argentina/San_Luis": { id: "America/Argentina/San_Luis", countrycode: "AR", country: "Argentina", name: "America/Argentina/San_Luis", offset: "UTC -03:00" },
+            "America/Argentina/Tucuman": { id: "America/Argentina/Tucuman", countrycode: "AR", country: "Argentina", name: "America/Argentina/Tucuman", offset: "UTC -03:00" },
+            "America/Argentina/Ushuaia": { id: "America/Argentina/Ushuaia", countrycode: "AR", country: "Argentina", name: "America/Argentina/Ushuaia", offset: "UTC -03:00" },
+            "Asia/Yerevan": { id: "Asia/Yerevan", countrycode: "AM", country: "Armenia", name: "Asia/Yerevan", offset: "UTC +04:00" },
+            "America/Aruba": { id: "America/Aruba", countrycode: "AW", country: "Aruba", name: "America/Aruba", offset: "UTC -04:00" },
+            "Antarctica/Macquarie": { id: "Antarctica/Macquarie", countrycode: "AU", country: "Australia", name: "Antarctica/Macquarie", offset: "UTC +11:00" },
+            "Australia/Adelaide": { id: "Australia/Adelaide", countrycode: "AU", country: "Australia", name: "Australia/Adelaide", offset: "UTC +10:30" },
+            "Australia/Brisbane": { id: "Australia/Brisbane", countrycode: "AU", country: "Australia", name: "Australia/Brisbane", offset: "UTC +10:00" },
+            "Australia/Broken_Hill": { id: "Australia/Broken_Hill", countrycode: "AU", country: "Australia", name: "Australia/Broken_Hill", offset: "UTC +10:30" },
+            "Australia/Currie": { id: "Australia/Currie", countrycode: "AU", country: "Australia", name: "Australia/Currie", offset: "UTC +11:00" },
+            "Australia/Darwin": { id: "Australia/Darwin", countrycode: "AU", country: "Australia", name: "Australia/Darwin", offset: "UTC +09:30" },
+            "Australia/Eucla": { id: "Australia/Eucla", countrycode: "AU", country: "Australia", name: "Australia/Eucla", offset: "UTC +08:45" },
+            "Australia/Hobart": { id: "Australia/Hobart", countrycode: "AU", country: "Australia", name: "Australia/Hobart", offset: "UTC +11:00" },
+            "Australia/Lindeman": { id: "Australia/Lindeman", countrycode: "AU", country: "Australia", name: "Australia/Lindeman", offset: "UTC +10:00" },
+            "Australia/Lord_Howe": { id: "Australia/Lord_Howe", countrycode: "AU", country: "Australia", name: "Australia/Lord_Howe", offset: "UTC +11:00" },
+            "Australia/Melbourne": { id: "Australia/Melbourne", countrycode: "AU", country: "Australia", name: "Australia/Melbourne", offset: "UTC +11:00" },
+            "Australia/Perth": { id: "Australia/Perth", countrycode: "AU", country: "Australia", name: "Australia/Perth", offset: "UTC +08:00" },
+            "Australia/Sydney": { id: "Australia/Sydney", countrycode: "AU", country: "Australia", name: "Australia/Sydney", offset: "UTC +11:00" },
+            "Europe/Vienna": { id: "Europe/Vienna", countrycode: "AT", country: "Austria", name: "Europe/Vienna", offset: "UTC +01:00" },
+            "Asia/Baku": { id: "Asia/Baku", countrycode: "AZ", country: "Azerbaijan", name: "Asia/Baku", offset: "UTC +04:00" },
+            "America/Nassau": { id: "America/Nassau", countrycode: "BS", country: "Bahamas", name: "America/Nassau", offset: "UTC -05:00" },
+            "Asia/Bahrain": { id: "Asia/Bahrain", countrycode: "BH", country: "Bahrain", name: "Asia/Bahrain", offset: "UTC +03:00" },
+            "Asia/Dhaka": { id: "Asia/Dhaka", countrycode: "BD", country: "Bangladesh", name: "Asia/Dhaka", offset: "UTC +06:00" },
+            "America/Barbados": { id: "America/Barbados", countrycode: "BB", country: "Barbados", name: "America/Barbados", offset: "UTC -04:00" },
+            "Europe/Minsk": { id: "Europe/Minsk", countrycode: "BY", country: "Belarus", name: "Europe/Minsk", offset: "UTC +03:00" },
+            "Europe/Brussels": { id: "Europe/Brussels", countrycode: "BE", country: "Belgium", name: "Europe/Brussels", offset: "UTC +01:00" },
+            "America/Belize": { id: "America/Belize", countrycode: "BZ", country: "Belize", name: "America/Belize", offset: "UTC -06:00" },
+            "Africa/Porto-Novo": { id: "Africa/Porto-Novo", countrycode: "BJ", country: "Benin", name: "Africa/Porto-Novo", offset: "UTC +01:00" },
+            "Atlantic/Bermuda": { id: "Atlantic/Bermuda", countrycode: "BM", country: "Bermuda", name: "Atlantic/Bermuda", offset: "UTC -04:00" },
+            "Asia/Thimphu": { id: "Asia/Thimphu", countrycode: "BT", country: "Bhutan", name: "Asia/Thimphu", offset: "UTC +06:00" },
+            "America/La_Paz": { id: "America/La_Paz", countrycode: "BO", country: "Bolivia, Plurinational State of", name: "America/La_Paz", offset: "UTC -04:00" },
+            "America/Kralendijk": { id: "America/Kralendijk", countrycode: "BQ", country: "Bonaire, Sint Eustatius and Saba", name: "America/Kralendijk", offset: "UTC -04:00" },
+            "Europe/Sarajevo": { id: "Europe/Sarajevo", countrycode: "BA", country: "Bosnia and Herzegovina", name: "Europe/Sarajevo", offset: "UTC +01:00" },
+            "Africa/Gaborone": { id: "Africa/Gaborone", countrycode: "BW", country: "Botswana", name: "Africa/Gaborone", offset: "UTC +02:00" },
+            "America/Araguaina": { id: "America/Araguaina", countrycode: "BR", country: "Brazil", name: "America/Araguaina", offset: "UTC -03:00" },
+            "America/Bahia": { id: "America/Bahia", countrycode: "BR", country: "Brazil", name: "America/Bahia", offset: "UTC -03:00" },
+            "America/Belem": { id: "America/Belem", countrycode: "BR", country: "Brazil", name: "America/Belem", offset: "UTC -03:00" },
+            "America/Boa_Vista": { id: "America/Boa_Vista", countrycode: "BR", country: "Brazil", name: "America/Boa_Vista", offset: "UTC -04:00" },
+            "America/Campo_Grande": { id: "America/Campo_Grande", countrycode: "BR", country: "Brazil", name: "America/Campo_Grande", offset: "UTC -04:00" },
+            "America/Cuiaba": { id: "America/Cuiaba", countrycode: "BR", country: "Brazil", name: "America/Cuiaba", offset: "UTC -04:00" },
+            "America/Eirunepe": { id: "America/Eirunepe", countrycode: "BR", country: "Brazil", name: "America/Eirunepe", offset: "UTC -05:00" },
+            "America/Fortaleza": { id: "America/Fortaleza", countrycode: "BR", country: "Brazil", name: "America/Fortaleza", offset: "UTC -03:00" },
+            "America/Maceio": { id: "America/Maceio", countrycode: "BR", country: "Brazil", name: "America/Maceio", offset: "UTC -03:00" },
+            "America/Manaus": { id: "America/Manaus", countrycode: "BR", country: "Brazil", name: "America/Manaus", offset: "UTC -04:00" },
+            "America/Noronha": { id: "America/Noronha", countrycode: "BR", country: "Brazil", name: "America/Noronha", offset: "UTC -02:00" },
+            "America/Porto_Velho": { id: "America/Porto_Velho", countrycode: "BR", country: "Brazil", name: "America/Porto_Velho", offset: "UTC -04:00" },
+            "America/Recife": { id: "America/Recife", countrycode: "BR", country: "Brazil", name: "America/Recife", offset: "UTC -03:00" },
+            "America/Rio_Branco": { id: "America/Rio_Branco", countrycode: "BR", country: "Brazil", name: "America/Rio_Branco", offset: "UTC -05:00" },
+            "America/Santarem": { id: "America/Santarem", countrycode: "BR", country: "Brazil", name: "America/Santarem", offset: "UTC -03:00" },
+            "America/Sao_Paulo": { id: "America/Sao_Paulo", countrycode: "BR", country: "Brazil", name: "America/Sao_Paulo", offset: "UTC -03:00" },
+            "Indian/Chagos": { id: "Indian/Chagos", countrycode: "IO", country: "British Indian Ocean Territory", name: "Indian/Chagos", offset: "UTC +06:00" },
+            "Asia/Brunei": { id: "Asia/Brunei", countrycode: "BN", country: "Brunei Darussalam", name: "Asia/Brunei", offset: "UTC +08:00" },
+            "Europe/Sofia": { id: "Europe/Sofia", countrycode: "BG", country: "Bulgaria", name: "Europe/Sofia", offset: "UTC +02:00" },
+            "Africa/Ouagadougou": { id: "Africa/Ouagadougou", countrycode: "BF", country: "Burkina Faso", name: "Africa/Ouagadougou", offset: "UTC" },
+            "Africa/Bujumbura": { id: "Africa/Bujumbura", countrycode: "BI", country: "Burundi", name: "Africa/Bujumbura", offset: "UTC +02:00" },
+            "Asia/Phnom_Penh": { id: "Asia/Phnom_Penh", countrycode: "KH", country: "Cambodia", name: "Asia/Phnom_Penh", offset: "UTC +07:00" },
+            "Africa/Douala": { id: "Africa/Douala", countrycode: "CM", country: "Cameroon", name: "Africa/Douala", offset: "UTC +01:00" },
+            "America/Atikokan": { id: "America/Atikokan", countrycode: "CA", country: "Canada", name: "America/Atikokan", offset: "UTC -05:00" },
+            "America/Blanc-Sablon": { id: "America/Blanc-Sablon", countrycode: "CA", country: "Canada", name: "America/Blanc-Sablon", offset: "UTC -04:00" },
+            "America/Cambridge_Bay": { id: "America/Cambridge_Bay", countrycode: "CA", country: "Canada", name: "America/Cambridge_Bay", offset: "UTC -07:00" },
+            "America/Creston": { id: "America/Creston", countrycode: "CA", country: "Canada", name: "America/Creston", offset: "UTC -07:00" },
+            "America/Dawson": { id: "America/Dawson", countrycode: "CA", country: "Canada", name: "America/Dawson", offset: "UTC -08:00" },
+            "America/Dawson_Creek": { id: "America/Dawson_Creek", countrycode: "CA", country: "Canada", name: "America/Dawson_Creek", offset: "UTC -07:00" },
+            "America/Edmonton": { id: "America/Edmonton", countrycode: "CA", country: "Canada", name: "America/Edmonton", offset: "UTC -07:00" },
+            "America/Fort_Nelson": { id: "America/Fort_Nelson", countrycode: "CA", country: "Canada", name: "America/Fort_Nelson", offset: "UTC -07:00" },
+            "America/Glace_Bay": { id: "America/Glace_Bay", countrycode: "CA", country: "Canada", name: "America/Glace_Bay", offset: "UTC -04:00" },
+            "America/Goose_Bay": { id: "America/Goose_Bay", countrycode: "CA", country: "Canada", name: "America/Goose_Bay", offset: "UTC -04:00" },
+            "America/Halifax": { id: "America/Halifax", countrycode: "CA", country: "Canada", name: "America/Halifax", offset: "UTC -04:00" },
+            "America/Inuvik": { id: "America/Inuvik", countrycode: "CA", country: "Canada", name: "America/Inuvik", offset: "UTC -07:00" },
+            "America/Iqaluit": { id: "America/Iqaluit", countrycode: "CA", country: "Canada", name: "America/Iqaluit", offset: "UTC -05:00" },
+            "America/Moncton": { id: "America/Moncton", countrycode: "CA", country: "Canada", name: "America/Moncton", offset: "UTC -04:00" },
+            "America/Nipigon": { id: "America/Nipigon", countrycode: "CA", country: "Canada", name: "America/Nipigon", offset: "UTC -05:00" },
+            "America/Pangnirtung": { id: "America/Pangnirtung", countrycode: "CA", country: "Canada", name: "America/Pangnirtung", offset: "UTC -05:00" },
+            "America/Rainy_River": { id: "America/Rainy_River", countrycode: "CA", country: "Canada", name: "America/Rainy_River", offset: "UTC -06:00" },
+            "America/Rankin_Inlet": { id: "America/Rankin_Inlet", countrycode: "CA", country: "Canada", name: "America/Rankin_Inlet", offset: "UTC -06:00" },
+            "America/Regina": { id: "America/Regina", countrycode: "CA", country: "Canada", name: "America/Regina", offset: "UTC -06:00" },
+            "America/Resolute": { id: "America/Resolute", countrycode: "CA", country: "Canada", name: "America/Resolute", offset: "UTC -06:00" },
+            "America/St_Johns": { id: "America/St_Johns", countrycode: "CA", country: "Canada", name: "America/St_Johns", offset: "UTC -03:30" },
+            "America/Swift_Current": { id: "America/Swift_Current", countrycode: "CA", country: "Canada", name: "America/Swift_Current", offset: "UTC -06:00" },
+            "America/Thunder_Bay": { id: "America/Thunder_Bay", countrycode: "CA", country: "Canada", name: "America/Thunder_Bay", offset: "UTC -05:00" },
+            "America/Toronto": { id: "America/Toronto", countrycode: "CA", country: "Canada", name: "America/Toronto", offset: "UTC -05:00" },
+            "America/Vancouver": { id: "America/Vancouver", countrycode: "CA", country: "Canada", name: "America/Vancouver", offset: "UTC -08:00" },
+            "America/Whitehorse": { id: "America/Whitehorse", countrycode: "CA", country: "Canada", name: "America/Whitehorse", offset: "UTC -08:00" },
+            "America/Winnipeg": { id: "America/Winnipeg", countrycode: "CA", country: "Canada", name: "America/Winnipeg", offset: "UTC -06:00" },
+            "America/Yellowknife": { id: "America/Yellowknife", countrycode: "CA", country: "Canada", name: "America/Yellowknife", offset: "UTC -07:00" },
+            "Atlantic/Cape_Verde": { id: "Atlantic/Cape_Verde", countrycode: "CV", country: "Cape Verde", name: "Atlantic/Cape_Verde", offset: "UTC -01:00" },
+            "America/Cayman": { id: "America/Cayman", countrycode: "KY", country: "Cayman Islands", name: "America/Cayman", offset: "UTC -05:00" },
+            "Africa/Bangui": { id: "Africa/Bangui", countrycode: "CF", country: "Central African Republic", name: "Africa/Bangui", offset: "UTC +01:00" },
+            "Africa/Ndjamena": { id: "Africa/Ndjamena", countrycode: "TD", country: "Chad", name: "Africa/Ndjamena", offset: "UTC +01:00" },
+            "America/Punta_Arenas": { id: "America/Punta_Arenas", countrycode: "CL", country: "Chile", name: "America/Punta_Arenas", offset: "UTC -03:00" },
+            "America/Santiago": { id: "America/Santiago", countrycode: "CL", country: "Chile", name: "America/Santiago", offset: "UTC -03:00" },
+            "Pacific/Easter": { id: "Pacific/Easter", countrycode: "CL", country: "Chile", name: "Pacific/Easter", offset: "UTC -05:00" },
+            "Asia/Shanghai": { id: "Asia/Shanghai", countrycode: "CN", country: "China", name: "Asia/Shanghai", offset: "UTC +08:00" },
+            "Asia/Urumqi": { id: "Asia/Urumqi", countrycode: "CN", country: "China", name: "Asia/Urumqi", offset: "UTC +06:00" },
+            "Indian/Christmas": { id: "Indian/Christmas", countrycode: "CX", country: "Christmas Island", name: "Indian/Christmas", offset: "UTC +07:00" },
+            "Indian/Cocos": { id: "Indian/Cocos", countrycode: "CC", country: "Cocos (Keeling) Islands", name: "Indian/Cocos", offset: "UTC +06:30" },
+            "America/Bogota": { id: "America/Bogota", countrycode: "CO", country: "Colombia", name: "America/Bogota", offset: "UTC -05:00" },
+            "Indian/Comoro": { id: "Indian/Comoro", countrycode: "KM", country: "Comoros", name: "Indian/Comoro", offset: "UTC +03:00" },
+            "Africa/Brazzaville": { id: "Africa/Brazzaville", countrycode: "CG", country: "Congo", name: "Africa/Brazzaville", offset: "UTC +01:00" },
+            "Africa/Kinshasa": { id: "Africa/Kinshasa", countrycode: "CD", country: "Congo, the Democratic Republic of the", name: "Africa/Kinshasa", offset: "UTC +01:00" },
+            "Africa/Lubumbashi": { id: "Africa/Lubumbashi", countrycode: "CD", country: "Congo, the Democratic Republic of the", name: "Africa/Lubumbashi", offset: "UTC +02:00" },
+            "Pacific/Rarotonga": { id: "Pacific/Rarotonga", countrycode: "CK", country: "Cook Islands", name: "Pacific/Rarotonga", offset: "UTC -10:00" },
+            "America/Costa_Rica": { id: "America/Costa_Rica", countrycode: "CR", country: "Costa Rica", name: "America/Costa_Rica", offset: "UTC -06:00" },
+            "Europe/Zagreb": { id: "Europe/Zagreb", countrycode: "HR", country: "Croatia", name: "Europe/Zagreb", offset: "UTC +01:00" },
+            "America/Havana": { id: "America/Havana", countrycode: "CU", country: "Cuba", name: "America/Havana", offset: "UTC -05:00" },
+            "America/Curacao": { id: "America/Curacao", countrycode: "CW", country: "Curaçao", name: "America/Curacao", offset: "UTC -04:00" },
+            "Asia/Famagusta": { id: "Asia/Famagusta", countrycode: "CY", country: "Cyprus", name: "Asia/Famagusta", offset: "UTC +02:00" },
+            "Asia/Nicosia": { id: "Asia/Nicosia", countrycode: "CY", country: "Cyprus", name: "Asia/Nicosia", offset: "UTC +02:00" },
+            "Europe/Prague": { id: "Europe/Prague", countrycode: "CZ", country: "Czech Republic", name: "Europe/Prague", offset: "UTC +01:00" },
+            "Africa/Abidjan": { id: "Africa/Abidjan", countrycode: "CI", country: "Côte d'Ivoire", name: "Africa/Abidjan", offset: "UTC" },
+            "Europe/Copenhagen": { id: "Europe/Copenhagen", countrycode: "DK", country: "Denmark", name: "Europe/Copenhagen", offset: "UTC +01:00" },
+            "Africa/Djibouti": { id: "Africa/Djibouti", countrycode: "DJ", country: "Djibouti", name: "Africa/Djibouti", offset: "UTC +03:00" },
+            "America/Dominica": { id: "America/Dominica", countrycode: "DM", country: "Dominica", name: "America/Dominica", offset: "UTC -04:00" },
+            "America/Santo_Domingo": { id: "America/Santo_Domingo", countrycode: "DO", country: "Dominican Republic", name: "America/Santo_Domingo", offset: "UTC -04:00" },
+            "America/Guayaquil": { id: "America/Guayaquil", countrycode: "EC", country: "Ecuador", name: "America/Guayaquil", offset: "UTC -05:00" },
+            "Pacific/Galapagos": { id: "Pacific/Galapagos", countrycode: "EC", country: "Ecuador", name: "Pacific/Galapagos", offset: "UTC -06:00" },
+            "Africa/Cairo": { id: "Africa/Cairo", countrycode: "EG", country: "Egypt", name: "Africa/Cairo", offset: "UTC +02:00" },
+            "America/El_Salvador": { id: "America/El_Salvador", countrycode: "SV", country: "El Salvador", name: "America/El_Salvador", offset: "UTC -06:00" },
+            "Africa/Malabo": { id: "Africa/Malabo", countrycode: "GQ", country: "Equatorial Guinea", name: "Africa/Malabo", offset: "UTC +01:00" },
+            "Africa/Asmara": { id: "Africa/Asmara", countrycode: "ER", country: "Eritrea", name: "Africa/Asmara", offset: "UTC +03:00" },
+            "Europe/Tallinn": { id: "Europe/Tallinn", countrycode: "EE", country: "Estonia", name: "Europe/Tallinn", offset: "UTC +02:00" },
+            "Africa/Addis_Ababa": { id: "Africa/Addis_Ababa", countrycode: "ET", country: "Ethiopia", name: "Africa/Addis_Ababa", offset: "UTC +03:00" },
+            "Atlantic/Stanley": { id: "Atlantic/Stanley", countrycode: "FK", country: "Falkland Islands (Malvinas)", name: "Atlantic/Stanley", offset: "UTC -03:00" },
+            "Atlantic/Faroe": { id: "Atlantic/Faroe", countrycode: "FO", country: "Faroe Islands", name: "Atlantic/Faroe", offset: "UTC" },
+            "Pacific/Fiji": { id: "Pacific/Fiji", countrycode: "FJ", country: "Fiji", name: "Pacific/Fiji", offset: "UTC +12:00" },
+            "Europe/Helsinki": { id: "Europe/Helsinki", countrycode: "FI", country: "Finland", name: "Europe/Helsinki", offset: "UTC +02:00" },
+            "Europe/Paris": { id: "Europe/Paris", countrycode: "FR", country: "France", name: "Europe/Paris", offset: "UTC +01:00" },
+            "America/Cayenne": { id: "America/Cayenne", countrycode: "GF", country: "French Guiana", name: "America/Cayenne", offset: "UTC -03:00" },
+            "Pacific/Gambier": { id: "Pacific/Gambier", countrycode: "PF", country: "French Polynesia", name: "Pacific/Gambier", offset: "UTC -09:00" },
+            "Pacific/Marquesas": { id: "Pacific/Marquesas", countrycode: "PF", country: "French Polynesia", name: "Pacific/Marquesas", offset: "UTC -09:30" },
+            "Pacific/Tahiti": { id: "Pacific/Tahiti", countrycode: "PF", country: "French Polynesia", name: "Pacific/Tahiti", offset: "UTC -10:00" },
+            "Indian/Kerguelen": { id: "Indian/Kerguelen", countrycode: "TF", country: "French Southern Territories", name: "Indian/Kerguelen", offset: "UTC +05:00" },
+            "Africa/Libreville": { id: "Africa/Libreville", countrycode: "GA", country: "Gabon", name: "Africa/Libreville", offset: "UTC +01:00" },
+            "Africa/Banjul": { id: "Africa/Banjul", countrycode: "GM", country: "Gambia", name: "Africa/Banjul", offset: "UTC" },
+            "Asia/Tbilisi": { id: "Asia/Tbilisi", countrycode: "GE", country: "Georgia", name: "Asia/Tbilisi", offset: "UTC +04:00" },
+            "Europe/Berlin": { id: "Europe/Berlin", countrycode: "DE", country: "Germany", name: "Europe/Berlin", offset: "UTC +01:00" },
+            "Europe/Busingen": { id: "Europe/Busingen", countrycode: "DE", country: "Germany", name: "Europe/Busingen", offset: "UTC +01:00" },
+            "Africa/Accra": { id: "Africa/Accra", countrycode: "GH", country: "Ghana", name: "Africa/Accra", offset: "UTC" },
+            "Europe/Gibraltar": { id: "Europe/Gibraltar", countrycode: "GI", country: "Gibraltar", name: "Europe/Gibraltar", offset: "UTC +01:00" },
+            "Europe/Athens": { id: "Europe/Athens", countrycode: "GR", country: "Greece", name: "Europe/Athens", offset: "UTC +02:00" },
+            "America/Danmarkshavn": { id: "America/Danmarkshavn", countrycode: "GL", country: "Greenland", name: "America/Danmarkshavn", offset: "UTC" },
+            "America/Godthab": { id: "America/Godthab", countrycode: "GL", country: "Greenland", name: "America/Godthab", offset: "UTC -03:00" },
+            "America/Scoresbysund": { id: "America/Scoresbysund", countrycode: "GL", country: "Greenland", name: "America/Scoresbysund", offset: "UTC -01:00" },
+            "America/Thule": { id: "America/Thule", countrycode: "GL", country: "Greenland", name: "America/Thule", offset: "UTC -04:00" },
+            "America/Grenada": { id: "America/Grenada", countrycode: "GD", country: "Grenada", name: "America/Grenada", offset: "UTC -04:00" },
+            "America/Guadeloupe": { id: "America/Guadeloupe", countrycode: "GP", country: "Guadeloupe", name: "America/Guadeloupe", offset: "UTC -04:00" },
+            "Pacific/Guam": { id: "Pacific/Guam", countrycode: "GU", country: "Guam", name: "Pacific/Guam", offset: "UTC +10:00" },
+            "America/Guatemala": { id: "America/Guatemala", countrycode: "GT", country: "Guatemala", name: "America/Guatemala", offset: "UTC -06:00" },
+            "Europe/Guernsey": { id: "Europe/Guernsey", countrycode: "GG", country: "Guernsey", name: "Europe/Guernsey", offset: "UTC" },
+            "Africa/Conakry": { id: "Africa/Conakry", countrycode: "GN", country: "Guinea", name: "Africa/Conakry", offset: "UTC" },
+            "Africa/Bissau": { id: "Africa/Bissau", countrycode: "GW", country: "Guinea-Bissau", name: "Africa/Bissau", offset: "UTC" },
+            "America/Guyana": { id: "America/Guyana", countrycode: "GY", country: "Guyana", name: "America/Guyana", offset: "UTC -04:00" },
+            "America/Port-au-Prince": { id: "America/Port-au-Prince", countrycode: "HT", country: "Haiti", name: "America/Port-au-Prince", offset: "UTC -05:00" },
+            "Europe/Vatican": { id: "Europe/Vatican", countrycode: "VA", country: "Holy See (Vatican City State)", name: "Europe/Vatican", offset: "UTC +01:00" },
+            "America/Tegucigalpa": { id: "America/Tegucigalpa", countrycode: "HN", country: "Honduras", name: "America/Tegucigalpa", offset: "UTC -06:00" },
+            "Asia/Hong_Kong": { id: "Asia/Hong_Kong", countrycode: "HK", country: "Hong Kong", name: "Asia/Hong_Kong", offset: "UTC +08:00" },
+            "Europe/Budapest": { id: "Europe/Budapest", countrycode: "HU", country: "Hungary", name: "Europe/Budapest", offset: "UTC +01:00" },
+            "Atlantic/Reykjavik": { id: "Atlantic/Reykjavik", countrycode: "IS", country: "Iceland", name: "Atlantic/Reykjavik", offset: "UTC" },
+            "Asia/Kolkata": { id: "Asia/Kolkata", countrycode: "IN", country: "India", name: "Asia/Kolkata", offset: "UTC +05:30" },
+            "Asia/Jakarta": { id: "Asia/Jakarta", countrycode: "ID", country: "Indonesia", name: "Asia/Jakarta", offset: "UTC +07:00" },
+            "Asia/Jayapura": { id: "Asia/Jayapura", countrycode: "ID", country: "Indonesia", name: "Asia/Jayapura", offset: "UTC +09:00" },
+            "Asia/Makassar": { id: "Asia/Makassar", countrycode: "ID", country: "Indonesia", name: "Asia/Makassar", offset: "UTC +08:00" },
+            "Asia/Pontianak": { id: "Asia/Pontianak", countrycode: "ID", country: "Indonesia", name: "Asia/Pontianak", offset: "UTC +07:00" },
+            "Asia/Tehran": { id: "Asia/Tehran", countrycode: "IR", country: "Iran, Islamic Republic of", name: "Asia/Tehran", offset: "UTC +03:30" },
+            "Asia/Baghdad": { id: "Asia/Baghdad", countrycode: "IQ", country: "Iraq", name: "Asia/Baghdad", offset: "UTC +03:00" },
+            "Europe/Dublin": { id: "Europe/Dublin", countrycode: "IE", country: "Ireland", name: "Europe/Dublin", offset: "UTC" },
+            "Europe/Isle_of_Man": { id: "Europe/Isle_of_Man", countrycode: "IM", country: "Isle of Man", name: "Europe/Isle_of_Man", offset: "UTC" },
+            "Asia/Jerusalem": { id: "Asia/Jerusalem", countrycode: "IL", country: "Israel", name: "Asia/Jerusalem", offset: "UTC +02:00" },
+            "Europe/Rome": { id: "Europe/Rome", countrycode: "IT", country: "Italy", name: "Europe/Rome", offset: "UTC +01:00" },
+            "America/Jamaica": { id: "America/Jamaica", countrycode: "JM", country: "Jamaica", name: "America/Jamaica", offset: "UTC -05:00" },
+            "Asia/Tokyo": { id: "Asia/Tokyo", countrycode: "JP", country: "Japan", name: "Asia/Tokyo", offset: "UTC +09:00" },
+            "Europe/Jersey": { id: "Europe/Jersey", countrycode: "JE", country: "Jersey", name: "Europe/Jersey", offset: "UTC" },
+            "Asia/Amman": { id: "Asia/Amman", countrycode: "JO", country: "Jordan", name: "Asia/Amman", offset: "UTC +02:00" },
+            "Asia/Almaty": { id: "Asia/Almaty", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Almaty", offset: "UTC +06:00" },
+            "Asia/Aqtau": { id: "Asia/Aqtau", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Aqtau", offset: "UTC +05:00" },
+            "Asia/Aqtobe": { id: "Asia/Aqtobe", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Aqtobe", offset: "UTC +05:00" },
+            "Asia/Atyrau": { id: "Asia/Atyrau", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Atyrau", offset: "UTC +05:00" },
+            "Asia/Oral": { id: "Asia/Oral", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Oral", offset: "UTC +05:00" },
+            "Asia/Qostanay": { id: "Asia/Qostanay", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Qostanay", offset: "UTC +06:00" },
+            "Asia/Qyzylorda": { id: "Asia/Qyzylorda", countrycode: "KZ", country: "Kazakhstan", name: "Asia/Qyzylorda", offset: "UTC +05:00" },
+            "Africa/Nairobi": { id: "Africa/Nairobi", countrycode: "KE", country: "Kenya", name: "Africa/Nairobi", offset: "UTC +03:00" },
+            "Pacific/Enderbury": { id: "Pacific/Enderbury", countrycode: "KI", country: "Kiribati", name: "Pacific/Enderbury", offset: "UTC +13:00" },
+            "Pacific/Kiritimati": { id: "Pacific/Kiritimati", countrycode: "KI", country: "Kiribati", name: "Pacific/Kiritimati", offset: "UTC +14:00" },
+            "Pacific/Tarawa": { id: "Pacific/Tarawa", countrycode: "KI", country: "Kiribati", name: "Pacific/Tarawa", offset: "UTC +12:00" },
+            "Asia/Pyongyang": { id: "Asia/Pyongyang", countrycode: "KP", country: "Korea, Democratic People's Republic of", name: "Asia/Pyongyang", offset: "UTC +09:00" },
+            "Asia/Seoul": { id: "Asia/Seoul", countrycode: "KR", country: "Korea, Republic of", name: "Asia/Seoul", offset: "UTC +09:00" },
+            "Asia/Kuwait": { id: "Asia/Kuwait", countrycode: "KW", country: "Kuwait", name: "Asia/Kuwait", offset: "UTC +03:00" },
+            "Asia/Bishkek": { id: "Asia/Bishkek", countrycode: "KG", country: "Kyrgyzstan", name: "Asia/Bishkek", offset: "UTC +06:00" },
+            "Asia/Vientiane": { id: "Asia/Vientiane", countrycode: "LA", country: "Lao People's Democratic Republic", name: "Asia/Vientiane", offset: "UTC +07:00" },
+            "Europe/Riga": { id: "Europe/Riga", countrycode: "LV", country: "Latvia", name: "Europe/Riga", offset: "UTC +02:00" },
+            "Asia/Beirut": { id: "Asia/Beirut", countrycode: "LB", country: "Lebanon", name: "Asia/Beirut", offset: "UTC +02:00" },
+            "Africa/Maseru": { id: "Africa/Maseru", countrycode: "LS", country: "Lesotho", name: "Africa/Maseru", offset: "UTC +02:00" },
+            "Africa/Monrovia": { id: "Africa/Monrovia", countrycode: "LR", country: "Liberia", name: "Africa/Monrovia", offset: "UTC" },
+            "Africa/Tripoli": { id: "Africa/Tripoli", countrycode: "LY", country: "Libya", name: "Africa/Tripoli", offset: "UTC +02:00" },
+            "Europe/Vaduz": { id: "Europe/Vaduz", countrycode: "LI", country: "Liechtenstein", name: "Europe/Vaduz", offset: "UTC +01:00" },
+            "Europe/Vilnius": { id: "Europe/Vilnius", countrycode: "LT", country: "Lithuania", name: "Europe/Vilnius", offset: "UTC +02:00" },
+            "Europe/Luxembourg": { id: "Europe/Luxembourg", countrycode: "LU", country: "Luxembourg", name: "Europe/Luxembourg", offset: "UTC +01:00" },
+            "Asia/Macau": { id: "Asia/Macau", countrycode: "MO", country: "Macao", name: "Asia/Macau", offset: "UTC +08:00" },
+            "Europe/Skopje": { id: "Europe/Skopje", countrycode: "MK", country: "Macedonia, the Former Yugoslav Republic of", name: "Europe/Skopje", offset: "UTC +01:00" },
+            "Indian/Antananarivo": { id: "Indian/Antananarivo", countrycode: "MG", country: "Madagascar", name: "Indian/Antananarivo", offset: "UTC +03:00" },
+            "Africa/Blantyre": { id: "Africa/Blantyre", countrycode: "MW", country: "Malawi", name: "Africa/Blantyre", offset: "UTC +02:00" },
+            "Asia/Kuala_Lumpur": { id: "Asia/Kuala_Lumpur", countrycode: "MY", country: "Malaysia", name: "Asia/Kuala_Lumpur", offset: "UTC +08:00" },
+            "Asia/Kuching": { id: "Asia/Kuching", countrycode: "MY", country: "Malaysia", name: "Asia/Kuching", offset: "UTC +08:00" },
+            "Indian/Maldives": { id: "Indian/Maldives", countrycode: "MV", country: "Maldives", name: "Indian/Maldives", offset: "UTC +05:00" },
+            "Africa/Bamako": { id: "Africa/Bamako", countrycode: "ML", country: "Mali", name: "Africa/Bamako", offset: "UTC" },
+            "Europe/Malta": { id: "Europe/Malta", countrycode: "MT", country: "Malta", name: "Europe/Malta", offset: "UTC +01:00" },
+            "Pacific/Kwajalein": { id: "Pacific/Kwajalein", countrycode: "MH", country: "Marshall Islands", name: "Pacific/Kwajalein", offset: "UTC +12:00" },
+            "Pacific/Majuro": { id: "Pacific/Majuro", countrycode: "MH", country: "Marshall Islands", name: "Pacific/Majuro", offset: "UTC +12:00" },
+            "America/Martinique": { id: "America/Martinique", countrycode: "MQ", country: "Martinique", name: "America/Martinique", offset: "UTC -04:00" },
+            "Africa/Nouakchott": { id: "Africa/Nouakchott", countrycode: "MR", country: "Mauritania", name: "Africa/Nouakchott", offset: "UTC" },
+            "Indian/Mauritius": { id: "Indian/Mauritius", countrycode: "MU", country: "Mauritius", name: "Indian/Mauritius", offset: "UTC +04:00" },
+            "Indian/Mayotte": { id: "Indian/Mayotte", countrycode: "YT", country: "Mayotte", name: "Indian/Mayotte", offset: "UTC +03:00" },
+            "America/Bahia_Banderas": { id: "America/Bahia_Banderas", countrycode: "MX", country: "Mexico", name: "America/Bahia_Banderas", offset: "UTC -06:00" },
+            "America/Cancun": { id: "America/Cancun", countrycode: "MX", country: "Mexico", name: "America/Cancun", offset: "UTC -05:00" },
+            "America/Chihuahua": { id: "America/Chihuahua", countrycode: "MX", country: "Mexico", name: "America/Chihuahua", offset: "UTC -07:00" },
+            "America/Hermosillo": { id: "America/Hermosillo", countrycode: "MX", country: "Mexico", name: "America/Hermosillo", offset: "UTC -07:00" },
+            "America/Matamoros": { id: "America/Matamoros", countrycode: "MX", country: "Mexico", name: "America/Matamoros", offset: "UTC -06:00" },
+            "America/Mazatlan": { id: "America/Mazatlan", countrycode: "MX", country: "Mexico", name: "America/Mazatlan", offset: "UTC -07:00" },
+            "America/Merida": { id: "America/Merida", countrycode: "MX", country: "Mexico", name: "America/Merida", offset: "UTC -06:00" },
+            "America/Mexico_City": { id: "America/Mexico_City", countrycode: "MX", country: "Mexico", name: "America/Mexico_City", offset: "UTC -06:00" },
+            "America/Monterrey": { id: "America/Monterrey", countrycode: "MX", country: "Mexico", name: "America/Monterrey", offset: "UTC -06:00" },
+            "America/Ojinaga": { id: "America/Ojinaga", countrycode: "MX", country: "Mexico", name: "America/Ojinaga", offset: "UTC -07:00" },
+            "America/Tijuana": { id: "America/Tijuana", countrycode: "MX", country: "Mexico", name: "America/Tijuana", offset: "UTC -08:00" },
+            "Pacific/Chuuk": { id: "Pacific/Chuuk", countrycode: "FM", country: "Micronesia, Federated States of", name: "Pacific/Chuuk", offset: "UTC +10:00" },
+            "Pacific/Kosrae": { id: "Pacific/Kosrae", countrycode: "FM", country: "Micronesia, Federated States of", name: "Pacific/Kosrae", offset: "UTC +11:00" },
+            "Pacific/Pohnpei": { id: "Pacific/Pohnpei", countrycode: "FM", country: "Micronesia, Federated States of", name: "Pacific/Pohnpei", offset: "UTC +11:00" },
+            "Europe/Chisinau": { id: "Europe/Chisinau", countrycode: "MD", country: "Moldova, Republic of", name: "Europe/Chisinau", offset: "UTC +02:00" },
+            "Europe/Monaco": { id: "Europe/Monaco", countrycode: "MC", country: "Monaco", name: "Europe/Monaco", offset: "UTC +01:00" },
+            "Asia/Choibalsan": { id: "Asia/Choibalsan", countrycode: "MN", country: "Mongolia", name: "Asia/Choibalsan", offset: "UTC +08:00" },
+            "Asia/Hovd": { id: "Asia/Hovd", countrycode: "MN", country: "Mongolia", name: "Asia/Hovd", offset: "UTC +07:00" },
+            "Asia/Ulaanbaatar": { id: "Asia/Ulaanbaatar", countrycode: "MN", country: "Mongolia", name: "Asia/Ulaanbaatar", offset: "UTC +08:00" },
+            "Europe/Podgorica": { id: "Europe/Podgorica", countrycode: "ME", country: "Montenegro", name: "Europe/Podgorica", offset: "UTC +01:00" },
+            "America/Montserrat": { id: "America/Montserrat", countrycode: "MS", country: "Montserrat", name: "America/Montserrat", offset: "UTC -04:00" },
+            "Africa/Casablanca": { id: "Africa/Casablanca", countrycode: "MA", country: "Morocco", name: "Africa/Casablanca", offset: "UTC +01:00" },
+            "Africa/Maputo": { id: "Africa/Maputo", countrycode: "MZ", country: "Mozambique", name: "Africa/Maputo", offset: "UTC +02:00" },
+            "Asia/Yangon": { id: "Asia/Yangon", countrycode: "MM", country: "Myanmar", name: "Asia/Yangon", offset: "UTC +06:30" },
+            "Africa/Windhoek": { id: "Africa/Windhoek", countrycode: "NA", country: "Namibia", name: "Africa/Windhoek", offset: "UTC +02:00" },
+            "Pacific/Nauru": { id: "Pacific/Nauru", countrycode: "NR", country: "Nauru", name: "Pacific/Nauru", offset: "UTC +12:00" },
+            "Asia/Kathmandu": { id: "Asia/Kathmandu", countrycode: "NP", country: "Nepal", name: "Asia/Kathmandu", offset: "UTC +05:45" },
+            "Europe/Amsterdam": { id: "Europe/Amsterdam", countrycode: "NL", country: "Netherlands", name: "Europe/Amsterdam", offset: "UTC +01:00" },
+            "Pacific/Noumea": { id: "Pacific/Noumea", countrycode: "NC", country: "New Caledonia", name: "Pacific/Noumea", offset: "UTC +11:00" },
+            "Pacific/Auckland": { id: "Pacific/Auckland", countrycode: "NZ", country: "New Zealand", name: "Pacific/Auckland", offset: "UTC +13:00" },
+            "Pacific/Chatham": { id: "Pacific/Chatham", countrycode: "NZ", country: "New Zealand", name: "Pacific/Chatham", offset: "UTC +13:45" },
+            "America/Managua": { id: "America/Managua", countrycode: "NI", country: "Nicaragua", name: "America/Managua", offset: "UTC -06:00" },
+            "Africa/Niamey": { id: "Africa/Niamey", countrycode: "NE", country: "Niger", name: "Africa/Niamey", offset: "UTC +01:00" },
+            "Africa/Lagos": { id: "Africa/Lagos", countrycode: "NG", country: "Nigeria", name: "Africa/Lagos", offset: "UTC +01:00" },
+            "Pacific/Niue": { id: "Pacific/Niue", countrycode: "NU", country: "Niue", name: "Pacific/Niue", offset: "UTC -11:00" },
+            "Pacific/Norfolk": { id: "Pacific/Norfolk", countrycode: "NF", country: "Norfolk Island", name: "Pacific/Norfolk", offset: "UTC +12:00" },
+            "Pacific/Saipan": { id: "Pacific/Saipan", countrycode: "MP", country: "Northern Mariana Islands", name: "Pacific/Saipan", offset: "UTC +10:00" },
+            "Europe/Oslo": { id: "Europe/Oslo", countrycode: "NO", country: "Norway", name: "Europe/Oslo", offset: "UTC +01:00" },
+            "Asia/Muscat": { id: "Asia/Muscat", countrycode: "OM", country: "Oman", name: "Asia/Muscat", offset: "UTC +04:00" },
+            "Asia/Karachi": { id: "Asia/Karachi", countrycode: "PK", country: "Pakistan", name: "Asia/Karachi", offset: "UTC +05:00" },
+            "Pacific/Palau": { id: "Pacific/Palau", countrycode: "PW", country: "Palau", name: "Pacific/Palau", offset: "UTC +09:00" },
+            "Asia/Gaza": { id: "Asia/Gaza", countrycode: "PS", country: "Palestine, State of", name: "Asia/Gaza", offset: "UTC +02:00" },
+            "Asia/Hebron": { id: "Asia/Hebron", countrycode: "PS", country: "Palestine, State of", name: "Asia/Hebron", offset: "UTC +02:00" },
+            "America/Panama": { id: "America/Panama", countrycode: "PA", country: "Panama", name: "America/Panama", offset: "UTC -05:00" },
+            "Pacific/Bougainville": { id: "Pacific/Bougainville", countrycode: "PG", country: "Papua New Guinea", name: "Pacific/Bougainville", offset: "UTC +11:00" },
+            "Pacific/Port_Moresby": { id: "Pacific/Port_Moresby", countrycode: "PG", country: "Papua New Guinea", name: "Pacific/Port_Moresby", offset: "UTC +10:00" },
+            "America/Asuncion": { id: "America/Asuncion", countrycode: "PY", country: "Paraguay", name: "America/Asuncion", offset: "UTC -03:00" },
+            "America/Lima": { id: "America/Lima", countrycode: "PE", country: "Peru", name: "America/Lima", offset: "UTC -05:00" },
+            "Asia/Manila": { id: "Asia/Manila", countrycode: "PH", country: "Philippines", name: "Asia/Manila", offset: "UTC +08:00" },
+            "Pacific/Pitcairn": { id: "Pacific/Pitcairn", countrycode: "PN", country: "Pitcairn", name: "Pacific/Pitcairn", offset: "UTC -08:00" },
+            "Europe/Warsaw": { id: "Europe/Warsaw", countrycode: "PL", country: "Poland", name: "Europe/Warsaw", offset: "UTC +01:00" },
+            "Atlantic/Azores": { id: "Atlantic/Azores", countrycode: "PT", country: "Portugal", name: "Atlantic/Azores", offset: "UTC -01:00" },
+            "Atlantic/Madeira": { id: "Atlantic/Madeira", countrycode: "PT", country: "Portugal", name: "Atlantic/Madeira", offset: "UTC" },
+            "Europe/Lisbon": { id: "Europe/Lisbon", countrycode: "PT", country: "Portugal", name: "Europe/Lisbon", offset: "UTC" },
+            "America/Puerto_Rico": { id: "America/Puerto_Rico", countrycode: "PR", country: "Puerto Rico", name: "America/Puerto_Rico", offset: "UTC -04:00" },
+            "Asia/Qatar": { id: "Asia/Qatar", countrycode: "QA", country: "Qatar", name: "Asia/Qatar", offset: "UTC +03:00" },
+            "Europe/Bucharest": { id: "Europe/Bucharest", countrycode: "RO", country: "Romania", name: "Europe/Bucharest", offset: "UTC +02:00" },
+            "Asia/Anadyr": { id: "Asia/Anadyr", countrycode: "RU", country: "Russian Federation", name: "Asia/Anadyr", offset: "UTC +12:00" },
+            "Asia/Barnaul": { id: "Asia/Barnaul", countrycode: "RU", country: "Russian Federation", name: "Asia/Barnaul", offset: "UTC +07:00" },
+            "Asia/Chita": { id: "Asia/Chita", countrycode: "RU", country: "Russian Federation", name: "Asia/Chita", offset: "UTC +09:00" },
+            "Asia/Irkutsk": { id: "Asia/Irkutsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Irkutsk", offset: "UTC +08:00" },
+            "Asia/Kamchatka": { id: "Asia/Kamchatka", countrycode: "RU", country: "Russian Federation", name: "Asia/Kamchatka", offset: "UTC +12:00" },
+            "Asia/Khandyga": { id: "Asia/Khandyga", countrycode: "RU", country: "Russian Federation", name: "Asia/Khandyga", offset: "UTC +09:00" },
+            "Asia/Krasnoyarsk": { id: "Asia/Krasnoyarsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Krasnoyarsk", offset: "UTC +07:00" },
+            "Asia/Magadan": { id: "Asia/Magadan", countrycode: "RU", country: "Russian Federation", name: "Asia/Magadan", offset: "UTC +11:00" },
+            "Asia/Novokuznetsk": { id: "Asia/Novokuznetsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Novokuznetsk", offset: "UTC +07:00" },
+            "Asia/Novosibirsk": { id: "Asia/Novosibirsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Novosibirsk", offset: "UTC +07:00" },
+            "Asia/Omsk": { id: "Asia/Omsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Omsk", offset: "UTC +06:00" },
+            "Asia/Sakhalin": { id: "Asia/Sakhalin", countrycode: "RU", country: "Russian Federation", name: "Asia/Sakhalin", offset: "UTC +11:00" },
+            "Asia/Srednekolymsk": { id: "Asia/Srednekolymsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Srednekolymsk", offset: "UTC +11:00" },
+            "Asia/Tomsk": { id: "Asia/Tomsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Tomsk", offset: "UTC +07:00" },
+            "Asia/Ust-Nera": { id: "Asia/Ust-Nera", countrycode: "RU", country: "Russian Federation", name: "Asia/Ust-Nera", offset: "UTC +10:00" },
+            "Asia/Vladivostok": { id: "Asia/Vladivostok", countrycode: "RU", country: "Russian Federation", name: "Asia/Vladivostok", offset: "UTC +10:00" },
+            "Asia/Yakutsk": { id: "Asia/Yakutsk", countrycode: "RU", country: "Russian Federation", name: "Asia/Yakutsk", offset: "UTC +09:00" },
+            "Asia/Yekaterinburg": { id: "Asia/Yekaterinburg", countrycode: "RU", country: "Russian Federation", name: "Asia/Yekaterinburg", offset: "UTC +05:00" },
+            "Europe/Astrakhan": { id: "Europe/Astrakhan", countrycode: "RU", country: "Russian Federation", name: "Europe/Astrakhan", offset: "UTC +04:00" },
+            "Europe/Kaliningrad": { id: "Europe/Kaliningrad", countrycode: "RU", country: "Russian Federation", name: "Europe/Kaliningrad", offset: "UTC +02:00" },
+            "Europe/Kirov": { id: "Europe/Kirov", countrycode: "RU", country: "Russian Federation", name: "Europe/Kirov", offset: "UTC +03:00" },
+            "Europe/Moscow": { id: "Europe/Moscow", countrycode: "RU", country: "Russian Federation", name: "Europe/Moscow", offset: "UTC +03:00" },
+            "Europe/Samara": { id: "Europe/Samara", countrycode: "RU", country: "Russian Federation", name: "Europe/Samara", offset: "UTC +04:00" },
+            "Europe/Saratov": { id: "Europe/Saratov", countrycode: "RU", country: "Russian Federation", name: "Europe/Saratov", offset: "UTC +04:00" },
+            "Europe/Ulyanovsk": { id: "Europe/Ulyanovsk", countrycode: "RU", country: "Russian Federation", name: "Europe/Ulyanovsk", offset: "UTC +04:00" },
+            "Europe/Volgograd": { id: "Europe/Volgograd", countrycode: "RU", country: "Russian Federation", name: "Europe/Volgograd", offset: "UTC +04:00" },
+            "Africa/Kigali": { id: "Africa/Kigali", countrycode: "RW", country: "Rwanda", name: "Africa/Kigali", offset: "UTC +02:00" },
+            "Indian/Reunion": { id: "Indian/Reunion", countrycode: "RE", country: "Réunion", name: "Indian/Reunion", offset: "UTC +04:00" },
+            "America/St_Barthelemy": { id: "America/St_Barthelemy", countrycode: "BL", country: "Saint Barthélemy", name: "America/St_Barthelemy", offset: "UTC -04:00" },
+            "Atlantic/St_Helena": { id: "Atlantic/St_Helena", countrycode: "SH", country: "Saint Helena, Ascension and Tristan da Cunha", name: "Atlantic/St_Helena", offset: "UTC" },
+            "America/St_Kitts": { id: "America/St_Kitts", countrycode: "KN", country: "Saint Kitts and Nevis", name: "America/St_Kitts", offset: "UTC -04:00" },
+            "America/St_Lucia": { id: "America/St_Lucia", countrycode: "LC", country: "Saint Lucia", name: "America/St_Lucia", offset: "UTC -04:00" },
+            "America/Marigot": { id: "America/Marigot", countrycode: "MF", country: "Saint Martin (French part)", name: "America/Marigot", offset: "UTC -04:00" },
+            "America/Miquelon": { id: "America/Miquelon", countrycode: "PM", country: "Saint Pierre and Miquelon", name: "America/Miquelon", offset: "UTC -03:00" },
+            "America/St_Vincent": { id: "America/St_Vincent", countrycode: "VC", country: "Saint Vincent and the Grenadines", name: "America/St_Vincent", offset: "UTC -04:00" },
+            "Pacific/Apia": { id: "Pacific/Apia", countrycode: "WS", country: "Samoa", name: "Pacific/Apia", offset: "UTC +14:00" },
+            "Europe/San_Marino": { id: "Europe/San_Marino", countrycode: "SM", country: "San Marino", name: "Europe/San_Marino", offset: "UTC +01:00" },
+            "Africa/Sao_Tome": { id: "Africa/Sao_Tome", countrycode: "ST", country: "Sao Tome and Principe", name: "Africa/Sao_Tome", offset: "UTC" },
+            "Asia/Riyadh": { id: "Asia/Riyadh", countrycode: "SA", country: "Saudi Arabia", name: "Asia/Riyadh", offset: "UTC +03:00" },
+            "Africa/Dakar": { id: "Africa/Dakar", countrycode: "SN", country: "Senegal", name: "Africa/Dakar", offset: "UTC" },
+            "Europe/Belgrade": { id: "Europe/Belgrade", countrycode: "RS", country: "Serbia", name: "Europe/Belgrade", offset: "UTC +01:00" },
+            "Indian/Mahe": { id: "Indian/Mahe", countrycode: "SC", country: "Seychelles", name: "Indian/Mahe", offset: "UTC +04:00" },
+            "Africa/Freetown": { id: "Africa/Freetown", countrycode: "SL", country: "Sierra Leone", name: "Africa/Freetown", offset: "UTC" },
+            "Asia/Singapore": { id: "Asia/Singapore", countrycode: "SG", country: "Singapore", name: "Asia/Singapore", offset: "UTC +08:00" },
+            "America/Lower_Princes": { id: "America/Lower_Princes", countrycode: "SX", country: "Sint Maarten (Dutch part)", name: "America/Lower_Princes", offset: "UTC -04:00" },
+            "Europe/Bratislava": { id: "Europe/Bratislava", countrycode: "SK", country: "Slovakia", name: "Europe/Bratislava", offset: "UTC +01:00" },
+            "Europe/Ljubljana": { id: "Europe/Ljubljana", countrycode: "SI", country: "Slovenia", name: "Europe/Ljubljana", offset: "UTC +01:00" },
+            "Pacific/Guadalcanal": { id: "Pacific/Guadalcanal", countrycode: "SB", country: "Solomon Islands", name: "Pacific/Guadalcanal", offset: "UTC +11:00" },
+            "Africa/Mogadishu": { id: "Africa/Mogadishu", countrycode: "SO", country: "Somalia", name: "Africa/Mogadishu", offset: "UTC +03:00" },
+            "Africa/Johannesburg": { id: "Africa/Johannesburg", countrycode: "ZA", country: "South Africa", name: "Africa/Johannesburg", offset: "UTC +02:00" },
+            "Atlantic/South_Georgia": { id: "Atlantic/South_Georgia", countrycode: "GS", country: "South Georgia and the South Sandwich Islands", name: "Atlantic/South_Georgia", offset: "UTC -02:00" },
+            "Africa/Juba": { id: "Africa/Juba", countrycode: "SS", country: "South Sudan", name: "Africa/Juba", offset: "UTC +03:00" },
+            "Africa/Ceuta": { id: "Africa/Ceuta", countrycode: "ES", country: "Spain", name: "Africa/Ceuta", offset: "UTC +01:00" },
+            "Atlantic/Canary": { id: "Atlantic/Canary", countrycode: "ES", country: "Spain", name: "Atlantic/Canary", offset: "UTC" },
+            "Europe/Madrid": { id: "Europe/Madrid", countrycode: "ES", country: "Spain", name: "Europe/Madrid", offset: "UTC +01:00" },
+            "Asia/Colombo": { id: "Asia/Colombo", countrycode: "LK", country: "Sri Lanka", name: "Asia/Colombo", offset: "UTC +05:30" },
+            "Africa/Khartoum": { id: "Africa/Khartoum", countrycode: "SD", country: "Sudan", name: "Africa/Khartoum", offset: "UTC +02:00" },
+            "America/Paramaribo": { id: "America/Paramaribo", countrycode: "SR", country: "Suriname", name: "America/Paramaribo", offset: "UTC -03:00" },
+            "Arctic/Longyearbyen": { id: "Arctic/Longyearbyen", countrycode: "SJ", country: "Svalbard and Jan Mayen", name: "Arctic/Longyearbyen", offset: "UTC +01:00" },
+            "Africa/Mbabane": { id: "Africa/Mbabane", countrycode: "SZ", country: "Swaziland", name: "Africa/Mbabane", offset: "UTC +02:00" },
+            "Europe/Stockholm": { id: "Europe/Stockholm", countrycode: "SE", country: "Sweden", name: "Europe/Stockholm", offset: "UTC +01:00" },
+            "Europe/Zurich": { id: "Europe/Zurich", countrycode: "CH", country: "Switzerland", name: "Europe/Zurich", offset: "UTC +01:00" },
+            "Asia/Damascus": { id: "Asia/Damascus", countrycode: "SY", country: "Syrian Arab Republic", name: "Asia/Damascus", offset: "UTC +02:00" },
+            "Asia/Taipei": { id: "Asia/Taipei", countrycode: "TW", country: "Taiwan, Province of China", name: "Asia/Taipei", offset: "UTC +08:00" },
+            "Asia/Dushanbe": { id: "Asia/Dushanbe", countrycode: "TJ", country: "Tajikistan", name: "Asia/Dushanbe", offset: "UTC +05:00" },
+            "Africa/Dar_es_Salaam": { id: "Africa/Dar_es_Salaam", countrycode: "TZ", country: "Tanzania, United Republic of", name: "Africa/Dar_es_Salaam", offset: "UTC +03:00" },
+            "Asia/Bangkok": { id: "Asia/Bangkok", countrycode: "TH", country: "Thailand", name: "Asia/Bangkok", offset: "UTC +07:00" },
+            "Asia/Dili": { id: "Asia/Dili", countrycode: "TL", country: "Timor-Leste", name: "Asia/Dili", offset: "UTC +09:00" },
+            "Africa/Lome": { id: "Africa/Lome", countrycode: "TG", country: "Togo", name: "Africa/Lome", offset: "UTC" },
+            "Pacific/Fakaofo": { id: "Pacific/Fakaofo", countrycode: "TK", country: "Tokelau", name: "Pacific/Fakaofo", offset: "UTC +13:00" },
+            "Pacific/Tongatapu": { id: "Pacific/Tongatapu", countrycode: "TO", country: "Tonga", name: "Pacific/Tongatapu", offset: "UTC +13:00" },
+            "America/Port_of_Spain": { id: "America/Port_of_Spain", countrycode: "TT", country: "Trinidad and Tobago", name: "America/Port_of_Spain", offset: "UTC -04:00" },
+            "Africa/Tunis": { id: "Africa/Tunis", countrycode: "TN", country: "Tunisia", name: "Africa/Tunis", offset: "UTC +01:00" },
+            "Europe/Istanbul": { id: "Europe/Istanbul", countrycode: "TR", country: "Turkey", name: "Europe/Istanbul", offset: "UTC +03:00" },
+            "Asia/Ashgabat": { id: "Asia/Ashgabat", countrycode: "TM", country: "Turkmenistan", name: "Asia/Ashgabat", offset: "UTC +05:00" },
+            "America/Grand_Turk": { id: "America/Grand_Turk", countrycode: "TC", country: "Turks and Caicos Islands", name: "America/Grand_Turk", offset: "UTC -05:00" },
+            "Pacific/Funafuti": { id: "Pacific/Funafuti", countrycode: "TV", country: "Tuvalu", name: "Pacific/Funafuti", offset: "UTC +12:00" },
+            "Africa/Kampala": { id: "Africa/Kampala", countrycode: "UG", country: "Uganda", name: "Africa/Kampala", offset: "UTC +03:00" },
+            "Europe/Kiev": { id: "Europe/Kiev", countrycode: "UA", country: "Ukraine", name: "Europe/Kiev", offset: "UTC +02:00" },
+            "Europe/Simferopol": { id: "Europe/Simferopol", countrycode: "UA", country: "Ukraine", name: "Europe/Simferopol", offset: "UTC +03:00" },
+            "Europe/Uzhgorod": { id: "Europe/Uzhgorod", countrycode: "UA", country: "Ukraine", name: "Europe/Uzhgorod", offset: "UTC +02:00" },
+            "Europe/Zaporozhye": { id: "Europe/Zaporozhye", countrycode: "UA", country: "Ukraine", name: "Europe/Zaporozhye", offset: "UTC +02:00" },
+            "Asia/Dubai": { id: "Asia/Dubai", countrycode: "AE", country: "United Arab Emirates", name: "Asia/Dubai", offset: "UTC +04:00" },
+            "Europe/London": { id: "Europe/London", countrycode: "GB", country: "United Kingdom", name: "Europe/London", offset: "UTC" },
+            "America/Adak": { id: "America/Adak", countrycode: "US", country: "United States", name: "America/Adak", offset: "UTC -10:00" },
+            "America/Anchorage": { id: "America/Anchorage", countrycode: "US", country: "United States", name: "America/Anchorage", offset: "UTC -09:00" },
+            "America/Boise": { id: "America/Boise", countrycode: "US", country: "United States", name: "America/Boise", offset: "UTC -07:00" },
+            "America/Chicago": { id: "America/Chicago", countrycode: "US", country: "United States", name: "America/Chicago", offset: "UTC -06:00" },
+            "America/Denver": { id: "America/Denver", countrycode: "US", country: "United States", name: "America/Denver", offset: "UTC -07:00" },
+            "America/Detroit": { id: "America/Detroit", countrycode: "US", country: "United States", name: "America/Detroit", offset: "UTC -05:00" },
+            "America/Indiana/Indianapolis": { id: "America/Indiana/Indianapolis", countrycode: "US", country: "United States", name: "America/Indiana/Indianapolis", offset: "UTC -05:00" },
+            "America/Indiana/Knox": { id: "America/Indiana/Knox", countrycode: "US", country: "United States", name: "America/Indiana/Knox", offset: "UTC -06:00" },
+            "America/Indiana/Marengo": { id: "America/Indiana/Marengo", countrycode: "US", country: "United States", name: "America/Indiana/Marengo", offset: "UTC -05:00" },
+            "America/Indiana/Petersburg": { id: "America/Indiana/Petersburg", countrycode: "US", country: "United States", name: "America/Indiana/Petersburg", offset: "UTC -05:00" },
+            "America/Indiana/Tell_City": { id: "America/Indiana/Tell_City", countrycode: "US", country: "United States", name: "America/Indiana/Tell_City", offset: "UTC -06:00" },
+            "America/Indiana/Vevay": { id: "America/Indiana/Vevay", countrycode: "US", country: "United States", name: "America/Indiana/Vevay", offset: "UTC -05:00" },
+            "America/Indiana/Vincennes": { id: "America/Indiana/Vincennes", countrycode: "US", country: "United States", name: "America/Indiana/Vincennes", offset: "UTC -05:00" },
+            "America/Indiana/Winamac": { id: "America/Indiana/Winamac", countrycode: "US", country: "United States", name: "America/Indiana/Winamac", offset: "UTC -05:00" },
+            "America/Juneau": { id: "America/Juneau", countrycode: "US", country: "United States", name: "America/Juneau", offset: "UTC -09:00" },
+            "America/Kentucky/Louisville": { id: "America/Kentucky/Louisville", countrycode: "US", country: "United States", name: "America/Kentucky/Louisville", offset: "UTC -05:00" },
+            "America/Kentucky/Monticello": { id: "America/Kentucky/Monticello", countrycode: "US", country: "United States", name: "America/Kentucky/Monticello", offset: "UTC -05:00" },
+            "America/Los_Angeles": { id: "America/Los_Angeles", countrycode: "US", country: "United States", name: "America/Los_Angeles", offset: "UTC -08:00" },
+            "America/Menominee": { id: "America/Menominee", countrycode: "US", country: "United States", name: "America/Menominee", offset: "UTC -06:00" },
+            "America/Metlakatla": { id: "America/Metlakatla", countrycode: "US", country: "United States", name: "America/Metlakatla", offset: "UTC -09:00" },
+            "America/New_York": { id: "America/New_York", countrycode: "US", country: "United States", name: "America/New_York", offset: "UTC -05:00" },
+            "America/Nome": { id: "America/Nome", countrycode: "US", country: "United States", name: "America/Nome", offset: "UTC -09:00" },
+            "America/North_Dakota/Beulah": { id: "America/North_Dakota/Beulah", countrycode: "US", country: "United States", name: "America/North_Dakota/Beulah", offset: "UTC -06:00" },
+            "America/North_Dakota/Center": { id: "America/North_Dakota/Center", countrycode: "US", country: "United States", name: "America/North_Dakota/Center", offset: "UTC -06:00" },
+            "America/North_Dakota/New_Salem": { id: "America/North_Dakota/New_Salem", countrycode: "US", country: "United States", name: "America/North_Dakota/New_Salem", offset: "UTC -06:00" },
+            "America/Phoenix": { id: "America/Phoenix", countrycode: "US", country: "United States", name: "America/Phoenix", offset: "UTC -07:00" },
+            "America/Sitka": { id: "America/Sitka", countrycode: "US", country: "United States", name: "America/Sitka", offset: "UTC -09:00" },
+            "America/Yakutat": { id: "America/Yakutat", countrycode: "US", country: "United States", name: "America/Yakutat", offset: "UTC -09:00" },
+            "Pacific/Honolulu": { id: "Pacific/Honolulu", countrycode: "US", country: "United States", name: "Pacific/Honolulu", offset: "UTC -10:00" },
+            "Pacific/Midway": { id: "Pacific/Midway", countrycode: "UM", country: "United States Minor Outlying Islands", name: "Pacific/Midway", offset: "UTC -11:00" },
+            "Pacific/Wake": { id: "Pacific/Wake", countrycode: "UM", country: "United States Minor Outlying Islands", name: "Pacific/Wake", offset: "UTC +12:00" },
+            "America/Montevideo": { id: "America/Montevideo", countrycode: "UY", country: "Uruguay", name: "America/Montevideo", offset: "UTC -03:00" },
+            "Asia/Samarkand": { id: "Asia/Samarkand", countrycode: "UZ", country: "Uzbekistan", name: "Asia/Samarkand", offset: "UTC +05:00" },
+            "Asia/Tashkent": { id: "Asia/Tashkent", countrycode: "UZ", country: "Uzbekistan", name: "Asia/Tashkent", offset: "UTC +05:00" },
+            "Pacific/Efate": { id: "Pacific/Efate", countrycode: "VU", country: "Vanuatu", name: "Pacific/Efate", offset: "UTC +11:00" },
+            "America/Caracas": { id: "America/Caracas", countrycode: "VE", country: "Venezuela, Bolivarian Republic of", name: "America/Caracas", offset: "UTC -04:00" },
+            "Asia/Ho_Chi_Minh": { id: "Asia/Ho_Chi_Minh", countrycode: "VN", country: "Viet Nam", name: "Asia/Ho_Chi_Minh", offset: "UTC +07:00" },
+            "America/Tortola": { id: "America/Tortola", countrycode: "VG", country: "Virgin Islands, British", name: "America/Tortola", offset: "UTC -04:00" },
+            "America/St_Thomas": { id: "America/St_Thomas", countrycode: "VI", country: "Virgin Islands, U.S.", name: "America/St_Thomas", offset: "UTC -04:00" },
+            "Pacific/Wallis": { id: "Pacific/Wallis", countrycode: "WF", country: "Wallis and Futuna", name: "Pacific/Wallis", offset: "UTC +12:00" },
+            "Africa/El_Aaiun": { id: "Africa/El_Aaiun", countrycode: "EH", country: "Western Sahara", name: "Africa/El_Aaiun", offset: "UTC +01:00" },
+            "Asia/Aden": { id: "Asia/Aden", countrycode: "YE", country: "Yemen", name: "Asia/Aden", offset: "UTC +03:00" },
+            "Africa/Lusaka": { id: "Africa/Lusaka", countrycode: "ZM", country: "Zambia", name: "Africa/Lusaka", offset: "UTC +02:00" },
+            "Africa/Harare": { id: "Africa/Harare", countrycode: "ZW", country: "Zimbabwe", name: "Africa/Harare", offset: "UTC +02:00" },
+            "Europe/Mariehamn": { id: "Europe/Mariehamn", countrycode: "AX", country: "Åland Islands", name: "Europe/Mariehamn", offset: "UTC +02:00" }
+        }
+    }
+
+    //static instance;
+
+    constructor() {
+        super();
+        if (!TimeZoneDefinition.instance) {
+            this.config = Object.assign({}, this.config, TimeZoneDefinition.CONFIG);
+            this.cache = TimeZoneDefinition.MAP;
+            this.initialized = true;
+            TimeZoneDefinition.instance = this;
+        }
+        return TimeZoneDefinition.instance;
+    }
+
+    get options() {
+        let options = [];
+        for (let o of Object.values(this.cache)) {
+            options.push({ value: o[this.identifier], label: `${o.name} (${o.offset})` });
+        }
+        options.sort(function(a, b) {
+            if (a.label > b.label) { return 1 }
+            if (a.label < b.label) { return -1 }
+            return 0;
+        });
+        return options;
+    }
+
+}
+
+window.TimeZoneDefinition = TimeZoneDefinition;
+class CountryCode extends BusinessObject {
+    
+    static get CONFIG() {
+        return {
+            identifier: 'code',
+            cadence: -1,
+            fields: [
+                new GridField({
+                    name: "code",
+                    label: TextFactory.get('code'),
+                    identifier: true,
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "name",
+                    label: TextFactory.get('country'),
+                    readonly: true,
+                    type: "string"
+                })
+            ]
+        };
+    }
+
+    static get MAP() {
+        return {
+            AF: { code: "AF", name: "Afghanistan" },
+            AX: { code: "AX", name: "Åland Islands" },
+            AL: { code: "AL", name: "Albania" },
+            DZ: { code: "DZ", name: "Algeria" },
+            AS: { code: "AS", name: "American Samoa" },
+            AD: { code: "AD", name: "Andorra" },
+            AO: { code: "AO", name: "Angola" },
+            AI: { code: "AI", name: "Anguilla" },
+            AQ: { code: "AQ", name: "Antarctica" },
+            AG: { code: "AG", name: "Antigua and Barbuda" },
+            AR: { code: "AR", name: "Argentina" },
+            AM: { code: "AM", name: "Armenia" },
+            AW: { code: "AW", name: "Aruba" },
+            AU: { code: "AU", name: "Australia" },
+            AT: { code: "AT", name: "Austria" },
+            AZ: { code: "AZ", name: "Azerbaijan" },
+            BS: { code: "BS", name: "Bahamas" },
+            BH: { code: "BH", name: "Bahrain" },
+            BD: { code: "BD", name: "Bangladesh" },
+            BB: { code: "BB", name: "Barbados" },
+            BY: { code: "BY", name: "Belarus" },
+            BE: { code: "BE", name: "Belgium" },
+            BZ: { code: "BZ", name: "Belize" },
+            BJ: { code: "BJ", name: "Benin" },
+            BM: { code: "BM", name: "Bermuda" },
+            BT: { code: "BT", name: "Bhutan" },
+            BO: { code: "BO", name: "Bolivia, Plurinational State of" },
+            BQ: { code: "BQ", name: "Bonaire, Sint Eustatius and Saba" },
+            BA: { code: "BA", name: "Bosnia and Herzegovina" },
+            BW: { code: "BW", name: "Botswana" },
+            BV: { code: "BV", name: "Bouvet Island" },
+            BR: { code: "BR", name: "Brazil" },
+            IO: { code: "IO", name: "British Indian Ocean Territory" },
+            BN: { code: "BN", name: "Brunei Darussalam" },
+            BG: { code: "BG", name: "Bulgaria" },
+            BF: { code: "BF", name: "Burkina Faso" },
+            BI: { code: "BI", name: "Burundi" },
+            KH: { code: "KH", name: "Cambodia" },
+            CM: { code: "CM", name: "Cameroon" },
+            CA: { code: "CA", name: "Canada" },
+            CV: { code: "CV", name: "Cape Verde" },
+            KY: { code: "KY", name: "Cayman Islands" },
+            CF: { code: "CF", name: "Central African Republic" },
+            TD: { code: "TD", name: "Chad" },
+            CL: { code: "CL", name: "Chile" },
+            CN: { code: "CN", name: "China" },
+            CX: { code: "CX", name: "Christmas Island" },
+            CC: { code: "CC", name: "Cocos (Keeling) Islands" },
+            CO: { code: "CO", name: "Colombia" },
+            KM: { code: "KM", name: "Comoros" },
+            CG: { code: "CG", name: "Congo" },
+            CD: { code: "CD", name: "Congo, the Democratic Republic of the" },
+            CK: { code: "CK", name: "Cook Islands" },
+            CR: { code: "CR", name: "Costa Rica" },
+            CI: { code: "CI", name: "Côte d'Ivoire" },
+            HR: { code: "HR", name: "Croatia" },
+            CU: { code: "CU", name: "Cuba" },
+            CW: { code: "CW", name: "Curaçao" },
+            CY: { code: "CY", name: "Cyprus" },
+            CZ: { code: "CZ", name: "Czech Republic" },
+            DK: { code: "DK", name: "Denmark" },
+            DJ: { code: "DJ", name: "Djibouti" },
+            DM: { code: "DM", name: "Dominica" },
+            DO: { code: "DO", name: "Dominican Republic" },
+            EC: { code: "EC", name: "Ecuador" },
+            EG: { code: "EG", name: "Egypt" },
+            SV: { code: "SV", name: "El Salvador" },
+            GQ: { code: "GQ", name: "Equatorial Guinea" },
+            ER: { code: "ER", name: "Eritrea" },
+            EE: { code: "EE", name: "Estonia" },
+            ET: { code: "ET", name: "Ethiopia" },
+            FK: { code: "FK", name: "Falkland Islands (Malvinas)" },
+            FO: { code: "FO", name: "Faroe Islands" },
+            FJ: { code: "FJ", name: "Fiji" },
+            FI: { code: "FI", name: "Finland" },
+            FR: { code: "FR", name: "France" },
+            GF: { code: "GF", name: "French Guiana" },
+            PF: { code: "PF", name: "French Polynesia" },
+            TF: { code: "TF", name: "French Southern Territories" },
+            GA: { code: "GA", name: "Gabon" },
+            GM: { code: "GM", name: "Gambia" },
+            GE: { code: "GE", name: "Georgia" },
+            DE: { code: "DE", name: "Germany" },
+            GH: { code: "GH", name: "Ghana" },
+            GI: { code: "GI", name: "Gibraltar" },
+            GR: { code: "GR", name: "Greece" },
+            GL: { code: "GL", name: "Greenland" },
+            GD: { code: "GD", name: "Grenada" },
+            GP: { code: "GP", name: "Guadeloupe" },
+            GU: { code: "GU", name: "Guam" },
+            GT: { code: "GT", name: "Guatemala" },
+            GG: { code: "GG", name: "Guernsey" },
+            GN: { code: "GN", name: "Guinea" },
+            GW: { code: "GW", name: "Guinea-Bissau" },
+            GY: { code: "GY", name: "Guyana" },
+            HT: { code: "HT", name: "Haiti" },
+            HM: { code: "HM", name: "Heard Island and McDonald Islands" },
+            VA: { code: "VA", name: "Holy See (Vatican City State)" },
+            HN: { code: "HN", name: "Honduras" },
+            HK: { code: "HK", name: "Hong Kong" },
+            HU: { code: "HU", name: "Hungary" },
+            IS: { code: "IS", name: "Iceland" },
+            IN: { code: "IN", name: "India" },
+            ID: { code: "ID", name: "Indonesia" },
+            IR: { code: "IR", name: "Iran, Islamic Republic of" },
+            IQ: { code: "IQ", name: "Iraq" },
+            IE: { code: "IE", name: "Ireland" },
+            IM: { code: "IM", name: "Isle of Man" },
+            IL: { code: "IL", name: "Israel" },
+            IT: { code: "IT", name: "Italy" },
+            JM: { code: "JM", name: "Jamaica" },
+            JP: { code: "JP", name: "Japan" },
+            JE: { code: "JE", name: "Jersey" },
+            JO: { code: "JO", name: "Jordan" },
+            KZ: { code: "KZ", name: "Kazakhstan" },
+            KE: { code: "KE", name: "Kenya" },
+            KI: { code: "KI", name: "Kiribati" },
+            KP: { code: "KP", name: "Korea, Democratic People's Republic of" },
+            KR: { code: "KR", name: "Korea, Republic of" },
+            KW: { code: "KW", name: "Kuwait" },
+            KG: { code: "KG", name: "Kyrgyzstan" },
+            LA: { code: "LA", name: "Lao People's Democratic Republic" },
+            LV: { code: "LV", name: "Latvia" },
+            LB: { code: "LB", name: "Lebanon" },
+            LS: { code: "LS", name: "Lesotho" },
+            LR: { code: "LR", name: "Liberia" },
+            LY: { code: "LY", name: "Libya" },
+            LI: { code: "LI", name: "Liechtenstein" },
+            LT: { code: "LT", name: "Lithuania" },
+            LU: { code: "LU", name: "Luxembourg" },
+            MO: { code: "MO", name: "Macao" },
+            MK: { code: "MK", name: "Macedonia, the Former Yugoslav Republic of" },
+            MG: { code: "MG", name: "Madagascar" },
+            MW: { code: "MW", name: "Malawi" },
+            MY: { code: "MY", name: "Malaysia" },
+            MV: { code: "MV", name: "Maldives" },
+            ML: { code: "ML", name: "Mali" },
+            MT: { code: "MT", name: "Malta" },
+            MH: { code: "MH", name: "Marshall Islands" },
+            MQ: { code: "MQ", name: "Martinique" },
+            MR: { code: "MR", name: "Mauritania" },
+            MU: { code: "MU", name: "Mauritius" },
+            YT: { code: "YT", name: "Mayotte" },
+            MX: { code: "MX", name: "Mexico" },
+            FM: { code: "FM", name: "Micronesia, Federated States of" },
+            MD: { code: "MD", name: "Moldova, Republic of" },
+            MC: { code: "MC", name: "Monaco" },
+            MN: { code: "MN", name: "Mongolia" },
+            ME: { code: "ME", name: "Montenegro" },
+            MS: { code: "MS", name: "Montserrat" },
+            MA: { code: "MA", name: "Morocco" },
+            MZ: { code: "MZ", name: "Mozambique" },
+            MM: { code: "MM", name: "Myanmar" },
+            NA: { code: "NA", name: "Namibia" },
+            NR: { code: "NR", name: "Nauru" },
+            NP: { code: "NP", name: "Nepal" },
+            NL: { code: "NL", name: "Netherlands" },
+            NC: { code: "NC", name: "New Caledonia" },
+            NZ: { code: "NZ", name: "New Zealand" },
+            NI: { code: "NI", name: "Nicaragua" },
+            NE: { code: "NE", name: "Niger" },
+            NG: { code: "NG", name: "Nigeria" },
+            NU: { code: "NU", name: "Niue" },
+            NF: { code: "NF", name: "Norfolk Island" },
+            MP: { code: "MP", name: "Northern Mariana Islands" },
+            NO: { code: "NO", name: "Norway" },
+            OM: { code: "OM", name: "Oman" },
+            PK: { code: "PK", name: "Pakistan" },
+            PW: { code: "PW", name: "Palau" },
+            PS: { code: "PS", name: "Palestine, State of" },
+            PA: { code: "PA", name: "Panama" },
+            PG: { code: "PG", name: "Papua New Guinea" },
+            PY: { code: "PY", name: "Paraguay" },
+            PE: { code: "PE", name: "Peru" },
+            PH: { code: "PH", name: "Philippines" },
+            PN: { code: "PN", name: "Pitcairn" },
+            PL: { code: "PL", name: "Poland" },
+            PT: { code: "PT", name: "Portugal" },
+            PR: { code: "PR", name: "Puerto Rico" },
+            QA: { code: "QA", name: "Qatar" },
+            RE: { code: "RE", name: "Réunion" },
+            RO: { code: "RO", name: "Romania" },
+            RU: { code: "RU", name: "Russian Federation" },
+            RW: { code: "RW", name: "Rwanda" },
+            BL: { code: "BL", name: "Saint Barthélemy" },
+            SH: { code: "SH", name: "Saint Helena, Ascension and Tristan da Cunha" },
+            KN: { code: "KN", name: "Saint Kitts and Nevis" },
+            LC: { code: "LC", name: "Saint Lucia" },
+            MF: { code: "MF", name: "Saint Martin (French part)" },
+            PM: { code: "PM", name: "Saint Pierre and Miquelon" },
+            VC: { code: "VC", name: "Saint Vincent and the Grenadines" },
+            WS: { code: "WS", name: "Samoa" },
+            SM: { code: "SM", name: "San Marino" },
+            ST: { code: "ST", name: "Sao Tome and Principe" },
+            SA: { code: "SA", name: "Saudi Arabia" },
+            SN: { code: "SN", name: "Senegal" },
+            RS: { code: "RS", name: "Serbia" },
+            SC: { code: "SC", name: "Seychelles" },
+            SL: { code: "SL", name: "Sierra Leone" },
+            SG: { code: "SG", name: "Singapore" },
+            SX: { code: "SX", name: "Sint Maarten (Dutch part)" },
+            SK: { code: "SK", name: "Slovakia" },
+            SI: { code: "SI", name: "Slovenia" },
+            SB: { code: "SB", name: "Solomon Islands" },
+            SO: { code: "SO", name: "Somalia" },
+            ZA: { code: "ZA", name: "South Africa" },
+            GS: { code: "GS", name: "South Georgia and the South Sandwich Islands" },
+            SS: { code: "SS", name: "South Sudan" },
+            ES: { code: "ES", name: "Spain" },
+            LK: { code: "LK", name: "Sri Lanka" },
+            SD: { code: "SD", name: "Sudan" },
+            SR: { code: "SR", name: "Suriname" },
+            SJ: { code: "SJ", name: "Svalbard and Jan Mayen" },
+            SZ: { code: "SZ", name: "Swaziland" },
+            SE: { code: "SE", name: "Sweden" },
+            CH: { code: "CH", name: "Switzerland" },
+            SY: { code: "SY", name: "Syrian Arab Republic" },
+            TW: { code: "TW", name: "Taiwan, Province of China" },
+            TJ: { code: "TJ", name: "Tajikistan" },
+            TZ: { code: "TZ", name: "Tanzania, United Republic of" },
+            TH: { code: "TH", name: "Thailand" },
+            TL: { code: "TL", name: "Timor-Leste" },
+            TG: { code: "TG", name: "Togo" },
+            TK: { code: "TK", name: "Tokelau" },
+            TO: { code: "TO", name: "Tonga" },
+            TT: { code: "TT", name: "Trinidad and Tobago" },
+            TN: { code: "TN", name: "Tunisia" },
+            TR: { code: "TR", name: "Turkey" },
+            TM: { code: "TM", name: "Turkmenistan" },
+            TC: { code: "TC", name: "Turks and Caicos Islands" },
+            TV: { code: "TV", name: "Tuvalu" },
+            UG: { code: "UG", name: "Uganda" },
+            UA: { code: "UA", name: "Ukraine" },
+            AE: { code: "AE", name: "United Arab Emirates" },
+            GB: { code: "GB", name: "United Kingdom" },
+            US: { code: "US", name: "United States" },
+            UM: { code: "UM", name: "United States Minor Outlying Islands" },
+            UY: { code: "UY", name: "Uruguay" },
+            UZ: { code: "UZ", name: "Uzbekistan" },
+            VU: { code: "VU", name: "Vanuatu" },
+            VE: { code: "VE", name: "Venezuela, Bolivarian Republic of" },
+            VN: { code: "VN", name: "Viet Nam" },
+            VG: { code: "VG", name: "Virgin Islands, British" },
+            VI: { code: "VI", name: "Virgin Islands, U.S." },
+            WF: { code: "WF", name: "Wallis and Futuna" },
+            EH: { code: "EH", name: "Western Sahara" },
+            YE: { code: "YE", name: "Yemen" },
+            ZM: { code: "ZM", name: "Zambia" },
+            ZW: { code: "ZW", name: "Zimbabwe" }
+        }
+    }
+
+    //static instance;
+
+    constructor() {
+        super();
+        if (!CountryCode.instance) {
+            this.config = Object.assign({}, this.config, CountryCode.CONFIG);
+            this.cache = CountryCode.MAP;
+            this.initialized = true;
+            CountryCode.instance = this;
+        }
+        return CountryCode.instance;
+    }
+}
+
+window.CountryCode = CountryCode;
+class StateProvince extends BusinessObject {
+    static get CONFIG() {
+        return {
+            identifier: 'id',
+            cadence: -1,
+            fields: [
+                new GridField({
+                    name: "id",
+                    label: TextFactory.get('code'),
+                    identifier: true,
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "name",
+                    label: TextFactory.get('name'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "country",
+                    label: TextFactory.get('country'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "alt",
+                    label: TextFactory.get('alternate_names'),
+                    readonly: true,
+                    type: "stringarray"
+                })
+            ]
+        };
+    }
+
+    /**
+     * A map of states in US and canada
+     * @return {*} a dictionary
+     */
+    static get MAP() {
+        return {
+            AL: { id: "AL", name: "Alabama", country: "US" },
+            AK: { id: "AK", name: "Alaska", country: "US" },
+            AZ: { id: "AZ", name: "Arizona", country: "US" },
+            AR: { id: "AR", name: "Arkansas", country: "US" },
+            CA: { id: "CA", name: "California", country: "US" },
+            CO: { id: "CO", name: "Colorado", country: "US" },
+            CT: { id: "CT", name: "Connecticut", country: "US" },
+            DC: { id: "DC", name: "District of Columbia", country: "US", alt: ["Washington DC", "Washington D.C."] },
+            DE: { id: "DE", name: "Delaware", country: "US" },
+            FL: { id: "FL", name: "Florida", country: "US" },
+            GA: { id: "GA", name: "Georgia", country: "US" },
+            HI: { id: "HI", name: "Hawaii", country: "US" },
+            ID: { id: "ID", name: "Idaho", country: "US" },
+            IL: { id: "IL", name: "Illinois", country: "US" },
+            IN: { id: "IN", name: "Indiana", country: "US" },
+            IA: { id: "IA", name: "Iowa", country: "US" },
+            KS: { id: "KS", name: "Kansas", country: "US" },
+            KY: { id: "KY", name: "Kentucky", country: "US" },
+            LA: { id: "LA", name: "Louisiana", country: "US" },
+            ME: { id: "ME", name: "Maine", country: "US" },
+            MD: { id: "MD", name: "Maryland", country: "US" },
+            MA: { id: "MA", name: "Massachusetts", country: "US" },
+            MI: { id: "MI", name: "Michigan", country: "US" },
+            MN: { id: "MN", name: "Minnesota", country: "US" },
+            MS: { id: "MS", name: "Mississippi", country: "US" },
+            MO: { id: "MO", name: "Missouri", country: "US" },
+            MT: { id: "MT", name: "Montana", country: "US" },
+            NE: { id: "NE", name: "Nebraska", country: "US" },
+            NV: { id: "NV", name: "Nevada", country: "US" },
+            NH: { id: "NH", name: "New Hampshire", country: "US" },
+            NJ: { id: "NJ", name: "New Jersey", country: "US" },
+            NM: { id: "NM", name: "New Mexico", country: "US" },
+            NY: { id: "NY", name: "New York", country: "US" },
+            NC: { id: "NC", name: "North Carolina", country: "US" },
+            ND: { id: "ND", name: "North Dakota", country: "US" },
+            OH: { id: "OH", name: "Ohio", country: "US" },
+            OK: { id: "OK", name: "Oklahoma", country: "US" },
+            OR: { id: "OR", name: "Oregon", country: "US" },
+            PA: { id: "PA", name: "Pennsylvania", country: "US" },
+            RI: { id: "RI", name: "Rhode Island", country: "US" },
+            SC: { id: "SC", name: "South Carolina", country: "US" },
+            SD: { id: "SD", name: "South Dakota", country: "US" },
+            TN: { id: "TN", name: "Tennessee", country: "US" },
+            TX: { id: "TX", name: "Texas", country: "US" },
+            UT: { id: "UT", name: "Utah", country: "US" },
+            VT: { id: "VT", name: "Vermont", country: "US" },
+            VA: { id: "VA", name: "Virginia", country: "US" },
+            WA: { id: "WA", name: "Washington", country: "US" },
+            WV: { id: "WV", name: "West Virginia", country: "US" },
+            WI: { id: "WI", name: "Wisconsin", country: "US" },
+            WY: { id: "WY", name: "Wyoming", country: "US" },
+            AS: { id: "AS", name: "American Samoa", country: "US" },
+            GU: { id: "GU", name: "Guam", country: "US" },
+            MP: { id: "MP", name: "Northern Mariana Islands", country: "US" },
+            PR: { id: "PR", name: "Puerto Rico", country: "US" },
+            UM: { id: "UM", name: "United States Minor Outlying Islands", country: "US" },
+            VI: { id: "VI", name: "Virgin Islands", country: "US" },
+
+            AB: { id: "AB", name: "Alberta", country: "CA" },
+            BC: { id: "BC", name: "British Columbia", country: "CA" },
+            MB: { id: "MB", name: "Manitoba", country: "CA" },
+            NB: { id: "NB", name: "New Brunswick", country: "CA" },
+            NL: { id: "NL", name: "Newfoundland and Labrador", country: "CA", alt: ["Newfoundland","Labrador"] },
+            NS: { id: "NS", name: "Nova Scotia", country: "CA" },
+            NU: { id: "NU", name: "Nunavut", country: "CA" },
+            NT: { id: "NT", name: "Northwest Territories", country: "CA" },
+            ON: { id: "ON", name: "Ontario", country: "CA" },
+            PE: { id: "PE", name: "Prince Edward Island", country: "CA" },
+            QC: { id: "QC", name: "Quebec", country: "CA" },
+            SK: { id: "SK", name: "Saskatchewan", country: "CA" },
+            YT: { id: "YT", name: "Yukon", country: "CA" }
+        };
+    }
+
+    /**
+     * An array of United States states
+     * @return {string[]}
+     */
+    static get US_STATES() {
+        return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU", "MP", "PR", "UM", "VI"];
+    }
+
+    /**
+     * An array of Canadian states
+     * @return {string[]}
+     */
+    static get CA_STATES() {
+        return ["AB", "BC", "MB", "NB", "NL", "NS", "NU", "NT", "ON", "PE", "QC", "SK", "YT"];
+    }
+
+    /**
+     * Get a list of state dictionary elements.
+     * @param filter Optional, either US or CA. If empty, returns all.
+     * @return {Array} an array of state object definitions
+     */
+    set(filter) {
+        const me = this;
+        let set = [];
+        switch (filter) {
+            case 'US':
+                for (let s of StateProvince.US_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+            case 'CA':
+                for (let s of StateProvince.CA_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+            default:
+                for (let s of StateProvince.US_STATES) {
+                    set.push(this.get(s));
+                }
+                for (let s of StateProvince.CA_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+        }
+
+        set.sort(function(a, b) {
+            return me.sortfunction(a, b);
+        });
+        return set;
+    }
+
+    /**
+     * Search the cache
+     * @param text the text to search on.
+     */
+    static search(text) {
+        if ((!text) || (text.length() < 1)) { return []; }
+
+        let results = [];
+
+        for (let k of Object.keys(StateProvince.MAP)) {
+            let s = StateProvince.MAP[k];
+            if (text.toUpperCase() === k) { // if the code matches, just slot it.
+                results.push(s);
+            } else if (s.name.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
+                results.push(s);
+            } else if ((s.alt) && (s.alt.length > 0)) {
+                let found = false;
+                for (let i of s.alt) {
+                    if ((!found) && (i.toUpperCase().indexOf(text.toUpperCase()) >= 0)) {
+                        results.push(s);
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    //static instance;
+
+    constructor() {
+        super();
+        if (!StateProvince.instance) {
+            this.config = Object.assign({}, this.config, StateProvince.CONFIG);
+            this.cache = StateProvince.MAP;
+            this.initialized = true;
+            StateProvince.instance = this;
+        }
+        return StateProvince.instance;
+    }
+}
+
+window.StateProvince = StateProvince;
 class TextFactory {
 
     /**
@@ -690,6 +1826,7 @@ class TextFactory {
             "lowercase": 'Lowercase',
             "manage_filters": 'Manage Filters',
             "matches_hidden_columns": "Your search matches data in hidden columns.",
+            "name" : 'Name',
             "new_password": 'New Password',
             "no_columns": 'No columns',
             "no_provided_content": 'No provided content',
@@ -742,7 +1879,13 @@ class TextFactory {
             "uppercase": 'Uppercase',
             "urlinput-placeholder-default": 'https://somewhere.cornflower.blue/',
             "urlinput-error-invalid_web_address": 'This is an invalid web address.',
-            "warning": 'Warning'
+            "warning": 'Warning',
+            "country_code" : "Country Code",
+            "country" : "Country",
+            "time_zone" : "Time zone",
+            "offset" : "Offset",
+            "code" : "Code",
+            "alternate_names" : "Alternate names"
         };
     }
 
@@ -960,916 +2103,6 @@ class IconFactory {
     }
 }
 window.IconFactory = IconFactory;
-class StateProvince {
-
-    /**
-     * A map of states in US and canada
-     * @return {*} a dictionary
-     */
-    static get STATEMAP() {
-        return {
-            AL: { id: "AL", name: "Alabama", country: "US" },
-            AK: { id: "AK", name: "Alaska", country: "US" },
-            AZ: { id: "AZ", name: "Arizona", country: "US" },
-            AR: { id: "AR", name: "Arkansas", country: "US" },
-            CA: { id: "CA", name: "California", country: "US" },
-            CO: { id: "CO", name: "Colorado", country: "US" },
-            CT: { id: "CT", name: "Connecticut", country: "US" },
-            DC: { id: "DC", name: "District of Columbia", country: "US", alt: ["Washington DC", "Washington D.C."] },
-            DE: { id: "DE", name: "Delaware", country: "US" },
-            FL: { id: "FL", name: "Florida", country: "US" },
-            GA: { id: "GA", name: "Georgia", country: "US" },
-            HI: { id: "HI", name: "Hawaii", country: "US" },
-            ID: { id: "ID", name: "Idaho", country: "US" },
-            IL: { id: "IL", name: "Illinois", country: "US" },
-            IN: { id: "IN", name: "Indiana", country: "US" },
-            IA: { id: "IA", name: "Iowa", country: "US" },
-            KS: { id: "KS", name: "Kansas", country: "US" },
-            KY: { id: "KY", name: "Kentucky", country: "US" },
-            LA: { id: "LA", name: "Louisiana", country: "US" },
-            ME: { id: "ME", name: "Maine", country: "US" },
-            MD: { id: "MD", name: "Maryland", country: "US" },
-            MA: { id: "MA", name: "Massachusetts", country: "US" },
-            MI: { id: "MI", name: "Michigan", country: "US" },
-            MN: { id: "MN", name: "Minnesota", country: "US" },
-            MS: { id: "MS", name: "Mississippi", country: "US" },
-            MO: { id: "MO", name: "Missouri", country: "US" },
-            MT: { id: "MT", name: "Montana", country: "US" },
-            NE: { id: "NE", name: "Nebraska", country: "US" },
-            NV: { id: "NV", name: "Nevada", country: "US" },
-            NH: { id: "NH", name: "New Hampshire", country: "US" },
-            NJ: { id: "NJ", name: "New Jersey", country: "US" },
-            NM: { id: "NM", name: "New Mexico", country: "US" },
-            NY: { id: "NY", name: "New York", country: "US" },
-            NC: { id: "NC", name: "North Carolina", country: "US" },
-            ND: { id: "ND", name: "North Dakota", country: "US" },
-            OH: { id: "OH", name: "Ohio", country: "US" },
-            OK: { id: "OK", name: "Oklahoma", country: "US" },
-            OR: { id: "OR", name: "Oregon", country: "US" },
-            PA: { id: "PA", name: "Pennsylvania", country: "US" },
-            RI: { id: "RI", name: "Rhode Island", country: "US" },
-            SC: { id: "SC", name: "South Carolina", country: "US" },
-            SD: { id: "SD", name: "South Dakota", country: "US" },
-            TN: { id: "TN", name: "Tennessee", country: "US" },
-            TX: { id: "TX", name: "Texas", country: "US" },
-            UT: { id: "UT", name: "Utah", country: "US" },
-            VT: { id: "VT", name: "Vermont", country: "US" },
-            VA: { id: "VA", name: "Virginia", country: "US" },
-            WA: { id: "WA", name: "Washington", country: "US" },
-            WV: { id: "WV", name: "West Virginia", country: "US" },
-            WI: { id: "WI", name: "Wisconsin", country: "US" },
-            WY: { id: "WY", name: "Wyoming", country: "US" },
-            AS: { id: "AS", name: "American Samoa", country: "US" },
-            GU: { id: "GU", name: "Guam", country: "US" },
-            MP: { id: "MP", name: "Northern Mariana Islands", country: "US" },
-            PR: { id: "PR", name: "Puerto Rico", country: "US" },
-            UM: { id: "UM", name: "United States Minor Outlying Islands", country: "US" },
-            VI: { id: "VI", name: "Virgin Islands", country: "US" },
-
-            AB: { id: "AB", name: "Alberta", country: "CA" },
-            BC: { id: "BC", name: "British Columbia", country: "CA" },
-            MB: { id: "MB", name: "Manitoba", country: "CA" },
-            NB: { id: "NB", name: "New Brunswick", country: "CA" },
-            NL: { id: "NL", name: "Newfoundland and Labrador", country: "CA", alt: ["Newfoundland","Labrador"] },
-            NS: { id: "NS", name: "Nova Scotia", country: "CA" },
-            NU: { id: "NU", name: "Nunavut", country: "CA" },
-            NT: { id: "NT", name: "Northwest Territories", country: "CA" },
-            ON: { id: "ON", name: "Ontario", country: "CA" },
-            PE: { id: "PE", name: "Prince Edward Island", country: "CA" },
-            QC: { id: "QC", name: "Quebec", country: "CA" },
-            SK: { id: "SK", name: "Saskatchewan", country: "CA" },
-            YT: { id: "YT", name: "Yukon", country: "CA" }
-        };
-    }
-
-    /**
-     * An array of United States states
-     * @return {string[]}
-     */
-    static get US_STATES() {
-        return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU", "MP", "PR", "UM", "VI"];
-    }
-
-    /**
-     * An array of Canadian states
-     * @return {string[]}
-     */
-    static get CA_STATES() {
-        return ["AB", "BC", "MB", "NB", "NL", "NS", "NU", "NT", "ON", "PE", "QC", "SK", "YT"];
-    }
-
-    /**
-     * Get a specific state by the id
-     * @param id the id to get
-     * @return {*} the state definition, or null
-     */
-    static get(id) {
-        return StateProvince.STATEMAP[id];
-    }
-
-    /**
-     * Get a list of state dictionary elements.
-     * @param filter Optional, either US or CA. If empty, returns all.
-     * @return {Array} an array of state object definitions
-     */
-    static list(filter) {
-        let list = [];
-        if ((filter) && (filter.toLowerCase() === 'us')) {
-            for (let s of StateProvince.US_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-        } else if ((filter) && (filter.toLowerCase() === 'ca')) {
-            for (let s of StateProvince.CA_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-        } else {
-            for (let s of StateProvince.US_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-            for (let s of StateProvince.CA_STATES) {
-                list.push(StateProvince.STATEMAP[s]);
-            }
-        }
-        return list;
-    }
-
-    /**
-     * Search the State dictionary
-     * @param text the text to search on.
-     */
-    static search(text) {
-        if ((!text) || (text.length() < 1)) { return []; }
-
-        let results = [];
-
-        for (let k of Object.keys(StateProvince.STATEMAP)) {
-            let s = StateProvince.STATEMAP[k];
-            if (text.toUpperCase() === k) { // if the code matches, just slot it.
-                results.push(s);
-            } else if (s.name.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
-                results.push(s);
-            } else if ((s.alt) && (s.alt.length > 0)) {
-                let found = false;
-                for (let i of s.alt) {
-                    if ((!found) && (i.toUpperCase().indexOf(text.toUpperCase()) >= 0)) {
-                        results.push(s);
-                    }
-                }
-            }
-        }
-        return results;
-    }
-
-}
-window.StateProvince = StateProvince;
-class CountryCodes {
-
-    static get MAP() {
-        return {
-            AF: { code: "AF", country: "Afghanistan" },
-            AX: { code: "AX", country: "Åland Islands" },
-            AL: { code: "AL", country: "Albania" },
-            DZ: { code: "DZ", country: "Algeria" },
-            AS: { code: "AS", country: "American Samoa" },
-            AD: { code: "AD", country: "Andorra" },
-            AO: { code: "AO", country: "Angola" },
-            AI: { code: "AI", country: "Anguilla" },
-            AQ: { code: "AQ", country: "Antarctica" },
-            AG: { code: "AG", country: "Antigua and Barbuda" },
-            AR: { code: "AR", country: "Argentina" },
-            AM: { code: "AM", country: "Armenia" },
-            AW: { code: "AW", country: "Aruba" },
-            AU: { code: "AU", country: "Australia" },
-            AT: { code: "AT", country: "Austria" },
-            AZ: { code: "AZ", country: "Azerbaijan" },
-            BS: { code: "BS", country: "Bahamas" },
-            BH: { code: "BH", country: "Bahrain" },
-            BD: { code: "BD", country: "Bangladesh" },
-            BB: { code: "BB", country: "Barbados" },
-            BY: { code: "BY", country: "Belarus" },
-            BE: { code: "BE", country: "Belgium" },
-            BZ: { code: "BZ", country: "Belize" },
-            BJ: { code: "BJ", country: "Benin" },
-            BM: { code: "BM", country: "Bermuda" },
-            BT: { code: "BT", country: "Bhutan" },
-            BO: { code: "BO", country: "Bolivia, Plurinational State of" },
-            BQ: { code: "BQ", country: "Bonaire, Sint Eustatius and Saba" },
-            BA: { code: "BA", country: "Bosnia and Herzegovina" },
-            BW: { code: "BW", country: "Botswana" },
-            BV: { code: "BV", country: "Bouvet Island" },
-            BR: { code: "BR", country: "Brazil" },
-            IO: { code: "IO", country: "British Indian Ocean Territory" },
-            BN: { code: "BN", country: "Brunei Darussalam" },
-            BG: { code: "BG", country: "Bulgaria" },
-            BF: { code: "BF", country: "Burkina Faso" },
-            BI: { code: "BI", country: "Burundi" },
-            KH: { code: "KH", country: "Cambodia" },
-            CM: { code: "CM", country: "Cameroon" },
-            CA: { code: "CA", country: "Canada" },
-            CV: { code: "CV", country: "Cape Verde" },
-            KY: { code: "KY", country: "Cayman Islands" },
-            CF: { code: "CF", country: "Central African Republic" },
-            TD: { code: "TD", country: "Chad" },
-            CL: { code: "CL", country: "Chile" },
-            CN: { code: "CN", country: "China" },
-            CX: { code: "CX", country: "Christmas Island" },
-            CC: { code: "CC", country: "Cocos (Keeling) Islands" },
-            CO: { code: "CO", country: "Colombia" },
-            KM: { code: "KM", country: "Comoros" },
-            CG: { code: "CG", country: "Congo" },
-            CD: { code: "CD", country: "Congo, the Democratic Republic of the" },
-            CK: { code: "CK", country: "Cook Islands" },
-            CR: { code: "CR", country: "Costa Rica" },
-            CI: { code: "CI", country: "Côte d'Ivoire" },
-            HR: { code: "HR", country: "Croatia" },
-            CU: { code: "CU", country: "Cuba" },
-            CW: { code: "CW", country: "Curaçao" },
-            CY: { code: "CY", country: "Cyprus" },
-            CZ: { code: "CZ", country: "Czech Republic" },
-            DK: { code: "DK", country: "Denmark" },
-            DJ: { code: "DJ", country: "Djibouti" },
-            DM: { code: "DM", country: "Dominica" },
-            DO: { code: "DO", country: "Dominican Republic" },
-            EC: { code: "EC", country: "Ecuador" },
-            EG: { code: "EG", country: "Egypt" },
-            SV: { code: "SV", country: "El Salvador" },
-            GQ: { code: "GQ", country: "Equatorial Guinea" },
-            ER: { code: "ER", country: "Eritrea" },
-            EE: { code: "EE", country: "Estonia" },
-            ET: { code: "ET", country: "Ethiopia" },
-            FK: { code: "FK", country: "Falkland Islands (Malvinas)" },
-            FO: { code: "FO", country: "Faroe Islands" },
-            FJ: { code: "FJ", country: "Fiji" },
-            FI: { code: "FI", country: "Finland" },
-            FR: { code: "FR", country: "France" },
-            GF: { code: "GF", country: "French Guiana" },
-            PF: { code: "PF", country: "French Polynesia" },
-            TF: { code: "TF", country: "French Southern Territories" },
-            GA: { code: "GA", country: "Gabon" },
-            GM: { code: "GM", country: "Gambia" },
-            GE: { code: "GE", country: "Georgia" },
-            DE: { code: "DE", country: "Germany" },
-            GH: { code: "GH", country: "Ghana" },
-            GI: { code: "GI", country: "Gibraltar" },
-            GR: { code: "GR", country: "Greece" },
-            GL: { code: "GL", country: "Greenland" },
-            GD: { code: "GD", country: "Grenada" },
-            GP: { code: "GP", country: "Guadeloupe" },
-            GU: { code: "GU", country: "Guam" },
-            GT: { code: "GT", country: "Guatemala" },
-            GG: { code: "GG", country: "Guernsey" },
-            GN: { code: "GN", country: "Guinea" },
-            GW: { code: "GW", country: "Guinea-Bissau" },
-            GY: { code: "GY", country: "Guyana" },
-            HT: { code: "HT", country: "Haiti" },
-            HM: { code: "HM", country: "Heard Island and McDonald Islands" },
-            VA: { code: "VA", country: "Holy See (Vatican City State)" },
-            HN: { code: "HN", country: "Honduras" },
-            HK: { code: "HK", country: "Hong Kong" },
-            HU: { code: "HU", country: "Hungary" },
-            IS: { code: "IS", country: "Iceland" },
-            IN: { code: "IN", country: "India" },
-            ID: { code: "ID", country: "Indonesia" },
-            IR: { code: "IR", country: "Iran, Islamic Republic of" },
-            IQ: { code: "IQ", country: "Iraq" },
-            IE: { code: "IE", country: "Ireland" },
-            IM: { code: "IM", country: "Isle of Man" },
-            IL: { code: "IL", country: "Israel" },
-            IT: { code: "IT", country: "Italy" },
-            JM: { code: "JM", country: "Jamaica" },
-            JP: { code: "JP", country: "Japan" },
-            JE: { code: "JE", country: "Jersey" },
-            JO: { code: "JO", country: "Jordan" },
-            KZ: { code: "KZ", country: "Kazakhstan" },
-            KE: { code: "KE", country: "Kenya" },
-            KI: { code: "KI", country: "Kiribati" },
-            KP: { code: "KP", country: "Korea, Democratic People's Republic of" },
-            KR: { code: "KR", country: "Korea, Republic of" },
-            KW: { code: "KW", country: "Kuwait" },
-            KG: { code: "KG", country: "Kyrgyzstan" },
-            LA: { code: "LA", country: "Lao People's Democratic Republic" },
-            LV: { code: "LV", country: "Latvia" },
-            LB: { code: "LB", country: "Lebanon" },
-            LS: { code: "LS", country: "Lesotho" },
-            LR: { code: "LR", country: "Liberia" },
-            LY: { code: "LY", country: "Libya" },
-            LI: { code: "LI", country: "Liechtenstein" },
-            LT: { code: "LT", country: "Lithuania" },
-            LU: { code: "LU", country: "Luxembourg" },
-            MO: { code: "MO", country: "Macao" },
-            MK: { code: "MK", country: "Macedonia, the Former Yugoslav Republic of" },
-            MG: { code: "MG", country: "Madagascar" },
-            MW: { code: "MW", country: "Malawi" },
-            MY: { code: "MY", country: "Malaysia" },
-            MV: { code: "MV", country: "Maldives" },
-            ML: { code: "ML", country: "Mali" },
-            MT: { code: "MT", country: "Malta" },
-            MH: { code: "MH", country: "Marshall Islands" },
-            MQ: { code: "MQ", country: "Martinique" },
-            MR: { code: "MR", country: "Mauritania" },
-            MU: { code: "MU", country: "Mauritius" },
-            YT: { code: "YT", country: "Mayotte" },
-            MX: { code: "MX", country: "Mexico" },
-            FM: { code: "FM", country: "Micronesia, Federated States of" },
-            MD: { code: "MD", country: "Moldova, Republic of" },
-            MC: { code: "MC", country: "Monaco" },
-            MN: { code: "MN", country: "Mongolia" },
-            ME: { code: "ME", country: "Montenegro" },
-            MS: { code: "MS", country: "Montserrat" },
-            MA: { code: "MA", country: "Morocco" },
-            MZ: { code: "MZ", country: "Mozambique" },
-            MM: { code: "MM", country: "Myanmar" },
-            NA: { code: "NA", country: "Namibia" },
-            NR: { code: "NR", country: "Nauru" },
-            NP: { code: "NP", country: "Nepal" },
-            NL: { code: "NL", country: "Netherlands" },
-            NC: { code: "NC", country: "New Caledonia" },
-            NZ: { code: "NZ", country: "New Zealand" },
-            NI: { code: "NI", country: "Nicaragua" },
-            NE: { code: "NE", country: "Niger" },
-            NG: { code: "NG", country: "Nigeria" },
-            NU: { code: "NU", country: "Niue" },
-            NF: { code: "NF", country: "Norfolk Island" },
-            MP: { code: "MP", country: "Northern Mariana Islands" },
-            NO: { code: "NO", country: "Norway" },
-            OM: { code: "OM", country: "Oman" },
-            PK: { code: "PK", country: "Pakistan" },
-            PW: { code: "PW", country: "Palau" },
-            PS: { code: "PS", country: "Palestine, State of" },
-            PA: { code: "PA", country: "Panama" },
-            PG: { code: "PG", country: "Papua New Guinea" },
-            PY: { code: "PY", country: "Paraguay" },
-            PE: { code: "PE", country: "Peru" },
-            PH: { code: "PH", country: "Philippines" },
-            PN: { code: "PN", country: "Pitcairn" },
-            PL: { code: "PL", country: "Poland" },
-            PT: { code: "PT", country: "Portugal" },
-            PR: { code: "PR", country: "Puerto Rico" },
-            QA: { code: "QA", country: "Qatar" },
-            RE: { code: "RE", country: "Réunion" },
-            RO: { code: "RO", country: "Romania" },
-            RU: { code: "RU", country: "Russian Federation" },
-            RW: { code: "RW", country: "Rwanda" },
-            BL: { code: "BL", country: "Saint Barthélemy" },
-            SH: { code: "SH", country: "Saint Helena, Ascension and Tristan da Cunha" },
-            KN: { code: "KN", country: "Saint Kitts and Nevis" },
-            LC: { code: "LC", country: "Saint Lucia" },
-            MF: { code: "MF", country: "Saint Martin (French part)" },
-            PM: { code: "PM", country: "Saint Pierre and Miquelon" },
-            VC: { code: "VC", country: "Saint Vincent and the Grenadines" },
-            WS: { code: "WS", country: "Samoa" },
-            SM: { code: "SM", country: "San Marino" },
-            ST: { code: "ST", country: "Sao Tome and Principe" },
-            SA: { code: "SA", country: "Saudi Arabia" },
-            SN: { code: "SN", country: "Senegal" },
-            RS: { code: "RS", country: "Serbia" },
-            SC: { code: "SC", country: "Seychelles" },
-            SL: { code: "SL", country: "Sierra Leone" },
-            SG: { code: "SG", country: "Singapore" },
-            SX: { code: "SX", country: "Sint Maarten (Dutch part)" },
-            SK: { code: "SK", country: "Slovakia" },
-            SI: { code: "SI", country: "Slovenia" },
-            SB: { code: "SB", country: "Solomon Islands" },
-            SO: { code: "SO", country: "Somalia" },
-            ZA: { code: "ZA", country: "South Africa" },
-            GS: { code: "GS", country: "South Georgia and the South Sandwich Islands" },
-            SS: { code: "SS", country: "South Sudan" },
-            ES: { code: "ES", country: "Spain" },
-            LK: { code: "LK", country: "Sri Lanka" },
-            SD: { code: "SD", country: "Sudan" },
-            SR: { code: "SR", country: "Suriname" },
-            SJ: { code: "SJ", country: "Svalbard and Jan Mayen" },
-            SZ: { code: "SZ", country: "Swaziland" },
-            SE: { code: "SE", country: "Sweden" },
-            CH: { code: "CH", country: "Switzerland" },
-            SY: { code: "SY", country: "Syrian Arab Republic" },
-            TW: { code: "TW", country: "Taiwan, Province of China" },
-            TJ: { code: "TJ", country: "Tajikistan" },
-            TZ: { code: "TZ", country: "Tanzania, United Republic of" },
-            TH: { code: "TH", country: "Thailand" },
-            TL: { code: "TL", country: "Timor-Leste" },
-            TG: { code: "TG", country: "Togo" },
-            TK: { code: "TK", country: "Tokelau" },
-            TO: { code: "TO", country: "Tonga" },
-            TT: { code: "TT", country: "Trinidad and Tobago" },
-            TN: { code: "TN", country: "Tunisia" },
-            TR: { code: "TR", country: "Turkey" },
-            TM: { code: "TM", country: "Turkmenistan" },
-            TC: { code: "TC", country: "Turks and Caicos Islands" },
-            TV: { code: "TV", country: "Tuvalu" },
-            UG: { code: "UG", country: "Uganda" },
-            UA: { code: "UA", country: "Ukraine" },
-            AE: { code: "AE", country: "United Arab Emirates" },
-            GB: { code: "GB", country: "United Kingdom" },
-            US: { code: "US", country: "United States" },
-            UM: { code: "UM", country: "United States Minor Outlying Islands" },
-            UY: { code: "UY", country: "Uruguay" },
-            UZ: { code: "UZ", country: "Uzbekistan" },
-            VU: { code: "VU", country: "Vanuatu" },
-            VE: { code: "VE", country: "Venezuela, Bolivarian Republic of" },
-            VN: { code: "VN", country: "Viet Nam" },
-            VG: { code: "VG", country: "Virgin Islands, British" },
-            VI: { code: "VI", country: "Virgin Islands, U.S." },
-            WF: { code: "WF", country: "Wallis and Futuna" },
-            EH: { code: "EH", country: "Western Sahara" },
-            YE: { code: "YE", country: "Yemen" },
-            ZM: { code: "ZM", country: "Zambia" },
-            ZW: { code: "ZW", country: "Zimbabwe" }
-        }
-    }
-
-    /**
-     * Get a specific country by the code
-     * @param code the code to get
-     * @return {*} the country definition, or null
-     */
-    static get(code) {
-        return CountryCodes.MAP[code];
-    }
-
-    /**
-     * Get a list of countries
-     * @return {Array} an array of country object definitions
-     */
-    static list() {
-        let list = [];
-        for (let c of Object.values(CountryCodes.MAP)) {
-            list.push(c);
-        }
-        list.sort(function(a,b){
-            if (a.country > b.country) { return 1 }
-            if (a.country < b.country) { return -1 }
-            return 0;
-        });
-        return list;
-    }
-
-}
-window.CountryCodes = CountryCodes;
-class TimezoneDB {
-
-    /**
-     * Get the dictionary of the timezones.
-     * @return a dictionary.
-     */
-    static get MAP() {
-        return {
-            "Asia/Kabul": { id: "Asia/Kabul", countrycode: "AF", country: "Afghanistan", tz: "Asia/Kabul", offset: "UTC +04:30" },
-            "Europe/Tirane": { id: "Europe/Tirane", countrycode: "AL", country: "Albania", tz: "Europe/Tirane", offset: "UTC +01:00" },
-            "Africa/Algiers": { id: "Africa/Algiers", countrycode: "DZ", country: "Algeria", tz: "Africa/Algiers", offset: "UTC +01:00" },
-            "Pacific/Pago_Pago": { id: "Pacific/Pago_Pago", countrycode: "AS", country: "American Samoa", tz: "Pacific/Pago_Pago", offset: "UTC -11:00" },
-            "Europe/Andorra": { id: "Europe/Andorra", countrycode: "AD", country: "Andorra", tz: "Europe/Andorra", offset: "UTC +01:00" },
-            "Africa/Luanda": { id: "Africa/Luanda", countrycode: "AO", country: "Angola", tz: "Africa/Luanda", offset: "UTC +01:00" },
-            "America/Anguilla": { id: "America/Anguilla", countrycode: "AI", country: "Anguilla", tz: "America/Anguilla", offset: "UTC -04:00" },
-            "Antarctica/Casey": { id: "Antarctica/Casey", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Casey", offset: "UTC +08:00" },
-            "Antarctica/Davis": { id: "Antarctica/Davis", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Davis", offset: "UTC +07:00" },
-            "Antarctica/DumontDUrville": { id: "Antarctica/DumontDUrville", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/DumontDUrville", offset: "UTC +10:00" },
-            "Antarctica/Mawson": { id: "Antarctica/Mawson", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Mawson", offset: "UTC +05:00" },
-            "Antarctica/McMurdo": { id: "Antarctica/McMurdo", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/McMurdo", offset: "UTC +13:00" },
-            "Antarctica/Palmer": { id: "Antarctica/Palmer", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Palmer", offset: "UTC -03:00" },
-            "Antarctica/Rothera": { id: "Antarctica/Rothera", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Rothera", offset: "UTC -03:00" },
-            "Antarctica/Syowa": { id: "Antarctica/Syowa", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Syowa", offset: "UTC +03:00" },
-            "Antarctica/Troll": { id: "Antarctica/Troll", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Troll", offset: "UTC" },
-            "Antarctica/Vostok": { id: "Antarctica/Vostok", countrycode: "AQ", country: "Antarctica", tz: "Antarctica/Vostok", offset: "UTC +06:00" },
-            "America/Antigua": { id: "America/Antigua", countrycode: "AG", country: "Antigua and Barbuda", tz: "America/Antigua", offset: "UTC -04:00" },
-            "America/Argentina/Buenos_Aires": { id: "America/Argentina/Buenos_Aires", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Buenos_Aires", offset: "UTC -03:00" },
-            "America/Argentina/Catamarca": { id: "America/Argentina/Catamarca", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Catamarca", offset: "UTC -03:00" },
-            "America/Argentina/Cordoba": { id: "America/Argentina/Cordoba", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Cordoba", offset: "UTC -03:00" },
-            "America/Argentina/Jujuy": { id: "America/Argentina/Jujuy", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Jujuy", offset: "UTC -03:00" },
-            "America/Argentina/La_Rioja": { id: "America/Argentina/La_Rioja", countrycode: "AR", country: "Argentina", tz: "America/Argentina/La_Rioja", offset: "UTC -03:00" },
-            "America/Argentina/Mendoza": { id: "America/Argentina/Mendoza", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Mendoza", offset: "UTC -03:00" },
-            "America/Argentina/Rio_Gallegos": { id: "America/Argentina/Rio_Gallegos", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Rio_Gallegos", offset: "UTC -03:00" },
-            "America/Argentina/Salta": { id: "America/Argentina/Salta", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Salta", offset: "UTC -03:00" },
-            "America/Argentina/San_Juan": { id: "America/Argentina/San_Juan", countrycode: "AR", country: "Argentina", tz: "America/Argentina/San_Juan", offset: "UTC -03:00" },
-            "America/Argentina/San_Luis": { id: "America/Argentina/San_Luis", countrycode: "AR", country: "Argentina", tz: "America/Argentina/San_Luis", offset: "UTC -03:00" },
-            "America/Argentina/Tucuman": { id: "America/Argentina/Tucuman", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Tucuman", offset: "UTC -03:00" },
-            "America/Argentina/Ushuaia": { id: "America/Argentina/Ushuaia", countrycode: "AR", country: "Argentina", tz: "America/Argentina/Ushuaia", offset: "UTC -03:00" },
-            "Asia/Yerevan": { id: "Asia/Yerevan", countrycode: "AM", country: "Armenia", tz: "Asia/Yerevan", offset: "UTC +04:00" },
-            "America/Aruba": { id: "America/Aruba", countrycode: "AW", country: "Aruba", tz: "America/Aruba", offset: "UTC -04:00" },
-            "Antarctica/Macquarie": { id: "Antarctica/Macquarie", countrycode: "AU", country: "Australia", tz: "Antarctica/Macquarie", offset: "UTC +11:00" },
-            "Australia/Adelaide": { id: "Australia/Adelaide", countrycode: "AU", country: "Australia", tz: "Australia/Adelaide", offset: "UTC +10:30" },
-            "Australia/Brisbane": { id: "Australia/Brisbane", countrycode: "AU", country: "Australia", tz: "Australia/Brisbane", offset: "UTC +10:00" },
-            "Australia/Broken_Hill": { id: "Australia/Broken_Hill", countrycode: "AU", country: "Australia", tz: "Australia/Broken_Hill", offset: "UTC +10:30" },
-            "Australia/Currie": { id: "Australia/Currie", countrycode: "AU", country: "Australia", tz: "Australia/Currie", offset: "UTC +11:00" },
-            "Australia/Darwin": { id: "Australia/Darwin", countrycode: "AU", country: "Australia", tz: "Australia/Darwin", offset: "UTC +09:30" },
-            "Australia/Eucla": { id: "Australia/Eucla", countrycode: "AU", country: "Australia", tz: "Australia/Eucla", offset: "UTC +08:45" },
-            "Australia/Hobart": { id: "Australia/Hobart", countrycode: "AU", country: "Australia", tz: "Australia/Hobart", offset: "UTC +11:00" },
-            "Australia/Lindeman": { id: "Australia/Lindeman", countrycode: "AU", country: "Australia", tz: "Australia/Lindeman", offset: "UTC +10:00" },
-            "Australia/Lord_Howe": { id: "Australia/Lord_Howe", countrycode: "AU", country: "Australia", tz: "Australia/Lord_Howe", offset: "UTC +11:00" },
-            "Australia/Melbourne": { id: "Australia/Melbourne", countrycode: "AU", country: "Australia", tz: "Australia/Melbourne", offset: "UTC +11:00" },
-            "Australia/Perth": { id: "Australia/Perth", countrycode: "AU", country: "Australia", tz: "Australia/Perth", offset: "UTC +08:00" },
-            "Australia/Sydney": { id: "Australia/Sydney", countrycode: "AU", country: "Australia", tz: "Australia/Sydney", offset: "UTC +11:00" },
-            "Europe/Vienna": { id: "Europe/Vienna", countrycode: "AT", country: "Austria", tz: "Europe/Vienna", offset: "UTC +01:00" },
-            "Asia/Baku": { id: "Asia/Baku", countrycode: "AZ", country: "Azerbaijan", tz: "Asia/Baku", offset: "UTC +04:00" },
-            "America/Nassau": { id: "America/Nassau", countrycode: "BS", country: "Bahamas", tz: "America/Nassau", offset: "UTC -05:00" },
-            "Asia/Bahrain": { id: "Asia/Bahrain", countrycode: "BH", country: "Bahrain", tz: "Asia/Bahrain", offset: "UTC +03:00" },
-            "Asia/Dhaka": { id: "Asia/Dhaka", countrycode: "BD", country: "Bangladesh", tz: "Asia/Dhaka", offset: "UTC +06:00" },
-            "America/Barbados": { id: "America/Barbados", countrycode: "BB", country: "Barbados", tz: "America/Barbados", offset: "UTC -04:00" },
-            "Europe/Minsk": { id: "Europe/Minsk", countrycode: "BY", country: "Belarus", tz: "Europe/Minsk", offset: "UTC +03:00" },
-            "Europe/Brussels": { id: "Europe/Brussels", countrycode: "BE", country: "Belgium", tz: "Europe/Brussels", offset: "UTC +01:00" },
-            "America/Belize": { id: "America/Belize", countrycode: "BZ", country: "Belize", tz: "America/Belize", offset: "UTC -06:00" },
-            "Africa/Porto-Novo": { id: "Africa/Porto-Novo", countrycode: "BJ", country: "Benin", tz: "Africa/Porto-Novo", offset: "UTC +01:00" },
-            "Atlantic/Bermuda": { id: "Atlantic/Bermuda", countrycode: "BM", country: "Bermuda", tz: "Atlantic/Bermuda", offset: "UTC -04:00" },
-            "Asia/Thimphu": { id: "Asia/Thimphu", countrycode: "BT", country: "Bhutan", tz: "Asia/Thimphu", offset: "UTC +06:00" },
-            "America/La_Paz": { id: "America/La_Paz", countrycode: "BO", country: "Bolivia, Plurinational State of", tz: "America/La_Paz", offset: "UTC -04:00" },
-            "America/Kralendijk": { id: "America/Kralendijk", countrycode: "BQ", country: "Bonaire, Sint Eustatius and Saba", tz: "America/Kralendijk", offset: "UTC -04:00" },
-            "Europe/Sarajevo": { id: "Europe/Sarajevo", countrycode: "BA", country: "Bosnia and Herzegovina", tz: "Europe/Sarajevo", offset: "UTC +01:00" },
-            "Africa/Gaborone": { id: "Africa/Gaborone", countrycode: "BW", country: "Botswana", tz: "Africa/Gaborone", offset: "UTC +02:00" },
-            "America/Araguaina": { id: "America/Araguaina", countrycode: "BR", country: "Brazil", tz: "America/Araguaina", offset: "UTC -03:00" },
-            "America/Bahia": { id: "America/Bahia", countrycode: "BR", country: "Brazil", tz: "America/Bahia", offset: "UTC -03:00" },
-            "America/Belem": { id: "America/Belem", countrycode: "BR", country: "Brazil", tz: "America/Belem", offset: "UTC -03:00" },
-            "America/Boa_Vista": { id: "America/Boa_Vista", countrycode: "BR", country: "Brazil", tz: "America/Boa_Vista", offset: "UTC -04:00" },
-            "America/Campo_Grande": { id: "America/Campo_Grande", countrycode: "BR", country: "Brazil", tz: "America/Campo_Grande", offset: "UTC -04:00" },
-            "America/Cuiaba": { id: "America/Cuiaba", countrycode: "BR", country: "Brazil", tz: "America/Cuiaba", offset: "UTC -04:00" },
-            "America/Eirunepe": { id: "America/Eirunepe", countrycode: "BR", country: "Brazil", tz: "America/Eirunepe", offset: "UTC -05:00" },
-            "America/Fortaleza": { id: "America/Fortaleza", countrycode: "BR", country: "Brazil", tz: "America/Fortaleza", offset: "UTC -03:00" },
-            "America/Maceio": { id: "America/Maceio", countrycode: "BR", country: "Brazil", tz: "America/Maceio", offset: "UTC -03:00" },
-            "America/Manaus": { id: "America/Manaus", countrycode: "BR", country: "Brazil", tz: "America/Manaus", offset: "UTC -04:00" },
-            "America/Noronha": { id: "America/Noronha", countrycode: "BR", country: "Brazil", tz: "America/Noronha", offset: "UTC -02:00" },
-            "America/Porto_Velho": { id: "America/Porto_Velho", countrycode: "BR", country: "Brazil", tz: "America/Porto_Velho", offset: "UTC -04:00" },
-            "America/Recife": { id: "America/Recife", countrycode: "BR", country: "Brazil", tz: "America/Recife", offset: "UTC -03:00" },
-            "America/Rio_Branco": { id: "America/Rio_Branco", countrycode: "BR", country: "Brazil", tz: "America/Rio_Branco", offset: "UTC -05:00" },
-            "America/Santarem": { id: "America/Santarem", countrycode: "BR", country: "Brazil", tz: "America/Santarem", offset: "UTC -03:00" },
-            "America/Sao_Paulo": { id: "America/Sao_Paulo", countrycode: "BR", country: "Brazil", tz: "America/Sao_Paulo", offset: "UTC -03:00" },
-            "Indian/Chagos": { id: "Indian/Chagos", countrycode: "IO", country: "British Indian Ocean Territory", tz: "Indian/Chagos", offset: "UTC +06:00" },
-            "Asia/Brunei": { id: "Asia/Brunei", countrycode: "BN", country: "Brunei Darussalam", tz: "Asia/Brunei", offset: "UTC +08:00" },
-            "Europe/Sofia": { id: "Europe/Sofia", countrycode: "BG", country: "Bulgaria", tz: "Europe/Sofia", offset: "UTC +02:00" },
-            "Africa/Ouagadougou": { id: "Africa/Ouagadougou", countrycode: "BF", country: "Burkina Faso", tz: "Africa/Ouagadougou", offset: "UTC" },
-            "Africa/Bujumbura": { id: "Africa/Bujumbura", countrycode: "BI", country: "Burundi", tz: "Africa/Bujumbura", offset: "UTC +02:00" },
-            "Asia/Phnom_Penh": { id: "Asia/Phnom_Penh", countrycode: "KH", country: "Cambodia", tz: "Asia/Phnom_Penh", offset: "UTC +07:00" },
-            "Africa/Douala": { id: "Africa/Douala", countrycode: "CM", country: "Cameroon", tz: "Africa/Douala", offset: "UTC +01:00" },
-            "America/Atikokan": { id: "America/Atikokan", countrycode: "CA", country: "Canada", tz: "America/Atikokan", offset: "UTC -05:00" },
-            "America/Blanc-Sablon": { id: "America/Blanc-Sablon", countrycode: "CA", country: "Canada", tz: "America/Blanc-Sablon", offset: "UTC -04:00" },
-            "America/Cambridge_Bay": { id: "America/Cambridge_Bay", countrycode: "CA", country: "Canada", tz: "America/Cambridge_Bay", offset: "UTC -07:00" },
-            "America/Creston": { id: "America/Creston", countrycode: "CA", country: "Canada", tz: "America/Creston", offset: "UTC -07:00" },
-            "America/Dawson": { id: "America/Dawson", countrycode: "CA", country: "Canada", tz: "America/Dawson", offset: "UTC -08:00" },
-            "America/Dawson_Creek": { id: "America/Dawson_Creek", countrycode: "CA", country: "Canada", tz: "America/Dawson_Creek", offset: "UTC -07:00" },
-            "America/Edmonton": { id: "America/Edmonton", countrycode: "CA", country: "Canada", tz: "America/Edmonton", offset: "UTC -07:00" },
-            "America/Fort_Nelson": { id: "America/Fort_Nelson", countrycode: "CA", country: "Canada", tz: "America/Fort_Nelson", offset: "UTC -07:00" },
-            "America/Glace_Bay": { id: "America/Glace_Bay", countrycode: "CA", country: "Canada", tz: "America/Glace_Bay", offset: "UTC -04:00" },
-            "America/Goose_Bay": { id: "America/Goose_Bay", countrycode: "CA", country: "Canada", tz: "America/Goose_Bay", offset: "UTC -04:00" },
-            "America/Halifax": { id: "America/Halifax", countrycode: "CA", country: "Canada", tz: "America/Halifax", offset: "UTC -04:00" },
-            "America/Inuvik": { id: "America/Inuvik", countrycode: "CA", country: "Canada", tz: "America/Inuvik", offset: "UTC -07:00" },
-            "America/Iqaluit": { id: "America/Iqaluit", countrycode: "CA", country: "Canada", tz: "America/Iqaluit", offset: "UTC -05:00" },
-            "America/Moncton": { id: "America/Moncton", countrycode: "CA", country: "Canada", tz: "America/Moncton", offset: "UTC -04:00" },
-            "America/Nipigon": { id: "America/Nipigon", countrycode: "CA", country: "Canada", tz: "America/Nipigon", offset: "UTC -05:00" },
-            "America/Pangnirtung": { id: "America/Pangnirtung", countrycode: "CA", country: "Canada", tz: "America/Pangnirtung", offset: "UTC -05:00" },
-            "America/Rainy_River": { id: "America/Rainy_River", countrycode: "CA", country: "Canada", tz: "America/Rainy_River", offset: "UTC -06:00" },
-            "America/Rankin_Inlet": { id: "America/Rankin_Inlet", countrycode: "CA", country: "Canada", tz: "America/Rankin_Inlet", offset: "UTC -06:00" },
-            "America/Regina": { id: "America/Regina", countrycode: "CA", country: "Canada", tz: "America/Regina", offset: "UTC -06:00" },
-            "America/Resolute": { id: "America/Resolute", countrycode: "CA", country: "Canada", tz: "America/Resolute", offset: "UTC -06:00" },
-            "America/St_Johns": { id: "America/St_Johns", countrycode: "CA", country: "Canada", tz: "America/St_Johns", offset: "UTC -03:30" },
-            "America/Swift_Current": { id: "America/Swift_Current", countrycode: "CA", country: "Canada", tz: "America/Swift_Current", offset: "UTC -06:00" },
-            "America/Thunder_Bay": { id: "America/Thunder_Bay", countrycode: "CA", country: "Canada", tz: "America/Thunder_Bay", offset: "UTC -05:00" },
-            "America/Toronto": { id: "America/Toronto", countrycode: "CA", country: "Canada", tz: "America/Toronto", offset: "UTC -05:00" },
-            "America/Vancouver": { id: "America/Vancouver", countrycode: "CA", country: "Canada", tz: "America/Vancouver", offset: "UTC -08:00" },
-            "America/Whitehorse": { id: "America/Whitehorse", countrycode: "CA", country: "Canada", tz: "America/Whitehorse", offset: "UTC -08:00" },
-            "America/Winnipeg": { id: "America/Winnipeg", countrycode: "CA", country: "Canada", tz: "America/Winnipeg", offset: "UTC -06:00" },
-            "America/Yellowknife": { id: "America/Yellowknife", countrycode: "CA", country: "Canada", tz: "America/Yellowknife", offset: "UTC -07:00" },
-            "Atlantic/Cape_Verde": { id: "Atlantic/Cape_Verde", countrycode: "CV", country: "Cape Verde", tz: "Atlantic/Cape_Verde", offset: "UTC -01:00" },
-            "America/Cayman": { id: "America/Cayman", countrycode: "KY", country: "Cayman Islands", tz: "America/Cayman", offset: "UTC -05:00" },
-            "Africa/Bangui": { id: "Africa/Bangui", countrycode: "CF", country: "Central African Republic", tz: "Africa/Bangui", offset: "UTC +01:00" },
-            "Africa/Ndjamena": { id: "Africa/Ndjamena", countrycode: "TD", country: "Chad", tz: "Africa/Ndjamena", offset: "UTC +01:00" },
-            "America/Punta_Arenas": { id: "America/Punta_Arenas", countrycode: "CL", country: "Chile", tz: "America/Punta_Arenas", offset: "UTC -03:00" },
-            "America/Santiago": { id: "America/Santiago", countrycode: "CL", country: "Chile", tz: "America/Santiago", offset: "UTC -03:00" },
-            "Pacific/Easter": { id: "Pacific/Easter", countrycode: "CL", country: "Chile", tz: "Pacific/Easter", offset: "UTC -05:00" },
-            "Asia/Shanghai": { id: "Asia/Shanghai", countrycode: "CN", country: "China", tz: "Asia/Shanghai", offset: "UTC +08:00" },
-            "Asia/Urumqi": { id: "Asia/Urumqi", countrycode: "CN", country: "China", tz: "Asia/Urumqi", offset: "UTC +06:00" },
-            "Indian/Christmas": { id: "Indian/Christmas", countrycode: "CX", country: "Christmas Island", tz: "Indian/Christmas", offset: "UTC +07:00" },
-            "Indian/Cocos": { id: "Indian/Cocos", countrycode: "CC", country: "Cocos (Keeling) Islands", tz: "Indian/Cocos", offset: "UTC +06:30" },
-            "America/Bogota": { id: "America/Bogota", countrycode: "CO", country: "Colombia", tz: "America/Bogota", offset: "UTC -05:00" },
-            "Indian/Comoro": { id: "Indian/Comoro", countrycode: "KM", country: "Comoros", tz: "Indian/Comoro", offset: "UTC +03:00" },
-            "Africa/Brazzaville": { id: "Africa/Brazzaville", countrycode: "CG", country: "Congo", tz: "Africa/Brazzaville", offset: "UTC +01:00" },
-            "Africa/Kinshasa": { id: "Africa/Kinshasa", countrycode: "CD", country: "Congo, the Democratic Republic of the", tz: "Africa/Kinshasa", offset: "UTC +01:00" },
-            "Africa/Lubumbashi": { id: "Africa/Lubumbashi", countrycode: "CD", country: "Congo, the Democratic Republic of the", tz: "Africa/Lubumbashi", offset: "UTC +02:00" },
-            "Pacific/Rarotonga": { id: "Pacific/Rarotonga", countrycode: "CK", country: "Cook Islands", tz: "Pacific/Rarotonga", offset: "UTC -10:00" },
-            "America/Costa_Rica": { id: "America/Costa_Rica", countrycode: "CR", country: "Costa Rica", tz: "America/Costa_Rica", offset: "UTC -06:00" },
-            "Europe/Zagreb": { id: "Europe/Zagreb", countrycode: "HR", country: "Croatia", tz: "Europe/Zagreb", offset: "UTC +01:00" },
-            "America/Havana": { id: "America/Havana", countrycode: "CU", country: "Cuba", tz: "America/Havana", offset: "UTC -05:00" },
-            "America/Curacao": { id: "America/Curacao", countrycode: "CW", country: "Curaçao", tz: "America/Curacao", offset: "UTC -04:00" },
-            "Asia/Famagusta": { id: "Asia/Famagusta", countrycode: "CY", country: "Cyprus", tz: "Asia/Famagusta", offset: "UTC +02:00" },
-            "Asia/Nicosia": { id: "Asia/Nicosia", countrycode: "CY", country: "Cyprus", tz: "Asia/Nicosia", offset: "UTC +02:00" },
-            "Europe/Prague": { id: "Europe/Prague", countrycode: "CZ", country: "Czech Republic", tz: "Europe/Prague", offset: "UTC +01:00" },
-            "Africa/Abidjan": { id: "Africa/Abidjan", countrycode: "CI", country: "Côte d'Ivoire", tz: "Africa/Abidjan", offset: "UTC" },
-            "Europe/Copenhagen": { id: "Europe/Copenhagen", countrycode: "DK", country: "Denmark", tz: "Europe/Copenhagen", offset: "UTC +01:00" },
-            "Africa/Djibouti": { id: "Africa/Djibouti", countrycode: "DJ", country: "Djibouti", tz: "Africa/Djibouti", offset: "UTC +03:00" },
-            "America/Dominica": { id: "America/Dominica", countrycode: "DM", country: "Dominica", tz: "America/Dominica", offset: "UTC -04:00" },
-            "America/Santo_Domingo": { id: "America/Santo_Domingo", countrycode: "DO", country: "Dominican Republic", tz: "America/Santo_Domingo", offset: "UTC -04:00" },
-            "America/Guayaquil": { id: "America/Guayaquil", countrycode: "EC", country: "Ecuador", tz: "America/Guayaquil", offset: "UTC -05:00" },
-            "Pacific/Galapagos": { id: "Pacific/Galapagos", countrycode: "EC", country: "Ecuador", tz: "Pacific/Galapagos", offset: "UTC -06:00" },
-            "Africa/Cairo": { id: "Africa/Cairo", countrycode: "EG", country: "Egypt", tz: "Africa/Cairo", offset: "UTC +02:00" },
-            "America/El_Salvador": { id: "America/El_Salvador", countrycode: "SV", country: "El Salvador", tz: "America/El_Salvador", offset: "UTC -06:00" },
-            "Africa/Malabo": { id: "Africa/Malabo", countrycode: "GQ", country: "Equatorial Guinea", tz: "Africa/Malabo", offset: "UTC +01:00" },
-            "Africa/Asmara": { id: "Africa/Asmara", countrycode: "ER", country: "Eritrea", tz: "Africa/Asmara", offset: "UTC +03:00" },
-            "Europe/Tallinn": { id: "Europe/Tallinn", countrycode: "EE", country: "Estonia", tz: "Europe/Tallinn", offset: "UTC +02:00" },
-            "Africa/Addis_Ababa": { id: "Africa/Addis_Ababa", countrycode: "ET", country: "Ethiopia", tz: "Africa/Addis_Ababa", offset: "UTC +03:00" },
-            "Atlantic/Stanley": { id: "Atlantic/Stanley", countrycode: "FK", country: "Falkland Islands (Malvinas)", tz: "Atlantic/Stanley", offset: "UTC -03:00" },
-            "Atlantic/Faroe": { id: "Atlantic/Faroe", countrycode: "FO", country: "Faroe Islands", tz: "Atlantic/Faroe", offset: "UTC" },
-            "Pacific/Fiji": { id: "Pacific/Fiji", countrycode: "FJ", country: "Fiji", tz: "Pacific/Fiji", offset: "UTC +12:00" },
-            "Europe/Helsinki": { id: "Europe/Helsinki", countrycode: "FI", country: "Finland", tz: "Europe/Helsinki", offset: "UTC +02:00" },
-            "Europe/Paris": { id: "Europe/Paris", countrycode: "FR", country: "France", tz: "Europe/Paris", offset: "UTC +01:00" },
-            "America/Cayenne": { id: "America/Cayenne", countrycode: "GF", country: "French Guiana", tz: "America/Cayenne", offset: "UTC -03:00" },
-            "Pacific/Gambier": { id: "Pacific/Gambier", countrycode: "PF", country: "French Polynesia", tz: "Pacific/Gambier", offset: "UTC -09:00" },
-            "Pacific/Marquesas": { id: "Pacific/Marquesas", countrycode: "PF", country: "French Polynesia", tz: "Pacific/Marquesas", offset: "UTC -09:30" },
-            "Pacific/Tahiti": { id: "Pacific/Tahiti", countrycode: "PF", country: "French Polynesia", tz: "Pacific/Tahiti", offset: "UTC -10:00" },
-            "Indian/Kerguelen": { id: "Indian/Kerguelen", countrycode: "TF", country: "French Southern Territories", tz: "Indian/Kerguelen", offset: "UTC +05:00" },
-            "Africa/Libreville": { id: "Africa/Libreville", countrycode: "GA", country: "Gabon", tz: "Africa/Libreville", offset: "UTC +01:00" },
-            "Africa/Banjul": { id: "Africa/Banjul", countrycode: "GM", country: "Gambia", tz: "Africa/Banjul", offset: "UTC" },
-            "Asia/Tbilisi": { id: "Asia/Tbilisi", countrycode: "GE", country: "Georgia", tz: "Asia/Tbilisi", offset: "UTC +04:00" },
-            "Europe/Berlin": { id: "Europe/Berlin", countrycode: "DE", country: "Germany", tz: "Europe/Berlin", offset: "UTC +01:00" },
-            "Europe/Busingen": { id: "Europe/Busingen", countrycode: "DE", country: "Germany", tz: "Europe/Busingen", offset: "UTC +01:00" },
-            "Africa/Accra": { id: "Africa/Accra", countrycode: "GH", country: "Ghana", tz: "Africa/Accra", offset: "UTC" },
-            "Europe/Gibraltar": { id: "Europe/Gibraltar", countrycode: "GI", country: "Gibraltar", tz: "Europe/Gibraltar", offset: "UTC +01:00" },
-            "Europe/Athens": { id: "Europe/Athens", countrycode: "GR", country: "Greece", tz: "Europe/Athens", offset: "UTC +02:00" },
-            "America/Danmarkshavn": { id: "America/Danmarkshavn", countrycode: "GL", country: "Greenland", tz: "America/Danmarkshavn", offset: "UTC" },
-            "America/Godthab": { id: "America/Godthab", countrycode: "GL", country: "Greenland", tz: "America/Godthab", offset: "UTC -03:00" },
-            "America/Scoresbysund": { id: "America/Scoresbysund", countrycode: "GL", country: "Greenland", tz: "America/Scoresbysund", offset: "UTC -01:00" },
-            "America/Thule": { id: "America/Thule", countrycode: "GL", country: "Greenland", tz: "America/Thule", offset: "UTC -04:00" },
-            "America/Grenada": { id: "America/Grenada", countrycode: "GD", country: "Grenada", tz: "America/Grenada", offset: "UTC -04:00" },
-            "America/Guadeloupe": { id: "America/Guadeloupe", countrycode: "GP", country: "Guadeloupe", tz: "America/Guadeloupe", offset: "UTC -04:00" },
-            "Pacific/Guam": { id: "Pacific/Guam", countrycode: "GU", country: "Guam", tz: "Pacific/Guam", offset: "UTC +10:00" },
-            "America/Guatemala": { id: "America/Guatemala", countrycode: "GT", country: "Guatemala", tz: "America/Guatemala", offset: "UTC -06:00" },
-            "Europe/Guernsey": { id: "Europe/Guernsey", countrycode: "GG", country: "Guernsey", tz: "Europe/Guernsey", offset: "UTC" },
-            "Africa/Conakry": { id: "Africa/Conakry", countrycode: "GN", country: "Guinea", tz: "Africa/Conakry", offset: "UTC" },
-            "Africa/Bissau": { id: "Africa/Bissau", countrycode: "GW", country: "Guinea-Bissau", tz: "Africa/Bissau", offset: "UTC" },
-            "America/Guyana": { id: "America/Guyana", countrycode: "GY", country: "Guyana", tz: "America/Guyana", offset: "UTC -04:00" },
-            "America/Port-au-Prince": { id: "America/Port-au-Prince", countrycode: "HT", country: "Haiti", tz: "America/Port-au-Prince", offset: "UTC -05:00" },
-            "Europe/Vatican": { id: "Europe/Vatican", countrycode: "VA", country: "Holy See (Vatican City State)", tz: "Europe/Vatican", offset: "UTC +01:00" },
-            "America/Tegucigalpa": { id: "America/Tegucigalpa", countrycode: "HN", country: "Honduras", tz: "America/Tegucigalpa", offset: "UTC -06:00" },
-            "Asia/Hong_Kong": { id: "Asia/Hong_Kong", countrycode: "HK", country: "Hong Kong", tz: "Asia/Hong_Kong", offset: "UTC +08:00" },
-            "Europe/Budapest": { id: "Europe/Budapest", countrycode: "HU", country: "Hungary", tz: "Europe/Budapest", offset: "UTC +01:00" },
-            "Atlantic/Reykjavik": { id: "Atlantic/Reykjavik", countrycode: "IS", country: "Iceland", tz: "Atlantic/Reykjavik", offset: "UTC" },
-            "Asia/Kolkata": { id: "Asia/Kolkata", countrycode: "IN", country: "India", tz: "Asia/Kolkata", offset: "UTC +05:30" },
-            "Asia/Jakarta": { id: "Asia/Jakarta", countrycode: "ID", country: "Indonesia", tz: "Asia/Jakarta", offset: "UTC +07:00" },
-            "Asia/Jayapura": { id: "Asia/Jayapura", countrycode: "ID", country: "Indonesia", tz: "Asia/Jayapura", offset: "UTC +09:00" },
-            "Asia/Makassar": { id: "Asia/Makassar", countrycode: "ID", country: "Indonesia", tz: "Asia/Makassar", offset: "UTC +08:00" },
-            "Asia/Pontianak": { id: "Asia/Pontianak", countrycode: "ID", country: "Indonesia", tz: "Asia/Pontianak", offset: "UTC +07:00" },
-            "Asia/Tehran": { id: "Asia/Tehran", countrycode: "IR", country: "Iran, Islamic Republic of", tz: "Asia/Tehran", offset: "UTC +03:30" },
-            "Asia/Baghdad": { id: "Asia/Baghdad", countrycode: "IQ", country: "Iraq", tz: "Asia/Baghdad", offset: "UTC +03:00" },
-            "Europe/Dublin": { id: "Europe/Dublin", countrycode: "IE", country: "Ireland", tz: "Europe/Dublin", offset: "UTC" },
-            "Europe/Isle_of_Man": { id: "Europe/Isle_of_Man", countrycode: "IM", country: "Isle of Man", tz: "Europe/Isle_of_Man", offset: "UTC" },
-            "Asia/Jerusalem": { id: "Asia/Jerusalem", countrycode: "IL", country: "Israel", tz: "Asia/Jerusalem", offset: "UTC +02:00" },
-            "Europe/Rome": { id: "Europe/Rome", countrycode: "IT", country: "Italy", tz: "Europe/Rome", offset: "UTC +01:00" },
-            "America/Jamaica": { id: "America/Jamaica", countrycode: "JM", country: "Jamaica", tz: "America/Jamaica", offset: "UTC -05:00" },
-            "Asia/Tokyo": { id: "Asia/Tokyo", countrycode: "JP", country: "Japan", tz: "Asia/Tokyo", offset: "UTC +09:00" },
-            "Europe/Jersey": { id: "Europe/Jersey", countrycode: "JE", country: "Jersey", tz: "Europe/Jersey", offset: "UTC" },
-            "Asia/Amman": { id: "Asia/Amman", countrycode: "JO", country: "Jordan", tz: "Asia/Amman", offset: "UTC +02:00" },
-            "Asia/Almaty": { id: "Asia/Almaty", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Almaty", offset: "UTC +06:00" },
-            "Asia/Aqtau": { id: "Asia/Aqtau", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Aqtau", offset: "UTC +05:00" },
-            "Asia/Aqtobe": { id: "Asia/Aqtobe", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Aqtobe", offset: "UTC +05:00" },
-            "Asia/Atyrau": { id: "Asia/Atyrau", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Atyrau", offset: "UTC +05:00" },
-            "Asia/Oral": { id: "Asia/Oral", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Oral", offset: "UTC +05:00" },
-            "Asia/Qostanay": { id: "Asia/Qostanay", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Qostanay", offset: "UTC +06:00" },
-            "Asia/Qyzylorda": { id: "Asia/Qyzylorda", countrycode: "KZ", country: "Kazakhstan", tz: "Asia/Qyzylorda", offset: "UTC +05:00" },
-            "Africa/Nairobi": { id: "Africa/Nairobi", countrycode: "KE", country: "Kenya", tz: "Africa/Nairobi", offset: "UTC +03:00" },
-            "Pacific/Enderbury": { id: "Pacific/Enderbury", countrycode: "KI", country: "Kiribati", tz: "Pacific/Enderbury", offset: "UTC +13:00" },
-            "Pacific/Kiritimati": { id: "Pacific/Kiritimati", countrycode: "KI", country: "Kiribati", tz: "Pacific/Kiritimati", offset: "UTC +14:00" },
-            "Pacific/Tarawa": { id: "Pacific/Tarawa", countrycode: "KI", country: "Kiribati", tz: "Pacific/Tarawa", offset: "UTC +12:00" },
-            "Asia/Pyongyang": { id: "Asia/Pyongyang", countrycode: "KP", country: "Korea, Democratic People's Republic of", tz: "Asia/Pyongyang", offset: "UTC +09:00" },
-            "Asia/Seoul": { id: "Asia/Seoul", countrycode: "KR", country: "Korea, Republic of", tz: "Asia/Seoul", offset: "UTC +09:00" },
-            "Asia/Kuwait": { id: "Asia/Kuwait", countrycode: "KW", country: "Kuwait", tz: "Asia/Kuwait", offset: "UTC +03:00" },
-            "Asia/Bishkek": { id: "Asia/Bishkek", countrycode: "KG", country: "Kyrgyzstan", tz: "Asia/Bishkek", offset: "UTC +06:00" },
-            "Asia/Vientiane": { id: "Asia/Vientiane", countrycode: "LA", country: "Lao People's Democratic Republic", tz: "Asia/Vientiane", offset: "UTC +07:00" },
-            "Europe/Riga": { id: "Europe/Riga", countrycode: "LV", country: "Latvia", tz: "Europe/Riga", offset: "UTC +02:00" },
-            "Asia/Beirut": { id: "Asia/Beirut", countrycode: "LB", country: "Lebanon", tz: "Asia/Beirut", offset: "UTC +02:00" },
-            "Africa/Maseru": { id: "Africa/Maseru", countrycode: "LS", country: "Lesotho", tz: "Africa/Maseru", offset: "UTC +02:00" },
-            "Africa/Monrovia": { id: "Africa/Monrovia", countrycode: "LR", country: "Liberia", tz: "Africa/Monrovia", offset: "UTC" },
-            "Africa/Tripoli": { id: "Africa/Tripoli", countrycode: "LY", country: "Libya", tz: "Africa/Tripoli", offset: "UTC +02:00" },
-            "Europe/Vaduz": { id: "Europe/Vaduz", countrycode: "LI", country: "Liechtenstein", tz: "Europe/Vaduz", offset: "UTC +01:00" },
-            "Europe/Vilnius": { id: "Europe/Vilnius", countrycode: "LT", country: "Lithuania", tz: "Europe/Vilnius", offset: "UTC +02:00" },
-            "Europe/Luxembourg": { id: "Europe/Luxembourg", countrycode: "LU", country: "Luxembourg", tz: "Europe/Luxembourg", offset: "UTC +01:00" },
-            "Asia/Macau": { id: "Asia/Macau", countrycode: "MO", country: "Macao", tz: "Asia/Macau", offset: "UTC +08:00" },
-            "Europe/Skopje": { id: "Europe/Skopje", countrycode: "MK", country: "Macedonia, the Former Yugoslav Republic of", tz: "Europe/Skopje", offset: "UTC +01:00" },
-            "Indian/Antananarivo": { id: "Indian/Antananarivo", countrycode: "MG", country: "Madagascar", tz: "Indian/Antananarivo", offset: "UTC +03:00" },
-            "Africa/Blantyre": { id: "Africa/Blantyre", countrycode: "MW", country: "Malawi", tz: "Africa/Blantyre", offset: "UTC +02:00" },
-            "Asia/Kuala_Lumpur": { id: "Asia/Kuala_Lumpur", countrycode: "MY", country: "Malaysia", tz: "Asia/Kuala_Lumpur", offset: "UTC +08:00" },
-            "Asia/Kuching": { id: "Asia/Kuching", countrycode: "MY", country: "Malaysia", tz: "Asia/Kuching", offset: "UTC +08:00" },
-            "Indian/Maldives": { id: "Indian/Maldives", countrycode: "MV", country: "Maldives", tz: "Indian/Maldives", offset: "UTC +05:00" },
-            "Africa/Bamako": { id: "Africa/Bamako", countrycode: "ML", country: "Mali", tz: "Africa/Bamako", offset: "UTC" },
-            "Europe/Malta": { id: "Europe/Malta", countrycode: "MT", country: "Malta", tz: "Europe/Malta", offset: "UTC +01:00" },
-            "Pacific/Kwajalein": { id: "Pacific/Kwajalein", countrycode: "MH", country: "Marshall Islands", tz: "Pacific/Kwajalein", offset: "UTC +12:00" },
-            "Pacific/Majuro": { id: "Pacific/Majuro", countrycode: "MH", country: "Marshall Islands", tz: "Pacific/Majuro", offset: "UTC +12:00" },
-            "America/Martinique": { id: "America/Martinique", countrycode: "MQ", country: "Martinique", tz: "America/Martinique", offset: "UTC -04:00" },
-            "Africa/Nouakchott": { id: "Africa/Nouakchott", countrycode: "MR", country: "Mauritania", tz: "Africa/Nouakchott", offset: "UTC" },
-            "Indian/Mauritius": { id: "Indian/Mauritius", countrycode: "MU", country: "Mauritius", tz: "Indian/Mauritius", offset: "UTC +04:00" },
-            "Indian/Mayotte": { id: "Indian/Mayotte", countrycode: "YT", country: "Mayotte", tz: "Indian/Mayotte", offset: "UTC +03:00" },
-            "America/Bahia_Banderas": { id: "America/Bahia_Banderas", countrycode: "MX", country: "Mexico", tz: "America/Bahia_Banderas", offset: "UTC -06:00" },
-            "America/Cancun": { id: "America/Cancun", countrycode: "MX", country: "Mexico", tz: "America/Cancun", offset: "UTC -05:00" },
-            "America/Chihuahua": { id: "America/Chihuahua", countrycode: "MX", country: "Mexico", tz: "America/Chihuahua", offset: "UTC -07:00" },
-            "America/Hermosillo": { id: "America/Hermosillo", countrycode: "MX", country: "Mexico", tz: "America/Hermosillo", offset: "UTC -07:00" },
-            "America/Matamoros": { id: "America/Matamoros", countrycode: "MX", country: "Mexico", tz: "America/Matamoros", offset: "UTC -06:00" },
-            "America/Mazatlan": { id: "America/Mazatlan", countrycode: "MX", country: "Mexico", tz: "America/Mazatlan", offset: "UTC -07:00" },
-            "America/Merida": { id: "America/Merida", countrycode: "MX", country: "Mexico", tz: "America/Merida", offset: "UTC -06:00" },
-            "America/Mexico_City": { id: "America/Mexico_City", countrycode: "MX", country: "Mexico", tz: "America/Mexico_City", offset: "UTC -06:00" },
-            "America/Monterrey": { id: "America/Monterrey", countrycode: "MX", country: "Mexico", tz: "America/Monterrey", offset: "UTC -06:00" },
-            "America/Ojinaga": { id: "America/Ojinaga", countrycode: "MX", country: "Mexico", tz: "America/Ojinaga", offset: "UTC -07:00" },
-            "America/Tijuana": { id: "America/Tijuana", countrycode: "MX", country: "Mexico", tz: "America/Tijuana", offset: "UTC -08:00" },
-            "Pacific/Chuuk": { id: "Pacific/Chuuk", countrycode: "FM", country: "Micronesia, Federated States of", tz: "Pacific/Chuuk", offset: "UTC +10:00" },
-            "Pacific/Kosrae": { id: "Pacific/Kosrae", countrycode: "FM", country: "Micronesia, Federated States of", tz: "Pacific/Kosrae", offset: "UTC +11:00" },
-            "Pacific/Pohnpei": { id: "Pacific/Pohnpei", countrycode: "FM", country: "Micronesia, Federated States of", tz: "Pacific/Pohnpei", offset: "UTC +11:00" },
-            "Europe/Chisinau": { id: "Europe/Chisinau", countrycode: "MD", country: "Moldova, Republic of", tz: "Europe/Chisinau", offset: "UTC +02:00" },
-            "Europe/Monaco": { id: "Europe/Monaco", countrycode: "MC", country: "Monaco", tz: "Europe/Monaco", offset: "UTC +01:00" },
-            "Asia/Choibalsan": { id: "Asia/Choibalsan", countrycode: "MN", country: "Mongolia", tz: "Asia/Choibalsan", offset: "UTC +08:00" },
-            "Asia/Hovd": { id: "Asia/Hovd", countrycode: "MN", country: "Mongolia", tz: "Asia/Hovd", offset: "UTC +07:00" },
-            "Asia/Ulaanbaatar": { id: "Asia/Ulaanbaatar", countrycode: "MN", country: "Mongolia", tz: "Asia/Ulaanbaatar", offset: "UTC +08:00" },
-            "Europe/Podgorica": { id: "Europe/Podgorica", countrycode: "ME", country: "Montenegro", tz: "Europe/Podgorica", offset: "UTC +01:00" },
-            "America/Montserrat": { id: "America/Montserrat", countrycode: "MS", country: "Montserrat", tz: "America/Montserrat", offset: "UTC -04:00" },
-            "Africa/Casablanca": { id: "Africa/Casablanca", countrycode: "MA", country: "Morocco", tz: "Africa/Casablanca", offset: "UTC +01:00" },
-            "Africa/Maputo": { id: "Africa/Maputo", countrycode: "MZ", country: "Mozambique", tz: "Africa/Maputo", offset: "UTC +02:00" },
-            "Asia/Yangon": { id: "Asia/Yangon", countrycode: "MM", country: "Myanmar", tz: "Asia/Yangon", offset: "UTC +06:30" },
-            "Africa/Windhoek": { id: "Africa/Windhoek", countrycode: "NA", country: "Namibia", tz: "Africa/Windhoek", offset: "UTC +02:00" },
-            "Pacific/Nauru": { id: "Pacific/Nauru", countrycode: "NR", country: "Nauru", tz: "Pacific/Nauru", offset: "UTC +12:00" },
-            "Asia/Kathmandu": { id: "Asia/Kathmandu", countrycode: "NP", country: "Nepal", tz: "Asia/Kathmandu", offset: "UTC +05:45" },
-            "Europe/Amsterdam": { id: "Europe/Amsterdam", countrycode: "NL", country: "Netherlands", tz: "Europe/Amsterdam", offset: "UTC +01:00" },
-            "Pacific/Noumea": { id: "Pacific/Noumea", countrycode: "NC", country: "New Caledonia", tz: "Pacific/Noumea", offset: "UTC +11:00" },
-            "Pacific/Auckland": { id: "Pacific/Auckland", countrycode: "NZ", country: "New Zealand", tz: "Pacific/Auckland", offset: "UTC +13:00" },
-            "Pacific/Chatham": { id: "Pacific/Chatham", countrycode: "NZ", country: "New Zealand", tz: "Pacific/Chatham", offset: "UTC +13:45" },
-            "America/Managua": { id: "America/Managua", countrycode: "NI", country: "Nicaragua", tz: "America/Managua", offset: "UTC -06:00" },
-            "Africa/Niamey": { id: "Africa/Niamey", countrycode: "NE", country: "Niger", tz: "Africa/Niamey", offset: "UTC +01:00" },
-            "Africa/Lagos": { id: "Africa/Lagos", countrycode: "NG", country: "Nigeria", tz: "Africa/Lagos", offset: "UTC +01:00" },
-            "Pacific/Niue": { id: "Pacific/Niue", countrycode: "NU", country: "Niue", tz: "Pacific/Niue", offset: "UTC -11:00" },
-            "Pacific/Norfolk": { id: "Pacific/Norfolk", countrycode: "NF", country: "Norfolk Island", tz: "Pacific/Norfolk", offset: "UTC +12:00" },
-            "Pacific/Saipan": { id: "Pacific/Saipan", countrycode: "MP", country: "Northern Mariana Islands", tz: "Pacific/Saipan", offset: "UTC +10:00" },
-            "Europe/Oslo": { id: "Europe/Oslo", countrycode: "NO", country: "Norway", tz: "Europe/Oslo", offset: "UTC +01:00" },
-            "Asia/Muscat": { id: "Asia/Muscat", countrycode: "OM", country: "Oman", tz: "Asia/Muscat", offset: "UTC +04:00" },
-            "Asia/Karachi": { id: "Asia/Karachi", countrycode: "PK", country: "Pakistan", tz: "Asia/Karachi", offset: "UTC +05:00" },
-            "Pacific/Palau": { id: "Pacific/Palau", countrycode: "PW", country: "Palau", tz: "Pacific/Palau", offset: "UTC +09:00" },
-            "Asia/Gaza": { id: "Asia/Gaza", countrycode: "PS", country: "Palestine, State of", tz: "Asia/Gaza", offset: "UTC +02:00" },
-            "Asia/Hebron": { id: "Asia/Hebron", countrycode: "PS", country: "Palestine, State of", tz: "Asia/Hebron", offset: "UTC +02:00" },
-            "America/Panama": { id: "America/Panama", countrycode: "PA", country: "Panama", tz: "America/Panama", offset: "UTC -05:00" },
-            "Pacific/Bougainville": { id: "Pacific/Bougainville", countrycode: "PG", country: "Papua New Guinea", tz: "Pacific/Bougainville", offset: "UTC +11:00" },
-            "Pacific/Port_Moresby": { id: "Pacific/Port_Moresby", countrycode: "PG", country: "Papua New Guinea", tz: "Pacific/Port_Moresby", offset: "UTC +10:00" },
-            "America/Asuncion": { id: "America/Asuncion", countrycode: "PY", country: "Paraguay", tz: "America/Asuncion", offset: "UTC -03:00" },
-            "America/Lima": { id: "America/Lima", countrycode: "PE", country: "Peru", tz: "America/Lima", offset: "UTC -05:00" },
-            "Asia/Manila": { id: "Asia/Manila", countrycode: "PH", country: "Philippines", tz: "Asia/Manila", offset: "UTC +08:00" },
-            "Pacific/Pitcairn": { id: "Pacific/Pitcairn", countrycode: "PN", country: "Pitcairn", tz: "Pacific/Pitcairn", offset: "UTC -08:00" },
-            "Europe/Warsaw": { id: "Europe/Warsaw", countrycode: "PL", country: "Poland", tz: "Europe/Warsaw", offset: "UTC +01:00" },
-            "Atlantic/Azores": { id: "Atlantic/Azores", countrycode: "PT", country: "Portugal", tz: "Atlantic/Azores", offset: "UTC -01:00" },
-            "Atlantic/Madeira": { id: "Atlantic/Madeira", countrycode: "PT", country: "Portugal", tz: "Atlantic/Madeira", offset: "UTC" },
-            "Europe/Lisbon": { id: "Europe/Lisbon", countrycode: "PT", country: "Portugal", tz: "Europe/Lisbon", offset: "UTC" },
-            "America/Puerto_Rico": { id: "America/Puerto_Rico", countrycode: "PR", country: "Puerto Rico", tz: "America/Puerto_Rico", offset: "UTC -04:00" },
-            "Asia/Qatar": { id: "Asia/Qatar", countrycode: "QA", country: "Qatar", tz: "Asia/Qatar", offset: "UTC +03:00" },
-            "Europe/Bucharest": { id: "Europe/Bucharest", countrycode: "RO", country: "Romania", tz: "Europe/Bucharest", offset: "UTC +02:00" },
-            "Asia/Anadyr": { id: "Asia/Anadyr", countrycode: "RU", country: "Russian Federation", tz: "Asia/Anadyr", offset: "UTC +12:00" },
-            "Asia/Barnaul": { id: "Asia/Barnaul", countrycode: "RU", country: "Russian Federation", tz: "Asia/Barnaul", offset: "UTC +07:00" },
-            "Asia/Chita": { id: "Asia/Chita", countrycode: "RU", country: "Russian Federation", tz: "Asia/Chita", offset: "UTC +09:00" },
-            "Asia/Irkutsk": { id: "Asia/Irkutsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Irkutsk", offset: "UTC +08:00" },
-            "Asia/Kamchatka": { id: "Asia/Kamchatka", countrycode: "RU", country: "Russian Federation", tz: "Asia/Kamchatka", offset: "UTC +12:00" },
-            "Asia/Khandyga": { id: "Asia/Khandyga", countrycode: "RU", country: "Russian Federation", tz: "Asia/Khandyga", offset: "UTC +09:00" },
-            "Asia/Krasnoyarsk": { id: "Asia/Krasnoyarsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Krasnoyarsk", offset: "UTC +07:00" },
-            "Asia/Magadan": { id: "Asia/Magadan", countrycode: "RU", country: "Russian Federation", tz: "Asia/Magadan", offset: "UTC +11:00" },
-            "Asia/Novokuznetsk": { id: "Asia/Novokuznetsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Novokuznetsk", offset: "UTC +07:00" },
-            "Asia/Novosibirsk": { id: "Asia/Novosibirsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Novosibirsk", offset: "UTC +07:00" },
-            "Asia/Omsk": { id: "Asia/Omsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Omsk", offset: "UTC +06:00" },
-            "Asia/Sakhalin": { id: "Asia/Sakhalin", countrycode: "RU", country: "Russian Federation", tz: "Asia/Sakhalin", offset: "UTC +11:00" },
-            "Asia/Srednekolymsk": { id: "Asia/Srednekolymsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Srednekolymsk", offset: "UTC +11:00" },
-            "Asia/Tomsk": { id: "Asia/Tomsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Tomsk", offset: "UTC +07:00" },
-            "Asia/Ust-Nera": { id: "Asia/Ust-Nera", countrycode: "RU", country: "Russian Federation", tz: "Asia/Ust-Nera", offset: "UTC +10:00" },
-            "Asia/Vladivostok": { id: "Asia/Vladivostok", countrycode: "RU", country: "Russian Federation", tz: "Asia/Vladivostok", offset: "UTC +10:00" },
-            "Asia/Yakutsk": { id: "Asia/Yakutsk", countrycode: "RU", country: "Russian Federation", tz: "Asia/Yakutsk", offset: "UTC +09:00" },
-            "Asia/Yekaterinburg": { id: "Asia/Yekaterinburg", countrycode: "RU", country: "Russian Federation", tz: "Asia/Yekaterinburg", offset: "UTC +05:00" },
-            "Europe/Astrakhan": { id: "Europe/Astrakhan", countrycode: "RU", country: "Russian Federation", tz: "Europe/Astrakhan", offset: "UTC +04:00" },
-            "Europe/Kaliningrad": { id: "Europe/Kaliningrad", countrycode: "RU", country: "Russian Federation", tz: "Europe/Kaliningrad", offset: "UTC +02:00" },
-            "Europe/Kirov": { id: "Europe/Kirov", countrycode: "RU", country: "Russian Federation", tz: "Europe/Kirov", offset: "UTC +03:00" },
-            "Europe/Moscow": { id: "Europe/Moscow", countrycode: "RU", country: "Russian Federation", tz: "Europe/Moscow", offset: "UTC +03:00" },
-            "Europe/Samara": { id: "Europe/Samara", countrycode: "RU", country: "Russian Federation", tz: "Europe/Samara", offset: "UTC +04:00" },
-            "Europe/Saratov": { id: "Europe/Saratov", countrycode: "RU", country: "Russian Federation", tz: "Europe/Saratov", offset: "UTC +04:00" },
-            "Europe/Ulyanovsk": { id: "Europe/Ulyanovsk", countrycode: "RU", country: "Russian Federation", tz: "Europe/Ulyanovsk", offset: "UTC +04:00" },
-            "Europe/Volgograd": { id: "Europe/Volgograd", countrycode: "RU", country: "Russian Federation", tz: "Europe/Volgograd", offset: "UTC +04:00" },
-            "Africa/Kigali": { id: "Africa/Kigali", countrycode: "RW", country: "Rwanda", tz: "Africa/Kigali", offset: "UTC +02:00" },
-            "Indian/Reunion": { id: "Indian/Reunion", countrycode: "RE", country: "Réunion", tz: "Indian/Reunion", offset: "UTC +04:00" },
-            "America/St_Barthelemy": { id: "America/St_Barthelemy", countrycode: "BL", country: "Saint Barthélemy", tz: "America/St_Barthelemy", offset: "UTC -04:00" },
-            "Atlantic/St_Helena": { id: "Atlantic/St_Helena", countrycode: "SH", country: "Saint Helena, Ascension and Tristan da Cunha", tz: "Atlantic/St_Helena", offset: "UTC" },
-            "America/St_Kitts": { id: "America/St_Kitts", countrycode: "KN", country: "Saint Kitts and Nevis", tz: "America/St_Kitts", offset: "UTC -04:00" },
-            "America/St_Lucia": { id: "America/St_Lucia", countrycode: "LC", country: "Saint Lucia", tz: "America/St_Lucia", offset: "UTC -04:00" },
-            "America/Marigot": { id: "America/Marigot", countrycode: "MF", country: "Saint Martin (French part)", tz: "America/Marigot", offset: "UTC -04:00" },
-            "America/Miquelon": { id: "America/Miquelon", countrycode: "PM", country: "Saint Pierre and Miquelon", tz: "America/Miquelon", offset: "UTC -03:00" },
-            "America/St_Vincent": { id: "America/St_Vincent", countrycode: "VC", country: "Saint Vincent and the Grenadines", tz: "America/St_Vincent", offset: "UTC -04:00" },
-            "Pacific/Apia": { id: "Pacific/Apia", countrycode: "WS", country: "Samoa", tz: "Pacific/Apia", offset: "UTC +14:00" },
-            "Europe/San_Marino": { id: "Europe/San_Marino", countrycode: "SM", country: "San Marino", tz: "Europe/San_Marino", offset: "UTC +01:00" },
-            "Africa/Sao_Tome": { id: "Africa/Sao_Tome", countrycode: "ST", country: "Sao Tome and Principe", tz: "Africa/Sao_Tome", offset: "UTC" },
-            "Asia/Riyadh": { id: "Asia/Riyadh", countrycode: "SA", country: "Saudi Arabia", tz: "Asia/Riyadh", offset: "UTC +03:00" },
-            "Africa/Dakar": { id: "Africa/Dakar", countrycode: "SN", country: "Senegal", tz: "Africa/Dakar", offset: "UTC" },
-            "Europe/Belgrade": { id: "Europe/Belgrade", countrycode: "RS", country: "Serbia", tz: "Europe/Belgrade", offset: "UTC +01:00" },
-            "Indian/Mahe": { id: "Indian/Mahe", countrycode: "SC", country: "Seychelles", tz: "Indian/Mahe", offset: "UTC +04:00" },
-            "Africa/Freetown": { id: "Africa/Freetown", countrycode: "SL", country: "Sierra Leone", tz: "Africa/Freetown", offset: "UTC" },
-            "Asia/Singapore": { id: "Asia/Singapore", countrycode: "SG", country: "Singapore", tz: "Asia/Singapore", offset: "UTC +08:00" },
-            "America/Lower_Princes": { id: "America/Lower_Princes", countrycode: "SX", country: "Sint Maarten (Dutch part)", tz: "America/Lower_Princes", offset: "UTC -04:00" },
-            "Europe/Bratislava": { id: "Europe/Bratislava", countrycode: "SK", country: "Slovakia", tz: "Europe/Bratislava", offset: "UTC +01:00" },
-            "Europe/Ljubljana": { id: "Europe/Ljubljana", countrycode: "SI", country: "Slovenia", tz: "Europe/Ljubljana", offset: "UTC +01:00" },
-            "Pacific/Guadalcanal": { id: "Pacific/Guadalcanal", countrycode: "SB", country: "Solomon Islands", tz: "Pacific/Guadalcanal", offset: "UTC +11:00" },
-            "Africa/Mogadishu": { id: "Africa/Mogadishu", countrycode: "SO", country: "Somalia", tz: "Africa/Mogadishu", offset: "UTC +03:00" },
-            "Africa/Johannesburg": { id: "Africa/Johannesburg", countrycode: "ZA", country: "South Africa", tz: "Africa/Johannesburg", offset: "UTC +02:00" },
-            "Atlantic/South_Georgia": { id: "Atlantic/South_Georgia", countrycode: "GS", country: "South Georgia and the South Sandwich Islands", tz: "Atlantic/South_Georgia", offset: "UTC -02:00" },
-            "Africa/Juba": { id: "Africa/Juba", countrycode: "SS", country: "South Sudan", tz: "Africa/Juba", offset: "UTC +03:00" },
-            "Africa/Ceuta": { id: "Africa/Ceuta", countrycode: "ES", country: "Spain", tz: "Africa/Ceuta", offset: "UTC +01:00" },
-            "Atlantic/Canary": { id: "Atlantic/Canary", countrycode: "ES", country: "Spain", tz: "Atlantic/Canary", offset: "UTC" },
-            "Europe/Madrid": { id: "Europe/Madrid", countrycode: "ES", country: "Spain", tz: "Europe/Madrid", offset: "UTC +01:00" },
-            "Asia/Colombo": { id: "Asia/Colombo", countrycode: "LK", country: "Sri Lanka", tz: "Asia/Colombo", offset: "UTC +05:30" },
-            "Africa/Khartoum": { id: "Africa/Khartoum", countrycode: "SD", country: "Sudan", tz: "Africa/Khartoum", offset: "UTC +02:00" },
-            "America/Paramaribo": { id: "America/Paramaribo", countrycode: "SR", country: "Suriname", tz: "America/Paramaribo", offset: "UTC -03:00" },
-            "Arctic/Longyearbyen": { id: "Arctic/Longyearbyen", countrycode: "SJ", country: "Svalbard and Jan Mayen", tz: "Arctic/Longyearbyen", offset: "UTC +01:00" },
-            "Africa/Mbabane": { id: "Africa/Mbabane", countrycode: "SZ", country: "Swaziland", tz: "Africa/Mbabane", offset: "UTC +02:00" },
-            "Europe/Stockholm": { id: "Europe/Stockholm", countrycode: "SE", country: "Sweden", tz: "Europe/Stockholm", offset: "UTC +01:00" },
-            "Europe/Zurich": { id: "Europe/Zurich", countrycode: "CH", country: "Switzerland", tz: "Europe/Zurich", offset: "UTC +01:00" },
-            "Asia/Damascus": { id: "Asia/Damascus", countrycode: "SY", country: "Syrian Arab Republic", tz: "Asia/Damascus", offset: "UTC +02:00" },
-            "Asia/Taipei": { id: "Asia/Taipei", countrycode: "TW", country: "Taiwan, Province of China", tz: "Asia/Taipei", offset: "UTC +08:00" },
-            "Asia/Dushanbe": { id: "Asia/Dushanbe", countrycode: "TJ", country: "Tajikistan", tz: "Asia/Dushanbe", offset: "UTC +05:00" },
-            "Africa/Dar_es_Salaam": { id: "Africa/Dar_es_Salaam", countrycode: "TZ", country: "Tanzania, United Republic of", tz: "Africa/Dar_es_Salaam", offset: "UTC +03:00" },
-            "Asia/Bangkok": { id: "Asia/Bangkok", countrycode: "TH", country: "Thailand", tz: "Asia/Bangkok", offset: "UTC +07:00" },
-            "Asia/Dili": { id: "Asia/Dili", countrycode: "TL", country: "Timor-Leste", tz: "Asia/Dili", offset: "UTC +09:00" },
-            "Africa/Lome": { id: "Africa/Lome", countrycode: "TG", country: "Togo", tz: "Africa/Lome", offset: "UTC" },
-            "Pacific/Fakaofo": { id: "Pacific/Fakaofo", countrycode: "TK", country: "Tokelau", tz: "Pacific/Fakaofo", offset: "UTC +13:00" },
-            "Pacific/Tongatapu": { id: "Pacific/Tongatapu", countrycode: "TO", country: "Tonga", tz: "Pacific/Tongatapu", offset: "UTC +13:00" },
-            "America/Port_of_Spain": { id: "America/Port_of_Spain", countrycode: "TT", country: "Trinidad and Tobago", tz: "America/Port_of_Spain", offset: "UTC -04:00" },
-            "Africa/Tunis": { id: "Africa/Tunis", countrycode: "TN", country: "Tunisia", tz: "Africa/Tunis", offset: "UTC +01:00" },
-            "Europe/Istanbul": { id: "Europe/Istanbul", countrycode: "TR", country: "Turkey", tz: "Europe/Istanbul", offset: "UTC +03:00" },
-            "Asia/Ashgabat": { id: "Asia/Ashgabat", countrycode: "TM", country: "Turkmenistan", tz: "Asia/Ashgabat", offset: "UTC +05:00" },
-            "America/Grand_Turk": { id: "America/Grand_Turk", countrycode: "TC", country: "Turks and Caicos Islands", tz: "America/Grand_Turk", offset: "UTC -05:00" },
-            "Pacific/Funafuti": { id: "Pacific/Funafuti", countrycode: "TV", country: "Tuvalu", tz: "Pacific/Funafuti", offset: "UTC +12:00" },
-            "Africa/Kampala": { id: "Africa/Kampala", countrycode: "UG", country: "Uganda", tz: "Africa/Kampala", offset: "UTC +03:00" },
-            "Europe/Kiev": { id: "Europe/Kiev", countrycode: "UA", country: "Ukraine", tz: "Europe/Kiev", offset: "UTC +02:00" },
-            "Europe/Simferopol": { id: "Europe/Simferopol", countrycode: "UA", country: "Ukraine", tz: "Europe/Simferopol", offset: "UTC +03:00" },
-            "Europe/Uzhgorod": { id: "Europe/Uzhgorod", countrycode: "UA", country: "Ukraine", tz: "Europe/Uzhgorod", offset: "UTC +02:00" },
-            "Europe/Zaporozhye": { id: "Europe/Zaporozhye", countrycode: "UA", country: "Ukraine", tz: "Europe/Zaporozhye", offset: "UTC +02:00" },
-            "Asia/Dubai": { id: "Asia/Dubai", countrycode: "AE", country: "United Arab Emirates", tz: "Asia/Dubai", offset: "UTC +04:00" },
-            "Europe/London": { id: "Europe/London", countrycode: "GB", country: "United Kingdom", tz: "Europe/London", offset: "UTC" },
-            "America/Adak": { id: "America/Adak", countrycode: "US", country: "United States", tz: "America/Adak", offset: "UTC -10:00" },
-            "America/Anchorage": { id: "America/Anchorage", countrycode: "US", country: "United States", tz: "America/Anchorage", offset: "UTC -09:00" },
-            "America/Boise": { id: "America/Boise", countrycode: "US", country: "United States", tz: "America/Boise", offset: "UTC -07:00" },
-            "America/Chicago": { id: "America/Chicago", countrycode: "US", country: "United States", tz: "America/Chicago", offset: "UTC -06:00" },
-            "America/Denver": { id: "America/Denver", countrycode: "US", country: "United States", tz: "America/Denver", offset: "UTC -07:00" },
-            "America/Detroit": { id: "America/Detroit", countrycode: "US", country: "United States", tz: "America/Detroit", offset: "UTC -05:00" },
-            "America/Indiana/Indianapolis": { id: "America/Indiana/Indianapolis", countrycode: "US", country: "United States", tz: "America/Indiana/Indianapolis", offset: "UTC -05:00" },
-            "America/Indiana/Knox": { id: "America/Indiana/Knox", countrycode: "US", country: "United States", tz: "America/Indiana/Knox", offset: "UTC -06:00" },
-            "America/Indiana/Marengo": { id: "America/Indiana/Marengo", countrycode: "US", country: "United States", tz: "America/Indiana/Marengo", offset: "UTC -05:00" },
-            "America/Indiana/Petersburg": { id: "America/Indiana/Petersburg", countrycode: "US", country: "United States", tz: "America/Indiana/Petersburg", offset: "UTC -05:00" },
-            "America/Indiana/Tell_City": { id: "America/Indiana/Tell_City", countrycode: "US", country: "United States", tz: "America/Indiana/Tell_City", offset: "UTC -06:00" },
-            "America/Indiana/Vevay": { id: "America/Indiana/Vevay", countrycode: "US", country: "United States", tz: "America/Indiana/Vevay", offset: "UTC -05:00" },
-            "America/Indiana/Vincennes": { id: "America/Indiana/Vincennes", countrycode: "US", country: "United States", tz: "America/Indiana/Vincennes", offset: "UTC -05:00" },
-            "America/Indiana/Winamac": { id: "America/Indiana/Winamac", countrycode: "US", country: "United States", tz: "America/Indiana/Winamac", offset: "UTC -05:00" },
-            "America/Juneau": { id: "America/Juneau", countrycode: "US", country: "United States", tz: "America/Juneau", offset: "UTC -09:00" },
-            "America/Kentucky/Louisville": { id: "America/Kentucky/Louisville", countrycode: "US", country: "United States", tz: "America/Kentucky/Louisville", offset: "UTC -05:00" },
-            "America/Kentucky/Monticello": { id: "America/Kentucky/Monticello", countrycode: "US", country: "United States", tz: "America/Kentucky/Monticello", offset: "UTC -05:00" },
-            "America/Los_Angeles": { id: "America/Los_Angeles", countrycode: "US", country: "United States", tz: "America/Los_Angeles", offset: "UTC -08:00" },
-            "America/Menominee": { id: "America/Menominee", countrycode: "US", country: "United States", tz: "America/Menominee", offset: "UTC -06:00" },
-            "America/Metlakatla": { id: "America/Metlakatla", countrycode: "US", country: "United States", tz: "America/Metlakatla", offset: "UTC -09:00" },
-            "America/New_York": { id: "America/New_York", countrycode: "US", country: "United States", tz: "America/New_York", offset: "UTC -05:00" },
-            "America/Nome": { id: "America/Nome", countrycode: "US", country: "United States", tz: "America/Nome", offset: "UTC -09:00" },
-            "America/North_Dakota/Beulah": { id: "America/North_Dakota/Beulah", countrycode: "US", country: "United States", tz: "America/North_Dakota/Beulah", offset: "UTC -06:00" },
-            "America/North_Dakota/Center": { id: "America/North_Dakota/Center", countrycode: "US", country: "United States", tz: "America/North_Dakota/Center", offset: "UTC -06:00" },
-            "America/North_Dakota/New_Salem": { id: "America/North_Dakota/New_Salem", countrycode: "US", country: "United States", tz: "America/North_Dakota/New_Salem", offset: "UTC -06:00" },
-            "America/Phoenix": { id: "America/Phoenix", countrycode: "US", country: "United States", tz: "America/Phoenix", offset: "UTC -07:00" },
-            "America/Sitka": { id: "America/Sitka", countrycode: "US", country: "United States", tz: "America/Sitka", offset: "UTC -09:00" },
-            "America/Yakutat": { id: "America/Yakutat", countrycode: "US", country: "United States", tz: "America/Yakutat", offset: "UTC -09:00" },
-            "Pacific/Honolulu": { id: "Pacific/Honolulu", countrycode: "US", country: "United States", tz: "Pacific/Honolulu", offset: "UTC -10:00" },
-            "Pacific/Midway": { id: "Pacific/Midway", countrycode: "UM", country: "United States Minor Outlying Islands", tz: "Pacific/Midway", offset: "UTC -11:00" },
-            "Pacific/Wake": { id: "Pacific/Wake", countrycode: "UM", country: "United States Minor Outlying Islands", tz: "Pacific/Wake", offset: "UTC +12:00" },
-            "America/Montevideo": { id: "America/Montevideo", countrycode: "UY", country: "Uruguay", tz: "America/Montevideo", offset: "UTC -03:00" },
-            "Asia/Samarkand": { id: "Asia/Samarkand", countrycode: "UZ", country: "Uzbekistan", tz: "Asia/Samarkand", offset: "UTC +05:00" },
-            "Asia/Tashkent": { id: "Asia/Tashkent", countrycode: "UZ", country: "Uzbekistan", tz: "Asia/Tashkent", offset: "UTC +05:00" },
-            "Pacific/Efate": { id: "Pacific/Efate", countrycode: "VU", country: "Vanuatu", tz: "Pacific/Efate", offset: "UTC +11:00" },
-            "America/Caracas": { id: "America/Caracas", countrycode: "VE", country: "Venezuela, Bolivarian Republic of", tz: "America/Caracas", offset: "UTC -04:00" },
-            "Asia/Ho_Chi_Minh": { id: "Asia/Ho_Chi_Minh", countrycode: "VN", country: "Viet Nam", tz: "Asia/Ho_Chi_Minh", offset: "UTC +07:00" },
-            "America/Tortola": { id: "America/Tortola", countrycode: "VG", country: "Virgin Islands, British", tz: "America/Tortola", offset: "UTC -04:00" },
-            "America/St_Thomas": { id: "America/St_Thomas", countrycode: "VI", country: "Virgin Islands, U.S.", tz: "America/St_Thomas", offset: "UTC -04:00" },
-            "Pacific/Wallis": { id: "Pacific/Wallis", countrycode: "WF", country: "Wallis and Futuna", tz: "Pacific/Wallis", offset: "UTC +12:00" },
-            "Africa/El_Aaiun": { id: "Africa/El_Aaiun", countrycode: "EH", country: "Western Sahara", tz: "Africa/El_Aaiun", offset: "UTC +01:00" },
-            "Asia/Aden": { id: "Asia/Aden", countrycode: "YE", country: "Yemen", tz: "Asia/Aden", offset: "UTC +03:00" },
-            "Africa/Lusaka": { id: "Africa/Lusaka", countrycode: "ZM", country: "Zambia", tz: "Africa/Lusaka", offset: "UTC +02:00" },
-            "Africa/Harare": { id: "Africa/Harare", countrycode: "ZW", country: "Zimbabwe", tz: "Africa/Harare", offset: "UTC +02:00" },
-            "Europe/Mariehamn": { id: "Europe/Mariehamn", countrycode: "AX", country: "Åland Islands", tz: "Europe/Mariehamn", offset: "UTC +02:00" },
-        }
-    }
-
-    /**
-     * Get a specific timezone def by its code
-     * @param code the code to get
-     * @return {*} the tz definition, or null
-     */
-    static get(code) {
-        return TimezoneDB.MAP[code];
-    }
-
-    /**
-     * Get a list of timezones
-     * @return {Array} an array of timezone object definitions
-     */
-    static list() {
-        let list = [];
-        for (let c of Object.values(TimezoneDB.MAP)) {
-            list.push(c);
-        }
-        list.sort(function(a,b){
-            if (a.id > b.id){ return 1 }
-            if (a.id < b.id){ return -1 }
-            return 0;
-        });
-        return list;
-    }
-    
-}
-window.TimezoneDB = TimezoneDB;
 class ToolTip {
 
     static get DEFAULT_CONFIG() {
@@ -1946,56 +2179,73 @@ class ToolTip {
         }, this.waittime);
     }
 
+    /**
+     * Do the actual opening.
+     */
     openGuts() {
-        const me = this;
 
         ToolTip.closeOpen();
 
         document.body.appendChild(this.container);
         this.container.removeAttribute('aria-hidden');
 
+        if (typeof ToolTip.activeTooltip === 'undefined' ) {
+            ToolTip.activeTooltip = this;
+        } else {
+            ToolTip.activeTooltip = this;
+        }
+
+        this.setPosition();
+
+        window.addEventListener('scroll', this.setPosition, true);
+
+    }
+
+    /**
+     * Set the position of the tooltip.
+     */
+    setPosition() {
+        if (!ToolTip.activeTooltip) { return; }
+        let self = ToolTip.activeTooltip;
+
         let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = this.parent.getBoundingClientRect(),
+            elemRect = self.parent.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top;
 
         switch(this.gravity) {
             case 's':
             case 'south':
-                this.container.style.top = `${(offsetTop + me.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
             case 'w':
             case 'west':
-                this.container.style.top = `${offsetTop}px`;
-                this.container.style.left = `${offsetLeft - this.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                self.container.style.top = `${offsetTop}px`;
+                self.container.style.left = `${offsetLeft - self.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'e':
             case 'east':
-                this.container.style.top = `${offsetTop}px`;
-                this.container.style.left = `${offsetLeft + this.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                self.container.style.top = `${offsetTop}px`;
+                self.container.style.left = `${offsetLeft + self.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'n':
             case 'north':
             default:
-                this.container.style.top = `${(offsetTop - me.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
         }
 
-        if (typeof ToolTip.activeTooltip === 'undefined' ) {
-            ToolTip.activeTooltip = this;
-        } else {
-            ToolTip.activeTooltip = this;
-        }
     }
 
     /**
      * Closes the help tooltip.
      */
     close() {
-        this.container.setAttribute('aria-hidden', 'true');
         this.parent.appendChild(this.container);
+        window.removeEventListener('scroll', this.setPosition, true);
+        this.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
     }
 
@@ -2617,55 +2867,12 @@ class ButtonMenu extends SimpleButton {
             }
         }
 
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = this.button.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top,
-            offsetRight = bodyRect.right - elemRect.right,
-            offsetBottom = elemRect.bottom - bodyRect.bottom;
-
-        //this.gravity = 's';
         this.menu.classList.add(this.gravity);
 
-        switch(this.gravity) {
-            case 'w':
-            case 'west':
-                this.menu.style.top = `${offsetTop}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
-                break;
-            case 'e':
-            case 'east':
-                this.menu.style.top = `${offsetTop}px`;
-                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
-                break;
-            case 'n':
-            case 'north':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
-                break;
-            case 'nw':
-            case 'northwest':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.menu.style.left = `${offsetLeft}px`;
-                break;
-            case 'se':
-            case 'southeast':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.menu.style.left = `${offsetLeft}px`;
-                break;
-            case 's':
-            case 'south':
-            case 'southwest':
-            default:
-                this.menu.style.top = `${(offsetTop + me.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                this.menu.style.right = `${offsetRight}px`;
-                break;
-        }
-
-        if (typeof ButtonMenu.activeTooltip === 'undefined' ) {
-            ButtonMenu.activeTooltip = this;
+        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
+            ButtonMenu.activeMenu = this;
         } else {
-            ButtonMenu.activeTooltip = this;
+            ButtonMenu.activeMenu = this;
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
@@ -2673,22 +2880,75 @@ class ButtonMenu extends SimpleButton {
             focusable[0].focus();
         }
 
-        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
-            ButtonMenu.activeMenu = this;
-        } else {
-            ButtonMenu.activeMenu = this;
-        }
         if (this.autoclose) {
             window.setTimeout(function() { // Set this after, or else we'll get bouncing.
                 me.setCloseListener();
             }, 200);
         }
+        window.addEventListener('scroll', this.setPosition, true);
+
+        if (this.autoclose) {
+            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
+                me.setPosition();
+            }, 50);
+        }
+
+    }
+
+    setPosition() {
+        if (!ButtonMenu.activeMenu) { return; }
+        let self = ButtonMenu.activeMenu;
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.button.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top,
+            offsetRight = bodyRect.right - elemRect.right,
+            offsetBottom = elemRect.bottom - bodyRect.bottom;
+
+        switch(self.gravity) {
+            case 'w':
+            case 'west':
+                self.menu.style.top = `${offsetTop - (self.button.clientHeight / 2)}px`;
+                self.menu.style.left = `${offsetLeft - self.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'e':
+            case 'east':
+                self.menu.style.top = `${offsetTop - (self.button.clientHeight / 2)}px`;
+                self.menu.style.left = `${offsetLeft + self.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'n':
+            case 'north':
+                self.menu.style.top = `${(offsetTop - self.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
+                break;
+            case 'nw':
+            case 'northwest':
+                self.menu.style.top = `${(offsetTop - self.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.menu.style.left = `${offsetLeft - (self.button.clientWidth / 2)}px`;
+                break;
+            case 'se':
+            case 'southeast':
+                self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.menu.style.left = `${offsetLeft - (self.button.clientWidth / 2)}px`;
+                break;
+            case 's':
+            case 'south':
+            case 'southwest':
+            default:
+                self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.menu.style.right = `${offsetRight - (self.button.clientWidth / 2)}px`;
+                break;
+        }
+
     }
 
     /**
      * Closes the button
      */
     close() {
+        window.removeEventListener('scroll', this.setPosition, true);
+        this.button.appendChild(this.menu);
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');
 
@@ -2699,7 +2959,6 @@ class ButtonMenu extends SimpleButton {
             }
         }
 
-        this.button.appendChild(this.menu);
         ButtonMenu.activeMenu = null;
 
     }
@@ -5229,21 +5488,15 @@ class SelectMenu extends InputElement {
             li.setAttribute('tabindex', '0');
         }
 
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = this.wrapper.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top;
-
-        this.listbox.style.top = `${(offsetTop + this.wrapper.clientHeight)}px`;
-        this.listbox.style.left = `${offsetLeft}px`;
-        this.listbox.style.width = `${this.container.clientWidth}px`;
-
-
         if (typeof SelectMenu.activeMenu === 'undefined' ) {
             SelectMenu.activeMenu = this;
         } else {
             SelectMenu.activeMenu = this;
         }
+
+        this.setPosition();
+
+        window.addEventListener('scroll', this.setPosition, true);
 
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
@@ -5251,9 +5504,28 @@ class SelectMenu extends InputElement {
     }
 
     /**
+     * Set the position of the open menu on the screen
+     */
+    setPosition() {
+        if (!SelectMenu.activeMenu) { return; }
+        let self = SelectMenu.activeMenu;
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.wrapper.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        self.listbox.style.top = `${(offsetTop + self.wrapper.clientHeight)}px`;
+        self.listbox.style.left = `${offsetLeft}px`;
+        self.listbox.style.width = `${self.container.clientWidth}px`;
+    }
+
+    /**
      * Closes the option list.
      */
     close() {
+        window.removeEventListener('scroll', this.setPosition, true);
+
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
@@ -5263,7 +5535,12 @@ class SelectMenu extends InputElement {
         }
 
         if (!this.combobox) {
-            this.triggerbox.value = this.value;
+            if (this.selected) {
+                let seltext = this.selected.parentNode.querySelector('span.text');
+                if (seltext) {
+                    this.triggerbox.value = seltext.innerHTML;
+                }
+            }
         }
 
         this.container.appendChild(this.listbox);
@@ -5860,6 +6137,7 @@ class StateMenu extends SelectMenu {
             unselectedtext: TextFactory.get('statemenu_select'),
             valuesas: 'code', // What to stick in the value for the elements.
                             // "code" or "name".
+            options: new StateProvince().options,
             set: null // Empty, or "US" or "CA". If empty, fills with all states.
         };
     }
@@ -5873,8 +6151,8 @@ class StateMenu extends SelectMenu {
         config = Object.assign({}, StateMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 
-        let states = StateProvince.list(config.set);
-        let options = [];
+        let states = new StateProvince().set(config.set);
+        config.options = [];
         for (let s of states) {
             let d = { label: s.name };
             if ((config.valuesas) && (config.valuesas === 'name')) {
@@ -5885,10 +6163,9 @@ class StateMenu extends SelectMenu {
             if ((config.value) && ((config.value.toUpperCase() === s.id) || (config.value.toUpperCase() === s.name))) {
                 d.checked = true;
             }
-            options.push(d);
+            config.options.push(d);
         }
 
-        config.options = options;
         super(config);
 
     }
@@ -5899,6 +6176,7 @@ class CountryMenu extends SelectMenu {
     static get DEFAULT_CONFIG() {
         return {
             unselectedtext: TextFactory.get('countrymenu_select'),
+            options: new CountryCode().options,
             valuesas: 'code' // What to stick in the value for the elements.
                              // "code" or "name".
         };
@@ -5913,24 +6191,22 @@ class CountryMenu extends SelectMenu {
         config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
         // { label: "Label to show", value: "v", checked: true }
 
-        let countries = CountryCodes.list();
-        let options = [];
-        for (let c of countries) {
-            let d = { label: c.country };
-            if ((config.valuesas) && (config.valuesas === 'name')) {
-                d.value = c.country;
-            } else {
-                d.value = c.code;
+        if ((config.valuesas) && (config.valuesas === 'name')) {
+            config.options = [];
+            let countries = new CountryCode().list;
+            for (let c of countries) {
+                config.options.push({ label: c.name, value: c.name });
             }
-            if ((config.value) && ((config.value.toUpperCase() === c.code) || (config.value.toUpperCase() === c.country))) {
-                d.checked = true;
+        }
+        if (config.value) {
+            for (let o of config.options) {
+                if ((config.value.toUpperCase() === o.value) || (config.value.toUpperCase() === o.label)) {
+                    o.checked = true;
+                }
             }
-            options.push(d);
         }
 
-        config.options = options;
         super(config);
-
     }
 }
 window.CountryMenu = CountryMenu;
@@ -5939,8 +6215,9 @@ class TimezoneMenu extends SelectMenu {
     static get DEFAULT_CONFIG() {
         return {
             unselectedtext: TextFactory.get('timezone_select'),
+            options: new TimeZoneDefinition().options,
             valuesas: 'offset' // What to stick in the value for the elements.
-                             // "offset" or "name".
+                               // "offset" or "name".
         };
     }
 
@@ -5951,24 +6228,7 @@ class TimezoneMenu extends SelectMenu {
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
-
-        let options = [];
-        for (let tz of TimezoneDB.list()) {
-            let o = { label: tz.id };
-            if ((config.valuesas) && (config.valuesas === 'name')) {
-                o.value = tz.id;
-            } else {
-                o.value = tz.offset;
-            }
-            if ((config.value) && ((config.value.toUpperCase() === tz.id) || (config.value.toUpperCase() === tz.offset))) {
-                o.checked = true;
-            }
-            options.push(o);
-        }
-
-        config.options = options;
         super(config);
-
     }
 }
 window.TimezoneMenu = TimezoneMenu;
@@ -6203,12 +6463,16 @@ class LoadingShade {
     }
 
     activate() {
-        this.container.parentNode.classList.add('shaded');
+        if (this.container.parentNode) {
+            this.container.parentNode.classList.add('shaded');
+        }
         this.container.removeAttribute('aria-hidden');
     }
 
     deactivate() {
-        this.container.parentNode.classList.remove('shaded');
+        if (this.container.parentNode) {
+            this.container.parentNode.classList.remove('shaded');
+        }
         this.container.setAttribute('aria-hidden', 'true');
     }
 
@@ -8895,6 +9159,11 @@ class DataGrid extends Panel {
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
 
+            warehouse: null, // A BusinessObject singleton.  If present,
+                             // the grid will ignore any values in fields, data, and source
+                             // and will instead pull all information from the warehouse
+                             // The grid will be registered with the warehouse and will
+                             // be updated when the warehouse updates
             fields: [],  // The data fields for the grid and how they behave.
             data: null,   // The data to throw into the grid on load. This is an array of rows.
             source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
@@ -8997,21 +9266,24 @@ class DataGrid extends Panel {
         }
 
         // Need to turn these into GridFields if they aren't already
-        if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
+        if (this.warehouse) {
+            this.fields = this.warehouse.fields;
+            this.identifier = this.warehouse.identifier;
+        } else if ((this.fields.length > 0) && (!GridField.prototype.isPrototypeOf(this.fields[0]))) {
             let nf = [];
             for (let f of this.fields) {
-                let x = new GridField(f);
                 nf.push(new GridField(f));
             }
             this.fields = nf;
+            for (let f of this.fields) {
+                if (f.identifier) { this.identifier = f.name; }
+            }
         }
 
-        for (let f of this.fields) {
-            if (f.identifier) { this.identifier = f.name; }
-        }
         this.activefilters = [];
         this.loadstate();
 
+        this.shade.activate();
         setTimeout(function() {
            me.fillData();
         }, 100);
@@ -9022,10 +9294,13 @@ class DataGrid extends Panel {
      */
     fillData() {
         const me = this;
-
-        this.shade.activate();
-
-        if (this.data) {
+        if (this.warehouse) {
+            this.warehouse.load(function(data) {
+                me.update(data);
+                me.postLoad();
+                me.shade.deactivate();
+            });
+        } else if (this.data) {
             for (let rdata of this.data) {
                 this.gridbody.appendChild(this.buildRow(rdata));
             }
@@ -9438,6 +9713,12 @@ class DataGrid extends Panel {
         dialog.open();
     }
 
+    /**
+     * Build a form for a data row.
+     * @param rowdata the row data
+     * @param mode the type of form to create (edit|duplicate|create|delete|view)
+     * @return a SimpleForm configuration
+     */
     buildForm(rowdata, mode) {
         const me = this;
         let form = {
@@ -11021,6 +11302,9 @@ class DataGrid extends Panel {
         this.config.updatehook = updatehook;
     }
 
+    get warehouse() { return this.config.warehouse; }
+    set warehouse(warehouse) { this.config.warehouse = warehouse; }
+
 }
 window.DataGrid = DataGrid;
 class GridField {
@@ -11197,12 +11481,11 @@ class GridField {
 
     /**
      * Get a form element for this data field.
-     * @param value The value of the input field (optional)
+     * @param value (optional) The value of the input field
      * @param config (optional) the config to use
      * @return {HiddenField|NumberInput|DateInput|BooleanToggle|EmailInput}
      */
     getElement(value, config) {
-        const me = this;
         let e;
         if (!config) {
             config = {
@@ -11260,7 +11543,6 @@ class GridField {
                 e = new TextInput(config);
                 break;
         }
-
         return e;
     }
 
@@ -11995,6 +12277,18 @@ class SimpleForm {
                 console.log(`No handler defined for form ${this.id} :: ${this.name}`);
             }
         }
+    }
+
+    /**
+     * Get the form value as a dictionary
+     * @return the values of the form as a key=value dictionary
+     */
+    dictionary() {
+        let dictionary = {};
+        for (let i of this.elements) {
+            dictionary[i.name] = i.value;
+        }
+        return dictionary;
     }
 
     /**
