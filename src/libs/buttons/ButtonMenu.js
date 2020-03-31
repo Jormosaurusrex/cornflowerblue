@@ -166,7 +166,9 @@ class ButtonMenu extends SimpleButton {
             case 'southwest':
             default:
                 self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.right = `${offsetRight - (self.button.clientWidth / 2)}px`;
+                self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
+
+                //self.menu.style.right = `${offsetRight - (self.button.clientWidth)}px`;
                 break;
         }
 
