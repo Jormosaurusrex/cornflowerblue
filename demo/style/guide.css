@@ -26,7 +26,6 @@ div#container {
 }
 @media (max-width: 599px) {
   div#container {
-    display: block;
     margin: 0;
     width: 100%;
     min-width: 100%;
@@ -70,6 +69,7 @@ div#container header h1.cfbtitle:after {
 @media (max-width: 599px) {
   div#container header {
     position: relative;
+    top: unset;
     height: var(--mobile-banner-height);
   }
 }
@@ -81,8 +81,8 @@ div#container nav {
 }
 @media (max-width: 599px) {
   div#container nav {
-    --tabbar-box-shadow: var(--panel-shadow);
     padding: 0;
+    top: 0;
   }
   div#container nav div.responsivebox div.menutitle {
     text-transform: uppercase;
@@ -119,6 +119,9 @@ div#container main {
   div#container main {
     overflow: scroll;
     padding: 2em 1em 2em 1em;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
   }
 }
 

@@ -4806,35 +4806,35 @@ div.tablist-container.responsive ul.tabbar {
     background-color: var(--tabbar-collapsed-open-menu-color);
     width: 100%;
     transition: all 0.1s;
+    padding: 0 0 0 4em;
   }
   nav.tablist-container.responsive ul.tabbar li,
 div.tablist-container.responsive ul.tabbar li {
     margin: 0;
     width: 100%;
     display: none;
+    height: unset;
+    max-height: unset;
   }
-  nav.tablist-container.responsive ul.tabbar li a,
-div.tablist-container.responsive ul.tabbar li a {
+  nav.tablist-container.responsive ul.tabbar li > a,
+div.tablist-container.responsive ul.tabbar li > a {
     width: 100%;
     height: 2em;
     min-height: 2em;
     max-height: 2em;
     font-size: 1em;
-    padding: 0.5em 1em 0.5em 4em;
+    padding: 0.5em 1em 0.5em 0;
     justify-content: flex-start;
   }
-  nav.tablist-container.responsive ul.tabbar li a[aria-selected=true],
-div.tablist-container.responsive ul.tabbar li a[aria-selected=true] {
+  nav.tablist-container.responsive ul.tabbar li > a[aria-selected=true],
+div.tablist-container.responsive ul.tabbar li > a[aria-selected=true] {
     box-shadow: inset 0.5em 0 0 var(--tabbar-selected-tab-highlight-color);
   }
   nav.tablist-container.responsive[aria-expanded=true],
 div.tablist-container.responsive[aria-expanded=true] {
     min-height: 90vh;
     max-height: 90vh;
-  }
-  nav.tablist-container.responsive[aria-expanded=true] div.responsivebox,
-div.tablist-container.responsive[aria-expanded=true] div.responsivebox {
-    background-color: var(--tabbar-collapsed-open-background-color);
+    bottom: 0;
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar,
 div.tablist-container.responsive[aria-expanded=true] ul.tabbar {
@@ -4843,9 +4843,34 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar {
     max-height: unset;
     overflow: scroll;
   }
-  nav.tablist-container.responsive[aria-expanded=true] ul.tabbar li,
-div.tablist-container.responsive[aria-expanded=true] ul.tabbar li {
+  nav.tablist-container.responsive[aria-expanded=true] ul.tabbar > li,
+div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li {
     display: block;
+    min-height: unset;
+  }
+  nav.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu,
+div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu {
+    border-top: 0.1em solid var(--tabbar-collapsed-open-background-color);
+    display: block;
+    justify-content: flex-end;
+    position: relative;
+    top: unset;
+    background-color: unset;
+    filter: none;
+  }
+  nav.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu > li,
+div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu > li {
+    display: block;
+    min-height: unset;
+  }
+  nav.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu > li > a,
+div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu > li > a {
+    background-color: unset;
+    justify-content: flex-end;
+  }
+  nav.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu:before,
+div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu:before {
+    display: none;
   }
 }
 

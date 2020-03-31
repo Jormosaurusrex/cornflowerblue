@@ -183,7 +183,6 @@ class CornflowerBlueDemo {
      */
     constructor() {
         this.body = document.body;
-        this.body.classList.add('noisy');
 
         this.main = document.getElementById('articlebox');
         this.build();
@@ -227,6 +226,7 @@ class CornflowerBlueDemo {
 
         this.container = document.getElementById('container');
 
+        /*
         let tabs = [
             { label: 'Intro', id: 'intro' },
             { label: 'cornflowerblue', id: 'wiki' },
@@ -247,8 +247,6 @@ class CornflowerBlueDemo {
             { label: 'Progress Meters', id: 'progressmeter' },
             { label: 'Data Grid', id: 'datagrid' }
         ];
-
-
         let newtabs = [
             { label: 'Intro', id: 'intro' },
             { label: 'cornflowerblue', id: 'wiki' },
@@ -275,6 +273,7 @@ class CornflowerBlueDemo {
             { label: 'Progress Meters', id: 'progressmeter' },
             { label: 'Data Grid', id: 'datagrids' }
         ];
+         */
         let tabstight = [
             { label: 'Intro', id: 'intro' },
             { label: 'cornflowerblue', id: 'wiki' },

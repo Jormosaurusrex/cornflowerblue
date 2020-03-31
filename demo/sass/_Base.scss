@@ -4,7 +4,6 @@
   --contentbox-width: 60em;
   --content-width: 48em;
 }
-
 body {
   background-color: var(--grey-darkest);
   font-family: var(--default-font-family);
@@ -12,7 +11,6 @@ body {
   background-image: url('../image/med_blue_parchment.png');
   background-attachment: fixed;
 }
-
 div#container {
   display: flex;
   flex-direction: column;
@@ -24,7 +22,6 @@ div#container {
   background-color: var(--canvas-color-primary);
   position: relative;
   @include for-phone-only {
-    display: block;
     margin: 0;
     width: 100%;
     min-width: 100%;
@@ -63,6 +60,7 @@ div#container {
     }
     @include for-phone-only {
       position: relative;
+      top: unset;
       height: var(--mobile-banner-height);
     }
   }
@@ -72,8 +70,8 @@ div#container {
     position: sticky;
     top: 5em;
     @include for-phone-only {
-      --tabbar-box-shadow: var(--panel-shadow);
       padding: 0;
+      top: 0;
       div.responsivebox {
         div.menutitle {
           text-transform: uppercase;
@@ -112,6 +110,9 @@ div#container {
     @include for-phone-only {
       overflow: scroll;
       padding: 2em 1em 2em 1em;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
     }
   }
 }
