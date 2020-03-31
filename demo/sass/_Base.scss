@@ -13,13 +13,6 @@ body {
   background-attachment: fixed;
 }
 
-#content-jump {
-  position: absolute;
-  left: 1em;
-  top: 1em;
-  z-index: 90000;
-}
-
 div#container {
   display: flex;
   flex-direction: column;
@@ -50,6 +43,12 @@ div#container {
     background-size: cover;
     background-position: bottom;
     background-repeat: no-repeat;
+    #content-jump {
+      position: absolute;
+      left: 1em;
+      bottom: 1em;
+      z-index: 90000;
+    }
     h1.cfbtitle {
       color: #6495ED;
       margin: 0 .5em .5em .5em;

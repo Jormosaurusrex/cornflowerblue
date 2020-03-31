@@ -35,7 +35,6 @@ class TabBar {
      */
     constructor(config) {
         this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
-        this.tabmap = {};
         if (!this.id) { this.id = `tabbar-${CFBUtils.getUniqueKey(5)}`; }
     }
 
@@ -70,27 +69,9 @@ class TabBar {
 
     /**
      * Builds the DOM.
-     * @returns the container object
      */
     buildContainer() {
         const me = this;
-
-        this.list = document.createElement('ul');
-        this.list.setAttribute('role', 'tablist');
-        this.list.classList.add('tabbar');
-
-        for (let c of this.classes) {
-            this.list.classList.add(c);
-        }
-
-        if (this.vertical) {
-            this.list.classList.add('vertical');
-        }
-        let order = 1;
-
-        for (let tabdef of this.tabs) {
-            order = this.buildTab(tabdef, order);
-        }
 
         if (this.navigation) {
             this.container = document.createElement('nav');
@@ -127,29 +108,66 @@ class TabBar {
         this.container.appendChild(this.list);
     }
 
+    /**
+     * Build the actual tab list object
+     */
+    buildList() {
+        this.list = document.createElement('ul');
+        this.list.setAttribute('role', 'tablist');
+        this.list.classList.add('tabbar');
+
+        for (let c of this.classes) {
+            this.list.classList.add(c);
+        }
+
+        if (this.vertical) {
+            this.list.classList.add('vertical');
+        }
+        let order = 1;
+
+        for (let tabdef of this.tabs) {
+            order = this.buildTab(tabdef, order);
+        }
+    }
+
+    /**
+     * Build an individual tab
+     * @param tabdef the tab definition
+     * @param order the taborder
+     * @param parent the parent tab object, if any (this will be an li)
+     * @return the next in the order
+     */
     buildTab(tabdef, order, parent) {
         const me = this;
-        let next = order + 1,
+        let parentname = 'root',
+            next = order + 1,
             previous = order - 1;
 
-        if (previous < 1) {
-            previous = 1;
-        }
+        if (previous < 1) { previous = 0; }
 
         if ((!tabdef.label) && (!tabdef.icon)) {
             console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
             return null;
         }
 
+        let li = document.createElement('li');
+        li.setAttribute('role', 'none');
+        li.setAttribute('data-tabno', `${order}`);
+        if (tabdef.classes) {
+            for (let c of tabdef.classes) {
+                li.classList.add(c);
+            }
+        }
+
         let link = document.createElement('a');
-        link.setAttribute('data-tabtext', `${tabdef.label}`);
-        link.setAttribute('data-tabno', `${order}`);
+        link.setAttribute('data-tabtext', tabdef.label);
+        link.setAttribute('data-tabno', order);
         link.setAttribute('id', tabdef.id);
         link.setAttribute('data-tabid', tabdef.id);
+        link.setAttribute('tabindex', '-1'); // always set this here
         if (!this.navigation) {
             link.setAttribute('role', 'menuitem');
         }
-
         if (tabdef.icon) {
             link.appendChild(IconFactory.icon(tabdef.icon));
         }
@@ -159,44 +177,30 @@ class TabBar {
             link.appendChild(linktext);
         }
 
-        let maplink = document.createElement('li');
-        maplink.setAttribute('role', 'none');
-        maplink.setAttribute('data-tabno', `${order}`);
-        maplink.appendChild(link);
-        if (tabdef.classes) {
-            for (let c of tabdef.classes) {
-                maplink.classList.add(c);
-            }
-        }
-
-        this.tabmap[tabdef.id] = maplink;
-
-        if (this.animation) {
-            this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
-            this.tabmap[tabdef.id].classList.add(this.animation);
-        }
+        li.appendChild(link);
 
         if (parent) {
-            let clink = parent.querySelector('a');
-            link.setAttribute('data-parent', `${clink.getAttribute('data-tabid')}`);
+            parentname = parent.getAttribute('data-tabid');
             let plist = parent.querySelector('ul');
             if (!plist) {
                 plist = document.createElement('ul');
                 plist.setAttribute('role', 'menu');
-                plist.setAttribute('aria-label', tabdef.label);
                 plist.classList.add('submenu');
                 parent.appendChild(plist);
             }
-            plist.append(this.tabmap[tabdef.id]); // attach to child list
+            plist.appendChild(li); // attach to child list
         } else {
-            this.list.appendChild(this.tabmap[tabdef.id]); // attach to root list
+            if (this.animation) {
+                li.style.setProperty('--anim-order', order); // used in animations
+                li.classList.add(this.animation);
+            }
+            this.list.appendChild(li); // attach to root list
         }
-
+        link.setAttribute('data-parent', parentname);
+        li.setAttribute('data-parent', parentname);
         order++;
-        link.setAttribute('tabindex', '-1'); // always set this here
 
         // Is this a master menu item?
-
         if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
             link.classList.add('mastertab');
             link.setAttribute('aria-haspopup', true);
@@ -204,29 +208,28 @@ class TabBar {
             if (this.submenuicon) {
                 link.appendChild(IconFactory.icon(this.submenuicon));
             }
-
             // Add the subtabs ins
             let localorder = 1;
             for (let subdef of tabdef.subtabs) {
-                localorder = this.buildTab(subdef, localorder, this.tabmap[tabdef.id]);
+                localorder = this.buildTab(subdef, localorder, li);
             }
-
             link.addEventListener('keydown', function (e) {
-                let prevtab = maplink.parentNode.querySelector(`a[data-tabno='${previous}']`);
-                let nexttab = maplink.parentNode.querySelector(`a[data-tabno='${next}']`);
-                console.log(maplink.parentNode.querySelectorAll(`li> [data-tabno='${next}']`));
-                console.log(maplink.parentNode);
-                e.preventDefault();
-                e.stopPropagation();
-                console.log(`master ${e.key} :: ${previous} :: ${next}`);
+                let setname = li.getAttribute('data-parent');
+                let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
+                let nexttab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${next}'] a[data-tabno='${next}']`);
+
                 switch (e.key) {
                     case 'ArrowLeft':
                     case 'ArrowUp':
+                        e.preventDefault();
+                        e.stopPropagation();
                         if (prevtab) {
                             prevtab.focus();
                         }
                         break;
                     case 'ArrowRight':
+                        e.preventDefault();
+                        e.stopPropagation();
                         if (nexttab) {
                             nexttab.focus();
                         }
@@ -234,46 +237,62 @@ class TabBar {
                     case 'ArrowDown':
                     case 'Enter':
                     case 'Space':
-                    default:
-                        let ul = maplink.querySelector('ul');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        let ul = li.querySelector('ul');
                         if (ul) {
                             let children = ul.querySelectorAll('li a');
                             children[0].focus();
                         }
                         break;
+                    default:
+                        break;
                 }
             });
         } else { // Non-Master Tabs
             link.addEventListener('keydown', function (e) {
-                console.log(`normal ${e.key} :: ${previous} :: ${next}`);
-                let prevtab = maplink.parentNode.querySelector(`a[data-tabno='${previous}']`);
-                let nexttab = maplink.parentNode.querySelector(`a[data-tabno='${next}']`);
-                e.preventDefault();
-                e.stopPropagation();
+
+                let setname = li.getAttribute('data-parent');
+                let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
+                let nexttab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${next}'] a[data-tabno='${next}']`);
+                let parenttab;
+                if (parent) {
+                    parenttab = parent.querySelector('a');
+                }
+
                 switch (e.key) {
                     case 'ArrowLeft':
                     case 'ArrowUp':
-                        if (order === 1) {
-                            console.log('order');
-                            let ttab = parent.querySelector('a');
-                            if (ttab) {
-                                console.lot(ttab);
-                                ttab.focus();
-                            }
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if ((previous === 0) && (parenttab)) {
+                            parenttab.focus();
                         } else if (prevtab) {
                             prevtab.focus();
                         }
                         break;
                     case 'ArrowRight':
                     case 'ArrowDown':
+                        e.preventDefault();
+                        e.stopPropagation();
                         if (nexttab) {
                             nexttab.focus();
                         }
                         break;
+                    case 'Escape':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (parenttab) {
+                            parenttab.focus();
+                        }
+                        break;
                     case 'Enter':
                     case 'Space':
-                    default:
+                        e.preventDefault();
+                        e.stopPropagation();
                         link.click();
+                        break;
+                    default:
                         break;
                 }
             });
@@ -293,6 +312,7 @@ class TabBar {
                 me.select(tabdef.id);
             }, 100);
         }
+
         return order; // send this back.
     }
 
@@ -391,7 +411,10 @@ class TabBar {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
-    get list() { return this._list; }
+    get list() {
+        if (!this._list) { this.buildList(); }
+        return this._list;
+    }
     set list(list) { this._list = list; }
 
     get menuicon() { return this.config.menuicon; }
@@ -420,9 +443,6 @@ class TabBar {
 
     get submenuicon() { return this.config.submenuicon; }
     set submenuicon(submenuicon) { this.config.submenuicon = submenuicon; }
-
-    get tabmap() { return this._tabmap; }
-    set tabmap(tabmap) { this._tabmap = tabmap; }
 
     get tabs() { return this.config.tabs; }
     set tabs(tabs) { this.config.tabs = tabs; }
