@@ -23,6 +23,9 @@ body {
 div#container {
   display: flex;
   flex-direction: column;
+  align-content: stretch;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   min-width: var(--contentbox-width);
@@ -43,7 +46,7 @@ div#container {
     align-items: flex-end;
     justify-content: flex-end;
     position: sticky;
-    top: -3em;
+    top: -4em;
     height: var(--banner-height);
     z-index: 1500;
     background-image: url('../image/cfb-banner.png');
@@ -67,57 +70,52 @@ div#container {
       height: var(--mobile-banner-height);
     }
   }
-  div.displaybox {
+  nav {
+    --tabbar-tab-background-color: var(--tabbar-selected-tab-background-color);
+    --tabbar-background-color: var(--tabbar-selected-tab-background-color);
+    position: sticky;
+    top: 5em;
+    @include for-phone-only {
+      --tabbar-box-shadow: var(--panel-shadow);
+      padding: 0;
+      div.responsivebox {
+        div.menutitle {
+          text-transform: uppercase;
+        }
+      }
+      li {
+        a {
+          text-transform: uppercase;
+          &[aria-selected="true"] {
+            box-shadow: none;
+            background-color: transparent;
+            color: var(--tabbar-selected-tab-text-color);
+            text-shadow: var(--tabbar-selected-tab-text-shadow);
+          }
+        }
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
+      }
+    }
+  }
+  main {
+    align-self: center;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    width: 100%;
+    justify-content: center;
     z-index: 300;
     position: relative;
     background-color: var(--canvas-color-primary);
-    padding: 0;
+    padding: 2em;
+    width: var(--content-width);
+    min-width: var(--content-width);
+    max-width: var(--content-width);
     scroll-snap-type: y mandatory;
     @include for-phone-only {
       overflow: scroll;
       padding: 2em 1em 2em 1em;
-    }
-    nav {
-      --tabbar-box-shadow: none;
-      --tabbar-tab-background-color: transparent;
-      --tabbar-background-color: transparent;
-      padding-top: 2em;
-      @include for-phone-only {
-        --tabbar-box-shadow: var(--panel-shadow);
-        position: sticky;
-        top: 0;
-        padding: 0;
-        div.responsivebox {
-          div.menutitle {
-            text-transform: uppercase;
-          }
-        }
-        li {
-          a {
-            text-transform: uppercase;
-            &[aria-selected="true"] {
-              box-shadow: none;
-              background-color: transparent;
-              color: var(--tabbar-selected-tab-text-color);
-              text-shadow: var(--tabbar-selected-tab-text-shadow);
-            }
-          }
-          &:hover {
-            background-color: transparent;
-            border-color: transparent;
-          }
-        }
-      }
-    }
-    main {
-      padding: 2em;
-      width: 100%;
-      min-width: var(--content-width);
-      max-width: var(--content-width);
     }
   }
 }

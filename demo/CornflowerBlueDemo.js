@@ -183,11 +183,11 @@ class CornflowerBlueDemo {
      */
     constructor() {
         this.body = document.body;
-        this.displaybox = document.getElementById('displaybox');
+        this.body.classList.add('noisy');
 
+        this.main = document.getElementById('articlebox');
         this.build();
 
-        this.body.classList.add('noisy');
 
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
@@ -205,10 +205,12 @@ class CornflowerBlueDemo {
         for (let a of articles) {
             a.setAttribute('aria-hidden', true);
         }
-        document.getElementById(`t-${tab}`).removeAttribute('aria-hidden');
+        let t = document.getElementById(`t-${tab}`);
+        if (t) {
+            t.removeAttribute('aria-hidden');
+        }
 
         this.navigation.select(tab);
-
         if(history.pushState) {
             history.pushState(null, null, `#${tab}`);
         } else {
@@ -246,7 +248,7 @@ class CornflowerBlueDemo {
             { label: 'Data Grid', id: 'datagrid' }
         ];
 
-        /*
+
         let newtabs = [
             { label: 'Intro', id: 'intro' },
             { label: 'cornflowerblue', id: 'wiki' },
@@ -313,21 +315,19 @@ class CornflowerBlueDemo {
                 ]
             },
         ];
-        */
+
 
         this.navigation = new TabBar({
-            vertical: true,
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: tabs,
+            tabs: newtabs,
             action: function(tab) {
                 me.switchTab(tab);
             }
         });
 
-        //this.container.insertBefore(this.navigation.container, this.displaybox);
-        this.displaybox.prepend(this.navigation.container);
+        this.container.insertBefore(this.navigation.container, this.main);
 
         this.grindButtons();
         this.grindCheckboxes();
@@ -1907,14 +1907,8 @@ class CornflowerBlueDemo {
     get body() { return this._body; }
     set body(body) { this._body = body; }
 
-    get codebox() { return this._codebox; }
-    set codebox(codebox) { this._codebox = codebox; }
-
     get container() { return this._container; }
     set container(container) { this._container = container; }
-
-    get displaybox() { return this._displaybox; }
-    set displaybox(displaybox) { this._displaybox = displaybox; }
 
     get skipbutton() { return this._skipbutton; }
     set skipbutton(skipbutton) { this._skipbutton = skipbutton; }
@@ -1922,9 +1916,10 @@ class CornflowerBlueDemo {
     get dialog() { return this._dialog; }
     set dialog(dialog) { this._dialog = dialog; }
 
+    get main() { return this._main; }
+    set main(main) { this._main = main; }
+
     get navigation() { return this._navigation; }
     set navigation(navigation) { this._navigation = navigation; }
-
-
 
 }

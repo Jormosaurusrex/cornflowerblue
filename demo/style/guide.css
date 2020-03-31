@@ -23,6 +23,9 @@ body {
 div#container {
   display: flex;
   flex-direction: column;
+  align-content: stretch;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   min-width: var(--contentbox-width);
@@ -46,7 +49,7 @@ div#container header {
   align-items: flex-end;
   justify-content: flex-end;
   position: sticky;
-  top: -3em;
+  top: -4em;
   height: var(--banner-height);
   z-index: 1500;
   background-image: url("../image/cfb-banner.png");
@@ -74,58 +77,53 @@ div#container header h1.cfbtitle:after {
     height: var(--mobile-banner-height);
   }
 }
-div#container div.displaybox {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 100%;
-  z-index: 300;
-  position: relative;
-  background-color: var(--canvas-color-primary);
-  padding: 0;
-  scroll-snap-type: y mandatory;
+div#container nav {
+  --tabbar-tab-background-color: var(--tabbar-selected-tab-background-color);
+  --tabbar-background-color: var(--tabbar-selected-tab-background-color);
+  position: sticky;
+  top: 5em;
 }
 @media (max-width: 599px) {
-  div#container div.displaybox {
-    overflow: scroll;
-    padding: 2em 1em 2em 1em;
-  }
-}
-div#container div.displaybox nav {
-  --tabbar-box-shadow: none;
-  --tabbar-tab-background-color: transparent;
-  --tabbar-background-color: transparent;
-  padding-top: 2em;
-}
-@media (max-width: 599px) {
-  div#container div.displaybox nav {
+  div#container nav {
     --tabbar-box-shadow: var(--panel-shadow);
-    position: sticky;
-    top: 0;
     padding: 0;
   }
-  div#container div.displaybox nav div.responsivebox div.menutitle {
+  div#container nav div.responsivebox div.menutitle {
     text-transform: uppercase;
   }
-  div#container div.displaybox nav li a {
+  div#container nav li a {
     text-transform: uppercase;
   }
-  div#container div.displaybox nav li a[aria-selected=true] {
+  div#container nav li a[aria-selected=true] {
     box-shadow: none;
     background-color: transparent;
     color: var(--tabbar-selected-tab-text-color);
     text-shadow: var(--tabbar-selected-tab-text-shadow);
   }
-  div#container div.displaybox nav li:hover {
+  div#container nav li:hover {
     background-color: transparent;
     border-color: transparent;
   }
 }
-div#container div.displaybox main {
+div#container main {
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  z-index: 300;
+  position: relative;
+  background-color: var(--canvas-color-primary);
   padding: 2em;
-  width: 100%;
+  width: var(--content-width);
   min-width: var(--content-width);
   max-width: var(--content-width);
+  scroll-snap-type: y mandatory;
+}
+@media (max-width: 599px) {
+  div#container main {
+    overflow: scroll;
+    padding: 2em 1em 2em 1em;
+  }
 }
 
 article {
