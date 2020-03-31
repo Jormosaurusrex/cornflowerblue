@@ -108,6 +108,8 @@
   --interior-shadows-inside-dark: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
 
+  --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+
   --wide-measure: 40em;
   --thin-measure: 25em;
 
@@ -535,10 +537,12 @@
 
   // TabBars
   --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-background-color: var(--ultralight);
+  --tabbar-background-color: var(--canvas-color-primary);
+  --tabbar-subtab-background-color: var(--canvas-color-secondary);
   --tabbar-interior-box-shadow: var(--interior-shadows-inside);
   --tabbar-border-radius: var(--border-radius);
 
+  --tabbar-tab-height: 3em;
   --tabbar-tab-box-shadow: none;
   --tabbar-tab-text-color: var(--grey-dark);
   --tabbar-tab-background-color: var(--ultralight);

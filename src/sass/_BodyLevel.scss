@@ -91,7 +91,7 @@ form.button-menu {
   border-radius: var(--button-border-radius);
   background-color: var(--button-menu-background-color);
   color: var(--button-menu-item-text-color);
-  filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  filter: var(--panel-shadow-filter);
   &[aria-hidden='true'] {
     display: none;
   }

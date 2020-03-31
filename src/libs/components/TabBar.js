@@ -135,9 +135,6 @@ class TabBar {
         if (previous < 1) {
             previous = 1;
         }
-        if (next > this.tabs.length) {
-            next = this.tabs.length;
-        }
 
         if ((!tabdef.label) && (!tabdef.icon)) {
             console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
@@ -164,6 +161,7 @@ class TabBar {
 
         let maplink = document.createElement('li');
         maplink.setAttribute('role', 'none');
+        maplink.setAttribute('data-tabno', `${order}`);
         maplink.appendChild(link);
         if (tabdef.classes) {
             for (let c of tabdef.classes) {
@@ -206,31 +204,77 @@ class TabBar {
             if (this.submenuicon) {
                 link.appendChild(IconFactory.icon(this.submenuicon));
             }
+
+            // Add the subtabs ins
+            let localorder = 1;
             for (let subdef of tabdef.subtabs) {
-                order = this.buildTab(subdef, order, this.tabmap[tabdef.id]);
+                localorder = this.buildTab(subdef, localorder, this.tabmap[tabdef.id]);
             }
-            // XXX SET open/close linking
-        } else {
-            // set link events here.
+
             link.addEventListener('keydown', function (e) {
+                let prevtab = maplink.parentNode.querySelector(`a[data-tabno='${previous}']`);
+                let nexttab = maplink.parentNode.querySelector(`a[data-tabno='${next}']`);
+                console.log(maplink.parentNode.querySelectorAll(`li> [data-tabno='${next}']`));
+                console.log(maplink.parentNode);
+                e.preventDefault();
+                e.stopPropagation();
+                console.log(`master ${e.key} :: ${previous} :: ${next}`);
                 switch (e.key) {
                     case 'ArrowLeft':
                     case 'ArrowUp':
-                        e.preventDefault();
-                        e.stopPropagation();
-                        me.list.querySelector(`[data-tabno='${previous}']`).focus();
+                        if (prevtab) {
+                            prevtab.focus();
+                        }
+                        break;
+                    case 'ArrowRight':
+                        if (nexttab) {
+                            nexttab.focus();
+                        }
+                        break;
+                    case 'ArrowDown':
+                    case 'Enter':
+                    case 'Space':
+                    default:
+                        let ul = maplink.querySelector('ul');
+                        if (ul) {
+                            let children = ul.querySelectorAll('li a');
+                            children[0].focus();
+                        }
+                        break;
+                }
+            });
+        } else { // Non-Master Tabs
+            link.addEventListener('keydown', function (e) {
+                console.log(`normal ${e.key} :: ${previous} :: ${next}`);
+                let prevtab = maplink.parentNode.querySelector(`a[data-tabno='${previous}']`);
+                let nexttab = maplink.parentNode.querySelector(`a[data-tabno='${next}']`);
+                e.preventDefault();
+                e.stopPropagation();
+                switch (e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        if (order === 1) {
+                            console.log('order');
+                            let ttab = parent.querySelector('a');
+                            if (ttab) {
+                                console.lot(ttab);
+                                ttab.focus();
+                            }
+                        } else if (prevtab) {
+                            prevtab.focus();
+                        }
                         break;
                     case 'ArrowRight':
                     case 'ArrowDown':
-                        e.preventDefault();
-                        e.stopPropagation();
-                        me.list.querySelector(`[data-tabno='${next}']`).focus();
+                        if (nexttab) {
+                            nexttab.focus();
+                        }
                         break;
                     case 'Enter':
                     case 'Space':
+                    default:
                         link.click();
                         break;
-
                 }
             });
             link.addEventListener('click', function (e) {

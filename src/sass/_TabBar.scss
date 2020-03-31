@@ -10,16 +10,17 @@ ul.tabbar {
   box-shadow: var(--tabbar-box-shadow);
   overflow: visible;
   padding: 0;
-  height: 3em;
-  min-height: 3em;
-  max-height: 3em;
-  > li {
+  li {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-content: stretch;
     margin: 0;
     padding: 0;
     position: relative;
+    height: var(--tabbar-tab-height);
+    min-height: var(--tabbar-tab-height);
+    max-height: var(--tabbar-tab-height);
     &.mobileonly {
       display: none;
       @include for-phone-only {
@@ -33,10 +34,11 @@ ul.tabbar {
       color: var(--tabbar-tab-text-color);
       text-shadow: var(--tabbar-tab-text-shadow);
       cursor: pointer;
+      width: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       flex-grow: 1;
       font-size: 1.1em;
       transition: all .1s linear;
@@ -52,14 +54,6 @@ ul.tabbar {
         background-color: var(--tabbar-hover-tab-background-color);
         text-shadow: var(--tabbar-hover-tab-text-shadow);
         filter: none;
-      }
-      @include for-hover-only {
-        &:hover {
-          color: var(--tabbar-hover-tab-text-color);
-          background-color: var(--tabbar-hover-tab-background-color);
-          text-shadow: var(--tabbar-hover-tab-text-shadow);
-          filter: none;
-        }
       }
       &:focus {
         outline: var(--hot-text-color) dashed .1em;
@@ -77,9 +71,15 @@ ul.tabbar {
     }
     @include for-hover-only {
       &:hover {
-        background-color: var(--tabbar-hover-tab-background-color);
-        border-color: var(--tabbar-hover-tab-highlight-color);
-        color: var(--tabbar-hover-tab-text-color);
+        //background-color: var(--tabbar-hover-tab-background-color);
+        //border-color: var(--tabbar-hover-tab-highlight-color);
+        //color: var(--tabbar-hover-tab-text-color);
+        > a {
+          color: var(--tabbar-hover-tab-text-color);
+          background-color: var(--tabbar-hover-tab-background-color);
+          text-shadow: var(--tabbar-hover-tab-text-shadow);
+          filter: none;
+        }
       }
     }
     &[aria-selected="true"] {
@@ -93,33 +93,51 @@ ul.tabbar {
         }
       }
     }
-    > ul.submenu {
+    &:focus-within {
+      color: var(--tabbar-hover-tab-text-color);
+      text-shadow: var(--tabbar-hover-tab-text-shadow);
+    }
+    ul.submenu {
       display: none;
-      z-index: 5001;
       width: 100%;
       position: absolute;
       left: 0;
       top: 3em;
       overflow: visible;
-      background-color: var(--light);
       padding: 0;
+      list-style-type: none;
+      border-radius: var(--tabbar-border-radius);
+      z-index: 3;
+      background-color: var(--tabbar-subtab-background-color);
+      --tabbar-tab-background-color: var(--tabbar-subtab-background-color);
+      box-shadow: none;
+      filter: var(--panel-shadow-filter);
+      &:before {
+        display: none;
+        content: "";
+        width: 0;
+        height: 0;
+        position: absolute;
+        right: 1.7em;
+        top: -.7em;
+        border-width: 0 .7em .7em .7em;
+        border-style: solid;
+        border-color: var(--tabbar-subtab-background-color) transparent;
+      }
       > li {
         align-items: flex-start;
         margin: 0;
         > a {
-          align-items: center;
-          justify-content: flex-start;
-          height: 2em;
-          min-height: 2em;
-          max-height: 2em;
-          font-size: 1em;
-          width: 100%;
+
         }
       }
     }
     &:focus-within {
-      > ul.submenu {
+      ul.submenu {
         display: block;
+        &:before {
+          display: block;
+        }
       }
     }
   }

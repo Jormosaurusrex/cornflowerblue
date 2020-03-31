@@ -23,9 +23,6 @@ body {
 div#container {
   display: flex;
   flex-direction: column;
-  align-content: stretch;
-  align-items: center;
-  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   min-width: var(--contentbox-width);

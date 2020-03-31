@@ -321,7 +321,7 @@ class CornflowerBlueDemo {
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: newtabs,
+            tabs: tabstight,
             action: function(tab) {
                 me.switchTab(tab);
             }
