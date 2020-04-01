@@ -163,12 +163,6 @@ div.example {
   div.checkbox {
     margin: 1em .5em 1em .5em
   }
-  button {
-    &.hexagon:nth-child(even) {
-      left: 0;
-      top: 0;
-    }
-  }
 }
 
 div.wiki {
@@ -179,6 +173,18 @@ div.wiki {
     display: inline-block;
     margin-bottom: -.1em;
   }
+  @include for-phone-only {
+    figure {
+      float: none;
+      margin: 1em 0 1em 0;
+      a {
+        text-align: center;
+      }
+    }
+  }
+  h2 {
+    white-space: nowrap;
+  }
   table.infobox {
     float: right;
     clear: right;
@@ -187,6 +193,16 @@ div.wiki {
     padding:1.5em;
     font-size: 80%;
     margin: 0 0 1em 1em;
+    width: 22em;
+    min-width: 22em;
+    max-width: 22em;
+    @include for-phone-only {
+      float: none;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      margin: 1em 0 1em 0;
+    }
     tr {
       display: flex;
       flex-direction:column;
@@ -222,13 +238,8 @@ table.glyphchart {
   }
 }
 
-
 body.modalopen {
   div.container {
     filter: blur(3px);
   }
-}
-
-img.banner-image {
-  width: 100%;
 }
