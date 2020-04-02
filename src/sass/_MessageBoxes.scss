@@ -34,6 +34,12 @@ div.messagebox {
         margin-bottom: 0;
       }
     }
+    @include for-phone-only {
+      flex-direction: column;
+      > span.icon {
+        align-self: center;
+      }
+    }
   }
   &.instructions {
     border: .1em dotted var(--instructions-border-color);
@@ -45,7 +51,7 @@ div.messagebox {
         flex-direction: column;
         flex-wrap: nowrap;
         margin: 0;
-        padding: 0 1.2em 0 1.2em;
+        padding: 0 0 0 1.2em;
         color: var(--instructions-text-color);
         text-shadow: var(--instructions-text-shadow);
       }
@@ -73,6 +79,17 @@ div.messagebox {
       div.payload {
         > span.icon {
           font-size: 50pt;
+        }
+      }
+    }
+    @include for-phone-only {
+      &.size-1,
+      &.size-2,
+      &.size-3 {
+        div.payload {
+          > span.icon {
+            font-size: 24pt;
+          }
         }
       }
     }

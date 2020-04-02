@@ -237,7 +237,7 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('id', `${this.id}-options`);
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('role', 'listbox');
-        this.listbox.classList.add('selectmenu-menu')
+        this.listbox.classList.add('selectmenu-menu');
         this.listbox.appendChild(this.optionlist);
 
         this.container.appendChild(this.listbox);
@@ -369,7 +369,7 @@ class SelectMenu extends InputElement {
             order++;
             this.optionlist.appendChild(o);
         }
-        this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
+        //this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
     }
 
     buildOption(def, order) {

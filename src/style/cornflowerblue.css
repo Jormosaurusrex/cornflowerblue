@@ -4172,6 +4172,14 @@ div.messagebox div.payload > span.icon {
 div.messagebox div.payload .content p:last-child {
   margin-bottom: 0;
 }
+@media (max-width: 599px) {
+  div.messagebox div.payload {
+    flex-direction: column;
+  }
+  div.messagebox div.payload > span.icon {
+    align-self: center;
+  }
+}
 div.messagebox.instructions {
   border: 0.1em dotted var(--instructions-border-color);
   background-color: var(--instructions-background-color);
@@ -4182,7 +4190,7 @@ div.messagebox.instructions div.payload ul {
   flex-direction: column;
   flex-wrap: nowrap;
   margin: 0;
-  padding: 0 1.2em 0 1.2em;
+  padding: 0 0 0 1.2em;
   color: var(--instructions-text-color);
   text-shadow: var(--instructions-text-shadow);
 }
@@ -4203,6 +4211,11 @@ div.messagebox.instructions.size-2 div.payload > span.icon {
 }
 div.messagebox.instructions.size-3 div.payload > span.icon {
   font-size: 50pt;
+}
+@media (max-width: 599px) {
+  div.messagebox.instructions.size-1 div.payload > span.icon, div.messagebox.instructions.size-2 div.payload > span.icon, div.messagebox.instructions.size-3 div.payload > span.icon {
+    font-size: 24pt;
+  }
 }
 div.messagebox.results {
   --color-base: var(--successbox-color-base);
@@ -4808,7 +4821,7 @@ div.tablist-container.responsive ul.tabbar {
     background-color: var(--tabbar-collapsed-open-menu-color);
     width: 100%;
     transition: all 0.1s;
-    padding: 0 0 0 4em;
+    padding: 0;
   }
   nav.tablist-container.responsive ul.tabbar li,
 div.tablist-container.responsive ul.tabbar li {
@@ -4817,6 +4830,7 @@ div.tablist-container.responsive ul.tabbar li {
     display: none;
     height: unset;
     max-height: unset;
+    padding: 0;
   }
   nav.tablist-container.responsive ul.tabbar li > a,
 div.tablist-container.responsive ul.tabbar li > a {
@@ -4824,8 +4838,7 @@ div.tablist-container.responsive ul.tabbar li > a {
     height: 2em;
     min-height: 2em;
     max-height: 2em;
-    font-size: 1em;
-    padding: 0.5em 1em 0.5em 0;
+    padding: 0.5em 1em 0.5em 4em;
     justify-content: flex-start;
   }
   nav.tablist-container.responsive ul.tabbar li > a[aria-selected=true],
