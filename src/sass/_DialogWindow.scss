@@ -162,6 +162,17 @@ div.window-container {
       height: auto;
       min-height: unset;
       max-height: 100vh;
+      &.isform {
+        div.content {
+          form {
+            div.contentbox {
+              div.elements {
+                min-width: 100%;
+              }
+            }
+          }
+        }
+      }
     }
   }
   div.trailer {

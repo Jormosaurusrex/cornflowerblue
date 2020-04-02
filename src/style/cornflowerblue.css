@@ -4502,6 +4502,9 @@ div.window-container div.dialog.isform div.content form div.actions {
     min-height: unset;
     max-height: 100vh;
   }
+  div.window-container div.dialog.isform div.content form div.contentbox div.elements {
+    min-width: 100%;
+  }
 }
 div.window-container div.trailer {
   padding: 1em;
