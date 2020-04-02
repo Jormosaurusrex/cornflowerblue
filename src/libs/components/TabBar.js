@@ -206,7 +206,9 @@ class TabBar {
             link.setAttribute('aria-haspopup', true);
             link.setAttribute('aria-expanded', false);
             if (this.submenuicon) {
-                link.appendChild(IconFactory.icon(this.submenuicon));
+                let sicon = IconFactory.icon(this.submenuicon);
+                sicon.classList.add('secondicon');
+                link.appendChild(sicon);
             }
             // Add the subtabs ins
             let localorder = 1;

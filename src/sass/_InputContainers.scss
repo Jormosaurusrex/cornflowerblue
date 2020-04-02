@@ -137,7 +137,7 @@ div.textarea-container {
     }
     &[aria-hidden=true] {
       opacity: 0;
-      padding: 0 0 0 0;
+      padding: 0;
       height: 0;
       li {
         display: none;
@@ -145,14 +145,13 @@ div.textarea-container {
     }
   }
   div.passivebox {
-    transition: all .2s;
+    transition: opacity .2s;
     background-color: var(--input-passivebox-background-color);
-    padding: var(--input-default-padding);
-    padding-left: 0;
     vertical-align: middle;
     color: var(--input-passivebox-text-color);
     width: 100%;
-    opacity: 0;
+    padding: var(--input-default-padding);
+    padding-left: 0;
     display: none;
   }
   &.minimal {
@@ -329,7 +328,6 @@ div.textarea-container {
       }
     }
   }
-
   &.passive {
     label {
       opacity: 1;
@@ -346,7 +344,6 @@ div.textarea-container {
     }
     div.passivebox {
       display: block;
-      opacity: 1;
       a {
         img {
           height: 3em;

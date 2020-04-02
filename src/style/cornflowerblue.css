@@ -2026,7 +2026,7 @@ div.textarea-container ul.messagebox li.warning {
 div.input-container ul.messagebox[aria-hidden=true],
 div.textarea-container ul.messagebox[aria-hidden=true] {
   opacity: 0;
-  padding: 0 0 0 0;
+  padding: 0;
   height: 0;
 }
 div.input-container ul.messagebox[aria-hidden=true] li,
@@ -2035,14 +2035,13 @@ div.textarea-container ul.messagebox[aria-hidden=true] li {
 }
 div.input-container div.passivebox,
 div.textarea-container div.passivebox {
-  transition: all 0.2s;
+  transition: opacity 0.2s;
   background-color: var(--input-passivebox-background-color);
-  padding: var(--input-default-padding);
-  padding-left: 0;
   vertical-align: middle;
   color: var(--input-passivebox-text-color);
   width: 100%;
-  opacity: 0;
+  padding: var(--input-default-padding);
+  padding-left: 0;
   display: none;
 }
 div.input-container.minimal,
@@ -2292,7 +2291,6 @@ div.textarea-container.passive ul.selectmenu {
 div.input-container.passive div.passivebox,
 div.textarea-container.passive div.passivebox {
   display: block;
-  opacity: 1;
 }
 div.input-container.passive div.passivebox a img,
 div.textarea-container.passive div.passivebox a img {
@@ -4554,6 +4552,11 @@ ul.tabbar li.mobileonly {
     display: flex;
   }
 }
+ul.tabbar li:focus-within > a {
+  background-color: var(--focus-color-half-solid);
+  color: var(--tabbar-hover-tab-text-color);
+  text-shadow: var(--tabbar-hover-tab-text-shadow);
+}
 ul.tabbar li > a {
   padding: 0 1em 0 1em;
   white-space: nowrap;
@@ -4595,6 +4598,9 @@ ul.tabbar li > a:focus {
 ul.tabbar li > a > span.icon {
   margin-right: 0.5em;
 }
+ul.tabbar li > a > span.icon.secondicon {
+  margin-right: 0;
+}
 @media (hover: hover) and (pointer: fine) {
   ul.tabbar li:hover > a {
     color: var(--tabbar-hover-tab-text-color);
@@ -4613,10 +4619,6 @@ ul.tabbar li[aria-selected=true] {
     color: var(--tabbar-hover-tab-text-color);
     text-shadow: var(--tabbar-hover-tab-text-shadow);
   }
-}
-ul.tabbar li:focus-within {
-  color: var(--tabbar-hover-tab-text-color);
-  text-shadow: var(--tabbar-hover-tab-text-shadow);
 }
 ul.tabbar li ul.submenu {
   display: none;
@@ -4640,7 +4642,7 @@ ul.tabbar li ul.submenu:before {
   width: 0;
   height: 0;
   position: absolute;
-  right: 1.7em;
+  right: 1.15em;
   top: -0.7em;
   border-width: 0 0.7em 0.7em 0.7em;
   border-style: solid;

@@ -27,6 +27,13 @@ ul.tabbar {
         display: flex;
       }
     }
+    &:focus-within {
+      > a {
+        background-color: var(--focus-color-half-solid);
+        color: var(--tabbar-hover-tab-text-color);
+        text-shadow: var(--tabbar-hover-tab-text-shadow);
+      }
+    }
     > a {
       padding: 0 1em 0 1em;
       white-space: nowrap;
@@ -67,13 +74,13 @@ ul.tabbar {
       }
       > span.icon {
         margin-right: .5em;
+        &.secondicon{
+          margin-right: 0;
+        }
       }
     }
     @include for-hover-only {
       &:hover {
-        //background-color: var(--tabbar-hover-tab-background-color);
-        //border-color: var(--tabbar-hover-tab-highlight-color);
-        //color: var(--tabbar-hover-tab-text-color);
         > a {
           color: var(--tabbar-hover-tab-text-color);
           background-color: var(--tabbar-hover-tab-background-color);
@@ -92,10 +99,6 @@ ul.tabbar {
           text-shadow: var(--tabbar-hover-tab-text-shadow);
         }
       }
-    }
-    &:focus-within {
-      color: var(--tabbar-hover-tab-text-color);
-      text-shadow: var(--tabbar-hover-tab-text-shadow);
     }
     ul.submenu {
       display: none;
@@ -118,7 +121,7 @@ ul.tabbar {
         width: 0;
         height: 0;
         position: absolute;
-        right: 1.7em;
+        right: 1.15em;
         top: -.7em;
         border-width: 0 .7em .7em .7em;
         border-style: solid;

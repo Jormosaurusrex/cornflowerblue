@@ -6,24 +6,22 @@ class CornflowerBlueDemo {
         return {
             instructions: {
                 icon: 'help-circle',
-                instructions: [
-                    "Enter your username and password."
-                ]
+                instructions: [TextFactory.get('loginform-instructions-enter_username')]
             },
             elements: [
                 new EmailInput({
-                    label: "Email",
+                    label: TextFactory.get('email'),
                     autocomplete: 'off',
                     required: true
                 }),
                 new PasswordInput({
-                    label: "Password",
+                    label: TextFactory.get('password'),
                     forceconstraints: false,
-                    placeholder: "Enter your password.",
+                    placeholder: TextFactory.get('passwordinput-placeholder-enter_password'),
                     required: true
                 }),
                 new BooleanToggle({
-                    label: "Remember Me",
+                    label: TextFactory.get('remember_me'),
                     style: "toggle",
                     labelside: 'right'
                 })
@@ -31,19 +29,19 @@ class CornflowerBlueDemo {
             handler: function(self, callback) {
                 let results = {
                     success: false,
-                    errors: ['Email and password do not match.']
+                    errors: [TextFactory.get('error-login-passwords_dont_match')]
                 };
                 callback(results);
             },
             actions: [
                 new ConstructiveButton({
-                    text: "Login",
+                    text: TextFactory.get('login'),
                     icon: "lock-open",
                     submits: true,
                     disabled: true  // No action needed.
                 }),
                 new SimpleButton({
-                    text: "Create Account",
+                    text: TextFactory.get('create_account'),
                     mute: true,
                     action: function() {
                         new Growler({
@@ -186,7 +184,6 @@ class CornflowerBlueDemo {
 
         this.main = document.getElementById('articlebox');
         this.build();
-
 
         if (window.location.hash.substr(1)) {
             this.switchTab(window.location.hash.substr(1));
@@ -891,7 +888,8 @@ class CornflowerBlueDemo {
             instructions: {
                 icon: 'help-circle',
                 instructions: [
-                    "Make changes to your profile below."
+                    "Make changes to your profile below.",
+                    "Click 'Save changes' when done."
                 ],
             },
             passiveinstructions: {
@@ -929,7 +927,7 @@ class CornflowerBlueDemo {
             },
             passiveactions: [
                 new SimpleButton({
-                    text: "Make Changes",
+                    text: TextFactory.get('make_changes'),
                     icon: "pencil-circle",
                     action: function(e, self) {
                         e.preventDefault();
@@ -939,13 +937,13 @@ class CornflowerBlueDemo {
             ],
             actions: [
                 new ConstructiveButton({
-                    text: "Save Changes",
-                    icon: "check-circle",
+                    text: TextFactory.get('save_changes'),
+                    icon: "checkmark-circle",
                     submits: true,
                     disabled: true  // No action needed.
                 }),
                 new DestructiveButton({
-                    text: "Cancel Changes",
+                    text: TextFactory.get('cancel_changes'),
                     icon: "echx-circle",
                     mute: true,
                     action: function(e, self) {

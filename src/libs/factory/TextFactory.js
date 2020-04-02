@@ -6,6 +6,15 @@ class TextFactory {
      */
     static get _libraryBase() {
         return {
+            "login" : "Login",
+            "password" : "Password",
+            "email" : "Email",
+            "passwordinput-placeholder-enter_password" : "Enter your password.",
+            "remember_me" : "Remember me",
+            "loginform-error-passwords_dont_match" : "Email and password do not match.",
+            "loginform-instructions-enter_username" : "Enter your username and password.",
+            "create_account" : "Create account",
+
             "actions": 'Actions',
             "apply_filters": 'Apply Filters',
             "bulk_select": 'Bulk select',
