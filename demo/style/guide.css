@@ -91,8 +91,6 @@ div#container nav {
     text-transform: uppercase;
   }
   div#container nav li a[aria-selected=true] {
-    box-shadow: none;
-    background-color: transparent;
     color: var(--tabbar-selected-tab-text-color);
     text-shadow: var(--tabbar-selected-tab-text-shadow);
   }
@@ -130,6 +128,9 @@ article {
   animation-duration: 250ms;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
+  width: var(--content-width);
+  min-width: var(--content-width);
+  max-width: var(--content-width);
   position: relative;
 }
 article[aria-hidden=true] {
@@ -137,6 +138,13 @@ article[aria-hidden=true] {
 }
 article h2 {
   margin: 0 0 0.5em 0;
+}
+@media (max-width: 599px) {
+  article {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 
 code.invoker {

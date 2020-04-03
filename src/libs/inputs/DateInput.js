@@ -79,7 +79,6 @@ class DateInput extends TextInput {
                 me.validate();
             }
         });
-
         this.triggerbutton = new ButtonMenu({
             classes: ['naked'],
             shape: 'square',

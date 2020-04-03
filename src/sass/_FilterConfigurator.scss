@@ -49,10 +49,44 @@ div.filter-configurator {
           opacity: 1;
         }
       }
+      @include for-phone-only {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: flex-start;
+        div.primeselector,
+        div.comparator,
+        div.valueinput {
+          margin-left: 0;
+          min-width: 75%;
+        }
+        div.comparator {
+          margin-top: .5em;
+          margin-bottom: .5em;
+        }
+        div.valueinput {
+          margin-right: 0;
+        }
+        div.validmarker {
+          width: 0;
+        }
+        button.filterkiller {
+          margin: 0;
+        }
+        &[data-valid='true'] {
+          div.validmarker {
+            opacity: 1;
+            width: auto;
+          }
+        }
+
+      }
     }
   }
   div.filter-actions {
     display: flex;
     flex-direction: row;
+    button:first-child {
+      margin-left: 0;
+    }
   }
 }
