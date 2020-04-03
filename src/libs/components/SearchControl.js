@@ -57,8 +57,10 @@ class SearchControl {
             mute: true,
             action: function(e) {
                 e.preventDefault();
-                if ((me.action) && (typeof me.action === 'function')) {
-                    me.action(me.value, me);
+                if (me.isopen) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
                 }
             }
         });
@@ -67,7 +69,6 @@ class SearchControl {
         this.container.addEventListener('click', function() {
             if (!me.isopen) {
                 me.searchinput.focus();
-                return;
             }
         });
 

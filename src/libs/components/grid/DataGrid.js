@@ -43,6 +43,7 @@ class DataGrid extends Panel {
                       // Whether or not a field can be filtered is defined in the field's definition.
             applyfiltersicon: 'checkmark-circle',
             actionsbuttonicon: 'menu',
+            filterbuttonicon: 'filter',
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.

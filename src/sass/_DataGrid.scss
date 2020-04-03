@@ -53,6 +53,44 @@ div.datagrid-container {
     button:last-child {
       margin-right: 0;
     }
+    @include for-phone-only {
+      flex-wrap: wrap;
+      height: unset;
+      min-height: unset;
+      padding: .5em 0 .5em 0;
+      div.searchcontrol {
+        order: -1;
+        margin-bottom: .5em;
+        margin-left: 0;
+        align-self: center;
+        input {
+          --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
+          width: auto;
+          border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+          padding: var(--input-default-padding);
+          background-color: var(--input-default-background-color);
+        }
+        button {
+          --button-border-color: var(--button-default-color);
+          border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
+          box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
+          padding-left: .5em;
+          padding-right: .5em;
+        }
+      }
+      button {
+        margin: 0;
+        padding: .6em;
+        &.filter {
+          span.icon {
+            margin: 0;
+          }
+          span.text {
+            display: none;
+          }
+        }
+      }
+    }
   }
   div.grid-filterinfo {
     display: none;
