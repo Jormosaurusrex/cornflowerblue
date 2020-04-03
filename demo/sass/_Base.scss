@@ -81,8 +81,7 @@ div#container {
         a {
           text-transform: uppercase;
           &[aria-selected="true"] {
-            box-shadow: none;
-            background-color: transparent;
+            //background-color: transparent;
             color: var(--tabbar-selected-tab-text-color);
             text-shadow: var(--tabbar-selected-tab-text-shadow);
           }

@@ -1300,6 +1300,11 @@ code.block {
   overflow: auto;
   white-space: unset;
 }
+@media (max-width: 599px) {
+  code {
+    white-space: unset;
+  }
+}
 
 @font-face {
   font-family: "cornflowerblue";

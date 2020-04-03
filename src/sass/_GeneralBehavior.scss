@@ -325,6 +325,9 @@ code {
     overflow: auto;
     white-space: unset;
   }
+  @include for-phone-only {
+    white-space: unset;
+  }
 }
 
 
