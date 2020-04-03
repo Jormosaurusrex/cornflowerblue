@@ -299,9 +299,10 @@ div.tablist-container {
         }
       }
       &[aria-expanded="true"] {
-        min-height: 90vh;
+        //min-height: 90vh;
         max-height: 90vh;
         bottom: 0;
+        padding-bottom: 1em;
         ul.tabbar {
           height: auto;
           min-height: unset;

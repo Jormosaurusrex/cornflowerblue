@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-03-28
+/*! Cornflower Blue - v0.1.1 - 2020-04-03
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -739,6 +739,507 @@ class BusinessObject {
 
 }
 
+class CountryCode extends BusinessObject {
+    
+    static get CONFIG() {
+        return {
+            identifier: 'code',
+            cadence: -1,
+            fields: [
+                new GridField({
+                    name: "code",
+                    label: TextFactory.get('code'),
+                    identifier: true,
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "name",
+                    label: TextFactory.get('country'),
+                    readonly: true,
+                    type: "string"
+                })
+            ]
+        };
+    }
+
+    static get MAP() {
+        return {
+            AF: { code: "AF", name: "Afghanistan" },
+            AX: { code: "AX", name: "Åland Islands" },
+            AL: { code: "AL", name: "Albania" },
+            DZ: { code: "DZ", name: "Algeria" },
+            AS: { code: "AS", name: "American Samoa" },
+            AD: { code: "AD", name: "Andorra" },
+            AO: { code: "AO", name: "Angola" },
+            AI: { code: "AI", name: "Anguilla" },
+            AQ: { code: "AQ", name: "Antarctica" },
+            AG: { code: "AG", name: "Antigua and Barbuda" },
+            AR: { code: "AR", name: "Argentina" },
+            AM: { code: "AM", name: "Armenia" },
+            AW: { code: "AW", name: "Aruba" },
+            AU: { code: "AU", name: "Australia" },
+            AT: { code: "AT", name: "Austria" },
+            AZ: { code: "AZ", name: "Azerbaijan" },
+            BS: { code: "BS", name: "Bahamas" },
+            BH: { code: "BH", name: "Bahrain" },
+            BD: { code: "BD", name: "Bangladesh" },
+            BB: { code: "BB", name: "Barbados" },
+            BY: { code: "BY", name: "Belarus" },
+            BE: { code: "BE", name: "Belgium" },
+            BZ: { code: "BZ", name: "Belize" },
+            BJ: { code: "BJ", name: "Benin" },
+            BM: { code: "BM", name: "Bermuda" },
+            BT: { code: "BT", name: "Bhutan" },
+            BO: { code: "BO", name: "Bolivia, Plurinational State of" },
+            BQ: { code: "BQ", name: "Bonaire, Sint Eustatius and Saba" },
+            BA: { code: "BA", name: "Bosnia and Herzegovina" },
+            BW: { code: "BW", name: "Botswana" },
+            BV: { code: "BV", name: "Bouvet Island" },
+            BR: { code: "BR", name: "Brazil" },
+            IO: { code: "IO", name: "British Indian Ocean Territory" },
+            BN: { code: "BN", name: "Brunei Darussalam" },
+            BG: { code: "BG", name: "Bulgaria" },
+            BF: { code: "BF", name: "Burkina Faso" },
+            BI: { code: "BI", name: "Burundi" },
+            KH: { code: "KH", name: "Cambodia" },
+            CM: { code: "CM", name: "Cameroon" },
+            CA: { code: "CA", name: "Canada" },
+            CV: { code: "CV", name: "Cape Verde" },
+            KY: { code: "KY", name: "Cayman Islands" },
+            CF: { code: "CF", name: "Central African Republic" },
+            TD: { code: "TD", name: "Chad" },
+            CL: { code: "CL", name: "Chile" },
+            CN: { code: "CN", name: "China" },
+            CX: { code: "CX", name: "Christmas Island" },
+            CC: { code: "CC", name: "Cocos (Keeling) Islands" },
+            CO: { code: "CO", name: "Colombia" },
+            KM: { code: "KM", name: "Comoros" },
+            CG: { code: "CG", name: "Congo" },
+            CD: { code: "CD", name: "Congo, the Democratic Republic of the" },
+            CK: { code: "CK", name: "Cook Islands" },
+            CR: { code: "CR", name: "Costa Rica" },
+            CI: { code: "CI", name: "Côte d'Ivoire" },
+            HR: { code: "HR", name: "Croatia" },
+            CU: { code: "CU", name: "Cuba" },
+            CW: { code: "CW", name: "Curaçao" },
+            CY: { code: "CY", name: "Cyprus" },
+            CZ: { code: "CZ", name: "Czech Republic" },
+            DK: { code: "DK", name: "Denmark" },
+            DJ: { code: "DJ", name: "Djibouti" },
+            DM: { code: "DM", name: "Dominica" },
+            DO: { code: "DO", name: "Dominican Republic" },
+            EC: { code: "EC", name: "Ecuador" },
+            EG: { code: "EG", name: "Egypt" },
+            SV: { code: "SV", name: "El Salvador" },
+            GQ: { code: "GQ", name: "Equatorial Guinea" },
+            ER: { code: "ER", name: "Eritrea" },
+            EE: { code: "EE", name: "Estonia" },
+            ET: { code: "ET", name: "Ethiopia" },
+            FK: { code: "FK", name: "Falkland Islands (Malvinas)" },
+            FO: { code: "FO", name: "Faroe Islands" },
+            FJ: { code: "FJ", name: "Fiji" },
+            FI: { code: "FI", name: "Finland" },
+            FR: { code: "FR", name: "France" },
+            GF: { code: "GF", name: "French Guiana" },
+            PF: { code: "PF", name: "French Polynesia" },
+            TF: { code: "TF", name: "French Southern Territories" },
+            GA: { code: "GA", name: "Gabon" },
+            GM: { code: "GM", name: "Gambia" },
+            GE: { code: "GE", name: "Georgia" },
+            DE: { code: "DE", name: "Germany" },
+            GH: { code: "GH", name: "Ghana" },
+            GI: { code: "GI", name: "Gibraltar" },
+            GR: { code: "GR", name: "Greece" },
+            GL: { code: "GL", name: "Greenland" },
+            GD: { code: "GD", name: "Grenada" },
+            GP: { code: "GP", name: "Guadeloupe" },
+            GU: { code: "GU", name: "Guam" },
+            GT: { code: "GT", name: "Guatemala" },
+            GG: { code: "GG", name: "Guernsey" },
+            GN: { code: "GN", name: "Guinea" },
+            GW: { code: "GW", name: "Guinea-Bissau" },
+            GY: { code: "GY", name: "Guyana" },
+            HT: { code: "HT", name: "Haiti" },
+            HM: { code: "HM", name: "Heard Island and McDonald Islands" },
+            VA: { code: "VA", name: "Holy See (Vatican City State)" },
+            HN: { code: "HN", name: "Honduras" },
+            HK: { code: "HK", name: "Hong Kong" },
+            HU: { code: "HU", name: "Hungary" },
+            IS: { code: "IS", name: "Iceland" },
+            IN: { code: "IN", name: "India" },
+            ID: { code: "ID", name: "Indonesia" },
+            IR: { code: "IR", name: "Iran, Islamic Republic of" },
+            IQ: { code: "IQ", name: "Iraq" },
+            IE: { code: "IE", name: "Ireland" },
+            IM: { code: "IM", name: "Isle of Man" },
+            IL: { code: "IL", name: "Israel" },
+            IT: { code: "IT", name: "Italy" },
+            JM: { code: "JM", name: "Jamaica" },
+            JP: { code: "JP", name: "Japan" },
+            JE: { code: "JE", name: "Jersey" },
+            JO: { code: "JO", name: "Jordan" },
+            KZ: { code: "KZ", name: "Kazakhstan" },
+            KE: { code: "KE", name: "Kenya" },
+            KI: { code: "KI", name: "Kiribati" },
+            KP: { code: "KP", name: "Korea, Democratic People's Republic of" },
+            KR: { code: "KR", name: "Korea, Republic of" },
+            KW: { code: "KW", name: "Kuwait" },
+            KG: { code: "KG", name: "Kyrgyzstan" },
+            LA: { code: "LA", name: "Lao People's Democratic Republic" },
+            LV: { code: "LV", name: "Latvia" },
+            LB: { code: "LB", name: "Lebanon" },
+            LS: { code: "LS", name: "Lesotho" },
+            LR: { code: "LR", name: "Liberia" },
+            LY: { code: "LY", name: "Libya" },
+            LI: { code: "LI", name: "Liechtenstein" },
+            LT: { code: "LT", name: "Lithuania" },
+            LU: { code: "LU", name: "Luxembourg" },
+            MO: { code: "MO", name: "Macao" },
+            MK: { code: "MK", name: "Macedonia, the Former Yugoslav Republic of" },
+            MG: { code: "MG", name: "Madagascar" },
+            MW: { code: "MW", name: "Malawi" },
+            MY: { code: "MY", name: "Malaysia" },
+            MV: { code: "MV", name: "Maldives" },
+            ML: { code: "ML", name: "Mali" },
+            MT: { code: "MT", name: "Malta" },
+            MH: { code: "MH", name: "Marshall Islands" },
+            MQ: { code: "MQ", name: "Martinique" },
+            MR: { code: "MR", name: "Mauritania" },
+            MU: { code: "MU", name: "Mauritius" },
+            YT: { code: "YT", name: "Mayotte" },
+            MX: { code: "MX", name: "Mexico" },
+            FM: { code: "FM", name: "Micronesia, Federated States of" },
+            MD: { code: "MD", name: "Moldova, Republic of" },
+            MC: { code: "MC", name: "Monaco" },
+            MN: { code: "MN", name: "Mongolia" },
+            ME: { code: "ME", name: "Montenegro" },
+            MS: { code: "MS", name: "Montserrat" },
+            MA: { code: "MA", name: "Morocco" },
+            MZ: { code: "MZ", name: "Mozambique" },
+            MM: { code: "MM", name: "Myanmar" },
+            NA: { code: "NA", name: "Namibia" },
+            NR: { code: "NR", name: "Nauru" },
+            NP: { code: "NP", name: "Nepal" },
+            NL: { code: "NL", name: "Netherlands" },
+            NC: { code: "NC", name: "New Caledonia" },
+            NZ: { code: "NZ", name: "New Zealand" },
+            NI: { code: "NI", name: "Nicaragua" },
+            NE: { code: "NE", name: "Niger" },
+            NG: { code: "NG", name: "Nigeria" },
+            NU: { code: "NU", name: "Niue" },
+            NF: { code: "NF", name: "Norfolk Island" },
+            MP: { code: "MP", name: "Northern Mariana Islands" },
+            NO: { code: "NO", name: "Norway" },
+            OM: { code: "OM", name: "Oman" },
+            PK: { code: "PK", name: "Pakistan" },
+            PW: { code: "PW", name: "Palau" },
+            PS: { code: "PS", name: "Palestine, State of" },
+            PA: { code: "PA", name: "Panama" },
+            PG: { code: "PG", name: "Papua New Guinea" },
+            PY: { code: "PY", name: "Paraguay" },
+            PE: { code: "PE", name: "Peru" },
+            PH: { code: "PH", name: "Philippines" },
+            PN: { code: "PN", name: "Pitcairn" },
+            PL: { code: "PL", name: "Poland" },
+            PT: { code: "PT", name: "Portugal" },
+            PR: { code: "PR", name: "Puerto Rico" },
+            QA: { code: "QA", name: "Qatar" },
+            RE: { code: "RE", name: "Réunion" },
+            RO: { code: "RO", name: "Romania" },
+            RU: { code: "RU", name: "Russian Federation" },
+            RW: { code: "RW", name: "Rwanda" },
+            BL: { code: "BL", name: "Saint Barthélemy" },
+            SH: { code: "SH", name: "Saint Helena, Ascension and Tristan da Cunha" },
+            KN: { code: "KN", name: "Saint Kitts and Nevis" },
+            LC: { code: "LC", name: "Saint Lucia" },
+            MF: { code: "MF", name: "Saint Martin (French part)" },
+            PM: { code: "PM", name: "Saint Pierre and Miquelon" },
+            VC: { code: "VC", name: "Saint Vincent and the Grenadines" },
+            WS: { code: "WS", name: "Samoa" },
+            SM: { code: "SM", name: "San Marino" },
+            ST: { code: "ST", name: "Sao Tome and Principe" },
+            SA: { code: "SA", name: "Saudi Arabia" },
+            SN: { code: "SN", name: "Senegal" },
+            RS: { code: "RS", name: "Serbia" },
+            SC: { code: "SC", name: "Seychelles" },
+            SL: { code: "SL", name: "Sierra Leone" },
+            SG: { code: "SG", name: "Singapore" },
+            SX: { code: "SX", name: "Sint Maarten (Dutch part)" },
+            SK: { code: "SK", name: "Slovakia" },
+            SI: { code: "SI", name: "Slovenia" },
+            SB: { code: "SB", name: "Solomon Islands" },
+            SO: { code: "SO", name: "Somalia" },
+            ZA: { code: "ZA", name: "South Africa" },
+            GS: { code: "GS", name: "South Georgia and the South Sandwich Islands" },
+            SS: { code: "SS", name: "South Sudan" },
+            ES: { code: "ES", name: "Spain" },
+            LK: { code: "LK", name: "Sri Lanka" },
+            SD: { code: "SD", name: "Sudan" },
+            SR: { code: "SR", name: "Suriname" },
+            SJ: { code: "SJ", name: "Svalbard and Jan Mayen" },
+            SZ: { code: "SZ", name: "Swaziland" },
+            SE: { code: "SE", name: "Sweden" },
+            CH: { code: "CH", name: "Switzerland" },
+            SY: { code: "SY", name: "Syrian Arab Republic" },
+            TW: { code: "TW", name: "Taiwan, Province of China" },
+            TJ: { code: "TJ", name: "Tajikistan" },
+            TZ: { code: "TZ", name: "Tanzania, United Republic of" },
+            TH: { code: "TH", name: "Thailand" },
+            TL: { code: "TL", name: "Timor-Leste" },
+            TG: { code: "TG", name: "Togo" },
+            TK: { code: "TK", name: "Tokelau" },
+            TO: { code: "TO", name: "Tonga" },
+            TT: { code: "TT", name: "Trinidad and Tobago" },
+            TN: { code: "TN", name: "Tunisia" },
+            TR: { code: "TR", name: "Turkey" },
+            TM: { code: "TM", name: "Turkmenistan" },
+            TC: { code: "TC", name: "Turks and Caicos Islands" },
+            TV: { code: "TV", name: "Tuvalu" },
+            UG: { code: "UG", name: "Uganda" },
+            UA: { code: "UA", name: "Ukraine" },
+            AE: { code: "AE", name: "United Arab Emirates" },
+            GB: { code: "GB", name: "United Kingdom" },
+            US: { code: "US", name: "United States" },
+            UM: { code: "UM", name: "United States Minor Outlying Islands" },
+            UY: { code: "UY", name: "Uruguay" },
+            UZ: { code: "UZ", name: "Uzbekistan" },
+            VU: { code: "VU", name: "Vanuatu" },
+            VE: { code: "VE", name: "Venezuela, Bolivarian Republic of" },
+            VN: { code: "VN", name: "Viet Nam" },
+            VG: { code: "VG", name: "Virgin Islands, British" },
+            VI: { code: "VI", name: "Virgin Islands, U.S." },
+            WF: { code: "WF", name: "Wallis and Futuna" },
+            EH: { code: "EH", name: "Western Sahara" },
+            YE: { code: "YE", name: "Yemen" },
+            ZM: { code: "ZM", name: "Zambia" },
+            ZW: { code: "ZW", name: "Zimbabwe" }
+        }
+    }
+
+    //static instance;
+
+    constructor() {
+        super();
+        if (!CountryCode.instance) {
+            this.config = Object.assign({}, this.config, CountryCode.CONFIG);
+            this.cache = CountryCode.MAP;
+            this.initialized = true;
+            CountryCode.instance = this;
+        }
+        return CountryCode.instance;
+    }
+}
+
+window.CountryCode = CountryCode;
+class StateProvince extends BusinessObject {
+    static get CONFIG() {
+        return {
+            identifier: 'id',
+            cadence: -1,
+            fields: [
+                new GridField({
+                    name: "id",
+                    label: TextFactory.get('code'),
+                    identifier: true,
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "name",
+                    label: TextFactory.get('name'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "country",
+                    label: TextFactory.get('country'),
+                    readonly: true,
+                    type: "string"
+                }),
+                new GridField({
+                    name: "alt",
+                    label: TextFactory.get('alternate_names'),
+                    readonly: true,
+                    type: "stringarray"
+                })
+            ]
+        };
+    }
+
+    /**
+     * A map of states in US and canada
+     * @return {*} a dictionary
+     */
+    static get MAP() {
+        return {
+            AL: { id: "AL", name: "Alabama", country: "US" },
+            AK: { id: "AK", name: "Alaska", country: "US" },
+            AZ: { id: "AZ", name: "Arizona", country: "US" },
+            AR: { id: "AR", name: "Arkansas", country: "US" },
+            CA: { id: "CA", name: "California", country: "US" },
+            CO: { id: "CO", name: "Colorado", country: "US" },
+            CT: { id: "CT", name: "Connecticut", country: "US" },
+            DC: { id: "DC", name: "District of Columbia", country: "US", alt: ["Washington DC", "Washington D.C."] },
+            DE: { id: "DE", name: "Delaware", country: "US" },
+            FL: { id: "FL", name: "Florida", country: "US" },
+            GA: { id: "GA", name: "Georgia", country: "US" },
+            HI: { id: "HI", name: "Hawaii", country: "US" },
+            ID: { id: "ID", name: "Idaho", country: "US" },
+            IL: { id: "IL", name: "Illinois", country: "US" },
+            IN: { id: "IN", name: "Indiana", country: "US" },
+            IA: { id: "IA", name: "Iowa", country: "US" },
+            KS: { id: "KS", name: "Kansas", country: "US" },
+            KY: { id: "KY", name: "Kentucky", country: "US" },
+            LA: { id: "LA", name: "Louisiana", country: "US" },
+            ME: { id: "ME", name: "Maine", country: "US" },
+            MD: { id: "MD", name: "Maryland", country: "US" },
+            MA: { id: "MA", name: "Massachusetts", country: "US" },
+            MI: { id: "MI", name: "Michigan", country: "US" },
+            MN: { id: "MN", name: "Minnesota", country: "US" },
+            MS: { id: "MS", name: "Mississippi", country: "US" },
+            MO: { id: "MO", name: "Missouri", country: "US" },
+            MT: { id: "MT", name: "Montana", country: "US" },
+            NE: { id: "NE", name: "Nebraska", country: "US" },
+            NV: { id: "NV", name: "Nevada", country: "US" },
+            NH: { id: "NH", name: "New Hampshire", country: "US" },
+            NJ: { id: "NJ", name: "New Jersey", country: "US" },
+            NM: { id: "NM", name: "New Mexico", country: "US" },
+            NY: { id: "NY", name: "New York", country: "US" },
+            NC: { id: "NC", name: "North Carolina", country: "US" },
+            ND: { id: "ND", name: "North Dakota", country: "US" },
+            OH: { id: "OH", name: "Ohio", country: "US" },
+            OK: { id: "OK", name: "Oklahoma", country: "US" },
+            OR: { id: "OR", name: "Oregon", country: "US" },
+            PA: { id: "PA", name: "Pennsylvania", country: "US" },
+            RI: { id: "RI", name: "Rhode Island", country: "US" },
+            SC: { id: "SC", name: "South Carolina", country: "US" },
+            SD: { id: "SD", name: "South Dakota", country: "US" },
+            TN: { id: "TN", name: "Tennessee", country: "US" },
+            TX: { id: "TX", name: "Texas", country: "US" },
+            UT: { id: "UT", name: "Utah", country: "US" },
+            VT: { id: "VT", name: "Vermont", country: "US" },
+            VA: { id: "VA", name: "Virginia", country: "US" },
+            WA: { id: "WA", name: "Washington", country: "US" },
+            WV: { id: "WV", name: "West Virginia", country: "US" },
+            WI: { id: "WI", name: "Wisconsin", country: "US" },
+            WY: { id: "WY", name: "Wyoming", country: "US" },
+            AS: { id: "AS", name: "American Samoa", country: "US" },
+            GU: { id: "GU", name: "Guam", country: "US" },
+            MP: { id: "MP", name: "Northern Mariana Islands", country: "US" },
+            PR: { id: "PR", name: "Puerto Rico", country: "US" },
+            UM: { id: "UM", name: "United States Minor Outlying Islands", country: "US" },
+            VI: { id: "VI", name: "Virgin Islands", country: "US" },
+
+            AB: { id: "AB", name: "Alberta", country: "CA" },
+            BC: { id: "BC", name: "British Columbia", country: "CA" },
+            MB: { id: "MB", name: "Manitoba", country: "CA" },
+            NB: { id: "NB", name: "New Brunswick", country: "CA" },
+            NL: { id: "NL", name: "Newfoundland and Labrador", country: "CA", alt: ["Newfoundland","Labrador"] },
+            NS: { id: "NS", name: "Nova Scotia", country: "CA" },
+            NU: { id: "NU", name: "Nunavut", country: "CA" },
+            NT: { id: "NT", name: "Northwest Territories", country: "CA" },
+            ON: { id: "ON", name: "Ontario", country: "CA" },
+            PE: { id: "PE", name: "Prince Edward Island", country: "CA" },
+            QC: { id: "QC", name: "Quebec", country: "CA" },
+            SK: { id: "SK", name: "Saskatchewan", country: "CA" },
+            YT: { id: "YT", name: "Yukon", country: "CA" }
+        };
+    }
+
+    /**
+     * An array of United States states
+     * @return {string[]}
+     */
+    static get US_STATES() {
+        return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU", "MP", "PR", "UM", "VI"];
+    }
+
+    /**
+     * An array of Canadian states
+     * @return {string[]}
+     */
+    static get CA_STATES() {
+        return ["AB", "BC", "MB", "NB", "NL", "NS", "NU", "NT", "ON", "PE", "QC", "SK", "YT"];
+    }
+
+    /**
+     * Get a list of state dictionary elements.
+     * @param filter Optional, either US or CA. If empty, returns all.
+     * @return {Array} an array of state object definitions
+     */
+    set(filter) {
+        const me = this;
+        let set = [];
+        switch (filter) {
+            case 'US':
+                for (let s of StateProvince.US_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+            case 'CA':
+                for (let s of StateProvince.CA_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+            default:
+                for (let s of StateProvince.US_STATES) {
+                    set.push(this.get(s));
+                }
+                for (let s of StateProvince.CA_STATES) {
+                    set.push(this.get(s));
+                }
+                break;
+        }
+
+        set.sort(function(a, b) {
+            return me.sortfunction(a, b);
+        });
+        return set;
+    }
+
+    /**
+     * Search the cache
+     * @param text the text to search on.
+     */
+    static search(text) {
+        if ((!text) || (text.length() < 1)) { return []; }
+
+        let results = [];
+
+        for (let k of Object.keys(StateProvince.MAP)) {
+            let s = StateProvince.MAP[k];
+            if (text.toUpperCase() === k) { // if the code matches, just slot it.
+                results.push(s);
+            } else if (s.name.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
+                results.push(s);
+            } else if ((s.alt) && (s.alt.length > 0)) {
+                let found = false;
+                for (let i of s.alt) {
+                    if ((!found) && (i.toUpperCase().indexOf(text.toUpperCase()) >= 0)) {
+                        results.push(s);
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    //static instance;
+
+    constructor() {
+        super();
+        if (!StateProvince.instance) {
+            this.config = Object.assign({}, this.config, StateProvince.CONFIG);
+            this.cache = StateProvince.MAP;
+            this.initialized = true;
+            StateProvince.instance = this;
+        }
+        return StateProvince.instance;
+    }
+}
+
+window.StateProvince = StateProvince;
 class TimeZoneDefinition extends BusinessObject {
     static get CONFIG() {
         return {
@@ -1248,507 +1749,165 @@ class TimeZoneDefinition extends BusinessObject {
 }
 
 window.TimeZoneDefinition = TimeZoneDefinition;
-class CountryCode extends BusinessObject {
-    
-    static get CONFIG() {
-        return {
-            identifier: 'code',
-            cadence: -1,
-            fields: [
-                new GridField({
-                    name: "code",
-                    label: TextFactory.get('code'),
-                    identifier: true,
-                    readonly: true,
-                    type: "string"
-                }),
-                new GridField({
-                    name: "name",
-                    label: TextFactory.get('country'),
-                    readonly: true,
-                    type: "string"
-                })
-            ]
-        };
+class IconFactory {
+
+    static get LIST() {
+        return [
+            'arrow-down-circle',
+            'arrow-up',
+            'download',
+            'map',
+            'arrow-right',
+            'upload',
+            'arrow-left',
+            'arrow-down-circle-1',
+            'calendar',
+            'trashcan',
+            'tag',
+            'legend',
+            'echx',
+            'arrow-down',
+            'clock',
+            'chat',
+            'check-circle-disc',
+            'checkmark-circle',
+            'chevron-down',
+            'checkmark',
+            'chevron-left',
+            'chevron-right',
+            'chevron-up',
+            'double-triangle-vertical',
+            'heart',
+            'no',
+            'double-triangle-horizontal',
+            'arrow-left-circle',
+            'echx-circle',
+            'echx-1',
+            'spinner-circle',
+            'circle-disc-chopped',
+            'circle',
+            'disc-chopped',
+            'gear-complex',
+            'gear',
+            'globe',
+            'help-circle',
+            'lightbulb',
+            'lock-open',
+            'magnify',
+            'menu',
+            'question',
+            'star',
+            'user-circle',
+            'user',
+            'exclaim',
+            'shape-hex',
+            'shape-rounded-triangle',
+            'warn-circle',
+            'warn-hex',
+            'warn-triangle',
+            'eye-slash',
+            'microphone-slash',
+            'minimize',
+            'eye',
+            'disc-check',
+            'minus-circle',
+            'minus',
+            'popout',
+            'plus',
+            'plus-circle',
+            'pencil',
+            'pencil-circle',
+            'refresh',
+            'speaker-high',
+            'speaker-low',
+            'printer',
+            'speaker-medium',
+            'microphone',
+            'speaker-mute',
+            'lock-closed',
+            'image',
+            'folder',
+            'document',
+            'speaker-slash',
+            'triangle-down-small',
+            'triangle-down',
+            'triangle-left-small',
+            'triangle-left',
+            'triangle-right-small',
+            'triangle-up',
+            'triangle-up-small',
+            'triangle-right',
+            'arrow-right-circle',
+            'arrow-up-circle',
+            'triangle-down-circle',
+            'triangle-left-circle',
+            'triangle-right-circle',
+            'triangle-up-circle',
+            'flag-notched',
+            'flag-pointed',
+            'flag-rectangle',
+            'flag-notched-angle',
+            'flag-pointed-angle',
+            'flag-rectangle-angle',
+            'filter',
+            'table',
+            'duplicate',
+            'dots-horizontal',
+            'dots-vertical'
+        ];
     }
 
-    static get MAP() {
-        return {
-            AF: { code: "AF", name: "Afghanistan" },
-            AX: { code: "AX", name: "Åland Islands" },
-            AL: { code: "AL", name: "Albania" },
-            DZ: { code: "DZ", name: "Algeria" },
-            AS: { code: "AS", name: "American Samoa" },
-            AD: { code: "AD", name: "Andorra" },
-            AO: { code: "AO", name: "Angola" },
-            AI: { code: "AI", name: "Anguilla" },
-            AQ: { code: "AQ", name: "Antarctica" },
-            AG: { code: "AG", name: "Antigua and Barbuda" },
-            AR: { code: "AR", name: "Argentina" },
-            AM: { code: "AM", name: "Armenia" },
-            AW: { code: "AW", name: "Aruba" },
-            AU: { code: "AU", name: "Australia" },
-            AT: { code: "AT", name: "Austria" },
-            AZ: { code: "AZ", name: "Azerbaijan" },
-            BS: { code: "BS", name: "Bahamas" },
-            BH: { code: "BH", name: "Bahrain" },
-            BD: { code: "BD", name: "Bangladesh" },
-            BB: { code: "BB", name: "Barbados" },
-            BY: { code: "BY", name: "Belarus" },
-            BE: { code: "BE", name: "Belgium" },
-            BZ: { code: "BZ", name: "Belize" },
-            BJ: { code: "BJ", name: "Benin" },
-            BM: { code: "BM", name: "Bermuda" },
-            BT: { code: "BT", name: "Bhutan" },
-            BO: { code: "BO", name: "Bolivia, Plurinational State of" },
-            BQ: { code: "BQ", name: "Bonaire, Sint Eustatius and Saba" },
-            BA: { code: "BA", name: "Bosnia and Herzegovina" },
-            BW: { code: "BW", name: "Botswana" },
-            BV: { code: "BV", name: "Bouvet Island" },
-            BR: { code: "BR", name: "Brazil" },
-            IO: { code: "IO", name: "British Indian Ocean Territory" },
-            BN: { code: "BN", name: "Brunei Darussalam" },
-            BG: { code: "BG", name: "Bulgaria" },
-            BF: { code: "BF", name: "Burkina Faso" },
-            BI: { code: "BI", name: "Burundi" },
-            KH: { code: "KH", name: "Cambodia" },
-            CM: { code: "CM", name: "Cameroon" },
-            CA: { code: "CA", name: "Canada" },
-            CV: { code: "CV", name: "Cape Verde" },
-            KY: { code: "KY", name: "Cayman Islands" },
-            CF: { code: "CF", name: "Central African Republic" },
-            TD: { code: "TD", name: "Chad" },
-            CL: { code: "CL", name: "Chile" },
-            CN: { code: "CN", name: "China" },
-            CX: { code: "CX", name: "Christmas Island" },
-            CC: { code: "CC", name: "Cocos (Keeling) Islands" },
-            CO: { code: "CO", name: "Colombia" },
-            KM: { code: "KM", name: "Comoros" },
-            CG: { code: "CG", name: "Congo" },
-            CD: { code: "CD", name: "Congo, the Democratic Republic of the" },
-            CK: { code: "CK", name: "Cook Islands" },
-            CR: { code: "CR", name: "Costa Rica" },
-            CI: { code: "CI", name: "Côte d'Ivoire" },
-            HR: { code: "HR", name: "Croatia" },
-            CU: { code: "CU", name: "Cuba" },
-            CW: { code: "CW", name: "Curaçao" },
-            CY: { code: "CY", name: "Cyprus" },
-            CZ: { code: "CZ", name: "Czech Republic" },
-            DK: { code: "DK", name: "Denmark" },
-            DJ: { code: "DJ", name: "Djibouti" },
-            DM: { code: "DM", name: "Dominica" },
-            DO: { code: "DO", name: "Dominican Republic" },
-            EC: { code: "EC", name: "Ecuador" },
-            EG: { code: "EG", name: "Egypt" },
-            SV: { code: "SV", name: "El Salvador" },
-            GQ: { code: "GQ", name: "Equatorial Guinea" },
-            ER: { code: "ER", name: "Eritrea" },
-            EE: { code: "EE", name: "Estonia" },
-            ET: { code: "ET", name: "Ethiopia" },
-            FK: { code: "FK", name: "Falkland Islands (Malvinas)" },
-            FO: { code: "FO", name: "Faroe Islands" },
-            FJ: { code: "FJ", name: "Fiji" },
-            FI: { code: "FI", name: "Finland" },
-            FR: { code: "FR", name: "France" },
-            GF: { code: "GF", name: "French Guiana" },
-            PF: { code: "PF", name: "French Polynesia" },
-            TF: { code: "TF", name: "French Southern Territories" },
-            GA: { code: "GA", name: "Gabon" },
-            GM: { code: "GM", name: "Gambia" },
-            GE: { code: "GE", name: "Georgia" },
-            DE: { code: "DE", name: "Germany" },
-            GH: { code: "GH", name: "Ghana" },
-            GI: { code: "GI", name: "Gibraltar" },
-            GR: { code: "GR", name: "Greece" },
-            GL: { code: "GL", name: "Greenland" },
-            GD: { code: "GD", name: "Grenada" },
-            GP: { code: "GP", name: "Guadeloupe" },
-            GU: { code: "GU", name: "Guam" },
-            GT: { code: "GT", name: "Guatemala" },
-            GG: { code: "GG", name: "Guernsey" },
-            GN: { code: "GN", name: "Guinea" },
-            GW: { code: "GW", name: "Guinea-Bissau" },
-            GY: { code: "GY", name: "Guyana" },
-            HT: { code: "HT", name: "Haiti" },
-            HM: { code: "HM", name: "Heard Island and McDonald Islands" },
-            VA: { code: "VA", name: "Holy See (Vatican City State)" },
-            HN: { code: "HN", name: "Honduras" },
-            HK: { code: "HK", name: "Hong Kong" },
-            HU: { code: "HU", name: "Hungary" },
-            IS: { code: "IS", name: "Iceland" },
-            IN: { code: "IN", name: "India" },
-            ID: { code: "ID", name: "Indonesia" },
-            IR: { code: "IR", name: "Iran, Islamic Republic of" },
-            IQ: { code: "IQ", name: "Iraq" },
-            IE: { code: "IE", name: "Ireland" },
-            IM: { code: "IM", name: "Isle of Man" },
-            IL: { code: "IL", name: "Israel" },
-            IT: { code: "IT", name: "Italy" },
-            JM: { code: "JM", name: "Jamaica" },
-            JP: { code: "JP", name: "Japan" },
-            JE: { code: "JE", name: "Jersey" },
-            JO: { code: "JO", name: "Jordan" },
-            KZ: { code: "KZ", name: "Kazakhstan" },
-            KE: { code: "KE", name: "Kenya" },
-            KI: { code: "KI", name: "Kiribati" },
-            KP: { code: "KP", name: "Korea, Democratic People's Republic of" },
-            KR: { code: "KR", name: "Korea, Republic of" },
-            KW: { code: "KW", name: "Kuwait" },
-            KG: { code: "KG", name: "Kyrgyzstan" },
-            LA: { code: "LA", name: "Lao People's Democratic Republic" },
-            LV: { code: "LV", name: "Latvia" },
-            LB: { code: "LB", name: "Lebanon" },
-            LS: { code: "LS", name: "Lesotho" },
-            LR: { code: "LR", name: "Liberia" },
-            LY: { code: "LY", name: "Libya" },
-            LI: { code: "LI", name: "Liechtenstein" },
-            LT: { code: "LT", name: "Lithuania" },
-            LU: { code: "LU", name: "Luxembourg" },
-            MO: { code: "MO", name: "Macao" },
-            MK: { code: "MK", name: "Macedonia, the Former Yugoslav Republic of" },
-            MG: { code: "MG", name: "Madagascar" },
-            MW: { code: "MW", name: "Malawi" },
-            MY: { code: "MY", name: "Malaysia" },
-            MV: { code: "MV", name: "Maldives" },
-            ML: { code: "ML", name: "Mali" },
-            MT: { code: "MT", name: "Malta" },
-            MH: { code: "MH", name: "Marshall Islands" },
-            MQ: { code: "MQ", name: "Martinique" },
-            MR: { code: "MR", name: "Mauritania" },
-            MU: { code: "MU", name: "Mauritius" },
-            YT: { code: "YT", name: "Mayotte" },
-            MX: { code: "MX", name: "Mexico" },
-            FM: { code: "FM", name: "Micronesia, Federated States of" },
-            MD: { code: "MD", name: "Moldova, Republic of" },
-            MC: { code: "MC", name: "Monaco" },
-            MN: { code: "MN", name: "Mongolia" },
-            ME: { code: "ME", name: "Montenegro" },
-            MS: { code: "MS", name: "Montserrat" },
-            MA: { code: "MA", name: "Morocco" },
-            MZ: { code: "MZ", name: "Mozambique" },
-            MM: { code: "MM", name: "Myanmar" },
-            NA: { code: "NA", name: "Namibia" },
-            NR: { code: "NR", name: "Nauru" },
-            NP: { code: "NP", name: "Nepal" },
-            NL: { code: "NL", name: "Netherlands" },
-            NC: { code: "NC", name: "New Caledonia" },
-            NZ: { code: "NZ", name: "New Zealand" },
-            NI: { code: "NI", name: "Nicaragua" },
-            NE: { code: "NE", name: "Niger" },
-            NG: { code: "NG", name: "Nigeria" },
-            NU: { code: "NU", name: "Niue" },
-            NF: { code: "NF", name: "Norfolk Island" },
-            MP: { code: "MP", name: "Northern Mariana Islands" },
-            NO: { code: "NO", name: "Norway" },
-            OM: { code: "OM", name: "Oman" },
-            PK: { code: "PK", name: "Pakistan" },
-            PW: { code: "PW", name: "Palau" },
-            PS: { code: "PS", name: "Palestine, State of" },
-            PA: { code: "PA", name: "Panama" },
-            PG: { code: "PG", name: "Papua New Guinea" },
-            PY: { code: "PY", name: "Paraguay" },
-            PE: { code: "PE", name: "Peru" },
-            PH: { code: "PH", name: "Philippines" },
-            PN: { code: "PN", name: "Pitcairn" },
-            PL: { code: "PL", name: "Poland" },
-            PT: { code: "PT", name: "Portugal" },
-            PR: { code: "PR", name: "Puerto Rico" },
-            QA: { code: "QA", name: "Qatar" },
-            RE: { code: "RE", name: "Réunion" },
-            RO: { code: "RO", name: "Romania" },
-            RU: { code: "RU", name: "Russian Federation" },
-            RW: { code: "RW", name: "Rwanda" },
-            BL: { code: "BL", name: "Saint Barthélemy" },
-            SH: { code: "SH", name: "Saint Helena, Ascension and Tristan da Cunha" },
-            KN: { code: "KN", name: "Saint Kitts and Nevis" },
-            LC: { code: "LC", name: "Saint Lucia" },
-            MF: { code: "MF", name: "Saint Martin (French part)" },
-            PM: { code: "PM", name: "Saint Pierre and Miquelon" },
-            VC: { code: "VC", name: "Saint Vincent and the Grenadines" },
-            WS: { code: "WS", name: "Samoa" },
-            SM: { code: "SM", name: "San Marino" },
-            ST: { code: "ST", name: "Sao Tome and Principe" },
-            SA: { code: "SA", name: "Saudi Arabia" },
-            SN: { code: "SN", name: "Senegal" },
-            RS: { code: "RS", name: "Serbia" },
-            SC: { code: "SC", name: "Seychelles" },
-            SL: { code: "SL", name: "Sierra Leone" },
-            SG: { code: "SG", name: "Singapore" },
-            SX: { code: "SX", name: "Sint Maarten (Dutch part)" },
-            SK: { code: "SK", name: "Slovakia" },
-            SI: { code: "SI", name: "Slovenia" },
-            SB: { code: "SB", name: "Solomon Islands" },
-            SO: { code: "SO", name: "Somalia" },
-            ZA: { code: "ZA", name: "South Africa" },
-            GS: { code: "GS", name: "South Georgia and the South Sandwich Islands" },
-            SS: { code: "SS", name: "South Sudan" },
-            ES: { code: "ES", name: "Spain" },
-            LK: { code: "LK", name: "Sri Lanka" },
-            SD: { code: "SD", name: "Sudan" },
-            SR: { code: "SR", name: "Suriname" },
-            SJ: { code: "SJ", name: "Svalbard and Jan Mayen" },
-            SZ: { code: "SZ", name: "Swaziland" },
-            SE: { code: "SE", name: "Sweden" },
-            CH: { code: "CH", name: "Switzerland" },
-            SY: { code: "SY", name: "Syrian Arab Republic" },
-            TW: { code: "TW", name: "Taiwan, Province of China" },
-            TJ: { code: "TJ", name: "Tajikistan" },
-            TZ: { code: "TZ", name: "Tanzania, United Republic of" },
-            TH: { code: "TH", name: "Thailand" },
-            TL: { code: "TL", name: "Timor-Leste" },
-            TG: { code: "TG", name: "Togo" },
-            TK: { code: "TK", name: "Tokelau" },
-            TO: { code: "TO", name: "Tonga" },
-            TT: { code: "TT", name: "Trinidad and Tobago" },
-            TN: { code: "TN", name: "Tunisia" },
-            TR: { code: "TR", name: "Turkey" },
-            TM: { code: "TM", name: "Turkmenistan" },
-            TC: { code: "TC", name: "Turks and Caicos Islands" },
-            TV: { code: "TV", name: "Tuvalu" },
-            UG: { code: "UG", name: "Uganda" },
-            UA: { code: "UA", name: "Ukraine" },
-            AE: { code: "AE", name: "United Arab Emirates" },
-            GB: { code: "GB", name: "United Kingdom" },
-            US: { code: "US", name: "United States" },
-            UM: { code: "UM", name: "United States Minor Outlying Islands" },
-            UY: { code: "UY", name: "Uruguay" },
-            UZ: { code: "UZ", name: "Uzbekistan" },
-            VU: { code: "VU", name: "Vanuatu" },
-            VE: { code: "VE", name: "Venezuela, Bolivarian Republic of" },
-            VN: { code: "VN", name: "Viet Nam" },
-            VG: { code: "VG", name: "Virgin Islands, British" },
-            VI: { code: "VI", name: "Virgin Islands, U.S." },
-            WF: { code: "WF", name: "Wallis and Futuna" },
-            EH: { code: "EH", name: "Western Sahara" },
-            YE: { code: "YE", name: "Yemen" },
-            ZM: { code: "ZM", name: "Zambia" },
-            ZW: { code: "ZW", name: "Zimbabwe" }
+    /**
+     * Gets an icon defined by cornflower blue
+     * @param icon the icon id. This is stacked with the cfb prefix.
+     * @param arialabel the aria label to use
+     * @return {*}
+     */
+    static icon(icon, arialabel) {
+        if (icon instanceof Object) { // this is probably a pre-defined icon
+            return icon;
         }
-    }
-
-    //static instance;
-
-    constructor() {
-        super();
-        if (!CountryCode.instance) {
-            this.config = Object.assign({}, this.config, CountryCode.CONFIG);
-            this.cache = CountryCode.MAP;
-            this.initialized = true;
-            CountryCode.instance = this;
+        let i = document.createElement('span');
+        i.classList.add('icon');
+        i.classList.add(`cfb-${icon}`);
+        if (arialabel) {
+            i.setAttribute('aria-label', arialabel);
+        } else {
+            i.setAttribute('aria-hidden', "true");
         }
-        return CountryCode.instance;
-    }
-}
-
-window.CountryCode = CountryCode;
-class StateProvince extends BusinessObject {
-    static get CONFIG() {
-        return {
-            identifier: 'id',
-            cadence: -1,
-            fields: [
-                new GridField({
-                    name: "id",
-                    label: TextFactory.get('code'),
-                    identifier: true,
-                    readonly: true,
-                    type: "string"
-                }),
-                new GridField({
-                    name: "name",
-                    label: TextFactory.get('name'),
-                    readonly: true,
-                    type: "string"
-                }),
-                new GridField({
-                    name: "country",
-                    label: TextFactory.get('country'),
-                    readonly: true,
-                    type: "string"
-                }),
-                new GridField({
-                    name: "alt",
-                    label: TextFactory.get('alternate_names'),
-                    readonly: true,
-                    type: "stringarray"
-                })
-            ]
-        };
+        return i;
     }
 
     /**
-     * A map of states in US and canada
-     * @return {*} a dictionary
+     * Gets an icon NOT defined by cornflower blue (like fontawesome, or a different icon font)
+     * @param icon the icon.  This can be an array as well, and if so will apply all elements as classes
+     * @param arialabel the aria label to use
+     * @return a span DOM object
      */
-    static get MAP() {
-        return {
-            AL: { id: "AL", name: "Alabama", country: "US" },
-            AK: { id: "AK", name: "Alaska", country: "US" },
-            AZ: { id: "AZ", name: "Arizona", country: "US" },
-            AR: { id: "AR", name: "Arkansas", country: "US" },
-            CA: { id: "CA", name: "California", country: "US" },
-            CO: { id: "CO", name: "Colorado", country: "US" },
-            CT: { id: "CT", name: "Connecticut", country: "US" },
-            DC: { id: "DC", name: "District of Columbia", country: "US", alt: ["Washington DC", "Washington D.C."] },
-            DE: { id: "DE", name: "Delaware", country: "US" },
-            FL: { id: "FL", name: "Florida", country: "US" },
-            GA: { id: "GA", name: "Georgia", country: "US" },
-            HI: { id: "HI", name: "Hawaii", country: "US" },
-            ID: { id: "ID", name: "Idaho", country: "US" },
-            IL: { id: "IL", name: "Illinois", country: "US" },
-            IN: { id: "IN", name: "Indiana", country: "US" },
-            IA: { id: "IA", name: "Iowa", country: "US" },
-            KS: { id: "KS", name: "Kansas", country: "US" },
-            KY: { id: "KY", name: "Kentucky", country: "US" },
-            LA: { id: "LA", name: "Louisiana", country: "US" },
-            ME: { id: "ME", name: "Maine", country: "US" },
-            MD: { id: "MD", name: "Maryland", country: "US" },
-            MA: { id: "MA", name: "Massachusetts", country: "US" },
-            MI: { id: "MI", name: "Michigan", country: "US" },
-            MN: { id: "MN", name: "Minnesota", country: "US" },
-            MS: { id: "MS", name: "Mississippi", country: "US" },
-            MO: { id: "MO", name: "Missouri", country: "US" },
-            MT: { id: "MT", name: "Montana", country: "US" },
-            NE: { id: "NE", name: "Nebraska", country: "US" },
-            NV: { id: "NV", name: "Nevada", country: "US" },
-            NH: { id: "NH", name: "New Hampshire", country: "US" },
-            NJ: { id: "NJ", name: "New Jersey", country: "US" },
-            NM: { id: "NM", name: "New Mexico", country: "US" },
-            NY: { id: "NY", name: "New York", country: "US" },
-            NC: { id: "NC", name: "North Carolina", country: "US" },
-            ND: { id: "ND", name: "North Dakota", country: "US" },
-            OH: { id: "OH", name: "Ohio", country: "US" },
-            OK: { id: "OK", name: "Oklahoma", country: "US" },
-            OR: { id: "OR", name: "Oregon", country: "US" },
-            PA: { id: "PA", name: "Pennsylvania", country: "US" },
-            RI: { id: "RI", name: "Rhode Island", country: "US" },
-            SC: { id: "SC", name: "South Carolina", country: "US" },
-            SD: { id: "SD", name: "South Dakota", country: "US" },
-            TN: { id: "TN", name: "Tennessee", country: "US" },
-            TX: { id: "TX", name: "Texas", country: "US" },
-            UT: { id: "UT", name: "Utah", country: "US" },
-            VT: { id: "VT", name: "Vermont", country: "US" },
-            VA: { id: "VA", name: "Virginia", country: "US" },
-            WA: { id: "WA", name: "Washington", country: "US" },
-            WV: { id: "WV", name: "West Virginia", country: "US" },
-            WI: { id: "WI", name: "Wisconsin", country: "US" },
-            WY: { id: "WY", name: "Wyoming", country: "US" },
-            AS: { id: "AS", name: "American Samoa", country: "US" },
-            GU: { id: "GU", name: "Guam", country: "US" },
-            MP: { id: "MP", name: "Northern Mariana Islands", country: "US" },
-            PR: { id: "PR", name: "Puerto Rico", country: "US" },
-            UM: { id: "UM", name: "United States Minor Outlying Islands", country: "US" },
-            VI: { id: "VI", name: "Virgin Islands", country: "US" },
-
-            AB: { id: "AB", name: "Alberta", country: "CA" },
-            BC: { id: "BC", name: "British Columbia", country: "CA" },
-            MB: { id: "MB", name: "Manitoba", country: "CA" },
-            NB: { id: "NB", name: "New Brunswick", country: "CA" },
-            NL: { id: "NL", name: "Newfoundland and Labrador", country: "CA", alt: ["Newfoundland","Labrador"] },
-            NS: { id: "NS", name: "Nova Scotia", country: "CA" },
-            NU: { id: "NU", name: "Nunavut", country: "CA" },
-            NT: { id: "NT", name: "Northwest Territories", country: "CA" },
-            ON: { id: "ON", name: "Ontario", country: "CA" },
-            PE: { id: "PE", name: "Prince Edward Island", country: "CA" },
-            QC: { id: "QC", name: "Quebec", country: "CA" },
-            SK: { id: "SK", name: "Saskatchewan", country: "CA" },
-            YT: { id: "YT", name: "Yukon", country: "CA" }
-        };
-    }
-
-    /**
-     * An array of United States states
-     * @return {string[]}
-     */
-    static get US_STATES() {
-        return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU", "MP", "PR", "UM", "VI"];
-    }
-
-    /**
-     * An array of Canadian states
-     * @return {string[]}
-     */
-    static get CA_STATES() {
-        return ["AB", "BC", "MB", "NB", "NL", "NS", "NU", "NT", "ON", "PE", "QC", "SK", "YT"];
-    }
-
-    /**
-     * Get a list of state dictionary elements.
-     * @param filter Optional, either US or CA. If empty, returns all.
-     * @return {Array} an array of state object definitions
-     */
-    set(filter) {
-        const me = this;
-        let set = [];
-        switch (filter) {
-            case 'US':
-                for (let s of StateProvince.US_STATES) {
-                    set.push(this.get(s));
-                }
-                break;
-            case 'CA':
-                for (let s of StateProvince.CA_STATES) {
-                    set.push(this.get(s));
-                }
-                break;
-            default:
-                for (let s of StateProvince.US_STATES) {
-                    set.push(this.get(s));
-                }
-                for (let s of StateProvince.CA_STATES) {
-                    set.push(this.get(s));
-                }
-                break;
+    static xicon(icon, arialabel) {
+        if (icon instanceof Object) { // this is probably a pre-defined icon
+            return icon;
         }
+        let i = document.createElement('span');
+        i.classList.add('icon');
 
-        set.sort(function(a, b) {
-            return me.sortfunction(a, b);
-        });
-        return set;
-    }
-
-    /**
-     * Search the cache
-     * @param text the text to search on.
-     */
-    static search(text) {
-        if ((!text) || (text.length() < 1)) { return []; }
-
-        let results = [];
-
-        for (let k of Object.keys(StateProvince.MAP)) {
-            let s = StateProvince.MAP[k];
-            if (text.toUpperCase() === k) { // if the code matches, just slot it.
-                results.push(s);
-            } else if (s.name.toUpperCase().indexOf(text.toUpperCase()) >= 0) {
-                results.push(s);
-            } else if ((s.alt) && (s.alt.length > 0)) {
-                let found = false;
-                for (let i of s.alt) {
-                    if ((!found) && (i.toUpperCase().indexOf(text.toUpperCase()) >= 0)) {
-                        results.push(s);
-                    }
-                }
+        if (Array.isArray(icon)) {
+            for (let c of icon) {
+                i.classList.add(c);
             }
+        } else {
+            i.classList.add(icon);
         }
-        return results;
-    }
 
-    //static instance;
-
-    constructor() {
-        super();
-        if (!StateProvince.instance) {
-            this.config = Object.assign({}, this.config, StateProvince.CONFIG);
-            this.cache = StateProvince.MAP;
-            this.initialized = true;
-            StateProvince.instance = this;
+        if (arialabel) {
+            i.setAttribute('aria-label', arialabel);
+        } else {
+            i.setAttribute('aria-hidden', "true");
         }
-        return StateProvince.instance;
+        return i;
     }
 }
-
-window.StateProvince = StateProvince;
+window.IconFactory = IconFactory;
 class TextFactory {
 
     /**
@@ -1757,6 +1916,15 @@ class TextFactory {
      */
     static get _libraryBase() {
         return {
+            "login" : "Login",
+            "password" : "Password",
+            "email" : "Email",
+            "passwordinput-placeholder-enter_password" : "Enter your password.",
+            "remember_me" : "Remember me",
+            "loginform-error-passwords_dont_match" : "Email and password do not match.",
+            "loginform-instructions-enter_username" : "Enter your username and password.",
+            "create_account" : "Create account",
+
             "actions": 'Actions',
             "apply_filters": 'Apply Filters',
             "bulk_select": 'Bulk select',
@@ -1944,420 +2112,6 @@ class TextFactory {
 
 }
 window.TextFactory = TextFactory;
-class IconFactory {
-
-    static get LIST() {
-        return [
-            'arrow-down-circle',
-            'arrow-up',
-            'download',
-            'map',
-            'arrow-right',
-            'upload',
-            'arrow-left',
-            'arrow-down-circle-1',
-            'calendar',
-            'trashcan',
-            'tag',
-            'legend',
-            'echx',
-            'arrow-down',
-            'clock',
-            'chat',
-            'check-circle-disc',
-            'checkmark-circle',
-            'chevron-down',
-            'checkmark',
-            'chevron-left',
-            'chevron-right',
-            'chevron-up',
-            'double-triangle-vertical',
-            'heart',
-            'no',
-            'double-triangle-horizontal',
-            'arrow-left-circle',
-            'echx-circle',
-            'echx-1',
-            'spinner-circle',
-            'circle-disc-chopped',
-            'circle',
-            'disc-chopped',
-            'gear-complex',
-            'gear',
-            'globe',
-            'help-circle',
-            'lightbulb',
-            'lock-open',
-            'magnify',
-            'menu',
-            'question',
-            'star',
-            'user-circle',
-            'user',
-            'exclaim',
-            'shape-hex',
-            'shape-rounded-triangle',
-            'warn-circle',
-            'warn-hex',
-            'warn-triangle',
-            'eye-slash',
-            'microphone-slash',
-            'minimize',
-            'eye',
-            'disc-check',
-            'minus-circle',
-            'minus',
-            'popout',
-            'plus',
-            'plus-circle',
-            'pencil',
-            'pencil-circle',
-            'refresh',
-            'speaker-high',
-            'speaker-low',
-            'printer',
-            'speaker-medium',
-            'microphone',
-            'speaker-mute',
-            'lock-closed',
-            'image',
-            'folder',
-            'document',
-            'speaker-slash',
-            'triangle-down-small',
-            'triangle-down',
-            'triangle-left-small',
-            'triangle-left',
-            'triangle-right-small',
-            'triangle-up',
-            'triangle-up-small',
-            'triangle-right',
-            'arrow-right-circle',
-            'arrow-up-circle',
-            'triangle-down-circle',
-            'triangle-left-circle',
-            'triangle-right-circle',
-            'triangle-up-circle',
-            'flag-notched',
-            'flag-pointed',
-            'flag-rectangle',
-            'flag-notched-angle',
-            'flag-pointed-angle',
-            'flag-rectangle-angle',
-            'filter',
-            'table',
-            'duplicate',
-            'dots-horizontal',
-            'dots-vertical'
-        ];
-    }
-
-    /**
-     * Gets an icon defined by cornflower blue
-     * @param icon the icon id. This is stacked with the cfb prefix.
-     * @param arialabel the aria label to use
-     * @return {*}
-     */
-    static icon(icon, arialabel) {
-        if (icon instanceof Object) { // this is probably a pre-defined icon
-            return icon;
-        }
-        let i = document.createElement('span');
-        i.classList.add('icon');
-        i.classList.add(`cfb-${icon}`);
-        if (arialabel) {
-            i.setAttribute('aria-label', arialabel);
-        } else {
-            i.setAttribute('aria-hidden', "true");
-        }
-        return i;
-    }
-
-    /**
-     * Gets an icon NOT defined by cornflower blue (like fontawesome, or a different icon font)
-     * @param icon the icon.  This can be an array as well, and if so will apply all elements as classes
-     * @param arialabel the aria label to use
-     * @return a span DOM object
-     */
-    static xicon(icon, arialabel) {
-        if (icon instanceof Object) { // this is probably a pre-defined icon
-            return icon;
-        }
-        let i = document.createElement('span');
-        i.classList.add('icon');
-
-        if (Array.isArray(icon)) {
-            for (let c of icon) {
-                i.classList.add(c);
-            }
-        } else {
-            i.classList.add(icon);
-        }
-
-        if (arialabel) {
-            i.setAttribute('aria-label', arialabel);
-        } else {
-            i.setAttribute('aria-hidden', "true");
-        }
-        return i;
-    }
-}
-window.IconFactory = IconFactory;
-class ToolTip {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // the id
-            icon: 'help-circle',
-            gravity: 'n',
-            iconclasses: [], // Classes to apply to the icon
-            text: null, // The text to use,
-            parent: null, // the parent object to fire off
-            waittime: 1000, // how long to wait before activating
-            classes: [] //Extra css classes to apply
-        };
-    }
-
-    static closeOpen() {
-        clearTimeout(ToolTip.timer);
-        if (ToolTip.activeTooltip) {
-            clearTimeout(ToolTip.activeTooltip.timer);
-            ToolTip.activeTooltip.close();
-        }
-    }
-
-    /**
-     * Define the element
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `tt-${CFBUtils.getUniqueKey(5)}`; }
-        return this;
-    }
-
-    /**
-     * Attach the tooltip to its parent.  Will reset an existing parent if one is provided
-     * during construction.
-     * @param parent
-     */
-    attach(parent) {
-        const me = this;
-        if ((parent) && (parent.container)) {
-           parent = parent.container;
-        }
-        this.parent = parent;
-        this.parent.appendChild(this.container);
-        this.parent.setAttribute('data-tooltip', 'closed');
-        this.parent.addEventListener('mouseover', function() {
-            me.open();
-        });
-        this.parent.addEventListener('mouseout', function() {
-            clearTimeout(ToolTip.timer);
-            me.close();
-        });
-        this.parent.addEventListener('focusin', function() {
-            me.open();
-        });
-        this.parent.addEventListener('focusout', function() {
-            clearTimeout(ToolTip.timer);
-            me.close();
-        });
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Opens the help tooltip
-     * This actually only starts a timer.  The actual opening happens in openGuts()
-     */
-    open() {
-        const me = this;
-        ToolTip.closeOpen();
-        ToolTip.timer = setTimeout(function() {
-            me.openGuts();
-        }, this.waittime);
-    }
-
-    /**
-     * Do the actual opening.
-     */
-    openGuts() {
-
-        ToolTip.closeOpen();
-
-        document.body.appendChild(this.container);
-        this.container.removeAttribute('aria-hidden');
-
-        if (typeof ToolTip.activeTooltip === 'undefined' ) {
-            ToolTip.activeTooltip = this;
-        } else {
-            ToolTip.activeTooltip = this;
-        }
-
-        this.setPosition();
-
-        window.addEventListener('scroll', this.setPosition, true);
-
-    }
-
-    /**
-     * Set the position of the tooltip.
-     */
-    setPosition() {
-        if (!ToolTip.activeTooltip) { return; }
-        let self = ToolTip.activeTooltip;
-
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.parent.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top;
-
-        switch(this.gravity) {
-            case 's':
-            case 'south':
-                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
-                break;
-            case 'w':
-            case 'west':
-                self.container.style.top = `${offsetTop}px`;
-                self.container.style.left = `${offsetLeft - self.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
-                break;
-            case 'e':
-            case 'east':
-                self.container.style.top = `${offsetTop}px`;
-                self.container.style.left = `${offsetLeft + self.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
-                break;
-            case 'n':
-            case 'north':
-            default:
-                self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
-                break;
-        }
-
-    }
-
-    /**
-     * Closes the help tooltip.
-     */
-    close() {
-        this.parent.appendChild(this.container);
-        window.removeEventListener('scroll', this.setPosition, true);
-        this.container.setAttribute('aria-hidden', 'true');
-        ToolTip.activeTooltip = null;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the full container
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('tooltip');
-        this.container.setAttribute('aria-hidden', 'true');
-        if (this.id) { this.container.setAttribute('id', this.id); }
-        switch(this.gravity) {
-            case 's':
-            case 'south':
-                this.container.classList.add('south');
-                break;
-            case 'w':
-            case 'west':
-                this.container.classList.add('west');
-                break;
-            case 'e':
-            case 'east':
-                this.container.classList.add('east');
-                break;
-            case 'n':
-            case 'north':
-            default:
-                this.container.classList.add('north');
-                break;
-        }
-
-        if ((this.classes) && (this.classes.length > 0)) {
-            for (let c of this.classes) {
-                this.container.classList.add(c);
-            }
-        }
-
-        if ((this.icon) && (this.icon !== '')) {
-            let icon = IconFactory.icon(this.icon);
-            icon.classList.add('tipicon');
-            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-                for (let ic of this.iconclasses) {
-                    icon.classList.add(ic);
-                }
-            }
-            this.container.appendChild(icon);
-        }
-
-        this.tiptext = document.createElement('div');
-        this.tiptext.classList.add('tiptext');
-        this.tiptext.setAttribute('id', `${this.id}-text`);
-        if (this.text) {
-            this.tiptext.innerHTML = this.text;
-        }
-
-        this.container.appendChild(this.tiptext);
-
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get gravity() { return this.config.gravity; }
-    set gravity(gravity) { this.config.gravity = gravity; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get iconclasses() { return this.config.iconclasses; }
-    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get parent() { return this.config.parent; }
-    set parent(parent) { this.config.parent = parent; }
-
-    get text() { return this.config.text; }
-    set text(text) { this.config.text = text; }
-
-    get timer() { return this._timer; }
-    set timer(timer) { this._timer = timer; }
-
-    get tiptext() { return this._tiptext; }
-    set tiptext(tiptext) { this._tiptext = tiptext; }
-
-    get tooltip() { return this._tooltip; }
-    set tooltip(tooltip) { this._tooltip = tooltip; }
-
-    get waittime() { return this.config.waittime; }
-    set waittime(waittime) { this.config.waittime = waittime; }
-
-}
-window.ToolTip = ToolTip;
 class SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2747,28 +2501,6 @@ class SimpleButton {
 
 }
 window.SimpleButton = SimpleButton;
-class ConstructiveButton extends SimpleButton {
-    constructor(config) {
-        if (config.classes) {
-            config.classes.push('constructive');
-        } else {
-            config.classes = ['constructive'];
-        }
-        super(config);
-    }
-}
-window.ConstructiveButton = ConstructiveButton;
-class DestructiveButton extends SimpleButton {
-    constructor(config) {
-        if (config.classes) {
-            config.classes.push('destructive');
-        } else {
-            config.classes = ['destructive'];
-        }
-        super(config);
-    }
-}
-window.DestructiveButton = DestructiveButton;
 class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -2937,7 +2669,9 @@ class ButtonMenu extends SimpleButton {
             case 'southwest':
             default:
                 self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.right = `${offsetRight - (self.button.clientWidth / 2)}px`;
+                self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
+
+                //self.menu.style.right = `${offsetRight - (self.button.clientWidth)}px`;
                 break;
         }
 
@@ -3107,6 +2841,28 @@ class ButtonMenu extends SimpleButton {
 
 }
 window.ButtonMenu = ButtonMenu;
+class ConstructiveButton extends SimpleButton {
+    constructor(config) {
+        if (config.classes) {
+            config.classes.push('constructive');
+        } else {
+            config.classes = ['constructive'];
+        }
+        super(config);
+    }
+}
+window.ConstructiveButton = ConstructiveButton;
+class DestructiveButton extends SimpleButton {
+    constructor(config) {
+        if (config.classes) {
+            config.classes.push('destructive');
+        } else {
+            config.classes = ['destructive'];
+        }
+        super(config);
+    }
+}
+window.DestructiveButton = DestructiveButton;
 class CloseButton extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
@@ -3124,78 +2880,6 @@ class CloseButton extends SimpleButton {
     }
 }
 window.CloseButton = CloseButton;
-class HelpButton extends SimpleButton {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            action: function(e, self) { self.tooltip.open(); },
-            icon: 'help-circle',
-            tipicon: 'help-circle',
-            tipgravity: 'n',
-            arialabel: TextFactory.get('help'),
-            iconclasses: ['helpicon'],
-            tooltip: null // help text to display
-        };
-    }
-
-    constructor(config) {
-        config = Object.assign({}, HelpButton.DEFAULT_CONFIG, config);
-        if (config.classes) {
-            if (!config.classes.includes('tagbutton')) {
-                config.classes.push('naked');
-                config.classes.push('help');
-            }
-        } else {
-            config.classes = ['naked', 'help'];
-        }
-        if (!config.id) { // need to generate an id for aria stuff
-            config.id = `${CFBUtils.getUniqueKey(5)}-help`;
-        }
-        super(config);
-
-    }
-
-}
-window.HelpButton = HelpButton;
-class SkipButton extends SimpleButton {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            text: TextFactory.get('skip_to_content'),
-            classes: ['visually-hidden', 'skipbutton'],
-            id: 'content-jump',
-            hot: true,
-            contentstart: "#content-start",
-            focusin: function(e, self) {
-                self.button.classList.remove('visually-hidden');
-            },
-            focusout: function(e, self) {
-                self.button.classList.add('visually-hidden');
-            },
-            action: function(e, self) {
-                let url = location.href;
-                location.href = self.contentstart;
-                history.replaceState(null,null,url);
-            }
-        };
-    }
-
-    constructor(config) {
-        config = Object.assign({}, SkipButton.DEFAULT_CONFIG, config);
-        super(config);
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    /**
-     * Get the content start identifier
-     * @return {string}
-     */
-    get contentstart() { return this.config.contentstart; }
-    set contentstart(contentstart) { this.config.contentstart = contentstart; }
-
-}
-window.SkipButton = SkipButton;
 class HamburgerButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
@@ -3272,6 +2956,78 @@ class HamburgerButton extends SimpleButton {
 
 }
 window.HamburgerButton = HamburgerButton;
+class HelpButton extends SimpleButton {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            action: function(e, self) { self.tooltip.open(); },
+            icon: 'help-circle',
+            tipicon: 'help-circle',
+            tipgravity: 'n',
+            arialabel: TextFactory.get('help'),
+            iconclasses: ['helpicon'],
+            tooltip: null // help text to display
+        };
+    }
+
+    constructor(config) {
+        config = Object.assign({}, HelpButton.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            if (!config.classes.includes('tagbutton')) {
+                config.classes.push('naked');
+                config.classes.push('help');
+            }
+        } else {
+            config.classes = ['naked', 'help'];
+        }
+        if (!config.id) { // need to generate an id for aria stuff
+            config.id = `${CFBUtils.getUniqueKey(5)}-help`;
+        }
+        super(config);
+
+    }
+
+}
+window.HelpButton = HelpButton;
+class SkipButton extends SimpleButton {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            text: TextFactory.get('skip_to_content'),
+            classes: ['visually-hidden', 'skipbutton'],
+            id: 'content-jump',
+            hot: true,
+            contentstart: "#content-start",
+            focusin: function(e, self) {
+                self.button.classList.remove('visually-hidden');
+            },
+            focusout: function(e, self) {
+                self.button.classList.add('visually-hidden');
+            },
+            action: function(e, self) {
+                let url = location.href;
+                location.href = self.contentstart;
+                history.replaceState(null,null,url);
+            }
+        };
+    }
+
+    constructor(config) {
+        config = Object.assign({}, SkipButton.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    /**
+     * Get the content start identifier
+     * @return {string}
+     */
+    get contentstart() { return this.config.contentstart; }
+    set contentstart(contentstart) { this.config.contentstart = contentstart; }
+
+}
+window.SkipButton = SkipButton;
 class TagButton extends HelpButton {
 
     static get DEFAULT_CONFIG() {
@@ -3300,3570 +3056,6 @@ class TagButton extends HelpButton {
 
 }
 window.TagButton = TagButton;
-class DatePicker {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            dateicon: 'calendar',
-            startdate: null,
-            value: null,
-            timezone: 'GMT',
-            basetime: '12:00:00', // Time to set dates on
-            locale: 'en-US',
-            weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            onselect: null, // A function to be called on selection. Passed the date selected, as a string.
-            classes: [] // Extra css classes to apply
-        };
-    }
-
-    /**
-     * Define a DataGrid
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
-    }
-
-    /**
-     * Get the month name.
-     * @param m month id
-     * @return {*} string
-     */
-    getMonthName(m) {
-        return this.months[m];
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the full container
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('datepicker');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-        this.container.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        this.monthbox = document.createElement('div');
-        this.monthbox.classList.add('monthbox');
-
-        this.renderMonth(this.startdate); // initial
-
-        this.container.appendChild(this.monthbox);
-    }
-
-    /**
-     * Render a month
-     * @param startDate the date to center the month around. If null, uses today.
-     */
-    renderMonth(startDate) {
-        const me = this;
-
-        // XXX there has to be a better way to do this.
-
-        let now = new Date();
-        let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
-
-        if (!startDate) {
-            startDate = today;
-        } else if (typeof startDate === 'string') {
-            startDate = new Date(`${startDate} ${this.basetime}`);
-            this.value = startDate;
-            this.startdate = startDate;
-        }
-
-        let startDay = new Date(startDate.getFullYear(), startDate.getMonth()).getDay();
-        //let daysInMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0).getDate();
-        //console.log(`startDay: ${startDay}, daysInThisMonth: ${daysInMonth}`);
-
-        // Many additional dates or things
-        let daysInMonth = (32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate()),
-            previousMonth = new Date(startDate.getFullYear(), (startDate.getMonth() - 1)),
-            daysInPreviousMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth(), 0).getDate(),
-            nextMonth = new Date(startDate.getFullYear(), (startDate.getMonth() + 1));
-
-        let month = document.createElement('div');
-        month.classList.add('month');
-
-        let header = document.createElement('div');
-        header.classList.add('datepicker-header');
-
-        let pMonthButton = new SimpleButton({
-            shape: 'square',
-            mute: true,
-            size: 'small',
-            icon: 'triangle-left',
-            action: function(e) {
-                e.preventDefault();
-                me.renderMonth(previousMonth);
-            }
-        });
-
-        let nMonthButton = new SimpleButton({
-            shape: 'square',
-            mute: true,
-            size: 'small',
-            icon: 'triangle-right',
-            action: function(e) {
-                e.preventDefault();
-                me.renderMonth(nextMonth);
-            }
-        });
-
-        let mname = document.createElement('div');
-        mname.classList.add('name');
-        mname.innerHTML = `${this.getMonthName(startDate.getMonth())}, ${startDate.getFullYear()}`;
-
-        header.appendChild(mname);
-        header.appendChild(pMonthButton.button);
-        header.appendChild(nMonthButton.button);
-
-        month.appendChild(header);
-
-        let calendar = document.createElement('table');
-        calendar.classList.add('month');
-
-        let thead = document.createElement('thead');
-        let hr = document.createElement('tr');
-        for (let weekday of this.weekdays) {
-            let th = document.createElement('th');
-            th.innerHTML = weekday.charAt(0);
-            let celltip = new ToolTip({
-                tipicon: '',
-                classes: ['unfixed'],
-                text: weekday
-            });
-            celltip.attach(th);
-            hr.appendChild(th);
-        }
-        thead.appendChild(hr);
-        calendar.appendChild(thead);
-
-        let tbody = document.createElement('tbody');
-
-        let dayOfMonth = 1,
-            dayOfNextMonth = 1,
-            dayOfPreviousMonth = daysInPreviousMonth - startDay;
-
-        let cellCount = 0;
-        for (let rc = 0; rc <= 5; rc++) {
-            let tr = document.createElement('tr');
-            for (let d = 0; d <= 6; d++) {
-
-                let td = document.createElement('td'),
-                    link = document.createElement('a'),
-                    thisDay;
-
-                link.setAttribute('data-cellno', cellCount);
-
-                if ((cellCount >= startDay) && (dayOfMonth <= daysInMonth)) {
-                    // startDay or into the future until the end of the month
-                    link.innerHTML = dayOfMonth;
-                    link.classList.add('cmonth');
-                    link.setAttribute('data-day', `${startDate.getFullYear()}-${(startDate.getMonth() + 1)}-${dayOfMonth}`);
-                    thisDay = new Date(`${startDate.getFullYear()}-${(startDate.getMonth() +1)}-${dayOfMonth} ${this.basetime}`);
-                    dayOfMonth++;
-                } else if ((cellCount < startDay)) {
-                    // before the startDay, so last month
-                    link.innerHTML = dayOfPreviousMonth;
-                    thisDay = new Date(`${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth} ${this.basetime}`);
-                    link.setAttribute('data-day', `${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth}`);
-                    dayOfPreviousMonth++;
-                } else {
-                    // after this month, so next month
-                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} ${this.basetime}`);
-                    link.innerHTML = dayOfNextMonth;
-                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
-                    dayOfNextMonth++;
-                }
-
-                link.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    me.select(link);
-                });
-                link.addEventListener('keydown', function(e) {
-
-                    let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
-                    let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
-
-                    switch (e.key) {
-                        case 'ArrowLeft':
-                        case 'ArrowUp':
-                            let p = tbody.querySelector(`[data-cellno='${pcell}'`);
-                            if (p) {
-                                p.focus();
-                            }
-                            e.stopPropagation();
-                            break;
-                        case 'ArrowRight':
-                        case 'ArrowDown':
-                            let n = tbody.querySelector(`[data-cellno='${ncell}'`);
-                            if (n) {
-                                n.focus();
-                            }
-                            e.stopPropagation();
-                            break;
-                        case 'Enter':
-                        case ' ':
-                            me.select(link);
-                            e.stopPropagation();
-                            break;
-                        default:
-                            break;
-                    }
-                    return false;
-                });
-
-                link.setAttribute('aria-label', link.getAttribute('data-day'));
-                link.setAttribute('tabindex', 0);
-
-                if (thisDay.getTime() === today.getTime()) {
-                    link.classList.add('today');
-                } else if (thisDay.getTime() < today.getTime()) {
-                    link.classList.add('past');
-                } else if (thisDay.getTime() > today.getTime()) {
-                    link.classList.add('future');
-                }
-
-                if ((this.value) && (
-                    (this.startdate.getFullYear() === thisDay.getFullYear()) &&
-                    (this.startdate.getMonth() === thisDay.getMonth()) &&
-                    (this.startdate.getDate() === thisDay.getDate())
-                )) {
-                    link.setAttribute('aria-selected', true);
-                }
-
-                td.appendChild(link);
-
-                tr.appendChild(td);
-                cellCount++;
-            }
-            tbody.appendChild(tr);
-        }
-        calendar.appendChild(tbody);
-
-        month.append(calendar);
-
-        this.monthbox.innerHTML = "";
-        this.monthbox.appendChild(month);
-    }
-
-    /**
-     * Select a date.
-     * @param link the date with the link
-     */
-    select(link) {
-        this.startdate = new Date(link.getAttribute('data-day'));
-        if ((this.onselect) && (typeof this.onselect === 'function')) {
-            this.onselect(link.getAttribute('data-day'));
-        }
-    }
-
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get basetime() { return this.config.basetime; }
-    set basetime(basetime) { this.config.basetime = basetime; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get dateicon() { return this.config.dateicon; }
-    set dateicon(dateicon) { this.config.dateicon = dateicon; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get locale() { return this.config.locale; }
-    set locale(locale) { this.config.locale = locale; }
-
-    get monthbox() { return this._monthbox; }
-    set monthbox(monthbox) { this._monthbox = monthbox; }
-
-    get months() { return this.config.months; }
-    set months(months) { this.config.months = months; }
-
-    get onselect() { return this.config.onselect; }
-    set onselect(onselect) { this.config.onselect = onselect; }
-
-    get startdate() { return this.config.startdate; }
-    set startdate(startdate) { this.config.startdate = startdate; }
-
-    get timezone() { return this.config.timezone; }
-    set timezone(timezone) { this.config.timezone = timezone; }
-
-    get weekdays() { return this.config.weekdays; }
-    set weekdays(weekdays) { this.config.weekdays = weekdays; }
-
-    get value() { return this.config.value; }
-    set value(value) { this.config.value = value; }
-
-
-}
-window.DatePicker = DatePicker;
-class InputElement {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // Component id
-            name: null, // Name attribute
-            form: null, // A form element this is in
-            counter: null, // A value for a character counter. Null means 'no counter'
-            // Possible values: null, 'remaining', 'limit', and 'sky'
-            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
-            type: 'text', // Type of input, defaults to "text"
-            label : null, // Input label. If null, does not show up.
-            placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
-                               // To insure a blank placeholder, set the value to ""
-            title: null,
-            pattern: null,
-            icon: null, // Use to define a specific icon, used in some specific controls.
-
-            minimal: false, // if true, build with the intent that it is part of a larger component.
-                            // this removes things like the search controls and validation boxes.
-
-            passive: false, // Start life in "passive" mode.
-            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
-
-            help: null, // Help text.
-            helpwaittime: 5000, // How long to wait before automatically showing help tooltip
-            required: false, // Is this a required field or not
-            requiredtext: TextFactory.get('required_lc'), // text to display on required items
-            requirederror: TextFactory.get('input-error-required'), // error to display if required item isn't filled.
-            hidden: false, // Whether or not to be hidden
-            autocomplete: 'off', // Enable browser autocomplete. Default is off.
-            arialabel: null, // The aria-label value. If null, follows: label > title > null
-            maxlength: null, // Value for maxlength.
-            value: '', // Value to use (pre-population).  Used during construction and then discarded.
-            disabled: false, // If true, disable the field.
-            classes: [], // Extra css classes to apply
-            onchange: null, // The change handler. Passed (self).
-            onreturn: null, // action to execute on hitting the return key. Passed (event, self).
-            ontab: null, // action to execute on hitting the tab key. Passed (event, self).
-            onkeyup: null, // action to execute on key up. Passed (event, self).
-            onkeydown: null, // action to execute on key down. Passed (event, self).
-            focusin: null, // action to execute on focus in. Passed (event, self).
-            focusout: null, // action to execute on focus out. Passed (event, self).
-            validator: null, // A function to run to test validity. Passed the self.
-            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
-                return `${data}`;
-            }
-
-        };
-    }
-
-    /**
-     * Define a the input
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
-
-        if (!this.arialabel) { // munch aria label.
-            if (this.label) {
-                this.arialabel = this.label;
-            } else if (this.title) {
-                this.arialabel = this.title;
-            }
-        }
-
-        if (!this.id) { this.id = `e-${CFBUtils.getUniqueKey(5)}`; }
-
-        if (!this.name) { this.name = this.id; }
-
-        if (!this.config.value) { this.config.value = ''; }
-
-        if (this.config.value) { // store the supplied value if any
-            this.origval = this.config.value;
-        } else {
-            this.origval = '';
-        }
-
-        this.touched = false; // set untouched on creation.
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    /**
-     * Return the input mode. This is used by mobile devices to select the correct keyboard.
-     * This is nearly always overridden.
-     * (Valid values are text, none, tel, url, email, numeric, decimal, search
-     * @return {string}
-     */
-    get inputmode() { return "text"; }
-
-    /**
-     * Returns a topcontrol, if any.  This is usually a character counter, and is overridden.
-     * @return {null}, or the character counter.
-     */
-    get topcontrol() { return this.charactercounter; }
-
-    /**
-     * Return an extra input control, if any. This is things like stepper buttons for numbers.
-     * @return {null}, or the input control.
-     */
-    get inputcontrol() { return null; }
-
-    /**
-     * Returns the raw element, without any container
-     * @return {*} the element.
-     */
-    get naked() { return this.input; }
-
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    /**
-     * Has the field been changed or not?
-     * @return {boolean} true or false, depending.
-     */
-    isDirty() {
-        return (this.origval !== this.value);
-    }
-
-    /**
-     * Runs validation.  Shows errors, if any. Returns true or false, depending.
-     * @param onload If true, this validation fires on the loading. This is important to
-     * know because some invalidations aren't actually errors until the form is submitted.
-     * @return {boolean}
-     */
-    validate(onload) {
-        this.errors = [];
-        this.warnings = [];
-
-        if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
-            this.errors.push(this.requirederror);
-        }
-
-        if ((this.localValidator) && (typeof this.localValidator === 'function')) {
-            this.localValidator(onload);
-        }
-        if ((this.validator) && (typeof this.validator === 'function')) {
-            this.validator(this);
-        }
-        if ((this.errors.length > 0) || (this.warnings.length > 0)) {
-            this.showMessages();
-            if (this.errors.length > 0) {
-                this.input.setAttribute('aria-invalid', 'true');
-            } else {
-                this.input.removeAttribute('aria-invalid');
-            }
-        } else {
-            this.clearMessages();
-            this.input.removeAttribute('aria-invalid');
-            if ((this.isDirty()) && (!onload)) { // This has to be valid
-                this.container.classList.add('valid');
-            } else {
-                this.container.classList.remove('valid');
-            }
-        }
-        return (this.errors.length < 1);
-    }
-
-    /**
-     * Local datatype validator, intended for overriding
-     * @param onload If true, this validation fires on the loading. This is important to
-     * know because some invalidations aren't actually errors until the form is submitted.
-     */
-    localValidator(onload) { }
-
-    /**
-     * Show messages and warnings
-     */
-    showMessages() {
-        this.messagebox.innerHTML = "";
-        for (let error of this.errors) {
-            this.addError(error);
-        }
-        for (let warning of this.warnings) {
-            this.addWarning(warning);
-        }
-        if (this.errors.length > 0) {
-            this.container.classList.add('error');
-        } else if (this.warnings.length > 0) {
-            this.container.classList.add('warning');
-        }
-        this.messagebox.removeAttribute('aria-hidden');
-    }
-
-    /**
-     * Clears all messages from the element.
-     */
-    clearMessages() {
-        this.errors = [];
-        this.warnings = [];
-        this.messagebox.innerHTML = '';
-        this.messagebox.setAttribute('aria-hidden', 'true');
-        this.container.classList.remove('error');
-        this.container.classList.remove('warning');
-    }
-
-    /**
-     * Add an error.
-     * @param error the error to add
-     */
-    addError(error) {
-        let err = document.createElement('li');
-        err.classList.add('error');
-        err.innerHTML = error;
-        this.messagebox.appendChild(err);
-    }
-
-    /**
-     * Add a warning
-     * @param warning the warning to add
-     */
-    addWarning(warning) {
-        let warn = document.createElement('li');
-        warn.classList.add('warning');
-        warn.innerHTML = warning;
-        this.messagebox.appendChild(warn);
-    }
-
-    /**
-     * Updates the counter
-     */
-    updateCounter() {
-        if (!this.counter) { return; }
-
-        let ctext = "";
-        if (this.counter === 'limit') {
-            ctext = TextFactory.get('input-counter-limit', this.value.length, this.maxlength);
-        } else if (this.counter === 'sky') {
-            ctext = TextFactory.get('input-counter-sky', this.value.length);
-        } else { // remaining
-            ctext = TextFactory.get('input-counter-remaining', (this.maxlength - this.value.length));
-        }
-
-        this.charactercounter.innerHTML = ctext;
-
-        if ((this.maxlength) && (this.value.length >= this.maxlength)) {
-            this.charactercounter.classList.add('outofbounds');
-        } else if ((this.counter !== 'sky')
-            && (this.value.length >= (this.maxlength * 0.90))) {
-            this.charactercounter.classList.remove('outofbounds');
-            this.charactercounter.classList.add('danger');
-        } else {
-            this.charactercounter.classList.remove('danger');
-            this.charactercounter.classList.remove('outofbounds');
-        }
-    }
-
-    /**
-     * Calculate what the placeholder should be. This method is often overridden.
-     * @return {null|*}
-     */
-    calculatePlaceholder() {
-        return '';
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Enable the element
-     */
-    disable() {
-        this.input.setAttribute('disabled', 'true');
-        this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
-    }
-
-    /**
-     * Disable the element
-     */
-    enable() {
-        this.input.removeAttribute('disabled');
-        this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
-    }
-
-    /**
-     * Switch to 'passive' mode.
-     */
-    pacify() {
-        this.container.classList.add('passive');
-        this.passive = true;
-    }
-
-    /**
-     * Switch from 'passive' mode to 'active' mode.
-     */
-    activate() {
-        this.container.classList.remove('passive');
-        this.passive = false;
-    }
-
-    /**
-     * Toggle the passive/active modes
-     */
-    toggleActivation() {
-        if (this.container.classList.contains('passive')) {
-            this.activate();
-            return;
-        }
-        this.pacify();
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get passivetext() {
-        let v;
-        if (this.value) {
-            v = this.value;
-        } else if (this.config.value) {
-            v = this.config.value;
-        }
-        if (v) {
-            if (this.renderer) {
-                return this.renderer(v);
-            }
-            return v;
-        }
-
-        return this.unsettext;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Builds and returns a container object for all parts.
-     * This gets over-ridden in elements that have additional structures, like a character counter
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        if (this.classes) {
-            for (let c of this.classes) {
-                this.container.classList.add(c);
-            }
-        }
-        if (this.label) { this.container.appendChild(this.labelobj); }
-
-        let wrap = document.createElement('div');
-        wrap.classList.add('wrap');
-        wrap.appendChild(this.input);
-        if (this.inputcontrol) { wrap.appendChild(this.inputcontrol); }
-        this.container.appendChild(wrap);
-
-        if (!this.minimal) {
-            this.container.appendChild(this.passivebox);
-            if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
-            this.container.appendChild(this.messagebox);
-        }
-        if (this.minimal) { this.container.classList.add('minimal'); }
-
-        this.postContainerScrub();
-
-    }
-
-    /**
-     * Apply various things to the container and its children.
-     */
-    postContainerScrub() {
-        if (this.required) {
-            this.container.classList.add('required');
-            this.input.setAttribute('required', 'required');
-        }
-        if (this.mute) { this.container.classList.add('mute'); }
-        if (this.disabled) { this.container.classList.add('disabled'); }
-
-        if (this.hidden) {
-            this.container.style.display = 'none';
-            this.container.setAttribute('aria-hidden', 'true');
-        }
-        if ((this.config.value) && (this.config.value.length > 0)) {
-            this.container.classList.add('filled');
-        }
-        if (this.passive) {
-            this.pacify();
-        }
-        if (this.help) {
-            this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
-            this.input.setAttribute('aria-labelledby', `${this.id}-label`);
-        }
-
-        this.validate(true);
-    }
-
-    /**
-     * Build the passive text box.
-     */
-    buildInactiveBox() {
-        this.passivebox = document.createElement('div');
-        this.passivebox.classList.add('passivebox');
-        this.passivebox.innerHTML = this.passivetext;
-    }
-
-    /**
-     * Builds the input's DOM.
-     */
-    buildInput() {
-        const me = this;
-
-        if (this.type === 'textarea') {
-            this.input = document.createElement('textarea');
-        } else {
-            this.input = document.createElement('input');
-        }
-
-        this.input.setAttribute('type', this.type);
-        this.input.setAttribute('id', this.id);
-        this.input.setAttribute('name', this.name);
-        this.input.setAttribute('inputmode', this.inputmode);
-        this.input.setAttribute('aria-describedby', `msg-${this.id}`);
-        this.input.setAttribute('role', 'textbox');
-        this.input.setAttribute('tabindex', '0');
-        this.input.setAttribute('placeholder', this.placeholder);
-
-        if (this.title) { this.input.setAttribute('title', this.title); }
-        if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
-        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
-        if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
-
-        if (this.classes) {
-            for (let c of this.classes) {
-                this.input.classList.add(c);
-            }
-        }
-        this.input.addEventListener('change', function(e) {
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
-            }
-        });
-
-        this.input.addEventListener('keydown', function(e) {
-            // Reset this to keep readers from constantly beeping. It will re-validate later.
-            me.input.removeAttribute('aria-invalid');
-            me.updateCounter();
-            me.touched = true; // set self as touched.
-            if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
-                me.onkeydown(e, me);
-            }
-        });
-        this.input.addEventListener('keyup', function(e) {
-            if (me.helptimer) {
-                clearTimeout(me.helptimer);
-                me.helpbutton.closeTooltip();
-            }
-
-            if ((me.value) && (me.value.length > 0) && (me.container)) {
-                me.container.classList.add('filled');
-            } else {
-                me.container.classList.remove('filled');
-            }
-
-            if ((me.form) && (me.required) // If this is the only thing required, tell the form.
-                && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
-                if (me.form) { me.form.validate(); }
-            }
-            if ((e.key === 'Enter') // Return key
-                && (me.onreturn) && (typeof me.onreturn === 'function')) {
-                e.preventDefault();
-                e.stopPropagation();
-                me.onreturn(e, me);
-            } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
-                me.onkeyup(e, me);
-            }
-        });
-        this.input.addEventListener('focusin', function(e) {
-            if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
-                me.input.setAttribute('placeholder', me.placeholder);
-            }
-            if (me.container) {
-                me.container.classList.add('active');
-            }
-            if (me.help) {
-                me.helptimer = setTimeout(function() {
-                    me.helpbutton.openTooltip();
-                }, me.helpwaittime);
-            }
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
-            }
-        });
-        this.input.addEventListener('focusout', function(e) {
-
-            if (me.passivebox) {
-                me.passivebox.innerHTML = me.passivetext;
-            }
-
-            if (me.helptimer) {
-                clearTimeout(me.helptimer);
-                me.helpbutton.closeTooltip();
-            }
-
-            if ((me.mute) && (me.label)) {
-                me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
-            }
-
-            if (me.container) { me.container.classList.remove('active'); }
-            me.validate();
-
-            if (me.form) { me.form.validate(); }
-
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
-            }
-        });
-        this.input.value = this.config.value;
-
-        if (this.required) {
-            this.input.setAttribute('required', 'true');
-            if (this.label) {
-                this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
-            }
-        }
-
-        if (this.mute) {
-            this.input.classList.add('mute');
-            if (this.label) {
-                this.input.setAttribute('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`);
-            }
-        }
-
-        if (this.hidden) { this.input.setAttribute('hidden', 'hidden'); }
-        if (this.disabled) { this.disable(); }
-
-        if (this.icon) { this.input.classList.add(`cfb-${this.icon}`); }
-
-    }
-
-    /**
-     * Builds the input's DOM.
-     */
-    buildLabel() {
-        const me = this;
-
-        if (!this.label) { return null; }
-
-        this.labelobj = document.createElement('label');
-        this.labelobj.setAttribute('for', this.id);
-        this.labelobj.setAttribute('id', `${this.id}-label`);
-        this.labelobj.innerHTML = this.label;
-
-        if (this.form) {
-            this.labelobj.setAttribute('form', this.form.id);
-        }
-
-        if (this.help) {
-            this.helpbutton = new HelpButton({
-                id: `${this.id}-help`,
-                tooltip: this.help
-            });
-            this.labelobj.appendChild(this.helpbutton.button);
-        }
-    }
-
-    /**
-     * Build the message box.
-     */
-    buildMessagebox() {
-        this.messagebox = document.createElement('ul');
-        this.messagebox.setAttribute('id', `msg-${this.id}`);
-        this.messagebox.classList.add('messagebox');
-    }
-
-    /**
-     * Draws a text counter in the field
-     */
-    buildCharacterCounter() {
-        if (this.counter) {
-            this.charactercounter = document.createElement('div');
-            this.charactercounter.classList.add('charcounter');
-            this.charactercounter.classList.add('topcontrol');
-            this.charactercounter.classList.add(this.counter);
-
-            if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
-
-            this.updateCounter();
-        }
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get arialabel() { return this.config.arialabel; }
-    set arialabel(arialabel) { this.config.arialabel = arialabel; }
-
-    get autocomplete() { return this.config.autocomplete; }
-    set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }
-
-    get charactercounter() {
-        if (!this._charactercounter) { this.buildCharacterCounter(); }
-        return this._charactercounter;
-    }
-    set charactercounter(charactercounter) { this._charactercounter = charactercounter; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get counter() { return this.config.counter; }
-    set counter(counter) { this.config.counter = counter; }
-
-    get disabled() { return this.config.disabled; }
-    set disabled(disabled) { this.config.disabled = disabled; }
-
-    get helptimer() { return this._helptimer; }
-    set helptimer(helptimer) { this._helptimer = helptimer; }
-
-    get messagebox() {
-        if (!this._messagebox) { this.buildMessagebox(); }
-        return this._messagebox;
-    }
-    set messagebox(messagebox) { this._messagebox = messagebox; }
-
-    get errors() { return this._errors; }
-    set errors(errors) { this._errors = errors; }
-
-    get focusin() { return this.config.focusin; }
-    set focusin(focusin) {
-        if (typeof focusin !== 'function') {
-            console.error("Action provided for focusin is not a function!");
-        }
-        this.config.focusin = focusin;
-    }
-
-    get focusout() { return this.config.focusout; }
-    set focusout(focusout) {
-        if (typeof focusout !== 'function') {
-            console.error("Action provided for focusout is not a function!");
-        }
-        this.config.focusout = focusout;
-    }
-
-    get form() { return this.config.form; }
-    set form(form) { this.config.form = form; }
-
-    get forceconstraints() { return this.config.forceconstraints; }
-    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
-
-    get hidden() { return this.config.hidden; }
-    set hidden(hidden) { this.config.hidden = hidden; }
-
-    get help() { return this.config.help; }
-    set help(help) { this.config.help = help; }
-
-    get helpbutton() { return this._helpbutton; }
-    set helpbutton(helpbutton) { this._helpbutton = helpbutton; }
-
-    get helpwaittime() { return this.config.helpwaittime; }
-    set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get input() {
-        if (!this._input) { this.buildInput(); }
-        return this._input;
-    }
-    set input(input) { this._input = input; }
-
-    get label() { return this.config.label; }
-    set label(label) { this.config.label = label; }
-
-    get labelobj() {
-        if (!this._labelobj) { this.buildLabel(); }
-        return this._labelobj;
-    }
-    set labelobj(labelobj) { this._labelobj = labelobj; }
-
-    get maxlength() { return this.config.maxlength; }
-    set maxlength(maxlength) { this.config.maxlength = maxlength; }
-
-    get minimal() { return this.config.minimal; }
-    set minimal(minimal) { this.config.minimal = minimal; }
-
-    get mute() { return this.config.mute; }
-    set mute(mute) { this.config.mute = mute; }
-
-    get name() { return this.config.name; }
-    set name(name) { this.config.name = name; }
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) {
-        if (typeof onchange !== 'function') {
-            console.error("Action provided for onchange is not a function!");
-        }
-        this.config.onchange = onchange;
-    }
-
-    get onkeydown() { return this.config.onkeydown; }
-    set onkeydown(onkeydown) {
-        if (typeof onkeydown !== 'function') {
-            console.error("Action provided for onkeydown is not a function!");
-        }
-        this.config.onkeydown = onkeydown;
-    }
-
-    get onkeyup() { return this.config.onkeyup; }
-    set onkeyup(onkeyup) {
-        if (typeof onkeyup !== 'function') {
-            console.error("Action provided for onkeyup is not a function!");
-        }
-        this.config.onkeyup = onkeyup;
-    }
-
-    get onreturn() { return this.config.onreturn; }
-    set onreturn(onreturn) {
-        if (typeof onreturn !== 'function') {
-            console.error("Action provided for onreturn is not a function!");
-        }
-        this.config.onreturn = onreturn;
-    }
-
-    get ontab() { return this.config.ontab; }
-    set ontab(ontab) {
-        if (typeof ontab !== 'function') {
-            console.error("Action provided for ontab is not a function!");
-        }
-        this.config.ontab = ontab;
-    }
-
-    get origval() { return this.config.origval; }
-    set origval(origval) { this.config.origval = origval; }
-
-    get passive() { return this.config.passive; }
-    set passive(passive) { this.config.passive = passive; }
-
-    get passivebox() {
-        if (!this._passivebox) { this.buildInactiveBox(); }
-        return this._passivebox;
-    }
-    set passivebox(passivebox) { this._passivebox = passivebox; }
-
-    get pattern() { return this.config.pattern; }
-    set pattern(pattern) { this.config.pattern = pattern; }
-
-    get placeholder() {
-        if (this.config.placeholder) return this.config.placeholder;
-        return this.calculatePlaceholder();
-    }
-    set placeholder(placeholder) { this.config.placeholder = placeholder; }
-
-    get renderer() { return this.config.renderer; }
-    set renderer(renderer) {
-        if (typeof renderer !== 'function') {
-            console.error("Value provided to renderer is not a function!");
-        }
-        this.config.renderer = renderer;
-    }
-
-    get required() { return this.config.required; }
-    set required(required) { this.config.required = required; }
-
-    get requirederror() { return this.config.requirederror; }
-    set requirederror(requirederror) { this.config.requirederror = requirederror; }
-
-    get requiredtext() { return this.config.requiredtext; }
-    set requiredtext(requiredtext) { this.config.requiredtext = requiredtext; }
-
-    get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
-
-    get touched() { return this._touched; }
-    set touched(touched) { this._touched = touched; }
-
-    get type() { return this.config.type; }
-    set type(type) { this.config.type = type; }
-
-    get unsettext() { return this.config.unsettext; }
-    set unsettext(unsettext) { this.config.unsettext = unsettext; }
-
-    get validator() { return this.config.validator; }
-    set validator(validator) { this.config.validator = validator; }
-
-    get value() { return this.input.value; }
-    set value(value) {
-        this.config.value = value;
-        this.input.value = value;
-        this.passivebox.value = value;
-    }
-
-    get warnings() { return this._warnings; }
-    set warnings(warnings) { this._warnings = warnings; }
-
-}
-window.InputElement = InputElement;
-class TextInput extends InputElement {
-    constructor(config) {
-        if (!config) { config = {}; }
-        config.type = "text";
-        super(config);
-    }
-}
-window.TextInput = TextInput;
-class BooleanToggle {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // The button id
-            name: null,
-            form: null, // A form element this is in
-            label: null, // The text for the label.
-            checked: false, // Initial state.
-            classes: [], // Extra css classes to apply
-            disabled: false, // If true, make the checkbox disabled.
-            labelside: 'right', // Which side to put the label on.
-            style: null, // Default to box
-            onchange: null, // The change handler. Passed (self).
-            validator: null, // A function to run to test validity. Passed the self; returns true or false.,
-            value: null, // the value of the checkbox
-            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
-                return `${data}`;
-            }
-        };
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
-        
-        if ((!this.arialabel) && (this.label)) { // munch aria label.
-            this.arialabel = this.label;
-        }
-
-        if (!this.id) { this.id = `check-${CFBUtils.getUniqueKey(5)}`; }
-        if (!this.name) { this.name = this.id; }
-        this.origval = this.checked;
-    }
-
-    /**
-     * Returns the raw element, without any container
-     * @return {*} the element.
-     */
-    get naked() { return this.toggle; }
-
-    /* STATE METHODS____________________________________________________________________ */
-
-    /**
-     * Runs validation and returns true or false, depending.
-     * @return {boolean}
-     */
-    validate() {
-        let valid = true;
-        if ((this.validator) && (typeof this.validator === 'function')) {
-            valid = this.validator(this);
-        }
-        return valid;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the container
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        this.container.classList.add('checkbox');
-
-        if (this.hidden) { this.container.style.display = 'none'; }
-        if (this.disabled) { this.container.classList.add('disabled'); }
-
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-
-        if (this.labelside === 'right') {
-            this.container.classList.add('rightside');
-            this.container.appendChild(this.toggle);
-            this.container.appendChild(this.labelobj);
-        } else {
-            this.container.appendChild(this.labelobj);
-            this.container.appendChild(this.toggle);
-        }
-    }
-
-    /**
-     * Builds the DOM.
-     */
-    build() {
-        const me = this;
-        this.toggle = document.createElement('input');
-        this.toggle.setAttribute('type', "checkbox");
-        this.toggle.setAttribute('id', this.id);
-        this.toggle.setAttribute('name', this.name);
-        this.toggle.setAttribute('tabindex', '0'); // always 0
-        this.toggle.setAttribute('role', 'checkbox');
-        this.toggle.setAttribute('value', this.value);
-        this.toggle.classList.add(this.style);
-
-        for (let c of this.classes) {
-            this.toggle.classList.add(c);
-        }
-
-        this.toggle.addEventListener('change', function() {
-            if (me.toggle.checked) {
-                me.toggle.setAttribute('aria-checked','true');
-                me.toggle.checked = true;
-            } else {
-                me.toggle.removeAttribute('aria-checked');
-                me.toggle.checked = false;
-            }
-            me.checked = me.toggle.checked;
-
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
-            }
-        });
-
-        if (this.disabled) { this.disable(); }
-        if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
-
-        if (this.checked) {
-            this.toggle.checked = true;
-            this.toggle.setAttribute('aria-checked', 'true');
-        }
-    }
-
-    /**
-     * Builds the input's DOM.
-     */
-    buildLabel() {
-        if (!this.label) { return null; }
-
-        this.labelobj = document.createElement('label');
-        this.labelobj.setAttribute('for', this.id);
-        this.labelobj.innerHTML = this.label;
-
-        if (this.form) {
-            this.labelobj.setAttribute('form', this.form.id);
-        }
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Enable the toggle
-     */
-    disable() {
-        this.toggle.setAttribute('disabled', 'disabled');
-        this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
-    }
-
-    /**
-     * Disable the toggle
-     */
-    enable() {
-        this.toggle.removeAttr('disabled');
-        this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get arialabel() { return this.config.arialabel; }
-    set arialabel(arialabel) { this.config.arialabel = arialabel; }
-
-    get checked() { return this.config.checked; }
-    set checked(checked) { this.config.checked = checked; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get disabled() { return this.config.disabled; }
-    set disabled(disabled) { this.config.disabled = disabled; }
-
-    get form() { return this.config.form; }
-    set form(form) { this.config.form = form; }
-
-    get hidden() { return this.config.hidden; }
-    set hidden(hidden) { this.config.hidden = hidden; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get label() { return this.config.label; }
-    set label(label) { this.config.label = label; }
-
-    get labelobj() {
-        if (!this._labelobj) { this.buildLabel(); }
-        return this._labelobj;
-    }
-    set labelobj(labelobj) { this._labelobj = labelobj; }
-
-    get labelside() { return this.config.labelside; }
-    set labelside(labelside) { this.config.labelside = labelside; }
-
-    get name() { return this.config.name; }
-    set name(name) { this.config.name = name; }
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) {
-        if (typeof onchange !== 'function') {
-            console.error("Action provided for onchange is not a function!");
-        }
-        this.config.onchange = onchange;
-    }
-
-    get origval() { return this.config.origval; }
-    set origval(origval) { this.config.origval = origval; }
-
-    get renderer() { return this.config.renderer; }
-    set renderer(renderer) {
-        if (typeof renderer !== 'function') {
-            console.error("Value provided to renderer is not a function!");
-        }
-        this.config.renderer = renderer;
-    }
-
-    get style() { return this.config.style; }
-    set style(style) { this.config.style = style; }
-
-    get toggle() {
-        if (!this._toggle) { this.build(); }
-        return this._toggle;
-    }
-    set toggle(toggle) { this._toggle = toggle; }
-
-    get validator() { return this.config.validator; }
-    set validator(validator) { this.config.validator = validator; }
-
-    get value() { return this.config.value; }
-    set value(value) {
-        this.input.attr('value', value);
-        this.config.value = value;
-    }
-
-}
-
-class NumberInput extends TextInput {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            type: 'text',
-            pattern: '[0-9]*',
-            forceconstraints: true,
-            minnumber: null,
-            maxnumber: null,
-            downbuttonarialabel: TextFactory.get('decrement_number'),
-            upbuttonarialabel: TextFactory.get('increment_number'),
-            wholenumbers: false, // Require whole numbers
-            steppers: true,
-            step: 1
-        };
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);
-
-        /*
-         * Number inputs have a startlingly complicated set of configuration
-         */
-        if (config.step) {
-            if (isNaN(parseFloat(config.step))) {
-                console.error(`step is defined as ${config.step} but is not a number. Deleting.`);
-                delete config.step;
-            } else if (Number(config.step) <= 0) {
-                console.error(`step cannot be a negative number. Deleting.`);
-                delete config.step;
-            } else {
-                config.step = Number(config.step);
-            }
-        }
-        if (config.maxnumber) {
-            if (isNaN(parseFloat(config.maxnumber))) {
-                console.error(`maxnumber is defined as ${config.maxnumber} but is not a number. Deleting.`);
-                delete config.maxnumber;
-            } else {
-                config.maxnumber = Number(config.maxnumber);
-            }
-        }
-        if (config.minnumber) {
-            if (isNaN(parseFloat(config.minnumber))) {
-                console.error(`minnumber is defined as ${config.minnumber} but is not a number. Deleting.`);
-                delete config.maxnumber;
-            } else {
-                config.minnumber = Number(config.minnumber);
-            }
-        }
-
-        // Have to take over any keydowns in order to overload the arrow keys.
-        if (config.onkeydown) {
-            config.origkeydown = config.onkeydown;
-        }
-        config.onkeydown = function(e, self) {
-            switch (e.key) {
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case '.':
-                case '*':
-                case '%':
-                case '$':
-                case '-':
-                case '!':
-                case '#':
-                case '+':
-                case '=':
-                case '>':
-                case '<':
-                case '?':
-                case 'Backspace':
-                case 'Delete':
-                case 'Enter':
-                case 'Tab':
-                    // Nothing.  These are characters that could be conceivably used
-                    break;
-                case 'ArrowUp': // Up
-                    e.preventDefault();
-                    e.stopPropagation();
-                    self.increment();
-                    break;
-                case 'ArrowDown': // Down
-                    e.preventDefault();
-                    e.stopPropagation();
-                    self.decrement();
-                    break;
-                default:
-                    if (self.forceconstraints) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                    break;
-            }
-
-            if ((self.origkeydown) && (typeof self.origkeydown === 'function')) {
-                self.origkeydown(e, self);
-            }
-        };
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get inputmode() { return "numeric"; }
-
-    get inputcontrol() { return this.stepbuttons; }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    localValidator(onload) {
-        if (this.value) {
-            if (isNaN(this.value)) {
-                this.errors.push(TextFactory.get('numberinput-error-nan'));
-                return;
-            }
-            let v = parseFloat(this.value);
-            if ((this.minnumber) && (v < this.minnumber)) {
-                this.errors.push(TextFactory.get('numberinput-error-minimum_value', this.minnumber));
-            } else if ((this.maxnumber) && (v > this.maxnumber)) {
-                this.errors.push(TextFactory.get('numberinput-error-maximum_value', this.maxnumber));
-            } else if ((this.step) && (v % this.step !== 0)) {
-                this.errors.push(TextFactory.get('numberinput-error-values_divisible', this.step));
-            } else if ((this.wholenumbers) && (v % 1 > 0)) {
-                this.errors.push(TextFactory.get('numberinput-error-must_be_whole_numbers'));
-            }
-        }
-    }
-
-    calculatePlaceholder() {
-        let text = TextFactory.get('numberinput-placeholder-basic');
-        if ((this.minnumber) && (this.maxnumber)) {
-            text = TextFactory.get('numberinput-placeholder-between_x_y', this.minnumber, this.maxnumber);
-        } else if (this.minnumber) {
-            text = TextFactory.get('numberinput-placeholder-larger_than_x', this.minnumber);
-        } else if (this.maxnumber) {
-            text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
-        }
-        if ((this.step) && (this.step > 1)) {
-            text += TextFactory.get('numberinput-placeholder-fragment_increments', this.step);
-        }
-        return text;
-    }
-
-    /**
-     * Increment the number
-     * @param step the amount to increment by.
-     */
-    increment(step = 1) {
-        if ((!step) || (isNaN(step))) { step = 1; }
-        let val = parseFloat(this.value);
-        if (!val) { val = 0; }
-        if (!isNaN(val)) {
-            val += step;
-            if ((this.maxnumber) && (val > this.maxnumber)) {
-                val = this.maxnumber;
-            }
-            this.value = val;
-        }
-    }
-
-    /**
-     * Decrement the number
-     * @param step the amount to decrement by
-     */
-    decrement(step=1) {
-        if ((!step) || (isNaN(step))) { step = 1; }
-        let val = parseFloat(this.value);
-        if (!val) { val = 0; }
-        if (!isNaN(val)) {
-            val -= step;
-            if ((this.maxnumber) && (val > this.maxnumber)) {
-                val = this.maxnumber;
-            }
-            this.value = val;
-        }
-
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the steppers
-     */
-    buildSteppers() {
-        const me = this;
-        if (this.steppers) {
-            this.upbtn = new SimpleButton({
-                classes: ['naked'],
-                icon: 'triangle-up',
-                arialabel: this.upbuttonarialabel,
-                notab: true,
-                action: function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.increment(me.step);
-                }
-            });
-            this.downbtn = new SimpleButton({
-                classes: ['naked'],
-                icon: 'triangle-down',
-                arialabel: this.downbuttonarialabel,
-                notab: true,
-                action: function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    me.decrement(me.step);
-                }
-            });
-            this.stepbuttons = document.createElement('div');
-            this.stepbuttons.classList.add('stepbuttons');
-            this.stepbuttons.classList.add('inputcontrol');
-            this.stepbuttons.appendChild(this.upbtn.button);
-            this.stepbuttons.appendChild(this.downbtn.button);
-            this.stepbuttons.addEventListener('mousedown', function(e) {
-                e.preventDefault(); // Prevents focus shifting.
-            });
-        }
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get downbtn() { return this._downbtn; }
-    set downbtn(downbtn) { this._downbtn = downbtn; }
-
-    get downbuttonarialabel() { return this.config.downbuttonarialabel; }
-    set downbuttonarialabel(downbuttonarialabel) { this.config.downbuttonarialabel = downbuttonarialabel; }
-
-    get maxnumber() { return this.config.maxnumber; }
-    set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
-
-    get minnumber() { return this.config.minnumber; }
-    set minnumber(minnumber) { this.config.minnumber = minnumber; }
-
-    get origkeydown() { return this.config.origkeydown; }
-    set origkeydown(origkeydown) { this.config.origkeydown = origkeydown; }
-
-    get step() { return this.config.step; }
-    set step(step) { this.config.step = step; }
-
-    get stepbuttons() {
-        if (!this._stepbuttons) { this.buildSteppers(); }
-        return this._stepbuttons;
-    }
-    set stepbuttons(stepbuttons) { this._stepbuttons = stepbuttons; }
-
-    get steppers() { return this.config.steppers; }
-    set steppers(steppers) { this.config.steppers = steppers; }
-
-    get upbtn() { return this._upbtn; }
-    set upbtn(upbtn) { this._upbtn = upbtn; }
-
-    get upbuttonarialabel() { return this.config.upbuttonarialabel; }
-    set upbuttonarialabel(upbuttonarialabel) { this.config.upbuttonarialabel = upbuttonarialabel; }
-
-    get wholenumbers() { return this.config.wholenumbers; }
-    set wholenumbers(wholenumbers) { this.config.wholenumbers = wholenumbers; }
-
-}
-window.NumberInput = NumberInput;
-class DateInput extends TextInput {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            basetime: '12:00:00', // Time to set dates on
-            timezone: 'GMT',
-            type: 'date',
-            gravity: 's', // The direction to open the datepicker
-            triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
-            forceconstraints: true,
-            dateicon: 'calendar'
-        };
-    }
-
-    /**
-     * Tests whether or the value is a valid date.
-     * @param date The date to check
-     * @returns {boolean} true or false, depending
-     */
-    static isValid(date) {
-        let d = new Date(date);
-        return d instanceof Date && !isNaN(d.getTime());
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, DateInput.DEFAULT_CONFIG, config);
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get inputcontrol() { return this.calbutton; }
-
-    get topcontrol() { return this.datedisplay; }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    calculatePlaceholder() {
-        return 'YYYY-MM-DD';
-    }
-
-    localValidator() {
-        if ((this.value) && (this.forceconstraints)) {
-            if (!DateInput.isValid(this.value)) {
-                this.errors.push(TextFactory.get('dateinput-error-invalid'));
-            }
-        }
-        this.updateDateDisplay();
-    }
-
-    /**
-     * Update the upper date display
-     */
-    updateDateDisplay() {
-        if ((!this.value) || (this.value === '')) {
-            this.datedisplay.classList.add('hidden');
-            this.datedisplay.innerHTML = '';
-            return;
-        }
-        this.datedisplay.classList.remove('hidden');
-        let d = new Date(`${this.value} ${this.basetime} GMT`);
-        this.datedisplay.innerHTML = d.toUTCString();
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the calendar button and attach the DatePicker
-     */
-    buildCalendarButton() {
-        const me = this;
-        this.datepicker = new DatePicker({
-            classes: ['menu'],
-            onselect: function(value) {
-                me.value = value;
-                me.triggerbutton.close();
-                me.input.focus();
-                me.validate();
-            }
-        });
-
-        this.triggerbutton = new ButtonMenu({
-            classes: ['naked'],
-            shape: 'square',
-            gravity: 'n',
-            icon: this.dateicon,
-            arialabel: this.triggerarialabel,
-            menu: this.datepicker.container,
-            action: function(e, self) {
-                if (self.isopen) {
-                    self.close();
-                    me.input.focus();
-                } else {
-                    self.open();
-                }
-                me.datepicker.renderMonth(me.value);
-                e.stopPropagation();
-            },
-        });
-
-        this.calbutton = document.createElement('div');
-        this.calbutton.classList.add('calbutton');
-        this.calbutton.classList.add('inputcontrol');
-        this.calbutton.appendChild(this.triggerbutton.button);
-
-        this.calbutton.addEventListener('mousedown', function(e) {
-            e.preventDefault(); // Prevents focus shifting.
-        });
-
-    }
-
-    /**
-     * Draws the date text display.
-     */
-    buildDateDisplay() {
-        this.datedisplay = document.createElement('div');
-        this.datedisplay.classList.add('datedisplay');
-        this.datedisplay.classList.add('topcontrol');
-        this.updateDateDisplay();
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get basetime() { return this.config.basetime; }
-    set basetime(basetime) { this.config.basetime = basetime; }
-
-    get calbutton() {
-        if (!this._calbutton) { this.buildCalendarButton(); }
-        return this._calbutton;
-    }
-    set calbutton(calbutton) { this._calbutton = calbutton; }
-
-    get datedisplay() {
-        if (!this._datedisplay) { this.buildDateDisplay(); }
-        return this._datedisplay;
-    }
-    set datedisplay(datedisplay) { this._datedisplay = datedisplay; }
-
-    get dateicon() { return this.config.dateicon; }
-    set dateicon(dateicon) { this.config.dateicon = dateicon; }
-
-    get datepicker() { return this._datepicker; }
-    set datepicker(datepicker) { this._datepicker = datepicker; }
-
-    get gravity() { return this.config.gravity; }
-    set gravity(gravity) { this.config.gravity = gravity; }
-
-    get timezone() { return this.config.timezone; }
-    set timezone(timezone) { this.config.timezone = timezone; }
-
-    get triggerarialabel() { return this.config.triggerarialabel; }
-    set triggerarialabel(triggerarialabel) { this.config.triggerarialabel = triggerarialabel; }
-
-    get triggerbutton() { return this._triggerbutton; }
-    set triggerbutton(triggerbutton) { this._triggerbutton = triggerbutton; }
-
-}
-
-
-class EmailInput extends TextInput {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            type: 'text',
-            forceconstraints: true,
-            pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'
-        };
-    }
-
-    /**
-     * Tests whether or not a string is a valid email address.
-     * @param email The email address to check
-     * @returns {boolean} true or false, depending
-     */
-    static isValid(email) {
-        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, EmailInput.DEFAULT_CONFIG, config);
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get inputmode() { return "email"; }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    calculatePlaceholder() {
-        return TextFactory.get('emailinput-placeholder-default');
-    }
-
-    localValidator() {
-        if ((this.value) && (this.forceconstraints)) {
-            if (!EmailInput.isValid(this.value)) {
-                this.errors.push(TextFactory.get('emailinput-error-invalid_web_address'));
-            }
-        }
-    }
-
-}
-
-
-class URLInput extends TextInput {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            type: 'text',
-            forceconstraints: true
-        };
-    }
-
-    /**
-     * Check if the URI is encoded already
-     * @param uri the URI to check
-     * @returns {boolean}
-     */
-    static isEncoded(uri) {
-        uri = uri || '';
-        return uri !== decodeURIComponent(uri);
-    }
-
-    /**
-     * Tests whether or not a string is a valid URI.
-     * @param uri The uri to check
-     * @returns {boolean} true or false, depending
-     */
-    static isValid(uri) {
-        return new RegExp(/\w+:(\/?\/?)[^\s]+/).test(uri);
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, URLInput.DEFAULT_CONFIG, config);
-
-        if ((config.value) && (URLInput.isEncoded(config.value))) {
-            config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
-        }
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get inputmode() { return "url"; }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    calculatePlaceholder() {
-        return TextFactory.get('urlinput-placeholder-default');
-    }
-
-    localValidator() {
-        if ((this.value) && (this.forceconstraints)) {
-            if (!URLInput.isValid(this.value)) {
-                this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
-            }
-        }
-    }
-
-}
-window.URLInput = URLInput;
-class HiddenField extends TextInput {
-    /*
-     * HiddenFields should not be used for elements that may become visible at some time.
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        config.hidden = true;
-        config.type = "hidden";
-        super(config);
-    }
-
-    get container() {
-        return this.input;
-    }
-}
-window.HiddenField = HiddenField;
-class PasswordInput extends TextInput {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            minlength: 5,
-            suggestedlength: 8,
-            maxlength: 30,
-            hideicon: 'eye-slash',
-            showicon: 'eye',
-            obscured: false, // If true, start with password hidden
-            forceconstraints: false,
-            type: 'password'
-        };
-    }
-
-    /**
-     * Define the object
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, PasswordInput.DEFAULT_CONFIG, config);
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get topcontrol() { return this.visibilityswitcher; }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    buildVisibilityControl() {
-        const me = this;
-
-        let icon = this.hideicon,
-            arialabel = TextFactory.get('hide_password');
-
-        if (this.obscured) {
-            icon = this.showicon;
-            arialabel = TextFactory.get('show_password');
-        }
-
-        this.eyebutton = new SimpleButton({
-            classes: ['naked'],
-            shape: 'square',
-            icon: icon,
-            arialabel: arialabel,
-            tooltip: TextFactory.get('passwordinput-change_visibility'),
-            action: function(e, self) {
-                me.toggleVisibility();
-                e.stopPropagation();
-            },
-        });
-
-        this.visibilitycontrol = document.createElement('div');
-        this.visibilitycontrol.classList.add('visbutton');
-        this.visibilitycontrol.classList.add('inputcontrol');
-        this.visibilitycontrol.appendChild(this.eyebutton.button);
-
-        this.visibilitycontrol.addEventListener('mousedown', function(e) {
-            e.preventDefault(); // Prevents focus shifting.
-        });
-
-    }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    /**
-     * Toggle the visibility of the password
-     */
-    toggleVisibility() {
-        if (this.input.getAttribute('type') === 'text') {
-            this.setVisibility(false);
-        } else {
-            this.setVisibility(true);
-        }
-    }
-
-    /**
-     * Set the visibility of the user's password.
-     * @param visible if true, make the password visible.
-     */
-    setVisibility(visible) {
-        if (visible) {
-            this.obscured = false;
-            this.input.setAttribute('type', 'text');
-            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('hide_password'));
-            this.eyebutton.setIcon(this.hideicon);
-        } else {
-            this.obscured = true;
-            this.input.setAttribute('type', 'password');
-            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('show_password'));
-            this.eyebutton.setIcon(this.showicon);
-        }
-        this.input.focus();
-    }
-
-    localValidator() {
-        if ((this.value) && (this.forceconstraints)) {
-            if (this.value.length < this.minlength) {
-                this.errors.push(TextFactory.get('passwordchanger-error-minlength', this.minlength));
-            } else if (this.value.length < this.suggestedlength) {
-                this.errors.push(TextFactory.get('passwordchanger-error-suggestedlength', this.suggestedlength));
-            } else if (this.value.length > this.maxlength) {
-                this.errors.push(TextFactory.get('passwordchanger-error-maxlength', this.maxlength));
-            }
-        }
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get eyebutton() { return this._eyebutton; }
-    set eyebutton(eyebutton) { this._eyebutton = eyebutton; }
-
-    get minlength() { return this.config.minlength; }
-    set minlength(minlength) { this.config.minlength = minlength; }
-
-    get hideicon() { return this.config.hideicon; }
-    set hideicon(hideicon) { this.config.hideicon = hideicon; }
-
-    get obscured() { return this.config.obscured; }
-    set obscured(obscured) { this.config.obscured = obscured; }
-
-    get showicon() { return this.config.showicon; }
-    set showicon(showicon) { this.config.showicon = showicon; }
-
-    get suggestedlength() { return this.config.suggestedlength; }
-    set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
-
-    get visibilitycontrol() {
-        if (!this._visibilitycontrol) { this.buildVisibilityControl(); }
-        return this._visibilitycontrol;
-    }
-    set visibilitycontrol(visibilitycontrol) { this._visibilitycontrol = visibilitycontrol; }
-
-
-}
-window.PasswordInput = PasswordInput;
-class SelectMenu extends InputElement {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            combobox: false,
-            unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
-            icon: "chevron-down",
-            prefix: null,   // a prefix to display in the trigger box.
-            value: null,    // Use this to set the value of the item
-            options: [],    // Array of option dictionary objects.  Printed in order given.
-                            // { label: "Label to show", value: "v", checked: true }
-            onchange: null  // The change handler. Passed (self).
-        };
-    }
-
-    /**
-     * Close open menus
-     */
-    static closeOpen() {
-        if (SelectMenu.activeMenu) {
-            SelectMenu.activeMenu.close();
-        }
-    }
-
-    /**
-     * Define the SelectMenu
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
-        if (!config.name) {
-            config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
-        }
-        super(config);
-
-        if (config.value) {
-            this.origval = config.value;
-        }
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    /**
-     * Let us know if the button is open
-     * @return boolean true if it is!
-     */
-    get isopen() {
-        return (this.wrapper.getAttribute('aria-expanded') === 'true');
-    }
-
-    /**
-     * Return the selected radio input.
-     * @return {HTMLElement}
-     */
-    get selected() {
-        let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);
-        if (sel) { return sel; }
-        return null;
-    }
-
-    get value() {
-        if (!this.selected) { return null; }
-        return this.selected.value;
-    }
-
-    set value(value) {
-        this.config.value = value;
-        this.triggerbox.value = value;
-        this.passivebox.value = value;
-    }
-
-    get passivetext() {
-        if (this.selectedoption) { return this.selectedoption.label; }
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
-        return this.unsettext;
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Scroll to a specific element in the list
-     * @param element the element to scroll to
-     */
-    scrollto(element) {
-        if (!element) return;
-        if ((this.scrolleditem) && (element.getAttribute('id') === this.scrolleditem.getAttribute('id'))) {
-            return; // this is us, don't reflow.
-        }
-        this.optionlist.scrollTop = element.offsetHeight;
-        this.scrolleditem = element;
-    }
-
-    /**
-     * Scroll the select to the selected element and optionally set focus there
-     * @param andfocus if true, focus on the element.
-     */
-    jumptoSelected(andfocus) {
-        let sel = this.optionlist.querySelector('li[aria-selected="true"]');
-        if (!sel) {
-            sel = this.optionlist.querySelector('li:first-child');
-        }
-        if (sel) {
-            this.scrollto(sel);
-            if (andfocus) {
-                sel.focus();
-            }
-        }
-    }
-
-    /**
-     * Opens the option list.
-     */
-    open() {
-        const me = this;
-
-        SelectMenu.closeOpen(); // close open menus
-
-        document.body.appendChild(this.listbox);
-
-        this.listbox.removeAttribute('aria-hidden');
-        this.wrapper.setAttribute('aria-expanded', true);
-
-        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
-            li.setAttribute('tabindex', '0');
-        }
-
-        if (typeof SelectMenu.activeMenu === 'undefined' ) {
-            SelectMenu.activeMenu = this;
-        } else {
-            SelectMenu.activeMenu = this;
-        }
-
-        this.setPosition();
-
-        window.addEventListener('scroll', this.setPosition, true);
-
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
-        }, 100);
-    }
-
-    /**
-     * Set the position of the open menu on the screen
-     */
-    setPosition() {
-        if (!SelectMenu.activeMenu) { return; }
-        let self = SelectMenu.activeMenu;
-
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.wrapper.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top;
-
-        self.listbox.style.top = `${(offsetTop + self.wrapper.clientHeight)}px`;
-        self.listbox.style.left = `${offsetLeft}px`;
-        self.listbox.style.width = `${self.container.clientWidth}px`;
-    }
-
-    /**
-     * Closes the option list.
-     */
-    close() {
-        window.removeEventListener('scroll', this.setPosition, true);
-
-        this.listbox.setAttribute('aria-hidden', 'true');
-        this.listbox.setAttribute('tabindex', '-1');
-        this.wrapper.setAttribute('aria-expanded', false);
-
-        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
-            li.setAttribute('tabindex', '-1');
-        }
-
-        if (!this.combobox) {
-            if (this.selected) {
-                let seltext = this.selected.parentNode.querySelector('span.text');
-                if (seltext) {
-                    this.triggerbox.value = seltext.innerHTML;
-                }
-            }
-        }
-
-        this.container.appendChild(this.listbox);
-        SelectMenu.activeMenu = null;
-    }
-
-    disable() {
-        this.triggerbox.setAttribute('disabled', 'disabled');
-        this.wrapper.removeAttribute('aria-expanded');
-        this.disabled = true;
-        if (this.triggerbox) { this.triggerbox.classList.add('disabled'); }
-        if (this.container) { this.container.classList.add('disabled'); }
-    }
-
-    enable() {
-        this.triggerbox.removeAttribute('disabled');
-        this.disabled = false;
-        if (this.triggerbox) { this.triggerbox.classList.remove('disabled'); }
-        if (this.container) { this.container.classList.remove('disabled'); }
-    }
-
-    pacify() {
-        this.container.classList.add('passive');
-        this.optionlist.setAttribute('aria-hidden', true);
-        this.passive = true;
-    }
-
-    activate() {
-        this.container.classList.remove('passive');
-        this.optionlist.removeAttribute('aria-hidden');
-        this.passive = false;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        this.container.classList.add('select-container');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-        if (this.labelobj) { this.container.appendChild(this.labelobj); }
-
-        this.wrapper = document.createElement('div');
-        this.wrapper.classList.add('wrap');
-        this.wrapper.setAttribute('role', 'combobox');
-        this.wrapper.setAttribute('aria-haspopup', 'listbox');
-        this.wrapper.setAttribute('aria-expanded', false);
-        this.wrapper.setAttribute('aria-owns', `${this.id}-options`);
-        if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
-        this.wrapper.appendChild(this.triggerbox);
-
-        this.container.append(this.wrapper);
-
-        this.listbox = document.createElement('div');
-        this.listbox.setAttribute('id', `${this.id}-options`);
-        this.listbox.setAttribute('aria-hidden', 'true');
-        this.listbox.setAttribute('role', 'listbox');
-        this.listbox.classList.add('selectmenu-menu')
-        this.listbox.appendChild(this.optionlist);
-
-        this.container.appendChild(this.listbox);
-
-        if (!this.minimal) {
-            this.container.appendChild(this.passivebox);
-            this.container.appendChild(this.messagebox);
-        }
-        if (this.minimal) { this.container.classList.add('minimal'); }
-
-        if (this.value) {
-            //this.select(this.value);
-        }
-
-        this.postContainerScrub();
-    }
-
-    /**
-     * Select a specific entry, given a value
-     * @param value the value to select
-     */
-    select(value) {
-        let allopts = this.listbox.querySelectorAll('li');
-        for (let o of allopts) {
-            let radio = o.querySelector(`input[name=${this.name}`);
-            if (o.getAttribute('data-value') === value) {
-                o.setAttribute('aria-selected', true);
-                radio.checked = true;
-            } else {
-                o.removeAttribute('aria-selected');
-                radio.checked = false;
-            }
-        }
-    }
-
-    /**
-     * Builds the trigger box for the select.
-     */
-    buildTriggerBox() {
-        const me = this;
-        this.triggerbox = document.createElement('input');
-        this.triggerbox.classList.add('trigger');
-        this.triggerbox.setAttribute('type', 'text');
-        this.triggerbox.setAttribute('tabindex', '0');
-        this.triggerbox.setAttribute('aria-autocomplete', 'none');
-        this.triggerbox.setAttribute('aria-activedescendant', '');
-        this.triggerbox.setAttribute('placeholder', this.placeholder);
-
-        this.triggerbox.addEventListener('focusin', function(e) {
-            if (me.disabled) {
-                e.stopPropagation();
-                return;
-            }
-            me.triggerbox.select(); // Select all the text
-            me.open();
-        });
-
-        this.triggerbox.addEventListener('keyup', function(e) {
-            if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
-                me.close();
-            } else {
-                switch (e.key) {
-                    case 'Enter':
-                    case 'Shift':
-                    case 'Control':
-                    case 'Alt':
-                    case 'CapsLock':
-                    case 'NumLock':
-                    case 'ScrollLock':
-                    case 'End':
-                    case 'Home':
-                    case 'Meta':
-                    case 'PageUp':
-                        // Nothing.
-                        break;
-                    case 'Tab':  // Tab
-                    case 'Escape': // Escape
-                    case 'ArrowUp': // Up
-                        me.close();
-                        break;
-                    case 'ArrowDown': // Down
-                        e.preventDefault();
-                        me.open();
-                        me.jumptoSelected(true);
-                        break;
-                    case 'Backspace':  // Backspace
-                    case 'Delete':  // Delete
-                        me.updateSearch();
-                        break;
-                    case ' ': // space
-                    default:
-                        me.updateSearch();
-                        break;
-                }
-            }
-        });
-
-        if (this.mute) { this.triggerbox.classList.add('mute'); }
-
-    }
-
-    calculatePlaceholder() {
-        if (this.unselectedtext) { return this.unselectedtext; }
-        return TextFactory.get('selectmenu-placeholder-default');
-    }
-
-    buildOptions() {
-
-        this.optionlist = document.createElement('ul');
-        this.optionlist.classList.add('selectmenu');
-        this.optionlist.setAttribute('id', this.id);
-        this.optionlist.setAttribute('tabindex', '-1');
-
-        let order = 1;
-        let minchars = 5;
-        for (let opt of this.options) {
-            if ((this.origval) && (this.origval === opt.value)) {
-                opt.checked = true;
-                this.selectedoption = opt;
-            } else {
-                delete opt.checked;
-            }
-
-            let o = this.buildOption(opt, order);
-
-            if ((opt.label) && (opt.label.length > minchars)) {
-                minchars = opt.label.length;
-            }
-            order++;
-            this.optionlist.appendChild(o);
-        }
-        this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
-    }
-
-    buildOption(def, order) {
-        const me = this;
-
-        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
-        let next = order + 1,
-            previous = order - 1;
-        if (this.unselectedtext) {
-            if (previous < 0) { previous = 0; }
-        } else {
-            if (previous < 1) { previous = 1; }
-        }
-        if (next > this.options.length) { next = this.options.length; }
-
-        let opt = document.createElement('input');
-        opt.setAttribute('type', 'radio');
-        opt.setAttribute('name', this.name);
-        opt.value = def.value;
-        if (def.checked) {
-            opt.checked = true;
-        }
-
-        let li = document.createElement('li');
-        li.setAttribute('tabindex', '-1');
-        li.setAttribute('id', `li-${lId}`);
-        li.setAttribute('data-menuorder', order);
-        li.setAttribute('role', 'option');
-        li.setAttribute('data-value', def.value);
-
-        li.appendChild(opt);
-
-        li.addEventListener('keydown', function(e) {
-            if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
-                me.close();
-            } else {
-                switch (e.key) {
-                    case 'Shift':
-                    case 'Control':
-                    case 'Alt':
-                    case 'CapsLock':
-                    case 'NumLock':
-                    case 'ScrollLock':
-                    case 'End':
-                    case 'Home':
-                    case 'Meta':
-                    case 'PageUp':
-                        // Nothing.
-                        break;
-                    case 'Tab':  // Tab
-                    case 'Escape': // Escape
-                    case 'ArrowUp': // Up
-                        e.preventDefault();
-                        me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
-                        break;
-                    case 'ArrowDown': // Down
-                        e.preventDefault();
-                        me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
-                        break;
-                    case 'Enter':
-                        li.click(); // click the one inside
-                        break;
-                    case 'Backspace':  // Backspace
-                    case 'Delete':  // Delete
-                        me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
-                        me.updateSearch();
-                        break;
-                    case ' ': // space
-                    default:
-                        e.preventDefault();
-                        me.triggerbox.value = me.triggerbox.value + e.key;
-                        me.updateSearch();
-                        break;
-                }
-            }
-
-        });
-
-        li.addEventListener('click', function() {
-            let listentries = me.optionlist.querySelectorAll('li');
-            for (let le of listentries) {
-                le.removeAttribute('aria-selected');
-                let opt = le.querySelector(`input[name=${me.name}]`);
-                if (opt) { opt.removeAttribute('checked') ; }
-            }
-            li.setAttribute('aria-selected', 'true');
-            li.querySelector(`input[name=${me.name}]`).checked = true;
-
-            if (me.prefix) {
-                me.triggerbox.value = `${me.prefix} ${def.label}`;
-            } else {
-                me.triggerbox.value = def.label;
-            }
-
-            me.selectedoption = def;
-
-            if (def.label === me.unselectedtext) {
-                me.passivebox.innerHTML = me.unsettext;
-            } else {
-                me.passivebox.innerHTML = def.label;
-            }
-
-            me.close();
-
-            me.validate();
-
-            if (me.form) { me.form.validate(); }
-
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
-            }
-        });
-
-        let text = document.createElement('span');
-        text.classList.add('text');
-        text.innerHTML = def.label;
-        li.appendChild(text);
-
-        if (def.checked) {
-            this.origval = def.value;
-            if (this.prefix) {
-                this.triggerbox.value = `${this.prefix} ${def.label}`;
-            } else {
-                this.triggerbox.value = def.label;
-            }
-            li.setAttribute('aria-selected', 'true');
-        }
-
-        return li;
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Search the list of options and scroll to it
-     * @param s the string to search
-     */
-    findByString(s) {
-        if ((!s) || (typeof s !== 'string')) { return; }
-        for (let li of this.optionlist.querySelectorAll('li')) {
-            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
-            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
-                this.scrollto(li);
-                li.focus();
-                break;
-            }
-        }
-    }
-
-    /**
-     * Updates the counter
-     */
-    updateSearch() {
-        this.findByString(this.triggerbox.value);
-    }
-
-    /**
-     * Sets an event listener to close the menu if the user clicks outside of it.
-     */
-    setCloseListener() {
-        const me = this;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
-        }, { once: true });
-
-        window.addEventListener('click', function(e) {
-            if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
-                me.setCloseListener();
-            } else {
-                me.close();
-            }
-        }, { once: true });
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get combobox() { return this.config.combobox; }
-    set combobox(combobox) { this.config.combobox = combobox; }
-
-    get listbox() { return this._listbox; }
-    set listbox(listbox) { this._listbox = listbox; }
-
-    get minimal() { return this.config.minimal; }
-    set minimal(minimal) { this.config.minimal = minimal; }
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) { this.config.onchange = onchange; }
-
-    get optionlist() {
-        if (!this._optionlist) { this.buildOptions(); }
-        return this._optionlist;
-    }
-    set optionlist(optionlist) { this._optionlist = optionlist; }
-
-    get options() { return this.config.options; }
-    set options(options) { this.config.options = options; }
-
-    get prefix() { return this.config.prefix; }
-    set prefix(prefix) { this.config.prefix = prefix; }
-
-    get selectedoption() { return this._selectedoption; }
-    set selectedoption(selectedoption) { this._selectedoption = selectedoption; }
-
-    get scrolleditem() { return this._scrolleditem; }
-    set scrolleditem(scrolleditem) { this._scrolleditem = scrolleditem; }
-
-    get triggerbox() {
-        if (!this._triggerbox) { this.buildTriggerBox(); }
-        return this._triggerbox;
-    }
-    set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
-
-    get unselectedtext() { return this.config.unselectedtext; }
-    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
-
-    get wrapper() { return this._wrapper; }
-    set wrapper(wrapper) { this._wrapper = wrapper; }
-
-}
-window.SelectMenu = SelectMenu;
-class RadioGroup extends SelectMenu {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // The button id
-            name: null,
-            form: null, // A form element this is in
-            label: null, // The text for the label.
-            passive: false, // Start life in "passive" mode.
-            required: false, // Is this a required field or not
-            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
-            classes: [], // Extra css classes to apply
-            disabled: false, // If true, make this disabled.
-            options: [], // Array of option dictionary objects.  Printed in order given.
-                         // { label: "Label to show", value: "v", checked: true }
-            validator: null // A function to run to test validity. Passed the self; returns true or false.
-        };
-    }
-
-    /**
-     * Define the RadioGroup
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
-
-        if (!config.id) { // need to generate an id for label stuff
-            config.id = `radiogroup-${CFBUtils.getUniqueKey(5)}`;
-        }
-        if (!config.name) { config.name = config.id; }
-
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get input() { return this.optionlist; }
-
-    get passivetext() {
-        if (this.selectedoption) { return this.selectedoption.label; }
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
-        return this.unsettext;
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    disable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.setAttribute('disabled', 'disabled');
-        }
-        this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
-    }
-
-    enable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.removeAttribute('disabled');
-        }
-        this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        this.container.classList.add('radiogroup-container');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-        this.container.appendChild(this.labelobj);
-        this.container.appendChild(this.optionlist);
-        this.container.appendChild(this.passivebox);
-
-        this.postContainerScrub();
-
-    }
-
-    postContainerScrub() {
-        if (this.hidden) { this.container.style.display = 'none'; }
-
-        if (this.required) {
-            this.container.classList.add('required');
-            this.optionlist.setAttribute('required', 'required');
-        }
-
-        if (this.hidden) {
-            this.container.style.display = 'none';
-            this.container.setAttribute('aria-hidden', 'true');
-        }
-
-        if (this.passive) { this.pacify(); }
-        if (this.disabled) { this.disable(); }
-
-        if (this.help) {
-            this.optionlist.setAttribute('aria-describedby', `${this.id}-help-tt`);
-            this.optionlist.setAttribute('aria-labelledby', `${this.id}-label`);
-        }
-    }
-
-    buildOption(def) {
-
-        const me = this;
-        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
-        let op = document.createElement('input');
-        op.setAttribute('id', lId);
-        op.setAttribute('type', 'radio');
-        op.setAttribute('name', this.name);
-        op.setAttribute('tabindex', '0'); // always 0
-        op.setAttribute('value', def.value);
-        op.setAttribute('aria-label', def.label);
-        op.setAttribute('role', 'radio');
-        for (let c of this.classes) {
-            op.classList.add(c);
-        }
-        op.addEventListener('change', function() {
-            if (op.checked) {
-                op.setAttribute('aria-checked', 'true');
-            } else {
-                op.removeAttribute('aria-checked');
-            }
-
-            me.selectedoption = def;
-            if (def.label === me.unselectedtext) {
-                me.passivebox.innerHTML = me.unsettext;
-            } else {
-                me.passivebox.innerHTML = def.label;
-            }
-
-            me.validate();
-
-            if (me.form) { me.form.validate(); }
-
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
-            }
-        });
-
-        let opLabel = document.createElement('label');
-        opLabel.setAttribute('for', lId);
-        opLabel.innerHTML = def.label;
-
-        if (def.checked) {
-            this.origval = def.value;
-            op.checked = true;
-            op.setAttribute('aria-checked', 'true');
-        }
-
-        let li = document.createElement('li');
-        li.classList.add('radio');
-        li.appendChild(op);
-        li.appendChild(opLabel);
-        return li;
-    }
-
-    buildOptions() {
-        this.optionlist = document.createElement('ul');
-        this.optionlist.classList.add('radiogroup');
-        this.optionlist.setAttribute('tabindex', '-1');
-
-        for (let opt of this.options) {
-            let o = this.buildOption(opt);
-            if (opt.checked) {
-                this.selectedoption = opt;
-            }
-            this.optionlist.appendChild(o);
-        }
-    }
-
-}
-window.RadioGroup = RadioGroup;
-class StateMenu extends SelectMenu {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            unselectedtext: TextFactory.get('statemenu_select'),
-            valuesas: 'code', // What to stick in the value for the elements.
-                            // "code" or "name".
-            options: new StateProvince().options,
-            set: null // Empty, or "US" or "CA". If empty, fills with all states.
-        };
-    }
-
-    /**
-     * Define the StateMenu
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, StateMenu.DEFAULT_CONFIG, config);
-        // { label: "Label to show", value: "v", checked: true }
-
-        let states = new StateProvince().set(config.set);
-        config.options = [];
-        for (let s of states) {
-            let d = { label: s.name };
-            if ((config.valuesas) && (config.valuesas === 'name')) {
-                d.value = s.name;
-            } else {
-                d.value = s.id;
-            }
-            if ((config.value) && ((config.value.toUpperCase() === s.id) || (config.value.toUpperCase() === s.name))) {
-                d.checked = true;
-            }
-            config.options.push(d);
-        }
-
-        super(config);
-
-    }
-}
-window.StateMenu = StateMenu;
-class CountryMenu extends SelectMenu {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            unselectedtext: TextFactory.get('countrymenu_select'),
-            options: new CountryCode().options,
-            valuesas: 'code' // What to stick in the value for the elements.
-                             // "code" or "name".
-        };
-    }
-
-    /**
-     * Define the CountryMenu
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
-        // { label: "Label to show", value: "v", checked: true }
-
-        if ((config.valuesas) && (config.valuesas === 'name')) {
-            config.options = [];
-            let countries = new CountryCode().list;
-            for (let c of countries) {
-                config.options.push({ label: c.name, value: c.name });
-            }
-        }
-        if (config.value) {
-            for (let o of config.options) {
-                if ((config.value.toUpperCase() === o.value) || (config.value.toUpperCase() === o.label)) {
-                    o.checked = true;
-                }
-            }
-        }
-
-        super(config);
-    }
-}
-window.CountryMenu = CountryMenu;
-class TimezoneMenu extends SelectMenu {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            unselectedtext: TextFactory.get('timezone_select'),
-            options: new TimeZoneDefinition().options,
-            valuesas: 'offset' // What to stick in the value for the elements.
-                               // "offset" or "name".
-        };
-    }
-
-    /**
-     * Define the TimezoneMenu
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
-        super(config);
-    }
-}
-window.TimezoneMenu = TimezoneMenu;
-class TextArea extends InputElement {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            counter: 'sky', // A value for a character counter. Null means 'no counter'
-            // Possible values: null, 'remaining', 'limit', and 'sky'
-        };
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, TextArea.DEFAULT_CONFIG, config);
-        config.type = "textarea";
-        super(config);
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('textarea-container');
-        this.container.appendChild(this.labelobj);
-        this.container.appendChild(this.charactercounter);
-
-        let wrap = document.createElement('div');
-        wrap.classList.add('wrap');
-        wrap.appendChild(this.input);
-        this.container.appendChild(wrap);
-
-        this.container.appendChild(this.passivebox);
-        this.container.appendChild(this.messagebox);
-
-        this.postContainerScrub();
-
-    }
-
-}
-window.TextArea = TextArea;
-class FileInput extends InputElement {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            type: "file",
-            icon: "upload",
-            accept: 'image/png,image/gif,image/jpg,image/jpeg', // the default accept mime-type
-            multiple: false, // Should the file uploader accept multiple files?
-            onchange: null // The change handler. Passed (self).
-        };
-    }
-
-    constructor(config) {
-        if (!config) { config = {}; }
-        config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
-        super(config);
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get value() {
-        if (this.selected) { return this.selected.val(); }
-        return ''; // Return empty string for no value.
-    }
-
-    get topcontrol() { return this.searchdisplay; }
-
-    get passivetext() {
-        if (this.selectedoption) { return this.selectedoption.label; }
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
-        return this.unsettext;
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    calculatePlaceholder() {
-        if (this.multiple) { return TextFactory.get('fileinput-placeholder-multiple'); }
-        return TextFactory.get('fileinput-placeholder-file');
-    }
-
-    disable() {
-        this.triggerbox.setAttribute('disabled', 'disabled');
-        this.triggerbox.classList.add('disabled');
-        this.container.classList.add('disabled');
-        this.disabled = true;
-    }
-
-    enable() {
-        this.triggerbox.removeAttr('disabled');
-        this.triggerbox.classList.remove('disabled');
-        this.container.classList.remove('disabled');
-        this.disabled = false;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        this.container.classList.add('file-container');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-        this.container.appendChild(this.labelobj);
-        this.container.appendChild(this.fileinput);
-
-        let wrap = document.createElement('div');
-        wrap.classList.add('wrap');
-        wrap.appendChild(this.triggerbox);
-        this.container.appendChild(wrap);
-
-        this.container.appendChild(this.messagebox);
-
-        this.postContainerScrub();
-    }
-
-    /**
-     * Builds the trigger box for the select.
-     */
-    buildTriggerBox() {
-        const me = this;
-        this.triggerbox = document.createElement('div');
-        this.triggerbox.classList.add('trigger');
-        this.triggerbox.setAttribute('tabindex', '-1');
-        this.triggerbox.innerHTML = this.placeholder;
-        this.triggerbox.addEventListener('click', function(e) {
-            if (me.disabled) {
-                e.stopPropagation();
-                return;
-            }
-            me.labelobj.click();
-        });
-        this.triggerbox.addEventListener('keydown', function(e) {
-            switch (e.key) {
-                case 'Tab':
-                    me.triggerbox.blur();
-                    break;
-                case 'Enter':
-                case ' ':
-                    me.labelobj.click();
-                    break;
-                default:
-                    break;
-            }
-        });
-
-        if (this.mute) { this.triggerbox.classList.add('mute'); }
-
-        if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
-    }
-
-    /**
-     * Build file input
-     */
-    buildFileInput() {
-        const me = this;
-
-        this.fileinput = document.createElement('input');
-        this.fileinput.setAttribute('type', this.type);
-        this.fileinput.setAttribute('name', this.name);
-        this.fileinput.setAttribute('id', this.id);
-        this.fileinput.setAttribute('accept', this.accept);
-        this.fileinput.setAttribute('multiple', this.multiple);
-        this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
-        this.fileinput.addEventListener('focusin', function() {
-                me.triggerbox.focus();
-        });
-        this.fileinput.addEventListener('change', function(me) {
-            if ((me.fileinput.files) && (me.fileinput.files.length > 0)) {
-                let farray =  me.fileinput.files;
-                let fnames = [];
-                for (let i of farray) {
-                    fnames.push(i.name);
-                }
-                if (fnames.length > 0) {
-                    me.triggerbox.classList.add('files');
-                    me.triggerbox.innerHTML = fnames.join(', ');
-                } else {
-                    me.triggerbox.classList.remove('files');
-                    me.triggerbox.innerHTML = me.placeholder;
-
-                }
-            }
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
-            }
-        });
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get accept() { return this.config.accept; }
-    set accept(accept) { this.config.accept = accept; }
-
-    get fileinput() {
-        if (!this._fileinput) { this.buildFileInput(); }
-        return this._fileinput;
-    }
-    set fileinput(fileinput) { this._fileinput = fileinput; }
-
-    get multiple() { return this.config.multiple; }
-    set multiple(multiple) { this.config.multiple = multiple; }
-
-    get triggerbox() {
-        if (!this._triggerbox) { this.buildTriggerBox(); }
-        return this._triggerbox;
-    }
-    set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
-
-}
-window.FileInput = FileInput;
-class LoadingShade {
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // the id
-            spinnerstyle: 'spin', //
-            spinnertext: TextFactory.get('simpleform-spinnertext'), //
-            classes: [] //Extra css classes to apply
-        };
-    }
-
-    /**
-     * Define the element
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        this.config = Object.assign({}, LoadingShade.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `shade-${CFBUtils.getUniqueKey(5)}`; }
-        return this;
-    }
-
-    activate() {
-        if (this.container.parentNode) {
-            this.container.parentNode.classList.add('shaded');
-        }
-        this.container.removeAttribute('aria-hidden');
-    }
-
-    deactivate() {
-        if (this.container.parentNode) {
-            this.container.parentNode.classList.remove('shaded');
-        }
-        this.container.setAttribute('aria-hidden', 'true');
-    }
-
-    toggle() {
-        if (this.container.getAttribute('aria-hidden') === true) {
-            this.activate();
-        } else {
-            this.deactivate();
-        }
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Draw the Form's shade
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('loading-shade');
-        this.container.setAttribute('aria-hidden', true);
-
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-        if (this.spinnerstyle) {
-            let d = document.createElement('div');
-            d.classList.add('spinner');
-            d.classList.add(this.spinnerstyle);
-            this.container.append(d);
-        }
-        if (this.spinnertext) {
-            let d = document.createElement('div');
-            d.classList.add('spinnertext');
-            d.innerHTML = this.spinnertext;
-            this.container.append(d);
-        }
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get spinnerstyle() { return this.config.spinnerstyle; }
-    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
-
-    get spinnertext() { return this.config.spinnertext; }
-    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
-
-}
-window.LoadingShade = LoadingShade;
-class DialogWindow {
-
-    static get DEFAULT_CONFIG() {
-       return {
-           id: null,
-           form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-           actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
-                            // Possible keywords:  closebutton, cancelbutton
-           content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
-           classes: [],             // apply these classes to the dialog, if any.
-           header: null, // DOM object, will be used if passed before title.
-           title: null,  // Adds a title to the dialog if present. header must be null.
-           trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
-                          // or a string.  If it's a string, it creates a div at the bottom
-                          // with the value of the text.
-           clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
-           escapecloses: true, // Allow the window to be closed by the escape key
-           nofocus: false, // If true, do not auto focus anything.
-           canceltext: TextFactory.get('cancel'),
-           closetext: TextFactory.get('close'), // Text for the closebutton, if any
-           showclose: true  // Show or hide the X button in the corner (requires title != null)
-        };
-    }
-
-    /**
-     * Define a DialogWindow
-     * @param config a dictionary object
-     * @return DialogWindow
-     */
-    constructor(config) {
-        this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
-
-        if (!this.id) { this.id = `dialog-${CFBUtils.getUniqueKey(5)}`; }
-
-        this.build();
-    }
-
-    /**
-     * Opens the dialog window
-     */
-    open() {
-        const me = this;
-
-        CFBUtils.closeOpen();
-
-        this.prevfocus = document.querySelector(':focus');
-
-        this.mask = document.createElement('div');
-        this.mask.classList.add('window-mask');
-        for (let c of this.classes) {
-            this.mask.classList.add(c);
-        }
-        this.mask.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (me.clickoutsidetoclose) {
-                me.close();
-            }
-        });
-        this.container.appendChild(me.window);
-
-        if ((this.trailer) && (typeof this.trailer === 'string')) {
-            let trail = document.createElement('div');
-            trail.classList.add('trailer');
-            trail.innerHTML = this.trailer;
-            this.container.appendChild(trail);
-        } else if (this.trailer) { // it's an html object
-            this.container.appendChild(this.trailer);
-        }
-
-        document.body.appendChild(this.mask);
-        document.body.appendChild(this.container);
-        document.body.classList.add('modalopen');
-
-        this.escapelistener = function(e) {
-            if (e.key === 'Escape') {
-                me.close();
-            }
-        };
-
-        setTimeout(function() {
-            if (!me.nofocus) {
-                let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                if (focusable[0]) {
-                    focusable[0].focus();
-                }
-            }
-            if (me.escapecloses) {
-                document.addEventListener('keyup', me.escapelistener);
-            }
-        }, 100);
-    }
-
-    /**
-     * Closes the dialog window
-     */
-    close() {
-        this.container.parentNode.removeChild(this.container);
-        this.mask.parentNode.removeChild(this.mask);
-        if (this.prevfocus) {
-            this.prevfocus.focus();
-        }
-        document.body.classList.remove('modalopen');
-        document.removeEventListener('keyup', this.escapelistener);
-    }
-
-    /**
-     * Check to see if escape should close the thing
-     * @param e the event.
-     */
-    escape(e, self) {
-        if (e.key === 'Escape') {
-            self.close();
-        }
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Constructs the DialogWindow's DOM elements
-     */
-    build() {
-        const me = this;
-
-        this.container = document.createElement('div');
-        this.container.classList.add('window-container');
-
-        this.window = document.createElement('div');
-        this.window.classList.add('dialog');
-        this.window.setAttribute('id', this.id);
-
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-            this.window.classList.add(c);
-        }
-
-        if ((this.title) || (this.header)) {
-            if (!this.header) {
-                this.header = document.createElement('h2');
-                let span = document.createElement('span');
-                span.classList.add('t');
-                span.innerHTML = this.title;
-                this.header.appendChild(span);
-            }
-            this.window.appendChild(this.header);
-
-            if (this.showclose) {
-                this.closebutton = new CloseButton({
-                    action: function(e) {
-                        e.preventDefault();
-                        me.close();
-                    }
-                });
-                this.header.appendChild(this.closebutton.button);
-            }
-        } else if (this.showclose) {
-            console.error("Dialog defines 'showclose' but no title is defined.");
-        }
-
-        if (this.form) { // it's a SimpleForm
-
-            this.form.dialog = this;
-
-            if ((this.actions) && (this.actions.length > 0)) {
-                for (let a of this.actions) {
-                    if (typeof a === 'string') { // it's a keyword
-                        switch(a) {
-                            case 'closebutton':
-                                this.form.actions.push(new SimpleButton({
-                                    text: this.closetext,
-                                    ghost: true,
-                                    action: function() {
-                                        me.close();
-                                    }
-                                }));
-                                break;
-                            case 'cancelbutton':
-                                this.form.actions.push(new DestructiveButton({
-                                    text: this.canceltext,
-                                    mute: true,
-                                    action: function() {
-                                        me.close();
-                                    }
-                                }));
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        this.form.actions.push(a);
-                    }
-                }
-            }
-
-
-            this.contentbox = document.createElement('div');
-            this.contentbox.classList.add('content');
-            this.contentbox.appendChild(this.form.form);
-
-            this.window.classList.add('isform');
-            this.window.appendChild(this.contentbox);
-
-        } else if (this.content) { // It's a DOM object
-
-            this.contentbox = document.createElement('div');
-            this.contentbox.classList.add('content');
-            this.contentbox.appendChild(this.content);
-
-            this.window.appendChild(this.contentbox);
-
-            if ((this.actions) && (this.actions.length > 0)) {
-                this.actionbox = document.createElement('div');
-                this.actionbox.classList.add('actions');
-                for (let a of this.actions) {
-                    if (typeof a === 'string') { // it's a keyword
-                        switch(a) {
-                            case 'closebutton':
-                                this.actionbox.appendChild(new SimpleButton({
-                                    text: this.closetext,
-                                    ghost: true,
-                                    action: function() {
-                                        me.close();
-                                    }
-                                }).container);
-                                break;
-                            case 'cancelbutton':
-                                this.actionbox.appendChild(new DestructiveButton({
-                                    text: this.canceltext,
-                                    mute: true,
-                                    action: function() {
-                                        me.close();
-                                    }
-                                }).container);
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        this.actionbox.appendChild(a.container);
-                    }
-                }
-                this.window.appendChild(this.actionbox);
-            }
-        }
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get actionbox() { return this._actionbox; }
-    set actionbox(actionbox) { this._actionbox = actionbox; }
-
-    get actions() { return this.config.actions; }
-    set actions(actions) { this.config.actions = actions; }
-
-    get canceltext() { return this.config.canceltext; }
-    set canceltext(canceltext) { this.config.canceltext = canceltext; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get clickoutsidetoclose() { return this.config.clickoutsidetoclose; }
-    set clickoutsidetoclose(clickoutsidetoclose) { this.config.clickoutsidetoclose = clickoutsidetoclose; }
-
-    get closebutton() { return this._closebutton; }
-    set closebutton(closebutton) { this._closebutton = closebutton; }
-
-    get closetext() { return this.config.closetext; }
-    set closetext(closetext) { this.config.closetext = closetext; }
-
-    get container() { return this._container; }
-    set container(container) { this._container = container; }
-
-    get content() { return this.config.content; }
-    set content(content) { this.config.content = content; }
-
-    get contentbox() { return this._contentbox; }
-    set contentbox(contentbox) { this._contentbox = contentbox; }
-
-    get escapecloses() { return this.config.escapecloses; }
-    set escapecloses(escapecloses) { this.config.escapecloses = escapecloses; }
-
-    get escapelistener() { return this._escapelistener; }
-    set escapelistener(escapelistener) { this._escapelistener = escapelistener; }
-
-    get form() { return this.config.form; }
-    set form(form) { this.config.form = form; }
-
-    get header() { return this.config.header; }
-    set header(header) { this.config.header = header; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get mask() { return this._mask; }
-    set mask(mask) { this._mask = mask; }
-
-    get nofocus() { return this.config.nofocus; }
-    set nofocus(nofocus) { this.config.nofocus = nofocus; }
-
-    get prevfocus() { return this._prevfocus; }
-    set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
-
-    get showclose() { return this.config.showclose; }
-    set showclose(showclose) { this.config.showclose = showclose; }
-
-    get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
-
-    get trailer() { return this.config.trailer; }
-    set trailer(trailer) { this.config.trailer = trailer; }
-
-    get window() { return this._window; }
-    set window(window) { this._window = window; }
-
-}
-window.DialogWindow = DialogWindow;
 class Panel {
 
     static get DEFAULT_CONFIG() {
@@ -7118,291 +3310,12 @@ class Panel {
 
 }
 window.Panel = Panel;
-class FloatingPanel extends Panel {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            style: 'plain', // Various styles that can be applied to the panel.
-                            // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
-                            // - 'invisible: panel behaves as normal but the background is transparent
-            position: 'top-left' // Position for the panel. Valid values:
-                                 // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
-        };
-    }
-
-    constructor(config) {
-        config = Object.assign({}, FloatingPanel.DEFAULT_CONFIG, config);
-        if (config.classes) {
-            config.classes.push('floating');
-        } else {
-            config.classes = ['floating'];
-        }
-        config.classes.push(config.position);
-        config.classes.push(config.style);
-        super(config);
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get position() { return this.config.position; }
-    set position(position) { this.config.position = position; }
-
-    get style() { return this.config.style; }
-    set style(style) { this.config.style = style; }
-
-}
-window.FloatingPanel = FloatingPanel;
-class Growler extends FloatingPanel {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            text : null, // The growler payload
-            closeicon: 'echx',
-            duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
-            icon: null, // An optional icon. Position of this depends on whether there is text or a title.
-                        // If a title is given but no text, it will be in the titlebar. Else it
-                        // gets placed in the text area.
-            position: 'bottom-right' // Position for the growler. Valid values:
-                        // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
-        };
-    }
-
-    static get GROWLBOX_ID() { return 'gbox-'; }
-
-    /**
-     * Quick access to a generic growler, with an optional title.
-     * @param text the text to display
-     * @param title (optional) a title
-     * @return {Growler}
-     */
-    static growl(text, title) {
-        return new Growler({
-            text: text,
-            title: title
-        });
-    }
-
-    /**
-     * Quick access to a error growler
-     * @param text the text to display
-     * @return {Growler}
-     */
-    static error(text) {
-        return new Growler({
-            text: text,
-            title: TextFactory.get('error'),
-            icon: 'warn-hex',
-            classes: ['error']
-        });
-    }
-
-    /**
-     * Quick access to a warn growler
-     * @param text the text to display
-     * @return {Growler}
-     */
-    static warn(text) {
-        return new Growler({
-            text: text,
-            title: TextFactory.get('warning'),
-            icon: 'warn-triangle',
-            classes: ['warn']
-        });
-    }
-
-    /**
-     * Quick access to a caution growler
-     * @param text the text to display
-     * @return {Growler}
-     */
-    static caution(text) {
-        return new Growler({
-            text: text,
-            title: TextFactory.get('caution'),
-            icon: 'warn-circle',
-            classes: ['caution']
-        });
-    }
-
-    /**
-     * Quick access to a success growler
-     * @param text the text to display
-     * @return {Growler}
-     */
-    static success(text) {
-        return new Growler({
-            text: text,
-            title: TextFactory.get('success'),
-            icon: 'check-circle',
-            classes: ['success']
-        });
-    }
-
-    /**
-     * Builds a growlbox and inserts it into the dom.
-     * @param position the position to create it at.
-     * @return HTMLDivElement growlbox object
-     */
-    static buildGrowlbox(position) {
-        let gb = document.createElement('div');
-        gb.classList.add('growlbox');
-        gb.setAttribute('id', `${Growler.GROWLBOX_ID}${position}`);
-        gb.classList.add(position);
-        document.querySelector('body').appendChild(gb);
-        return gb;
-    }
-
-    /**
-     * Define a growler
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        config = Object.assign({}, Growler.DEFAULT_CONFIG, config);
-        super(config);
-
-        this.growlbox = document.getElementById(`${Growler.GROWLBOX_ID}${this.position}`);
-        if (!this.growlbox) {
-            this.growlbox = Growler.buildGrowlbox(this.position);
-        }
-        this.show();
-    }
-
-    /**
-     * Close the growler
-     */
-    close() {
-        const me = this;
-        if (this.timer) { clearTimeout(this.timer); }
-        this.container.setAttribute('aria-hidden', 'true');
-
-        setTimeout(function() {
-            if ((me.onclose) && (typeof me.onclose === 'function')) {
-                me.onclose(me);
-            }
-            me.container.parentNode.removeChild(me.container);
-        }, 100);
-
-    }
-
-    /**
-     * Quickly close the growler, no animations.
-     */
-    quickClose() {
-        if (this.timer) { clearTimeout(this.timer); }
-        this.container.parentNode.removeChild(this.container);
-        if ((this.onclose) && (typeof this.onclose === 'function')) {
-            this.onclose(this);
-        }
-    }
-
-    /**
-     * Show the growler
-     */
-    show() {
-        const me = this;
-        this.container.removeAttribute('aria-hidden');
-
-        if (this.duration > 0) {
-            this.timer = setTimeout(function() {
-                me.close();
-            }, this.duration);
-        }
-        if ((this.onopen) && (typeof this.onopen === 'function')) {
-            this.onopen(this);
-        }
-    }
-
-    buildContainer() {
-        const me = this;
-
-        this.container = document.createElement('div');
-        this.container.setAttribute('aria-hidden', 'true');
-        this.container.classList.add('growler');
-
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-
-        this.closebutton = new CloseButton({
-            action: function(e) {
-                e.preventDefault();
-                me.quickClose();
-            }
-        });
-
-        if (this.title) {
-            let h3 = document.createElement('h3');
-            let span = document.createElement('span');
-            span.classList.add('text');
-            span.innerHTML = this.title;
-            h3.appendChild(span);
-            h3.appendChild(this.closebutton.button);
-            this.container.appendChild(h3);
-        } else {
-            this.container.appendChild(this.closebutton.button);
-        }
-
-        if (this.text) {
-            let payload = document.createElement('div');
-            payload.classList.add('payload');
-            if (this.icon) {
-                let i = IconFactory.icon(this.icon);
-                i.classList.add('i');
-                payload.append(i);
-            }
-
-            let d = document.createElement('div');
-            d.classList.add('text');
-            d.innerHTML = this.text;
-            payload.appendChild(d);
-
-            this.container.appendChild(payload);
-        }
-
-        this.growlbox.appendChild(this.container);
-
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get closebutton() { return this._closebutton; }
-    set closebutton(closebutton) { this._closebutton = closebutton; }
-
-    get duration() { return this.config.duration; }
-    set duration(duration) { this.config.duration = duration; }
-
-    get growlbox() { return this._growlbox; }
-    set growlbox(growlbox) { this._growlbox = growlbox; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get text() { return this.config.text; }
-    set text(text) { this.config.text = text; }
-
-    get timer() { return this._timer; }
-    set timer(timer) { this._timer = timer; }
-
-}
-window.Growler = Growler;
-class MessageBox {
-
+class LoadingShade {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
-            icon: null,
-            title: null,
-            content: null,
+            spinnerstyle: 'spin', //
+            spinnertext: TextFactory.get('simpleform-spinnertext'), //
             classes: [] //Extra css classes to apply
         };
     }
@@ -7412,1176 +3325,58 @@ class MessageBox {
      * @param config a dictionary object
      */
     constructor(config) {
-        this.config = Object.assign({}, MessageBox.DEFAULT_CONFIG, config);
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the full container
-     */
-    buildContainer() {
-        this.container = document.createElement('div');
-        this.container.classList.add('messagebox');
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-        if (this.title) {
-            this.header = document.createElement('h3');
-            this.header.innerHTML = this.title;
-            this.container.appendChild(this.header);
-        }
-        if (this.content) {
-            if (this.icon) {
-                this.payload.appendChild(IconFactory.icon(this.icon));
-            }
-            this.content.classList.add('content');
-            this.payload.appendChild(this.content);
-            this.container.appendChild(this.payload);
-        }
-    }
-
-    buildPayload() {
-        this.payload = document.createElement('div');
-        this.payload.classList.add('payload');
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get content() { return this.config.content; }
-    set content(content) { this.config.content = content; }
-
-    get header() { return this._header; }
-    set header(header) { this._header = header; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get payload() {
-        if (!this._payload) { this.buildPayload(); }
-        return this._payload;
-    }
-    set payload(payload) { this._payload = payload; }
-
-    get title() { return this.config.title; }
-    set title(title) { this.config.title = title; }
-
-}
-window.MessageBox = MessageBox;
-class InstructionBox extends MessageBox {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            icon : 'help-circle', // If present, will be displayed large next to texts
-            instructions: [] // An array of instruction texts
-        };
-    }
-
-    /**
-     * Define the element
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        config = Object.assign({}, InstructionBox.DEFAULT_CONFIG, config);
-        if (config.classes) {
-            config.classes.push('instructions');
-        } else {
-            config.classes = ['instructions'];
-        }
-        super(config);
-    }
-
-    /* PSEUDO GETTERS___________________________________________________________________ */
-
-    get infolist() { return this.instructions; }
-    set infolist(infolist) { this.instructions = infolist; }
-
-    setInstructions(instructions) {
-        this.setInfolist(instructions);
-    }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    /**
-     * Replace existing infolist with some different ones
-     * @param infolist an array of info items
-     */
-    setInfolist(infolist) {
-        this.container.classList.remove('size-1');
-        this.container.classList.remove('size-2');
-        this.container.classList.remove('size-3');
-        this.list.innerHTML = '';
-
-        for (let text of infolist) {
-            let li = document.createElement('li');
-            li.innerHTML = text;
-            this.list.appendChild(li);
-        }
-
-        if ((infolist.length > 0) && (infolist.length < 4)) {
-            this.container.classList.add(`size-${infolist.length}`);
-        }
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the actual DOM container.
-     */
-    buildContainer() {
-        if ((this.infolist) && (this.infolist.length > 0)) {
-            for (let text of this.infolist) {
-                let li = document.createElement('li');
-                li.innerHTML = text;
-                this.list.appendChild(li);
-            }
-            this.content = this.list;
-        }
-
-        super.buildContainer();
-
-        if ((this.infolist.length > 0) && (this.infolist.length < 4)) {
-            this.container.classList.add(`size-${this.infolist.length}`);
-        }
-    }
-
-    /**
-     * Build the list object.  This is the dumbest method I've ever written.
-     */
-    buildList() {
-        this.list = document.createElement('ul');
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get instructions() { return this.config.instructions; }
-    set instructions(instructions) { this.config.instructions = instructions; }
-
-    get list() {
-        if (!this._list) { this.buildList(); }
-        return this._list;
-    }
-    set list(list) { this._list = list;  }
-
-}
-window.InstructionBox = InstructionBox;
-class PasswordGenerator {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id: null,
-            buttontext: TextFactory.get('generate_password'),
-            buttonicon: 'refresh',
-            length: 15, // how many characters to generate
-            autofills: [], // input elements to auto fill.
-            sets: ['lc', 'uc', 'num', 'punc']
-        };
-    }
-
-    static get DATASETS () {
-        return {
-            lc: { id: 'lc', label: TextFactory.get('lowercase'), set: 'a-z', chars: 'abcdefghijklmnopqrstuvwxyz' },
-            uc: { id: 'uc', label: TextFactory.get('uppercase'), set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
-            num: { id: 'num', label: TextFactory.get('numbers'), set: '0-9', chars: '0123456789' },
-            punc: { id: 'punc', label: TextFactory.get('punctuation'), set: '#', chars: '![]{}()%&*$#^<>~@|' }
-        };
-    }
-
-    /**
-     * Get a dataset definition by id
-     * @param id the id of the dataset
-     * @return {*} the dataset definition, or null
-     */
-    static getDataSet(id) {
-        return PasswordGenerator.DATASETS[id];
-    }
-
-    /**
-     * Generates a random password string.  Takes an array of character objects to include
-     * @param datasets an array of dataset identifiers (defaults to all)
-     * @param length how long of a password to generate (default 15);
-     * @returns {string}
-     */
-    static randomPassword (datasets = PasswordGenerator.DEFAULT_CONFIG.sets, length = 15) {
-
-        let corpus = '';
-        for (let ds of datasets) {
-            if (PasswordGenerator.getDataSet(ds)) {
-                corpus += PasswordGenerator.getDataSet(ds).chars;
-            }
-        }
-
-        let pw = '';
-        for (let i = 0; i < length; i++) {
-            pw += corpus.charAt(Math.floor(Math.random() * corpus.length));
-        }
-        return pw;
-    }
-
-    constructor(config) {
-        this.config = Object.assign({}, PasswordGenerator.DEFAULT_CONFIG, config);
-
-        if (!this.id) { this.id = `pwgen-${CFBUtils.getUniqueKey(5)}`; }
-
-        this.setactuals = [];
-    }
-
-    /* ACTION METHODS___________________________________________________________________ */
-
-    /**
-     * Does the actual password generation
-     */
-    generatePassword() {
-        let sets = [];
-        if ((!this.sets) || (this.sets.length === 0)){
-            sets = PasswordGenerator.DEFAULT_CONFIG.sets;
-        } else {
-            for (let cb of this.setactuals) {
-                if (cb.checked) {
-                    sets.push(cb.value);
-                }
-            }
-        }
-
-        let genpw =  PasswordGenerator.randomPassword(sets, this.length);
-
-        if ((this.autofills) && (this.autofills.length > 0)) {
-            let theform;
-            for (let af of this.autofills) {
-                af.value = genpw;
-                if (af.form) { theform = af.form; }
-            }
-            if (theform) {
-                theform.validate();
-            }
-        }
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Build the container for the generator
-     */
-    buildContainer() {
-        const me = this;
-        this.container = document.createElement('div');
-        this.container.classList.add('pwgenerator');
-
-        this.datasetblock = document.createElement('ul');
-        this.datasetblock.classList.add('datasets');
-        this.datasetblock.setAttribute('aria-hidden', 'true');
-
-        if (this.sets.length > 0) {
-            for (let ds of this.sets) {
-                if (ds in PasswordGenerator.DATASETS) {
-                    let set = PasswordGenerator.getDataSet(ds);
-                    let cb = new BooleanToggle({
-                        name: `dset-${set.id}`,
-                        id: `${this.id}-${set.id}`,
-                        value: set.id,
-                        label: set.label,
-                        checked: true
-                    });
-                    this.setactuals.push(cb);
-                    let li = document.createElement('li');
-                    li.appendChild(cb.container);
-                    this.datasetblock.appendChild(li);
-                }
-            }
-        }
-
-        this.button = new SimpleButton({
-            text: this.buttontext,
-            naked: true,
-            action: function(e) {
-                e.preventDefault();
-                me.generatePassword();
-            }
-
-        });
-
-        this.configbutton = new SimpleButton({
-            icon: 'gear',
-            naked: true,
-            arialabel: TextFactory.get('configure_generator'),
-            classes: ['config'],
-            action: function(e) {
-                e.preventDefault();
-                if (me.datasetblock.getAttribute('aria-hidden')) {
-                    me.datasetblock.removeAttribute('aria-hidden');
-                } else {
-                    me.datasetblock.setAttribute('aria-hidden', 'true');
-                }
-            }
-
-        });
-        let controls = document.createElement('div');
-        controls.classList.add('controls');
-        controls.appendChild(this.button.button);
-        controls.appendChild(this.configbutton.button);
-
-        this.container.appendChild(controls);
-        this.container.appendChild(this.datasetblock);
-
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get autofills() { return this.config.autofills; }
-    set autofills(autofills) { this.config.autofills = autofills; }
-
-    get button() { return this._button; }
-    set button(button) { this._button = button; }
-
-    get configbutton() { return this._configbutton; }
-    set configbutton(configbutton) { this._configbutton = configbutton; }
-
-    get buttonicon() { return this.config.buttonicon; }
-    set buttonicon(buttonicon) { this.config.buttonicon = buttonicon; }
-
-    get buttontext() { return this.config.buttontext; }
-    set buttontext(buttontext) { this.config.buttontext = buttontext; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get datasetblock() { return this._datasetblock; }
-    set datasetblock(datasetblock) { this._datasetblock = datasetblock; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get length() { return this.config.length; }
-    set length(length) { this.config.length = length; }
-
-    get sets() { return this.config.sets; }
-    set sets(sets) { this.config.sets = sets; }
-
-    get setactuals() { return this._setactuals; }
-    set setactuals(setactuals) { this._setactuals = setactuals; }
-
-}
-window.PasswordGenerator = PasswordGenerator;
-class PasswordChangeForm {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            maxlength: 30,
-            minlength: 5,
-            suggestedlength: 8,
-            cannotbe: [],
-            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
-            instructions: [TextFactory.get('passwordchanger-form-instructions')],
-            placeholder: null,
-            buttontext: TextFactory.get('change_password'),
-            pwcurrlabel: TextFactory.get('current_password'),
-            pwcurrplaceholder: TextFactory.get('passwordchanger-currentpw-placeholder'),
-            pwcurrhelp: TextFactory.get('passwordchanger-currentpw-help'),
-            pwonelabel: TextFactory.get('new_password'),
-            pwoneplaceholder: null,
-            pwonehelp: null,
-            pwtwolabel: TextFactory.get('confirm_password'),
-            pwtwoplaceholder: null,
-            pwtwohelp: null,
-            badpasswordhook: null // Function used to test the value against an external bad password list, like the one used by NIST.
-        };
-    }
-
-    constructor(config) {
-        this.config = Object.assign({}, PasswordChangeForm.DEFAULT_CONFIG, config);
-
-        if (!this.id) { this.id = `pwchange-${CFBUtils.getUniqueKey(5)}`; }
-    }
-
-    /* ACTION METHODS___________________________________________________________________ */
-
-
-    /* VALIDATION METHODS_______________________________________________________________ */
-
-    runChecks(self) {
-        let valid = true;
-        if ((this.pwone.value) !== (this.pwtwo.value)) {
-            this.pwone.errors.push(TextArea.get('passwordchanger-error-passwords_must_match'));
-            this.pwone.showMessages();
-            valid = false;
-        }
-        if ((this.cannotbe) && (this.cannotbe.length > 0)) {
-            for (let cbs of this.cannotbe) {
-                if (this.pwone.value === cbs) {
-                    this.pwone.errors.push(TextArea.get('passwordchanger-error-cannot_be_used_as_pw'));
-                    valid = false;
-                }
-            }
-        }
-        if ((valid) && (this.badpasswordhook) && (typeof this.badpasswordhook === 'function')) {
-            valid = this.badpasswordhook(this.pwone);
-        }
-
-        if (valid) {
-            this.pwone.clearMessages();
-        }
-
-        return valid;
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    buildForm() {
-        const me = this;
-
-        this.pwcurr = new PasswordInput({
-            id: `${this.id}-pwcurr`,
-            label: this.pwcurrlabel,
-            showpasswordbydefault: true,
-            required: true,
-            placeholder: this.pwcurrplaceholder,
-            help: this.pwcurrhelp
-        });
-        this.pwone = new PasswordInput({
-            id: `${this.id}-pwone`,
-            label: this.pwonelabel,
-            showpasswordbydefault: true,
-            required: true,
-            placeholder: this.pwoneplaceholder,
-            help: this.pwonehelp
-        });
-        this.pwtwo = new PasswordInput({
-            id: `${this.id}-pwtwo`,
-            label: this.pwtwolabel,
-            required: true,
-            showpasswordbydefault: true,
-            placeholder: this.pwtwoplaceholder,
-            help: this.pwtwohelp
-        });
-
-        this.pwgen = new PasswordGenerator({
-            autofills: [this.pwone, this.pwtwo]
-        });
-
-
-        this.form = new SimpleForm({
-            instructions: {
-                icon: 'help-circle',
-                instructions: this.instructions
-            },
-            elements: [
-                new HiddenField({
-                    name: this.name
-                }),
-                this.pwcurr,
-                this.pwone,
-                this.pwtwo,
-                this.pwgen
-
-            ],
-            validator: function(self) {
-                return me.runChecks(self);
-            },
-            handler: function(self, callback) {
-                let results = {
-                    success: true,
-                    results: [TextFactory.get('passwordchanger-results-changed_successfully')]
-                };
-                callback(results);
-            },
-            actions: [
-                new ConstructiveButton({
-                    text: this.buttontext,
-                    hot: true,
-                    submits: true,
-                    disabled: true  // No action needed.
-                })
-            ]
-
-        });
-
-    }
-
-    /**
-     * Calculate the placeholder
-     * @return {string|*}
-     */
-    calculatePlaceholder() {
-        if (this.placeholder) { return this.placeholder; }
-        if (this.forceconstraints) {
-            return TextFactory.get('passwordchanger-placeholder-minlength', this.minlength);
-        } else if (this.suggestedlength) {
-            return TextFactory.get('passwordchanger-placeholder-suggested', this.suggestedlength);
-        }
-    }
-
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    get container() {
-        return this.form.container;
-    }
-
-    get pwonehelp() {
-        if (this.config.pwonehelp) { return this.config.pwonehelp; }
-        // generate
-    }
-
-    get pwoneplaceholder() {
-        if (this.config.pwoneplaceholder) { return this.config.pwoneplaceholder; }
-        // generate
-    }
-
-    get pwtwohelp() {
-        if (this.config.pwtwohelp) { return this.config.pwtwohelp; }
-        // generate
-    }
-
-    get pwtwoplaceholder() {
-        if (this.config.pwtwoplaceholder) { return this.config.pwtwoplaceholder; }
-        // generate
-    }
-
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get badpasswordhook() { return this.config.badpasswordhook; }
-    set badpasswordhook(badpasswordhook) {
-        if (typeof badpasswordhook !== 'function') {
-            console.error("Action provided for badpasswordhook is not a function!");
-        }
-        this.config.badpasswordhook = badpasswordhook;
-    }
-
-    get buttontext() { return this.config.buttontext; }
-    set buttontext(buttontext) { this.config.buttontext = buttontext; }
-
-    get cannotbe() { return this.config.cannotbe; }
-    set cannotbe(cannotbe) { this.config.cannotbe = cannotbe; }
-
-    get forceconstraints() { return this.config.forceconstraints; }
-    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
-
-    get form() {
-        if (!this._form) { this.buildForm(); }
-        return this._form;
-    }
-    set form(form) { this._form = form; }
-
-    get instructions() { return this.config.instructions; }
-    set instructions(instructions) { this.config.instructions = instructions; }
-
-    get maxlength() { return this.config.maxlength; }
-    set maxlength(maxlength) { this.config.maxlength = maxlength; }
-
-    get minlength() { return this.config.minlength; }
-    set minlength(minlength) { this.config.minlength = minlength; }
-
-    get placeholder() {
-        if (this.config.placeholder) return this.config.placeholder;
-        return this.calculatePlaceholder();
-    }
-    set placeholder(placeholder) { this.config.placeholder = placeholder; }
-
-    get pwactual() { return this._pwactual; }
-    set pwactual(pwactual) { this._pwactual = pwactual; }
-
-    get pwcurr() { return this._pwcurr; }
-    set pwcurr(pwcurr) { this._pwcurr = pwcurr; }
-
-    get pwgen() { return this._pwgen; }
-    set pwgen(pwgen) { this._pwgen = pwgen; }
-
-    get pwone() { return this._pwone; }
-    set pwone(pwone) { this._pwone = pwone; }
-
-    get pwtwo() { return this._pwtwo; }
-    set pwtwo(pwtwo) { this._pwtwo = pwtwo; }
-
-    get pwcurrhelp() { return this.config.pwcurrhelp; }
-    set pwcurrhelp(pwcurrhelp) { this.config.pwcurrhelp = pwcurrhelp; }
-
-    get pwcurrlabel() { return this.config.pwcurrlabel; }
-    set pwcurrlabel(pwcurrlabel) { this.config.pwcurrlabel = pwcurrlabel; }
-
-    get pwcurrplaceholder() { return this.config.pwcurrplaceholder; }
-    set pwcurrplaceholder(pwcurrplaceholder) { this.config.pwcurrplaceholder = pwcurrplaceholder; }
-
-    get pwonelabel() { return this.config.pwonelabel; }
-    set pwonelabel(pwonelabel) { this.config.pwonelabel = pwonelabel; }
-
-    get pwtwolabel() { return this.config.pwtwolabel; }
-    set pwtwolabel(pwtwolabel) { this.config.pwtwolabel = pwtwolabel; }
-
-    get suggestedlength() { return this.config.suggestedlength; }
-    set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
-
-    get value() { return this.pwactual.val(); }
-    set value(value) { this.pwactual.val(value); }
-
-}
-window.PasswordChangeForm = PasswordChangeForm;
-class TabBar {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id: null, // The id
-            navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
-            responsive: true, // Set to false to disable responsive collapsing.
-            menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
-            menulabel: TextFactory.get('toggle_menu'), // Default text for the menu
-            arialabel: TextFactory.get('primary'), // the aria label to use if this is a navigation
-            submenuicon: 'triangle-down', // icon to indicate submenu
-
-            vertical: false, // Vertical or horizontal
-            animation: 'popin', // Set to null to disable animations
-            tabs: [], // An array of tab definitions
-            // {
-            //    classes: [] // An array of css classes to add
-                              // include "mobileonly" to only show item in mobile
-            //    label: "Tab Text", // text, optional if given an icon
-            //    id: null, // tab id, used with "activate(tabid)"
-            //    icon: null, // an icon identifier, optional
-            //    selected: false, // if true, start selected
-            //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
-            //    subtabs: null  // an array of tab definitions to indicate subtabs
-            // }
-            action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
-                          // This is what will fire if there is no action defined on the tab definition.
-            classes: [] //Extra css classes to apply
-        };
-    }
-
-    /**
-     * Define a TabBar
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
-        this.tabmap = {};
-        if (!this.id) { this.id = `tabbar-${CFBUtils.getUniqueKey(5)}`; }
-    }
-
-    /* CORE METHODS_____________________________________________________________________ */
-
-    /**
-     * Marks a specific tab as selected
-     * @param tab the tab to select
-     */
-    select(tab) {
-        if (typeof tab === 'string') {
-            tab = document.querySelectorAll(`[data-tabid='${tab}']`)[0];
-        }
-        if (!tab) {
-            console.warn(`Tab does not exist: ${tab}`);
-            return;
-        }
-        if (this.selected) {
-            this.selected.removeAttribute('aria-selected');
-            this.selected.setAttribute('tabindex', '-1');
-        }
-        this.selected = tab;
-        this.selected.setAttribute('aria-selected', 'true');
-        this.selected.setAttribute('tabindex', '0');
-
-        if ((this.responsive) && (this.menutitle)) {
-            this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
-        }
-    }
-
-    /* CONSTRUCTION METHODS_____________________________________________________________ */
-
-    /**
-     * Builds the DOM.
-     * @returns the container object
-     */
-    buildContainer() {
-        const me = this;
-
-        this.list = document.createElement('ul');
-        this.list.setAttribute('role', 'tablist');
-        this.list.classList.add('tabbar');
-
-        for (let c of this.classes) {
-            this.list.classList.add(c);
-        }
-
-        if (this.vertical) {
-            this.list.classList.add('vertical');
-        }
-        let order = 1;
-
-        for (let tabdef of this.tabs) {
-            order = this.buildTab(tabdef, order);
-        }
-
-        if (this.navigation) {
-            this.container = document.createElement('nav');
-            this.list.removeAttribute('role');
-            this.container.setAttribute('aria-label', this.arialabel);
-        } else {
-            this.container = document.createElement('div');
-        }
-
-        this.container.classList.add('tablist-container');
-
-        for (let c of this.classes) {
-            this.container.classList.add(c);
-        }
-
-        if (this.responsive) {
-            this.responsivebox = document.createElement('div');
-            this.responsivebox.classList.add('responsivebox');
-
-            this.menubutton = new HamburgerButton({
-                text: this.menulabel,
-                toggletarget: me
-            });
-            this.responsivebox.appendChild(this.menubutton.button);
-
-            this.menutitle = document.createElement('div');
-            this.menutitle.classList.add('menutitle');
-            this.responsivebox.appendChild(this.menutitle);
-
-            this.container.classList.add('responsive');
-            this.container.appendChild(this.responsivebox);
-        }
-
-        this.container.appendChild(this.list);
-    }
-
-    buildTab(tabdef, order, parent) {
-        const me = this;
-        let next = order + 1,
-            previous = order - 1;
-
-        if (previous < 1) {
-            previous = 1;
-        }
-        if (next > this.tabs.length) {
-            next = this.tabs.length;
-        }
-
-        if ((!tabdef.label) && (!tabdef.icon)) {
-            console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
-            return null;
-        }
-
-        let link = document.createElement('a');
-        link.setAttribute('data-tabtext', `${tabdef.label}`);
-        link.setAttribute('data-tabno', `${order}`);
-        link.setAttribute('id', tabdef.id);
-        link.setAttribute('data-tabid', tabdef.id);
-        if (!this.navigation) {
-            link.setAttribute('role', 'menuitem');
-        }
-
-        if (tabdef.icon) {
-            link.appendChild(IconFactory.icon(tabdef.icon));
-        }
-        if (tabdef.label) {
-            let linktext = document.createElement('span');
-            linktext.innerHTML = tabdef.label;
-            link.appendChild(linktext);
-        }
-
-        let maplink = document.createElement('li');
-        maplink.setAttribute('role', 'none');
-        maplink.appendChild(link);
-        if (tabdef.classes) {
-            for (let c of tabdef.classes) {
-                maplink.classList.add(c);
-            }
-        }
-
-        this.tabmap[tabdef.id] = maplink;
-
-        if (this.animation) {
-            this.tabmap[tabdef.id].style.setProperty('--anim-order', `${order}`); // used in animations
-            this.tabmap[tabdef.id].classList.add(this.animation);
-        }
-
-        if (parent) {
-            let clink = parent.querySelector('a');
-            link.setAttribute('data-parent', `${clink.getAttribute('data-tabid')}`);
-            let plist = parent.querySelector('ul');
-            if (!plist) {
-                plist = document.createElement('ul');
-                plist.setAttribute('role', 'menu');
-                plist.setAttribute('aria-label', tabdef.label);
-                plist.classList.add('submenu');
-                parent.appendChild(plist);
-            }
-            plist.append(this.tabmap[tabdef.id]); // attach to child list
-        } else {
-            this.list.appendChild(this.tabmap[tabdef.id]); // attach to root list
-        }
-
-        order++;
-        link.setAttribute('tabindex', '-1'); // always set this here
-
-        // Is this a master menu item?
-
-        if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
-            link.classList.add('mastertab');
-            link.setAttribute('aria-haspopup', true);
-            link.setAttribute('aria-expanded', false);
-            if (this.submenuicon) {
-                link.appendChild(IconFactory.icon(this.submenuicon));
-            }
-            for (let subdef of tabdef.subtabs) {
-                order = this.buildTab(subdef, order, this.tabmap[tabdef.id]);
-            }
-            // XXX SET open/close linking
-        } else {
-            // set link events here.
-            link.addEventListener('keydown', function (e) {
-                switch (e.key) {
-                    case 'ArrowLeft':
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        e.stopPropagation();
-                        me.list.querySelector(`[data-tabno='${previous}']`).focus();
-                        break;
-                    case 'ArrowRight':
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        e.stopPropagation();
-                        me.list.querySelector(`[data-tabno='${next}']`).focus();
-                        break;
-                    case 'Enter':
-                    case 'Space':
-                        link.click();
-                        break;
-
-                }
-            });
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                me.select(tabdef.id);
-                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                    tabdef.action(tabdef.id, me);
-                } else if (me.action) {
-                    me.action(tabdef.id, me);
-                }
-            });
-        }
-
-        if (tabdef.selected) {
-            window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
-                me.select(tabdef.id);
-            }, 100);
-        }
-        return order; // send this back.
-    }
-
-    /* PSEUDO-GETTER METHODS____________________________________________________________ */
-
-    /**
-     * Let us know if the menu is open
-     * @return true if it is!
-     */
-    get isopen() {
-        return this.container.hasAttribute('aria-expanded');
-    }
-
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Toggle whether or not the menu is open
-     */
-    toggle() {
-        if (this.isopen) {
-            this.close();
-            return;
-        }
-        this.open();
-    }
-
-    /**
-     * Opens the menu
-     */
-    open() {
-        const me = this;
-        if (this.isopen) { return; }
-        this.container.setAttribute('aria-expanded', 'true');
-        if (this.menubutton) { this.menubutton.open(); }
-
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
-        }, 200);
-    }
-
-    /**
-     * Closes the menu
-     */
-    close() {
-        this.container.removeAttribute('aria-expanded');
-        if (this.menubutton) { this.menubutton.close(); }
-    }
-
-    /**
-     * Sets an event listener to close the menu if the user clicks outside of it.
-     */
-    setCloseListener() {
-        const me = this;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
-        }, { once: true });
-
-        window.addEventListener('click', function(e) {
-            if (e.target === me.list) {
-                me.setCloseListener();
-            } else {
-                me.close();
-            }
-        }, { once: true, });
-    }
-
-    /* UTILITY METHODS__________________________________________________________________ */
-
-    /**
-     * Dump this object as a string.
-     * @returns {string}
-     */
-    toString () { return CFBUtils.getConfig(this); }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get action() { return this.config.action; }
-    set action(action) { this.config.action = action; }
-
-    get animation() { return this.config.animation; }
-    set animation(animation) { this.config.animation = animation; }
-
-    get arialabel() { return this.config.arialabel; }
-    set arialabel(arialabel) { this.config.arialabel = arialabel; }
-
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
-    set container(container) { this._container = container; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
-    get list() { return this._list; }
-    set list(list) { this._list = list; }
-
-    get menuicon() { return this.config.menuicon; }
-    set menuicon(menuicon) { this.config.menuicon = menuicon; }
-
-    get menulabel() { return this.config.menulabel; }
-    set menulabel(menulabel) { this.config.menulabel = menulabel; }
-
-    get menubutton() { return this._menubutton; }
-    set menubutton(menubutton) { this._menubutton = menubutton; }
-
-    get menutitle() { return this._menutitle; }
-    set menutitle(menutitle) { this._menutitle = menutitle; }
-
-    get navigation() { return this.config.navigation; }
-    set navigation(navigation) { this.config.navigation = navigation; }
-
-    get responsive() { return this.config.responsive; }
-    set responsive(responsive) { this.config.responsive = responsive; }
-
-    get responsivebox() { return this._responsivebox; }
-    set responsivebox(responsivebox) { this._responsivebox = responsivebox; }
-
-    get selected() { return this._selected; }
-    set selected(selected) { this._selected = selected; }
-
-    get submenuicon() { return this.config.submenuicon; }
-    set submenuicon(submenuicon) { this.config.submenuicon = submenuicon; }
-
-    get tabmap() { return this._tabmap; }
-    set tabmap(tabmap) { this._tabmap = tabmap; }
-
-    get tabs() { return this.config.tabs; }
-    set tabs(tabs) { this.config.tabs = tabs; }
-
-    get vertical() { return this.config.vertical; }
-    set vertical(vertical) { this.config.vertical = vertical; }
-
-}
-window.TabBar = TabBar;
-
-class SearchControl {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // the id
-            autoexecute: true, // Cause the search's action to execute automatically on focusout
-                               // or when there number of seed characters is reached
-            arialabel: TextFactory.get('searchcontrol-instructions'), // The aria-label value.
-            maxlength: null, // Value for maxlength.
-            searchtext: TextFactory.get('search'),
-            searchicon: 'magnify',
-            action: function(value, self) { // The search action. Passed the value of the input and the self
-                console.log(`Executing search action: ${value}`);
-            },
-            value: '', // Value to use (pre-population).  Used during construction and then discarded.
-            classes: [] //Extra css classes to apply
-        };
-    }
-
-    /**
-     * Define the element
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        this.config = Object.assign({}, SearchControl.DEFAULT_CONFIG, config);
+        this.config = Object.assign({}, LoadingShade.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `shade-${CFBUtils.getUniqueKey(5)}`; }
         return this;
     }
 
-    /* CORE METHODS_____________________________________________________________________ */
+    activate() {
+        if (this.container.parentNode) {
+            this.container.parentNode.classList.add('shaded');
+        }
+        this.container.removeAttribute('aria-hidden');
+    }
 
-    /* PSEUDO GETTERS___________________________________________________________________ */
+    deactivate() {
+        if (this.container.parentNode) {
+            this.container.parentNode.classList.remove('shaded');
+        }
+        this.container.setAttribute('aria-hidden', 'true');
+    }
 
-    get isopen() { return this.container.classList.contains('open'); }
-
-    get value() { return this.searchinput.value; }
-    set value(value) { this.searchinput.value = value; }
+    toggle() {
+        if (this.container.getAttribute('aria-hidden') === true) {
+            this.activate();
+        } else {
+            this.deactivate();
+        }
+    }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build the full searchcontrol container
+     * Draw the Form's shade
      */
     buildContainer() {
-        const me = this;
         this.container = document.createElement('div');
-        this.container.classList.add('searchcontrol');
+        this.container.classList.add('loading-shade');
+        this.container.setAttribute('aria-hidden', true);
+
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-
-        this.buildSearchInput();
-        this.container.appendChild(this.searchinput);
-
-        this.searchbutton = new SimpleButton({
-            text: this.searchtext,
-            icon: this.searchicon,
-            mute: true,
-            action: function(e) {
-                e.preventDefault();
-                if ((me.action) && (typeof me.action === 'function')) {
-                    me.action(me.value, me);
-                }
-            }
-        });
-
-        // Open the search input if the user clicks on the button when it's not open
-        this.container.addEventListener('click', function() {
-            if (!me.isopen) {
-                me.searchinput.focus();
-                return;
-            }
-        });
-
-        this.container.appendChild(this.searchbutton.button);
-
-    }
-
-    /**
-     * Build the search input
-     */
-    buildSearchInput() {
-        const me = this;
-        this.searchinput = document.createElement('input');
-
-        this.searchinput.setAttribute('type', 'text');
-        this.searchinput.setAttribute('role', 'textbox');
-        this.searchinput.setAttribute('tabindex', '0');
-
-        if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }
-        if (this.arialabel) { this.searchinput.setAttribute('aria-label', this.arialabel); }
-        if (this.maxlength) { this.searchinput.setAttribute('maxlength', this.maxlength); }
-
-        for (let c of this.classes) {
-            this.searchinput.classList.add(c);
+        if (this.spinnerstyle) {
+            let d = document.createElement('div');
+            d.classList.add('spinner');
+            d.classList.add(this.spinnerstyle);
+            this.container.append(d);
         }
-
-        this.searchinput.addEventListener('keyup', function(e) {
-            switch (e.key) {
-                case 'Tab':
-                    if (me.autoexecute) {
-                        if ((me.action) && (typeof me.action === 'function')) {
-                            me.action(me.value, me);
-                        }
-                    }
-                    break;
-                case 'Enter':
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
-                    }
-                    break;
-                default:
-                    if (me.autoexecute) {
-                        if ((me.action) && (typeof me.action === 'function')) {
-                            me.action(me.value, me);
-                        }
-                    }
-                    break;
-
-            }
-        });
-
-        this.searchinput.addEventListener('focusout', function(e) {
-            if ((me.value) && (me.value.length > 0)) {
-                me.container.classList.add('open');
-                if (me.autoexecute) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
-                    }
-                }
-            } else {
-                me.container.classList.remove('open');
-            }
-        });
-
-        this.searchinput.value = this.config.value;
-
+        if (this.spinnertext) {
+            let d = document.createElement('div');
+            d.classList.add('spinnertext');
+            d.innerHTML = this.spinnertext;
+            this.container.append(d);
+        }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -8594,18 +3389,6 @@ class SearchControl {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get arialabel() { return this.config.arialabel; }
-    set arialabel(arialabel) { this.config.arialabel = arialabel; }
-
-    get autoexecute() { return this.config.autoexecute; }
-    set autoexecute(autoexecute) { this.config.autoexecute = autoexecute; }
-
-    get action() { return this.config.action; }
-    set action(action) { this.config.action = action; }
-
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
-
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -8615,27 +3398,17 @@ class SearchControl {
     }
     set container(container) { this._container = container; }
 
-    get maxlength() { return this.config.maxlength; }
-    set maxlength(maxlength) { this.config.maxlength = maxlength; }
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
 
-    get placeholder() { return this.config.placeholder; }
-    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+    get spinnerstyle() { return this.config.spinnerstyle; }
+    set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
 
-    get searchinput() { return this._searchinput; }
-    set searchinput(searchinput) { this._searchinput = searchinput; }
-
-    get searchbutton() { return this._searchbutton; }
-    set searchbutton(searchbutton) { this._searchbutton = searchbutton; }
-
-    get searchtext() { return this.config.searchtext; }
-    set searchtext(searchtext) { this.config.searchtext = searchtext; }
-
-    get searchicon() { return this.config.searchicon; }
-    set searchicon(searchicon) { this.config.searchicon = searchicon; }
+    get spinnertext() { return this.config.spinnertext; }
+    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
 }
-window.SearchControl = SearchControl;
-
+window.LoadingShade = LoadingShade;
 class SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {
@@ -8903,254 +3676,512 @@ class SimpleProgressMeter {
 }
 window.SimpleProgressMeter = SimpleProgressMeter;
 
-class RadialProgressMeter extends SimpleProgressMeter {
+class MessageBox {
 
     static get DEFAULT_CONFIG() {
         return {
-            numberposition: 'center', // where to display the badge and stinger.
-                                    // Values include: center, bottomleft, bottomright, topleft, topright
-            badge: null, // the large central number to show. If left empty, it will display the percentage.
-            stinger: null, // A small text to display below the main badge
-            size: 'medium', // Can be one of several values or metrics!
-                        // Accepts: 'small', 'medium', 'large', 'huge' as strings
-                        // Numbers in pixels and ems, as strings ('300px' or '5em')
-                        // Or if given a number, assumes pixels
-            style: 'solid', // 'solid' or 'ticks'.
-                        // If set to 'ticks', disables any 'segments' value.
-            segments: null, // Displays tick marks in the circle.
-                        // Takes a number; this is the number of divisions. If you want segments of 10%, set it
-                        // to 10.  If you want segments of 25%, set it to 4.
-            strokewidth: null // If provided, the stroke will be this wide.
-                            // If not provided, the width will be 5% of the circle's whole size
+            id : null, // the id
+            icon: null,
+            title: null,
+            content: null,
+            classes: [] //Extra css classes to apply
         };
     }
 
     /**
-     * Define the RadialProgresMeter
+     * Define the element
      * @param config a dictionary object
      */
     constructor(config) {
-        config = Object.assign({}, RadialProgressMeter.DEFAULT_CONFIG, config);
-        super(config);
+        this.config = Object.assign({}, MessageBox.DEFAULT_CONFIG, config);
+    }
 
-        this.calculateSize();
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-        if (!this.strokewidth) {
-            this.strokewidth = this.actualsize * 0.07;
+    /**
+     * Build the full container
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('messagebox');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
         }
-        if (this.style === 'ticks') {
-            this.segments = null;
+        if (this.title) {
+            this.header = document.createElement('h3');
+            this.header.innerHTML = this.title;
+            this.container.appendChild(this.header);
         }
+        if (this.content) {
+            if (this.icon) {
+                this.payload.appendChild(IconFactory.icon(this.icon));
+            }
+            this.content.classList.add('content');
+            this.payload.appendChild(this.content);
+            this.container.appendChild(this.payload);
+        }
+    }
 
-        this.radius = (this.actualsize / 2) - (this.strokewidth * 2); // have to cut the stroke
-        this.circumference = this.radius * 2 * Math.PI; // pie are round
+    buildPayload() {
+        this.payload = document.createElement('div');
+        this.payload.classList.add('payload');
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get content() { return this.config.content; }
+    set content(content) { this.config.content = content; }
+
+    get header() { return this._header; }
+    set header(header) { this._header = header; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get payload() {
+        if (!this._payload) { this.buildPayload(); }
+        return this._payload;
+    }
+    set payload(payload) { this._payload = payload; }
+
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
+
+}
+window.MessageBox = MessageBox;
+class InstructionBox extends MessageBox {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            icon : 'help-circle', // If present, will be displayed large next to texts
+            instructions: [] // An array of instruction texts
+        };
     }
 
     /**
-     * Calculates the size of the SVG to use.
-     * - Parses the 'size' attribute into 'actualsize'
-     * - Determines the 'sizeclass'
+     * Define the element
+     * @param config a dictionary object
      */
-    calculateSize() {
-        if (typeof this.size === 'number') {
-            this.actualsize = this.size;
-        } else if (this.size.toLowerCase().endsWith('px')) {
-            this.actualsize = parseInt(this.size);
-            if (isNaN(this.actualsize)) {
-                console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
-                this.actualsize = 200;
-            }
-        } else if (this.size.toLowerCase().endsWith('em')) {
-            this.actualsize = (CFBUtils.getSingleEmInPixels() * parseInt(this.size));
-            if (isNaN(this.actualsize)) {
-                console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
-                this.actualsize = 200;
-            }
+    constructor(config) {
+        config = Object.assign({}, InstructionBox.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('instructions');
         } else {
-            switch(this.size) {
-                case 'small':
-                    this.actualsize = 100;
-                    break;
-                case 'large':
-                    this.actualsize = 400;
-                    break;
-                case 'huge':
-                    this.actualsize = 800;
-                    break;
-                case 'medium':
-                default:
-                    this.actualsize = 200;
-                    break;
-            }
+            config.classes = ['instructions'];
         }
-
-        // Now we parse a size class
-        if (this.actualsize >= 800) {
-            this.sizeclass = 'huge';
-        } else if (this.actualsize >= 400) {
-            this.sizeclass = 'large';
-        } else if (this.actualsize >= 200) {
-            this.sizeclass = 'medium';
-        } else if (this.actualsize >= 100) {
-            this.sizeclass = 'small';
-        } else  {
-            this.sizeclass = 'tiny';
-        }
+        super(config);
     }
 
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get infolist() { return this.instructions; }
+    set infolist(infolist) { this.instructions = infolist; }
+
+    setInstructions(instructions) {
+        this.setInfolist(instructions);
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
     /**
-     * Set the progress value of the meter
-     * @param percent the percent to set it to.
+     * Replace existing infolist with some different ones
+     * @param infolist an array of info items
      */
-    setProgress(percent) {
-        const offset = this.circumference - percent / 100 * this.circumference;
+    setInfolist(infolist) {
+        this.container.classList.remove('size-1');
+        this.container.classList.remove('size-2');
+        this.container.classList.remove('size-3');
+        this.list.innerHTML = '';
 
-        let circle = this.container.querySelector('.radialcircle');
-        circle.style.strokeDasharray = `${this.circumference} ${this.circumference}`;
-        circle.style.strokeDashoffset = offset;
+        for (let text of infolist) {
+            let li = document.createElement('li');
+            li.innerHTML = text;
+            this.list.appendChild(li);
+        }
 
-        if (this.segments) {
-
-            let tickwidth = this.segments * 2;
-
-            let seglength = (((this.radius * 2) * Math.PI) - tickwidth) / (this.segments);
-
-            let tickmarks = this.container.querySelector('.tickmarks');
-            tickmarks.style.strokeDasharray = `2px ${seglength}px`;
-            tickmarks.style.strokeDashoffset = 0;
-
+        if ((infolist.length > 0) && (infolist.length < 4)) {
+            this.container.classList.add(`size-${infolist.length}`);
         }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build a circle template
-     * @param target the class to apply
-     * @return {*|null|undefined}
+     * Build the actual DOM container.
      */
-    circleTemplate(target) {
-        let c = document.createElement('circle');
-        c.classList.add(target);
-        c.setAttribute('stroke-width', this.strokewidth);
-        c.setAttribute('r', this.radius);
-        c.setAttribute('cx', this.actualsize / 2);
-        c.setAttribute('cy', this.actualsize / 2);
-
-        return c;
-    }
-
     buildContainer() {
-
-        const me = this;
-
-        this.container = document.createElement('div');
-        this.container.classList.add(this.sizeclass);
-        this.container.classList.add('progressbar-container');
-        if (this.label) { this.container.appendChild(this.labelobj); }
-
-        let wrap = document.createElement('div');
-        wrap.classList.add('circlewrap');
-        wrap.style.width = `${this.actualsize}`;
-        wrap.style.height = `${this.actualsize}`;
-
-        let svg = document.createElement('svg'); // the background gutter circle
-        svg.setAttribute('height', this.actualsize);
-        svg.setAttribute('width', this.actualsize);
-        svg.classList.add('progressgutter');
-        svg.classList.add(this.style);
-        svg.appendChild(this.circleTemplate('gutter'));
-        svg.appendChild(this.circleTemplate('radialcircle'));
-
-        if ((this.segments) || (this.style === 'ticks')) {
-            svg.appendChild(this.circleTemplate('tickmarks'));
+        if ((this.infolist) && (this.infolist.length > 0)) {
+            for (let text of this.infolist) {
+                let li = document.createElement('li');
+                li.innerHTML = text;
+                this.list.appendChild(li);
+            }
+            this.content = this.list;
         }
 
-        wrap.appendChild(svg);
-        wrap.appendChild(this.decallayer);
-        this.container.appendChild(wrap);
+        super.buildContainer();
 
-        this.container.innerHTML = this.container.innerHTML; // this is funky but necessary ¯\_(ツ)_/¯
-
-        this.setProgress(0); // flatten
-
-        // Don't allow the the width animation to fire until it's in the page
-        let animtimer = window.setTimeout(function() {
-            me.setProgress(me.value);
-        }, 500);
-    }
-
-
-    buildDecalLayer() {
-        if (!this.badge) { this.badge = `${this.value}<sup>%</sup>`; }
-
-        this.badgeobj = document.createElement('div');
-        this.badgeobj.classList.add('badge');
-        this.badgeobj.innerHTML = this.badge;
-
-        if (this.stinger) {
-            this.stingerobj = document.createElement('div');
-            this.stingerobj.classList.add('stinger');
-            this.stingerobj.innerHTML = this.stinger;
+        if ((this.infolist.length > 0) && (this.infolist.length < 4)) {
+            this.container.classList.add(`size-${this.infolist.length}`);
         }
-
-        this.decallayer = document.createElement('div');
-        this.decallayer.classList.add('decals');
-        this.decallayer.classList.add(this.numberposition);
-        this.decallayer.appendChild(this.badgeobj);
-        if (this.stinger) { this.decallayer.appendChild(this.stingerobj); }
-
     }
 
+    /**
+     * Build the list object.  This is the dumbest method I've ever written.
+     */
+    buildList() {
+        this.list = document.createElement('ul');
+    }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get actualsize() { return this._actualsize; }
-    set actualsize(actualsize) { this._actualsize = actualsize; }
+    get instructions() { return this.config.instructions; }
+    set instructions(instructions) { this.config.instructions = instructions; }
 
-    get badge() { return this.config.badge; }
-    set badge(badge) { this.config.badge = badge; }
-
-    get badgeobj() { return this._badgeobj; }
-    set badgeobj(badgeobj) { this._badgeobj = badgeobj; }
-
-    get circumference() { return this._circumference; }
-    set circumference(circumference) { this._circumference = circumference; }
-
-    get numberposition() { return this.config.numberposition; }
-    set numberposition(numberposition) { this.config.numberposition = numberposition; }
-
-    get radius() { return this._radius; }
-    set radius(radius) { this._radius = radius; }
-
-    get size() { return this.config.size; }
-    set size(size) { this.config.size = size; }
-
-    get sizeclass() { return this._sizeclass; }
-    set sizeclass(sizeclass) { this._sizeclass = sizeclass; }
-
-    get stinger() { return this.config.stinger; }
-    set stinger(stinger) { this.config.stinger = stinger; }
-
-    get stingerobj() { return this._stingerobj; }
-    set stingerobj(stingerobj) { this._stingerobj = stingerobj; }
-
-    get strokewidth() { return this.config.strokewidth; }
-    set strokewidth(strokewidth) { this.config.strokewidth = strokewidth; }
-
-    get style() { return this.config.style; }
-    set style(style) { this.config.style = style; }
-
-    get segments() { return this.config.segments; }
-    set segments(segments) { this.config.segments = segments; }
-
-    get wrap() { return this._wrap; }
-    set wrap(wrap) { this._wrap = wrap; }
-
+    get list() {
+        if (!this._list) { this.buildList(); }
+        return this._list;
+    }
+    set list(list) { this._list = list;  }
 
 }
-window.RadialProgressMeter = RadialProgressMeter;
+window.InstructionBox = InstructionBox;
+class ResultsContainer {
 
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // Component id
+            classes: [], // Extra css classes to apply,
+
+            errors: null, // array of errors
+            warnings: null, // array of warning strings
+            results: null, // array of result or success message strings
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, ResultsContainer.DEFAULT_CONFIG, config);
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the full messagebox container
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        
+        this.container.classList.add('resultsbox');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        if ((this.errors) && (this.errors.length > 0)) {
+            this.container.appendChild(new ErrorBox({
+                errors: this.errors,
+            }).container);
+        }
+
+        if ((this.results) && (this.results.length > 0)) {
+            this.container.appendChild(new SuccessBox({
+                results: this.results,
+            }).container);
+        }
+
+        if ((this.warnings) && (this.warnings.length > 0)) {
+            this.container.appendChild(new WarningBox({
+                warnings: this.warnings,
+            }).container);
+        }
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get errors() { return this.config.errors; }
+    set errors(errors) { this.config.errors = errors; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get results() { return this.config.results; }
+    set results(results) { this.config.results = results; }
+
+    get warnings() { return this.config.warnings; }
+    set warnings(warnings) { this.config.warnings = warnings; }
+
+    get warningstitle() { return this.config.warningstitle; }
+    set warningstitle(warningstitle) { this.config.warningstitle = warningstitle; }
+
+    get warningicon() { return this.config.warningicon; }
+    set warningicon(warningicon) { this.config.warningicon = warningicon; }
+
+}
+window.ResultsContainer = ResultsContainer;
+class ErrorBox extends InstructionBox {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            title: TextFactory.get('error'),
+            icon : 'warn-hex',
+            errors: [] // An array of information texts
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, ErrorBox.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('results');
+            config.classes.push('errors');
+        } else {
+            config.classes = ['results', 'errors'];
+        }
+        super(config);
+
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get infolist() { return this.errors; }
+    set infolist(infolist) { this.errors = infolist; }
+
+    setErrors(errors) {
+        this.setInfolist(errors);
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get errors() { return this.config.errors; }
+    set errors(errors) { this.config.errors = errors; }
+
+}
+window.ErrorBox = ErrorBox;
+class SuccessBox extends InstructionBox {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            title: TextFactory.get('success'),
+            icon : 'disc-check',
+            results: [] // An array of information texts
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, SuccessBox.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('results');
+            config.classes.push('successes');
+        } else {
+            config.classes = ['results', 'successes'];
+        }
+        super(config);
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get infolist() { return this.results; }
+    set infolist(infolist) { this.results = infolist; }
+
+    setResults(results) {
+        this.setInfolist(results);
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get results() { return this.config.results; }
+    set results(results) { this.config.results = results; }
+
+}
+window.SuccessBox = SuccessBox;
+class WarningBox extends InstructionBox {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            title: TextFactory.get('warning'),
+            icon : 'warn-triangle',
+            warnings: [] // An array of information texts
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, WarningBox.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('results');
+            config.classes.push('warnings');
+        } else {
+            config.classes = ['results', 'warnings'];
+        }
+        super(config);
+    }
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get infolist() { return this.warnings; }
+    set infolist(infolist) { this.warnings = infolist; }
+
+    setWarnings(warnings) {
+        this.setInfolist(warnings);
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get warnings() { return this.config.warnings; }
+    set warnings(warnings) { this.config.warnings = warnings; }
+
+}
+window.WarningBox = WarningBox;
+class ColumnConfigurator {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The id
+            classes: [], //Extra css classes to apply,
+            fields: [],
+            grid: null, // the datagrid to control.
+            instructions: TextFactory.get('datagrid-column-config-instructions')
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        this.config = Object.assign({}, ColumnConfigurator.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `cconfig-${CFBUtils.getUniqueKey(5)}`; }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the thing.
+     */
+    buildContainer() {
+        /*
+         * This this is gigantic and ugly.  Don't @ me.
+         * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
+         */
+        const me = this;
+
+        this.container = document.createElement('div');
+        this.container.classList.add('column-configurator');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        // instructions
+        if (this.instructions) {
+            this.container.append(new InstructionBox({
+                instructions: [this.instructions]
+            }).container);
+        }
+
+        this.elements = document.createElement('ul');
+        this.elements.classList.add('column-list');
+
+        for (let f of this.grid.fields) {
+            let li = document.createElement('li');
+
+            let cbox = new BooleanToggle({
+                label: f.label,
+                checked: !f.hidden,
+                classes: ['column'],
+                onchange: function() {
+                    me.grid.toggleColumn(f);
+                }
+            });
+
+            li.appendChild(cbox.container);
+
+            if (f.description) {
+                let desc = document.createElement('div');
+                desc.classList.add('description');
+                desc.innerHTML = f.description;
+                li.appendChild(desc);
+            }
+            this.elements.appendChild(li);
+        }
+
+        this.container.append(this.elements);
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get elements() { return this._elements; }
+    set elements(elements) { this._elements = elements; }
+
+    get fields() { return this.config.fields; }
+    set fields(fields) { this.config.fields = fields; }
+
+    get grid() { return this.config.grid; }
+    set grid(grid) { this.config.grid = grid; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get instructions() { return this.config.instructions; }
+    set instructions(instructions) { this.config.instructions = instructions; }
+}
+window.ColumnConfigurator = ColumnConfigurator;
 class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
@@ -9196,6 +4227,7 @@ class DataGrid extends Panel {
                       // Whether or not a field can be filtered is defined in the field's definition.
             applyfiltersicon: 'checkmark-circle',
             actionsbuttonicon: 'menu',
+            filterbuttonicon: 'filter',
 
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.
@@ -11307,360 +6339,6 @@ class DataGrid extends Panel {
 
 }
 window.DataGrid = DataGrid;
-class GridField {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            name: null,        // The variable name for this field (computer readable)
-            label: null,       // The human-readable name for the column
-            readonly: false,   // if true, this value cannot be changed. Useful for identifiers.
-            hidden: false,     // Is the column hidden or not.
-            identifier: false, // If true, marks the field as the unique identifier for a data set.
-                               // An identifier is required in a grid if you want to update entries.
-            type: 'string',    // The datatype of the column
-                               //   - string
-                               //   - url
-                               //   - imageurl
-                               //   - email
-                               //   - boolean
-                               //   - number
-                               //   - date
-                               //   - time
-                               //   - stringarray
-                               //   - paragraph
-                               //   - enumeration
-            values: null,      // An array of option values for an enumeration data type. Ignored if not
-                               // an enumeration
-                               // [
-                               //   { label: "Label to show", value: "v", default: false }
-                               //  ]
-            separator: ', ',   // Used when rendering array values
-            placeholder: null, // The placeholder to use in the field
-            minnumber: null,   // The minnumber to use in the field
-            maxnumber: null,   // The maxnumber to use in the field
-            nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
-            resize: false,     // Whether or not to allow resizing of the column (default: false)
-            description: null, // A string that describes the data in the column
-            classes: [],       // Additional classes to apply to cells of this field
-            filterable: false, // Is the field filterable?
-            renderer: null     // A function that can be used to format the in the field. Overrides native
-                               // renderer.  Takes "data" as an argument.
-        };
-    }
-
-
-
-    /**
-     * Supported comparators
-     * @return a comparator dictionary.
-     * @constructor
-     */
-    static get COMPARATORS() {
-        return {
-            'startswith' : TextFactory.get('comparator-startswith'),
-            'endswith' : TextFactory.get('comparator-endswith'),
-            'contains' : TextFactory.get('comparator-contains'),
-            'notcontains' : TextFactory.get('comparator-notcontains'),
-            'equals' : TextFactory.get('comparator-equals'),
-            'doesnotequal' : TextFactory.get('comparator-doesnotequal'),
-            'isbefore' : TextFactory.get('comparator-isbefore'),
-            'isafter' : TextFactory.get('comparator-isafter'),
-            'isgreaterthan' : TextFactory.get('comparator-greaterthan'),
-            'islessthan' : TextFactory.get('comparator-lessthan')
-        }
-    }
-
-    /**
-     * Get a comparator label
-     * @param comparator the comparator
-     * @return A string, or null
-     */
-    static getComparatorLabel(comparator) {
-        return GridField.COMPARATORS[comparator];
-    }
-
-
-    /**
-     * Define the gridfield
-     * @param config a dictionary object
-     */
-    constructor(config) {
-        this.config = Object.assign({}, GridField.DEFAULT_CONFIG, config);
-        this.setRenderer();
-    }
-
-    /**
-     * Set the renderer for the field, if one isn't provided.
-     */
-    setRenderer() {
-        const me = this;
-        switch (this.type) {
-            case 'number':
-                if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
-                }
-                break;
-            case 'date':
-            case 'time':
-                if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return d.toString();
-                    }
-                }
-                break;
-            case 'boolean':
-                if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
-                }
-                break;
-            case 'url':
-                if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return `<a href="${d}">${d}</a>`;
-                    }
-                }
-                break;
-            case 'imageurl':
-                if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return `<a href="${d}"><img src="${d}" /></a>`;
-                    }
-                }
-                break;
-            case 'email':
-                if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return `<a href="mailto:${d}">${d}</a>`;
-                    }
-                }
-                break;
-            case 'enumeration':
-                if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return this.getValue(d);
-                    }
-                }
-                break;
-            case 'paragraph':
-                if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
-                }
-                break;
-            case 'stringarray':
-                if (!this.renderer) {
-                    this.renderer = function(d) {
-                        if (Array.isArray(d)) {
-                            return d.join(me.separator);
-                        }
-                        return d;
-                    }
-                }
-                break;
-            case 'string':
-            default:
-                if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
-                }
-                break;
-        }
-
-    }
-
-    getValue(key) {
-        let value;
-        if ((this.values) && (this.values.length > 0)) {
-            for (let def of this.values) {
-                if (def.key === 'key') {
-                    value = def.value;
-                    break;
-                }
-            }
-        }
-        return value;
-    }
-
-    /**
-     * Get a form element for this data field.
-     * @param value (optional) The value of the input field
-     * @param config (optional) the config to use
-     * @return {HiddenField|NumberInput|DateInput|BooleanToggle|EmailInput}
-     */
-    getElement(value, config) {
-        let e;
-        if (!config) {
-            config = {
-                name: this.name,
-                label: this.label,
-                disabled: this.readonly,
-                help: this.description,
-                placeholder: this.placeholder,
-                maxnumber: this.maxnumber,
-                minnumber: this.minnumber,
-                classes: this.classes,
-                value: value,
-                renderer: this.renderer
-            };
-        }
-
-        switch (this.type) {
-            case 'number':
-                e = new NumberInput(config);
-                break;
-            case 'date':
-            case 'time':
-                e = new DateInput(config);
-                break;
-            case 'enumeration':
-                config.options = [];
-                for (let o of this.values) {
-                    config.options.push({ label: o.label, value: o.value, checked: o.default });
-                }
-                e = new SelectMenu(config);
-                break;
-            case 'boolean':
-                e = new BooleanToggle(config);
-                break;
-            case 'timezone':
-                e = new TimezoneMenu(config);
-                break;
-            case 'url':
-                e = new URLInput(config);
-                break;
-            case 'imageurl':
-                e = new URLInput(config);
-                break;
-            case 'email':
-                e = new EmailInput(config);
-                break;
-            case 'paragraph':
-                e = new TextArea(config);
-                break;
-            case 'stringarray':
-                e = new TextInput(config);
-                break;
-            case 'string':
-            default:
-                e = new TextInput(config);
-                break;
-        }
-        return e;
-    }
-
-    /**
-     * Get the valid comparators for this datatypes
-     * @return an array of comparator definitions.
-     */
-    getComparators() {
-
-        let comparators;
-
-        switch (this.type) {
-            case 'number':
-                comparators = [
-                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
-                    { value: 'isgreaterthan', label: GridField.getComparatorLabel('isgreaterthan') },
-                    { value: 'islessthan', label: GridField.getComparatorLabel('islessthan') }
-                ];
-                break;
-            case 'date':
-            case 'time':
-                comparators = [
-                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
-                    { value: 'isbefore', label: GridField.getComparatorLabel('isbefore') },
-                    { value: 'isafter', label: GridField.getComparatorLabel('isafter') }
-                ];
-                break;
-            case 'boolean':
-            case 'enumeration':
-                comparators = [
-                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
-                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') }
-                ];
-                break;
-            case 'url':
-            case 'imageurl':
-            case 'email':
-            case 'paragraph':
-            case 'stringarray':
-            case 'string':
-            default:
-                comparators = [ // Default for strings.
-                    {value: 'contains', label: GridField.getComparatorLabel('contains')},
-                    {value: 'notcontains', label: GridField.getComparatorLabel('notcontains')},
-                    {value: 'equals', label: GridField.getComparatorLabel('equals')},
-                    {value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal')},
-                    {value: 'startswith', label: GridField.getComparatorLabel('startswith')},
-                    {value: 'endswith', label: GridField.getComparatorLabel('endswith')}
-                ];
-                break;
-        }
-
-        return comparators;
-    }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    get classes() { return this.config.classes ; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get description() { return this.config.description ; }
-    set description(description) { this.config.description = description; }
-
-    get filterable() { return this.config.filterable ; }
-    set filterable(filterable) { this.config.filterable = filterable; }
-
-    get hidden() { return this.config.hidden ; }
-    set hidden(hidden) { this.config.hidden = hidden; }
-
-    get identifier() { return this.config.identifier ; }
-    set identifier(identifier) { this.config.identifier = identifier; }
-
-    get label() { return this.config.label ; }
-    set label(label) { this.config.label = label; }
-
-    get maxnumber() { return this.config.maxnumber ; }
-    set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
-
-    get minnumber() { return this.config.minnumber ; }
-    set minnumber(minnumber) { this.config.minnumber = minnumber; }
-
-    get name() { return this.config.name ; }
-    set name(name) { this.config.name = name; }
-
-    get nodupe() { return this.config.nodupe ; }
-    set nodupe(nodupe) { this.config.nodupe = nodupe; }
-
-    get placeholder() { return this.config.placeholder ; }
-    set placeholder(placeholder) { this.config.placeholder = placeholder; }
-
-    get readonly() { return this.config.readonly ; }
-    set readonly(readonly) { this.config.readonly = readonly; }
-
-    get renderer() { return this.config.renderer; }
-    set renderer(renderer) {
-        if (typeof renderer !== 'function') {
-            console.error("Value provided to renderer is not a function!");
-        }
-        this.config.renderer = renderer;
-    }
-
-    get resize() { return this.config.resize ; }
-    set resize(resize) { this.config.resize = resize; }
-
-    get separator() { return this.config.separator ; }
-    set separator(separator) { this.config.separator = separator; }
-
-    get type() { return this.config.type ; }
-    set type(type) { this.config.type = type; }
-
-    get values() { return this.config.values ; }
-    set values(values) { this.config.values = values; }
-
-}
-window.GridField = GridField;
-
 class FilterConfigurator {
 
     static get DEFAULT_CONFIG() {
@@ -12023,76 +6701,1240 @@ class FilterConfigurator {
     set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
 }
 window.FilterConfigurator = FilterConfigurator;
-class ColumnConfigurator {
+class GridField {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            classes: [], //Extra css classes to apply,
-            fields: [],
-            grid: null, // the datagrid to control.
-            instructions: TextFactory.get('datagrid-column-config-instructions')
+            name: null,        // The variable name for this field (computer readable)
+            label: null,       // The human-readable name for the column
+            readonly: false,   // if true, this value cannot be changed. Useful for identifiers.
+            hidden: false,     // Is the column hidden or not.
+            identifier: false, // If true, marks the field as the unique identifier for a data set.
+                               // An identifier is required in a grid if you want to update entries.
+            type: 'string',    // The datatype of the column
+                               //   - string
+                               //   - url
+                               //   - imageurl
+                               //   - email
+                               //   - boolean
+                               //   - number
+                               //   - date
+                               //   - time
+                               //   - stringarray
+                               //   - paragraph
+                               //   - enumeration
+            values: null,      // An array of option values for an enumeration data type. Ignored if not
+                               // an enumeration
+                               // [
+                               //   { label: "Label to show", value: "v", default: false }
+                               //  ]
+            separator: ', ',   // Used when rendering array values
+            placeholder: null, // The placeholder to use in the field
+            minnumber: null,   // The minnumber to use in the field
+            maxnumber: null,   // The maxnumber to use in the field
+            nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
+            resize: false,     // Whether or not to allow resizing of the column (default: false)
+            description: null, // A string that describes the data in the column
+            classes: [],       // Additional classes to apply to cells of this field
+            filterable: false, // Is the field filterable?
+            renderer: null     // A function that can be used to format the in the field. Overrides native
+                               // renderer.  Takes "data" as an argument.
         };
     }
 
+
+
+    /**
+     * Supported comparators
+     * @return a comparator dictionary.
+     * @constructor
+     */
+    static get COMPARATORS() {
+        return {
+            'startswith' : TextFactory.get('comparator-startswith'),
+            'endswith' : TextFactory.get('comparator-endswith'),
+            'contains' : TextFactory.get('comparator-contains'),
+            'notcontains' : TextFactory.get('comparator-notcontains'),
+            'equals' : TextFactory.get('comparator-equals'),
+            'doesnotequal' : TextFactory.get('comparator-doesnotequal'),
+            'isbefore' : TextFactory.get('comparator-isbefore'),
+            'isafter' : TextFactory.get('comparator-isafter'),
+            'isgreaterthan' : TextFactory.get('comparator-greaterthan'),
+            'islessthan' : TextFactory.get('comparator-lessthan')
+        }
+    }
+
+    /**
+     * Get a comparator label
+     * @param comparator the comparator
+     * @return A string, or null
+     */
+    static getComparatorLabel(comparator) {
+        return GridField.COMPARATORS[comparator];
+    }
+
+
+    /**
+     * Define the gridfield
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, GridField.DEFAULT_CONFIG, config);
+        this.setRenderer();
+    }
+
+    /**
+     * Set the renderer for the field, if one isn't provided.
+     */
+    setRenderer() {
+        const me = this;
+        switch (this.type) {
+            case 'number':
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+            case 'date':
+            case 'time':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return d.toString();
+                    }
+                }
+                break;
+            case 'boolean':
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+            case 'url':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return `<a href="${d}">${d}</a>`;
+                    }
+                }
+                break;
+            case 'imageurl':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return `<a href="${d}"><img src="${d}" /></a>`;
+                    }
+                }
+                break;
+            case 'email':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return `<a href="mailto:${d}">${d}</a>`;
+                    }
+                }
+                break;
+            case 'enumeration':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        return this.getValue(d);
+                    }
+                }
+                break;
+            case 'paragraph':
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+            case 'stringarray':
+                if (!this.renderer) {
+                    this.renderer = function(d) {
+                        if (Array.isArray(d)) {
+                            return d.join(me.separator);
+                        }
+                        return d;
+                    }
+                }
+                break;
+            case 'string':
+            default:
+                if (!this.renderer) {
+                    this.renderer = function(d) { return d; }
+                }
+                break;
+        }
+
+    }
+
+    getValue(key) {
+        let value;
+        if ((this.values) && (this.values.length > 0)) {
+            for (let def of this.values) {
+                if (def.key === 'key') {
+                    value = def.value;
+                    break;
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Get a form element for this data field.
+     * @param value (optional) The value of the input field
+     * @param config (optional) the config to use
+     * @return {HiddenField|NumberInput|DateInput|BooleanToggle|EmailInput}
+     */
+    getElement(value, config) {
+        let e;
+        if (!config) {
+            config = {
+                name: this.name,
+                label: this.label,
+                disabled: this.readonly,
+                help: this.description,
+                placeholder: this.placeholder,
+                maxnumber: this.maxnumber,
+                minnumber: this.minnumber,
+                classes: this.classes,
+                value: value,
+                renderer: this.renderer
+            };
+        }
+
+        switch (this.type) {
+            case 'number':
+                e = new NumberInput(config);
+                break;
+            case 'date':
+            case 'time':
+                e = new DateInput(config);
+                break;
+            case 'enumeration':
+                config.options = [];
+                for (let o of this.values) {
+                    config.options.push({ label: o.label, value: o.value, checked: o.default });
+                }
+                e = new SelectMenu(config);
+                break;
+            case 'boolean':
+                e = new BooleanToggle(config);
+                break;
+            case 'timezone':
+                e = new TimezoneMenu(config);
+                break;
+            case 'url':
+                e = new URLInput(config);
+                break;
+            case 'imageurl':
+                e = new URLInput(config);
+                break;
+            case 'email':
+                e = new EmailInput(config);
+                break;
+            case 'paragraph':
+                e = new TextArea(config);
+                break;
+            case 'stringarray':
+                e = new TextInput(config);
+                break;
+            case 'string':
+            default:
+                e = new TextInput(config);
+                break;
+        }
+        return e;
+    }
+
+    /**
+     * Get the valid comparators for this datatypes
+     * @return an array of comparator definitions.
+     */
+    getComparators() {
+
+        let comparators;
+
+        switch (this.type) {
+            case 'number':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
+                    { value: 'isgreaterthan', label: GridField.getComparatorLabel('isgreaterthan') },
+                    { value: 'islessthan', label: GridField.getComparatorLabel('islessthan') }
+                ];
+                break;
+            case 'date':
+            case 'time':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') },
+                    { value: 'isbefore', label: GridField.getComparatorLabel('isbefore') },
+                    { value: 'isafter', label: GridField.getComparatorLabel('isafter') }
+                ];
+                break;
+            case 'boolean':
+            case 'enumeration':
+                comparators = [
+                    { value: 'equals', checked: true, label: GridField.getComparatorLabel('equals') },
+                    { value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal') }
+                ];
+                break;
+            case 'url':
+            case 'imageurl':
+            case 'email':
+            case 'paragraph':
+            case 'stringarray':
+            case 'string':
+            default:
+                comparators = [ // Default for strings.
+                    {value: 'contains', label: GridField.getComparatorLabel('contains')},
+                    {value: 'notcontains', label: GridField.getComparatorLabel('notcontains')},
+                    {value: 'equals', label: GridField.getComparatorLabel('equals')},
+                    {value: 'doesnotequal', label: GridField.getComparatorLabel('doesnotequal')},
+                    {value: 'startswith', label: GridField.getComparatorLabel('startswith')},
+                    {value: 'endswith', label: GridField.getComparatorLabel('endswith')}
+                ];
+                break;
+        }
+
+        return comparators;
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes ; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get description() { return this.config.description ; }
+    set description(description) { this.config.description = description; }
+
+    get filterable() { return this.config.filterable ; }
+    set filterable(filterable) { this.config.filterable = filterable; }
+
+    get hidden() { return this.config.hidden ; }
+    set hidden(hidden) { this.config.hidden = hidden; }
+
+    get identifier() { return this.config.identifier ; }
+    set identifier(identifier) { this.config.identifier = identifier; }
+
+    get label() { return this.config.label ; }
+    set label(label) { this.config.label = label; }
+
+    get maxnumber() { return this.config.maxnumber ; }
+    set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
+
+    get minnumber() { return this.config.minnumber ; }
+    set minnumber(minnumber) { this.config.minnumber = minnumber; }
+
+    get name() { return this.config.name ; }
+    set name(name) { this.config.name = name; }
+
+    get nodupe() { return this.config.nodupe ; }
+    set nodupe(nodupe) { this.config.nodupe = nodupe; }
+
+    get placeholder() { return this.config.placeholder ; }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
+    get readonly() { return this.config.readonly ; }
+    set readonly(readonly) { this.config.readonly = readonly; }
+
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
+
+    get resize() { return this.config.resize ; }
+    set resize(resize) { this.config.resize = resize; }
+
+    get separator() { return this.config.separator ; }
+    set separator(separator) { this.config.separator = separator; }
+
+    get type() { return this.config.type ; }
+    set type(type) { this.config.type = type; }
+
+    get values() { return this.config.values ; }
+    set values(values) { this.config.values = values; }
+
+}
+window.GridField = GridField;
+
+class DatePicker {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            dateicon: 'calendar',
+            startdate: null,
+            value: null,
+            timezone: 'GMT',
+            basetime: '12:00:00', // Time to set dates on
+            locale: 'en-US',
+            weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            onselect: null, // A function to be called on selection. Passed the date selected, as a string.
+            classes: [] // Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define a DataGrid
+     * @param config a dictionary object
+     */
     constructor(config) {
         if (!config) { config = {}; }
-        this.config = Object.assign({}, ColumnConfigurator.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `cconfig-${CFBUtils.getUniqueKey(5)}`; }
+        this.config = Object.assign({}, DatePicker.DEFAULT_CONFIG, config);
+    }
+
+    /**
+     * Get the month name.
+     * @param m month id
+     * @return {*} string
+     */
+    getMonthName(m) {
+        return this.months[m];
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
-     * Build the thing.
+     * Build the full container
      */
     buildContainer() {
-        /*
-         * This this is gigantic and ugly.  Don't @ me.
-         * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
-         */
+        this.container = document.createElement('div');
+        this.container.classList.add('datepicker');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        this.monthbox = document.createElement('div');
+        this.monthbox.classList.add('monthbox');
+
+        this.renderMonth(this.startdate); // initial
+
+        this.container.appendChild(this.monthbox);
+    }
+
+    /**
+     * Render a month
+     * @param startDate the date to center the month around. If null, uses today.
+     */
+    renderMonth(startDate) {
+        const me = this;
+
+        // XXX there has to be a better way to do this.
+
+        let now = new Date();
+        let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
+
+        if (!startDate) {
+            startDate = today;
+        } else if (typeof startDate === 'string') {
+            startDate = new Date(`${startDate} ${this.basetime}`);
+            this.value = startDate;
+            this.startdate = startDate;
+        }
+
+        let startDay = new Date(startDate.getFullYear(), startDate.getMonth()).getDay();
+        //let daysInMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0).getDate();
+        //console.log(`startDay: ${startDay}, daysInThisMonth: ${daysInMonth}`);
+
+        // Many additional dates or things
+        let daysInMonth = (32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate()),
+            previousMonth = new Date(startDate.getFullYear(), (startDate.getMonth() - 1)),
+            daysInPreviousMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth(), 0).getDate(),
+            nextMonth = new Date(startDate.getFullYear(), (startDate.getMonth() + 1));
+
+        let month = document.createElement('div');
+        month.classList.add('month');
+
+        let header = document.createElement('div');
+        header.classList.add('datepicker-header');
+
+        let pMonthButton = new SimpleButton({
+            shape: 'square',
+            mute: true,
+            size: 'small',
+            icon: 'triangle-left',
+            action: function(e) {
+                e.preventDefault();
+                me.renderMonth(previousMonth);
+            }
+        });
+
+        let nMonthButton = new SimpleButton({
+            shape: 'square',
+            mute: true,
+            size: 'small',
+            icon: 'triangle-right',
+            action: function(e) {
+                e.preventDefault();
+                me.renderMonth(nextMonth);
+            }
+        });
+
+        let mname = document.createElement('div');
+        mname.classList.add('name');
+        mname.innerHTML = `${this.getMonthName(startDate.getMonth())}, ${startDate.getFullYear()}`;
+
+        header.appendChild(mname);
+        header.appendChild(pMonthButton.button);
+        header.appendChild(nMonthButton.button);
+
+        month.appendChild(header);
+
+        let calendar = document.createElement('table');
+        calendar.classList.add('month');
+
+        let thead = document.createElement('thead');
+        let hr = document.createElement('tr');
+        for (let weekday of this.weekdays) {
+            let th = document.createElement('th');
+            th.innerHTML = weekday.charAt(0);
+            let celltip = new ToolTip({
+                tipicon: '',
+                classes: ['unfixed'],
+                text: weekday
+            });
+            celltip.attach(th);
+            hr.appendChild(th);
+        }
+        thead.appendChild(hr);
+        calendar.appendChild(thead);
+
+        let tbody = document.createElement('tbody');
+
+        let dayOfMonth = 1,
+            dayOfNextMonth = 1,
+            dayOfPreviousMonth = daysInPreviousMonth - startDay;
+
+        let cellCount = 0;
+        for (let rc = 0; rc <= 5; rc++) {
+            let tr = document.createElement('tr');
+            for (let d = 0; d <= 6; d++) {
+
+                let td = document.createElement('td'),
+                    link = document.createElement('a'),
+                    thisDay;
+
+                link.setAttribute('data-cellno', cellCount);
+
+                if ((cellCount >= startDay) && (dayOfMonth <= daysInMonth)) {
+                    // startDay or into the future until the end of the month
+                    link.innerHTML = dayOfMonth;
+                    link.classList.add('cmonth');
+                    link.setAttribute('data-day', `${startDate.getFullYear()}-${(startDate.getMonth() + 1)}-${dayOfMonth}`);
+                    thisDay = new Date(`${startDate.getFullYear()}-${(startDate.getMonth() +1)}-${dayOfMonth} ${this.basetime}`);
+                    dayOfMonth++;
+                } else if ((cellCount < startDay)) {
+                    // before the startDay, so last month
+                    link.innerHTML = dayOfPreviousMonth;
+                    thisDay = new Date(`${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth} ${this.basetime}`);
+                    link.setAttribute('data-day', `${previousMonth.getFullYear()}-${(previousMonth.getMonth()+ 1)}-${dayOfPreviousMonth}`);
+                    dayOfPreviousMonth++;
+                } else {
+                    // after this month, so next month
+                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} ${this.basetime}`);
+                    link.innerHTML = dayOfNextMonth;
+                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
+                    dayOfNextMonth++;
+                }
+
+                link.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    me.select(link);
+                });
+                link.addEventListener('keydown', function(e) {
+
+                    let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
+                    let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
+
+                    switch (e.key) {
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                            let p = tbody.querySelector(`[data-cellno='${pcell}'`);
+                            if (p) {
+                                p.focus();
+                            }
+                            e.stopPropagation();
+                            break;
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                            let n = tbody.querySelector(`[data-cellno='${ncell}'`);
+                            if (n) {
+                                n.focus();
+                            }
+                            e.stopPropagation();
+                            break;
+                        case 'Enter':
+                        case ' ':
+                            me.select(link);
+                            e.stopPropagation();
+                            break;
+                        default:
+                            break;
+                    }
+                    return false;
+                });
+
+                link.setAttribute('aria-label', link.getAttribute('data-day'));
+                link.setAttribute('tabindex', 0);
+
+                if (thisDay.getTime() === today.getTime()) {
+                    link.classList.add('today');
+                } else if (thisDay.getTime() < today.getTime()) {
+                    link.classList.add('past');
+                } else if (thisDay.getTime() > today.getTime()) {
+                    link.classList.add('future');
+                }
+
+                if ((this.value) && (
+                    (this.startdate.getFullYear() === thisDay.getFullYear()) &&
+                    (this.startdate.getMonth() === thisDay.getMonth()) &&
+                    (this.startdate.getDate() === thisDay.getDate())
+                )) {
+                    link.setAttribute('aria-selected', true);
+                }
+
+                td.appendChild(link);
+
+                tr.appendChild(td);
+                cellCount++;
+            }
+            tbody.appendChild(tr);
+        }
+        calendar.appendChild(tbody);
+
+        month.append(calendar);
+
+        this.monthbox.innerHTML = "";
+        this.monthbox.appendChild(month);
+    }
+
+    /**
+     * Select a date.
+     * @param link the date with the link
+     */
+    select(link) {
+        this.startdate = new Date(link.getAttribute('data-day'));
+        if ((this.onselect) && (typeof this.onselect === 'function')) {
+            this.onselect(link.getAttribute('data-day'));
+        }
+    }
+
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get basetime() { return this.config.basetime; }
+    set basetime(basetime) { this.config.basetime = basetime; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get dateicon() { return this.config.dateicon; }
+    set dateicon(dateicon) { this.config.dateicon = dateicon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get locale() { return this.config.locale; }
+    set locale(locale) { this.config.locale = locale; }
+
+    get monthbox() { return this._monthbox; }
+    set monthbox(monthbox) { this._monthbox = monthbox; }
+
+    get months() { return this.config.months; }
+    set months(months) { this.config.months = months; }
+
+    get onselect() { return this.config.onselect; }
+    set onselect(onselect) { this.config.onselect = onselect; }
+
+    get startdate() { return this.config.startdate; }
+    set startdate(startdate) { this.config.startdate = startdate; }
+
+    get timezone() { return this.config.timezone; }
+    set timezone(timezone) { this.config.timezone = timezone; }
+
+    get weekdays() { return this.config.weekdays; }
+    set weekdays(weekdays) { this.config.weekdays = weekdays; }
+
+    get value() { return this.config.value; }
+    set value(value) { this.config.value = value; }
+
+
+}
+window.DatePicker = DatePicker;
+class DialogWindow {
+
+    static get DEFAULT_CONFIG() {
+       return {
+           id: null,
+           form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+           actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
+                            // Possible keywords:  closebutton, cancelbutton
+           content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
+           classes: [],             // apply these classes to the dialog, if any.
+           header: null, // DOM object, will be used if passed before title.
+           title: null,  // Adds a title to the dialog if present. header must be null.
+           trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
+                          // or a string.  If it's a string, it creates a div at the bottom
+                          // with the value of the text.
+           clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+           escapecloses: true, // Allow the window to be closed by the escape key
+           nofocus: false, // If true, do not auto focus anything.
+           canceltext: TextFactory.get('cancel'),
+           closetext: TextFactory.get('close'), // Text for the closebutton, if any
+           showclose: true  // Show or hide the X button in the corner (requires title != null)
+        };
+    }
+
+    /**
+     * Define a DialogWindow
+     * @param config a dictionary object
+     * @return DialogWindow
+     */
+    constructor(config) {
+        this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
+
+        if (!this.id) { this.id = `dialog-${CFBUtils.getUniqueKey(5)}`; }
+
+        this.build();
+    }
+
+    /**
+     * Opens the dialog window
+     */
+    open() {
+        const me = this;
+
+        CFBUtils.closeOpen();
+
+        this.prevfocus = document.querySelector(':focus');
+
+        this.mask = document.createElement('div');
+        this.mask.classList.add('window-mask');
+        for (let c of this.classes) {
+            this.mask.classList.add(c);
+        }
+        this.mask.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (me.clickoutsidetoclose) {
+                me.close();
+            }
+        });
+        this.container.appendChild(me.window);
+
+        if ((this.trailer) && (typeof this.trailer === 'string')) {
+            let trail = document.createElement('div');
+            trail.classList.add('trailer');
+            trail.innerHTML = this.trailer;
+            this.container.appendChild(trail);
+        } else if (this.trailer) { // it's an html object
+            this.container.appendChild(this.trailer);
+        }
+
+        document.body.appendChild(this.mask);
+        document.body.appendChild(this.container);
+        document.body.classList.add('modalopen');
+
+        this.escapelistener = function(e) {
+            if (e.key === 'Escape') {
+                me.close();
+            }
+        };
+
+        setTimeout(function() {
+            if (!me.nofocus) {
+                let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable[0]) {
+                    focusable[0].focus();
+                }
+            }
+            if (me.escapecloses) {
+                document.addEventListener('keyup', me.escapelistener);
+            }
+        }, 100);
+    }
+
+    /**
+     * Closes the dialog window
+     */
+    close() {
+        this.container.parentNode.removeChild(this.container);
+        this.mask.parentNode.removeChild(this.mask);
+        if (this.prevfocus) {
+            this.prevfocus.focus();
+        }
+        document.body.classList.remove('modalopen');
+        document.removeEventListener('keyup', this.escapelistener);
+    }
+
+    /**
+     * Check to see if escape should close the thing
+     * @param e the event.
+     */
+    escape(e, self) {
+        if (e.key === 'Escape') {
+            self.close();
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Constructs the DialogWindow's DOM elements
+     */
+    build() {
         const me = this;
 
         this.container = document.createElement('div');
-        this.container.classList.add('column-configurator');
+        this.container.classList.add('window-container');
+
+        this.window = document.createElement('div');
+        this.window.classList.add('dialog');
+        this.window.setAttribute('id', this.id);
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+            this.window.classList.add(c);
+        }
+
+        if ((this.title) || (this.header)) {
+            if (!this.header) {
+                this.header = document.createElement('h2');
+                let span = document.createElement('span');
+                span.classList.add('t');
+                span.innerHTML = this.title;
+                this.header.appendChild(span);
+            }
+            this.window.appendChild(this.header);
+
+            if (this.showclose) {
+                this.closebutton = new CloseButton({
+                    action: function(e) {
+                        e.preventDefault();
+                        me.close();
+                    }
+                });
+                this.header.appendChild(this.closebutton.button);
+            }
+        } else if (this.showclose) {
+            console.error("Dialog defines 'showclose' but no title is defined.");
+        }
+
+        if (this.form) { // it's a SimpleForm
+
+            this.form.dialog = this;
+
+            if ((this.actions) && (this.actions.length > 0)) {
+                for (let a of this.actions) {
+                    if (typeof a === 'string') { // it's a keyword
+                        switch(a) {
+                            case 'closebutton':
+                                this.form.actions.push(new SimpleButton({
+                                    text: this.closetext,
+                                    ghost: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }));
+                                break;
+                            case 'cancelbutton':
+                                this.form.actions.push(new DestructiveButton({
+                                    text: this.canceltext,
+                                    mute: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }));
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        this.form.actions.push(a);
+                    }
+                }
+            }
+
+
+            this.contentbox = document.createElement('div');
+            this.contentbox.classList.add('content');
+            this.contentbox.appendChild(this.form.form);
+
+            this.window.classList.add('isform');
+            this.window.appendChild(this.contentbox);
+
+        } else if (this.content) { // It's a DOM object
+
+            this.contentbox = document.createElement('div');
+            this.contentbox.classList.add('content');
+            this.contentbox.appendChild(this.content);
+
+            this.window.appendChild(this.contentbox);
+
+            if ((this.actions) && (this.actions.length > 0)) {
+                this.actionbox = document.createElement('div');
+                this.actionbox.classList.add('actions');
+                for (let a of this.actions) {
+                    if (typeof a === 'string') { // it's a keyword
+                        switch(a) {
+                            case 'closebutton':
+                                this.actionbox.appendChild(new SimpleButton({
+                                    text: this.closetext,
+                                    ghost: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }).container);
+                                break;
+                            case 'cancelbutton':
+                                this.actionbox.appendChild(new DestructiveButton({
+                                    text: this.canceltext,
+                                    mute: true,
+                                    action: function() {
+                                        me.close();
+                                    }
+                                }).container);
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        this.actionbox.appendChild(a.container);
+                    }
+                }
+                this.window.appendChild(this.actionbox);
+            }
+        }
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actionbox() { return this._actionbox; }
+    set actionbox(actionbox) { this._actionbox = actionbox; }
+
+    get actions() { return this.config.actions; }
+    set actions(actions) { this.config.actions = actions; }
+
+    get canceltext() { return this.config.canceltext; }
+    set canceltext(canceltext) { this.config.canceltext = canceltext; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get clickoutsidetoclose() { return this.config.clickoutsidetoclose; }
+    set clickoutsidetoclose(clickoutsidetoclose) { this.config.clickoutsidetoclose = clickoutsidetoclose; }
+
+    get closebutton() { return this._closebutton; }
+    set closebutton(closebutton) { this._closebutton = closebutton; }
+
+    get closetext() { return this.config.closetext; }
+    set closetext(closetext) { this.config.closetext = closetext; }
+
+    get container() { return this._container; }
+    set container(container) { this._container = container; }
+
+    get content() { return this.config.content; }
+    set content(content) { this.config.content = content; }
+
+    get contentbox() { return this._contentbox; }
+    set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get escapecloses() { return this.config.escapecloses; }
+    set escapecloses(escapecloses) { this.config.escapecloses = escapecloses; }
+
+    get escapelistener() { return this._escapelistener; }
+    set escapelistener(escapelistener) { this._escapelistener = escapelistener; }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
+
+    get header() { return this.config.header; }
+    set header(header) { this.config.header = header; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get mask() { return this._mask; }
+    set mask(mask) { this._mask = mask; }
+
+    get nofocus() { return this.config.nofocus; }
+    set nofocus(nofocus) { this.config.nofocus = nofocus; }
+
+    get prevfocus() { return this._prevfocus; }
+    set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
+
+    get showclose() { return this.config.showclose; }
+    set showclose(showclose) { this.config.showclose = showclose; }
+
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
+
+    get trailer() { return this.config.trailer; }
+    set trailer(trailer) { this.config.trailer = trailer; }
+
+    get window() { return this._window; }
+    set window(window) { this._window = window; }
+
+}
+window.DialogWindow = DialogWindow;
+class FloatingPanel extends Panel {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            style: 'plain', // Various styles that can be applied to the panel.
+                            // - 'plain': simple, spartan, solid.
+                            // - 'ghost': similar to 'plain' except that it turns
+                            //            translucent when not in focus or hover
+                            // - 'invisible: panel behaves as normal but the background is transparent
+            position: 'top-left' // Position for the panel. Valid values:
+                                 // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+        };
+    }
+
+    constructor(config) {
+        config = Object.assign({}, FloatingPanel.DEFAULT_CONFIG, config);
+        if (config.classes) {
+            config.classes.push('floating');
+        } else {
+            config.classes = ['floating'];
+        }
+        config.classes.push(config.position);
+        config.classes.push(config.style);
+        super(config);
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get position() { return this.config.position; }
+    set position(position) { this.config.position = position; }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
+
+}
+window.FloatingPanel = FloatingPanel;
+class Growler extends FloatingPanel {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            text : null, // The growler payload
+            closeicon: 'echx',
+            duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
+            icon: null, // An optional icon. Position of this depends on whether there is text or a title.
+                        // If a title is given but no text, it will be in the titlebar. Else it
+                        // gets placed in the text area.
+            position: 'bottom-right' // Position for the growler. Valid values:
+                        // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+        };
+    }
+
+    static get GROWLBOX_ID() { return 'gbox-'; }
+
+    /**
+     * Quick access to a generic growler, with an optional title.
+     * @param text the text to display
+     * @param title (optional) a title
+     * @return {Growler}
+     */
+    static growl(text, title) {
+        return new Growler({
+            text: text,
+            title: title
+        });
+    }
+
+    /**
+     * Quick access to a error growler
+     * @param text the text to display
+     * @return {Growler}
+     */
+    static error(text) {
+        return new Growler({
+            text: text,
+            title: TextFactory.get('error'),
+            icon: 'warn-hex',
+            classes: ['error']
+        });
+    }
+
+    /**
+     * Quick access to a warn growler
+     * @param text the text to display
+     * @return {Growler}
+     */
+    static warn(text) {
+        return new Growler({
+            text: text,
+            title: TextFactory.get('warning'),
+            icon: 'warn-triangle',
+            classes: ['warn']
+        });
+    }
+
+    /**
+     * Quick access to a caution growler
+     * @param text the text to display
+     * @return {Growler}
+     */
+    static caution(text) {
+        return new Growler({
+            text: text,
+            title: TextFactory.get('caution'),
+            icon: 'warn-circle',
+            classes: ['caution']
+        });
+    }
+
+    /**
+     * Quick access to a success growler
+     * @param text the text to display
+     * @return {Growler}
+     */
+    static success(text) {
+        return new Growler({
+            text: text,
+            title: TextFactory.get('success'),
+            icon: 'check-circle',
+            classes: ['success']
+        });
+    }
+
+    /**
+     * Builds a growlbox and inserts it into the dom.
+     * @param position the position to create it at.
+     * @return HTMLDivElement growlbox object
+     */
+    static buildGrowlbox(position) {
+        let gb = document.createElement('div');
+        gb.classList.add('growlbox');
+        gb.setAttribute('id', `${Growler.GROWLBOX_ID}${position}`);
+        gb.classList.add(position);
+        document.querySelector('body').appendChild(gb);
+        return gb;
+    }
+
+    /**
+     * Define a growler
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, Growler.DEFAULT_CONFIG, config);
+        super(config);
+
+        this.growlbox = document.getElementById(`${Growler.GROWLBOX_ID}${this.position}`);
+        if (!this.growlbox) {
+            this.growlbox = Growler.buildGrowlbox(this.position);
+        }
+        this.show();
+    }
+
+    /**
+     * Close the growler
+     */
+    close() {
+        const me = this;
+        if (this.timer) { clearTimeout(this.timer); }
+        this.container.setAttribute('aria-hidden', 'true');
+
+        setTimeout(function() {
+            if ((me.onclose) && (typeof me.onclose === 'function')) {
+                me.onclose(me);
+            }
+            me.container.parentNode.removeChild(me.container);
+        }, 100);
+
+    }
+
+    /**
+     * Quickly close the growler, no animations.
+     */
+    quickClose() {
+        if (this.timer) { clearTimeout(this.timer); }
+        this.container.parentNode.removeChild(this.container);
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
+    }
+
+    /**
+     * Show the growler
+     */
+    show() {
+        const me = this;
+        this.container.removeAttribute('aria-hidden');
+
+        if (this.duration > 0) {
+            this.timer = setTimeout(function() {
+                me.close();
+            }, this.duration);
+        }
+        if ((this.onopen) && (typeof this.onopen === 'function')) {
+            this.onopen(this);
+        }
+    }
+
+    buildContainer() {
+        const me = this;
+
+        this.container = document.createElement('div');
+        this.container.setAttribute('aria-hidden', 'true');
+        this.container.classList.add('growler');
+
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
 
-        // instructions
-        if (this.instructions) {
-            this.container.append(new InstructionBox({
-                instructions: [this.instructions]
-            }).container);
-        }
-
-        this.elements = document.createElement('ul');
-        this.elements.classList.add('column-list');
-
-        for (let f of this.grid.fields) {
-            let li = document.createElement('li');
-
-            let cbox = new BooleanToggle({
-                label: f.label,
-                checked: !f.hidden,
-                classes: ['column'],
-                onchange: function() {
-                    me.grid.toggleColumn(f);
-                }
-            });
-
-            li.appendChild(cbox.container);
-
-            if (f.description) {
-                let desc = document.createElement('div');
-                desc.classList.add('description');
-                desc.innerHTML = f.description;
-                li.appendChild(desc);
+        this.closebutton = new CloseButton({
+            action: function(e) {
+                e.preventDefault();
+                me.quickClose();
             }
-            this.elements.appendChild(li);
+        });
+
+        if (this.title) {
+            let h3 = document.createElement('h3');
+            let span = document.createElement('span');
+            span.classList.add('text');
+            span.innerHTML = this.title;
+            h3.appendChild(span);
+            h3.appendChild(this.closebutton.button);
+            this.container.appendChild(h3);
+        } else {
+            this.container.appendChild(this.closebutton.button);
         }
 
-        this.container.append(this.elements);
+        if (this.text) {
+            let payload = document.createElement('div');
+            payload.classList.add('payload');
+            if (this.icon) {
+                let i = IconFactory.icon(this.icon);
+                i.classList.add('i');
+                payload.append(i);
+            }
+
+            let d = document.createElement('div');
+            d.classList.add('text');
+            d.innerHTML = this.text;
+            payload.appendChild(d);
+
+            this.container.appendChild(payload);
+        }
+
+        this.growlbox.appendChild(this.container);
 
     }
 
@@ -12106,6 +7948,905 @@ class ColumnConfigurator {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get closebutton() { return this._closebutton; }
+    set closebutton(closebutton) { this._closebutton = closebutton; }
+
+    get duration() { return this.config.duration; }
+    set duration(duration) { this.config.duration = duration; }
+
+    get growlbox() { return this._growlbox; }
+    set growlbox(growlbox) { this._growlbox = growlbox; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get text() { return this.config.text; }
+    set text(text) { this.config.text = text; }
+
+    get timer() { return this._timer; }
+    set timer(timer) { this._timer = timer; }
+
+}
+window.Growler = Growler;
+class PasswordChangeForm {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            maxlength: 30,
+            minlength: 5,
+            suggestedlength: 8,
+            cannotbe: [],
+            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
+            instructions: [TextFactory.get('passwordchanger-form-instructions')],
+            placeholder: null,
+            buttontext: TextFactory.get('change_password'),
+            pwcurrlabel: TextFactory.get('current_password'),
+            pwcurrplaceholder: TextFactory.get('passwordchanger-currentpw-placeholder'),
+            pwcurrhelp: TextFactory.get('passwordchanger-currentpw-help'),
+            pwonelabel: TextFactory.get('new_password'),
+            pwoneplaceholder: null,
+            pwonehelp: null,
+            pwtwolabel: TextFactory.get('confirm_password'),
+            pwtwoplaceholder: null,
+            pwtwohelp: null,
+            badpasswordhook: null // Function used to test the value against an external bad password list, like the one used by NIST.
+        };
+    }
+
+    constructor(config) {
+        this.config = Object.assign({}, PasswordChangeForm.DEFAULT_CONFIG, config);
+
+        if (!this.id) { this.id = `pwchange-${CFBUtils.getUniqueKey(5)}`; }
+    }
+
+    /* ACTION METHODS___________________________________________________________________ */
+
+
+    /* VALIDATION METHODS_______________________________________________________________ */
+
+    runChecks(self) {
+        let valid = true;
+        if ((this.pwone.value) !== (this.pwtwo.value)) {
+            this.pwone.errors.push(TextArea.get('passwordchanger-error-passwords_must_match'));
+            this.pwone.showMessages();
+            valid = false;
+        }
+        if ((this.cannotbe) && (this.cannotbe.length > 0)) {
+            for (let cbs of this.cannotbe) {
+                if (this.pwone.value === cbs) {
+                    this.pwone.errors.push(TextArea.get('passwordchanger-error-cannot_be_used_as_pw'));
+                    valid = false;
+                }
+            }
+        }
+        if ((valid) && (this.badpasswordhook) && (typeof this.badpasswordhook === 'function')) {
+            valid = this.badpasswordhook(this.pwone);
+        }
+
+        if (valid) {
+            this.pwone.clearMessages();
+        }
+
+        return valid;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildForm() {
+        const me = this;
+
+        this.pwcurr = new PasswordInput({
+            id: `${this.id}-pwcurr`,
+            label: this.pwcurrlabel,
+            showpasswordbydefault: true,
+            required: true,
+            placeholder: this.pwcurrplaceholder,
+            help: this.pwcurrhelp
+        });
+        this.pwone = new PasswordInput({
+            id: `${this.id}-pwone`,
+            label: this.pwonelabel,
+            showpasswordbydefault: true,
+            required: true,
+            placeholder: this.pwoneplaceholder,
+            help: this.pwonehelp
+        });
+        this.pwtwo = new PasswordInput({
+            id: `${this.id}-pwtwo`,
+            label: this.pwtwolabel,
+            required: true,
+            showpasswordbydefault: true,
+            placeholder: this.pwtwoplaceholder,
+            help: this.pwtwohelp
+        });
+
+        this.pwgen = new PasswordGenerator({
+            autofills: [this.pwone, this.pwtwo]
+        });
+
+
+        this.form = new SimpleForm({
+            instructions: {
+                icon: 'help-circle',
+                instructions: this.instructions
+            },
+            elements: [
+                new HiddenField({
+                    name: this.name
+                }),
+                this.pwcurr,
+                this.pwone,
+                this.pwtwo,
+                this.pwgen
+
+            ],
+            validator: function(self) {
+                return me.runChecks(self);
+            },
+            handler: function(self, callback) {
+                let results = {
+                    success: true,
+                    results: [TextFactory.get('passwordchanger-results-changed_successfully')]
+                };
+                callback(results);
+            },
+            actions: [
+                new ConstructiveButton({
+                    text: this.buttontext,
+                    hot: true,
+                    submits: true,
+                    disabled: true  // No action needed.
+                })
+            ]
+
+        });
+
+    }
+
+    /**
+     * Calculate the placeholder
+     * @return {string|*}
+     */
+    calculatePlaceholder() {
+        if (this.placeholder) { return this.placeholder; }
+        if (this.forceconstraints) {
+            return TextFactory.get('passwordchanger-placeholder-minlength', this.minlength);
+        } else if (this.suggestedlength) {
+            return TextFactory.get('passwordchanger-placeholder-suggested', this.suggestedlength);
+        }
+    }
+
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get container() {
+        return this.form.container;
+    }
+
+    get pwonehelp() {
+        if (this.config.pwonehelp) { return this.config.pwonehelp; }
+        // generate
+    }
+
+    get pwoneplaceholder() {
+        if (this.config.pwoneplaceholder) { return this.config.pwoneplaceholder; }
+        // generate
+    }
+
+    get pwtwohelp() {
+        if (this.config.pwtwohelp) { return this.config.pwtwohelp; }
+        // generate
+    }
+
+    get pwtwoplaceholder() {
+        if (this.config.pwtwoplaceholder) { return this.config.pwtwoplaceholder; }
+        // generate
+    }
+
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get badpasswordhook() { return this.config.badpasswordhook; }
+    set badpasswordhook(badpasswordhook) {
+        if (typeof badpasswordhook !== 'function') {
+            console.error("Action provided for badpasswordhook is not a function!");
+        }
+        this.config.badpasswordhook = badpasswordhook;
+    }
+
+    get buttontext() { return this.config.buttontext; }
+    set buttontext(buttontext) { this.config.buttontext = buttontext; }
+
+    get cannotbe() { return this.config.cannotbe; }
+    set cannotbe(cannotbe) { this.config.cannotbe = cannotbe; }
+
+    get forceconstraints() { return this.config.forceconstraints; }
+    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
+
+    get form() {
+        if (!this._form) { this.buildForm(); }
+        return this._form;
+    }
+    set form(form) { this._form = form; }
+
+    get instructions() { return this.config.instructions; }
+    set instructions(instructions) { this.config.instructions = instructions; }
+
+    get maxlength() { return this.config.maxlength; }
+    set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get minlength() { return this.config.minlength; }
+    set minlength(minlength) { this.config.minlength = minlength; }
+
+    get placeholder() {
+        if (this.config.placeholder) return this.config.placeholder;
+        return this.calculatePlaceholder();
+    }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
+    get pwactual() { return this._pwactual; }
+    set pwactual(pwactual) { this._pwactual = pwactual; }
+
+    get pwcurr() { return this._pwcurr; }
+    set pwcurr(pwcurr) { this._pwcurr = pwcurr; }
+
+    get pwgen() { return this._pwgen; }
+    set pwgen(pwgen) { this._pwgen = pwgen; }
+
+    get pwone() { return this._pwone; }
+    set pwone(pwone) { this._pwone = pwone; }
+
+    get pwtwo() { return this._pwtwo; }
+    set pwtwo(pwtwo) { this._pwtwo = pwtwo; }
+
+    get pwcurrhelp() { return this.config.pwcurrhelp; }
+    set pwcurrhelp(pwcurrhelp) { this.config.pwcurrhelp = pwcurrhelp; }
+
+    get pwcurrlabel() { return this.config.pwcurrlabel; }
+    set pwcurrlabel(pwcurrlabel) { this.config.pwcurrlabel = pwcurrlabel; }
+
+    get pwcurrplaceholder() { return this.config.pwcurrplaceholder; }
+    set pwcurrplaceholder(pwcurrplaceholder) { this.config.pwcurrplaceholder = pwcurrplaceholder; }
+
+    get pwonelabel() { return this.config.pwonelabel; }
+    set pwonelabel(pwonelabel) { this.config.pwonelabel = pwonelabel; }
+
+    get pwtwolabel() { return this.config.pwtwolabel; }
+    set pwtwolabel(pwtwolabel) { this.config.pwtwolabel = pwtwolabel; }
+
+    get suggestedlength() { return this.config.suggestedlength; }
+    set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
+
+    get value() { return this.pwactual.val(); }
+    set value(value) { this.pwactual.val(value); }
+
+}
+window.PasswordChangeForm = PasswordChangeForm;
+class PasswordGenerator {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id: null,
+            buttontext: TextFactory.get('generate_password'),
+            buttonicon: 'refresh',
+            length: 15, // how many characters to generate
+            autofills: [], // input elements to auto fill.
+            sets: ['lc', 'uc', 'num', 'punc']
+        };
+    }
+
+    static get DATASETS () {
+        return {
+            lc: { id: 'lc', label: TextFactory.get('lowercase'), set: 'a-z', chars: 'abcdefghijklmnopqrstuvwxyz' },
+            uc: { id: 'uc', label: TextFactory.get('uppercase'), set: 'A-Z', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
+            num: { id: 'num', label: TextFactory.get('numbers'), set: '0-9', chars: '0123456789' },
+            punc: { id: 'punc', label: TextFactory.get('punctuation'), set: '#', chars: '![]{}()%&*$#^<>~@|' }
+        };
+    }
+
+    /**
+     * Get a dataset definition by id
+     * @param id the id of the dataset
+     * @return {*} the dataset definition, or null
+     */
+    static getDataSet(id) {
+        return PasswordGenerator.DATASETS[id];
+    }
+
+    /**
+     * Generates a random password string.  Takes an array of character objects to include
+     * @param datasets an array of dataset identifiers (defaults to all)
+     * @param length how long of a password to generate (default 15);
+     * @returns {string}
+     */
+    static randomPassword (datasets = PasswordGenerator.DEFAULT_CONFIG.sets, length = 15) {
+
+        let corpus = '';
+        for (let ds of datasets) {
+            if (PasswordGenerator.getDataSet(ds)) {
+                corpus += PasswordGenerator.getDataSet(ds).chars;
+            }
+        }
+
+        let pw = '';
+        for (let i = 0; i < length; i++) {
+            pw += corpus.charAt(Math.floor(Math.random() * corpus.length));
+        }
+        return pw;
+    }
+
+    constructor(config) {
+        this.config = Object.assign({}, PasswordGenerator.DEFAULT_CONFIG, config);
+
+        if (!this.id) { this.id = `pwgen-${CFBUtils.getUniqueKey(5)}`; }
+
+        this.setactuals = [];
+    }
+
+    /* ACTION METHODS___________________________________________________________________ */
+
+    /**
+     * Does the actual password generation
+     */
+    generatePassword() {
+        let sets = [];
+        if ((!this.sets) || (this.sets.length === 0)){
+            sets = PasswordGenerator.DEFAULT_CONFIG.sets;
+        } else {
+            for (let cb of this.setactuals) {
+                if (cb.checked) {
+                    sets.push(cb.value);
+                }
+            }
+        }
+
+        let genpw =  PasswordGenerator.randomPassword(sets, this.length);
+
+        if ((this.autofills) && (this.autofills.length > 0)) {
+            let theform;
+            for (let af of this.autofills) {
+                af.value = genpw;
+                if (af.form) { theform = af.form; }
+            }
+            if (theform) {
+                theform.validate();
+            }
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the container for the generator
+     */
+    buildContainer() {
+        const me = this;
+        this.container = document.createElement('div');
+        this.container.classList.add('pwgenerator');
+
+        this.datasetblock = document.createElement('ul');
+        this.datasetblock.classList.add('datasets');
+        this.datasetblock.setAttribute('aria-hidden', 'true');
+
+        if (this.sets.length > 0) {
+            for (let ds of this.sets) {
+                if (ds in PasswordGenerator.DATASETS) {
+                    let set = PasswordGenerator.getDataSet(ds);
+                    let cb = new BooleanToggle({
+                        name: `dset-${set.id}`,
+                        id: `${this.id}-${set.id}`,
+                        value: set.id,
+                        label: set.label,
+                        checked: true
+                    });
+                    this.setactuals.push(cb);
+                    let li = document.createElement('li');
+                    li.appendChild(cb.container);
+                    this.datasetblock.appendChild(li);
+                }
+            }
+        }
+
+        this.button = new SimpleButton({
+            text: this.buttontext,
+            naked: true,
+            action: function(e) {
+                e.preventDefault();
+                me.generatePassword();
+            }
+
+        });
+
+        this.configbutton = new SimpleButton({
+            icon: 'gear',
+            naked: true,
+            arialabel: TextFactory.get('configure_generator'),
+            classes: ['config'],
+            action: function(e) {
+                e.preventDefault();
+                if (me.datasetblock.getAttribute('aria-hidden')) {
+                    me.datasetblock.removeAttribute('aria-hidden');
+                } else {
+                    me.datasetblock.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+        });
+        let controls = document.createElement('div');
+        controls.classList.add('controls');
+        controls.appendChild(this.button.button);
+        controls.appendChild(this.configbutton.button);
+
+        this.container.appendChild(controls);
+        this.container.appendChild(this.datasetblock);
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get autofills() { return this.config.autofills; }
+    set autofills(autofills) { this.config.autofills = autofills; }
+
+    get button() { return this._button; }
+    set button(button) { this._button = button; }
+
+    get configbutton() { return this._configbutton; }
+    set configbutton(configbutton) { this._configbutton = configbutton; }
+
+    get buttonicon() { return this.config.buttonicon; }
+    set buttonicon(buttonicon) { this.config.buttonicon = buttonicon; }
+
+    get buttontext() { return this.config.buttontext; }
+    set buttontext(buttontext) { this.config.buttontext = buttontext; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get datasetblock() { return this._datasetblock; }
+    set datasetblock(datasetblock) { this._datasetblock = datasetblock; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get length() { return this.config.length; }
+    set length(length) { this.config.length = length; }
+
+    get sets() { return this.config.sets; }
+    set sets(sets) { this.config.sets = sets; }
+
+    get setactuals() { return this._setactuals; }
+    set setactuals(setactuals) { this._setactuals = setactuals; }
+
+}
+window.PasswordGenerator = PasswordGenerator;
+class RadialProgressMeter extends SimpleProgressMeter {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            numberposition: 'center', // where to display the badge and stinger.
+                                    // Values include: center, bottomleft, bottomright, topleft, topright
+            badge: null, // the large central number to show. If left empty, it will display the percentage.
+            stinger: null, // A small text to display below the main badge
+            size: 'medium', // Can be one of several values or metrics!
+                        // Accepts: 'small', 'medium', 'large', 'huge' as strings
+                        // Numbers in pixels and ems, as strings ('300px' or '5em')
+                        // Or if given a number, assumes pixels
+            style: 'solid', // 'solid' or 'ticks'.
+                        // If set to 'ticks', disables any 'segments' value.
+            segments: null, // Displays tick marks in the circle.
+                        // Takes a number; this is the number of divisions. If you want segments of 10%, set it
+                        // to 10.  If you want segments of 25%, set it to 4.
+            strokewidth: null // If provided, the stroke will be this wide.
+                            // If not provided, the width will be 5% of the circle's whole size
+        };
+    }
+
+    /**
+     * Define the RadialProgresMeter
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, RadialProgressMeter.DEFAULT_CONFIG, config);
+        super(config);
+
+        this.calculateSize();
+
+        if (!this.strokewidth) {
+            this.strokewidth = this.actualsize * 0.07;
+        }
+        if (this.style === 'ticks') {
+            this.segments = null;
+        }
+
+        this.radius = (this.actualsize / 2) - (this.strokewidth * 2); // have to cut the stroke
+        this.circumference = this.radius * 2 * Math.PI; // pie are round
+    }
+
+    /**
+     * Calculates the size of the SVG to use.
+     * - Parses the 'size' attribute into 'actualsize'
+     * - Determines the 'sizeclass'
+     */
+    calculateSize() {
+        if (typeof this.size === 'number') {
+            this.actualsize = this.size;
+        } else if (this.size.toLowerCase().endsWith('px')) {
+            this.actualsize = parseInt(this.size);
+            if (isNaN(this.actualsize)) {
+                console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
+                this.actualsize = 200;
+            }
+        } else if (this.size.toLowerCase().endsWith('em')) {
+            this.actualsize = (CFBUtils.getSingleEmInPixels() * parseInt(this.size));
+            if (isNaN(this.actualsize)) {
+                console.error(`RadialProgressMeter: provided invalid size: ${this.size}`);
+                this.actualsize = 200;
+            }
+        } else {
+            switch(this.size) {
+                case 'small':
+                    this.actualsize = 100;
+                    break;
+                case 'large':
+                    this.actualsize = 400;
+                    break;
+                case 'huge':
+                    this.actualsize = 800;
+                    break;
+                case 'medium':
+                default:
+                    this.actualsize = 200;
+                    break;
+            }
+        }
+
+        // Now we parse a size class
+        if (this.actualsize >= 800) {
+            this.sizeclass = 'huge';
+        } else if (this.actualsize >= 400) {
+            this.sizeclass = 'large';
+        } else if (this.actualsize >= 200) {
+            this.sizeclass = 'medium';
+        } else if (this.actualsize >= 100) {
+            this.sizeclass = 'small';
+        } else  {
+            this.sizeclass = 'tiny';
+        }
+    }
+
+    /**
+     * Set the progress value of the meter
+     * @param percent the percent to set it to.
+     */
+    setProgress(percent) {
+        const offset = this.circumference - percent / 100 * this.circumference;
+
+        let circle = this.container.querySelector('.radialcircle');
+        circle.style.strokeDasharray = `${this.circumference} ${this.circumference}`;
+        circle.style.strokeDashoffset = offset;
+
+        if (this.segments) {
+
+            let tickwidth = this.segments * 2;
+
+            let seglength = (((this.radius * 2) * Math.PI) - tickwidth) / (this.segments);
+
+            let tickmarks = this.container.querySelector('.tickmarks');
+            tickmarks.style.strokeDasharray = `2px ${seglength}px`;
+            tickmarks.style.strokeDashoffset = 0;
+
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build a circle template
+     * @param target the class to apply
+     * @return {*|null|undefined}
+     */
+    circleTemplate(target) {
+        let c = document.createElement('circle');
+        c.classList.add(target);
+        c.setAttribute('stroke-width', this.strokewidth);
+        c.setAttribute('r', this.radius);
+        c.setAttribute('cx', this.actualsize / 2);
+        c.setAttribute('cy', this.actualsize / 2);
+
+        return c;
+    }
+
+    buildContainer() {
+
+        const me = this;
+
+        this.container = document.createElement('div');
+        this.container.classList.add(this.sizeclass);
+        this.container.classList.add('progressbar-container');
+        if (this.label) { this.container.appendChild(this.labelobj); }
+
+        let wrap = document.createElement('div');
+        wrap.classList.add('circlewrap');
+        wrap.style.width = `${this.actualsize}`;
+        wrap.style.height = `${this.actualsize}`;
+
+        let svg = document.createElement('svg'); // the background gutter circle
+        svg.setAttribute('height', this.actualsize);
+        svg.setAttribute('width', this.actualsize);
+        svg.classList.add('progressgutter');
+        svg.classList.add(this.style);
+        svg.appendChild(this.circleTemplate('gutter'));
+        svg.appendChild(this.circleTemplate('radialcircle'));
+
+        if ((this.segments) || (this.style === 'ticks')) {
+            svg.appendChild(this.circleTemplate('tickmarks'));
+        }
+
+        wrap.appendChild(svg);
+        wrap.appendChild(this.decallayer);
+        this.container.appendChild(wrap);
+
+        this.container.innerHTML = this.container.innerHTML; // this is funky but necessary ¯\_(ツ)_/¯
+
+        this.setProgress(0); // flatten
+
+        // Don't allow the the width animation to fire until it's in the page
+        let animtimer = window.setTimeout(function() {
+            me.setProgress(me.value);
+        }, 500);
+    }
+
+
+    buildDecalLayer() {
+        if (!this.badge) { this.badge = `${this.value}<sup>%</sup>`; }
+
+        this.badgeobj = document.createElement('div');
+        this.badgeobj.classList.add('badge');
+        this.badgeobj.innerHTML = this.badge;
+
+        if (this.stinger) {
+            this.stingerobj = document.createElement('div');
+            this.stingerobj.classList.add('stinger');
+            this.stingerobj.innerHTML = this.stinger;
+        }
+
+        this.decallayer = document.createElement('div');
+        this.decallayer.classList.add('decals');
+        this.decallayer.classList.add(this.numberposition);
+        this.decallayer.appendChild(this.badgeobj);
+        if (this.stinger) { this.decallayer.appendChild(this.stingerobj); }
+
+    }
+
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get actualsize() { return this._actualsize; }
+    set actualsize(actualsize) { this._actualsize = actualsize; }
+
+    get badge() { return this.config.badge; }
+    set badge(badge) { this.config.badge = badge; }
+
+    get badgeobj() { return this._badgeobj; }
+    set badgeobj(badgeobj) { this._badgeobj = badgeobj; }
+
+    get circumference() { return this._circumference; }
+    set circumference(circumference) { this._circumference = circumference; }
+
+    get numberposition() { return this.config.numberposition; }
+    set numberposition(numberposition) { this.config.numberposition = numberposition; }
+
+    get radius() { return this._radius; }
+    set radius(radius) { this._radius = radius; }
+
+    get size() { return this.config.size; }
+    set size(size) { this.config.size = size; }
+
+    get sizeclass() { return this._sizeclass; }
+    set sizeclass(sizeclass) { this._sizeclass = sizeclass; }
+
+    get stinger() { return this.config.stinger; }
+    set stinger(stinger) { this.config.stinger = stinger; }
+
+    get stingerobj() { return this._stingerobj; }
+    set stingerobj(stingerobj) { this._stingerobj = stingerobj; }
+
+    get strokewidth() { return this.config.strokewidth; }
+    set strokewidth(strokewidth) { this.config.strokewidth = strokewidth; }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
+
+    get segments() { return this.config.segments; }
+    set segments(segments) { this.config.segments = segments; }
+
+    get wrap() { return this._wrap; }
+    set wrap(wrap) { this._wrap = wrap; }
+
+
+}
+window.RadialProgressMeter = RadialProgressMeter;
+
+class SearchControl {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // the id
+            autoexecute: true, // Cause the search's action to execute automatically on focusout
+                               // or when there number of seed characters is reached
+            arialabel: TextFactory.get('searchcontrol-instructions'), // The aria-label value.
+            maxlength: null, // Value for maxlength.
+            searchtext: TextFactory.get('search'),
+            searchicon: 'magnify',
+            action: function(value, self) { // The search action. Passed the value of the input and the self
+                console.log(`Executing search action: ${value}`);
+            },
+            value: '', // Value to use (pre-population).  Used during construction and then discarded.
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, SearchControl.DEFAULT_CONFIG, config);
+        return this;
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /* PSEUDO GETTERS___________________________________________________________________ */
+
+    get isopen() { return this.container.classList.contains('open'); }
+
+    get value() { return this.searchinput.value; }
+    set value(value) { this.searchinput.value = value; }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the full searchcontrol container
+     */
+    buildContainer() {
+        const me = this;
+        this.container = document.createElement('div');
+        this.container.classList.add('searchcontrol');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        this.buildSearchInput();
+        this.container.appendChild(this.searchinput);
+
+        this.searchbutton = new SimpleButton({
+            text: this.searchtext,
+            icon: this.searchicon,
+            mute: true,
+            action: function(e) {
+                e.preventDefault();
+                if (me.isopen) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
+            }
+        });
+
+        // Open the search input if the user clicks on the button when it's not open
+        this.container.addEventListener('click', function() {
+            if (!me.isopen) {
+                me.searchinput.focus();
+            }
+        });
+
+        this.container.appendChild(this.searchbutton.button);
+
+    }
+
+    /**
+     * Build the search input
+     */
+    buildSearchInput() {
+        const me = this;
+        this.searchinput = document.createElement('input');
+
+        this.searchinput.setAttribute('type', 'text');
+        this.searchinput.setAttribute('role', 'textbox');
+        this.searchinput.setAttribute('tabindex', '0');
+
+        if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }
+        if (this.arialabel) { this.searchinput.setAttribute('aria-label', this.arialabel); }
+        if (this.maxlength) { this.searchinput.setAttribute('maxlength', this.maxlength); }
+
+        for (let c of this.classes) {
+            this.searchinput.classList.add(c);
+        }
+
+        this.searchinput.addEventListener('keyup', function(e) {
+            switch (e.key) {
+                case 'Tab':
+                    if (me.autoexecute) {
+                        if ((me.action) && (typeof me.action === 'function')) {
+                            me.action(me.value, me);
+                        }
+                    }
+                    break;
+                case 'Enter':
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                    break;
+                default:
+                    if (me.autoexecute) {
+                        if ((me.action) && (typeof me.action === 'function')) {
+                            me.action(me.value, me);
+                        }
+                    }
+                    break;
+
+            }
+        });
+
+        this.searchinput.addEventListener('focusout', function(e) {
+            if ((me.value) && (me.value.length > 0)) {
+                me.container.classList.add('open');
+                if (me.autoexecute) {
+                    if ((me.action) && (typeof me.action === 'function')) {
+                        me.action(me.value, me);
+                    }
+                }
+            } else {
+                me.container.classList.remove('open');
+            }
+        });
+
+        this.searchinput.value = this.config.value;
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get autoexecute() { return this.config.autoexecute; }
+    set autoexecute(autoexecute) { this.config.autoexecute = autoexecute; }
+
+    get action() { return this.config.action; }
+    set action(action) { this.config.action = action; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
 
@@ -12115,22 +8856,27 @@ class ColumnConfigurator {
     }
     set container(container) { this._container = container; }
 
-    get elements() { return this._elements; }
-    set elements(elements) { this._elements = elements; }
+    get maxlength() { return this.config.maxlength; }
+    set maxlength(maxlength) { this.config.maxlength = maxlength; }
 
-    get fields() { return this.config.fields; }
-    set fields(fields) { this.config.fields = fields; }
+    get placeholder() { return this.config.placeholder; }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
 
-    get grid() { return this.config.grid; }
-    set grid(grid) { this.config.grid = grid; }
+    get searchinput() { return this._searchinput; }
+    set searchinput(searchinput) { this._searchinput = searchinput; }
 
-    get id() { return this.config.id; }
-    set id(id) { this.config.id = id; }
+    get searchbutton() { return this._searchbutton; }
+    set searchbutton(searchbutton) { this._searchbutton = searchbutton; }
 
-    get instructions() { return this.config.instructions; }
-    set instructions(instructions) { this.config.instructions = instructions; }
+    get searchtext() { return this.config.searchtext; }
+    set searchtext(searchtext) { this.config.searchtext = searchtext; }
+
+    get searchicon() { return this.config.searchicon; }
+    set searchicon(searchicon) { this.config.searchicon = searchicon; }
+
 }
-window.ColumnConfigurator = ColumnConfigurator;
+window.SearchControl = SearchControl;
+
 class SimpleForm {
 
     static get DEFAULT_CONFIG() {
@@ -12758,3 +9504,3544 @@ class SimpleForm {
 
 }
 window.SimpleForm = SimpleForm;
+
+class TabBar {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id: null, // The id
+            navigation: false, // set to true if this is a navigation element, so that it wraps in a <nav /> element.
+            responsive: true, // Set to false to disable responsive collapsing.
+            menuicon: "menu", // the icon to use for the menu button, if in responsive mode.
+            menulabel: TextFactory.get('toggle_menu'), // Default text for the menu
+            arialabel: TextFactory.get('primary'), // the aria label to use if this is a navigation
+            submenuicon: 'triangle-down', // icon to indicate submenu
+
+            vertical: false, // Vertical or horizontal
+            animation: 'popin', // Set to null to disable animations
+            tabs: [], // An array of tab definitions
+            // {
+            //    classes: [] // An array of css classes to add
+                              // include "mobileonly" to only show item in mobile
+            //    label: "Tab Text", // text, optional if given an icon
+            //    id: null, // tab id, used with "activate(tabid)"
+            //    icon: null, // an icon identifier, optional
+            //    selected: false, // if true, start selected
+            //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
+            //    subtabs: null  // an array of tab definitions to indicate subtabs
+            // }
+            action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
+                          // This is what will fire if there is no action defined on the tab definition.
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    /**
+     * Define a TabBar
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, TabBar.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `tabbar-${CFBUtils.getUniqueKey(5)}`; }
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Marks a specific tab as selected
+     * @param tab the tab to select
+     */
+    select(tab) {
+        if (typeof tab === 'string') {
+            tab = document.querySelectorAll(`[data-tabid='${tab}']`)[0];
+        }
+        if (!tab) {
+            console.warn(`Tab does not exist: ${tab}`);
+            return;
+        }
+        if (this.selected) {
+            this.selected.removeAttribute('aria-selected');
+            this.selected.setAttribute('tabindex', '-1');
+        }
+        this.selected = tab;
+        this.selected.setAttribute('aria-selected', 'true');
+        this.selected.setAttribute('tabindex', '0');
+
+        if ((this.responsive) && (this.menutitle)) {
+            this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
+        }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds the DOM.
+     */
+    buildContainer() {
+        const me = this;
+
+        if (this.navigation) {
+            this.container = document.createElement('nav');
+            this.list.removeAttribute('role');
+            this.container.setAttribute('aria-label', this.arialabel);
+        } else {
+            this.container = document.createElement('div');
+        }
+
+        this.container.classList.add('tablist-container');
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        if (this.responsive) {
+            this.responsivebox = document.createElement('div');
+            this.responsivebox.classList.add('responsivebox');
+
+            this.menubutton = new HamburgerButton({
+                text: this.menulabel,
+                toggletarget: me
+            });
+            this.responsivebox.appendChild(this.menubutton.button);
+
+            this.menutitle = document.createElement('div');
+            this.menutitle.classList.add('menutitle');
+            this.responsivebox.appendChild(this.menutitle);
+
+            this.container.classList.add('responsive');
+            this.container.appendChild(this.responsivebox);
+        }
+
+        this.container.appendChild(this.list);
+    }
+
+    /**
+     * Build the actual tab list object
+     */
+    buildList() {
+        this.list = document.createElement('ul');
+        this.list.setAttribute('role', 'tablist');
+        this.list.classList.add('tabbar');
+
+        for (let c of this.classes) {
+            this.list.classList.add(c);
+        }
+
+        if (this.vertical) {
+            this.list.classList.add('vertical');
+        }
+        let order = 1;
+
+        for (let tabdef of this.tabs) {
+            order = this.buildTab(tabdef, order);
+        }
+    }
+
+    /**
+     * Build an individual tab
+     * @param tabdef the tab definition
+     * @param order the taborder
+     * @param parent the parent tab object, if any (this will be an li)
+     * @return the next in the order
+     */
+    buildTab(tabdef, order, parent) {
+        const me = this;
+        let parentname = 'root',
+            next = order + 1,
+            previous = order - 1;
+
+        if (previous < 1) { previous = 0; }
+
+        if ((!tabdef.label) && (!tabdef.icon)) {
+            console.warn('TabBar: Element defined but has neither icon or text.  Skipping');
+            return null;
+        }
+
+        let li = document.createElement('li');
+        li.setAttribute('role', 'none');
+        li.setAttribute('data-tabno', `${order}`);
+        if (tabdef.classes) {
+            for (let c of tabdef.classes) {
+                li.classList.add(c);
+            }
+        }
+
+        let link = document.createElement('a');
+        link.setAttribute('data-tabtext', tabdef.label);
+        link.setAttribute('data-tabno', order);
+        link.setAttribute('id', tabdef.id);
+        link.setAttribute('data-tabid', tabdef.id);
+        link.setAttribute('tabindex', '-1'); // always set this here
+        if (!this.navigation) {
+            link.setAttribute('role', 'menuitem');
+        }
+        if (tabdef.icon) {
+            link.appendChild(IconFactory.icon(tabdef.icon));
+        }
+        if (tabdef.label) {
+            let linktext = document.createElement('span');
+            linktext.innerHTML = tabdef.label;
+            link.appendChild(linktext);
+        }
+
+        li.appendChild(link);
+
+        if (parent) {
+            parentname = parent.getAttribute('data-tabid');
+            let plist = parent.querySelector('ul');
+            if (!plist) {
+                plist = document.createElement('ul');
+                plist.setAttribute('role', 'menu');
+                plist.classList.add('submenu');
+                parent.appendChild(plist);
+            }
+            plist.appendChild(li); // attach to child list
+        } else {
+            if (this.animation) {
+                li.style.setProperty('--anim-order', order); // used in animations
+                li.classList.add(this.animation);
+            }
+            this.list.appendChild(li); // attach to root list
+        }
+        link.setAttribute('data-parent', parentname);
+        li.setAttribute('data-parent', parentname);
+        order++;
+
+        // Is this a master menu item?
+        if ((tabdef.subtabs) && (tabdef.subtabs.length > 0)) {
+            link.classList.add('mastertab');
+            link.setAttribute('aria-haspopup', true);
+            link.setAttribute('aria-expanded', false);
+            if (this.submenuicon) {
+                let sicon = IconFactory.icon(this.submenuicon);
+                sicon.classList.add('secondicon');
+                link.appendChild(sicon);
+            }
+            // Add the subtabs ins
+            let localorder = 1;
+            for (let subdef of tabdef.subtabs) {
+                localorder = this.buildTab(subdef, localorder, li);
+            }
+            link.addEventListener('keydown', function (e) {
+                let setname = li.getAttribute('data-parent');
+                let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
+                let nexttab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${next}'] a[data-tabno='${next}']`);
+
+                switch (e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (prevtab) {
+                            prevtab.focus();
+                        }
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (nexttab) {
+                            nexttab.focus();
+                        }
+                        break;
+                    case 'ArrowDown':
+                    case 'Enter':
+                    case 'Space':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        let ul = li.querySelector('ul');
+                        if (ul) {
+                            let children = ul.querySelectorAll('li a');
+                            children[0].focus();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            });
+        } else { // Non-Master Tabs
+            link.addEventListener('keydown', function (e) {
+
+                let setname = li.getAttribute('data-parent');
+                let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
+                let nexttab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${next}'] a[data-tabno='${next}']`);
+                let parenttab;
+                if (parent) {
+                    parenttab = parent.querySelector('a');
+                }
+
+                switch (e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if ((previous === 0) && (parenttab)) {
+                            parenttab.focus();
+                        } else if (prevtab) {
+                            prevtab.focus();
+                        }
+                        break;
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (nexttab) {
+                            nexttab.focus();
+                        }
+                        break;
+                    case 'Escape':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (parenttab) {
+                            parenttab.focus();
+                        }
+                        break;
+                    case 'Enter':
+                    case 'Space':
+                        e.preventDefault();
+                        e.stopPropagation();
+                        link.click();
+                        break;
+                    default:
+                        break;
+                }
+            });
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                me.select(tabdef.id);
+                if ((tabdef.action) && (typeof tabdef.action === 'function')) {
+                    tabdef.action(tabdef.id, me);
+                } else if (me.action) {
+                    me.action(tabdef.id, me);
+                }
+            });
+        }
+
+        if (tabdef.selected) {
+            window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
+                me.select(tabdef.id);
+            }, 100);
+        }
+
+        return order; // send this back.
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Let us know if the menu is open
+     * @return true if it is!
+     */
+    get isopen() {
+        return this.container.hasAttribute('aria-expanded');
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Toggle whether or not the menu is open
+     */
+    toggle() {
+        if (this.isopen) {
+            this.close();
+            return;
+        }
+        this.open();
+    }
+
+    /**
+     * Opens the menu
+     */
+    open() {
+        const me = this;
+        if (this.isopen) { return; }
+        this.container.setAttribute('aria-expanded', 'true');
+        if (this.menubutton) { this.menubutton.open(); }
+
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 200);
+    }
+
+    /**
+     * Closes the menu
+     */
+    close() {
+        this.container.removeAttribute('aria-expanded');
+        if (this.menubutton) { this.menubutton.close(); }
+    }
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { me.close(); }
+        }, { once: true });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === me.list) {
+                me.setCloseListener();
+            } else {
+                me.close();
+            }
+        }, { once: true, });
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get action() { return this.config.action; }
+    set action(action) { this.config.action = action; }
+
+    get animation() { return this.config.animation; }
+    set animation(animation) { this.config.animation = animation; }
+
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get list() {
+        if (!this._list) { this.buildList(); }
+        return this._list;
+    }
+    set list(list) { this._list = list; }
+
+    get menuicon() { return this.config.menuicon; }
+    set menuicon(menuicon) { this.config.menuicon = menuicon; }
+
+    get menulabel() { return this.config.menulabel; }
+    set menulabel(menulabel) { this.config.menulabel = menulabel; }
+
+    get menubutton() { return this._menubutton; }
+    set menubutton(menubutton) { this._menubutton = menubutton; }
+
+    get menutitle() { return this._menutitle; }
+    set menutitle(menutitle) { this._menutitle = menutitle; }
+
+    get navigation() { return this.config.navigation; }
+    set navigation(navigation) { this.config.navigation = navigation; }
+
+    get responsive() { return this.config.responsive; }
+    set responsive(responsive) { this.config.responsive = responsive; }
+
+    get responsivebox() { return this._responsivebox; }
+    set responsivebox(responsivebox) { this._responsivebox = responsivebox; }
+
+    get selected() { return this._selected; }
+    set selected(selected) { this._selected = selected; }
+
+    get submenuicon() { return this.config.submenuicon; }
+    set submenuicon(submenuicon) { this.config.submenuicon = submenuicon; }
+
+    get tabs() { return this.config.tabs; }
+    set tabs(tabs) { this.config.tabs = tabs; }
+
+    get vertical() { return this.config.vertical; }
+    set vertical(vertical) { this.config.vertical = vertical; }
+
+}
+window.TabBar = TabBar;
+
+class ToolTip {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // the id
+            icon: 'help-circle',
+            gravity: 'n',
+            iconclasses: [], // Classes to apply to the icon
+            text: null, // The text to use,
+            parent: null, // the parent object to fire off
+            waittime: 1000, // how long to wait before activating
+            classes: [] //Extra css classes to apply
+        };
+    }
+
+    static closeOpen() {
+        clearTimeout(ToolTip.timer);
+        if (ToolTip.activeTooltip) {
+            clearTimeout(ToolTip.activeTooltip.timer);
+            ToolTip.activeTooltip.close();
+        }
+    }
+
+    /**
+     * Define the element
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `tt-${CFBUtils.getUniqueKey(5)}`; }
+        return this;
+    }
+
+    /**
+     * Attach the tooltip to its parent.  Will reset an existing parent if one is provided
+     * during construction.
+     * @param parent
+     */
+    attach(parent) {
+        const me = this;
+        if ((parent) && (parent.container)) {
+           parent = parent.container;
+        }
+        this.parent = parent;
+        this.parent.appendChild(this.container);
+        this.parent.setAttribute('data-tooltip', 'closed');
+        this.parent.addEventListener('mouseover', function() {
+            me.open();
+        });
+        this.parent.addEventListener('mouseout', function() {
+            clearTimeout(ToolTip.timer);
+            me.close();
+        });
+        this.parent.addEventListener('focusin', function() {
+            me.open();
+        });
+        this.parent.addEventListener('focusout', function() {
+            clearTimeout(ToolTip.timer);
+            me.close();
+        });
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Opens the help tooltip
+     * This actually only starts a timer.  The actual opening happens in openGuts()
+     */
+    open() {
+        const me = this;
+        ToolTip.closeOpen();
+        ToolTip.timer = setTimeout(function() {
+            me.openGuts();
+        }, this.waittime);
+    }
+
+    /**
+     * Do the actual opening.
+     */
+    openGuts() {
+
+        ToolTip.closeOpen();
+
+        document.body.appendChild(this.container);
+        this.container.removeAttribute('aria-hidden');
+
+        if (typeof ToolTip.activeTooltip === 'undefined' ) {
+            ToolTip.activeTooltip = this;
+        } else {
+            ToolTip.activeTooltip = this;
+        }
+
+        this.setPosition();
+
+        window.addEventListener('scroll', this.setPosition, true);
+
+    }
+
+    /**
+     * Set the position of the tooltip.
+     */
+    setPosition() {
+        if (!ToolTip.activeTooltip) { return; }
+        let self = ToolTip.activeTooltip;
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.parent.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+            case 'w':
+            case 'west':
+                self.container.style.top = `${offsetTop}px`;
+                self.container.style.left = `${offsetLeft - self.container.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'e':
+            case 'east':
+                self.container.style.top = `${offsetTop}px`;
+                self.container.style.left = `${offsetLeft + self.parent.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                break;
+            case 'n':
+            case 'north':
+            default:
+                self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+        }
+
+    }
+
+    /**
+     * Closes the help tooltip.
+     */
+    close() {
+        this.parent.appendChild(this.container);
+        window.removeEventListener('scroll', this.setPosition, true);
+        this.container.setAttribute('aria-hidden', 'true');
+        ToolTip.activeTooltip = null;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the full container
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('tooltip');
+        this.container.setAttribute('aria-hidden', 'true');
+        if (this.id) { this.container.setAttribute('id', this.id); }
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.classList.add('south');
+                break;
+            case 'w':
+            case 'west':
+                this.container.classList.add('west');
+                break;
+            case 'e':
+            case 'east':
+                this.container.classList.add('east');
+                break;
+            case 'n':
+            case 'north':
+            default:
+                this.container.classList.add('north');
+                break;
+        }
+
+        if ((this.classes) && (this.classes.length > 0)) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
+        }
+
+        if ((this.icon) && (this.icon !== '')) {
+            let icon = IconFactory.icon(this.icon);
+            icon.classList.add('tipicon');
+            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+                for (let ic of this.iconclasses) {
+                    icon.classList.add(ic);
+                }
+            }
+            this.container.appendChild(icon);
+        }
+
+        this.tiptext = document.createElement('div');
+        this.tiptext.classList.add('tiptext');
+        this.tiptext.setAttribute('id', `${this.id}-text`);
+        if (this.text) {
+            this.tiptext.innerHTML = this.text;
+        }
+
+        this.container.appendChild(this.tiptext);
+
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get iconclasses() { return this.config.iconclasses; }
+    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get parent() { return this.config.parent; }
+    set parent(parent) { this.config.parent = parent; }
+
+    get text() { return this.config.text; }
+    set text(text) { this.config.text = text; }
+
+    get timer() { return this._timer; }
+    set timer(timer) { this._timer = timer; }
+
+    get tiptext() { return this._tiptext; }
+    set tiptext(tiptext) { this._tiptext = tiptext; }
+
+    get tooltip() { return this._tooltip; }
+    set tooltip(tooltip) { this._tooltip = tooltip; }
+
+    get waittime() { return this.config.waittime; }
+    set waittime(waittime) { this.config.waittime = waittime; }
+
+}
+window.ToolTip = ToolTip;
+class InputElement {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // Component id
+            name: null, // Name attribute
+            form: null, // A form element this is in
+            counter: null, // A value for a character counter. Null means 'no counter'
+            // Possible values: null, 'remaining', 'limit', and 'sky'
+            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
+            type: 'text', // Type of input, defaults to "text"
+            label : null, // Input label. If null, does not show up.
+            placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
+                               // To insure a blank placeholder, set the value to ""
+            title: null,
+            pattern: null,
+            icon: null, // Use to define a specific icon, used in some specific controls.
+
+            minimal: false, // if true, build with the intent that it is part of a larger component.
+                            // this removes things like the search controls and validation boxes.
+
+            passive: false, // Start life in "passive" mode.
+            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
+
+            help: null, // Help text.
+            helpwaittime: 5000, // How long to wait before automatically showing help tooltip
+            required: false, // Is this a required field or not
+            requiredtext: TextFactory.get('required_lc'), // text to display on required items
+            requirederror: TextFactory.get('input-error-required'), // error to display if required item isn't filled.
+            hidden: false, // Whether or not to be hidden
+            autocomplete: 'off', // Enable browser autocomplete. Default is off.
+            arialabel: null, // The aria-label value. If null, follows: label > title > null
+            maxlength: null, // Value for maxlength.
+            value: '', // Value to use (pre-population).  Used during construction and then discarded.
+            disabled: false, // If true, disable the field.
+            classes: [], // Extra css classes to apply
+            onchange: null, // The change handler. Passed (self).
+            onreturn: null, // action to execute on hitting the return key. Passed (event, self).
+            ontab: null, // action to execute on hitting the tab key. Passed (event, self).
+            onkeyup: null, // action to execute on key up. Passed (event, self).
+            onkeydown: null, // action to execute on key down. Passed (event, self).
+            focusin: null, // action to execute on focus in. Passed (event, self).
+            focusout: null, // action to execute on focus out. Passed (event, self).
+            validator: null, // A function to run to test validity. Passed the self.
+            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+                return `${data}`;
+            }
+
+        };
+    }
+
+    /**
+     * Define a the input
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
+
+        if (!this.arialabel) { // munch aria label.
+            if (this.label) {
+                this.arialabel = this.label;
+            } else if (this.title) {
+                this.arialabel = this.title;
+            }
+        }
+
+        if (!this.id) { this.id = `e-${CFBUtils.getUniqueKey(5)}`; }
+
+        if (!this.name) { this.name = this.id; }
+
+        if (!this.config.value) { this.config.value = ''; }
+
+        if (this.config.value) { // store the supplied value if any
+            this.origval = this.config.value;
+        } else {
+            this.origval = '';
+        }
+
+        this.touched = false; // set untouched on creation.
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Return the input mode. This is used by mobile devices to select the correct keyboard.
+     * This is nearly always overridden.
+     * (Valid values are text, none, tel, url, email, numeric, decimal, search
+     * @return {string}
+     */
+    get inputmode() { return "text"; }
+
+    /**
+     * Returns a topcontrol, if any.  This is usually a character counter, and is overridden.
+     * @return {null}, or the character counter.
+     */
+    get topcontrol() { return this.charactercounter; }
+
+    /**
+     * Return an extra input control, if any. This is things like stepper buttons for numbers.
+     * @return {null}, or the input control.
+     */
+    get inputcontrol() { return null; }
+
+    /**
+     * Returns the raw element, without any container
+     * @return {*} the element.
+     */
+    get naked() { return this.input; }
+
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Has the field been changed or not?
+     * @return {boolean} true or false, depending.
+     */
+    isDirty() {
+        return (this.origval !== this.value);
+    }
+
+    /**
+     * Runs validation.  Shows errors, if any. Returns true or false, depending.
+     * @param onload If true, this validation fires on the loading. This is important to
+     * know because some invalidations aren't actually errors until the form is submitted.
+     * @return {boolean}
+     */
+    validate(onload) {
+        this.errors = [];
+        this.warnings = [];
+
+        if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
+            this.errors.push(this.requirederror);
+        }
+
+        if ((this.localValidator) && (typeof this.localValidator === 'function')) {
+            this.localValidator(onload);
+        }
+        if ((this.validator) && (typeof this.validator === 'function')) {
+            this.validator(this);
+        }
+        if ((this.errors.length > 0) || (this.warnings.length > 0)) {
+            this.showMessages();
+            if (this.errors.length > 0) {
+                this.input.setAttribute('aria-invalid', 'true');
+            } else {
+                this.input.removeAttribute('aria-invalid');
+            }
+        } else {
+            this.clearMessages();
+            this.input.removeAttribute('aria-invalid');
+            if ((this.isDirty()) && (!onload)) { // This has to be valid
+                this.container.classList.add('valid');
+            } else {
+                this.container.classList.remove('valid');
+            }
+        }
+        return (this.errors.length < 1);
+    }
+
+    /**
+     * Local datatype validator, intended for overriding
+     * @param onload If true, this validation fires on the loading. This is important to
+     * know because some invalidations aren't actually errors until the form is submitted.
+     */
+    localValidator(onload) { }
+
+    /**
+     * Show messages and warnings
+     */
+    showMessages() {
+        this.messagebox.innerHTML = "";
+        for (let error of this.errors) {
+            this.addError(error);
+        }
+        for (let warning of this.warnings) {
+            this.addWarning(warning);
+        }
+        if (this.errors.length > 0) {
+            this.container.classList.add('error');
+        } else if (this.warnings.length > 0) {
+            this.container.classList.add('warning');
+        }
+        this.messagebox.removeAttribute('aria-hidden');
+    }
+
+    /**
+     * Clears all messages from the element.
+     */
+    clearMessages() {
+        this.errors = [];
+        this.warnings = [];
+        this.messagebox.innerHTML = '';
+        this.messagebox.setAttribute('aria-hidden', 'true');
+        this.container.classList.remove('error');
+        this.container.classList.remove('warning');
+    }
+
+    /**
+     * Add an error.
+     * @param error the error to add
+     */
+    addError(error) {
+        let err = document.createElement('li');
+        err.classList.add('error');
+        err.innerHTML = error;
+        this.messagebox.appendChild(err);
+    }
+
+    /**
+     * Add a warning
+     * @param warning the warning to add
+     */
+    addWarning(warning) {
+        let warn = document.createElement('li');
+        warn.classList.add('warning');
+        warn.innerHTML = warning;
+        this.messagebox.appendChild(warn);
+    }
+
+    /**
+     * Updates the counter
+     */
+    updateCounter() {
+        if (!this.counter) { return; }
+
+        let ctext = "";
+        if (this.counter === 'limit') {
+            ctext = TextFactory.get('input-counter-limit', this.value.length, this.maxlength);
+        } else if (this.counter === 'sky') {
+            ctext = TextFactory.get('input-counter-sky', this.value.length);
+        } else { // remaining
+            ctext = TextFactory.get('input-counter-remaining', (this.maxlength - this.value.length));
+        }
+
+        this.charactercounter.innerHTML = ctext;
+
+        if ((this.maxlength) && (this.value.length >= this.maxlength)) {
+            this.charactercounter.classList.add('outofbounds');
+        } else if ((this.counter !== 'sky')
+            && (this.value.length >= (this.maxlength * 0.90))) {
+            this.charactercounter.classList.remove('outofbounds');
+            this.charactercounter.classList.add('danger');
+        } else {
+            this.charactercounter.classList.remove('danger');
+            this.charactercounter.classList.remove('outofbounds');
+        }
+    }
+
+    /**
+     * Calculate what the placeholder should be. This method is often overridden.
+     * @return {null|*}
+     */
+    calculatePlaceholder() {
+        return '';
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Enable the element
+     */
+    disable() {
+        this.input.setAttribute('disabled', 'true');
+        this.disabled = true;
+        if (this.container) { this.container.classList.add('disabled'); }
+    }
+
+    /**
+     * Disable the element
+     */
+    enable() {
+        this.input.removeAttribute('disabled');
+        this.disabled = false;
+        if (this.container) { this.container.classList.remove('disabled'); }
+    }
+
+    /**
+     * Switch to 'passive' mode.
+     */
+    pacify() {
+        this.container.classList.add('passive');
+        this.passive = true;
+    }
+
+    /**
+     * Switch from 'passive' mode to 'active' mode.
+     */
+    activate() {
+        this.container.classList.remove('passive');
+        this.passive = false;
+    }
+
+    /**
+     * Toggle the passive/active modes
+     */
+    toggleActivation() {
+        if (this.container.classList.contains('passive')) {
+            this.activate();
+            return;
+        }
+        this.pacify();
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get passivetext() {
+        let v;
+        if (this.value) {
+            v = this.value;
+        } else if (this.config.value) {
+            v = this.config.value;
+        }
+        if (v) {
+            if (this.renderer) {
+                return this.renderer(v);
+            }
+            return v;
+        }
+
+        return this.unsettext;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds and returns a container object for all parts.
+     * This gets over-ridden in elements that have additional structures, like a character counter
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
+        }
+        if (this.label) { this.container.appendChild(this.labelobj); }
+
+        let wrap = document.createElement('div');
+        wrap.classList.add('wrap');
+        wrap.appendChild(this.input);
+        if (this.inputcontrol) { wrap.appendChild(this.inputcontrol); }
+        this.container.appendChild(wrap);
+
+        if (!this.minimal) {
+            this.container.appendChild(this.passivebox);
+            if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
+            this.container.appendChild(this.messagebox);
+        }
+        if (this.minimal) { this.container.classList.add('minimal'); }
+
+        this.postContainerScrub();
+
+    }
+
+    /**
+     * Apply various things to the container and its children.
+     */
+    postContainerScrub() {
+        if (this.required) {
+            this.container.classList.add('required');
+            this.input.setAttribute('required', 'required');
+        }
+        if (this.mute) { this.container.classList.add('mute'); }
+        if (this.disabled) { this.container.classList.add('disabled'); }
+
+        if (this.hidden) {
+            this.container.style.display = 'none';
+            this.container.setAttribute('aria-hidden', 'true');
+        }
+        if ((this.config.value) && (this.config.value.length > 0)) {
+            this.container.classList.add('filled');
+        }
+        if (this.passive) {
+            this.pacify();
+        }
+        if (this.help) {
+            this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
+            this.input.setAttribute('aria-labelledby', `${this.id}-label`);
+        }
+
+        this.validate(true);
+    }
+
+    /**
+     * Build the passive text box.
+     */
+    buildInactiveBox() {
+        this.passivebox = document.createElement('div');
+        this.passivebox.classList.add('passivebox');
+        this.passivebox.innerHTML = this.passivetext;
+    }
+
+    /**
+     * Builds the input's DOM.
+     */
+    buildInput() {
+        const me = this;
+
+        if (this.type === 'textarea') {
+            this.input = document.createElement('textarea');
+        } else {
+            this.input = document.createElement('input');
+        }
+
+        this.input.setAttribute('type', this.type);
+        this.input.setAttribute('id', this.id);
+        this.input.setAttribute('name', this.name);
+        this.input.setAttribute('inputmode', this.inputmode);
+        this.input.setAttribute('aria-describedby', `msg-${this.id}`);
+        this.input.setAttribute('role', 'textbox');
+        this.input.setAttribute('tabindex', '0');
+        this.input.setAttribute('placeholder', this.placeholder);
+
+        if (this.title) { this.input.setAttribute('title', this.title); }
+        if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
+        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
+        if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
+
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.input.classList.add(c);
+            }
+        }
+        this.input.addEventListener('change', function(e) {
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+
+        this.input.addEventListener('keydown', function(e) {
+            // Reset this to keep readers from constantly beeping. It will re-validate later.
+            me.input.removeAttribute('aria-invalid');
+            me.updateCounter();
+            me.touched = true; // set self as touched.
+            if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
+                me.onkeydown(e, me);
+            }
+        });
+        this.input.addEventListener('keyup', function(e) {
+            if (me.helptimer) {
+                clearTimeout(me.helptimer);
+                me.helpbutton.closeTooltip();
+            }
+
+            if ((me.value) && (me.value.length > 0) && (me.container)) {
+                me.container.classList.add('filled');
+            } else {
+                me.container.classList.remove('filled');
+            }
+
+            if ((me.form) && (me.required) // If this is the only thing required, tell the form.
+                && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
+                if (me.form) { me.form.validate(); }
+            }
+            if ((e.key === 'Enter') // Return key
+                && (me.onreturn) && (typeof me.onreturn === 'function')) {
+                e.preventDefault();
+                e.stopPropagation();
+                me.onreturn(e, me);
+            } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
+                me.onkeyup(e, me);
+            }
+        });
+        this.input.addEventListener('focusin', function(e) {
+            if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
+                me.input.setAttribute('placeholder', me.placeholder);
+            }
+            if (me.container) {
+                me.container.classList.add('active');
+            }
+            if (me.help) {
+                me.helptimer = setTimeout(function() {
+                    me.helpbutton.openTooltip();
+                }, me.helpwaittime);
+            }
+            if ((me.focusin) && (typeof me.focusin === 'function')) {
+                me.focusin(e, me);
+            }
+        });
+        this.input.addEventListener('focusout', function(e) {
+
+            if (me.passivebox) {
+                me.passivebox.innerHTML = me.passivetext;
+            }
+
+            if (me.helptimer) {
+                clearTimeout(me.helptimer);
+                me.helpbutton.closeTooltip();
+            }
+
+            if ((me.mute) && (me.label)) {
+                me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+            }
+
+            if (me.container) { me.container.classList.remove('active'); }
+            me.validate();
+
+            if (me.form) { me.form.validate(); }
+
+            if ((me.focusout) && (typeof me.focusout === 'function')) {
+                me.focusout(e, me);
+            }
+        });
+        this.input.value = this.config.value;
+
+        if (this.required) {
+            this.input.setAttribute('required', 'true');
+            if (this.label) {
+                this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
+            }
+        }
+
+        if (this.mute) {
+            this.input.classList.add('mute');
+            if (this.label) {
+                this.input.setAttribute('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`);
+            }
+        }
+
+        if (this.hidden) { this.input.setAttribute('hidden', 'hidden'); }
+        if (this.disabled) { this.disable(); }
+
+        if (this.icon) { this.input.classList.add(`cfb-${this.icon}`); }
+
+    }
+
+    /**
+     * Builds the input's DOM.
+     */
+    buildLabel() {
+        const me = this;
+
+        if (!this.label) { return null; }
+
+        this.labelobj = document.createElement('label');
+        this.labelobj.setAttribute('for', this.id);
+        this.labelobj.setAttribute('id', `${this.id}-label`);
+        this.labelobj.innerHTML = this.label;
+
+        if (this.form) {
+            this.labelobj.setAttribute('form', this.form.id);
+        }
+
+        if (this.help) {
+            this.helpbutton = new HelpButton({
+                id: `${this.id}-help`,
+                tooltip: this.help
+            });
+            this.labelobj.appendChild(this.helpbutton.button);
+        }
+    }
+
+    /**
+     * Build the message box.
+     */
+    buildMessagebox() {
+        this.messagebox = document.createElement('ul');
+        this.messagebox.setAttribute('id', `msg-${this.id}`);
+        this.messagebox.classList.add('messagebox');
+    }
+
+    /**
+     * Draws a text counter in the field
+     */
+    buildCharacterCounter() {
+        if (this.counter) {
+            this.charactercounter = document.createElement('div');
+            this.charactercounter.classList.add('charcounter');
+            this.charactercounter.classList.add('topcontrol');
+            this.charactercounter.classList.add(this.counter);
+
+            if ((!this.maxlength) || (this.maxlength <= 0)) { this.counter = 'sky'; }
+
+            this.updateCounter();
+        }
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get autocomplete() { return this.config.autocomplete; }
+    set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }
+
+    get charactercounter() {
+        if (!this._charactercounter) { this.buildCharacterCounter(); }
+        return this._charactercounter;
+    }
+    set charactercounter(charactercounter) { this._charactercounter = charactercounter; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get counter() { return this.config.counter; }
+    set counter(counter) { this.config.counter = counter; }
+
+    get disabled() { return this.config.disabled; }
+    set disabled(disabled) { this.config.disabled = disabled; }
+
+    get helptimer() { return this._helptimer; }
+    set helptimer(helptimer) { this._helptimer = helptimer; }
+
+    get messagebox() {
+        if (!this._messagebox) { this.buildMessagebox(); }
+        return this._messagebox;
+    }
+    set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get errors() { return this._errors; }
+    set errors(errors) { this._errors = errors; }
+
+    get focusin() { return this.config.focusin; }
+    set focusin(focusin) {
+        if (typeof focusin !== 'function') {
+            console.error("Action provided for focusin is not a function!");
+        }
+        this.config.focusin = focusin;
+    }
+
+    get focusout() { return this.config.focusout; }
+    set focusout(focusout) {
+        if (typeof focusout !== 'function') {
+            console.error("Action provided for focusout is not a function!");
+        }
+        this.config.focusout = focusout;
+    }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
+
+    get forceconstraints() { return this.config.forceconstraints; }
+    set forceconstraints(forceconstraints) { this.config.forceconstraints = forceconstraints; }
+
+    get hidden() { return this.config.hidden; }
+    set hidden(hidden) { this.config.hidden = hidden; }
+
+    get help() { return this.config.help; }
+    set help(help) { this.config.help = help; }
+
+    get helpbutton() { return this._helpbutton; }
+    set helpbutton(helpbutton) { this._helpbutton = helpbutton; }
+
+    get helpwaittime() { return this.config.helpwaittime; }
+    set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get input() {
+        if (!this._input) { this.buildInput(); }
+        return this._input;
+    }
+    set input(input) { this._input = input; }
+
+    get label() { return this.config.label; }
+    set label(label) { this.config.label = label; }
+
+    get labelobj() {
+        if (!this._labelobj) { this.buildLabel(); }
+        return this._labelobj;
+    }
+    set labelobj(labelobj) { this._labelobj = labelobj; }
+
+    get maxlength() { return this.config.maxlength; }
+    set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get minimal() { return this.config.minimal; }
+    set minimal(minimal) { this.config.minimal = minimal; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
+
+    get name() { return this.config.name; }
+    set name(name) { this.config.name = name; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) {
+        if (typeof onchange !== 'function') {
+            console.error("Action provided for onchange is not a function!");
+        }
+        this.config.onchange = onchange;
+    }
+
+    get onkeydown() { return this.config.onkeydown; }
+    set onkeydown(onkeydown) {
+        if (typeof onkeydown !== 'function') {
+            console.error("Action provided for onkeydown is not a function!");
+        }
+        this.config.onkeydown = onkeydown;
+    }
+
+    get onkeyup() { return this.config.onkeyup; }
+    set onkeyup(onkeyup) {
+        if (typeof onkeyup !== 'function') {
+            console.error("Action provided for onkeyup is not a function!");
+        }
+        this.config.onkeyup = onkeyup;
+    }
+
+    get onreturn() { return this.config.onreturn; }
+    set onreturn(onreturn) {
+        if (typeof onreturn !== 'function') {
+            console.error("Action provided for onreturn is not a function!");
+        }
+        this.config.onreturn = onreturn;
+    }
+
+    get ontab() { return this.config.ontab; }
+    set ontab(ontab) {
+        if (typeof ontab !== 'function') {
+            console.error("Action provided for ontab is not a function!");
+        }
+        this.config.ontab = ontab;
+    }
+
+    get origval() { return this.config.origval; }
+    set origval(origval) { this.config.origval = origval; }
+
+    get passive() { return this.config.passive; }
+    set passive(passive) { this.config.passive = passive; }
+
+    get passivebox() {
+        if (!this._passivebox) { this.buildInactiveBox(); }
+        return this._passivebox;
+    }
+    set passivebox(passivebox) { this._passivebox = passivebox; }
+
+    get pattern() { return this.config.pattern; }
+    set pattern(pattern) { this.config.pattern = pattern; }
+
+    get placeholder() {
+        if (this.config.placeholder) return this.config.placeholder;
+        return this.calculatePlaceholder();
+    }
+    set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
+
+    get required() { return this.config.required; }
+    set required(required) { this.config.required = required; }
+
+    get requirederror() { return this.config.requirederror; }
+    set requirederror(requirederror) { this.config.requirederror = requirederror; }
+
+    get requiredtext() { return this.config.requiredtext; }
+    set requiredtext(requiredtext) { this.config.requiredtext = requiredtext; }
+
+    get title() { return this.config.title; }
+    set title(title) { this.config.title = title; }
+
+    get touched() { return this._touched; }
+    set touched(touched) { this._touched = touched; }
+
+    get type() { return this.config.type; }
+    set type(type) { this.config.type = type; }
+
+    get unsettext() { return this.config.unsettext; }
+    set unsettext(unsettext) { this.config.unsettext = unsettext; }
+
+    get validator() { return this.config.validator; }
+    set validator(validator) { this.config.validator = validator; }
+
+    get value() { return this.input.value; }
+    set value(value) {
+        this.config.value = value;
+        this.input.value = value;
+        this.passivebox.value = value;
+    }
+
+    get warnings() { return this._warnings; }
+    set warnings(warnings) { this._warnings = warnings; }
+
+}
+window.InputElement = InputElement;
+class TextInput extends InputElement {
+    constructor(config) {
+        if (!config) { config = {}; }
+        config.type = "text";
+        super(config);
+    }
+}
+window.TextInput = TextInput;
+class SelectMenu extends InputElement {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            combobox: false,
+            unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
+            icon: "chevron-down",
+            prefix: null,   // a prefix to display in the trigger box.
+            value: null,    // Use this to set the value of the item
+            options: [],    // Array of option dictionary objects.  Printed in order given.
+                            // { label: "Label to show", value: "v", checked: true }
+            onchange: null  // The change handler. Passed (self).
+        };
+    }
+
+    /**
+     * Close open menus
+     */
+    static closeOpen() {
+        if (SelectMenu.activeMenu) {
+            SelectMenu.activeMenu.close();
+        }
+    }
+
+    /**
+     * Define the SelectMenu
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        config = Object.assign({}, SelectMenu.DEFAULT_CONFIG, config);
+        if (!config.name) {
+            config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
+        }
+        super(config);
+
+        if (config.value) {
+            this.origval = config.value;
+        }
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    /**
+     * Let us know if the button is open
+     * @return boolean true if it is!
+     */
+    get isopen() {
+        return (this.wrapper.getAttribute('aria-expanded') === 'true');
+    }
+
+    /**
+     * Return the selected radio input.
+     * @return {HTMLElement}
+     */
+    get selected() {
+        let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);
+        if (sel) { return sel; }
+        return null;
+    }
+
+    get value() {
+        if (!this.selected) { return null; }
+        return this.selected.value;
+    }
+
+    set value(value) {
+        this.config.value = value;
+        this.triggerbox.value = value;
+        this.passivebox.value = value;
+    }
+
+    get passivetext() {
+        if (this.selectedoption) { return this.selectedoption.label; }
+        if (this.value) { return this.value; }
+        if (this.config.value) { return this.config.value; }
+        return this.unsettext;
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Scroll to a specific element in the list
+     * @param element the element to scroll to
+     */
+    scrollto(element) {
+        if (!element) return;
+        if ((this.scrolleditem) && (element.getAttribute('id') === this.scrolleditem.getAttribute('id'))) {
+            return; // this is us, don't reflow.
+        }
+        this.optionlist.scrollTop = element.offsetHeight;
+        this.scrolleditem = element;
+    }
+
+    /**
+     * Scroll the select to the selected element and optionally set focus there
+     * @param andfocus if true, focus on the element.
+     */
+    jumptoSelected(andfocus) {
+        let sel = this.optionlist.querySelector('li[aria-selected="true"]');
+        if (!sel) {
+            sel = this.optionlist.querySelector('li:first-child');
+        }
+        if (sel) {
+            this.scrollto(sel);
+            if (andfocus) {
+                sel.focus();
+            }
+        }
+    }
+
+    /**
+     * Opens the option list.
+     */
+    open() {
+        const me = this;
+
+        SelectMenu.closeOpen(); // close open menus
+
+        document.body.appendChild(this.listbox);
+
+        this.listbox.removeAttribute('aria-hidden');
+        this.wrapper.setAttribute('aria-expanded', true);
+
+        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
+            li.setAttribute('tabindex', '0');
+        }
+
+        if (typeof SelectMenu.activeMenu === 'undefined' ) {
+            SelectMenu.activeMenu = this;
+        } else {
+            SelectMenu.activeMenu = this;
+        }
+
+        this.setPosition();
+
+        window.addEventListener('scroll', this.setPosition, true);
+
+        setTimeout(function() { // Set this after, or else we'll get bouncing.
+            me.setCloseListener();
+        }, 100);
+    }
+
+    /**
+     * Set the position of the open menu on the screen
+     */
+    setPosition() {
+        if (!SelectMenu.activeMenu) { return; }
+        let self = SelectMenu.activeMenu;
+
+        let bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.wrapper.getBoundingClientRect(),
+            offsetLeft = elemRect.left - bodyRect.left,
+            offsetTop = elemRect.top - bodyRect.top;
+
+        self.listbox.style.top = `${(offsetTop + self.wrapper.clientHeight)}px`;
+        self.listbox.style.left = `${offsetLeft}px`;
+        self.listbox.style.width = `${self.container.clientWidth}px`;
+    }
+
+    /**
+     * Closes the option list.
+     */
+    close() {
+        window.removeEventListener('scroll', this.setPosition, true);
+
+        this.listbox.setAttribute('aria-hidden', 'true');
+        this.listbox.setAttribute('tabindex', '-1');
+        this.wrapper.setAttribute('aria-expanded', false);
+
+        for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
+            li.setAttribute('tabindex', '-1');
+        }
+
+        if (!this.combobox) {
+            if (this.selected) {
+                let seltext = this.selected.parentNode.querySelector('span.text');
+                if (seltext) {
+                    this.triggerbox.value = seltext.innerHTML;
+                }
+            }
+        }
+
+        this.container.appendChild(this.listbox);
+        SelectMenu.activeMenu = null;
+    }
+
+    disable() {
+        this.triggerbox.setAttribute('disabled', 'disabled');
+        this.wrapper.removeAttribute('aria-expanded');
+        this.disabled = true;
+        if (this.triggerbox) { this.triggerbox.classList.add('disabled'); }
+        if (this.container) { this.container.classList.add('disabled'); }
+    }
+
+    enable() {
+        this.triggerbox.removeAttribute('disabled');
+        this.disabled = false;
+        if (this.triggerbox) { this.triggerbox.classList.remove('disabled'); }
+        if (this.container) { this.container.classList.remove('disabled'); }
+    }
+
+    pacify() {
+        this.container.classList.add('passive');
+        this.optionlist.setAttribute('aria-hidden', true);
+        this.passive = true;
+    }
+
+    activate() {
+        this.container.classList.remove('passive');
+        this.optionlist.removeAttribute('aria-hidden');
+        this.passive = false;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('select-container');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        if (this.labelobj) { this.container.appendChild(this.labelobj); }
+
+        this.wrapper = document.createElement('div');
+        this.wrapper.classList.add('wrap');
+        this.wrapper.setAttribute('role', 'combobox');
+        this.wrapper.setAttribute('aria-haspopup', 'listbox');
+        this.wrapper.setAttribute('aria-expanded', false);
+        this.wrapper.setAttribute('aria-owns', `${this.id}-options`);
+        if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
+        this.wrapper.appendChild(this.triggerbox);
+
+        this.container.append(this.wrapper);
+
+        this.listbox = document.createElement('div');
+        this.listbox.setAttribute('id', `${this.id}-options`);
+        this.listbox.setAttribute('aria-hidden', 'true');
+        this.listbox.setAttribute('role', 'listbox');
+        this.listbox.classList.add('selectmenu-menu');
+        this.listbox.appendChild(this.optionlist);
+
+        this.container.appendChild(this.listbox);
+
+        if (!this.minimal) {
+            this.container.appendChild(this.passivebox);
+            this.container.appendChild(this.messagebox);
+        }
+        if (this.minimal) { this.container.classList.add('minimal'); }
+
+        if (this.value) {
+            //this.select(this.value);
+        }
+
+        this.postContainerScrub();
+    }
+
+    /**
+     * Select a specific entry, given a value
+     * @param value the value to select
+     */
+    select(value) {
+        let allopts = this.listbox.querySelectorAll('li');
+        for (let o of allopts) {
+            let radio = o.querySelector(`input[name=${this.name}`);
+            if (o.getAttribute('data-value') === value) {
+                o.setAttribute('aria-selected', true);
+                radio.checked = true;
+            } else {
+                o.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
+    }
+
+    /**
+     * Builds the trigger box for the select.
+     */
+    buildTriggerBox() {
+        const me = this;
+        this.triggerbox = document.createElement('input');
+        this.triggerbox.classList.add('trigger');
+        this.triggerbox.setAttribute('type', 'text');
+        this.triggerbox.setAttribute('tabindex', '0');
+        this.triggerbox.setAttribute('aria-autocomplete', 'none');
+        this.triggerbox.setAttribute('aria-activedescendant', '');
+        this.triggerbox.setAttribute('placeholder', this.placeholder);
+
+        this.triggerbox.addEventListener('focusin', function(e) {
+            if (me.disabled) {
+                e.stopPropagation();
+                return;
+            }
+            me.triggerbox.select(); // Select all the text
+            me.open();
+        });
+
+        this.triggerbox.addEventListener('keyup', function(e) {
+            if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
+                me.close();
+            } else {
+                switch (e.key) {
+                    case 'Enter':
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
+                        // Nothing.
+                        break;
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
+                        me.close();
+                        break;
+                    case 'ArrowDown': // Down
+                        e.preventDefault();
+                        me.open();
+                        me.jumptoSelected(true);
+                        break;
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
+                        me.updateSearch();
+                        break;
+                    case ' ': // space
+                    default:
+                        me.updateSearch();
+                        break;
+                }
+            }
+        });
+
+        if (this.mute) { this.triggerbox.classList.add('mute'); }
+
+    }
+
+    calculatePlaceholder() {
+        if (this.unselectedtext) { return this.unselectedtext; }
+        return TextFactory.get('selectmenu-placeholder-default');
+    }
+
+    buildOptions() {
+
+        this.optionlist = document.createElement('ul');
+        this.optionlist.classList.add('selectmenu');
+        this.optionlist.setAttribute('id', this.id);
+        this.optionlist.setAttribute('tabindex', '-1');
+
+        let order = 1;
+        let minchars = 5;
+        for (let opt of this.options) {
+            if ((this.origval) && (this.origval === opt.value)) {
+                opt.checked = true;
+                this.selectedoption = opt;
+            } else {
+                delete opt.checked;
+            }
+
+            let o = this.buildOption(opt, order);
+
+            if ((opt.label) && (opt.label.length > minchars)) {
+                minchars = opt.label.length;
+            }
+            order++;
+            this.optionlist.appendChild(o);
+        }
+        //this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
+    }
+
+    buildOption(def, order) {
+        const me = this;
+
+        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
+        let next = order + 1,
+            previous = order - 1;
+        if (this.unselectedtext) {
+            if (previous < 0) { previous = 0; }
+        } else {
+            if (previous < 1) { previous = 1; }
+        }
+        if (next > this.options.length) { next = this.options.length; }
+
+        let opt = document.createElement('input');
+        opt.setAttribute('type', 'radio');
+        opt.setAttribute('name', this.name);
+        opt.value = def.value;
+        if (def.checked) {
+            opt.checked = true;
+        }
+
+        let li = document.createElement('li');
+        li.setAttribute('tabindex', '-1');
+        li.setAttribute('id', `li-${lId}`);
+        li.setAttribute('data-menuorder', order);
+        li.setAttribute('role', 'option');
+        li.setAttribute('data-value', def.value);
+
+        li.appendChild(opt);
+
+        li.addEventListener('keydown', function(e) {
+            if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
+                me.close();
+            } else {
+                switch (e.key) {
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
+                        // Nothing.
+                        break;
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
+                        e.preventDefault();
+                        me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
+                        break;
+                    case 'ArrowDown': // Down
+                        e.preventDefault();
+                        me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
+                        break;
+                    case 'Enter':
+                        li.click(); // click the one inside
+                        break;
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
+                        me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
+                        me.updateSearch();
+                        break;
+                    case ' ': // space
+                    default:
+                        e.preventDefault();
+                        me.triggerbox.value = me.triggerbox.value + e.key;
+                        me.updateSearch();
+                        break;
+                }
+            }
+
+        });
+
+        li.addEventListener('click', function() {
+            let listentries = me.optionlist.querySelectorAll('li');
+            for (let le of listentries) {
+                le.removeAttribute('aria-selected');
+                let opt = le.querySelector(`input[name=${me.name}]`);
+                if (opt) { opt.removeAttribute('checked') ; }
+            }
+            li.setAttribute('aria-selected', 'true');
+            li.querySelector(`input[name=${me.name}]`).checked = true;
+
+            if (me.prefix) {
+                me.triggerbox.value = `${me.prefix} ${def.label}`;
+            } else {
+                me.triggerbox.value = def.label;
+            }
+
+            me.selectedoption = def;
+
+            if (def.label === me.unselectedtext) {
+                me.passivebox.innerHTML = me.unsettext;
+            } else {
+                me.passivebox.innerHTML = def.label;
+            }
+
+            me.close();
+
+            me.validate();
+
+            if (me.form) { me.form.validate(); }
+
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+
+        let text = document.createElement('span');
+        text.classList.add('text');
+        text.innerHTML = def.label;
+        li.appendChild(text);
+
+        if (def.checked) {
+            this.origval = def.value;
+            if (this.prefix) {
+                this.triggerbox.value = `${this.prefix} ${def.label}`;
+            } else {
+                this.triggerbox.value = def.label;
+            }
+            li.setAttribute('aria-selected', 'true');
+        }
+
+        return li;
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Search the list of options and scroll to it
+     * @param s the string to search
+     */
+    findByString(s) {
+        if ((!s) || (typeof s !== 'string')) { return; }
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
+                this.scrollto(li);
+                li.focus();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Updates the counter
+     */
+    updateSearch() {
+        this.findByString(this.triggerbox.value);
+    }
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+        const me = this;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { me.close(); }
+        }, { once: true });
+
+        window.addEventListener('click', function(e) {
+            if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
+                me.setCloseListener();
+            } else {
+                me.close();
+            }
+        }, { once: true });
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get combobox() { return this.config.combobox; }
+    set combobox(combobox) { this.config.combobox = combobox; }
+
+    get listbox() { return this._listbox; }
+    set listbox(listbox) { this._listbox = listbox; }
+
+    get minimal() { return this.config.minimal; }
+    set minimal(minimal) { this.config.minimal = minimal; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) { this.config.onchange = onchange; }
+
+    get optionlist() {
+        if (!this._optionlist) { this.buildOptions(); }
+        return this._optionlist;
+    }
+    set optionlist(optionlist) { this._optionlist = optionlist; }
+
+    get options() { return this.config.options; }
+    set options(options) { this.config.options = options; }
+
+    get prefix() { return this.config.prefix; }
+    set prefix(prefix) { this.config.prefix = prefix; }
+
+    get selectedoption() { return this._selectedoption; }
+    set selectedoption(selectedoption) { this._selectedoption = selectedoption; }
+
+    get scrolleditem() { return this._scrolleditem; }
+    set scrolleditem(scrolleditem) { this._scrolleditem = scrolleditem; }
+
+    get triggerbox() {
+        if (!this._triggerbox) { this.buildTriggerBox(); }
+        return this._triggerbox;
+    }
+    set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
+
+    get unselectedtext() { return this.config.unselectedtext; }
+    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
+
+    get wrapper() { return this._wrapper; }
+    set wrapper(wrapper) { this._wrapper = wrapper; }
+
+}
+window.SelectMenu = SelectMenu;
+class BooleanToggle {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The button id
+            name: null,
+            form: null, // A form element this is in
+            label: null, // The text for the label.
+            checked: false, // Initial state.
+            classes: [], // Extra css classes to apply
+            disabled: false, // If true, make the checkbox disabled.
+            labelside: 'right', // Which side to put the label on.
+            style: null, // Default to box
+            onchange: null, // The change handler. Passed (self).
+            validator: null, // A function to run to test validity. Passed the self; returns true or false.,
+            value: null, // the value of the checkbox
+            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+                return `${data}`;
+            }
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
+        
+        if ((!this.arialabel) && (this.label)) { // munch aria label.
+            this.arialabel = this.label;
+        }
+
+        if (!this.id) { this.id = `check-${CFBUtils.getUniqueKey(5)}`; }
+        if (!this.name) { this.name = this.id; }
+        this.origval = this.checked;
+    }
+
+    /**
+     * Returns the raw element, without any container
+     * @return {*} the element.
+     */
+    get naked() { return this.toggle; }
+
+    /* STATE METHODS____________________________________________________________________ */
+
+    /**
+     * Runs validation and returns true or false, depending.
+     * @return {boolean}
+     */
+    validate() {
+        let valid = true;
+        if ((this.validator) && (typeof this.validator === 'function')) {
+            valid = this.validator(this);
+        }
+        return valid;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the container
+     */
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('checkbox');
+
+        if (this.hidden) { this.container.style.display = 'none'; }
+        if (this.disabled) { this.container.classList.add('disabled'); }
+
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+
+        if (this.labelside === 'right') {
+            this.container.classList.add('rightside');
+            this.container.appendChild(this.toggle);
+            this.container.appendChild(this.labelobj);
+        } else {
+            this.container.appendChild(this.labelobj);
+            this.container.appendChild(this.toggle);
+        }
+    }
+
+    /**
+     * Builds the DOM.
+     */
+    build() {
+        const me = this;
+        this.toggle = document.createElement('input');
+        this.toggle.setAttribute('type', "checkbox");
+        this.toggle.setAttribute('id', this.id);
+        this.toggle.setAttribute('name', this.name);
+        this.toggle.setAttribute('tabindex', '0'); // always 0
+        this.toggle.setAttribute('role', 'checkbox');
+        this.toggle.setAttribute('value', this.value);
+        this.toggle.classList.add(this.style);
+
+        for (let c of this.classes) {
+            this.toggle.classList.add(c);
+        }
+
+        this.toggle.addEventListener('change', function() {
+            if (me.toggle.checked) {
+                me.toggle.setAttribute('aria-checked','true');
+                me.toggle.checked = true;
+            } else {
+                me.toggle.removeAttribute('aria-checked');
+                me.toggle.checked = false;
+            }
+            me.checked = me.toggle.checked;
+
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+
+        if (this.disabled) { this.disable(); }
+        if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
+
+        if (this.checked) {
+            this.toggle.checked = true;
+            this.toggle.setAttribute('aria-checked', 'true');
+        }
+    }
+
+    /**
+     * Builds the input's DOM.
+     */
+    buildLabel() {
+        if (!this.label) { return null; }
+
+        this.labelobj = document.createElement('label');
+        this.labelobj.setAttribute('for', this.id);
+        this.labelobj.innerHTML = this.label;
+
+        if (this.form) {
+            this.labelobj.setAttribute('form', this.form.id);
+        }
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Enable the toggle
+     */
+    disable() {
+        this.toggle.setAttribute('disabled', 'disabled');
+        this.disabled = true;
+        if (this.container) { this.container.classList.add('disabled'); }
+    }
+
+    /**
+     * Disable the toggle
+     */
+    enable() {
+        this.toggle.removeAttr('disabled');
+        this.disabled = false;
+        if (this.container) { this.container.classList.remove('disabled'); }
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get arialabel() { return this.config.arialabel; }
+    set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get checked() { return this.config.checked; }
+    set checked(checked) { this.config.checked = checked; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get disabled() { return this.config.disabled; }
+    set disabled(disabled) { this.config.disabled = disabled; }
+
+    get form() { return this.config.form; }
+    set form(form) { this.config.form = form; }
+
+    get hidden() { return this.config.hidden; }
+    set hidden(hidden) { this.config.hidden = hidden; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get label() { return this.config.label; }
+    set label(label) { this.config.label = label; }
+
+    get labelobj() {
+        if (!this._labelobj) { this.buildLabel(); }
+        return this._labelobj;
+    }
+    set labelobj(labelobj) { this._labelobj = labelobj; }
+
+    get labelside() { return this.config.labelside; }
+    set labelside(labelside) { this.config.labelside = labelside; }
+
+    get name() { return this.config.name; }
+    set name(name) { this.config.name = name; }
+
+    get onchange() { return this.config.onchange; }
+    set onchange(onchange) {
+        if (typeof onchange !== 'function') {
+            console.error("Action provided for onchange is not a function!");
+        }
+        this.config.onchange = onchange;
+    }
+
+    get origval() { return this.config.origval; }
+    set origval(origval) { this.config.origval = origval; }
+
+    get renderer() { return this.config.renderer; }
+    set renderer(renderer) {
+        if (typeof renderer !== 'function') {
+            console.error("Value provided to renderer is not a function!");
+        }
+        this.config.renderer = renderer;
+    }
+
+    get style() { return this.config.style; }
+    set style(style) { this.config.style = style; }
+
+    get toggle() {
+        if (!this._toggle) { this.build(); }
+        return this._toggle;
+    }
+    set toggle(toggle) { this._toggle = toggle; }
+
+    get validator() { return this.config.validator; }
+    set validator(validator) { this.config.validator = validator; }
+
+    get value() { return this.config.value; }
+    set value(value) {
+        this.input.attr('value', value);
+        this.config.value = value;
+    }
+
+}
+
+class DateInput extends TextInput {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            basetime: '12:00:00', // Time to set dates on
+            timezone: 'GMT',
+            type: 'date',
+            gravity: 's', // The direction to open the datepicker
+            triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
+            forceconstraints: true,
+            dateicon: 'calendar'
+        };
+    }
+
+    /**
+     * Tests whether or the value is a valid date.
+     * @param date The date to check
+     * @returns {boolean} true or false, depending
+     */
+    static isValid(date) {
+        let d = new Date(date);
+        return d instanceof Date && !isNaN(d.getTime());
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, DateInput.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get inputcontrol() { return this.calbutton; }
+
+    get topcontrol() { return this.datedisplay; }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    calculatePlaceholder() {
+        return 'YYYY-MM-DD';
+    }
+
+    localValidator() {
+        if ((this.value) && (this.forceconstraints)) {
+            if (!DateInput.isValid(this.value)) {
+                this.errors.push(TextFactory.get('dateinput-error-invalid'));
+            }
+        }
+        this.updateDateDisplay();
+    }
+
+    /**
+     * Update the upper date display
+     */
+    updateDateDisplay() {
+        if ((!this.value) || (this.value === '')) {
+            this.datedisplay.classList.add('hidden');
+            this.datedisplay.innerHTML = '';
+            return;
+        }
+        this.datedisplay.classList.remove('hidden');
+        let d = new Date(`${this.value} ${this.basetime} GMT`);
+        this.datedisplay.innerHTML = d.toUTCString();
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the calendar button and attach the DatePicker
+     */
+    buildCalendarButton() {
+        const me = this;
+        this.datepicker = new DatePicker({
+            classes: ['menu'],
+            onselect: function(value) {
+                me.value = value;
+                me.triggerbutton.close();
+                me.input.focus();
+                me.validate();
+            }
+        });
+        this.triggerbutton = new ButtonMenu({
+            classes: ['naked'],
+            shape: 'square',
+            gravity: 'n',
+            icon: this.dateicon,
+            arialabel: this.triggerarialabel,
+            menu: this.datepicker.container,
+            action: function(e, self) {
+                if (self.isopen) {
+                    self.close();
+                    me.input.focus();
+                } else {
+                    self.open();
+                }
+                me.datepicker.renderMonth(me.value);
+                e.stopPropagation();
+            },
+        });
+
+        this.calbutton = document.createElement('div');
+        this.calbutton.classList.add('calbutton');
+        this.calbutton.classList.add('inputcontrol');
+        this.calbutton.appendChild(this.triggerbutton.button);
+
+        this.calbutton.addEventListener('mousedown', function(e) {
+            e.preventDefault(); // Prevents focus shifting.
+        });
+
+    }
+
+    /**
+     * Draws the date text display.
+     */
+    buildDateDisplay() {
+        this.datedisplay = document.createElement('div');
+        this.datedisplay.classList.add('datedisplay');
+        this.datedisplay.classList.add('topcontrol');
+        this.updateDateDisplay();
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get basetime() { return this.config.basetime; }
+    set basetime(basetime) { this.config.basetime = basetime; }
+
+    get calbutton() {
+        if (!this._calbutton) { this.buildCalendarButton(); }
+        return this._calbutton;
+    }
+    set calbutton(calbutton) { this._calbutton = calbutton; }
+
+    get datedisplay() {
+        if (!this._datedisplay) { this.buildDateDisplay(); }
+        return this._datedisplay;
+    }
+    set datedisplay(datedisplay) { this._datedisplay = datedisplay; }
+
+    get dateicon() { return this.config.dateicon; }
+    set dateicon(dateicon) { this.config.dateicon = dateicon; }
+
+    get datepicker() { return this._datepicker; }
+    set datepicker(datepicker) { this._datepicker = datepicker; }
+
+    get gravity() { return this.config.gravity; }
+    set gravity(gravity) { this.config.gravity = gravity; }
+
+    get timezone() { return this.config.timezone; }
+    set timezone(timezone) { this.config.timezone = timezone; }
+
+    get triggerarialabel() { return this.config.triggerarialabel; }
+    set triggerarialabel(triggerarialabel) { this.config.triggerarialabel = triggerarialabel; }
+
+    get triggerbutton() { return this._triggerbutton; }
+    set triggerbutton(triggerbutton) { this._triggerbutton = triggerbutton; }
+
+}
+
+
+class EmailInput extends TextInput {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            type: 'text',
+            forceconstraints: true,
+            pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'
+        };
+    }
+
+    /**
+     * Tests whether or not a string is a valid email address.
+     * @param email The email address to check
+     * @returns {boolean} true or false, depending
+     */
+    static isValid(email) {
+        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, EmailInput.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get inputmode() { return "email"; }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    calculatePlaceholder() {
+        return TextFactory.get('emailinput-placeholder-default');
+    }
+
+    localValidator() {
+        if ((this.value) && (this.forceconstraints)) {
+            if (!EmailInput.isValid(this.value)) {
+                this.errors.push(TextFactory.get('emailinput-error-invalid_web_address'));
+            }
+        }
+    }
+
+}
+
+
+class FileInput extends InputElement {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            type: "file",
+            icon: "upload",
+            accept: 'image/png,image/gif,image/jpg,image/jpeg', // the default accept mime-type
+            multiple: false, // Should the file uploader accept multiple files?
+            onchange: null // The change handler. Passed (self).
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get value() {
+        if (this.selected) { return this.selected.val(); }
+        return ''; // Return empty string for no value.
+    }
+
+    get topcontrol() { return this.searchdisplay; }
+
+    get passivetext() {
+        if (this.selectedoption) { return this.selectedoption.label; }
+        if (this.value) { return this.value; }
+        if (this.config.value) { return this.config.value; }
+        return this.unsettext;
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    calculatePlaceholder() {
+        if (this.multiple) { return TextFactory.get('fileinput-placeholder-multiple'); }
+        return TextFactory.get('fileinput-placeholder-file');
+    }
+
+    disable() {
+        this.triggerbox.setAttribute('disabled', 'disabled');
+        this.triggerbox.classList.add('disabled');
+        this.container.classList.add('disabled');
+        this.disabled = true;
+    }
+
+    enable() {
+        this.triggerbox.removeAttr('disabled');
+        this.triggerbox.classList.remove('disabled');
+        this.container.classList.remove('disabled');
+        this.disabled = false;
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('file-container');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.appendChild(this.labelobj);
+        this.container.appendChild(this.fileinput);
+
+        let wrap = document.createElement('div');
+        wrap.classList.add('wrap');
+        wrap.appendChild(this.triggerbox);
+        this.container.appendChild(wrap);
+
+        this.container.appendChild(this.messagebox);
+
+        this.postContainerScrub();
+    }
+
+    /**
+     * Builds the trigger box for the select.
+     */
+    buildTriggerBox() {
+        const me = this;
+        this.triggerbox = document.createElement('div');
+        this.triggerbox.classList.add('trigger');
+        this.triggerbox.setAttribute('tabindex', '-1');
+        this.triggerbox.innerHTML = this.placeholder;
+        this.triggerbox.addEventListener('click', function(e) {
+            if (me.disabled) {
+                e.stopPropagation();
+                return;
+            }
+            me.labelobj.click();
+        });
+        this.triggerbox.addEventListener('keydown', function(e) {
+            switch (e.key) {
+                case 'Tab':
+                    me.triggerbox.blur();
+                    break;
+                case 'Enter':
+                case ' ':
+                    me.labelobj.click();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        if (this.mute) { this.triggerbox.classList.add('mute'); }
+
+        if (this.icon) { this.triggerbox.classList.add(`cfb-${this.icon}`); }
+    }
+
+    /**
+     * Build file input
+     */
+    buildFileInput() {
+        const me = this;
+
+        this.fileinput = document.createElement('input');
+        this.fileinput.setAttribute('type', this.type);
+        this.fileinput.setAttribute('name', this.name);
+        this.fileinput.setAttribute('id', this.id);
+        this.fileinput.setAttribute('accept', this.accept);
+        this.fileinput.setAttribute('multiple', this.multiple);
+        this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
+        this.fileinput.addEventListener('focusin', function() {
+                me.triggerbox.focus();
+        });
+        this.fileinput.addEventListener('change', function(me) {
+            if ((me.fileinput.files) && (me.fileinput.files.length > 0)) {
+                let farray =  me.fileinput.files;
+                let fnames = [];
+                for (let i of farray) {
+                    fnames.push(i.name);
+                }
+                if (fnames.length > 0) {
+                    me.triggerbox.classList.add('files');
+                    me.triggerbox.innerHTML = fnames.join(', ');
+                } else {
+                    me.triggerbox.classList.remove('files');
+                    me.triggerbox.innerHTML = me.placeholder;
+
+                }
+            }
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get accept() { return this.config.accept; }
+    set accept(accept) { this.config.accept = accept; }
+
+    get fileinput() {
+        if (!this._fileinput) { this.buildFileInput(); }
+        return this._fileinput;
+    }
+    set fileinput(fileinput) { this._fileinput = fileinput; }
+
+    get multiple() { return this.config.multiple; }
+    set multiple(multiple) { this.config.multiple = multiple; }
+
+    get triggerbox() {
+        if (!this._triggerbox) { this.buildTriggerBox(); }
+        return this._triggerbox;
+    }
+    set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
+
+}
+window.FileInput = FileInput;
+class HiddenField extends TextInput {
+    /*
+     * HiddenFields should not be used for elements that may become visible at some time.
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        config.hidden = true;
+        config.type = "hidden";
+        super(config);
+    }
+
+    get container() {
+        return this.input;
+    }
+}
+window.HiddenField = HiddenField;
+class NumberInput extends TextInput {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            type: 'text',
+            pattern: '[0-9]*',
+            forceconstraints: true,
+            minnumber: null,
+            maxnumber: null,
+            downbuttonarialabel: TextFactory.get('decrement_number'),
+            upbuttonarialabel: TextFactory.get('increment_number'),
+            wholenumbers: false, // Require whole numbers
+            steppers: true,
+            step: 1
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);
+
+        /*
+         * Number inputs have a startlingly complicated set of configuration
+         */
+        if (config.step) {
+            if (isNaN(parseFloat(config.step))) {
+                console.error(`step is defined as ${config.step} but is not a number. Deleting.`);
+                delete config.step;
+            } else if (Number(config.step) <= 0) {
+                console.error(`step cannot be a negative number. Deleting.`);
+                delete config.step;
+            } else {
+                config.step = Number(config.step);
+            }
+        }
+        if (config.maxnumber) {
+            if (isNaN(parseFloat(config.maxnumber))) {
+                console.error(`maxnumber is defined as ${config.maxnumber} but is not a number. Deleting.`);
+                delete config.maxnumber;
+            } else {
+                config.maxnumber = Number(config.maxnumber);
+            }
+        }
+        if (config.minnumber) {
+            if (isNaN(parseFloat(config.minnumber))) {
+                console.error(`minnumber is defined as ${config.minnumber} but is not a number. Deleting.`);
+                delete config.maxnumber;
+            } else {
+                config.minnumber = Number(config.minnumber);
+            }
+        }
+
+        // Have to take over any keydowns in order to overload the arrow keys.
+        if (config.onkeydown) {
+            config.origkeydown = config.onkeydown;
+        }
+        config.onkeydown = function(e, self) {
+            switch (e.key) {
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case '.':
+                case '*':
+                case '%':
+                case '$':
+                case '-':
+                case '!':
+                case '#':
+                case '+':
+                case '=':
+                case '>':
+                case '<':
+                case '?':
+                case 'Backspace':
+                case 'Delete':
+                case 'Enter':
+                case 'Tab':
+                    // Nothing.  These are characters that could be conceivably used
+                    break;
+                case 'ArrowUp': // Up
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.increment();
+                    break;
+                case 'ArrowDown': // Down
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.decrement();
+                    break;
+                default:
+                    if (self.forceconstraints) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    break;
+            }
+
+            if ((self.origkeydown) && (typeof self.origkeydown === 'function')) {
+                self.origkeydown(e, self);
+            }
+        };
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get inputmode() { return "numeric"; }
+
+    get inputcontrol() { return this.stepbuttons; }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    localValidator(onload) {
+        if (this.value) {
+            if (isNaN(this.value)) {
+                this.errors.push(TextFactory.get('numberinput-error-nan'));
+                return;
+            }
+            let v = parseFloat(this.value);
+            if ((this.minnumber) && (v < this.minnumber)) {
+                this.errors.push(TextFactory.get('numberinput-error-minimum_value', this.minnumber));
+            } else if ((this.maxnumber) && (v > this.maxnumber)) {
+                this.errors.push(TextFactory.get('numberinput-error-maximum_value', this.maxnumber));
+            } else if ((this.step) && (v % this.step !== 0)) {
+                this.errors.push(TextFactory.get('numberinput-error-values_divisible', this.step));
+            } else if ((this.wholenumbers) && (v % 1 > 0)) {
+                this.errors.push(TextFactory.get('numberinput-error-must_be_whole_numbers'));
+            }
+        }
+    }
+
+    calculatePlaceholder() {
+        let text = TextFactory.get('numberinput-placeholder-basic');
+        if ((this.minnumber) && (this.maxnumber)) {
+            text = TextFactory.get('numberinput-placeholder-between_x_y', this.minnumber, this.maxnumber);
+        } else if (this.minnumber) {
+            text = TextFactory.get('numberinput-placeholder-larger_than_x', this.minnumber);
+        } else if (this.maxnumber) {
+            text = TextFactory.get('numberinput-placeholder-smaller_than_y', this.maxnumber);
+        }
+        if ((this.step) && (this.step > 1)) {
+            text += TextFactory.get('numberinput-placeholder-fragment_increments', this.step);
+        }
+        return text;
+    }
+
+    /**
+     * Increment the number
+     * @param step the amount to increment by.
+     */
+    increment(step = 1) {
+        if ((!step) || (isNaN(step))) { step = 1; }
+        let val = parseFloat(this.value);
+        if (!val) { val = 0; }
+        if (!isNaN(val)) {
+            val += step;
+            if ((this.maxnumber) && (val > this.maxnumber)) {
+                val = this.maxnumber;
+            }
+            this.value = val;
+        }
+    }
+
+    /**
+     * Decrement the number
+     * @param step the amount to decrement by
+     */
+    decrement(step=1) {
+        if ((!step) || (isNaN(step))) { step = 1; }
+        let val = parseFloat(this.value);
+        if (!val) { val = 0; }
+        if (!isNaN(val)) {
+            val -= step;
+            if ((this.maxnumber) && (val > this.maxnumber)) {
+                val = this.maxnumber;
+            }
+            this.value = val;
+        }
+
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Build the steppers
+     */
+    buildSteppers() {
+        const me = this;
+        if (this.steppers) {
+            this.upbtn = new SimpleButton({
+                classes: ['naked'],
+                icon: 'triangle-up',
+                arialabel: this.upbuttonarialabel,
+                notab: true,
+                action: function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.increment(me.step);
+                }
+            });
+            this.downbtn = new SimpleButton({
+                classes: ['naked'],
+                icon: 'triangle-down',
+                arialabel: this.downbuttonarialabel,
+                notab: true,
+                action: function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    me.decrement(me.step);
+                }
+            });
+            this.stepbuttons = document.createElement('div');
+            this.stepbuttons.classList.add('stepbuttons');
+            this.stepbuttons.classList.add('inputcontrol');
+            this.stepbuttons.appendChild(this.upbtn.button);
+            this.stepbuttons.appendChild(this.downbtn.button);
+            this.stepbuttons.addEventListener('mousedown', function(e) {
+                e.preventDefault(); // Prevents focus shifting.
+            });
+        }
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get downbtn() { return this._downbtn; }
+    set downbtn(downbtn) { this._downbtn = downbtn; }
+
+    get downbuttonarialabel() { return this.config.downbuttonarialabel; }
+    set downbuttonarialabel(downbuttonarialabel) { this.config.downbuttonarialabel = downbuttonarialabel; }
+
+    get maxnumber() { return this.config.maxnumber; }
+    set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
+
+    get minnumber() { return this.config.minnumber; }
+    set minnumber(minnumber) { this.config.minnumber = minnumber; }
+
+    get origkeydown() { return this.config.origkeydown; }
+    set origkeydown(origkeydown) { this.config.origkeydown = origkeydown; }
+
+    get step() { return this.config.step; }
+    set step(step) { this.config.step = step; }
+
+    get stepbuttons() {
+        if (!this._stepbuttons) { this.buildSteppers(); }
+        return this._stepbuttons;
+    }
+    set stepbuttons(stepbuttons) { this._stepbuttons = stepbuttons; }
+
+    get steppers() { return this.config.steppers; }
+    set steppers(steppers) { this.config.steppers = steppers; }
+
+    get upbtn() { return this._upbtn; }
+    set upbtn(upbtn) { this._upbtn = upbtn; }
+
+    get upbuttonarialabel() { return this.config.upbuttonarialabel; }
+    set upbuttonarialabel(upbuttonarialabel) { this.config.upbuttonarialabel = upbuttonarialabel; }
+
+    get wholenumbers() { return this.config.wholenumbers; }
+    set wholenumbers(wholenumbers) { this.config.wholenumbers = wholenumbers; }
+
+}
+window.NumberInput = NumberInput;
+class PasswordInput extends TextInput {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            minlength: 5,
+            suggestedlength: 8,
+            maxlength: 30,
+            hideicon: 'eye-slash',
+            showicon: 'eye',
+            obscured: false, // If true, start with password hidden
+            forceconstraints: false,
+            type: 'password'
+        };
+    }
+
+    /**
+     * Define the object
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, PasswordInput.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get topcontrol() { return this.visibilityswitcher; }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildVisibilityControl() {
+        const me = this;
+
+        let icon = this.hideicon,
+            arialabel = TextFactory.get('hide_password');
+
+        if (this.obscured) {
+            icon = this.showicon;
+            arialabel = TextFactory.get('show_password');
+        }
+
+        this.eyebutton = new SimpleButton({
+            classes: ['naked'],
+            shape: 'square',
+            icon: icon,
+            arialabel: arialabel,
+            tooltip: TextFactory.get('passwordinput-change_visibility'),
+            action: function(e, self) {
+                me.toggleVisibility();
+                e.stopPropagation();
+            },
+        });
+
+        this.visibilitycontrol = document.createElement('div');
+        this.visibilitycontrol.classList.add('visbutton');
+        this.visibilitycontrol.classList.add('inputcontrol');
+        this.visibilitycontrol.appendChild(this.eyebutton.button);
+
+        this.visibilitycontrol.addEventListener('mousedown', function(e) {
+            e.preventDefault(); // Prevents focus shifting.
+        });
+
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    /**
+     * Toggle the visibility of the password
+     */
+    toggleVisibility() {
+        if (this.input.getAttribute('type') === 'text') {
+            this.setVisibility(false);
+        } else {
+            this.setVisibility(true);
+        }
+    }
+
+    /**
+     * Set the visibility of the user's password.
+     * @param visible if true, make the password visible.
+     */
+    setVisibility(visible) {
+        if (visible) {
+            this.obscured = false;
+            this.input.setAttribute('type', 'text');
+            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('hide_password'));
+            this.eyebutton.setIcon(this.hideicon);
+        } else {
+            this.obscured = true;
+            this.input.setAttribute('type', 'password');
+            this.eyebutton.button.setAttribute('aria-label', TextFactory.get('show_password'));
+            this.eyebutton.setIcon(this.showicon);
+        }
+        this.input.focus();
+    }
+
+    localValidator() {
+        if ((this.value) && (this.forceconstraints)) {
+            if (this.value.length < this.minlength) {
+                this.errors.push(TextFactory.get('passwordchanger-error-minlength', this.minlength));
+            } else if (this.value.length < this.suggestedlength) {
+                this.errors.push(TextFactory.get('passwordchanger-error-suggestedlength', this.suggestedlength));
+            } else if (this.value.length > this.maxlength) {
+                this.errors.push(TextFactory.get('passwordchanger-error-maxlength', this.maxlength));
+            }
+        }
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get eyebutton() { return this._eyebutton; }
+    set eyebutton(eyebutton) { this._eyebutton = eyebutton; }
+
+    get minlength() { return this.config.minlength; }
+    set minlength(minlength) { this.config.minlength = minlength; }
+
+    get hideicon() { return this.config.hideicon; }
+    set hideicon(hideicon) { this.config.hideicon = hideicon; }
+
+    get obscured() { return this.config.obscured; }
+    set obscured(obscured) { this.config.obscured = obscured; }
+
+    get showicon() { return this.config.showicon; }
+    set showicon(showicon) { this.config.showicon = showicon; }
+
+    get suggestedlength() { return this.config.suggestedlength; }
+    set suggestedlength(suggestedlength) { this.config.suggestedlength = suggestedlength; }
+
+    get visibilitycontrol() {
+        if (!this._visibilitycontrol) { this.buildVisibilityControl(); }
+        return this._visibilitycontrol;
+    }
+    set visibilitycontrol(visibilitycontrol) { this._visibilitycontrol = visibilitycontrol; }
+
+
+}
+window.PasswordInput = PasswordInput;
+class RadioGroup extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id : null, // The button id
+            name: null,
+            form: null, // A form element this is in
+            label: null, // The text for the label.
+            passive: false, // Start life in "passive" mode.
+            required: false, // Is this a required field or not
+            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
+            classes: [], // Extra css classes to apply
+            disabled: false, // If true, make this disabled.
+            options: [], // Array of option dictionary objects.  Printed in order given.
+                         // { label: "Label to show", value: "v", checked: true }
+            validator: null // A function to run to test validity. Passed the self; returns true or false.
+        };
+    }
+
+    /**
+     * Define the RadioGroup
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
+
+        if (!config.id) { // need to generate an id for label stuff
+            config.id = `radiogroup-${CFBUtils.getUniqueKey(5)}`;
+        }
+        if (!config.name) { config.name = config.id; }
+
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get input() { return this.optionlist; }
+
+    get passivetext() {
+        if (this.selectedoption) { return this.selectedoption.label; }
+        if (this.value) { return this.value; }
+        if (this.config.value) { return this.config.value; }
+        return this.unsettext;
+    }
+
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    disable() {
+        let radios = this.optionlist.querySelectorAll("input[type='radio']");
+        for (let r of radios) {
+            r.setAttribute('disabled', 'disabled');
+        }
+        this.disabled = true;
+        if (this.container) { this.container.classList.add('disabled'); }
+    }
+
+    enable() {
+        let radios = this.optionlist.querySelectorAll("input[type='radio']");
+        for (let r of radios) {
+            r.removeAttribute('disabled');
+        }
+        this.disabled = false;
+        if (this.container) { this.container.classList.remove('disabled'); }
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('radiogroup-container');
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.appendChild(this.labelobj);
+        this.container.appendChild(this.optionlist);
+        this.container.appendChild(this.passivebox);
+
+        this.postContainerScrub();
+
+    }
+
+    postContainerScrub() {
+        if (this.hidden) { this.container.style.display = 'none'; }
+
+        if (this.required) {
+            this.container.classList.add('required');
+            this.optionlist.setAttribute('required', 'required');
+        }
+
+        if (this.hidden) {
+            this.container.style.display = 'none';
+            this.container.setAttribute('aria-hidden', 'true');
+        }
+
+        if (this.passive) { this.pacify(); }
+        if (this.disabled) { this.disable(); }
+
+        if (this.help) {
+            this.optionlist.setAttribute('aria-describedby', `${this.id}-help-tt`);
+            this.optionlist.setAttribute('aria-labelledby', `${this.id}-label`);
+        }
+    }
+
+    buildOption(def) {
+
+        const me = this;
+        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
+        let op = document.createElement('input');
+        op.setAttribute('id', lId);
+        op.setAttribute('type', 'radio');
+        op.setAttribute('name', this.name);
+        op.setAttribute('tabindex', '0'); // always 0
+        op.setAttribute('value', def.value);
+        op.setAttribute('aria-label', def.label);
+        op.setAttribute('role', 'radio');
+        for (let c of this.classes) {
+            op.classList.add(c);
+        }
+        op.addEventListener('change', function() {
+            if (op.checked) {
+                op.setAttribute('aria-checked', 'true');
+            } else {
+                op.removeAttribute('aria-checked');
+            }
+
+            me.selectedoption = def;
+            if (def.label === me.unselectedtext) {
+                me.passivebox.innerHTML = me.unsettext;
+            } else {
+                me.passivebox.innerHTML = def.label;
+            }
+
+            me.validate();
+
+            if (me.form) { me.form.validate(); }
+
+            if ((me.onchange) && (typeof me.onchange === 'function')) {
+                me.onchange(me);
+            }
+        });
+
+        let opLabel = document.createElement('label');
+        opLabel.setAttribute('for', lId);
+        opLabel.innerHTML = def.label;
+
+        if (def.checked) {
+            this.origval = def.value;
+            op.checked = true;
+            op.setAttribute('aria-checked', 'true');
+        }
+
+        let li = document.createElement('li');
+        li.classList.add('radio');
+        li.appendChild(op);
+        li.appendChild(opLabel);
+        return li;
+    }
+
+    buildOptions() {
+        this.optionlist = document.createElement('ul');
+        this.optionlist.classList.add('radiogroup');
+        this.optionlist.setAttribute('tabindex', '-1');
+
+        for (let opt of this.options) {
+            let o = this.buildOption(opt);
+            if (opt.checked) {
+                this.selectedoption = opt;
+            }
+            this.optionlist.appendChild(o);
+        }
+    }
+
+}
+window.RadioGroup = RadioGroup;
+class TextArea extends InputElement {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            counter: 'sky', // A value for a character counter. Null means 'no counter'
+            // Possible values: null, 'remaining', 'limit', and 'sky'
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, TextArea.DEFAULT_CONFIG, config);
+        config.type = "textarea";
+        super(config);
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('textarea-container');
+        this.container.appendChild(this.labelobj);
+        this.container.appendChild(this.charactercounter);
+
+        let wrap = document.createElement('div');
+        wrap.classList.add('wrap');
+        wrap.appendChild(this.input);
+        this.container.appendChild(wrap);
+
+        this.container.appendChild(this.passivebox);
+        this.container.appendChild(this.messagebox);
+
+        this.postContainerScrub();
+
+    }
+
+}
+window.TextArea = TextArea;
+class URLInput extends TextInput {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            type: 'text',
+            forceconstraints: true
+        };
+    }
+
+    /**
+     * Check if the URI is encoded already
+     * @param uri the URI to check
+     * @returns {boolean}
+     */
+    static isEncoded(uri) {
+        uri = uri || '';
+        return uri !== decodeURIComponent(uri);
+    }
+
+    /**
+     * Tests whether or not a string is a valid URI.
+     * @param uri The uri to check
+     * @returns {boolean} true or false, depending
+     */
+    static isValid(uri) {
+        return new RegExp(/\w+:(\/?\/?)[^\s]+/).test(uri);
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, URLInput.DEFAULT_CONFIG, config);
+
+        if ((config.value) && (URLInput.isEncoded(config.value))) {
+            config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
+        }
+        super(config);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get inputmode() { return "url"; }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    calculatePlaceholder() {
+        return TextFactory.get('urlinput-placeholder-default');
+    }
+
+    localValidator() {
+        if ((this.value) && (this.forceconstraints)) {
+            if (!URLInput.isValid(this.value)) {
+                this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
+            }
+        }
+    }
+
+}
+window.URLInput = URLInput;
+class CountryMenu extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            unselectedtext: TextFactory.get('countrymenu_select'),
+            options: new CountryCode().options,
+            valuesas: 'code' // What to stick in the value for the elements.
+                             // "code" or "name".
+        };
+    }
+
+    /**
+     * Define the CountryMenu
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, CountryMenu.DEFAULT_CONFIG, config);
+        // { label: "Label to show", value: "v", checked: true }
+
+        if ((config.valuesas) && (config.valuesas === 'name')) {
+            config.options = [];
+            let countries = new CountryCode().list;
+            for (let c of countries) {
+                config.options.push({ label: c.name, value: c.name });
+            }
+        }
+        if (config.value) {
+            for (let o of config.options) {
+                if ((config.value.toUpperCase() === o.value) || (config.value.toUpperCase() === o.label)) {
+                    o.checked = true;
+                }
+            }
+        }
+
+        super(config);
+    }
+}
+window.CountryMenu = CountryMenu;
+class StateMenu extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            unselectedtext: TextFactory.get('statemenu_select'),
+            valuesas: 'code', // What to stick in the value for the elements.
+                            // "code" or "name".
+            options: new StateProvince().options,
+            set: null // Empty, or "US" or "CA". If empty, fills with all states.
+        };
+    }
+
+    /**
+     * Define the StateMenu
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, StateMenu.DEFAULT_CONFIG, config);
+        // { label: "Label to show", value: "v", checked: true }
+
+        let states = new StateProvince().set(config.set);
+        config.options = [];
+        for (let s of states) {
+            let d = { label: s.name };
+            if ((config.valuesas) && (config.valuesas === 'name')) {
+                d.value = s.name;
+            } else {
+                d.value = s.id;
+            }
+            if ((config.value) && ((config.value.toUpperCase() === s.id) || (config.value.toUpperCase() === s.name))) {
+                d.checked = true;
+            }
+            config.options.push(d);
+        }
+
+        super(config);
+
+    }
+}
+window.StateMenu = StateMenu;
+class TimezoneMenu extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            unselectedtext: TextFactory.get('timezone_select'),
+            options: new TimeZoneDefinition().options,
+            valuesas: 'offset' // What to stick in the value for the elements.
+                               // "offset" or "name".
+        };
+    }
+
+    /**
+     * Define the TimezoneMenu
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
+        super(config);
+    }
+}
+window.TimezoneMenu = TimezoneMenu;

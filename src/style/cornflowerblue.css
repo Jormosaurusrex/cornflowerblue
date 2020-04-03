@@ -4854,9 +4854,9 @@ div.tablist-container.responsive ul.tabbar li > a[aria-selected=true] {
   }
   nav.tablist-container.responsive[aria-expanded=true],
 div.tablist-container.responsive[aria-expanded=true] {
-    min-height: 90vh;
     max-height: 90vh;
     bottom: 0;
+    padding-bottom: 1em;
   }
   nav.tablist-container.responsive[aria-expanded=true] ul.tabbar,
 div.tablist-container.responsive[aria-expanded=true] ul.tabbar {
