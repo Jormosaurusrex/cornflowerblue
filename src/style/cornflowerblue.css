@@ -4506,7 +4506,8 @@ div.window-container div.dialog.isform div.content form div.actions {
     min-height: unset;
     max-height: 100vh;
   }
-  div.window-container div.dialog.isform div.content form div.contentbox div.elements {
+  div.window-container div.dialog.isform div.content form div.contentbox div.header,
+div.window-container div.dialog.isform div.content form div.contentbox div.elements {
     min-width: 100%;
   }
 }

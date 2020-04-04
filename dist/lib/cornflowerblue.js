@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-04-03
+/*! Cornflower Blue - v0.1.1 - 2020-04-04
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -22,9 +22,18 @@ class CFBUtils {
         if (ButtonMenu.activeMenu) {
             ButtonMenu.activeMenu.close();
         }
-
     }
 
+    /**
+     * Sets data-* attributes on a given DOM element
+     * @param mapping a dictionary of attributes
+     * @param element the DOM element to apply them to.
+     */
+    static applyDataAttributes(mapping, element) {
+        for (let k of Object.keys(mapping)) {
+            element.setAttribute(`data-${k}`, mapping[k]);
+        }
+    }
 
     /* GENERAL METHODS__________________________________________________________________ */
 
@@ -2117,6 +2126,7 @@ class SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             submits: false, // If true, force "type='submit'"
             arialabel: null, // THe aria-label attribute
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
@@ -2299,6 +2309,9 @@ class SimpleButton {
             this.button.classList.add(c);
         }
 
+        CFBUtils.applyDataAttributes(this.attributes, this.button);
+
+
         this.button.addEventListener('focusin', function(e) {
             if ((me.focusin) && (typeof me.focusin === 'function')) {
                 me.focusin(e, me);
@@ -2379,6 +2392,9 @@ class SimpleButton {
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
 
     get button() {
         if (!this._button) { this.buildButton(); }
@@ -5987,7 +6003,7 @@ class DataGrid extends Panel {
             }
 
             cell.appendChild(new ButtonMenu({
-                ghost: true,
+                mute: true,
                 shape: 'square',
                 data: rdata,
                 secondicon: null,
@@ -10222,6 +10238,7 @@ class InputElement {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // Component id
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             name: null, // Name attribute
             form: null, // A form element this is in
             counter: null, // A value for a character counter. Null means 'no counter'
@@ -10731,6 +10748,8 @@ class InputElement {
             }
         }
 
+        CFBUtils.applyDataAttributes(this.attributes, this.input);
+
         if (this.mute) {
             this.input.classList.add('mute');
             if (this.label) {
@@ -10808,6 +10827,9 @@ class InputElement {
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
 
     get autocomplete() { return this.config.autocomplete; }
     set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }
@@ -11029,6 +11051,7 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             combobox: false,
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
@@ -11266,6 +11289,9 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('role', 'listbox');
         this.listbox.classList.add('selectmenu-menu');
         this.listbox.appendChild(this.optionlist);
+
+        CFBUtils.applyDataAttributes(this.attributes, this.listbox);
+
 
         this.container.appendChild(this.listbox);
 
@@ -11574,6 +11600,9 @@ class SelectMenu extends InputElement {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
+
     get combobox() { return this.config.combobox; }
     set combobox(combobox) { this.config.combobox = combobox; }
 
@@ -11623,6 +11652,7 @@ class BooleanToggle {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // The button id
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             name: null,
             form: null, // A form element this is in
             label: null, // The text for the label.
@@ -11718,6 +11748,9 @@ class BooleanToggle {
             this.toggle.classList.add(c);
         }
 
+        CFBUtils.applyDataAttributes(this.attributes, this.toggle);
+
+
         this.toggle.addEventListener('change', function() {
             if (me.toggle.checked) {
                 me.toggle.setAttribute('aria-checked','true');
@@ -11789,6 +11822,9 @@ class BooleanToggle {
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
 
     get checked() { return this.config.checked; }
     set checked(checked) { this.config.checked = checked; }
@@ -12204,6 +12240,9 @@ class FileInput extends InputElement {
         this.fileinput.addEventListener('focusin', function() {
                 me.triggerbox.focus();
         });
+
+        CFBUtils.applyDataAttributes(this.attributes, this.fileinput);
+
         this.fileinput.addEventListener('change', function(me) {
             if ((me.fileinput.files) && (me.fileinput.files.length > 0)) {
                 let farray =  me.fileinput.files;
