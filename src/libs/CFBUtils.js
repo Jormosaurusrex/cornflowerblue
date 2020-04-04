@@ -27,6 +27,7 @@ class CFBUtils {
      * @param element the DOM element to apply them to.
      */
     static applyDataAttributes(mapping, element) {
+        if ((!mapping) || (!element)) { return; }
         for (let k of Object.keys(mapping)) {
             element.setAttribute(`data-${k}`, mapping[k]);
         }
