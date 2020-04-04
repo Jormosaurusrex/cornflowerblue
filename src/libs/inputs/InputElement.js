@@ -3,6 +3,7 @@ class InputElement {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // Component id
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             name: null, // Name attribute
             form: null, // A form element this is in
             counter: null, // A value for a character counter. Null means 'no counter'
@@ -512,6 +513,8 @@ class InputElement {
             }
         }
 
+        CFBUtils.applyDataAttributes(this.attributes, this.input);
+
         if (this.mute) {
             this.input.classList.add('mute');
             if (this.label) {
@@ -589,6 +592,9 @@ class InputElement {
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
 
     get autocomplete() { return this.config.autocomplete; }
     set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }

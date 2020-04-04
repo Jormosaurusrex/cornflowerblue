@@ -3,6 +3,7 @@ class BooleanToggle {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // The button id
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             name: null,
             form: null, // A form element this is in
             label: null, // The text for the label.
@@ -98,6 +99,9 @@ class BooleanToggle {
             this.toggle.classList.add(c);
         }
 
+        CFBUtils.applyDataAttributes(this.attributes, this.toggle);
+
+
         this.toggle.addEventListener('change', function() {
             if (me.toggle.checked) {
                 me.toggle.setAttribute('aria-checked','true');
@@ -169,6 +173,9 @@ class BooleanToggle {
 
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
+
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
 
     get checked() { return this.config.checked; }
     set checked(checked) { this.config.checked = checked; }

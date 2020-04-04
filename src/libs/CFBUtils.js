@@ -19,9 +19,18 @@ class CFBUtils {
         if (ButtonMenu.activeMenu) {
             ButtonMenu.activeMenu.close();
         }
-
     }
 
+    /**
+     * Sets data-* attributes on a given DOM element
+     * @param mapping a dictionary of attributes
+     * @param element the DOM element to apply them to.
+     */
+    static applyDataAttributes(mapping, element) {
+        for (let k of Object.keys(mapping)) {
+            element.setAttribute(`data-${k}`, mapping[k]);
+        }
+    }
 
     /* GENERAL METHODS__________________________________________________________________ */
 

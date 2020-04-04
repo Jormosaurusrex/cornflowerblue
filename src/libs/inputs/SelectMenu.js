@@ -2,6 +2,7 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
+            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             combobox: false,
             unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
             icon: "chevron-down",
@@ -239,6 +240,9 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('role', 'listbox');
         this.listbox.classList.add('selectmenu-menu');
         this.listbox.appendChild(this.optionlist);
+
+        CFBUtils.applyDataAttributes(this.attributes, this.listbox);
+
 
         this.container.appendChild(this.listbox);
 
@@ -546,6 +550,9 @@ class SelectMenu extends InputElement {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
 
     get combobox() { return this.config.combobox; }
     set combobox(combobox) { this.config.combobox = combobox; }

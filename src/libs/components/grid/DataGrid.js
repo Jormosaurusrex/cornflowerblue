@@ -1803,7 +1803,7 @@ class DataGrid extends Panel {
             }
 
             cell.appendChild(new ButtonMenu({
-                ghost: true,
+                mute: true,
                 shape: 'square',
                 data: rdata,
                 secondicon: null,

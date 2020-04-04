@@ -126,6 +126,9 @@ class FileInput extends InputElement {
         this.fileinput.addEventListener('focusin', function() {
                 me.triggerbox.focus();
         });
+
+        CFBUtils.applyDataAttributes(this.attributes, this.fileinput);
+
         this.fileinput.addEventListener('change', function(me) {
             if ((me.fileinput.files) && (me.fileinput.files.length > 0)) {
                 let farray =  me.fileinput.files;
