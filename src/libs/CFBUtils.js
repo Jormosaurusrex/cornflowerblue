@@ -27,12 +27,84 @@ class CFBUtils {
      * @param element the DOM element to apply them to.
      */
     static applyDataAttributes(mapping, element) {
+        if ((!mapping) || (!element)) { return; }
         for (let k of Object.keys(mapping)) {
             element.setAttribute(`data-${k}`, mapping[k]);
         }
     }
 
     /* GENERAL METHODS__________________________________________________________________ */
+
+    static getHumanReadableTime(date) {
+
+        let now = new Date(),
+            formatted,
+            second = 1000 * 60,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24,
+            week = day * 7;
+
+
+        let difference = date.getTime() - now.getTime();
+        if (difference > (week * 4)) { // In 3 Months
+            // Specials.  X Years, X Months
+        } else if (difference > week) {
+            // In 2 weeks
+        } else if (difference > (day * 2)) {
+            // In 3 Days
+        } else if (difference > day) {
+            // Tomorrow
+        } else if (difference > (hour * 12)) {
+            // specialized checks ("this afternoon")
+        } else if (difference > hour) {
+            // In 4 hours
+        } else if (difference > (minute * 30)) {
+            // In 42 minutes
+        } else if (difference > (minute * 25)) {
+            // About half an hour
+        } else if (difference > (minute * 15)) {
+            // In 17 minutes
+        } else if (difference > (minute * 5)) {
+            // 12 minutes from now
+        } else if (difference > (second * 120)) {
+            // in 2,3,4,5 minutes
+        } else if (difference > (seconds * 90)) {
+            // in about 2 minutes
+        } else if (difference > (seconds * 61)) {
+            // A minute
+        } else if (difference > (seconds * 45)) {
+            // About a minute
+        } else if (difference > (seconds * 20)) {
+            // in 37 seconds
+        } else if (difference > 0) {
+            // Now
+        } else if (difference < (seconds * 20)) {
+            // Just now
+        } else if (difference < (seconds * 45)) {
+            // About a minute ago
+        } else if (difference < (minutes * 55)) {
+            // 13 minutes ago
+        } else if (difference < (minutes * 70)) {
+            // About an hour ago
+        } else if (difference < day) {
+            // 4 Hours ago
+        } else if (difference < week) {
+            // 3 days ago
+        } else if (difference < (week * 3)) {
+            // 2 weeks ago
+        } else if (difference < (seconds * 20)) {
+
+        } else if (difference < (minute * 30)) {
+
+        } else {
+            // Just now
+        }
+
+
+        return formatted;
+    }
+
 
     /**
      * Change the timezone on a date.

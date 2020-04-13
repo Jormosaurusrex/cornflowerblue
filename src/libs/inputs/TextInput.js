@@ -1,7 +1,7 @@
 class TextInput extends InputElement {
     constructor(config) {
         if (!config) { config = {}; }
-        config.type = "text";
+        if (!config.type) { config.type = "text"; }
         super(config);
     }
 }

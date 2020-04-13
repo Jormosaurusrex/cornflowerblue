@@ -188,7 +188,6 @@ class SimpleButton {
 
         CFBUtils.applyDataAttributes(this.attributes, this.button);
 
-
         this.button.addEventListener('focusin', function(e) {
             if ((me.focusin) && (typeof me.focusin === 'function')) {
                 me.focusin(e, me);

@@ -849,9 +849,7 @@ class DataGrid extends Panel {
         }
 
         for (let key in entry) {
-            if (key === this.identifier) {
-                continue;
-            }
+            if (key === this.identifier) { continue; }
             let oldCell = rowDOM.querySelector(`[data-name=${key}`);
             let c = this.buildCell(entry, this.getField(key));
             rowDOM.replaceChild(c, oldCell);

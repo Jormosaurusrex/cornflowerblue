@@ -7,7 +7,7 @@ class PasswordInput extends TextInput {
             maxlength: 30,
             hideicon: 'eye-slash',
             showicon: 'eye',
-            obscured: false, // If true, start with password hidden
+            obscured: true, // If true, start with password hidden
             forceconstraints: false,
             type: 'password'
         };
@@ -25,7 +25,7 @@ class PasswordInput extends TextInput {
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
-    get topcontrol() { return this.visibilityswitcher; }
+    get inputcontrol() { return this.visibilitycontrol; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
