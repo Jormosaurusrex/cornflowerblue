@@ -93,7 +93,6 @@
   // Shadows
   --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
   --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
-  --text-shadow: var(--text-shadow-light);
   --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
   --on-white-text-shadow: 0 .03em .03em rgba(50,50,50,0.3);
   --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
@@ -101,6 +100,7 @@
   --box-shadow: .1em .1em .5em 0 rgba(50, 50, 50, 0.5);
   --hover-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
   --panel-shadow: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
+  --panel-shadow-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.4);
   --panel-shadow-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow-light-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
@@ -109,6 +109,15 @@
   --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
 
   --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+
+
+  // Default font styles
+  --paragraph-measure: auto;
+  --font-family: var(--fontstack-sansserif);
+  --text-color: var(--grey-dark);
+  --hot-text-color: var(--ultralight);
+  --required-color: var(--red);
+  --text-shadow: var(--text-shadow-light);
 
   --wide-measure: 40em;
   --thin-measure: 25em;
@@ -145,9 +154,6 @@
   --destructive-color-helf: var(--red-half);
   --destructive-color-quarter: var(--red-quarter);
   --destructive-color-translucent: var(--red-translucent);
-
-  --hot-text-color: var(--ultralight);
-  --required-color: var(--red);
 
   --accept-color: var(--green);
   --accept-color-half: var(--green-half);
@@ -187,7 +193,7 @@
   --disabled-color-translucent: var(--grey-translucent);
 
   // Aside
-  --aside-text-color: var(--paragraph-text-color);
+  --aside-text-color: var(-text-color);
   --aside-text-shadow: var(--text-shadow);
   --aside-background-color: var(--canvas-color-callout-lightweight);
   --aside-border-color: var(--blue);
@@ -257,7 +263,7 @@
 
   // Code
   --code-background-color: var(--canvas-color-callout-lightweight);
-  --code-text-color: var(--paragraph-text-color);
+  --code-text-color: var(--text-color);
   --code-text-shadow: var(--text-shadow);
   --code-font-family: var(--fontstack-monospace);
 
@@ -491,12 +497,6 @@
   --panel-closed-hover-background-color: var(--focus-color);
   --panel-closed-hover-text-color: var(--hot-text-color);
 
-  // Paragraph
-  --paragraph-text-color: var(--grey-dark);
-  --paragraph-measure: auto;
-  --paragraph-shadow: var(--text-shadow);
-  --paragraph-font-family: var(--fontstack-sansserif);
-
   // Progressmeter
   --progressmeter-simple-background-color: var(--ultralight);
   --progressmeter-simple-background-image: var(--darker-grey-stripes);
@@ -516,7 +516,7 @@
   --progressmeter-radial-tick-color: var(--hot-text-color);
 
   // Sup
-  --sup-text-color: var(--paragraph-text-color);
+  --sup-text-color: var(--text-color);
   --sup-text-shadow: var(--paragraph-text-shadow);
 
   // Radios inherit a lot from --checkbox-

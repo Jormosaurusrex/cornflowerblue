@@ -20,6 +20,8 @@ html {
 html,
 body {
   //height: 100vh;
+  color: var(--text-color);
+  font-family: var(--font-family);
   ::selection {
     background-color: var(--highlight-color);
     color: var(--hot-text-color);
@@ -156,10 +158,10 @@ h6 {
 p {
   margin: 1em 0 1em 0;
   line-height: 1.4;
-  color: var(--paragraph-text-color);
+  color: var(--text-color);
   width: var(--paragraph-measure);
-  text-shadow: var(--paragraph-shadow);
-  font-family: var(--paragraph-font-family);
+  text-shadow: var(--text-shadow);
+  font-family: var(--font-family);
   &.dropcap {
     &:first-letter {
       font-size: 5.5em;
@@ -167,6 +169,14 @@ p {
       line-height: .6; /* from 1 */
       margin-right: 0.05em;
     }
+  }
+}
+ul,
+ol {
+  > li {
+    color: var(--text-color);
+    text-shadow: var(--text-shadow);
+    font-family: var(--font-family);
   }
 }
 
