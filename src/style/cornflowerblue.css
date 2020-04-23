@@ -1001,7 +1001,7 @@ body.noisy:after {
 h1 {
   font-size: 3.5em;
   font-weight: 500;
-  margin: 0.5em 0 0.5em 0;
+  margin: 0.5rem 0 0.5rem 0;
   color: var(--headers-h1-text-color);
   text-shadow: var(--headers-h1-text-shadow);
   text-transform: var(--headers-h1-text-transform);
@@ -1016,7 +1016,7 @@ h1:after {
   content: "";
   border-top: 0.05em solid var(--headers-h1-border-color);
   flex: 1 0 2em;
-  margin: 0 0 0 0.1em;
+  margin: 0 0 0 0.1rem;
 }
 h1.inset {
   background-color: var(--headers-h1-text-color);
@@ -1035,7 +1035,7 @@ h1.inset {
 h2 {
   font-weight: 400;
   font-size: 2.5em;
-  margin: 0.5em 0 1em 0;
+  margin: 0.5rem 0 1rem 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
   text-shadow: var(--headers-h2-text-shadow);
@@ -1150,6 +1150,7 @@ ol > li {
   color: var(--text-color);
   text-shadow: var(--text-shadow);
   font-family: var(--font-family);
+  margin: 0.5em 0 0.5em 0;
 }
 
 a {
