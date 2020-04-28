@@ -3,6 +3,8 @@ class Panel {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // The id
+            dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
             contentid : null, // The contentid
             headerid : null, // The headerid
             title: null, // The title
@@ -135,6 +137,9 @@ class Panel {
             this.contentbox.appendChild(this.content);
         }
 
+        CFBUtils.applyAttributes(this.attributes, this.container);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.container);
+
         this.container.appendChild(this.contentbox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
@@ -165,8 +170,14 @@ class Panel {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get togglebutton() { return this._togglebutton; }
     set togglebutton(togglebutton) { this._togglebutton = togglebutton; }

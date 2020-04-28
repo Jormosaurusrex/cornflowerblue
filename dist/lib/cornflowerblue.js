@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-04-23
+/*! Cornflower Blue - v0.1.1 - 2020-04-27
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -21,6 +21,18 @@ class CFBUtils {
         // ButtonMenus
         if (ButtonMenu.activeMenu) {
             ButtonMenu.activeMenu.close();
+        }
+    }
+
+    /**
+     * Sets attributes on a given DOM element
+     * @param mapping a dictionary of attributes
+     * @param element the DOM element to apply them to.
+     */
+    static applyAttributes(mapping, element) {
+        if ((!mapping) || (!element)) { return; }
+        for (let k of Object.keys(mapping)) {
+            element.setAttribute(k, mapping[k]);
         }
     }
 
@@ -2198,7 +2210,8 @@ class SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
             submits: false, // If true, force "type='submit'"
             arialabel: null, // THe aria-label attribute
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
@@ -2381,7 +2394,8 @@ class SimpleButton {
             this.button.classList.add(c);
         }
 
-        CFBUtils.applyDataAttributes(this.attributes, this.button);
+        CFBUtils.applyAttributes(this.attributes, this.button);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.button);
 
         this.button.addEventListener('focusin', function(e) {
             if ((me.focusin) && (typeof me.focusin === 'function')) {
@@ -2478,6 +2492,9 @@ class SimpleButton {
 
     get container() { return this.button; }
     set container(container) { this.button = container; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
@@ -3148,6 +3165,8 @@ class Panel {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // The id
+            dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
             contentid : null, // The contentid
             headerid : null, // The headerid
             title: null, // The title
@@ -3280,6 +3299,9 @@ class Panel {
             this.contentbox.appendChild(this.content);
         }
 
+        CFBUtils.applyAttributes(this.attributes, this.container);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.container);
+
         this.container.appendChild(this.contentbox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
@@ -3310,8 +3332,14 @@ class Panel {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get attributes() { return this.config.attributes; }
+    set attributes(attributes) { this.config.attributes = attributes; }
+
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get togglebutton() { return this._togglebutton; }
     set togglebutton(togglebutton) { this._togglebutton = togglebutton; }

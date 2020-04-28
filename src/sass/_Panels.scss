@@ -6,7 +6,7 @@ div.panel {
   margin: 0;
   padding: var(--panel-padding);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
   h3 {
     display: flex;

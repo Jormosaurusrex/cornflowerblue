@@ -22,6 +22,18 @@ class CFBUtils {
     }
 
     /**
+     * Sets attributes on a given DOM element
+     * @param mapping a dictionary of attributes
+     * @param element the DOM element to apply them to.
+     */
+    static applyAttributes(mapping, element) {
+        if ((!mapping) || (!element)) { return; }
+        for (let k of Object.keys(mapping)) {
+            element.setAttribute(k, mapping[k]);
+        }
+    }
+
+    /**
      * Sets data-* attributes on a given DOM element
      * @param mapping a dictionary of attributes
      * @param element the DOM element to apply them to.

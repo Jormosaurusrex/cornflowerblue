@@ -1130,7 +1130,7 @@ h6.fancy:before {
 }
 
 p {
-  margin: 1em 0 1em 0;
+  margin: 0 0 2rem 0;
   line-height: 1.4;
   color: var(--text-color);
   width: var(--paragraph-measure);
@@ -1150,7 +1150,7 @@ ol > li {
   color: var(--text-color);
   text-shadow: var(--text-shadow);
   font-family: var(--font-family);
-  margin: 0.5em 0 0.5em 0;
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 a {
@@ -1160,9 +1160,9 @@ a {
 a:link {
   text-decoration: underline;
 }
-a:hover {
-  filter: brightness(120%);
-  text-decoration: underline double;
+a:focus {
+  outline: var(--link-color) dashed 0.1em;
+  outline-offset: 0.2em;
 }
 a:active {
   filter: brightness(120%);
@@ -1171,6 +1171,12 @@ a:visited {
   filter: brightness(80%);
   text-decoration: none;
 }
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    filter: brightness(120%);
+    text-decoration: underline double;
+  }
+}
 
 ol,
 ul {
@@ -1178,7 +1184,7 @@ ul {
   list-style-type: decimal;
   margin-inline-start: 0;
   margin-inline-end: 0;
-  padding-inline-start: 1.5em;
+  padding-inline-start: 1.5rem;
 }
 
 ul {
@@ -1191,8 +1197,8 @@ legend {
   display: block;
   font-weight: normal;
   position: relative;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
   font-size: 1em;
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
@@ -1203,7 +1209,7 @@ legend button.help {
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
   font-size: 1em;
-  margin: 0 0.5em 0 0.5em;
+  margin: 0 0.5rem 0 0.5rem;
 }
 label button.help:hover, label button.help:focus, label button.help:active,
 legend button.help:hover,
@@ -1239,7 +1245,7 @@ sup {
 blockquote {
   display: block;
   padding: 1em;
-  margin: 1em auto 0.5em auto;
+  margin: 1rem auto 0.5rem auto;
   width: 70%;
   max-width: 70%;
   min-width: 70%;
@@ -1251,13 +1257,13 @@ blockquote {
   text-shadow: var(--blockquote-text-shadow);
 }
 blockquote p {
-  margin: 0.5em;
+  margin: 0.5rem;
 }
 
 hr {
-  margin: 1em 2.5em 1em 2.5em;
+  margin: 1rem 2.5rem 1rem 2.5rem;
   background-color: var(--hr-background-color);
-  border-top: 0.2em double var(--hr-border-color);
+  border-top: 0.2rem double var(--hr-border-color);
   border-bottom: none;
   border-left: none;
   border-right: none;
@@ -1266,17 +1272,17 @@ hr {
 aside {
   display: block;
   float: right;
-  padding: 1em;
-  margin: 0 0 0.5em 0.5em;
+  padding: 1rem;
+  margin: 0 0 0.5rem 0.5rem;
   width: 40%;
   font-style: oblique;
-  border-left: 0.1em solid var(--aside-border-color);
+  border-left: 0.1rem solid var(--aside-border-color);
   background-color: var(--aside-background-color);
   color: var(--aside-text-color);
   text-shadow: var(--aside-text-shadow);
 }
 aside p {
-  margin: 0.5em;
+  margin: 0.5rem;
 }
 
 figure {
@@ -1288,14 +1294,14 @@ figure {
   flex-wrap: nowrap;
   float: right;
   clear: right;
-  padding: 1em;
-  margin: 0 0 1em 1em;
+  padding: 1rem;
+  margin: 0 0 1rem 1rem;
 }
 figure img {
   margin: 0;
 }
 figure figcaption {
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
 code {
@@ -1308,7 +1314,7 @@ code {
 code.block {
   display: block;
   font-size: 0.9em;
-  padding: 1.5em;
+  padding: 1.5rem;
   overflow: auto;
   white-space: unset;
 }
@@ -1871,7 +1877,8 @@ code.block {
 /* '' */
 div.input-container,
 div.textarea-container {
-  margin: 0.5em 0 0.5em 0;
+  margin: 0;
+  padding: 0.5em 0 0.5em 0;
   position: relative;
 }
 div.input-container label,
@@ -2333,6 +2340,7 @@ div.textarea-container div.passivebox {
 input[type=text],
 input[type=number],
 input[type=password],
+input[type=search],
 textarea {
   transition: all 0.2s;
   box-sizing: border-box;
@@ -2356,6 +2364,7 @@ textarea {
 input[type=text]::placeholder,
 input[type=number]::placeholder,
 input[type=password]::placeholder,
+input[type=search]::placeholder,
 textarea::placeholder {
   color: var(--input-default-placeholder-color);
   font-weight: normal;
@@ -2364,6 +2373,7 @@ textarea::placeholder {
 input[type=text]:disabled,
 input[type=number]:disabled,
 input[type=password]:disabled,
+input[type=search]:disabled,
 textarea:disabled {
   border-color: var(--input-disabled-border-color);
   background-color: var(--input-disabled-background-color);
@@ -2376,6 +2386,8 @@ input[type=number]:focus,
 input[type=number]:focus-within,
 input[type=password]:focus,
 input[type=password]:focus-within,
+input[type=search]:focus,
+input[type=search]:focus-within,
 textarea:focus,
 textarea:focus-within {
   border-color: var(--input-focused-border-color);
@@ -2387,6 +2399,8 @@ input[type=number]:focus::placeholder,
 input[type=number]:focus-within::placeholder,
 input[type=password]:focus::placeholder,
 input[type=password]:focus-within::placeholder,
+input[type=search]:focus::placeholder,
+input[type=search]:focus-within::placeholder,
 textarea:focus::placeholder,
 textarea:focus-within::placeholder {
   opacity: 0.3;
@@ -2394,6 +2408,7 @@ textarea:focus-within::placeholder {
 input[type=text].mute,
 input[type=number].mute,
 input[type=password].mute,
+input[type=search].mute,
 textarea.mute {
   background-color: var(--input-mute-background-color);
   box-shadow: var(--input-mute-box-shadow);
@@ -2402,6 +2417,7 @@ textarea.mute {
 input[type=text].mute::placeholder,
 input[type=number].mute::placeholder,
 input[type=password].mute::placeholder,
+input[type=search].mute::placeholder,
 textarea.mute::placeholder {
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
@@ -2410,6 +2426,7 @@ textarea.mute::placeholder {
 input[type=text].mute:focus,
 input[type=number].mute:focus,
 input[type=password].mute:focus,
+input[type=search].mute:focus,
 textarea.mute:focus {
   border-bottom-color: var(--focus-color);
   background-color: var(--input-focused-background-color);
@@ -2418,12 +2435,14 @@ textarea.mute:focus {
 input[type=text].mute:focus::placeholder,
 input[type=number].mute:focus::placeholder,
 input[type=password].mute:focus::placeholder,
+input[type=search].mute:focus::placeholder,
 textarea.mute:focus::placeholder {
   opacity: 0;
 }
 input[type=text].mute:disabled,
 input[type=number].mute:disabled,
 input[type=password].mute:disabled,
+input[type=search].mute:disabled,
 textarea.mute:disabled {
   --input-default-border-color: var(--input-disabled-placeholder-color);
   background-color: var(--input-mute-disabled-background-color);
@@ -2431,6 +2450,7 @@ textarea.mute:disabled {
 input[type=text].mute:disabled::placeholder,
 input[type=number].mute:disabled::placeholder,
 input[type=password].mute:disabled::placeholder,
+input[type=search].mute:disabled::placeholder,
 textarea.mute:disabled::placeholder {
   color: var(--input-disabled-placeholder-color);
   text-shadow: none;
@@ -4317,7 +4337,7 @@ div.panel {
   margin: 0;
   padding: var(--panel-padding);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
 }
 div.panel h3 {

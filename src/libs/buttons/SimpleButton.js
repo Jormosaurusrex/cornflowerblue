@@ -3,7 +3,8 @@ class SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             id : null, // the id
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
             submits: false, // If true, force "type='submit'"
             arialabel: null, // THe aria-label attribute
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
@@ -186,7 +187,8 @@ class SimpleButton {
             this.button.classList.add(c);
         }
 
-        CFBUtils.applyDataAttributes(this.attributes, this.button);
+        CFBUtils.applyAttributes(this.attributes, this.button);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.button);
 
         this.button.addEventListener('focusin', function(e) {
             if ((me.focusin) && (typeof me.focusin === 'function')) {
@@ -283,6 +285,9 @@ class SimpleButton {
 
     get container() { return this.button; }
     set container(container) { this.button = container; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }

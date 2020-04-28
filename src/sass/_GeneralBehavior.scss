@@ -156,7 +156,7 @@ h6 {
 
 // Text Elements
 p {
-  margin: 1em 0 1em 0;
+  margin: 0 0 2rem 0;
   line-height: 1.4;
   color: var(--text-color);
   width: var(--paragraph-measure);
@@ -177,7 +177,7 @@ ol {
     color: var(--text-color);
     text-shadow: var(--text-shadow);
     font-family: var(--font-family);
-    margin: .5em 0 .5em 0;
+    margin: .5rem 0 .5rem 0;
   }
 }
 
@@ -187,9 +187,9 @@ a {
   &:link {
     text-decoration: underline;
   }
-  &:hover {
-    filter: brightness(120%);
-    text-decoration: underline double;
+  &:focus {
+    outline: var(--link-color) dashed .1em;
+    outline-offset: .2em;
   }
   &:active {
     filter: brightness(120%);
@@ -197,6 +197,12 @@ a {
   &:visited {
     filter: brightness(80%);
     text-decoration: none;
+  }
+  @include for-hover-only {
+    &:hover {
+      filter: brightness(120%);
+      text-decoration: underline double;
+    }
   }
 }
 
@@ -206,7 +212,7 @@ ul {
   list-style-type: decimal;
   margin-inline-start: 0;
   margin-inline-end: 0;
-  padding-inline-start: 1.5em;
+  padding-inline-start: 1.5rem;
 }
 
 ul {
@@ -219,8 +225,8 @@ legend {
   display: block;
   font-weight: normal;
   position: relative;
-  margin-top: 1em;
-  margin-bottom: .5em;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
   font-size: 1em;
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
@@ -229,7 +235,7 @@ legend {
     color: var(--label-color);
     text-shadow:var(--label-text-shadow);
     font-size: 1em;
-    margin: 0 .5em 0 .5em;
+    margin: 0 .5rem 0 .5rem;
     &:hover,
     &:focus,
     &:active {
@@ -263,7 +269,7 @@ sup {
 blockquote {
   display: block;
   padding: 1em;
-  margin: 1em auto .5em auto;
+  margin: 1rem auto .5rem auto;
   width: 70%;
   max-width: 70%;
   min-width: 70%;
@@ -274,14 +280,14 @@ blockquote {
   color: var(--blockquote-text-color);
   text-shadow: var(--blockquote-text-shadow);
   p {
-    margin: .5em;
+    margin: .5rem;
   }
 }
 
 hr {
-  margin: 1em 2.5em 1em 2.5em;
+  margin: 1rem 2.5rem 1rem 2.5rem;
   background-color: var(--hr-background-color);
-  border-top: .2em double var(--hr-border-color);
+  border-top: .2rem double var(--hr-border-color);
   border-bottom: none;
   border-left: none;
   border-right: none;
@@ -290,16 +296,16 @@ hr {
 aside {
   display: block;
   float: right;
-  padding: 1em;
-  margin: 0 0 .5em .5em;
+  padding: 1rem;
+  margin: 0 0 .5rem .5rem;
   width: 40%;
   font-style: oblique;
-  border-left: .1em solid var(--aside-border-color);
+  border-left: .1rem solid var(--aside-border-color);
   background-color: var(--aside-background-color);
   color: var(--aside-text-color);
   text-shadow: var(--aside-text-shadow);
   p {
-    margin: .5em;
+    margin: .5rem;
   }
 }
 
@@ -313,13 +319,13 @@ figure {
   flex-wrap: nowrap;
   float: right;
   clear: right;
-  padding: 1em;
-  margin: 0 0 1em 1em;
+  padding: 1rem;
+  margin: 0 0 1rem 1rem;
   img {
     margin: 0;
   }
   figcaption {
-    margin-top: 1em;
+    margin-top: 1rem;
   }
 }
 
@@ -332,7 +338,7 @@ code {
   &.block {
     display: block;
     font-size: .9em;
-    padding: 1.5em;
+    padding: 1.5rem;
     overflow: auto;
     white-space: unset;
   }
