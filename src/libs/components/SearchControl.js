@@ -84,7 +84,7 @@ class SearchControl {
         this.searchinput = document.createElement('input');
 
         this.searchinput.setAttribute('type', 'text');
-        this.searchinput.setAttribute('role', 'textbox');
+        this.searchinput.setAttribute('role', 'search');
         this.searchinput.setAttribute('tabindex', '0');
 
         if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }

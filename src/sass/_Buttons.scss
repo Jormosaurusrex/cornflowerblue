@@ -1,6 +1,7 @@
 button,
 input[type='submit'],
-input[type='reset'] {
+input[type='reset'],
+a.button {
   display: flex;
   align-items: center;
   flex-direction: row;

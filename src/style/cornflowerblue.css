@@ -2617,7 +2617,8 @@ div.select-container.disabled.mute input.trigger {
 
 button,
 input[type=submit],
-input[type=reset] {
+input[type=reset],
+a.button {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -2646,32 +2647,38 @@ input[type=reset] {
 }
 button span.icon,
 input[type=submit] span.icon,
-input[type=reset] span.icon {
+input[type=reset] span.icon,
+a.button span.icon {
   margin: 0 0.5em 0 0;
 }
 button span.icon:before,
 input[type=submit] span.icon:before,
-input[type=reset] span.icon:before {
+input[type=reset] span.icon:before,
+a.button span.icon:before {
   margin: 0;
 }
 button span.icon.secondicon,
 input[type=submit] span.icon.secondicon,
-input[type=reset] span.icon.secondicon {
+input[type=reset] span.icon.secondicon,
+a.button span.icon.secondicon {
   margin: 0 0 0 0.5em;
 }
 button.righticon,
 input[type=submit].righticon,
-input[type=reset].righticon {
+input[type=reset].righticon,
+a.button.righticon {
   flex-direction: row-reverse;
 }
 button.righticon span.icon,
 input[type=submit].righticon span.icon,
-input[type=reset].righticon span.icon {
+input[type=reset].righticon span.icon,
+a.button.righticon span.icon {
   margin: 0 0 0 0.5em;
 }
 button.expander,
 input[type=submit].expander,
-input[type=reset].expander {
+input[type=reset].expander,
+a.button.expander {
   transition: width 0.2s;
 }
 button.expander span.text,
@@ -2679,7 +2686,9 @@ button.expander span.secondicon,
 input[type=submit].expander span.text,
 input[type=submit].expander span.secondicon,
 input[type=reset].expander span.text,
-input[type=reset].expander span.secondicon {
+input[type=reset].expander span.secondicon,
+a.button.expander span.text,
+a.button.expander span.secondicon {
   transition: all 0.2s;
   opacity: 1;
   width: 0;
@@ -2700,7 +2709,13 @@ input[type=reset].expander:focus span.secondicon,
 input[type=reset].expander:active span.text,
 input[type=reset].expander:active span.secondicon,
 input[type=reset].expander[aria-expanded=true] span.text,
-input[type=reset].expander[aria-expanded=true] span.secondicon {
+input[type=reset].expander[aria-expanded=true] span.secondicon,
+a.button.expander:focus span.text,
+a.button.expander:focus span.secondicon,
+a.button.expander:active span.text,
+a.button.expander:active span.secondicon,
+a.button.expander[aria-expanded=true] span.text,
+a.button.expander[aria-expanded=true] span.secondicon {
   animation: cfb-expando-button 0.2s;
   opacity: 1;
   width: auto;
@@ -2711,7 +2726,9 @@ button.expander:hover span.secondicon,
 input[type=submit].expander:hover span.text,
 input[type=submit].expander:hover span.secondicon,
 input[type=reset].expander:hover span.text,
-input[type=reset].expander:hover span.secondicon {
+input[type=reset].expander:hover span.secondicon,
+a.button.expander:hover span.text,
+a.button.expander:hover span.secondicon {
     animation: cfb-expando-button 0.2s;
     opacity: 1;
     width: auto;
@@ -2719,14 +2736,16 @@ input[type=reset].expander:hover span.secondicon {
 }
 button.hamburger span.magichamburger,
 input[type=submit].hamburger span.magichamburger,
-input[type=reset].hamburger span.magichamburger {
+input[type=reset].hamburger span.magichamburger,
+a.button.hamburger span.magichamburger {
   display: inline-block;
   width: 1em;
   height: 1em;
 }
 button.hamburger span.magichamburger span,
 input[type=submit].hamburger span.magichamburger span,
-input[type=reset].hamburger span.magichamburger span {
+input[type=reset].hamburger span.magichamburger span,
+a.button.hamburger span.magichamburger span {
   width: 1em;
   height: 0.15em;
   background-color: var(--button-default-text-color);
@@ -2737,41 +2756,48 @@ input[type=reset].hamburger span.magichamburger span {
 }
 button.hamburger span.magichamburger span:first-child,
 input[type=submit].hamburger span.magichamburger span:first-child,
-input[type=reset].hamburger span.magichamburger span:first-child {
+input[type=reset].hamburger span.magichamburger span:first-child,
+a.button.hamburger span.magichamburger span:first-child {
   margin-top: 0;
 }
 button.hamburger span.magichamburger span:nth-child(2),
 input[type=submit].hamburger span.magichamburger span:nth-child(2),
-input[type=reset].hamburger span.magichamburger span:nth-child(2) {
+input[type=reset].hamburger span.magichamburger span:nth-child(2),
+a.button.hamburger span.magichamburger span:nth-child(2) {
   margin: 0.25em auto 0.25em auto;
 }
 button.hamburger span.magichamburger span:last-child,
 input[type=submit].hamburger span.magichamburger span:last-child,
-input[type=reset].hamburger span.magichamburger span:last-child {
+input[type=reset].hamburger span.magichamburger span:last-child,
+a.button.hamburger span.magichamburger span:last-child {
   margin-bottom: 0;
 }
 button.hamburger[aria-expanded=true] span.magichamburger span:first-child,
 input[type=submit].hamburger[aria-expanded=true] span.magichamburger span:first-child,
-input[type=reset].hamburger[aria-expanded=true] span.magichamburger span:first-child {
+input[type=reset].hamburger[aria-expanded=true] span.magichamburger span:first-child,
+a.button.hamburger[aria-expanded=true] span.magichamburger span:first-child {
   width: 1.25em;
   transform: translateX(0.1em) rotate(45deg);
   transform-origin: top left;
 }
 button.hamburger[aria-expanded=true] span.magichamburger span:nth-child(2),
 input[type=submit].hamburger[aria-expanded=true] span.magichamburger span:nth-child(2),
-input[type=reset].hamburger[aria-expanded=true] span.magichamburger span:nth-child(2) {
+input[type=reset].hamburger[aria-expanded=true] span.magichamburger span:nth-child(2),
+a.button.hamburger[aria-expanded=true] span.magichamburger span:nth-child(2) {
   opacity: 0;
 }
 button.hamburger[aria-expanded=true] span.magichamburger span:last-child,
 input[type=submit].hamburger[aria-expanded=true] span.magichamburger span:last-child,
-input[type=reset].hamburger[aria-expanded=true] span.magichamburger span:last-child {
+input[type=reset].hamburger[aria-expanded=true] span.magichamburger span:last-child,
+a.button.hamburger[aria-expanded=true] span.magichamburger span:last-child {
   width: 1.25em;
   transform: translateX(0.1em) rotate(-45deg);
   transform-origin: bottom left;
 }
 button.ghost,
 input[type=submit].ghost,
-input[type=reset].ghost {
+input[type=reset].ghost,
+a.button.ghost {
   --button-border-color: var(--button-default-color);
   box-shadow: inset -0.1em -0.1em 0 0 var(--button-border-color), inset 0.1em -0.1em 0 0 var(--button-border-color), inset -0.1em 0.1em 0 0 var(--button-border-color), inset 0.1em 0.1em 0 0 var(--button-border-color);
   color: var(--button-default-color);
@@ -2785,7 +2811,11 @@ input[type=submit].active,
 input[type=reset]:focus,
 input[type=reset]:active,
 input[type=reset].focus,
-input[type=reset].active {
+input[type=reset].active,
+a.button:focus,
+a.button:active,
+a.button.focus,
+a.button.active {
   color: var(--button-hover-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
@@ -2797,7 +2827,9 @@ input[type=reset].active {
 input[type=submit]:hover,
 input[type=submit].hover,
 input[type=reset]:hover,
-input[type=reset].hover {
+input[type=reset].hover,
+a.button:hover,
+a.button.hover {
     color: var(--button-hover-text-color);
     text-shadow: var(--button-text-shadow);
     background-color: var(--button-default-color);
@@ -2812,7 +2844,9 @@ button:focus, button.focus,
 input[type=submit]:focus,
 input[type=submit].focus,
 input[type=reset]:focus,
-input[type=reset].focus {
+input[type=reset].focus,
+a.button:focus,
+a.button.focus {
   outline: var(--button-default-color) dashed 0.1em;
   outline-offset: 0.2em;
   text-decoration: underline double;
@@ -2821,7 +2855,9 @@ button:active, button.active,
 input[type=submit]:active,
 input[type=submit].active,
 input[type=reset]:active,
-input[type=reset].active {
+input[type=reset].active,
+a.button:active,
+a.button.active {
   box-shadow: var(--button-active-box-shadow);
   text-decoration: none;
   background-image: var(--button-active-gradient);
@@ -2830,17 +2866,20 @@ input[type=reset].active {
 }
 button.constructive,
 input[type=submit].constructive,
-input[type=reset].constructive {
+input[type=reset].constructive,
+a.button.constructive {
   --button-default-color: var(--constructive-color);
 }
 button.destructive,
 input[type=submit].destructive,
-input[type=reset].destructive {
+input[type=reset].destructive,
+a.button.destructive {
   --button-default-color: var(--destructive-color);
 }
 button:disabled,
 input[type=submit]:disabled,
-input[type=reset]:disabled {
+input[type=reset]:disabled,
+a.button:disabled {
   color: var(--button-disabled-text-color);
   background-color: var(--button-disabled-color);
   border-color: var(--button-disabled-color);
@@ -2855,7 +2894,10 @@ input[type=submit]:disabled:focus,
 input[type=submit]:disabled:active,
 input[type=reset]:disabled:hover,
 input[type=reset]:disabled:focus,
-input[type=reset]:disabled:active {
+input[type=reset]:disabled:active,
+a.button:disabled:hover,
+a.button:disabled:focus,
+a.button:disabled:active {
   color: var(--button-disabled-text-color);
   background-color: var(--button-disabled-color);
   border-color: var(--button-disabled-color);
@@ -2864,7 +2906,8 @@ input[type=reset]:disabled:active {
 }
 button.mute,
 input[type=submit].mute,
-input[type=reset].mute {
+input[type=reset].mute,
+a.button.mute {
   color: var(--button-default-color);
   background-color: transparent;
   border-color: transparent;
@@ -2872,13 +2915,15 @@ input[type=reset].mute {
 }
 button.mute.constructive,
 input[type=submit].mute.constructive,
-input[type=reset].mute.constructive {
+input[type=reset].mute.constructive,
+a.button.mute.constructive {
   color: var(--constructive-color);
   text-shadow: none;
 }
 button.mute.destructive,
 input[type=submit].mute.destructive,
-input[type=reset].mute.destructive {
+input[type=reset].mute.destructive,
+a.button.mute.destructive {
   color: var(--destructive-color);
   text-shadow: none;
 }
@@ -2890,7 +2935,11 @@ input[type=submit].mute.focus,
 input[type=reset].mute:active,
 input[type=reset].mute.active,
 input[type=reset].mute:focus,
-input[type=reset].mute.focus {
+input[type=reset].mute.focus,
+a.button.mute:active,
+a.button.mute.active,
+a.button.mute:focus,
+a.button.mute.focus {
   color: var(--button-hover-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
@@ -2904,7 +2953,11 @@ input[type=submit].mute.focus.constructive,
 input[type=reset].mute:active.constructive,
 input[type=reset].mute.active.constructive,
 input[type=reset].mute:focus.constructive,
-input[type=reset].mute.focus.constructive {
+input[type=reset].mute.focus.constructive,
+a.button.mute:active.constructive,
+a.button.mute.active.constructive,
+a.button.mute:focus.constructive,
+a.button.mute.focus.constructive {
   background-color: var(--constructive-color);
 }
 button.mute:active.destructive, button.mute.active.destructive, button.mute:focus.destructive, button.mute.focus.destructive,
@@ -2915,7 +2968,11 @@ input[type=submit].mute.focus.destructive,
 input[type=reset].mute:active.destructive,
 input[type=reset].mute.active.destructive,
 input[type=reset].mute:focus.destructive,
-input[type=reset].mute.focus.destructive {
+input[type=reset].mute.focus.destructive,
+a.button.mute:active.destructive,
+a.button.mute.active.destructive,
+a.button.mute:focus.destructive,
+a.button.mute.focus.destructive {
   background-color: var(--destructive-color);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -2923,7 +2980,9 @@ input[type=reset].mute.focus.destructive {
 input[type=submit].mute:hover,
 input[type=submit].mute.hover,
 input[type=reset].mute:hover,
-input[type=reset].mute.hover {
+input[type=reset].mute.hover,
+a.button.mute:hover,
+a.button.mute.hover {
     text-decoration: underline;
     filter: brightness(120%);
     color: var(--button-hover-text-color);
@@ -2935,14 +2994,18 @@ input[type=reset].mute.hover {
 input[type=submit].mute:hover.constructive,
 input[type=submit].mute.hover.constructive,
 input[type=reset].mute:hover.constructive,
-input[type=reset].mute.hover.constructive {
+input[type=reset].mute.hover.constructive,
+a.button.mute:hover.constructive,
+a.button.mute.hover.constructive {
     background-color: var(--constructive-color);
   }
   button.mute:hover.destructive, button.mute.hover.destructive,
 input[type=submit].mute:hover.destructive,
 input[type=submit].mute.hover.destructive,
 input[type=reset].mute:hover.destructive,
-input[type=reset].mute.hover.destructive {
+input[type=reset].mute.hover.destructive,
+a.button.mute:hover.destructive,
+a.button.mute.hover.destructive {
     background-color: var(--destructive-color);
   }
 }
@@ -2950,7 +3013,9 @@ button.mute:active, button.mute.active,
 input[type=submit].mute:active,
 input[type=submit].mute.active,
 input[type=reset].mute:active,
-input[type=reset].mute.active {
+input[type=reset].mute.active,
+a.button.mute:active,
+a.button.mute.active {
   text-decoration: none;
   box-shadow: none;
 }
@@ -2958,14 +3023,17 @@ button.mute:focus, button.mute.focus,
 input[type=submit].mute:focus,
 input[type=submit].mute.focus,
 input[type=reset].mute:focus,
-input[type=reset].mute.focus {
+input[type=reset].mute.focus,
+a.button.mute:focus,
+a.button.mute.focus {
   outline: var(--button-default-color) dashed 0.1em;
   outline-offset: 0.2em;
   text-decoration: underline double;
 }
 button.mute:disabled,
 input[type=submit].mute:disabled,
-input[type=reset].mute:disabled {
+input[type=reset].mute:disabled,
+a.button.mute:disabled {
   color: var(--button-disabled-text-color);
   background-color: transparent;
   border-color: transparent;
@@ -2980,7 +3048,10 @@ input[type=submit].mute:disabled:focus,
 input[type=submit].mute:disabled:active,
 input[type=reset].mute:disabled:hover,
 input[type=reset].mute:disabled:focus,
-input[type=reset].mute:disabled:active {
+input[type=reset].mute:disabled:active,
+a.button.mute:disabled:hover,
+a.button.mute:disabled:focus,
+a.button.mute:disabled:active {
   color: var(--button-disabled-color);
   background-color: transparent;
   border-color: transparent;
@@ -2989,7 +3060,8 @@ input[type=reset].mute:disabled:active {
 }
 button.hot,
 input[type=submit].hot,
-input[type=reset].hot {
+input[type=reset].hot,
+a.button.hot {
   color: var(--button-default-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
@@ -2997,19 +3069,22 @@ input[type=reset].hot {
 }
 button.hot.constructive,
 input[type=submit].hot.constructive,
-input[type=reset].hot.constructive {
+input[type=reset].hot.constructive,
+a.button.hot.constructive {
   background-color: var(--constructive-color);
   border-color: var(--constructive-color);
 }
 button.hot.destructive,
 input[type=submit].hot.destructive,
-input[type=reset].hot.destructive {
+input[type=reset].hot.destructive,
+a.button.hot.destructive {
   background-color: var(--destructive-color);
   border-color: var(--destructive-color);
 }
 button.hot:disabled,
 input[type=submit].hot:disabled,
-input[type=reset].hot:disabled {
+input[type=reset].hot:disabled,
+a.button.hot:disabled {
   color: var(--button-disabled-text-color);
   background-color: var(--button-disabled-color);
   border-color: var(--button-disabled-color);
@@ -3024,7 +3099,10 @@ input[type=submit].hot:disabled:focus,
 input[type=submit].hot:disabled:active,
 input[type=reset].hot:disabled:hover,
 input[type=reset].hot:disabled:focus,
-input[type=reset].hot:disabled:active {
+input[type=reset].hot:disabled:active,
+a.button.hot:disabled:hover,
+a.button.hot:disabled:focus,
+a.button.hot:disabled:active {
   color: var(--button-disabled-text-color);
   background-color: var(--button-disabled-color);
   border-color: var(--button-disabled-color);
@@ -3035,7 +3113,9 @@ button.square, button.circle,
 input[type=submit].square,
 input[type=submit].circle,
 input[type=reset].square,
-input[type=reset].circle {
+input[type=reset].circle,
+a.button.square,
+a.button.circle {
   padding: 0.5em;
   width: 2em;
   height: 2em;
@@ -3049,7 +3129,9 @@ button.square span.icon, button.circle span.icon,
 input[type=submit].square span.icon,
 input[type=submit].circle span.icon,
 input[type=reset].square span.icon,
-input[type=reset].circle span.icon {
+input[type=reset].circle span.icon,
+a.button.square span.icon,
+a.button.circle span.icon {
   margin: 0;
   font-size: 1.2em;
 }
@@ -3063,7 +3145,11 @@ input[type=submit].circle span.text,
 input[type=reset].square span.secondicon,
 input[type=reset].square span.text,
 input[type=reset].circle span.secondicon,
-input[type=reset].circle span.text {
+input[type=reset].circle span.text,
+a.button.square span.secondicon,
+a.button.square span.text,
+a.button.circle span.secondicon,
+a.button.circle span.text {
   display: none;
 }
 button.square:hover, button.square:focus, button.square:active, button.circle:hover, button.circle:focus, button.circle:active,
@@ -3078,19 +3164,27 @@ input[type=reset].square:focus,
 input[type=reset].square:active,
 input[type=reset].circle:hover,
 input[type=reset].circle:focus,
-input[type=reset].circle:active {
+input[type=reset].circle:active,
+a.button.square:hover,
+a.button.square:focus,
+a.button.square:active,
+a.button.circle:hover,
+a.button.circle:focus,
+a.button.circle:active {
   text-decoration: none;
 }
 button.circle,
 input[type=submit].circle,
-input[type=reset].circle {
+input[type=reset].circle,
+a.button.circle {
   border: 0.1em solid var(--button-default-color);
   box-shadow: none;
   border-radius: 50%;
 }
 button.circle.mute,
 input[type=submit].circle.mute,
-input[type=reset].circle.mute {
+input[type=reset].circle.mute,
+a.button.circle.mute {
   border: none;
 }
 button.circle:hover, button.circle:focus, button.circle:active,
@@ -3099,12 +3193,16 @@ input[type=submit].circle:focus,
 input[type=submit].circle:active,
 input[type=reset].circle:hover,
 input[type=reset].circle:focus,
-input[type=reset].circle:active {
+input[type=reset].circle:active,
+a.button.circle:hover,
+a.button.circle:focus,
+a.button.circle:active {
   box-shadow: var(--button-circle-hover-box-shadow);
 }
 button.circle:disabled,
 input[type=submit].circle:disabled,
-input[type=reset].circle:disabled {
+input[type=reset].circle:disabled,
+a.button.circle:disabled {
   box-shadow: none;
   border: none;
 }
@@ -3112,7 +3210,9 @@ button.naked, button.link,
 input[type=submit].naked,
 input[type=submit].link,
 input[type=reset].naked,
-input[type=reset].link {
+input[type=reset].link,
+a.button.naked,
+a.button.link {
   margin: 0;
   padding: 0;
   background-color: transparent;
@@ -3138,7 +3238,15 @@ input[type=reset].naked.active,
 input[type=reset].link:focus,
 input[type=reset].link.focus,
 input[type=reset].link:active,
-input[type=reset].link.active {
+input[type=reset].link.active,
+a.button.naked:focus,
+a.button.naked.focus,
+a.button.naked:active,
+a.button.naked.active,
+a.button.link:focus,
+a.button.link.focus,
+a.button.link:active,
+a.button.link.active {
   background-color: transparent;
   background-image: none;
   color: var(--button-default-color);
@@ -3152,7 +3260,11 @@ input[type=submit].link.hover,
 input[type=reset].naked:hover,
 input[type=reset].naked.hover,
 input[type=reset].link:hover,
-input[type=reset].link.hover {
+input[type=reset].link.hover,
+a.button.naked:hover,
+a.button.naked.hover,
+a.button.link:hover,
+a.button.link.hover {
     background-color: transparent;
     background-image: none;
     color: var(--button-default-color);
@@ -3160,12 +3272,14 @@ input[type=reset].link.hover {
 }
 button.naked,
 input[type=submit].naked,
-input[type=reset].naked {
+input[type=reset].naked,
+a.button.naked {
   color: var(--button-default-color);
 }
 button.link,
 input[type=submit].link,
-input[type=reset].link {
+input[type=reset].link,
+a.button.link {
   color: var(--link-color);
   text-shadow: var(--link-text-shadow);
   text-decoration: underline;
@@ -3175,7 +3289,9 @@ input[type=reset].link {
 input[type=submit].link:hover,
 input[type=submit].link.hover,
 input[type=reset].link:hover,
-input[type=reset].link.hover {
+input[type=reset].link.hover,
+a.button.link:hover,
+a.button.link.hover {
     color: var(--link-color);
     filter: brightness(120%);
     text-decoration: underline double;
@@ -3185,48 +3301,58 @@ button.link:active, button.link.active,
 input[type=submit].link:active,
 input[type=submit].link.active,
 input[type=reset].link:active,
-input[type=reset].link.active {
+input[type=reset].link.active,
+a.button.link:active,
+a.button.link.active {
   color: var(--link-color);
 }
 button.link:focus, button.link.focus,
 input[type=submit].link:focus,
 input[type=submit].link.focus,
 input[type=reset].link:focus,
-input[type=reset].link.focus {
+input[type=reset].link.focus,
+a.button.link:focus,
+a.button.link.focus {
   color: var(--link-color);
   text-decoration: underline double;
 }
 button.link:disabled,
 input[type=submit].link:disabled,
-input[type=reset].link:disabled {
+input[type=reset].link:disabled,
+a.button.link:disabled {
   color: var(--button-disabled-text-color);
   text-shadow: none;
 }
 button.micro,
 input[type=submit].micro,
-input[type=reset].micro {
+input[type=reset].micro,
+a.button.micro {
   font-size: 0.6em;
 }
 button.small,
 input[type=submit].small,
-input[type=reset].small {
+input[type=reset].small,
+a.button.small {
   font-size: 0.8em;
 }
 button.large,
 input[type=submit].large,
-input[type=reset].large {
+input[type=reset].large,
+a.button.large {
   font-size: 1.2em;
 }
 @media (max-width: 599px) {
   button.large,
 input[type=submit].large,
-input[type=reset].large {
+input[type=reset].large,
+a.button.large {
     font-size: 1em;
   }
 }
 button.fill,
 input[type=submit].fill,
-input[type=reset].fill {
+input[type=reset].fill,
+a.button.fill {
   font-size: 1.2em;
   width: 100%;
   height: 100%;
@@ -3234,19 +3360,22 @@ input[type=reset].fill {
 @media (max-width: 599px) {
   button.fill,
 input[type=submit].fill,
-input[type=reset].fill {
+input[type=reset].fill,
+a.button.fill {
     font-size: 1em;
   }
 }
 button.pill,
 input[type=submit].pill,
-input[type=reset].pill {
+input[type=reset].pill,
+a.button.pill {
   border-radius: 1.5em;
   margin: 0;
 }
 button.pill.ghost,
 input[type=submit].pill.ghost,
-input[type=reset].pill.ghost {
+input[type=reset].pill.ghost,
+a.button.pill.ghost {
   box-shadow: none;
   border: 0.1em solid var(--button-default-color);
 }
@@ -3258,19 +3387,26 @@ input[type=submit].pill:disabled,
 input[type=reset].pill:hover,
 input[type=reset].pill:active,
 input[type=reset].pill:focus,
-input[type=reset].pill:disabled {
+input[type=reset].pill:disabled,
+a.button.pill:hover,
+a.button.pill:active,
+a.button.pill:focus,
+a.button.pill:disabled {
   border: none;
 }
 button.hidden,
 input[type=submit].hidden,
-input[type=reset].hidden {
+input[type=reset].hidden,
+a.button.hidden {
   display: none;
 }
 button.closebutton, button.togglebutton,
 input[type=submit].closebutton,
 input[type=submit].togglebutton,
 input[type=reset].closebutton,
-input[type=reset].togglebutton {
+input[type=reset].togglebutton,
+a.button.closebutton,
+a.button.togglebutton {
   --button-default-color: var(--hot-text-color);
   opacity: 0.5;
   box-shadow: none;
@@ -3285,7 +3421,11 @@ input[type=submit].togglebutton:active,
 input[type=reset].closebutton:focus,
 input[type=reset].closebutton:active,
 input[type=reset].togglebutton:focus,
-input[type=reset].togglebutton:active {
+input[type=reset].togglebutton:active,
+a.button.closebutton:focus,
+a.button.closebutton:active,
+a.button.togglebutton:focus,
+a.button.togglebutton:active {
   color: var(--hot-text-color);
   background: none;
 }
@@ -3294,7 +3434,9 @@ input[type=reset].togglebutton:active {
 input[type=submit].closebutton:hover,
 input[type=submit].togglebutton:hover,
 input[type=reset].closebutton:hover,
-input[type=reset].togglebutton:hover {
+input[type=reset].togglebutton:hover,
+a.button.closebutton:hover,
+a.button.togglebutton:hover {
     opacity: 1;
     color: var(--hot-text-color);
     background: none;
@@ -3302,7 +3444,8 @@ input[type=reset].togglebutton:hover {
 }
 button.headerbutton,
 input[type=submit].headerbutton,
-input[type=reset].headerbutton {
+input[type=reset].headerbutton,
+a.button.headerbutton {
   justify-content: space-between;
   width: 100%;
   box-shadow: none;
@@ -3310,51 +3453,60 @@ input[type=reset].headerbutton {
 }
 button.headerbutton span.icon,
 input[type=submit].headerbutton span.icon,
-input[type=reset].headerbutton span.icon {
+input[type=reset].headerbutton span.icon,
+a.button.headerbutton span.icon {
   opacity: 0.5;
   margin-right: 0;
 }
 @media (hover: hover) and (pointer: fine) {
   button.headerbutton:hover span.icon,
 input[type=submit].headerbutton:hover span.icon,
-input[type=reset].headerbutton:hover span.icon {
+input[type=reset].headerbutton:hover span.icon,
+a.button.headerbutton:hover span.icon {
     opacity: 1;
   }
 }
 button.help,
 input[type=submit].help,
-input[type=reset].help {
+input[type=reset].help,
+a.button.help {
   overflow: visible;
   display: inline-block;
 }
 button.help span.icon,
 input[type=submit].help span.icon,
-input[type=reset].help span.icon {
+input[type=reset].help span.icon,
+a.button.help span.icon {
   margin: 0;
 }
 button.help[aria-expanded=true] div.tooltip, button.help.stayopen div.tooltip,
 input[type=submit].help[aria-expanded=true] div.tooltip,
 input[type=submit].help.stayopen div.tooltip,
 input[type=reset].help[aria-expanded=true] div.tooltip,
-input[type=reset].help.stayopen div.tooltip {
+input[type=reset].help.stayopen div.tooltip,
+a.button.help[aria-expanded=true] div.tooltip,
+a.button.help.stayopen div.tooltip {
   display: flex;
   animation: cfb-fadein-delay-half 0.2s;
 }
 button.help.stayopen div.tooltip button.closebutton,
 input[type=submit].help.stayopen div.tooltip button.closebutton,
-input[type=reset].help.stayopen div.tooltip button.closebutton {
+input[type=reset].help.stayopen div.tooltip button.closebutton,
+a.button.help.stayopen div.tooltip button.closebutton {
   display: inline-block;
 }
 button.tagbutton,
 input[type=submit].tagbutton,
-input[type=reset].tagbutton {
+input[type=reset].tagbutton,
+a.button.tagbutton {
   overflow: visible;
   font-size: 0.8em;
   padding: 0.2em 1em 0.2em 1em;
 }
 button.tagbutton span.tagicon,
 input[type=submit].tagbutton span.tagicon,
-input[type=reset].tagbutton span.tagicon {
+input[type=reset].tagbutton span.tagicon,
+a.button.tagbutton span.tagicon {
   margin-right: 1em;
   margin-left: 0;
   border-radius: 50%;
@@ -3364,30 +3516,35 @@ input[type=reset].tagbutton span.tagicon {
 }
 button.tagbutton div.tooltip,
 input[type=submit].tagbutton div.tooltip,
-input[type=reset].tagbutton div.tooltip {
+input[type=reset].tagbutton div.tooltip,
+a.button.tagbutton div.tooltip {
   left: -1em;
   bottom: 2.5em;
 }
 button.tagbutton div.tooltip:before,
 input[type=submit].tagbutton div.tooltip:before,
-input[type=reset].tagbutton div.tooltip:before {
+input[type=reset].tagbutton div.tooltip:before,
+a.button.tagbutton div.tooltip:before {
   left: 1em;
   bottom: -0.5em;
 }
 button.tagbutton.righticon,
 input[type=submit].tagbutton.righticon,
-input[type=reset].tagbutton.righticon {
+input[type=reset].tagbutton.righticon,
+a.button.tagbutton.righticon {
   padding-right: 0.2em;
 }
 button.tagbutton.righticon span.tagicon,
 input[type=submit].tagbutton.righticon span.tagicon,
-input[type=reset].tagbutton.righticon span.tagicon {
+input[type=reset].tagbutton.righticon span.tagicon,
+a.button.tagbutton.righticon span.tagicon {
   margin-right: 0;
   margin-left: 1em;
 }
 button.menu,
 input[type=submit].menu,
-input[type=reset].menu {
+input[type=reset].menu,
+a.button.menu {
   overflow: visible;
 }
 button.menu.square ul.menu,
@@ -3406,7 +3563,13 @@ input[type=reset].menu.square form.menu,
 input[type=reset].menu.square div.menu,
 input[type=reset].menu.circle ul.menu,
 input[type=reset].menu.circle form.menu,
-input[type=reset].menu.circle div.menu {
+input[type=reset].menu.circle div.menu,
+a.button.menu.square ul.menu,
+a.button.menu.square form.menu,
+a.button.menu.square div.menu,
+a.button.menu.circle ul.menu,
+a.button.menu.circle form.menu,
+a.button.menu.circle div.menu {
   font-size: 1em;
 }
 button.menu.square ul.menu:before,
@@ -3425,12 +3588,19 @@ input[type=reset].menu.square form.menu:before,
 input[type=reset].menu.square div.menu:before,
 input[type=reset].menu.circle ul.menu:before,
 input[type=reset].menu.circle form.menu:before,
-input[type=reset].menu.circle div.menu:before {
+input[type=reset].menu.circle div.menu:before,
+a.button.menu.square ul.menu:before,
+a.button.menu.square form.menu:before,
+a.button.menu.square div.menu:before,
+a.button.menu.circle ul.menu:before,
+a.button.menu.circle form.menu:before,
+a.button.menu.circle div.menu:before {
   right: 0.25em;
 }
 button.menu[aria-expanded=true],
 input[type=submit].menu[aria-expanded=true],
-input[type=reset].menu[aria-expanded=true] {
+input[type=reset].menu[aria-expanded=true],
+a.button.menu[aria-expanded=true] {
   color: var(--button-default-text-color);
   text-shadow: var(--button-text-shadow);
   background-color: var(--button-default-color);
@@ -3440,7 +3610,8 @@ input[type=reset].menu[aria-expanded=true] {
 }
 button.menu[aria-expanded=true] ul.menu,
 input[type=submit].menu[aria-expanded=true] ul.menu,
-input[type=reset].menu[aria-expanded=true] ul.menu {
+input[type=reset].menu[aria-expanded=true] ul.menu,
+a.button.menu[aria-expanded=true] ul.menu {
   display: flex;
 }
 
