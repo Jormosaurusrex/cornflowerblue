@@ -6232,9 +6232,15 @@ div.searchcontrol.open button.mute, div.searchcontrol.open button.ghost, div.sea
   --button-border-color: var(--input-focused-border-color);
 }
 div.searchcontrol.open button:hover, div.searchcontrol:focus-within button:hover {
+  --button-border-color: transparent;
+}
+div.searchcontrol.open button:hover.mute, div.searchcontrol.open button:hover.ghost, div.searchcontrol:focus-within button:hover.mute, div.searchcontrol:focus-within button:hover.ghost {
   --button-border-color: var(--focus-color);
 }
 div.searchcontrol.open button:focus, div.searchcontrol:focus-within button:focus {
+  --button-border-color: transparent;
+}
+div.searchcontrol.open button:focus.mute, div.searchcontrol.open button:focus.ghost, div.searchcontrol:focus-within button:focus.mute, div.searchcontrol:focus-within button:focus.ghost {
   --button-border-color: var(--focus-color);
 }
 

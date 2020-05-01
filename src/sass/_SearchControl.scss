@@ -33,12 +33,18 @@ div.searchcontrol {
         --button-border-color: var(--input-focused-border-color);
       }
       &:hover {
-        --button-border-color: var(--focus-color);
-        //box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
+        --button-border-color: transparent;
+        &.mute,
+        &.ghost {
+          --button-border-color: var(--focus-color);
+        }
       }
       &:focus {
-        --button-border-color: var(--focus-color);
-        //box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
+        --button-border-color: transparent;
+        &.mute,
+        &.ghost {
+          --button-border-color: var(--focus-color);
+        }
       }
     }
   }
