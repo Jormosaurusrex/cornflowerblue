@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-04-28
+/*! Cornflower Blue - v0.1.1 - 2020-04-30
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -8885,7 +8885,7 @@ class SearchControl {
         this.searchinput = document.createElement('input');
 
         this.searchinput.setAttribute('type', 'text');
-        this.searchinput.setAttribute('role', 'textbox');
+        this.searchinput.setAttribute('role', 'search');
         this.searchinput.setAttribute('tabindex', '0');
 
         if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }

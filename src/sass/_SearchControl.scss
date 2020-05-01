@@ -25,9 +25,13 @@ div.searchcontrol {
       background-color: var(--input-default-background-color);
     }
     button {
-      --button-border-color: var(--input-focused-border-color);
+      --button-border-color: transparent;
       border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
       box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
+      &.mute,
+      &.ghost {
+        --button-border-color: var(--input-focused-border-color);
+      }
       &:hover {
         --button-border-color: var(--focus-color);
         //box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
