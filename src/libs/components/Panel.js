@@ -91,6 +91,7 @@ class Panel {
     buildHeader() {
         const me = this;
         this.header = document.createElement('h3');
+        this.header.classList.add('panelheader');
         if (this.collapsible) {
             this.togglebutton = new SimpleButton({
                 id: this.headerid,

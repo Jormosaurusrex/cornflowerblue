@@ -1,5 +1,5 @@
 div.column-configurator {
-  padding: 2em;
+  padding: 2rem;
   ul.column-list {
     display: flex;
     flex-direction: column;
@@ -9,14 +9,13 @@ div.column-configurator {
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
       div.checkbox {
         margin: 0;
       }
       div.description {
-        padding: .5em 1em .5em 3em;
+        padding: .5rem 1rem .5rem 3rem;
         font-size: .8em;
-
       }
     }
   }

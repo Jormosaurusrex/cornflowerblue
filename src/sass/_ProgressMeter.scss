@@ -1,5 +1,5 @@
 div.progressbar-container {
-  margin: .5em 0 .5em 0;
+  margin: .5rem 0 .5rem 0;
   position: relative;
   .decals {
     display: flex;
@@ -130,7 +130,7 @@ div.progressbar-container {
   }
   div.simpleprogress {
     position: relative;
-    margin: 1em 0 1em 0;
+    margin: 1rem 0 1rem 0;
     padding: 0;
     background-color: var(--progressmeter-simple-background-color);
     background-image: var(--progressmeter-simple-background-image);
@@ -166,7 +166,7 @@ div.progressbar-container {
       margin: 0;
     }
     &.exteriordecal-bottom {
-      margin: 1em 0 0 0;
+      margin: 1rem 0 0 0;
     }
     &.withdecals {
       height: 3em;

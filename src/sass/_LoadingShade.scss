@@ -42,7 +42,7 @@ div.spinner.spin {
   width: 10em;
   height: 10em;
   position: relative;
-  margin: 1em 0 1em 0;
+  margin: 1rem 0 1rem 0;
   border: .75em solid var(--shade-spinner-downcolor);
   border-top-color: var(--shade-spinner-color);
   animation: cfb-localspin 1.1s infinite linear;
@@ -52,7 +52,7 @@ div.spinner.bounce {
   width: 4em;
   height: 4em;
   position: relative;
-  margin: -2em 0 4em 0;
+  margin: -2rem 0 4rem 0;
   &:before,
   &:after {
     display: block;

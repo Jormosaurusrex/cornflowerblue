@@ -203,13 +203,13 @@ ul.button-menu {
         filter: none;
       }
       &:focus {
-        margin: .3em;
+        margin: .3rem;
         outline: var(--hot-text-color) dashed .1em;
         outline-offset: .2em;
         text-decoration: underline double;
       }
       span.icon {
-        margin-right: 1em;
+        margin-right: 1rem;
       }
     }
   }

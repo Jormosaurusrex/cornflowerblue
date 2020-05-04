@@ -46,7 +46,7 @@ body {
 
 // Headers
 h1 {
-  font-size: 3.5em;
+  font-size: 3.5rem;
   font-weight: 500;
   margin: .5rem 0 .5rem 0;
   color: var(--headers-h1-text-color);
@@ -61,7 +61,7 @@ h1 {
   &:after {
     content: '';
     border-top: .05em solid var(--headers-h1-border-color);
-    flex: 1 0 2em;
+    flex: 1 0 2rem;
     margin: 0 0 0 .1rem;
   }
   &.inset {
@@ -73,12 +73,12 @@ h1 {
     background-clip: text;
   }
   @include for-phone-only {
-   font-size: 2em;
+   font-size: 2rem;
   }
 }
 h2 {
   font-weight: 400;
-  font-size: 2.5em;
+  font-size: 2.5rem;
   margin: .5rem 0 1rem 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
@@ -91,16 +91,16 @@ h2 {
   &:after {
     content: '';
     border-top: .05em solid var(--headers-h2-border-color);
-    flex: 1 0 2em;
-    margin: 0 0 0 .1em;
+    flex: 1 0 2rem;
+    margin: 0 0 0 .1rem;
   }
   @include for-phone-only {
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 }
 h3 {
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1.3rem;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h3-text-transform);
   color: var(--headers-h3-text-color);
@@ -108,21 +108,21 @@ h3 {
 }
 h4 {
   font-weight: 400;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h4-text-transform);
   color: var(--headers-h4-text-color);
 }
 h5 {
   font-weight: 200;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h5-text-transform);
   color: var(--headers-h5-text-color);
 }
 h6 {
   font-weight: 100;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   margin: .5em 0 1em 0;
   text-transform: var(--headers-h6-text-transform);
   color: var(--headers-h6-text-color);
@@ -142,11 +142,11 @@ h6 {
     &:before,
     &:after {
       content: '';
-      height: .2em;
+      height: .2rem;
       border-top: .05em solid;
       border-bottom: .05em solid;
-      flex: 1 0 2em;
-      margin: 0 0 0 .5em;
+      flex: 1 0 2rem;
+      margin: 0 0 0 .5rem;
     }
     &:before {
       margin: 0 .5em 0 0;
@@ -164,10 +164,10 @@ p {
   font-family: var(--font-family);
   &.dropcap {
     &:first-letter {
-      font-size: 5.5em;
+      font-size: 5.5rem;
       float: left;
       line-height: .6; /* from 1 */
-      margin-right: 0.05em;
+      margin-right: 0.05rem;
     }
   }
 }
@@ -188,8 +188,8 @@ a {
     text-decoration: underline;
   }
   &:focus {
-    outline: var(--link-color) dashed .1em;
-    outline-offset: .2em;
+    outline: var(--link-color) dashed .1rem;
+    outline-offset: .2rem;
   }
   &:active {
     filter: brightness(120%);
@@ -227,14 +227,14 @@ legend {
   position: relative;
   margin-top: 1rem;
   margin-bottom: .5rem;
-  font-size: 1em;
+  font-size: 1rem;
   color: var(--label-color);
   text-shadow: var(--label-text-shadow);
   text-transform: var(--label-text-transform);
   button.help {
     color: var(--label-color);
     text-shadow:var(--label-text-shadow);
-    font-size: 1em;
+    font-size: 1rem;
     margin: 0 .5rem 0 .5rem;
     &:hover,
     &:focus,
@@ -259,7 +259,7 @@ pre {
 
 sup {
   vertical-align: super;
-  font-size: .8em;
+  font-size: .8rem;
   line-height: 1;
   color: var(--sup-text-color);
   text-shadow: var(--sup-text-shadow);
@@ -268,7 +268,7 @@ sup {
 
 blockquote {
   display: block;
-  padding: 1em;
+  padding: 1rem;
   margin: 1rem auto .5rem auto;
   width: 70%;
   max-width: 70%;

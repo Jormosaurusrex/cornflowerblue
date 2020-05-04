@@ -8,7 +8,7 @@ div.panel {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  h3 {
+  h3.panelheader {
     display: flex;
     flex-direction: row;
     align-items: center;

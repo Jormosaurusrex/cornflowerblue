@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-04-30
+/*! Cornflower Blue - v0.1.1 - 2020-05-03
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3253,6 +3253,7 @@ class Panel {
     buildHeader() {
         const me = this;
         this.header = document.createElement('h3');
+        this.header.classList.add('panelheader');
         if (this.collapsible) {
             this.togglebutton = new SimpleButton({
                 id: this.headerid,

@@ -21,7 +21,7 @@ form {
     flex-grow: 1;
     padding: .5em 1.5em .5em 1.5em;
     div.instructions {
-      margin: 1em 0 1em 0;
+      margin: 1rem 0 1rem 0;
     }
   }
   div.elements {
@@ -33,7 +33,7 @@ form {
     box-sizing: border-box;
     div.input-container,
     div.textarea-container {
-      margin: 1em 0 1em 0;
+      margin: 1rem 0 1rem 0;
     }
   }
   div.actions,
@@ -48,7 +48,7 @@ form {
     border-top: .1em solid var(--form-actions-border-color);
     padding: .5em 1.5em .5em 1.5em;
     button {
-      margin-right: 1em;
+      margin-right: 1rem;
       &.fill {
         margin: 0;
       }
