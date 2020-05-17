@@ -18,8 +18,7 @@ div.searchcontrol {
   &.open,
   &:focus-within {
     input {
-      --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
-      width: auto;
+      width: 100%;
       border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
       padding: var(--input-default-padding);
       background-color: var(--input-default-background-color);

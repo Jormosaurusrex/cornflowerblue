@@ -19,7 +19,6 @@ html {
 }
 html,
 body {
-  //height: 100vh;
   color: var(--text-color);
   font-family: var(--font-family);
   ::selection {
@@ -176,7 +175,6 @@ ol {
   > li {
     color: var(--text-color);
     text-shadow: var(--text-shadow);
-    font-family: var(--font-family);
     margin: .5rem 0 .5rem 0;
   }
 }

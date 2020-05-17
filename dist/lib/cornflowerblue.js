@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-05-03
+/*! Cornflower Blue - v0.1.1 - 2020-05-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2993,6 +2993,7 @@ class HamburgerButton extends SimpleButton {
             shape: 'square',
             naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,
+            toggleaction: function(self) { },
             action: function(e, self) { self.toggle(); }
         };
     }
@@ -3028,6 +3029,9 @@ class HamburgerButton extends SimpleButton {
     /* CONTROL METHODS__________________________________________________________________ */
 
     toggle() {
+        if ((this.toggleaction) && (typeof this.toggleaction === 'function')) {
+            this.toggleaction(this);
+        }
         if (this.isopen) {
             this.close();
             return;
@@ -3054,6 +3058,9 @@ class HamburgerButton extends SimpleButton {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get toggleaction() { return this.config.toggleaction; }
+    set toggleaction(toggleaction) { this.config.toggleaction = toggleaction; }
 
     get toggletarget() { return this.config.toggletarget; }
     set toggletarget(toggletarget) { this.config.toggletarget = toggletarget; }
@@ -8808,6 +8815,7 @@ class SearchControl {
             autoexecute: true, // Cause the search's action to execute automatically on focusout
                                // or when there number of seed characters is reached
             arialabel: TextFactory.get('searchcontrol-instructions'), // The aria-label value.
+            stayopen: false,
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
@@ -8874,6 +8882,10 @@ class SearchControl {
             }
         });
 
+        if (this.stayopen) {
+            this.container.classList.add('open');
+        }
+
         this.container.appendChild(this.searchbutton.button);
 
     }
@@ -8923,7 +8935,7 @@ class SearchControl {
         });
 
         this.searchinput.addEventListener('focusout', function(e) {
-            if ((me.value) && (me.value.length > 0)) {
+            if (((me.value) && (me.value.length > 0)) || (me.stayopen)) {
                 me.container.classList.add('open');
                 if (me.autoexecute) {
                     if ((me.action) && (typeof me.action === 'function')) {
@@ -8987,6 +8999,9 @@ class SearchControl {
 
     get searchicon() { return this.config.searchicon; }
     set searchicon(searchicon) { this.config.searchicon = searchicon; }
+
+    get stayopen() { return this.config.stayopen; }
+    set stayopen(stayopen) { this.config.stayopen = stayopen; }
 
 }
 window.SearchControl = SearchControl;

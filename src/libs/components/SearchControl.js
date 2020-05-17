@@ -6,6 +6,7 @@ class SearchControl {
             autoexecute: true, // Cause the search's action to execute automatically on focusout
                                // or when there number of seed characters is reached
             arialabel: TextFactory.get('searchcontrol-instructions'), // The aria-label value.
+            stayopen: false,
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
@@ -72,6 +73,10 @@ class SearchControl {
             }
         });
 
+        if (this.stayopen) {
+            this.container.classList.add('open');
+        }
+
         this.container.appendChild(this.searchbutton.button);
 
     }
@@ -121,7 +126,7 @@ class SearchControl {
         });
 
         this.searchinput.addEventListener('focusout', function(e) {
-            if ((me.value) && (me.value.length > 0)) {
+            if (((me.value) && (me.value.length > 0)) || (me.stayopen)) {
                 me.container.classList.add('open');
                 if (me.autoexecute) {
                     if ((me.action) && (typeof me.action === 'function')) {
@@ -185,6 +190,9 @@ class SearchControl {
 
     get searchicon() { return this.config.searchicon; }
     set searchicon(searchicon) { this.config.searchicon = searchicon; }
+
+    get stayopen() { return this.config.stayopen; }
+    set stayopen(stayopen) { this.config.stayopen = stayopen; }
 
 }
 window.SearchControl = SearchControl;

@@ -7,6 +7,7 @@ class HamburgerButton extends SimpleButton {
             shape: 'square',
             naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,
+            toggleaction: function(self) { },
             action: function(e, self) { self.toggle(); }
         };
     }
@@ -42,6 +43,9 @@ class HamburgerButton extends SimpleButton {
     /* CONTROL METHODS__________________________________________________________________ */
 
     toggle() {
+        if ((this.toggleaction) && (typeof this.toggleaction === 'function')) {
+            this.toggleaction(this);
+        }
         if (this.isopen) {
             this.close();
             return;
@@ -68,6 +72,9 @@ class HamburgerButton extends SimpleButton {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get toggleaction() { return this.config.toggleaction; }
+    set toggleaction(toggleaction) { this.config.toggleaction = toggleaction; }
 
     get toggletarget() { return this.config.toggletarget; }
     set toggletarget(toggletarget) { this.config.toggletarget = toggletarget; }
