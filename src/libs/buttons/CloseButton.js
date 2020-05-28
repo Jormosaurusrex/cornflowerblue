@@ -8,7 +8,6 @@ class CloseButton extends SimpleButton {
             classes: ["naked", "closebutton"]
         };
     }
-
     constructor(config) {
         config = Object.assign({}, CloseButton.DEFAULT_CONFIG, config);
         super(config);

@@ -268,6 +268,7 @@
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
   --dialog-actions-box-shadow: var(--interior-shadow-inverse);
+  --dialog-side-padding: 1.5rem;
   --figure-text-color: var(--grey-dark);
   --figure-text-shadow: var(--text-shadow);
   --figure-background-color: var(--canvas-color-secondary);
@@ -1001,7 +1002,7 @@ body.noisy:after {
 h1 {
   font-size: 3.5rem;
   font-weight: 500;
-  margin: 0.5rem 0 0.5rem 0;
+  margin: 0.5rem 0;
   color: var(--headers-h1-text-color);
   text-shadow: var(--headers-h1-text-shadow);
   text-transform: var(--headers-h1-text-transform);
@@ -1035,7 +1036,7 @@ h1.inset {
 h2 {
   font-weight: 400;
   font-size: 2.5rem;
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.5rem 0;
   text-transform: var(--headers-h2-text-transform);
   color: var(--headers-h2-text-color);
   text-shadow: var(--headers-h2-text-shadow);
@@ -1060,7 +1061,7 @@ h2:after {
 h3 {
   font-weight: 400;
   font-size: 1.3rem;
-  margin: 0.5em 0 1em 0;
+  margin: 0.5rem 0 1rem 0;
   text-transform: var(--headers-h3-text-transform);
   color: var(--headers-h3-text-color);
   text-shadow: var(--headers-h3-text-shadow);
@@ -1069,7 +1070,7 @@ h3 {
 h4 {
   font-weight: 400;
   font-size: 1.2rem;
-  margin: 0.5em 0 1em 0;
+  margin: 0.5rem 0 1rem 0;
   text-transform: var(--headers-h4-text-transform);
   color: var(--headers-h4-text-color);
 }
@@ -1077,7 +1078,7 @@ h4 {
 h5 {
   font-weight: 200;
   font-size: 1.1rem;
-  margin: 0.5em 0 1em 0;
+  margin: 0.5rem 0 1rem 0;
   text-transform: var(--headers-h5-text-transform);
   color: var(--headers-h5-text-color);
 }
@@ -1085,7 +1086,7 @@ h5 {
 h6 {
   font-weight: 100;
   font-size: 1.1rem;
-  margin: 0.5em 0 1em 0;
+  margin: 0.5rem 0 1rem 0;
   text-transform: var(--headers-h6-text-transform);
   color: var(--headers-h6-text-color);
 }
@@ -3645,8 +3646,19 @@ a.button.togglebutton {
   --button-default-color: var(--hot-text-color);
   opacity: 0.5;
   box-shadow: none;
-  margin-right: 0.5em;
   background: none;
+  flex-direction: row-reverse;
+  transition: opacity 0.5s;
+}
+button.closebutton span.text, button.togglebutton span.text,
+input[type=submit].closebutton span.text,
+input[type=submit].togglebutton span.text,
+input[type=reset].closebutton span.text,
+input[type=reset].togglebutton span.text,
+a.button.closebutton span.text,
+a.button.togglebutton span.text {
+  font-size: 1rem;
+  opacity: 0;
 }
 button.closebutton:focus, button.closebutton:active, button.togglebutton:focus, button.togglebutton:active,
 input[type=submit].closebutton:focus,
@@ -3664,6 +3676,16 @@ a.button.togglebutton:active {
   color: var(--hot-text-color);
   background: none;
 }
+button.closebutton:focus span.text, button.togglebutton:focus span.text,
+input[type=submit].closebutton:focus span.text,
+input[type=submit].togglebutton:focus span.text,
+input[type=reset].closebutton:focus span.text,
+input[type=reset].togglebutton:focus span.text,
+a.button.closebutton:focus span.text,
+a.button.togglebutton:focus span.text {
+  opacity: 1;
+  display: inline-block;
+}
 @media (hover: hover) and (pointer: fine) {
   button.closebutton:hover, button.togglebutton:hover,
 input[type=submit].closebutton:hover,
@@ -3675,6 +3697,16 @@ a.button.togglebutton:hover {
     opacity: 1;
     color: var(--hot-text-color);
     background: none;
+  }
+  button.closebutton:hover span.text, button.togglebutton:hover span.text,
+input[type=submit].closebutton:hover span.text,
+input[type=submit].togglebutton:hover span.text,
+input[type=reset].closebutton:hover span.text,
+input[type=reset].togglebutton:hover span.text,
+a.button.closebutton:hover span.text,
+a.button.togglebutton:hover span.text {
+    opacity: 1;
+    display: inline-block;
   }
 }
 button.headerbutton,
@@ -5100,7 +5132,7 @@ div.window-container div.dialog h2 {
   margin: 0;
   font-weight: normal;
   font-size: 1.5em;
-  padding: 0.5em 1em 0.5em 1.5em;
+  padding: 1rem var(--dialog-side-padding);
   position: relative;
   width: 100%;
   border-bottom: 0.1em solid var(--dialog-header-border-color);
@@ -5138,7 +5170,7 @@ div.window-container div.dialog div.actions {
   max-height: 5em;
   overflow: auto;
   z-index: 9;
-  padding: 0.5em 1.5em 0.5em 1.5em;
+  padding: 1rem var(--dialog-side-padding);
   background-color: var(--form-actions-background-color);
   border-top: 0.1em solid var(--form-actions-border-color);
 }
@@ -5154,7 +5186,7 @@ div.window-container div.dialog div.actions button:first-child {
 div.window-container div.dialog div.actions button:last-child:not(:only-of-type) {
   align-self: flex-end;
   margin-left: auto;
-  margin-right: 1rem;
+  margin-right: 0;
 }
 div.window-container div.dialog div.actions button:last-child:not(:only-of-type):first-child {
   margin-left: 0;
@@ -5162,7 +5194,7 @@ div.window-container div.dialog div.actions button:last-child:not(:only-of-type)
 div.window-container div.dialog div.actions button:last-child:not(:only-of-type):last-child:not(:only-of-type) {
   align-self: flex-end;
   margin-left: auto;
-  margin-right: 1rem;
+  margin-right: 0;
 }
 div.window-container div.dialog.isform div.content {
   margin: 0;

@@ -4,7 +4,7 @@ class DateInput extends TextInput {
         return {
             basetime: '12:00:00', // Time to set dates on
             timezone: 'GMT',
-            type: 'date',
+            type: 'text',
             gravity: 's', // The direction to open the datepicker
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,

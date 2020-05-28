@@ -431,18 +431,33 @@ a.button {
     --button-default-color: var(--hot-text-color);
     opacity: 0.5;
     box-shadow: none;
-    margin-right: .5em;
     background: none;
+    flex-direction: row-reverse;
+    transition: opacity .5s;
+    span.text {
+      font-size: 1rem;
+      opacity: 0;
+    }
     &:focus,
     &:active {
       color: var(--hot-text-color);
       background: none;
+    }
+    &:focus {
+      span.text {
+        opacity: 1;
+        display: inline-block;
+      }
     }
     @include for-hover-only {
       &:hover {
         opacity: 1;
         color: var(--hot-text-color);
         background: none;
+        span.text {
+          opacity: 1;
+          display: inline-block;
+        }
       }
     }
   }

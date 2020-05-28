@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-05-08
+/*! Cornflower Blue - v0.1.1 - 2020-05-17
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -8819,6 +8819,8 @@ class SearchControl {
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
+            focusin: null, // action to execute on focus in. Passed (event, self).
+            focusout: null, // action to execute on focus out. Passed (event, self).
             action: function(value, self) { // The search action. Passed the value of the input and the self
                 console.log(`Executing search action: ${value}`);
             },
@@ -8865,6 +8867,8 @@ class SearchControl {
             text: this.searchtext,
             icon: this.searchicon,
             mute: true,
+            focusin: this.focusin,
+            focusout: this.focusout,
             action: function(e) {
                 e.preventDefault();
                 if (me.isopen) {
@@ -8945,6 +8949,15 @@ class SearchControl {
             } else {
                 me.container.classList.remove('open');
             }
+            if ((me.focusout) && (typeof me.focusout === 'function')) {
+                me.focusout(e, me);
+            }
+        });
+
+        this.searchinput.addEventListener('focusin', function(e) {
+            if ((me.focusin) && (typeof me.focusin === 'function')) {
+                me.focusin(e, me);
+            }
         });
 
         this.searchinput.value = this.config.value;
@@ -8981,6 +8994,22 @@ class SearchControl {
         return this._container;
     }
     set container(container) { this._container = container; }
+
+    get focusin() { return this.config.focusin; }
+    set focusin(focusin) {
+        if (typeof focusin !== 'function') {
+            console.error("Action provided for focusin is not a function!");
+        }
+        this.config.focusin = focusin;
+    }
+
+    get focusout() { return this.config.focusout; }
+    set focusout(focusout) {
+        if (typeof focusout !== 'function') {
+            console.error("Action provided for focusout is not a function!");
+        }
+        this.config.focusout = focusout;
+    }
 
     get maxlength() { return this.config.maxlength; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }

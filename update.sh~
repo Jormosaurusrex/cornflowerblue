@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cp dist/lib/* ~/wraith/lib/
+cp dist/style/cornflowerblue.* ~/wraith/style/
+cp src/sass/_Mixins.scss ~/wraith/sass/
+
+
+cp dist/lib/* ~/console/lib/
+cp dist/style/cornflowerblue.* ~/console/sass/cfb2/
+cp src/sass/_Mixins.scss ~/console/sass/cfb2/
+cp src/sass/_Tooltip.scss ~/console/sass/cfb2/
+cp src/sass/_Variables.scss ~/console/sass/cfb2/
+cp src/sass/_Animations.scss ~/console/sass/cfb2/
+cp src/sass/_Font.scss ~/console/sass/cfb2/
+cp src/sass/_BodyLevel.scss ~/console/sass/cfb2/
+

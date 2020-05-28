@@ -50,7 +50,7 @@ div.window-container {
       margin: 0;
       font-weight: normal;
       font-size: 1.5em;
-      padding: .5em 1em .5em 1.5em;
+      padding: 1rem var(--dialog-side-padding);
       position: relative;
       width: 100%;
       border-bottom: .1em solid var(--dialog-header-border-color);
@@ -88,7 +88,7 @@ div.window-container {
       max-height: 5em;
       overflow: auto;
       z-index: 9;
-      padding: .5em 1.5em .5em 1.5em;
+      padding: 1rem var(--dialog-side-padding);
       background-color: var(--form-actions-background-color);
       border-top: .1em solid var(--form-actions-border-color);
       button {
@@ -103,14 +103,14 @@ div.window-container {
       button:last-child:not(:only-of-type) {
         align-self: flex-end;
         margin-left: auto;
-        margin-right: 1rem;
+        margin-right: 0;
         &:first-child {
           margin-left: 0;
         }
         &:last-child:not(:only-of-type) {
           align-self: flex-end;
           margin-left: auto;
-          margin-right: 1rem;
+          margin-right: 0;
         }
       }
 
