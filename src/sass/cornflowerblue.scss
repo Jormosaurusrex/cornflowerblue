@@ -4,8 +4,14 @@
 @import "variables/Colors";
 @import "variables/Variables";
 
+@import "html/Core.scss";
+@import "html/Blocks.scss";
+@import "html/Headers.scss";
+@import "html/Links.scss";
+@import "html/Lists.scss";
+@import "html/Texts.scss";
+
 @import "BodyLevel";
-@import "GeneralBehavior";
 @import "Form";
 
 @import "elements/Buttons";

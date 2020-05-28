@@ -110,21 +110,4 @@
   --disabled-color-quarter: var(--grey-quarter);
   --disabled-color-translucent: var(--grey-translucent);
 
-  // Labels
-  --label-color: var(--darkblue);
-  --label-text-shadow: var(--text-shadow);
-  --label-required-marker-color: var(--required-color);
-  --label-text-transform: none;
-
-  // Links
-  --link-link-color: var(--focus-color);
-  --link-active-color: var(--focus-color);
-  --link-hover-color: var(--focus-color);
-  --link-visited-color: var(--focus-color);
-  --link-color: var(--focus-color);
-  --link-text-shadow: var(--on-white-text-shadow);
-
-  // Sup
-  --sup-text-color: var(--text-color);
-  --sup-text-shadow: var(--paragraph-text-shadow);
 }
