@@ -21,7 +21,6 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'src/libs/CFBUtils.js',
-
                     'src/libs/bo/BusinessObject.js',
                     'src/libs/bo/CountryCode.js',
                     'src/libs/bo/StateProvince.js',
@@ -43,25 +42,20 @@ module.exports = function(grunt) {
                     'src/libs/components/Panel.js',
                     'src/libs/components/LoadingShade.js',
                     'src/libs/components/SimpleProgressMeter.js',
-
                     'src/libs/components/info/MessageBox.js',
                     'src/libs/components/info/InstructionBox.js',
                     'src/libs/components/info/ResultsContainer.js',
                     'src/libs/components/info/ErrorBox.js',
                     'src/libs/components/info/SuccessBox.js',
                     'src/libs/components/info/WarningBox.js',
-
                     'src/libs/components/grid/ColumnConfigurator.js',
                     'src/libs/components/grid/DataGrid.js',
                     'src/libs/components/grid/FilterConfigurator.js',
                     'src/libs/components/grid/GridField.js',
-
                     'src/libs/components/DatePicker.js',
                     'src/libs/components/DialogWindow.js',
                     'src/libs/components/FloatingPanel.js',
                     'src/libs/components/Growler.js',
-                    'src/libs/components/PasswordChangeForm.js',
-                    'src/libs/components/PasswordGenerator.js',
                     'src/libs/components/RadialProgressMeter.js',
                     'src/libs/components/SearchControl.js',
                     'src/libs/components/SimpleForm.js',
