@@ -1,3 +1,43 @@
+:root {
+  // Datagrid keys
+  --datagrid-background-color: var(--ultralight);
+
+  --datagrid-gridheader-background-color: var(--light);
+  --datagrid-gridheader-text-color: var(--grey-darkest);
+  --datagrid-gridheader-grid-text-color: var(--grey-darker);
+  --datagrid-gridheader-hover-text-shadow: var(--text-shadow);
+  --datagrid-gridheader-hover-text-color: var(--hot-text-color);
+  --datagrid-gridheader-sort-highlight-color: var(--focus-color);
+  --datagrid-gridheader-hover-background-color: var(--focus-color);
+
+  --datagrid-grid-color: transparent;
+  --datagrid-grid-text-color: var(--grey-darkest);
+  --datagrid-grid-selected-background-color: var(--focus-color);
+  --datagrid-grid-selected-text-color: var(--hot-text-color);
+
+  --datagrid-grid-multiselected-selected-background-color: var(--focus-color-half);
+  --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
+
+  --datagrid-grid-background-color: var(--ultralight);
+  --datagrid-grid-alternate-background-color: var(--ultralight);
+  --datagrid-grid-mechanical-background-color: var(--ultralight);
+  --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
+  --datagrid-grid-hover-text-color: var(--hot-text-color);
+  --datagrid-grid-hover-text-shadow: var(--text-shadow);
+
+  --datagrid-line-color: var(--sublight);
+
+  --datagrid-messagebox-color-base: var(--grey-darkest);
+  --datagrid-messagebox-stripes-base: var(--grey-translucent);
+
+  --datagrid-filter-border-color: var(--light);
+  --datagrid-filterinfo-background-color: var(--canvas-color-secondary);
+
+  --datagrid-title-background-color: var(--sublight);
+  --datagrid-title-text-color: var(--grey-dark);
+
+
+}
 div.datagrid-container {
   position: relative;
   display: flex;

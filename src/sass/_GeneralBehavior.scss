@@ -1,3 +1,70 @@
+:root {
+  // Aside
+  --aside-text-color: var(-text-color);
+  --aside-text-shadow: var(--text-shadow);
+  --aside-background-color: var(--canvas-color-callout-lightweight);
+  --aside-border-color: var(--blue);
+
+  // Blockquote
+  --blockquote-text-color: var(--blue);
+  --blockquote-text-shadow: var(--text-shadow);
+  --blockquote-background-color: var(--canvas-color-callout-lightweight);
+  --blockquote-border-color: var(--blue);
+
+  // Code
+  --code-background-color: var(--canvas-color-callout-lightweight);
+  --code-text-color: var(--text-color);
+  --code-text-shadow: var(--text-shadow);
+  --code-font-family: var(--fontstack-monospace);
+
+  // Figure
+  --figure-text-color: var(--grey-dark);
+  --figure-text-shadow: var(--text-shadow);
+  --figure-background-color: var(--canvas-color-secondary);
+
+
+  // Headers //--grey-meddark
+  --headers-h1-text-color: var(--grey-meddark);
+  --headers-h1-text-shadow: none;
+  --headers-h1-text-transform: uppercase;
+  --headers-h1-background-color: transparent;
+  --headers-h1-border-color: var(--grey-medium);
+
+  --headers-h2-text-color: var(--grey-meddark);
+  --headers-h2-text-shadow: none;
+  --headers-h2-text-transform: uppercase;
+  --headers-h2-background-color: transparent;
+  --headers-h2-border-color: var(--grey-medium);
+
+  --headers-h3-text-color: var(--grey-darker);
+  --headers-h3-text-shadow: none;
+  --headers-h3-text-transform: uppercase;
+  --headers-h3-background-color: transparent;
+  --headers-h3-border-color: var(--grey-medium);
+
+  --headers-h4-text-color: var(--grey-darker);
+  --headers-h4-text-shadow: none;
+  --headers-h4-text-transform: uppercase;
+  --headers-h4-background-color: transparent;
+  --headers-h4-border-color: var(--grey-medium);
+
+  --headers-h5-text-color: var(--grey-darkest);
+  --headers-h5-text-shadow: none;
+  --headers-h5-text-transform: uppercase;
+  --headers-h5-background-color: transparent;
+  --headers-h5-border-color: var(--grey-medium);
+
+  --headers-h6-text-color: var(--grey-darkest);
+  --headers-h6-text-shadow: none;
+  --headers-h6-text-transform: uppercase;
+  --headers-h6-background-color: transparent;
+  --headers-h6-border-color: var(--grey-medium);
+
+  // Horizontal rules
+  --hr-background-color: transparent;
+  --hr-border-color: var(--grey-medium);
+
+}
 * {
   padding: 0;
   margin: 0;
@@ -26,6 +93,7 @@ body {
     color: var(--hot-text-color);
   }
 }
+
 body {
   &.noisy {
     &:after {

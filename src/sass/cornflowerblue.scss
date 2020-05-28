@@ -1,29 +1,32 @@
-@import "Mixins";
-@import "Variables";
+@import "lib/Mixins";
+@import "lib/Animations";
+@import "lib/Font";
+@import "variables/Colors";
+@import "variables/Variables";
+
 @import "BodyLevel";
-@import "Animations";
-@import "LoadingShade";
 @import "GeneralBehavior";
-@import "Font";
-@import "InputContainers";
-@import "Inputs";
-@import "FileInput";
-@import "SelectMenu";
-@import "Buttons";
-@import "ChecksAndRadios";
-@import "RadioGroup";
-@import "SimpleForm";
-@import "Growler";
-@import "Panels";
-@import "Tooltip";
-@import "MessageBoxes";
-@import "DialogWindow";
-@import "TabBar";
-@import "DatePicker";
-@import "DataGrid";
-@import "ColumnConfigurator";
-@import "FilterConfigurator";
-@import "PasswordGenerator";
-@import "SearchControl";
-@import "ProgressMeter";
+@import "Form";
+
+@import "elements/Buttons";
+@import "elements/ChecksAndRadios";
+@import "elements/Containers";
+@import "elements/Inputs";
+@import "elements/FileInput";
+@import "elements/SelectMenu";
+
+@import "components/DatePicker";
+@import "components/DialogWindow";
+@import "components/Growler";
+@import "components/LoadingShade";
+@import "components/MessageBoxes";
+@import "components/Panels";
+@import "components/ProgressMeter";
+@import "components/SearchControl";
+@import "components/TabBar";
+@import "components/Tooltip";
+@import "components/grid/DataGrid";
+@import "components/grid/ColumnConfigurator";
+@import "components/grid/FilterConfigurator";
+
 

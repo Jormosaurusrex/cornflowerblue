@@ -1,3 +1,17 @@
+:root {
+  --datepicker-cell-dimensions: 2.5em;
+  --datepicker-header-color: var(--blue);
+  --datepicker-background-color: var(--canvas-color-primary);
+  --datepicker-month-header-background-color: var(--canvas-color-tertiary);
+  --datepicker-month-header-text-color: var(--grey-darkest);
+  --datepicker-day-today-background-color: var(--blue);
+  --datepicker-day-today-text-color: var(--ultralight);
+  --datepicker-day-past-text-color: var(--grey-medium);
+  --datepicker-day-background-color: var(--canvas-color-secondary);
+  --datepicker-day-text-color: var(--blue);
+  --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
+  --datepicker-day-currentmonth-text-color: var(--blue);
+}
 div.datepicker {
   position: relative;
   display: flex;

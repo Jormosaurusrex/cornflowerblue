@@ -1,3 +1,11 @@
+:root {
+  // Select menu inputs
+  --selectmenu-menu-background-color: var(--ultralight);
+  --selectmenu-menu-alternate-background-color: var(--grey-translucent);
+  --selectmenu-menu-item-hover-background-color: var(--focus-color);
+  --selectmenu-menu-item-hover-text-color: var(--hot-text-color);
+  --selectmenu-menu-item-hover-text-shadow: var(--text-shadow);
+}
 div.select-container {
   position: relative;
   &.disabled {

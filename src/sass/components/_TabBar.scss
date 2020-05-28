@@ -1,3 +1,35 @@
+:root {
+  // TabBars
+  --tabbar-box-shadow: var(--panel-shadow-light);
+  --tabbar-background-color: var(--canvas-color-primary);
+  --tabbar-subtab-background-color: var(--canvas-color-secondary);
+  --tabbar-interior-box-shadow: var(--interior-shadows-inside);
+  --tabbar-border-radius: var(--border-radius);
+
+  --tabbar-tab-height: 3em;
+  --tabbar-tab-box-shadow: none;
+  --tabbar-tab-text-color: var(--grey-dark);
+  --tabbar-tab-background-color: var(--ultralight);
+  --tabbar-tab-text-shadow: none;
+
+  --tabbar-selected-tab-background-color: var(--ultralight);
+  --tabbar-selected-tab-highlight-color: var(--focus-color);
+  --tabbar-selected-tab-text-color: var(--focus-color);
+  --tabbar-selected-tab-text-shadow: none;
+
+  --tabbar-hover-tab-background-color: var(--focus-color);
+  --tabbar-hover-tab-highlight-color: var(--focus-color);
+  --tabbar-hover-tab-text-color: var(--ultralight);
+  --tabbar-hover-tab-text-shadow: var(--text-shadow);
+
+  --tabbar-collapsed-height: 3.5em;
+  --tabbar-collapsed-background-color: var(--tabbar-background-color);
+  --tabbar-collapsed-open-background-color: var(--bright);
+  --tabbar-collapsed-button-color: var(--tabbar-selected-tab-highlight-color);
+  --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
+  --tabbar-collapsed-title-color: var(--grey-meddark);
+
+}
 ul.tabbar {
   list-style-type: none;
   display: flex;

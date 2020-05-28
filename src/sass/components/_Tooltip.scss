@@ -1,3 +1,11 @@
+:root {
+  // Tooltip
+  --tooltip-border-radius: var(--border-radius);
+  --tooltip-background-color: var(--canvas-color-colored);
+  --tooltip-text-color: var(--standard-color);
+  --tooltip-text-shadow: var(--text-shadow);
+  --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+}
 div.tooltip {
   animation: cfb-fadein .5s;
   opacity: 1;

@@ -1,3 +1,40 @@
+:root {
+  // Input
+  --input-default-padding: .5em 1em .5em 1.5em;
+  --input-border-radius: .1em;
+
+  --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
+  --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
+  --input-border-error-box-shadow: inset -.1em -.1em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
+
+  --input-focus-warning-box-shadow: inset .5em 0 0 var(--warning-color), inset .1em -.1em 0 0 var(--warning-color), inset -.1em .1em 0 0 var(--warning-color), inset .1em .1em 0 0 var(--warning-color);
+
+  --input-focus-error-box-shadow: inset .5em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
+
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--focus-color);
+
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-default-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--focus-color);
+
+  --input-default-background-color: var(--grey-translucent);
+  --input-default-border-color: var(--standard-color);
+  --input-default-text-color: var(--grey-darker);
+  --input-default-text-shadow: none;
+  --input-default-placeholder-color: var(--placeholder-color);
+
+  --input-disabled-background-color: var(--disabled-base-color);
+  --input-disabled-border-color: var(--disabled-highlight-color);
+  --input-disabled-text-color: var(--disabled-highlight-color);
+  --input-disabled-placeholder-color: var(--disabled-highlight-color);
+
+  --input-focused-border-color: var(--focus-color);
+  --input-focused-background-color: var(--focus-color-translucent);
+
+  --input-mute-background-color: var(--grey-translucent);
+  --input-mute-disabled-background-color: var(--light);
+  --input-mute-focus-background-color: var(--grey-quarter);
+}
 [hidden] { display: none; }
 input[type="text"],
 input[type="number"],

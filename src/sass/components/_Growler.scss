@@ -1,4 +1,18 @@
-
+:root {
+  // Growler keys
+  --growlbox-max-width: 22em;
+  --growler-core-color: var(--blue);
+  --growler-max-width: 20em;
+  --growler-border-radius: var(--border-radius);
+  --growler-box-shadow: var(--panel-shadow);
+  --growler-text-color: var(--grey-darkest);
+  --growler-text-shadow: var(--text-shadow);
+  --growler-default-background-color: var(--ultralight);
+  --growler-default-border-color: var(--growler-core-color);
+  --growler-header-text-color: var(--ultralight);
+  --growler-header-text-shadow: var(--text-shadow);
+  --growler-header-background-color: var(--growler-core-color);
+}
 div.growlbox {
   z-index: 50000;
   position: fixed;

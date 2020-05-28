@@ -1,3 +1,33 @@
+:root {
+  --input-passivebox-background-color: transparent;
+  --input-passivebox-text-color: var(--grey-dark);
+  --input-passivebox-text-shadow: var(--text-shadow);
+
+  --input-subline-text-color: var(--grey-dark);
+  --input-subline-warning-text-color: var(--warning-color);
+  --input-subline-error-text-color: var(--error-color);
+
+  --input-messages-background-color: transparent;
+  --input-messages-text-color: var(--grey-darkest);
+  --input-messages-warning-text-color: var(--grey-darkest);
+  --input-messages-error-text-color: var(--error-color);
+
+  --input-status-default-background-color: var(--grey-dark);
+  --input-status-icon-color: var(--morelight);
+  --input-status-icon-text-shadow: var(--text-shadow);
+  --input-status-warning-background-color: var(--warning-color);
+  --input-status-warning-icon-color: var(--input-status-icon-color);
+  --input-status-warning-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-error-background-color: var(--error-color);
+  --input-status-error-icon-color: var(--input-status-icon-color);
+  --input-status-error-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-valid-background-color: transparent;
+  --input-status-valid-icon-color: var(--success-color-half);
+  --input-status-valid-icon-text-shadow: none;
+  --input-status-active-background-color: var(--focus-color);
+  --input-status-active-icon-color: var(--input-status-icon-color);
+  --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+}
 div.input-container,
 p.input-container,
 div.textarea-container,

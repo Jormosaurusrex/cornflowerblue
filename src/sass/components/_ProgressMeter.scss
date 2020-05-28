@@ -1,3 +1,23 @@
+:root {
+  // Progressmeter
+  --progressmeter-simple-background-color: var(--ultralight);
+  --progressmeter-simple-background-image: var(--darker-grey-stripes);
+  --progressmeter-simple-border-color: var(--grey-light);
+  --progressmeter-simple-marker-color: var(--blue);
+  --progressmeter-simple-progress-background-color: var(--blue-half);
+  --progressmeter-simple-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
+  --progressmeter-simple-progress-background-image: var(--blue-stripes);
+  --progressmeter-simple-decal-text-color: var(--grey-dark);
+  --progressmeter-simple-decal-text-shadow: var(--text-shadow-heavy);
+
+  --progressmeter-radial-background-color: transparent;
+  --progressmeter-radial-stroke-color: var(--darkblue);
+  --progressmeter-radial-gutter-color: var(--blue-quarter);
+  --progressmeter-radial-decal-text-color: var(--grey-dark);
+  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
+  --progressmeter-radial-tick-color: var(--hot-text-color);
+
+}
 div.progressbar-container {
   margin: .5rem 0 .5rem 0;
   position: relative;

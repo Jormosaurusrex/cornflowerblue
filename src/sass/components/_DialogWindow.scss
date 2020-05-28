@@ -1,3 +1,18 @@
+:root {
+  // Dialog keys
+  --dialog-background-color: var(--ultralight);
+  --dialog-border-radius: var(--border-radius);
+  --dialog-box-shadow: var(--panel-shadow);
+  --dialog-header-background-color: var(--grey-dark);
+  --dialog-header-text-color: var(--ultralight);
+  --dialog-header-text-shadow: var(--text-shadow);
+  --dialog-header-border-color: var(--grey-darkest);
+  --dialog-header-box-shadow: var(--interior-shadow);
+  --dialog-window-mask-color: var(--white);
+  --dialog-window-mask-opacity: .25;
+  --dialog-actions-box-shadow: var(--interior-shadow-inverse);
+  --dialog-side-padding: 1.5rem;
+}
 body.modalopen {
   height: 100vh;
   overflow-y: hidden;

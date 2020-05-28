@@ -1,3 +1,10 @@
+:root {
+  // Form keys
+  --form-background-color: transparent;
+  --form-border-color: transparent;
+  --form-actions-background-color: var(--morelight);
+  --form-actions-border-color: var(--light);
+}
 form {
   margin: 0;
   position: relative;

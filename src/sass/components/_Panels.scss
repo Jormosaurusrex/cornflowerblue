@@ -1,3 +1,15 @@
+:root {
+  // Panels
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-primary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+  --panel-padding: .5em 1em .5em 1em;
+  --panel-closed-hover-background-color: var(--focus-color);
+  --panel-closed-hover-text-color: var(--hot-text-color);
+}
 div.panel {
   transition: all .2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
