@@ -23,7 +23,6 @@ html {
 html,
 body {
   color: var(--text-color);
-  font-family: var(--font-family);
   ::selection {
     background-color: var(--highlight-color);
     color: var(--hot-text-color);

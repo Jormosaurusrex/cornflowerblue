@@ -3,37 +3,20 @@
   --input-default-padding: .5em 1em .5em 1.5em;
   --input-border-radius: .1em;
 
-  --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
-  --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
-  --input-border-error-box-shadow: inset -.1em -.1em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
+  --input-border-color-rgb: var(--standard-color-rgb);
+  --input-border-color: rgb(var(--input-border-color-rgb));
 
-  --input-focus-warning-box-shadow: inset .5em 0 0 var(--warning-color), inset .1em -.1em 0 0 var(--warning-color), inset -.1em .1em 0 0 var(--warning-color), inset .1em .1em 0 0 var(--warning-color);
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
 
-  --input-focus-error-box-shadow: inset .5em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
-
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--focus-color);
-
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-default-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--focus-color);
-
-  --input-default-background-color: var(--grey-translucent);
-  --input-default-border-color: var(--standard-color);
-  --input-default-text-color: var(--grey-darker);
-  --input-default-text-shadow: none;
-  --input-default-placeholder-color: var(--placeholder-color);
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
 
   --input-disabled-background-color: var(--disabled-base-color);
   --input-disabled-border-color: var(--disabled-highlight-color);
   --input-disabled-text-color: var(--disabled-highlight-color);
   --input-disabled-placeholder-color: var(--disabled-highlight-color);
 
-  --input-focused-border-color: var(--focus-color);
-  --input-focused-background-color: var(--focus-color-translucent);
-
-  --input-mute-background-color: var(--grey-translucent);
-  --input-mute-disabled-background-color: var(--light);
-  --input-mute-focus-background-color: var(--grey-quarter);
 }
 [hidden] { display: none; }
 input[type="text"],
@@ -50,10 +33,11 @@ textarea {
   word-spacing: inherit;
   font-size: 1em;
   width: 100%;
-  background-color: var(--input-default-background-color);
+  background-color: rgba(var(--input-border-color-rgb), 0.1);
   margin: 0;
   border: none;
-  box-shadow: var(--input-border-box-shadow);
+  box-shadow: inset -.1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
+
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
   color: var(--input-default-text-color);
@@ -65,6 +49,7 @@ textarea {
     text-shadow: none;
   }
   &:disabled {
+    // XXX TODO disabled color stuff
     border-color: var(--input-disabled-border-color);
     background-color: var(--input-disabled-background-color);
     color: var(--input-disabled-text-color);
@@ -73,26 +58,27 @@ textarea {
   }
   &:focus,
   &:focus-within {
-    border-color: var(--input-focused-border-color);
-    background-color: var(--input-focused-background-color);
-    box-shadow: var(--input-focus-box-shadow);
+    --input-border-color-rgb: var(--colors-focus-rgb);
+    --input-border-color: rgb(var(--colors-focus-rgb));
+    box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
     &::placeholder {
       opacity: 0.3;
     }
   }
   &.mute {
-    background-color: var(--input-mute-background-color);
-    box-shadow: var(--input-mute-box-shadow);
+    background-color: rgba(var(--input-border-color-rgb), 0.05);
+    box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
     padding: .5em 1em .5em 1.5em;
     &::placeholder {
       color: var(--label-color);
       text-shadow:var(--label-text-shadow);
       text-transform: var(--label-text-transform);
     }
-    &:focus {
-      border-bottom-color: var(--focus-color);
-      background-color: var(--input-focused-background-color);
-      box-shadow: var(--input-mute-focus-box-shadow);
+    &:focus,
+    &:focus-within {
+      --input-border-color-rgb: var(--colors-focus-rgb);
+      background-color: rgba(var(--input-border-color-rgb), 0.05);
+      box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
       &::placeholder {
         opacity: 0;
       }
@@ -117,10 +103,10 @@ textarea {
   }
   &.mute {
     padding: 1em 1em 1em 2em;
-    box-shadow: var(--input-mute-textarea-box-shadow);
+    box-shadow: inset .1em 0 0 0 rgb(var(--input-border-color-rgb));
     border-bottom: none;
     &:focus {
-      box-shadow: var(--input-mute-focus-textarea-box-shadow);
+      box-shadow: inset .2em 0 0 0 rgb(var(--input-border-color-rgb));
     }
   }
 }

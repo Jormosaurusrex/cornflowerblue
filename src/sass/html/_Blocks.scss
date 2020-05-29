@@ -1,27 +1,6 @@
 :root {
-  // Aside
-  --aside-text-color: var(-text-color);
-  --aside-text-shadow: var(--text-shadow);
-  --aside-background-color: var(--canvas-color-callout-lightweight);
-  --aside-border-color: var(--blue);
-
-  // Blockquote
-  --blockquote-text-color: var(--blue);
-  --blockquote-text-shadow: var(--text-shadow);
-  --blockquote-background-color: var(--canvas-color-callout-lightweight);
-  --blockquote-border-color: var(--blue);
-
   // Code
-  --code-background-color: var(--canvas-color-callout-lightweight);
-  --code-text-color: var(--text-color);
-  --code-text-shadow: var(--text-shadow);
   --code-font-family: var(--fontstack-monospace);
-
-  // Figure
-  --figure-text-color: var(--grey-dark);
-  --figure-text-shadow: var(--text-shadow);
-  --figure-background-color: var(--canvas-color-secondary);
-
 }
 blockquote {
   display: block;
@@ -31,11 +10,11 @@ blockquote {
   max-width: 70%;
   min-width: 70%;
   font-style: oblique;
-  border-bottom: .1em solid var(--blockquote-border-color);
-  border-top: .1em solid var(--blockquote-border-color);
-  background-color: var(--blockquote-background-color);
-  color: var(--blockquote-text-color);
-  text-shadow: var(--blockquote-text-shadow);
+  border-bottom: .1em solid var(--colors-highlight);
+  border-top: .1em solid var(--colors-highlight);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
   p {
     margin: .5rem;
   }
@@ -47,18 +26,18 @@ aside {
   margin: 0 0 .5rem .5rem;
   width: 40%;
   font-style: oblique;
-  border-left: .1rem solid var(--aside-border-color);
-  background-color: var(--aside-background-color);
-  color: var(--aside-text-color);
-  text-shadow: var(--aside-text-shadow);
+  border-left: .1rem solid var(--colors-highlight);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
   p {
     margin: .5rem;
   }
 }
 figure {
-  background-color: var(--figure-background-color);
-  color: var(--figure-text-color);
-  text-shadow: var(--figure-text-shadow);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -75,9 +54,9 @@ figure {
 }
 code {
   font-family: var(--code-font-family);
-  background-color: var(--code-background-color);
-  color: var(--code-text-color);
-  text-shadow: var(--code-text-shadow);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
   white-space: nowrap;
   &.block {
     display: block;

@@ -3,10 +3,79 @@
   We want to use variables so that they can be re-themed
  */
 :root {
-
+  // Font Basics
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
+
+  --default-font-family: var(--fontstack-sansserif);
+  --default-font-size: 13pt;
+
+  --text-color: var(--grey-dark);
+  --hot-text-color: var(--ultralight);
+  --required-color: var(--red);
+  --text-shadow: var(--text-shadow-light);
+
+  --wide-measure: 40em;
+  --thin-measure: 25em;
+
+  // Canvas colors
+  --canvas-color-primary: var(--ultralight);
+  --canvas-color-secondary: var(--morelight);
+  --canvas-color-tertiary: var(--light);
+  --canvas-color-highlight: var(--cornflowerblue-light);
+
+  // Semantic colors
+
+  // Actions (buttons and links)
+  --colors-affordance-rgb: var(--darkblue-rgb); // Default for buttons and links
+  --colors-affordance: rgb(var(--colors-affordance-rgb));
+
+  --colors-highlight-rgb: var(--darkblue-rgb);
+  --colors-highlight: rgb(var(--colors-highlight-rgb));
+
+  --colors-constructive-rgb: var(--green-rgb); // This moves the action forward
+  --colors-constructive: rgb(var(--colors-constructive-rgb));
+
+  --colors-destructive-rgb: var(--red-rgb); // This moves the action backward/cancels
+  --colors-destructive: rgb(var(--colors-destructive-rgb));
+
+  // Fields (input elements)
+  --standard-color-rgb: var(--grey-dark-rgb); // Chrome: input borders, input chrome buttons, toggles, etc.
+  --standard-color: var(--grey-dark);
+
+  --placeholder-color-rgb: var(--grey-medium-rgb); // Input placeholders
+  --placeholder-color: var(--grey-medium);
+
+  // Status
+  --colors-focus-rgb: var(--green-rgb); // Indicates the item has been selected.
+  --colors-focus: rgb(var(--colors-focus-rgb));
+
+  --colors-required-rgb: var(--red-rgb); // Operation or element is required
+  --colors-required: rgb(var(--colors-required-rgb));
+
+  --colors-success-rgb: var(--green-rgb); // Operation or element is successful
+  --colors-success: rgb(var(--colors-success-rgb));
+
+  --colors-error-rgb: var(--red-rgb); // Operation or element is in an error state
+  --colors-error: rgb(var(--colors-error-rgb));
+
+  --colors-warning-rgb: var(--orange-rgb); // Operation or element is in an warning state
+  --colors-warning: rgb(var(--colors-warning-rgb));
+
+  --colors-caution-rgb: var(--yellow-rgb); // Operation or element is in an caution state
+  --colors-caution: rgb(var(--colors-caution-rgb));
+
+  --disabled-base-color: var(--light);
+  --disabled-base-color-light: var(--morelight);
+  --disabled-highlight-color: var(--grey-medium);
+  --disabled-color-half: var(--grey-half);
+  --disabled-color-quarter: var(--grey-quarter);
+  --disabled-color-translucent: var(--grey-translucent);
+
+
+  // Misc Values
+  --border-radius: .2rem;
 
   // Shadows
   --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
@@ -29,85 +98,5 @@
   --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
 
 
-  // Default font styles
-  --paragraph-measure: auto;
-  --font-family: var(--fontstack-sansserif);
-  --text-color: var(--grey-dark);
-  --hot-text-color: var(--ultralight);
-  --required-color: var(--red);
-  --text-shadow: var(--text-shadow-light);
-
-  --wide-measure: 40em;
-  --thin-measure: 25em;
-
-  --body-background-color: var(--grey-darkest);
-  --canvas-color-primary: var(--ultralight);
-  --canvas-color-secondary: var(--morelight);
-  --canvas-color-tertiary: var(--light);
-  --canvas-color-colored: var(--cornflowerblue-translucent);
-  --canvas-color-callout-lightweight: var(--blue-translucent);
-
-  // Misc Values
-  --default-font-family: var(--fontstack-sansserif);
-  --default-font-size: 13pt;
-  --border-radius: .2rem;
-
-  // Semantic colors
-  --standard-color: var(--grey-dark);
-  --placeholder-color: var(--grey-medium);
-
-  --highlight-color: var(--darkblue);
-  --focus-color: var(--green);
-  --focus-color-half: var(--green-half);
-  --focus-color-quarter: var(--green-quarter);
-  --focus-color-translucent: var(--green-translucent);
-  --focus-color-half-solid: #39784a;
-
-  --constructive-color: var(--green);
-  --constructive-color-half: var(--green-half);
-  --constructive-color-quarter: var(--green-quarter);
-  --constructive-color-translucent: var(--green-translucent);
-
-  --destructive-color: var(--red);
-  --destructive-color-helf: var(--red-half);
-  --destructive-color-quarter: var(--red-quarter);
-  --destructive-color-translucent: var(--red-translucent);
-
-  --accept-color: var(--green);
-  --accept-color-half: var(--green-half);
-  --accept-color-quarter: var(--green-quarter);
-  --accept-color-translucent: var(--green-translucent);
-  --accept-stripes: var(--green-stripes);
-
-  --success-color: var(--green);
-  --success-color-half: var(--green-half);
-  --success-color-quarter: var(--green-quarter);
-  --success-color-translucent: var(--green-translucent);
-  --success-stripes: var(--green-stripes);
-
-  --error-color: var(--red);
-  --error-color-half: var(--red-half);
-  --error-color-quarter: var(--red-quarter);
-  --error-color-translucent: var(--red-translucent);
-  --error-stripes: var(--red-stripes);
-
-  --warning-color: var(--orange);
-  --warning-color-half: var(--orange-half);
-  --warning-color-quarter: var(--orange-quarter);
-  --warning-color-translucent: var(--orange-translucent);
-  --warning-stripes: var(--orange-stripes);
-
-  --caution-color: var(--yellow);
-  --caution-color-half: var(--yellow-half);
-  --caution-color-quarter: var(--yellow-quarter);
-  --caution-color-translucent: var(--yellow-translucent);
-  --caution-stripes: var(--yellow-stripes);
-
-  --disabled-base-color: var(--light);
-  --disabled-base-color-light: var(--morelight);
-  --disabled-highlight-color: var(--grey-medium);
-  --disabled-color-half: var(--grey-half);
-  --disabled-color-quarter: var(--grey-quarter);
-  --disabled-color-translucent: var(--grey-translucent);
 
 }

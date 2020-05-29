@@ -15,18 +15,9 @@
   --input-status-default-background-color: var(--grey-dark);
   --input-status-icon-color: var(--morelight);
   --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-warning-background-color: var(--warning-color);
-  --input-status-warning-icon-color: var(--input-status-icon-color);
-  --input-status-warning-icon-text-shadow: var(--input-status-icon-text-shadow);
-  --input-status-error-background-color: var(--error-color);
-  --input-status-error-icon-color: var(--input-status-icon-color);
-  --input-status-error-icon-text-shadow: var(--input-status-icon-text-shadow);
-  --input-status-valid-background-color: transparent;
-  --input-status-valid-icon-color: var(--success-color-half);
-  --input-status-valid-icon-text-shadow: none;
-  --input-status-active-background-color: var(--focus-color);
-  --input-status-active-icon-color: var(--input-status-icon-color);
-  --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+
+  --input-status-color-rgb: var(--blue-rgb);  // This is going to be the primary color for this
+
 }
 div.input-container,
 p.input-container,
@@ -51,7 +42,6 @@ p.textarea-container {
       &.calbutton {
         --button-default-color: var(--standard-color);
         display: flex;
-        //opacity: .25;
         top: .2em;
         bottom: .2em;
         right: 3.5em;
@@ -107,7 +97,7 @@ p.textarea-container {
       bottom: 0;
       width: 2em;
       margin: 0;
-      background-color: var(--input-status-default-background-color);
+      background-color: rgb(var(--input-status-color-rgb));
       font-family: "cornflowerblue", serif;
       font-style: normal;
       font-weight: normal;
@@ -153,14 +143,17 @@ p.textarea-container {
   }
   ul.messagebox {
     transition: all .2s;
-    font-size: .9em;
+    font-size: .9rem;
     margin: 0;
     opacity: 1;
     height: auto;
-    padding: .5em 1em .5em 2em;
+    padding: .5rem 1rem .5rem 2rem;
     background-color: var(--input-messages-background-color);
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--input-status-color-rgb), 0.05) .5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
+    border: .1em dashed rgba(var(--input-status-color-rgb), 0.5);
+    border-top: none;
     li {
-      margin: .5em 0 .5em 0;
+      margin: .5rem 0 .5rem 0;
       &.error {
         color: var(--input-messages-error-text-color);
       }
@@ -189,20 +182,20 @@ p.textarea-container {
   }
   &.minimal {
     display: inline-block;
-    margin: 0 .5em 0 .5em;
+    margin: 0 .5rem 0 .5rem;
     div.wrap {
       div.inputcontrol {
-        right: 1em;
+        right: 1rem;
       }
       &:after {
         display: none;
       }
       &:before {
-        right: 1em;
+        right: 1rem;
       }
     }
     input.trigger {
-      padding-right: 2em;
+      padding-right: 2rem;
     }
   }
   &.mute {
@@ -211,7 +204,7 @@ p.textarea-container {
       margin-top: 0;
     }
     div.topcontrol {
-      top: .3em;
+      top: .3rem;
     }
     &.active,
     &.filled {
@@ -231,86 +224,19 @@ p.textarea-container {
   &.required {
     label {
       &:after {
-        color: var(--label-required-marker-color);
         content: attr(data-required-text);
-        font-size: .75em;
-        margin-left: .5em;
+        display: inline-block;
       }
     }
   }
-  &.valid {
-    div.wrap {
-      &:after {
-        opacity: 1;
-        background-color: var(--input-status-valid-background-color);
-        text-shadow: var(--input-status-valid-icon-text-shadow);
-        color: var(--input-status-valid-icon-color);
-        content: '\30';
-      }
-    }
-    &.active {
-      div.wrap {
-        &:after {
-          background-color: var(--input-status-active-background-color);
-          text-shadow: var(--input-status-active-icon-text-shadow);
-          color: var(--input-status-active-icon-color);
-        }
-      }
-    }
-  }
+  &.valid,
+  &.error,
   &.warning {
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
-      border-color: var(--warning-color);
-      &:focus {
-        border-color: var(--warning-color);
-        box-shadow: var(--input-focus-warning-box-shadow);
-        background-color: var(--warning-color-translucent);
-      }
-    }
-    ul.messagebox {
-      background-image: var(--warning-stripes);
-      border-left: .1em dashed var(--warning-color-half);
-      border-right: .1em dashed var(--warning-color-half);
-      border-bottom: .1em dashed var(--warning-color-half);
-    }
+    --input-status-color-rgb: var(--colors-success-rgb);
+    --input-border-color-rgb: var(--input-status-color-rgb);
     div.wrap {
       &:after {
         opacity: 1;
-        background-color: var(--input-status-warning-background-color);
-        text-shadow: var(--input-status-warning-icon-text-shadow);
-        color: var(--input-status-warning-icon-color);
-        content: '\53';
-      }
-    }
-  }
-  &.error {
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
-      box-shadow: var(--input-border-error-box-shadow);
-      &:focus {
-        border-color: var(--error-color);
-        box-shadow: var(--input-focus-error-box-shadow);
-        background-color: var(--error-color-translucent);
-      }
-    }
-    ul.messagebox {
-      background-image: var(--error-stripes);
-      border-left: .1em dashed var(--error-color-half);
-      border-right: .1em dashed var(--error-color-half);
-      border-bottom: .1em dashed var(--error-color-half);
-    }
-    div.wrap {
-      &:after {
-        opacity: 1;
-        background-color: var(--input-status-error-background-color);
-        color: var(--input-status-icon-color);
-        text-shadow: var(--input-status-error-icon-text-shadow);
-        content: '\51';
       }
     }
     &.mute {
@@ -318,11 +244,35 @@ p.textarea-container {
       input[type="number"],
       input[type="password"],
       textarea {
-        border-color: var(--error-color);
+        border-color: rgb(var(--input-status-color-rgb));
         &:focus {
-          border-color: var(--error-color);
-          box-shadow: inset 0 -.4em 0 0 var(--error-color);
+          box-shadow: inset 0 -.4rem 0 0 rgb(var(--input-status-color-rgb));;
         }
+      }
+    }
+  }
+  &.error {
+    --input-status-color-rgb: var(--colors-error-rgb);
+    div.wrap {
+      &:after {
+        content: '\51';
+      }
+    }
+  }
+  &.valid {
+    --input-status-color-rgb: var(--colors-success-rgb);
+    div.wrap {
+      &:after {
+        opacity: 1;
+        content: '\30';
+      }
+    }
+  }
+  &.warning {
+    --input-status-color-rgb: var(--colors-warning-rgb);
+    div.wrap {
+      &:after {
+        content: '\53';
       }
     }
   }
@@ -347,17 +297,6 @@ p.textarea-container {
       div.topcontrol {
         opacity: 1;
         top: .3em;
-      }
-    }
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
-      border-color: var(--input-focused-border-color);
-      background-color: var(--input-focused-background-color);
-      box-shadow: var(--input-focus-box-shadow);
-      &::placeholder {
-        opacity: 0.3;
       }
     }
   }

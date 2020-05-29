@@ -14,18 +14,16 @@ body {
 div#container {
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   min-width: var(--contentbox-width);
   max-width: var(--contentbox-width);
+  width: var(--contentbox-width);
   min-height: 100vh; // only set min-height
   background-color: var(--canvas-color-primary);
   position: relative;
   @include for-phone-only {
+    --contentbox-width: 100%;
     margin: 0;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
   }
   header {
     display: flex;

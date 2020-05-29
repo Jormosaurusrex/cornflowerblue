@@ -1,10 +1,10 @@
 :root {
   // Button keys
-  --button-box-shadow: 0 .1em .2em 0 rgba(50, 50, 50, 0.5);
-  --button-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.7);
-  --button-active-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
+  --button-box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
+  --button-hover-box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+  --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
   --button-border-radius: var(--border-radius);
-  --button-default-color: var(--darkblue);
+  --button-default-color: var(--colors-affordance);
 
   --button-default-text-color: var(--hot-text-color);
   --button-hover-text-color: var(--hot-text-color);
@@ -194,10 +194,10 @@ a.button {
     outline: none;
   }
   &.constructive {
-    --button-default-color: var(--constructive-color);
+    --button-default-color: var(--colors-constructive);
   }
   &.destructive {
-    --button-default-color: var(--destructive-color);
+    --button-default-color: var(--colors-destructive);
   }
   &:disabled {
     color: var(--button-disabled-text-color);
@@ -223,11 +223,11 @@ a.button {
     border-color: transparent;
     box-shadow: none;
     &.constructive {
-      color: var(--constructive-color);
+      color: var(--colors-constructive);
       text-shadow: none;
     }
     &.destructive {
-      color: var(--destructive-color);
+      color: var(--colors-destructive);
       text-shadow: none;
     }
     &:active,
@@ -239,10 +239,10 @@ a.button {
       background-color: var(--button-default-color);
       box-shadow: var(--button-hover-box-shadow);
       &.constructive {
-        background-color: var(--constructive-color);
+        background-color: var(--colors-constructive);
       }
       &.destructive {
-        background-color: var(--destructive-color);
+        background-color: var(--colors-destructive);
       }
     }
     @include for-hover-only {
@@ -255,10 +255,10 @@ a.button {
         background-color: var(--button-default-color);
         box-shadow: var(--button-hover-box-shadow);
         &.constructive {
-          background-color: var(--constructive-color);
+          background-color: var(--colors-constructive);
         }
         &.destructive {
-          background-color: var(--destructive-color);
+          background-color: var(--colors-destructive);
         }
       }
     }
@@ -298,12 +298,12 @@ a.button {
     background-color: var(--button-default-color);
     border-color: var(--button-default-color);
     &.constructive {
-      background-color: var(--constructive-color);
-      border-color: var(--constructive-color);
+      background-color: var(--colors-constructive);
+      border-color: var(--colors-constructive);
     }
     &.destructive {
-      background-color: var(--destructive-color);
-      border-color: var(--destructive-color);
+      background-color: var(--colors-destructive);
+      border-color: var(--colors-destructive);
     }
     &:disabled {
       color: var(--button-disabled-text-color);
@@ -587,5 +587,3 @@ a.button {
     }
   }
 }
-
-// Button menus are in _BodyLevel.scss

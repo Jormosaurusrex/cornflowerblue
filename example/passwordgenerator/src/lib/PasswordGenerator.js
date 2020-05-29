@@ -130,9 +130,20 @@ class PasswordGenerator {
                 e.preventDefault();
                 me.generatePassword();
             }
-
         });
 
+        this.configbutton = new ButtonMenu({
+            icon: 'gear',
+            secondicon: null,
+            shape: 'square',
+            naked: true,
+            stayopen: true,
+            arialabel: TextFactory.get('configure_generator'),
+            classes: ['config'],
+            menu: this.datasetblock
+        });
+
+        /*
         this.configbutton = new SimpleButton({
             icon: 'gear',
             naked: true,
@@ -148,6 +159,7 @@ class PasswordGenerator {
             }
 
         });
+        */
         let controls = document.createElement('div');
         controls.classList.add('controls');
         controls.appendChild(this.button.button);

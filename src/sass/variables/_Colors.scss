@@ -1,83 +1,54 @@
 :root {
   // Raw colors
-  --cornflowerblue: rgb(100, 149, 237); // #6495ED
-  --cornflowerblue-half: rgb(176, 192, 227); // #6495ED
-  --cornflowerblue-quarter: rgb(212, 219, 239); // #6495ED
-  --cornflowerblue-translucent: rgb(236, 238, 248); // #6495ED
-  --darkblue: rgb(0, 84, 166); // #0054a6
+  --cornflowerblue-rgb: 100, 149, 237; // #6495ED
+  --cornflowerblue: rgb(var(--cornflowerblue-rgb));
+  --cornflowerblue-light-rgb: 216, 228, 250; // #d8e4fa
+  --cornflowerblue-light: rgb(var(--cornflowerblue-light-rgb));
+
+  --darkblue-rgb: 0, 84, 166; // #0054a6
+  --darkblue: rgb(var(--darkblue-rgb));
+
   --blue: var(--cornflowerblue); // #6495ED
-  --red: rgb(145, 0, 0); // #910000
-  --orange: rgb(255, 153, 0); // #ff9900
-  --yellow: rgb(255, 221, 27); // #ffdd1b
-  --green: rgb(0, 94, 32); // #005e20
-  --tan: rgb(234, 220, 188); // #eadcbc
-  --purple: rgb(86, 59, 103); // #563b67
+  --blue-rgb: --cornflowerblue-rgb;
+  --red-rgb: 145, 0, 0; // #910000
+  --red: rgb(var(--red-rgb));
+  --orange-rgb: 255, 153, 0; // #ff9900
+  --orange: rgb(var(--orange-rgb));
+  --yellow-rgb: 255, 221, 27; // #ffdd1b
+  --yellow: rgb(var(--yellow-rgb));
+  --green-rgb: 0, 94, 32; // #005e20
+  --green: rgb(var(--green-rgb));
+  --tan-rgb: 234, 220, 188; // #eadcbc
+  --tan: rgb(var(--tan-rgb));
+  --purple-rgb: 86, 59, 103; // #563b67
+  --purple: rgb(var(--purple-rgb));
 
-  --white: #fff;
-  --ultralight: #fdfdfd;
-  --bright: #eee;
-  --morelight: #f3f3f3;
-  --sublight: #e5e5e5;
-  --light: #ddd;
-  --grey-light: #ccc;
-  --grey-medium: rgb(153, 153, 153); // #999
-  --grey-dark: rgb(102, 102, 102); // #666
-  --grey-meddark: rgb(85, 85, 85); // #555
-  --grey-darker: rgb(68, 68, 68); // #444
-  --grey-darkest: rgb(34, 34, 34); // #222;
-  --black: #000;
+  --white-rgb: 255, 255, 255;
+  --white: rgb(var(--white-rgb));
+  --ultralight-rgb: 253, 253, 253;
+  --ultralight: rgb(var(--ultralight-rgb));
+  --bright-rgb: 238, 238, 238;
+  --bright: rgb(var(--bright-rgb));
+  --morelight-rgb: 243, 243, 243;
+  --morelight: rgb(var(--morelight-rgb));
+  --sublight-rgb: 229, 229, 229;
+  --sublight: rgb(var(--sublight-rgb));
+  --light-rgb: 221, 221, 221;
+  --light: rgb(var(--light-rgb));
+  --grey-rgb: 204, 204, 240;
+  --grey: rgb(var(--grey-rgb));
+  --grey-medium-rgb: 153, 153, 153; // #999
+  --grey-medium: rgb(var(--grey-medium-rgb));
+  --grey-dark-rgb: 102, 102, 102; // #666
+  --grey-dark: rgb(var(--grey-dark-rgb));
+  --grey-meddark-rgb: 85, 85, 85; // #555
+  --grey-meddark: rgb(var(--grey-meddark-rgb));
+  --grey-darker-rgb: 68, 68, 68; // #444
+  --grey-darker: rgb(var(--grey-darker-rgb));
+  --grey-darkest-rgb: 34, 34, 34; // #222;
+  --grey-darkest: rgb(var(--grey-darkest-rgb));
+  --black-rgb: 0, 0, 0;
+  --black: rgb(var(--black-rgb));
 
-  // Half opacity colors
-  --white-threequarter: rgba(255, 255, 255, 0.75); // #fff
-  --white-half: rgba(255, 255, 255, 0.5); // #fff
-  --white-quarter: rgba(255, 255, 255, 0.25); // #fff
-  --white-translucent: rgba(255, 255, 255, 0.1); // #fff
-  --grey-threequarter: rgba(153, 153, 153, 0.75); // #999
-  --grey-half: rgba(153, 153, 153, 0.5); // #999
-  --grey-quarter: rgba(153, 153, 153, 0.25); // #999
-  --grey-translucent: rgba(153, 153, 153, 0.1); // #999
-  --black-threequarter: rgba(0, 0, 0, 0.75); // #000
-  --black-half: rgba(0, 0, 0, 0.5); // #000
-  --black-quarter: rgba(0, 0, 0, 0.25); // #000
-  --black-translucent: rgba(0, 0, 0, 0.1); // #000
-  --blue-threequarter: rgba(100, 149, 237, 0.75); // #6495ED
-  --blue-half: rgba(100, 149, 237, 0.5); // #6495ED
-  --blue-quarter: rgba(100, 149, 237, 0.25); // #6495ED
-  --blue-translucent: rgba(100, 149, 237, 0.1); // #6495ED
-  --darkblue-threequarter: rgba(0, 84, 166, 0.75); // #0054a6
-  --darkblue-half: rgba(0, 84, 166, 0.5); // #0054a6
-  --darkblue-quarter: rgba(0, 84, 166, 0.25); // #0054a6
-  --darkblue-translucent: rgba(0, 84, 166, 0.1); // #0054a6
-  --green-threequarter: rgba(0, 94, 32, 0.75); // #005e20
-  --green-half: #6ea07d; // #005e20
-  --green-quarter: rgba(0, 94, 32, 0.25); // #005e20
-  --green-translucent: rgba(0, 94, 32, 0.1); // #005e20
-  --red-threequarter: rgba(145, 0, 0, 0.75); // #910000
-  --red-half: rgba(145, 0, 0, 0.5); // #910000
-  --red-quarter: rgba(145, 0, 0, 0.25); // #910000
-  --red-translucent: rgba(145, 0, 0, 0.1); // #910000
-  --orange-threequarter: rgba(255, 153, 0, 0.75); // #ff9900
-  --orange-half: rgba(255, 153, 0, 0.5); // #ff9900
-  --orange-quarter: rgba(255, 153, 0, 0.25); // #ff9900
-  --orange-translucent: rgba(255, 153, 0, 0.1); // #ff9900
-  --yellow-threequarter: rgba(255, 221, 27, 0.75); // #ffdd1b
-  --yellow-half: rgba(255, 221, 27, 0.5); // #ffdd1b
-  --yellow-quarter: rgba(255, 221, 27, 0.25); // #ffdd1b
-  --yellow-translucent: rgba(255, 221, 27, 0.1); // #ffdd1b
-  --purple-threequarter: rgba(86, 59, 103, 0.75); // #563b67
-  --purple-half: rgba(86, 59, 103, 0.5); // #563b67
-  --purple-quarter: rgba(86, 59, 103, 0.25); // #563b67
-  --purple-translucent: rgba(86, 59, 103, 0.1); // #563b67
-
-  // Stripes
-  --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(145, 0, 0, 0.05) .5em, rgba(145, 0, 0, 0.05) 1em);
-  --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(255, 153, 0, 0.1) .5em, rgba(255, 153, 0, 0.1) 1em);
-  --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(51, 89, 100, 0.05) .5em, rgba(51, 89, 100, 0.05) 1em);
-  --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 94, 32, 0.05) .5em, rgba(0, 94, 32, 0.05) 1em);
-  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(100, 149, 237, 0.05) .5em, rgba(100, 149, 237, 0.05) 1em);
-  --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(86, 59, 103, 0.05) .5em, rgba(86, 59, 103, 0.05) 1em);
-  --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(153, 153, 153, 0.05) .5em, rgba(153, 153, 153, 0.05) 1em);
-  --dark-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(102, 102, 102, 0.05) .5em, rgba(102, 102, 102, 0.05) 1em);
-  --darker-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(68, 68, 68, 0.05) .5em, rgba(68, 68, 68, 0.05) 1em);
 
 }

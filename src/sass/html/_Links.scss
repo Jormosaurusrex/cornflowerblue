@@ -1,21 +1,16 @@
 :root {
   // Links
-  --link-link-color: var(--focus-color);
-  --link-active-color: var(--focus-color);
-  --link-hover-color: var(--focus-color);
-  --link-visited-color: var(--focus-color);
-  --link-color: var(--focus-color);
+  --link-color: var(--colors-affordance);
   --link-text-shadow: var(--on-white-text-shadow);
 }
-
-
 a {
   color: var(--link-color);
   text-shadow: var(--link-text-shadow);
   &:link {
     text-decoration: underline;
   }
-  &:focus {
+  &:focus,
+  &:focus-within {
     outline: var(--link-color) dashed .1rem;
     outline-offset: .2rem;
   }

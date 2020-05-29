@@ -713,80 +713,52 @@
 
 /* '' */
 :root {
-  --cornflowerblue: rgb(100, 149, 237);
-  --cornflowerblue-half: rgb(176, 192, 227);
-  --cornflowerblue-quarter: rgb(212, 219, 239);
-  --cornflowerblue-translucent: rgb(236, 238, 248);
-  --darkblue: rgb(0, 84, 166);
+  --cornflowerblue-rgb: 100, 149, 237;
+  --cornflowerblue: rgb(var(--cornflowerblue-rgb));
+  --cornflowerblue-light-rgb: 216, 228, 250;
+  --cornflowerblue-light: rgb(var(--cornflowerblue-light-rgb));
+  --darkblue-rgb: 0, 84, 166;
+  --darkblue: rgb(var(--darkblue-rgb));
   --blue: var(--cornflowerblue);
-  --red: rgb(145, 0, 0);
-  --orange: rgb(255, 153, 0);
-  --yellow: rgb(255, 221, 27);
-  --green: rgb(0, 94, 32);
-  --tan: rgb(234, 220, 188);
-  --purple: rgb(86, 59, 103);
-  --white: #fff;
-  --ultralight: #fdfdfd;
-  --bright: #eee;
-  --morelight: #f3f3f3;
-  --sublight: #e5e5e5;
-  --light: #ddd;
-  --grey-light: #ccc;
-  --grey-medium: rgb(153, 153, 153);
-  --grey-dark: rgb(102, 102, 102);
-  --grey-meddark: rgb(85, 85, 85);
-  --grey-darker: rgb(68, 68, 68);
-  --grey-darkest: rgb(34, 34, 34);
-  --black: #000;
-  --white-threequarter: rgba(255, 255, 255, 0.75);
-  --white-half: rgba(255, 255, 255, 0.5);
-  --white-quarter: rgba(255, 255, 255, 0.25);
-  --white-translucent: rgba(255, 255, 255, 0.1);
-  --grey-threequarter: rgba(153, 153, 153, 0.75);
-  --grey-half: rgba(153, 153, 153, 0.5);
-  --grey-quarter: rgba(153, 153, 153, 0.25);
-  --grey-translucent: rgba(153, 153, 153, 0.1);
-  --black-threequarter: rgba(0, 0, 0, 0.75);
-  --black-half: rgba(0, 0, 0, 0.5);
-  --black-quarter: rgba(0, 0, 0, 0.25);
-  --black-translucent: rgba(0, 0, 0, 0.1);
-  --blue-threequarter: rgba(100, 149, 237, 0.75);
-  --blue-half: rgba(100, 149, 237, 0.5);
-  --blue-quarter: rgba(100, 149, 237, 0.25);
-  --blue-translucent: rgba(100, 149, 237, 0.1);
-  --darkblue-threequarter: rgba(0, 84, 166, 0.75);
-  --darkblue-half: rgba(0, 84, 166, 0.5);
-  --darkblue-quarter: rgba(0, 84, 166, 0.25);
-  --darkblue-translucent: rgba(0, 84, 166, 0.1);
-  --green-threequarter: rgba(0, 94, 32, 0.75);
-  --green-half: #6ea07d;
-  --green-quarter: rgba(0, 94, 32, 0.25);
-  --green-translucent: rgba(0, 94, 32, 0.1);
-  --red-threequarter: rgba(145, 0, 0, 0.75);
-  --red-half: rgba(145, 0, 0, 0.5);
-  --red-quarter: rgba(145, 0, 0, 0.25);
-  --red-translucent: rgba(145, 0, 0, 0.1);
-  --orange-threequarter: rgba(255, 153, 0, 0.75);
-  --orange-half: rgba(255, 153, 0, 0.5);
-  --orange-quarter: rgba(255, 153, 0, 0.25);
-  --orange-translucent: rgba(255, 153, 0, 0.1);
-  --yellow-threequarter: rgba(255, 221, 27, 0.75);
-  --yellow-half: rgba(255, 221, 27, 0.5);
-  --yellow-quarter: rgba(255, 221, 27, 0.25);
-  --yellow-translucent: rgba(255, 221, 27, 0.1);
-  --purple-threequarter: rgba(86, 59, 103, 0.75);
-  --purple-half: rgba(86, 59, 103, 0.5);
-  --purple-quarter: rgba(86, 59, 103, 0.25);
-  --purple-translucent: rgba(86, 59, 103, 0.1);
-  --red-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(145, 0, 0, 0.05) .5em, rgba(145, 0, 0, 0.05) 1em);
-  --orange-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(255, 153, 0, 0.1) .5em, rgba(255, 153, 0, 0.1) 1em);
-  --yellow-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(51, 89, 100, 0.05) .5em, rgba(51, 89, 100, 0.05) 1em);
-  --green-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(0, 94, 32, 0.05) .5em, rgba(0, 94, 32, 0.05) 1em);
-  --blue-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(100, 149, 237, 0.05) .5em, rgba(100, 149, 237, 0.05) 1em);
-  --purple-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(86, 59, 103, 0.05) .5em, rgba(86, 59, 103, 0.05) 1em);
-  --grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(153, 153, 153, 0.05) .5em, rgba(153, 153, 153, 0.05) 1em);
-  --dark-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(102, 102, 102, 0.05) .5em, rgba(102, 102, 102, 0.05) 1em);
-  --darker-grey-stripes: repeating-linear-gradient(-45deg, transparent, transparent .5em, rgba(68, 68, 68, 0.05) .5em, rgba(68, 68, 68, 0.05) 1em);
+  --blue-rgb: --cornflowerblue-rgb;
+  --red-rgb: 145, 0, 0;
+  --red: rgb(var(--red-rgb));
+  --orange-rgb: 255, 153, 0;
+  --orange: rgb(var(--orange-rgb));
+  --yellow-rgb: 255, 221, 27;
+  --yellow: rgb(var(--yellow-rgb));
+  --green-rgb: 0, 94, 32;
+  --green: rgb(var(--green-rgb));
+  --tan-rgb: 234, 220, 188;
+  --tan: rgb(var(--tan-rgb));
+  --purple-rgb: 86, 59, 103;
+  --purple: rgb(var(--purple-rgb));
+  --white-rgb: 255, 255, 255;
+  --white: rgb(var(--white-rgb));
+  --ultralight-rgb: 253, 253, 253;
+  --ultralight: rgb(var(--ultralight-rgb));
+  --bright-rgb: 238, 238, 238;
+  --bright: rgb(var(--bright-rgb));
+  --morelight-rgb: 243, 243, 243;
+  --morelight: rgb(var(--morelight-rgb));
+  --sublight-rgb: 229, 229, 229;
+  --sublight: rgb(var(--sublight-rgb));
+  --light-rgb: 221, 221, 221;
+  --light: rgb(var(--light-rgb));
+  --grey-rgb: 204, 204, 240;
+  --grey: rgb(var(--grey-rgb));
+  --grey-medium-rgb: 153, 153, 153;
+  --grey-medium: rgb(var(--grey-medium-rgb));
+  --grey-dark-rgb: 102, 102, 102;
+  --grey-dark: rgb(var(--grey-dark-rgb));
+  --grey-meddark-rgb: 85, 85, 85;
+  --grey-meddark: rgb(var(--grey-meddark-rgb));
+  --grey-darker-rgb: 68, 68, 68;
+  --grey-darker: rgb(var(--grey-darker-rgb));
+  --grey-darkest-rgb: 34, 34, 34;
+  --grey-darkest: rgb(var(--grey-darkest-rgb));
+  --black-rgb: 0, 0, 0;
+  --black: rgb(var(--black-rgb));
 }
 
 /*
@@ -796,6 +768,49 @@
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
+  --default-font-family: var(--fontstack-sansserif);
+  --default-font-size: 13pt;
+  --text-color: var(--grey-dark);
+  --hot-text-color: var(--ultralight);
+  --required-color: var(--red);
+  --text-shadow: var(--text-shadow-light);
+  --wide-measure: 40em;
+  --thin-measure: 25em;
+  --canvas-color-primary: var(--ultralight);
+  --canvas-color-secondary: var(--morelight);
+  --canvas-color-tertiary: var(--light);
+  --canvas-color-highlight: var(--cornflowerblue-light);
+  --colors-affordance-rgb: var(--darkblue-rgb);
+  --colors-affordance: rgb(var(--colors-affordance-rgb));
+  --colors-highlight-rgb: var(--darkblue-rgb);
+  --colors-highlight: rgb(var(--colors-highlight-rgb));
+  --colors-constructive-rgb: var(--green-rgb);
+  --colors-constructive: rgb(var(--colors-constructive-rgb));
+  --colors-destructive-rgb: var(--red-rgb);
+  --colors-destructive: rgb(var(--colors-destructive-rgb));
+  --standard-color-rgb: var(--grey-dark-rgb);
+  --standard-color: var(--grey-dark);
+  --placeholder-color-rgb: var(--grey-medium-rgb);
+  --placeholder-color: var(--grey-medium);
+  --colors-focus-rgb: var(--green-rgb);
+  --colors-focus: rgb(var(--colors-focus-rgb));
+  --colors-required-rgb: var(--red-rgb);
+  --colors-required: rgb(var(--colors-required-rgb));
+  --colors-success-rgb: var(--green-rgb);
+  --colors-success: rgb(var(--colors-success-rgb));
+  --colors-error-rgb: var(--red-rgb);
+  --colors-error: rgb(var(--colors-error-rgb));
+  --colors-warning-rgb: var(--orange-rgb);
+  --colors-warning: rgb(var(--colors-warning-rgb));
+  --colors-caution-rgb: var(--yellow-rgb);
+  --colors-caution: rgb(var(--colors-caution-rgb));
+  --disabled-base-color: var(--light);
+  --disabled-base-color-light: var(--morelight);
+  --disabled-highlight-color: var(--grey-medium);
+  --disabled-color-half: var(--grey-half);
+  --disabled-color-quarter: var(--grey-quarter);
+  --disabled-color-translucent: var(--grey-translucent);
+  --border-radius: .2rem;
   --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
   --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
   --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
@@ -812,70 +827,6 @@
   --interior-shadows-inside-dark: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
-  --paragraph-measure: auto;
-  --font-family: var(--fontstack-sansserif);
-  --text-color: var(--grey-dark);
-  --hot-text-color: var(--ultralight);
-  --required-color: var(--red);
-  --text-shadow: var(--text-shadow-light);
-  --wide-measure: 40em;
-  --thin-measure: 25em;
-  --body-background-color: var(--grey-darkest);
-  --canvas-color-primary: var(--ultralight);
-  --canvas-color-secondary: var(--morelight);
-  --canvas-color-tertiary: var(--light);
-  --canvas-color-colored: var(--cornflowerblue-translucent);
-  --canvas-color-callout-lightweight: var(--blue-translucent);
-  --default-font-family: var(--fontstack-sansserif);
-  --default-font-size: 13pt;
-  --border-radius: .2rem;
-  --standard-color: var(--grey-dark);
-  --placeholder-color: var(--grey-medium);
-  --highlight-color: var(--darkblue);
-  --focus-color: var(--green);
-  --focus-color-half: var(--green-half);
-  --focus-color-quarter: var(--green-quarter);
-  --focus-color-translucent: var(--green-translucent);
-  --focus-color-half-solid: #39784a;
-  --constructive-color: var(--green);
-  --constructive-color-half: var(--green-half);
-  --constructive-color-quarter: var(--green-quarter);
-  --constructive-color-translucent: var(--green-translucent);
-  --destructive-color: var(--red);
-  --destructive-color-helf: var(--red-half);
-  --destructive-color-quarter: var(--red-quarter);
-  --destructive-color-translucent: var(--red-translucent);
-  --accept-color: var(--green);
-  --accept-color-half: var(--green-half);
-  --accept-color-quarter: var(--green-quarter);
-  --accept-color-translucent: var(--green-translucent);
-  --accept-stripes: var(--green-stripes);
-  --success-color: var(--green);
-  --success-color-half: var(--green-half);
-  --success-color-quarter: var(--green-quarter);
-  --success-color-translucent: var(--green-translucent);
-  --success-stripes: var(--green-stripes);
-  --error-color: var(--red);
-  --error-color-half: var(--red-half);
-  --error-color-quarter: var(--red-quarter);
-  --error-color-translucent: var(--red-translucent);
-  --error-stripes: var(--red-stripes);
-  --warning-color: var(--orange);
-  --warning-color-half: var(--orange-half);
-  --warning-color-quarter: var(--orange-quarter);
-  --warning-color-translucent: var(--orange-translucent);
-  --warning-stripes: var(--orange-stripes);
-  --caution-color: var(--yellow);
-  --caution-color-half: var(--yellow-half);
-  --caution-color-quarter: var(--yellow-quarter);
-  --caution-color-translucent: var(--yellow-translucent);
-  --caution-stripes: var(--yellow-stripes);
-  --disabled-base-color: var(--light);
-  --disabled-base-color-light: var(--morelight);
-  --disabled-highlight-color: var(--grey-medium);
-  --disabled-color-half: var(--grey-half);
-  --disabled-color-quarter: var(--grey-quarter);
-  --disabled-color-translucent: var(--grey-translucent);
 }
 
 :root {
@@ -907,7 +858,6 @@ html {
 html,
 body {
   color: var(--text-color);
-  font-family: var(--font-family);
 }
 html ::selection,
 body ::selection {
@@ -938,21 +888,7 @@ hr {
 }
 
 :root {
-  --aside-text-color: var(-text-color);
-  --aside-text-shadow: var(--text-shadow);
-  --aside-background-color: var(--canvas-color-callout-lightweight);
-  --aside-border-color: var(--blue);
-  --blockquote-text-color: var(--blue);
-  --blockquote-text-shadow: var(--text-shadow);
-  --blockquote-background-color: var(--canvas-color-callout-lightweight);
-  --blockquote-border-color: var(--blue);
-  --code-background-color: var(--canvas-color-callout-lightweight);
-  --code-text-color: var(--text-color);
-  --code-text-shadow: var(--text-shadow);
   --code-font-family: var(--fontstack-monospace);
-  --figure-text-color: var(--grey-dark);
-  --figure-text-shadow: var(--text-shadow);
-  --figure-background-color: var(--canvas-color-secondary);
 }
 
 blockquote {
@@ -963,11 +899,11 @@ blockquote {
   max-width: 70%;
   min-width: 70%;
   font-style: oblique;
-  border-bottom: 0.1em solid var(--blockquote-border-color);
-  border-top: 0.1em solid var(--blockquote-border-color);
-  background-color: var(--blockquote-background-color);
-  color: var(--blockquote-text-color);
-  text-shadow: var(--blockquote-text-shadow);
+  border-bottom: 0.1em solid var(--colors-highlight);
+  border-top: 0.1em solid var(--colors-highlight);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
 }
 blockquote p {
   margin: 0.5rem;
@@ -980,19 +916,19 @@ aside {
   margin: 0 0 0.5rem 0.5rem;
   width: 40%;
   font-style: oblique;
-  border-left: 0.1rem solid var(--aside-border-color);
-  background-color: var(--aside-background-color);
-  color: var(--aside-text-color);
-  text-shadow: var(--aside-text-shadow);
+  border-left: 0.1rem solid var(--colors-highlight);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
 }
 aside p {
   margin: 0.5rem;
 }
 
 figure {
-  background-color: var(--figure-background-color);
-  color: var(--figure-text-color);
-  text-shadow: var(--figure-text-shadow);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -1010,9 +946,9 @@ figure figcaption {
 
 code {
   font-family: var(--code-font-family);
-  background-color: var(--code-background-color);
-  color: var(--code-text-color);
-  text-shadow: var(--code-text-shadow);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
   white-space: nowrap;
 }
 code.block {
@@ -1193,11 +1129,7 @@ h6.fancy:before {
 }
 
 :root {
-  --link-link-color: var(--focus-color);
-  --link-active-color: var(--focus-color);
-  --link-hover-color: var(--focus-color);
-  --link-visited-color: var(--focus-color);
-  --link-color: var(--focus-color);
+  --link-color: var(--colors-affordance);
   --link-text-shadow: var(--on-white-text-shadow);
 }
 
@@ -1208,7 +1140,7 @@ a {
 a:link {
   text-decoration: underline;
 }
-a:focus {
+a:focus, a:focus-within {
   outline: var(--link-color) dashed 0.1rem;
   outline-offset: 0.2rem;
 }
@@ -1236,8 +1168,6 @@ ul {
 }
 ol > li,
 ul > li {
-  color: var(--text-color);
-  text-shadow: var(--text-shadow);
   margin: 0.5rem 0 0.5rem 0;
 }
 
@@ -1245,22 +1175,10 @@ ul {
   list-style-type: disc;
 }
 
-:root {
-  --label-color: var(--darkblue);
-  --label-text-shadow: var(--text-shadow);
-  --label-required-marker-color: var(--required-color);
-  --label-text-transform: none;
-  --sup-text-color: var(--text-color);
-  --sup-text-shadow: var(--paragraph-text-shadow);
-}
-
 p {
   margin: 0 0 2rem 0;
   line-height: 1.4;
-  color: var(--text-color);
-  width: var(--paragraph-measure);
   text-shadow: var(--text-shadow);
-  font-family: var(--font-family);
 }
 p.dropcap:first-letter {
   font-size: 5.5rem;
@@ -1274,28 +1192,35 @@ label,
 legend {
   transition: all 0.2s;
   display: block;
-  font-weight: normal;
   position: relative;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: var(--label-color);
-  text-shadow: var(--label-text-shadow);
-  text-transform: var(--label-text-transform);
+  font-weight: 400;
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
+  text-transform: uppercase;
+}
+label:after,
+legend:after {
+  color: var(--colors-required);
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  display: none;
 }
 label button.help,
 legend button.help {
-  color: var(--label-color);
-  text-shadow: var(--label-text-shadow);
+  color: var(--colors-hightlight);
+  text-shadow: var(--text-shadow);
   font-size: 1rem;
-  margin: 0 0.5rem 0 0.5rem;
+  margin: 0 0 0 0.5rem;
 }
 label button.help:hover, label button.help:focus, label button.help:active,
 legend button.help:hover,
 legend button.help:focus,
 legend button.help:active {
-  color: var(--label-color);
-  text-shadow: var(--label-text-shadow);
+  color: var(--colors-hightlight);
+  text-shadow: var(--text-shadow);
 }
 
 dfn,
@@ -1316,8 +1241,6 @@ sup {
   vertical-align: super;
   font-size: 0.8rem;
   line-height: 1;
-  color: var(--sup-text-color);
-  text-shadow: var(--sup-text-shadow);
   background-color: transparent;
 }
 
@@ -1647,11 +1570,11 @@ form.passive div.passiveactions {
 }
 
 :root {
-  --button-box-shadow: 0 .1em .2em 0 rgba(50, 50, 50, 0.5);
-  --button-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.7);
-  --button-active-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
+  --button-box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
+  --button-hover-box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+  --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
   --button-border-radius: var(--border-radius);
-  --button-default-color: var(--darkblue);
+  --button-default-color: var(--colors-affordance);
   --button-default-text-color: var(--hot-text-color);
   --button-hover-text-color: var(--hot-text-color);
   --button-hover-highlight-color: var(--white-half);
@@ -1928,13 +1851,13 @@ button.constructive,
 input[type=submit].constructive,
 input[type=reset].constructive,
 a.button.constructive {
-  --button-default-color: var(--constructive-color);
+  --button-default-color: var(--colors-constructive);
 }
 button.destructive,
 input[type=submit].destructive,
 input[type=reset].destructive,
 a.button.destructive {
-  --button-default-color: var(--destructive-color);
+  --button-default-color: var(--colors-destructive);
 }
 button:disabled,
 input[type=submit]:disabled,
@@ -1977,14 +1900,14 @@ button.mute.constructive,
 input[type=submit].mute.constructive,
 input[type=reset].mute.constructive,
 a.button.mute.constructive {
-  color: var(--constructive-color);
+  color: var(--colors-constructive);
   text-shadow: none;
 }
 button.mute.destructive,
 input[type=submit].mute.destructive,
 input[type=reset].mute.destructive,
 a.button.mute.destructive {
-  color: var(--destructive-color);
+  color: var(--colors-destructive);
   text-shadow: none;
 }
 button.mute:active, button.mute.active, button.mute:focus, button.mute.focus,
@@ -2018,7 +1941,7 @@ a.button.mute:active.constructive,
 a.button.mute.active.constructive,
 a.button.mute:focus.constructive,
 a.button.mute.focus.constructive {
-  background-color: var(--constructive-color);
+  background-color: var(--colors-constructive);
 }
 button.mute:active.destructive, button.mute.active.destructive, button.mute:focus.destructive, button.mute.focus.destructive,
 input[type=submit].mute:active.destructive,
@@ -2033,7 +1956,7 @@ a.button.mute:active.destructive,
 a.button.mute.active.destructive,
 a.button.mute:focus.destructive,
 a.button.mute.focus.destructive {
-  background-color: var(--destructive-color);
+  background-color: var(--colors-destructive);
 }
 @media (hover: hover) and (pointer: fine) {
   button.mute:hover, button.mute.hover,
@@ -2057,7 +1980,7 @@ input[type=reset].mute:hover.constructive,
 input[type=reset].mute.hover.constructive,
 a.button.mute:hover.constructive,
 a.button.mute.hover.constructive {
-    background-color: var(--constructive-color);
+    background-color: var(--colors-constructive);
   }
   button.mute:hover.destructive, button.mute.hover.destructive,
 input[type=submit].mute:hover.destructive,
@@ -2066,7 +1989,7 @@ input[type=reset].mute:hover.destructive,
 input[type=reset].mute.hover.destructive,
 a.button.mute:hover.destructive,
 a.button.mute.hover.destructive {
-    background-color: var(--destructive-color);
+    background-color: var(--colors-destructive);
   }
 }
 button.mute:active, button.mute.active,
@@ -2131,15 +2054,15 @@ button.hot.constructive,
 input[type=submit].hot.constructive,
 input[type=reset].hot.constructive,
 a.button.hot.constructive {
-  background-color: var(--constructive-color);
-  border-color: var(--constructive-color);
+  background-color: var(--colors-constructive);
+  border-color: var(--colors-constructive);
 }
 button.hot.destructive,
 input[type=submit].hot.destructive,
 input[type=reset].hot.destructive,
 a.button.hot.destructive {
-  background-color: var(--destructive-color);
-  border-color: var(--destructive-color);
+  background-color: var(--colors-destructive);
+  border-color: var(--colors-destructive);
 }
 button.hot:disabled,
 input[type=submit].hot:disabled,
@@ -3401,18 +3324,7 @@ div.radiogroup-container.disabled ul.radiogroup li.radio label {
   --input-status-default-background-color: var(--grey-dark);
   --input-status-icon-color: var(--morelight);
   --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-warning-background-color: var(--warning-color);
-  --input-status-warning-icon-color: var(--input-status-icon-color);
-  --input-status-warning-icon-text-shadow: var(--input-status-icon-text-shadow);
-  --input-status-error-background-color: var(--error-color);
-  --input-status-error-icon-color: var(--input-status-icon-color);
-  --input-status-error-icon-text-shadow: var(--input-status-icon-text-shadow);
-  --input-status-valid-background-color: transparent;
-  --input-status-valid-icon-color: var(--success-color-half);
-  --input-status-valid-icon-text-shadow: none;
-  --input-status-active-background-color: var(--focus-color);
-  --input-status-active-icon-color: var(--input-status-icon-color);
-  --input-status-active-icon-text-shadow: var(--input-status-icon-text-shadow);
+  --input-status-color-rgb: var(--blue-rgb);
 }
 
 div.input-container,
@@ -3552,7 +3464,7 @@ p.textarea-container div.wrap:after {
   bottom: 0;
   width: 2em;
   margin: 0;
-  background-color: var(--input-status-default-background-color);
+  background-color: rgb(var(--input-status-color-rgb));
   font-family: "cornflowerblue", serif;
   font-style: normal;
   font-weight: normal;
@@ -3634,18 +3546,21 @@ p.input-container ul.messagebox,
 div.textarea-container ul.messagebox,
 p.textarea-container ul.messagebox {
   transition: all 0.2s;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   margin: 0;
   opacity: 1;
   height: auto;
-  padding: 0.5em 1em 0.5em 2em;
+  padding: 0.5rem 1rem 0.5rem 2rem;
   background-color: var(--input-messages-background-color);
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
+  border: 0.1em dashed rgba(var(--input-status-color-rgb), 0.5);
+  border-top: none;
 }
 div.input-container ul.messagebox li,
 p.input-container ul.messagebox li,
 div.textarea-container ul.messagebox li,
 p.textarea-container ul.messagebox li {
-  margin: 0.5em 0 0.5em 0;
+  margin: 0.5rem 0 0.5rem 0;
 }
 div.input-container ul.messagebox li.error,
 p.input-container ul.messagebox li.error,
@@ -3691,13 +3606,13 @@ p.input-container.minimal,
 div.textarea-container.minimal,
 p.textarea-container.minimal {
   display: inline-block;
-  margin: 0 0.5em 0 0.5em;
+  margin: 0 0.5rem 0 0.5rem;
 }
 div.input-container.minimal div.wrap div.inputcontrol,
 p.input-container.minimal div.wrap div.inputcontrol,
 div.textarea-container.minimal div.wrap div.inputcontrol,
 p.textarea-container.minimal div.wrap div.inputcontrol {
-  right: 1em;
+  right: 1rem;
 }
 div.input-container.minimal div.wrap:after,
 p.input-container.minimal div.wrap:after,
@@ -3709,13 +3624,13 @@ div.input-container.minimal div.wrap:before,
 p.input-container.minimal div.wrap:before,
 div.textarea-container.minimal div.wrap:before,
 p.textarea-container.minimal div.wrap:before {
-  right: 1em;
+  right: 1rem;
 }
 div.input-container.minimal input.trigger,
 p.input-container.minimal input.trigger,
 div.textarea-container.minimal input.trigger,
 p.textarea-container.minimal input.trigger {
-  padding-right: 2em;
+  padding-right: 2rem;
 }
 div.input-container.mute label,
 p.input-container.mute label,
@@ -3728,7 +3643,7 @@ div.input-container.mute div.topcontrol,
 p.input-container.mute div.topcontrol,
 div.textarea-container.mute div.topcontrol,
 p.textarea-container.mute div.topcontrol {
-  top: 0.3em;
+  top: 0.3rem;
 }
 div.input-container.mute.active label, div.input-container.mute.filled label,
 p.input-container.mute.active label,
@@ -3758,179 +3673,166 @@ div.input-container.required label:after,
 p.input-container.required label:after,
 div.textarea-container.required label:after,
 p.textarea-container.required label:after {
-  color: var(--label-required-marker-color);
   content: attr(data-required-text);
-  font-size: 0.75em;
-  margin-left: 0.5em;
+  display: inline-block;
+}
+div.input-container.valid, div.input-container.error, div.input-container.warning,
+p.input-container.valid,
+p.input-container.error,
+p.input-container.warning,
+div.textarea-container.valid,
+div.textarea-container.error,
+div.textarea-container.warning,
+p.textarea-container.valid,
+p.textarea-container.error,
+p.textarea-container.warning {
+  --input-status-color-rgb: var(--colors-success-rgb);
+  --input-border-color-rgb: var(--input-status-color-rgb);
+}
+div.input-container.valid div.wrap:after, div.input-container.error div.wrap:after, div.input-container.warning div.wrap:after,
+p.input-container.valid div.wrap:after,
+p.input-container.error div.wrap:after,
+p.input-container.warning div.wrap:after,
+div.textarea-container.valid div.wrap:after,
+div.textarea-container.error div.wrap:after,
+div.textarea-container.warning div.wrap:after,
+p.textarea-container.valid div.wrap:after,
+p.textarea-container.error div.wrap:after,
+p.textarea-container.warning div.wrap:after {
+  opacity: 1;
+}
+div.input-container.valid.mute input[type=text],
+div.input-container.valid.mute input[type=number],
+div.input-container.valid.mute input[type=password],
+div.input-container.valid.mute textarea, div.input-container.error.mute input[type=text],
+div.input-container.error.mute input[type=number],
+div.input-container.error.mute input[type=password],
+div.input-container.error.mute textarea, div.input-container.warning.mute input[type=text],
+div.input-container.warning.mute input[type=number],
+div.input-container.warning.mute input[type=password],
+div.input-container.warning.mute textarea,
+p.input-container.valid.mute input[type=text],
+p.input-container.valid.mute input[type=number],
+p.input-container.valid.mute input[type=password],
+p.input-container.valid.mute textarea,
+p.input-container.error.mute input[type=text],
+p.input-container.error.mute input[type=number],
+p.input-container.error.mute input[type=password],
+p.input-container.error.mute textarea,
+p.input-container.warning.mute input[type=text],
+p.input-container.warning.mute input[type=number],
+p.input-container.warning.mute input[type=password],
+p.input-container.warning.mute textarea,
+div.textarea-container.valid.mute input[type=text],
+div.textarea-container.valid.mute input[type=number],
+div.textarea-container.valid.mute input[type=password],
+div.textarea-container.valid.mute textarea,
+div.textarea-container.error.mute input[type=text],
+div.textarea-container.error.mute input[type=number],
+div.textarea-container.error.mute input[type=password],
+div.textarea-container.error.mute textarea,
+div.textarea-container.warning.mute input[type=text],
+div.textarea-container.warning.mute input[type=number],
+div.textarea-container.warning.mute input[type=password],
+div.textarea-container.warning.mute textarea,
+p.textarea-container.valid.mute input[type=text],
+p.textarea-container.valid.mute input[type=number],
+p.textarea-container.valid.mute input[type=password],
+p.textarea-container.valid.mute textarea,
+p.textarea-container.error.mute input[type=text],
+p.textarea-container.error.mute input[type=number],
+p.textarea-container.error.mute input[type=password],
+p.textarea-container.error.mute textarea,
+p.textarea-container.warning.mute input[type=text],
+p.textarea-container.warning.mute input[type=number],
+p.textarea-container.warning.mute input[type=password],
+p.textarea-container.warning.mute textarea {
+  border-color: rgb(var(--input-status-color-rgb));
+}
+div.input-container.valid.mute input[type=text]:focus,
+div.input-container.valid.mute input[type=number]:focus,
+div.input-container.valid.mute input[type=password]:focus,
+div.input-container.valid.mute textarea:focus, div.input-container.error.mute input[type=text]:focus,
+div.input-container.error.mute input[type=number]:focus,
+div.input-container.error.mute input[type=password]:focus,
+div.input-container.error.mute textarea:focus, div.input-container.warning.mute input[type=text]:focus,
+div.input-container.warning.mute input[type=number]:focus,
+div.input-container.warning.mute input[type=password]:focus,
+div.input-container.warning.mute textarea:focus,
+p.input-container.valid.mute input[type=text]:focus,
+p.input-container.valid.mute input[type=number]:focus,
+p.input-container.valid.mute input[type=password]:focus,
+p.input-container.valid.mute textarea:focus,
+p.input-container.error.mute input[type=text]:focus,
+p.input-container.error.mute input[type=number]:focus,
+p.input-container.error.mute input[type=password]:focus,
+p.input-container.error.mute textarea:focus,
+p.input-container.warning.mute input[type=text]:focus,
+p.input-container.warning.mute input[type=number]:focus,
+p.input-container.warning.mute input[type=password]:focus,
+p.input-container.warning.mute textarea:focus,
+div.textarea-container.valid.mute input[type=text]:focus,
+div.textarea-container.valid.mute input[type=number]:focus,
+div.textarea-container.valid.mute input[type=password]:focus,
+div.textarea-container.valid.mute textarea:focus,
+div.textarea-container.error.mute input[type=text]:focus,
+div.textarea-container.error.mute input[type=number]:focus,
+div.textarea-container.error.mute input[type=password]:focus,
+div.textarea-container.error.mute textarea:focus,
+div.textarea-container.warning.mute input[type=text]:focus,
+div.textarea-container.warning.mute input[type=number]:focus,
+div.textarea-container.warning.mute input[type=password]:focus,
+div.textarea-container.warning.mute textarea:focus,
+p.textarea-container.valid.mute input[type=text]:focus,
+p.textarea-container.valid.mute input[type=number]:focus,
+p.textarea-container.valid.mute input[type=password]:focus,
+p.textarea-container.valid.mute textarea:focus,
+p.textarea-container.error.mute input[type=text]:focus,
+p.textarea-container.error.mute input[type=number]:focus,
+p.textarea-container.error.mute input[type=password]:focus,
+p.textarea-container.error.mute textarea:focus,
+p.textarea-container.warning.mute input[type=text]:focus,
+p.textarea-container.warning.mute input[type=number]:focus,
+p.textarea-container.warning.mute input[type=password]:focus,
+p.textarea-container.warning.mute textarea:focus {
+  box-shadow: inset 0 -0.4rem 0 0 rgb(var(--input-status-color-rgb));
+}
+div.input-container.error,
+p.input-container.error,
+div.textarea-container.error,
+p.textarea-container.error {
+  --input-status-color-rgb: var(--colors-error-rgb);
+}
+div.input-container.error div.wrap:after,
+p.input-container.error div.wrap:after,
+div.textarea-container.error div.wrap:after,
+p.textarea-container.error div.wrap:after {
+  content: "Q";
+}
+div.input-container.valid,
+p.input-container.valid,
+div.textarea-container.valid,
+p.textarea-container.valid {
+  --input-status-color-rgb: var(--colors-success-rgb);
 }
 div.input-container.valid div.wrap:after,
 p.input-container.valid div.wrap:after,
 div.textarea-container.valid div.wrap:after,
 p.textarea-container.valid div.wrap:after {
   opacity: 1;
-  background-color: var(--input-status-valid-background-color);
-  text-shadow: var(--input-status-valid-icon-text-shadow);
-  color: var(--input-status-valid-icon-color);
   content: "0";
 }
-div.input-container.valid.active div.wrap:after,
-p.input-container.valid.active div.wrap:after,
-div.textarea-container.valid.active div.wrap:after,
-p.textarea-container.valid.active div.wrap:after {
-  background-color: var(--input-status-active-background-color);
-  text-shadow: var(--input-status-active-icon-text-shadow);
-  color: var(--input-status-active-icon-color);
-}
-div.input-container.warning input[type=text],
-div.input-container.warning input[type=number],
-div.input-container.warning input[type=password],
-div.input-container.warning textarea,
-p.input-container.warning input[type=text],
-p.input-container.warning input[type=number],
-p.input-container.warning input[type=password],
-p.input-container.warning textarea,
-div.textarea-container.warning input[type=text],
-div.textarea-container.warning input[type=number],
-div.textarea-container.warning input[type=password],
-div.textarea-container.warning textarea,
-p.textarea-container.warning input[type=text],
-p.textarea-container.warning input[type=number],
-p.textarea-container.warning input[type=password],
-p.textarea-container.warning textarea {
-  border-color: var(--warning-color);
-}
-div.input-container.warning input[type=text]:focus,
-div.input-container.warning input[type=number]:focus,
-div.input-container.warning input[type=password]:focus,
-div.input-container.warning textarea:focus,
-p.input-container.warning input[type=text]:focus,
-p.input-container.warning input[type=number]:focus,
-p.input-container.warning input[type=password]:focus,
-p.input-container.warning textarea:focus,
-div.textarea-container.warning input[type=text]:focus,
-div.textarea-container.warning input[type=number]:focus,
-div.textarea-container.warning input[type=password]:focus,
-div.textarea-container.warning textarea:focus,
-p.textarea-container.warning input[type=text]:focus,
-p.textarea-container.warning input[type=number]:focus,
-p.textarea-container.warning input[type=password]:focus,
-p.textarea-container.warning textarea:focus {
-  border-color: var(--warning-color);
-  box-shadow: var(--input-focus-warning-box-shadow);
-  background-color: var(--warning-color-translucent);
-}
-div.input-container.warning ul.messagebox,
-p.input-container.warning ul.messagebox,
-div.textarea-container.warning ul.messagebox,
-p.textarea-container.warning ul.messagebox {
-  background-image: var(--warning-stripes);
-  border-left: 0.1em dashed var(--warning-color-half);
-  border-right: 0.1em dashed var(--warning-color-half);
-  border-bottom: 0.1em dashed var(--warning-color-half);
+div.input-container.warning,
+p.input-container.warning,
+div.textarea-container.warning,
+p.textarea-container.warning {
+  --input-status-color-rgb: var(--colors-warning-rgb);
 }
 div.input-container.warning div.wrap:after,
 p.input-container.warning div.wrap:after,
 div.textarea-container.warning div.wrap:after,
 p.textarea-container.warning div.wrap:after {
-  opacity: 1;
-  background-color: var(--input-status-warning-background-color);
-  text-shadow: var(--input-status-warning-icon-text-shadow);
-  color: var(--input-status-warning-icon-color);
   content: "S";
-}
-div.input-container.error input[type=text],
-div.input-container.error input[type=number],
-div.input-container.error input[type=password],
-div.input-container.error textarea,
-p.input-container.error input[type=text],
-p.input-container.error input[type=number],
-p.input-container.error input[type=password],
-p.input-container.error textarea,
-div.textarea-container.error input[type=text],
-div.textarea-container.error input[type=number],
-div.textarea-container.error input[type=password],
-div.textarea-container.error textarea,
-p.textarea-container.error input[type=text],
-p.textarea-container.error input[type=number],
-p.textarea-container.error input[type=password],
-p.textarea-container.error textarea {
-  box-shadow: var(--input-border-error-box-shadow);
-}
-div.input-container.error input[type=text]:focus,
-div.input-container.error input[type=number]:focus,
-div.input-container.error input[type=password]:focus,
-div.input-container.error textarea:focus,
-p.input-container.error input[type=text]:focus,
-p.input-container.error input[type=number]:focus,
-p.input-container.error input[type=password]:focus,
-p.input-container.error textarea:focus,
-div.textarea-container.error input[type=text]:focus,
-div.textarea-container.error input[type=number]:focus,
-div.textarea-container.error input[type=password]:focus,
-div.textarea-container.error textarea:focus,
-p.textarea-container.error input[type=text]:focus,
-p.textarea-container.error input[type=number]:focus,
-p.textarea-container.error input[type=password]:focus,
-p.textarea-container.error textarea:focus {
-  border-color: var(--error-color);
-  box-shadow: var(--input-focus-error-box-shadow);
-  background-color: var(--error-color-translucent);
-}
-div.input-container.error ul.messagebox,
-p.input-container.error ul.messagebox,
-div.textarea-container.error ul.messagebox,
-p.textarea-container.error ul.messagebox {
-  background-image: var(--error-stripes);
-  border-left: 0.1em dashed var(--error-color-half);
-  border-right: 0.1em dashed var(--error-color-half);
-  border-bottom: 0.1em dashed var(--error-color-half);
-}
-div.input-container.error div.wrap:after,
-p.input-container.error div.wrap:after,
-div.textarea-container.error div.wrap:after,
-p.textarea-container.error div.wrap:after {
-  opacity: 1;
-  background-color: var(--input-status-error-background-color);
-  color: var(--input-status-icon-color);
-  text-shadow: var(--input-status-error-icon-text-shadow);
-  content: "Q";
-}
-div.input-container.error.mute input[type=text],
-div.input-container.error.mute input[type=number],
-div.input-container.error.mute input[type=password],
-div.input-container.error.mute textarea,
-p.input-container.error.mute input[type=text],
-p.input-container.error.mute input[type=number],
-p.input-container.error.mute input[type=password],
-p.input-container.error.mute textarea,
-div.textarea-container.error.mute input[type=text],
-div.textarea-container.error.mute input[type=number],
-div.textarea-container.error.mute input[type=password],
-div.textarea-container.error.mute textarea,
-p.textarea-container.error.mute input[type=text],
-p.textarea-container.error.mute input[type=number],
-p.textarea-container.error.mute input[type=password],
-p.textarea-container.error.mute textarea {
-  border-color: var(--error-color);
-}
-div.input-container.error.mute input[type=text]:focus,
-div.input-container.error.mute input[type=number]:focus,
-div.input-container.error.mute input[type=password]:focus,
-div.input-container.error.mute textarea:focus,
-p.input-container.error.mute input[type=text]:focus,
-p.input-container.error.mute input[type=number]:focus,
-p.input-container.error.mute input[type=password]:focus,
-p.input-container.error.mute textarea:focus,
-div.textarea-container.error.mute input[type=text]:focus,
-div.textarea-container.error.mute input[type=number]:focus,
-div.textarea-container.error.mute input[type=password]:focus,
-div.textarea-container.error.mute textarea:focus,
-p.textarea-container.error.mute input[type=text]:focus,
-p.textarea-container.error.mute input[type=number]:focus,
-p.textarea-container.error.mute input[type=password]:focus,
-p.textarea-container.error.mute textarea:focus {
-  border-color: var(--error-color);
-  box-shadow: inset 0 -0.4em 0 0 var(--error-color);
 }
 div.input-container.disabled,
 p.input-container.disabled,
@@ -3980,74 +3882,6 @@ p.textarea-container.active div.wrap div.topcontrol,
 p.textarea-container:focus-within div.wrap div.topcontrol {
   opacity: 1;
   top: 0.3em;
-}
-div.input-container.active input[type=text],
-div.input-container.active input[type=number],
-div.input-container.active input[type=password],
-div.input-container.active textarea, div.input-container:focus-within input[type=text],
-div.input-container:focus-within input[type=number],
-div.input-container:focus-within input[type=password],
-div.input-container:focus-within textarea,
-p.input-container.active input[type=text],
-p.input-container.active input[type=number],
-p.input-container.active input[type=password],
-p.input-container.active textarea,
-p.input-container:focus-within input[type=text],
-p.input-container:focus-within input[type=number],
-p.input-container:focus-within input[type=password],
-p.input-container:focus-within textarea,
-div.textarea-container.active input[type=text],
-div.textarea-container.active input[type=number],
-div.textarea-container.active input[type=password],
-div.textarea-container.active textarea,
-div.textarea-container:focus-within input[type=text],
-div.textarea-container:focus-within input[type=number],
-div.textarea-container:focus-within input[type=password],
-div.textarea-container:focus-within textarea,
-p.textarea-container.active input[type=text],
-p.textarea-container.active input[type=number],
-p.textarea-container.active input[type=password],
-p.textarea-container.active textarea,
-p.textarea-container:focus-within input[type=text],
-p.textarea-container:focus-within input[type=number],
-p.textarea-container:focus-within input[type=password],
-p.textarea-container:focus-within textarea {
-  border-color: var(--input-focused-border-color);
-  background-color: var(--input-focused-background-color);
-  box-shadow: var(--input-focus-box-shadow);
-}
-div.input-container.active input[type=text]::placeholder,
-div.input-container.active input[type=number]::placeholder,
-div.input-container.active input[type=password]::placeholder,
-div.input-container.active textarea::placeholder, div.input-container:focus-within input[type=text]::placeholder,
-div.input-container:focus-within input[type=number]::placeholder,
-div.input-container:focus-within input[type=password]::placeholder,
-div.input-container:focus-within textarea::placeholder,
-p.input-container.active input[type=text]::placeholder,
-p.input-container.active input[type=number]::placeholder,
-p.input-container.active input[type=password]::placeholder,
-p.input-container.active textarea::placeholder,
-p.input-container:focus-within input[type=text]::placeholder,
-p.input-container:focus-within input[type=number]::placeholder,
-p.input-container:focus-within input[type=password]::placeholder,
-p.input-container:focus-within textarea::placeholder,
-div.textarea-container.active input[type=text]::placeholder,
-div.textarea-container.active input[type=number]::placeholder,
-div.textarea-container.active input[type=password]::placeholder,
-div.textarea-container.active textarea::placeholder,
-div.textarea-container:focus-within input[type=text]::placeholder,
-div.textarea-container:focus-within input[type=number]::placeholder,
-div.textarea-container:focus-within input[type=password]::placeholder,
-div.textarea-container:focus-within textarea::placeholder,
-p.textarea-container.active input[type=text]::placeholder,
-p.textarea-container.active input[type=number]::placeholder,
-p.textarea-container.active input[type=password]::placeholder,
-p.textarea-container.active textarea::placeholder,
-p.textarea-container:focus-within input[type=text]::placeholder,
-p.textarea-container:focus-within input[type=number]::placeholder,
-p.textarea-container:focus-within input[type=password]::placeholder,
-p.textarea-container:focus-within textarea::placeholder {
-  opacity: 0.3;
 }
 div.input-container.passive label,
 p.input-container.passive label,
@@ -4110,29 +3944,16 @@ div.textarea-container div.passivebox {
 :root {
   --input-default-padding: .5em 1em .5em 1.5em;
   --input-border-radius: .1em;
-  --input-border-box-shadow: inset -.1em -.1em 0 0 var(--input-default-border-color), inset .1em -.1em 0 0 var(--input-default-border-color), inset -.1em .1em 0 0 var(--input-default-border-color), inset .1em .1em 0 0 var(--input-default-border-color);
-  --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset -.1em .1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
-  --input-border-error-box-shadow: inset -.1em -.1em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
-  --input-focus-warning-box-shadow: inset .5em 0 0 var(--warning-color), inset .1em -.1em 0 0 var(--warning-color), inset -.1em .1em 0 0 var(--warning-color), inset .1em .1em 0 0 var(--warning-color);
-  --input-focus-error-box-shadow: inset .5em 0 0 var(--error-color), inset .1em -.1em 0 0 var(--error-color), inset -.1em .1em 0 0 var(--error-color), inset .1em .1em 0 0 var(--error-color);
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-default-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--focus-color);
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-default-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--focus-color);
-  --input-default-background-color: var(--grey-translucent);
-  --input-default-border-color: var(--standard-color);
-  --input-default-text-color: var(--grey-darker);
-  --input-default-text-shadow: none;
-  --input-default-placeholder-color: var(--placeholder-color);
+  --input-border-color-rgb: var(--standard-color-rgb);
+  --input-border-color: rgb(var(--input-border-color-rgb));
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
   --input-disabled-background-color: var(--disabled-base-color);
   --input-disabled-border-color: var(--disabled-highlight-color);
   --input-disabled-text-color: var(--disabled-highlight-color);
   --input-disabled-placeholder-color: var(--disabled-highlight-color);
-  --input-focused-border-color: var(--focus-color);
-  --input-focused-background-color: var(--focus-color-translucent);
-  --input-mute-background-color: var(--grey-translucent);
-  --input-mute-disabled-background-color: var(--light);
-  --input-mute-focus-background-color: var(--grey-quarter);
 }
 
 [hidden] {
@@ -4153,10 +3974,10 @@ textarea {
   word-spacing: inherit;
   font-size: 1em;
   width: 100%;
-  background-color: var(--input-default-background-color);
+  background-color: rgba(var(--input-border-color-rgb), 0.1);
   margin: 0;
   border: none;
-  box-shadow: var(--input-border-box-shadow);
+  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
   color: var(--input-default-text-color);
@@ -4192,9 +4013,9 @@ input[type=search]:focus,
 input[type=search]:focus-within,
 textarea:focus,
 textarea:focus-within {
-  border-color: var(--input-focused-border-color);
-  background-color: var(--input-focused-background-color);
-  box-shadow: var(--input-focus-box-shadow);
+  --input-border-color-rgb: var(--colors-focus-rgb);
+  --input-border-color: rgb(var(--colors-focus-rgb));
+  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
 }
 input[type=text]:focus::placeholder, input[type=text]:focus-within::placeholder,
 input[type=number]:focus::placeholder,
@@ -4212,8 +4033,8 @@ input[type=number].mute,
 input[type=password].mute,
 input[type=search].mute,
 textarea.mute {
-  background-color: var(--input-mute-background-color);
-  box-shadow: var(--input-mute-box-shadow);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
 }
 input[type=text].mute::placeholder,
@@ -4225,20 +4046,28 @@ textarea.mute::placeholder {
   text-shadow: var(--label-text-shadow);
   text-transform: var(--label-text-transform);
 }
-input[type=text].mute:focus,
+input[type=text].mute:focus, input[type=text].mute:focus-within,
 input[type=number].mute:focus,
+input[type=number].mute:focus-within,
 input[type=password].mute:focus,
+input[type=password].mute:focus-within,
 input[type=search].mute:focus,
-textarea.mute:focus {
-  border-bottom-color: var(--focus-color);
-  background-color: var(--input-focused-background-color);
-  box-shadow: var(--input-mute-focus-box-shadow);
+input[type=search].mute:focus-within,
+textarea.mute:focus,
+textarea.mute:focus-within {
+  --input-border-color-rgb: var(--colors-focus-rgb);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
 }
-input[type=text].mute:focus::placeholder,
+input[type=text].mute:focus::placeholder, input[type=text].mute:focus-within::placeholder,
 input[type=number].mute:focus::placeholder,
+input[type=number].mute:focus-within::placeholder,
 input[type=password].mute:focus::placeholder,
+input[type=password].mute:focus-within::placeholder,
 input[type=search].mute:focus::placeholder,
-textarea.mute:focus::placeholder {
+input[type=search].mute:focus-within::placeholder,
+textarea.mute:focus::placeholder,
+textarea.mute:focus-within::placeholder {
   opacity: 0;
 }
 input[type=text].mute:disabled,
@@ -4269,11 +4098,11 @@ textarea:before {
 }
 textarea.mute {
   padding: 1em 1em 1em 2em;
-  box-shadow: var(--input-mute-textarea-box-shadow);
+  box-shadow: inset 0.1em 0 0 0 rgb(var(--input-border-color-rgb));
   border-bottom: none;
 }
 textarea.mute:focus {
-  box-shadow: var(--input-mute-focus-textarea-box-shadow);
+  box-shadow: inset 0.2em 0 0 0 rgb(var(--input-border-color-rgb));
 }
 
 input[type=file] {
@@ -5555,11 +5384,11 @@ div.searchcontrol.open button:focus.mute, div.searchcontrol.open button:focus.gh
   --tabbar-tab-background-color: var(--ultralight);
   --tabbar-tab-text-shadow: none;
   --tabbar-selected-tab-background-color: var(--ultralight);
-  --tabbar-selected-tab-highlight-color: var(--focus-color);
-  --tabbar-selected-tab-text-color: var(--focus-color);
+  --tabbar-selected-tab-highlight-color: var(--colors-focus);
+  --tabbar-selected-tab-text-color:var(--colors-focus);
   --tabbar-selected-tab-text-shadow: none;
-  --tabbar-hover-tab-background-color: var(--focus-color);
-  --tabbar-hover-tab-highlight-color: var(--focus-color);
+  --tabbar-hover-tab-background-color: var(--colors-focus);
+  --tabbar-hover-tab-highlight-color: var(--colors-focus);
   --tabbar-hover-tab-text-color: var(--ultralight);
   --tabbar-hover-tab-text-shadow: var(--text-shadow);
   --tabbar-collapsed-height: 3.5em;
@@ -5604,7 +5433,7 @@ ul.tabbar li.mobileonly {
   }
 }
 ul.tabbar li:focus-within > a {
-  background-color: var(--focus-color-half-solid);
+  background-color: var(--colors-focus);
   color: var(--tabbar-hover-tab-text-color);
   text-shadow: var(--tabbar-hover-tab-text-shadow);
 }
@@ -5929,7 +5758,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu:b
 
 :root {
   --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--canvas-color-colored);
+  --tooltip-background-color: var(--canvas-color-highlight);
   --tooltip-text-color: var(--standard-color);
   --tooltip-text-shadow: var(--text-shadow);
   --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));

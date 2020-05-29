@@ -9,6 +9,7 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
+            stayopen: false, // Set true for it to stay open when elements are clicked within.
             gravity: 's', // Gravity direction for the menu
             tooltipgravity: 'e', // Gravity direction for the tooltips
             data: null, // A place to store information that the button actions may need, if the menu is
@@ -124,6 +125,9 @@ class ButtonMenu extends SimpleButton {
 
     }
 
+    /**
+     * Position the menu
+     */
     setPosition() {
         if (!ButtonMenu.activeMenu) { return; }
         let self = ButtonMenu.activeMenu;
@@ -189,9 +193,7 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '-1');
             }
         }
-
         ButtonMenu.activeMenu = null;
-
     }
 
     /**
@@ -206,8 +208,9 @@ class ButtonMenu extends SimpleButton {
 
         window.addEventListener('click', function(e) {
             let tag = me.menu.tagName.toLowerCase();
-            if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+            if (((me.menu.contains(e.target))) && (me.stayopen)) {
                 me.setCloseListener();
+            } else if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
             } else if (me.menu.contains(e.target)) {
                 me.close();
             } else if (me.button.contains(e.target)) {
@@ -332,6 +335,9 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get stayopen() { return this.config.stayopen; }
+    set stayopen(stayopen) { this.config.stayopen = stayopen; }
 
     get tooltipgravity() { return this.config.tooltipgravity; }
     set tooltipgravity(tooltipgravity) { this.config.tooltipgravity = tooltipgravity; }
