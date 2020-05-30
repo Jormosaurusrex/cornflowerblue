@@ -1863,29 +1863,11 @@ button:disabled,
 input[type=submit]:disabled,
 input[type=reset]:disabled,
 a.button:disabled {
-  color: var(--button-disabled-text-color);
-  background-color: var(--button-disabled-color);
-  border-color: var(--button-disabled-color);
+  opacity: 0.5;
   cursor: not-allowed;
   text-shadow: none;
   box-shadow: none;
   pointer-events: none;
-}
-button:disabled:hover, button:disabled:focus, button:disabled:active,
-input[type=submit]:disabled:hover,
-input[type=submit]:disabled:focus,
-input[type=submit]:disabled:active,
-input[type=reset]:disabled:hover,
-input[type=reset]:disabled:focus,
-input[type=reset]:disabled:active,
-a.button:disabled:hover,
-a.button:disabled:focus,
-a.button:disabled:active {
-  color: var(--button-disabled-text-color);
-  background-color: var(--button-disabled-color);
-  border-color: var(--button-disabled-color);
-  text-shadow: none;
-  box-shadow: none;
 }
 button.mute,
 input[type=submit].mute,
@@ -2013,34 +1995,6 @@ a.button.mute.focus {
   outline-offset: 0.2em;
   text-decoration: underline double;
 }
-button.mute:disabled,
-input[type=submit].mute:disabled,
-input[type=reset].mute:disabled,
-a.button.mute:disabled {
-  color: var(--button-disabled-text-color);
-  background-color: transparent;
-  border-color: transparent;
-  cursor: not-allowed;
-  text-shadow: none;
-  box-shadow: none;
-  pointer-events: none;
-}
-button.mute:disabled:hover, button.mute:disabled:focus, button.mute:disabled:active,
-input[type=submit].mute:disabled:hover,
-input[type=submit].mute:disabled:focus,
-input[type=submit].mute:disabled:active,
-input[type=reset].mute:disabled:hover,
-input[type=reset].mute:disabled:focus,
-input[type=reset].mute:disabled:active,
-a.button.mute:disabled:hover,
-a.button.mute:disabled:focus,
-a.button.mute:disabled:active {
-  color: var(--button-disabled-color);
-  background-color: transparent;
-  border-color: transparent;
-  text-shadow: none;
-  box-shadow: none;
-}
 button.hot,
 input[type=submit].hot,
 input[type=reset].hot,
@@ -2063,34 +2017,6 @@ input[type=reset].hot.destructive,
 a.button.hot.destructive {
   background-color: var(--colors-destructive);
   border-color: var(--colors-destructive);
-}
-button.hot:disabled,
-input[type=submit].hot:disabled,
-input[type=reset].hot:disabled,
-a.button.hot:disabled {
-  color: var(--button-disabled-text-color);
-  background-color: var(--button-disabled-color);
-  border-color: var(--button-disabled-color);
-  cursor: not-allowed;
-  text-shadow: none;
-  box-shadow: none;
-  pointer-events: none;
-}
-button.hot:disabled:hover, button.hot:disabled:focus, button.hot:disabled:active,
-input[type=submit].hot:disabled:hover,
-input[type=submit].hot:disabled:focus,
-input[type=submit].hot:disabled:active,
-input[type=reset].hot:disabled:hover,
-input[type=reset].hot:disabled:focus,
-input[type=reset].hot:disabled:active,
-a.button.hot:disabled:hover,
-a.button.hot:disabled:focus,
-a.button.hot:disabled:active {
-  color: var(--button-disabled-text-color);
-  background-color: var(--button-disabled-color);
-  border-color: var(--button-disabled-color);
-  text-shadow: none;
-  box-shadow: none;
 }
 button.square, button.circle,
 input[type=submit].square,
@@ -2303,7 +2229,6 @@ button.link:disabled,
 input[type=submit].link:disabled,
 input[type=reset].link:disabled,
 a.button.link:disabled {
-  color: var(--button-disabled-text-color);
   text-shadow: none;
 }
 button.micro,

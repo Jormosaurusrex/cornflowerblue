@@ -200,22 +200,11 @@ a.button {
     --button-default-color: var(--colors-destructive);
   }
   &:disabled {
-    color: var(--button-disabled-text-color);
-    background-color: var(--button-disabled-color);
-    border-color: var(--button-disabled-color);
+    opacity: .5;
     cursor: not-allowed;
     text-shadow: none;
     box-shadow: none;
     pointer-events: none;
-    &:hover,
-    &:focus,
-    &:active {
-      color: var(--button-disabled-text-color);
-      background-color: var(--button-disabled-color);
-      border-color: var(--button-disabled-color);
-      text-shadow: none;
-      box-shadow: none;
-    }
   }
   &.mute {
     color: var(--button-default-color);
@@ -273,24 +262,6 @@ a.button {
       outline-offset: .2em;
       text-decoration: underline double;
     }
-    &:disabled { // special disabled for mute styles
-      color: var(--button-disabled-text-color);
-      background-color: transparent;
-      border-color: transparent;
-      cursor: not-allowed;
-      text-shadow: none;
-      box-shadow: none;
-      pointer-events: none;
-      &:hover,
-      &:focus,
-      &:active {
-        color: var(--button-disabled-color);
-        background-color: transparent;
-        border-color: transparent;
-        text-shadow: none;
-        box-shadow: none;
-      }
-    }
   }
   &.hot {
     color: var(--button-default-text-color);
@@ -304,24 +275,6 @@ a.button {
     &.destructive {
       background-color: var(--colors-destructive);
       border-color: var(--colors-destructive);
-    }
-    &:disabled {
-      color: var(--button-disabled-text-color);
-      background-color: var(--button-disabled-color);
-      border-color: var(--button-disabled-color);
-      cursor: not-allowed;
-      text-shadow: none;
-      box-shadow: none;
-      pointer-events: none;
-      &:hover,
-      &:focus,
-      &:active {
-        color: var(--button-disabled-text-color);
-        background-color: var(--button-disabled-color);
-        border-color: var(--button-disabled-color);
-        text-shadow: none;
-        box-shadow: none;
-      }
     }
   }
   &.square,
@@ -417,7 +370,6 @@ a.button {
       text-decoration: underline double;
     }
     &:disabled {
-      color: var(--button-disabled-text-color);
       text-shadow: none;
     }
   }
