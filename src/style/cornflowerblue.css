@@ -2675,13 +2675,11 @@ div.radiogroup-container ul.radiogroup li.radio {
 }
 div.radiogroup-container ul.radiogroup li.radio input[type=radio] {
   display: inline-block;
-  margin: 0 1rem 0 0;
+  margin: 0;
 }
 div.radiogroup-container ul.radiogroup li.radio label {
   display: inline-block;
-  margin: 0;
-  text-shadow: var(--radio-element-label-text-shadow);
-  color: var(--radio-element-label-color);
+  margin: 0 0 0 0.5rem;
 }
 @media (hover: hover) and (pointer: fine) {
   div.radiogroup-container ul.radiogroup li.radio label:hover {
@@ -2696,10 +2694,6 @@ div.radiogroup-container.required ul.radiogroup li.radio label:after {
 }
 div.radiogroup-container.passive ul.radiogroup {
   display: none;
-}
-div.radiogroup-container.disabled ul.radiogroup li.radio label {
-  color: var(--disabled-highlight-color);
-  text-decoration: none;
 }
 
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {

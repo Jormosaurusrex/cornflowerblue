@@ -1,8 +1,6 @@
 :root {
   --checkbox-border-color-rgb: var(--standard-color-rgb);
   --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
-
-  // Checkbox keys
   --checkbox-size: 2em; // Total box size
   --checkbox-font-size: 2em; // For the checkmark symbol
   --checkbox-toggle-size: 1.3em; // For filled checkboxes and radios
@@ -45,13 +43,11 @@ div.radiogroup-container {
       margin: .5rem 0 .5rem 0;
       input[type="radio"] {
         display: inline-block;
-        margin: 0 1rem 0 0;
+        margin: 0;
       }
       label {
         display: inline-block;
-        margin: 0;
-        text-shadow: var(--radio-element-label-text-shadow);
-        color: var(--radio-element-label-color);
+        margin: 0 0 0 .5rem;
         @include for-hover-only {
           &:hover {
             text-decoration: underline double;
@@ -79,16 +75,6 @@ div.radiogroup-container {
   &.passive {
     ul.radiogroup {
       display: none;
-    }
-  }
-  &.disabled {
-    ul.radiogroup {
-      li.radio {
-        label {
-          color: var(--disabled-highlight-color);
-          text-decoration: none;
-        }
-      }
     }
   }
 }
