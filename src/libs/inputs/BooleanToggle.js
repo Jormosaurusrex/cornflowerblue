@@ -62,7 +62,7 @@ class BooleanToggle {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
-        this.container.classList.add('checkbox');
+        this.container.classList.add('checkbox-container');
 
         if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }

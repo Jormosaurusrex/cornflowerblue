@@ -8,7 +8,7 @@
   --checkbox-toggle-size: 1.3em; // For filled checkboxes and radios
   --checkbox-toggle-offset: 0.2em;
 }
-div.checkbox {
+div.checkbox-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -32,6 +32,67 @@ div.checkbox {
     }
   }
 }
+div.radiogroup-container {
+  ul.radiogroup {
+    list-style-type: none;
+    li.radio {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: center;
+      margin: .5rem 0 .5rem 0;
+      input[type="radio"] {
+        display: inline-block;
+        margin: 0 1rem 0 0;
+      }
+      label {
+        display: inline-block;
+        margin: 0;
+        text-shadow: var(--radio-element-label-text-shadow);
+        color: var(--radio-element-label-color);
+        @include for-hover-only {
+          &:hover {
+            text-decoration: underline double;
+          }
+        }
+        &.required {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  &.required {
+    ul.radiogroup {
+      li.radio {
+        label {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  &.passive {
+    ul.radiogroup {
+      display: none;
+    }
+  }
+  &.disabled {
+    ul.radiogroup {
+      li.radio {
+        label {
+          color: var(--disabled-highlight-color);
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
 @supports(-webkit-appearance: none) or (-moz-appearance: none) {
   input[type='checkbox'],
   input[type='radio'] {
@@ -136,6 +197,7 @@ input[type="radio"] {
       }
     }
   }
+  &[type="radio"],
   &.square,
   &.round {
     &:before,
@@ -179,6 +241,7 @@ input[type="radio"] {
       }
     }
   }
+  &[type="radio"],
   &.round {
     border-radius: 50%;
     &:checked,
@@ -260,7 +323,10 @@ input[type="radio"] {
 }
 input[type=checkbox],
 input[type=checkbox] + label,
-input[type=checkbox]:checked + label {
+input[type=checkbox]:checked + label,
+input[type=radio],
+input[type=radio] + label,
+input[type=radio]:checked + label {
   &:disabled {
     opacity: .5;
     cursor: not-allowed;
@@ -274,226 +340,6 @@ input[type=checkbox]:checked + label {
     &:checked:after {
       box-shadow: none !important;
       text-shadow: none !important;
-    }
-  }
-}
-input[type="radio"] {
-  --checkbox-size: 2em; // Total box size
-  --checkbox-font-size: 2em; // For the checkmark symbol
-  --checkbox-toggle-size: 1.3em; // For filled checkboxes and radios
-  --checkbox-toggle-offset: 0.2em;
-  border-radius: 50%;
-  width: var(--checkbox-size);
-  height: var(--checkbox-size);
-  max-width: var(--checkbox-size);
-  max-height: var(--checkbox-size);
-  &:before,
-  &:checked:before {
-    display: none;
-  }
-  &:after {
-    width: var(--checkbox-toggle-size);
-    height: var(--checkbox-toggle-size);
-    max-width: var(--checkbox-toggle-size);
-    max-height: var(--checkbox-toggle-size);
-    left: var(--checkbox-toggle-offset);
-    top: var(--checkbox-toggle-offset);
-    background-color: var(--checkbox-toggle-chrome-color);
-    border: .2em solid var(--checkbox-toggle-chrome-color);
-  }
-  &:checked,
-  &:focus,
-  &:active {
-    &:after {
-      border-radius: 50%;
-    }
-  }
-  @include for-hover-only {
-    &:hover {
-      border-color: var(--checkbox-focus-color);
-      background-color: var(--checkbox-focus-color);
-      box-shadow: var(--hover-box-shadow);
-      &:before {
-        display: none;
-      }
-      &:after {
-        border-radius: 50%;
-        display: block;
-        background-color: transparent;
-        border: .2em dotted var(--checkbox-toggle-chrome-color);
-      }
-      &:checked {
-        border-color: var(--checkbox-border-color);
-        box-shadow: var(--checkbox-checked-shadow);
-        background-color: var(--checkbox-focus-color);
-        &:before {
-          display: none;
-        }
-        &:after {
-          background-color: var(--checkbox-border-color);
-          border: .2em solid var(--checkbox-border-color);
-        }
-      }
-    }
-  }
-  &:checked {
-    &:after {
-      display: block;
-    }
-  }
-}
-input[type=radio],
-input[type=radio] + label,
-input[type=radio]:checked + label {
-  &:disabled {
-    color: var(--disabled-highlight-color) !important;
-    background-color: var(--disabled-base-color) !important;
-    border-color: var(--disabled-highlight-color) !important;
-    cursor: not-allowed;
-    box-shadow: none !important;
-    pointer-events: none;
-    outline: none;
-    text-decoration: none;
-    &:before,
-    &:after {
-      box-shadow: none !important;
-      text-shadow: none !important;
-    }
-    &:checked:before {
-      display: none;
-    }
-    &:checked:after {
-      background-color: var(--disabled-highlight-color);
-      border-color: var(--disabled-highlight-color);
-      box-shadow: none;
-    }
-    @include for-hover-only {
-      &:hover {
-        color: var(--disabled-highlight-color) !important;
-        background-color: var(--disabled-base-color) !important;
-        border-color: var(--disabled-highlight-color) !important;
-        box-shadow: none;
-        outline: none;
-        text-decoration: none;
-        &:before,
-        &:after {
-          box-shadow: none !important;
-          text-shadow: none !important;
-        }
-        &:before {
-          opacity: 0;
-        }
-        &:checked:before {
-          opacity: 1;
-          color: var(--disabled-highlight-color) !important;
-          box-shadow: none;
-          text-shadow: none;
-        }
-        &:checked:after {
-          opacity: 1;
-          background-color: var(--disabled-highlight-color);
-          border-color: var(--disabled-highlight-color);
-          box-shadow: none;
-        }
-      }
-    }
-    &:focus,
-    &:active {
-      color: var(--disabled-highlight-color) !important;
-      background-color: var(--disabled-base-color) !important;
-      border-color: var(--disabled-highlight-color) !important;
-      box-shadow: none;
-      outline: none;
-      text-decoration: none;
-      &:before,
-      &:after {
-        box-shadow: none !important;
-        text-shadow: none !important;
-      }
-      &:before {
-        opacity: 0;
-      }
-      &:checked:before {
-        opacity: 1;
-        color: var(--disabled-highlight-color) !important;
-        box-shadow: none;
-        text-shadow: none;
-      }
-      &:checked:after {
-        opacity: 1;
-        background-color: var(--disabled-highlight-color);
-        border-color: var(--disabled-highlight-color);
-        box-shadow: none;
-      }
-    }
-    &.toggle,
-    &.switch {
-      &:after,
-      &:checked:after {
-        background-color: var(--disabled-highlight-color);
-        border-color: var(--disabled-highlight-color);
-        box-shadow: none;
-      }
-    }
-  }
-}
-div.radiogroup-container {
-  ul.radiogroup {
-    list-style-type: none;
-    li.radio {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      align-items: center;
-      align-content: center;
-      margin: .5rem 0 .5rem 0;
-      input[type="radio"] {
-        display: inline-block;
-        margin: 0 1rem 0 0;
-      }
-      label {
-        display: inline-block;
-        margin: 0;
-        text-shadow: var(--radio-element-label-text-shadow);
-        color: var(--radio-element-label-color);
-        @include for-hover-only {
-          &:hover {
-            text-decoration: underline double;
-          }
-        }
-        &.required {
-          &:after {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-  &.required {
-    ul.radiogroup {
-      li.radio {
-        label {
-          &:after {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-  &.passive {
-    ul.radiogroup {
-      display: none;
-    }
-  }
-  &.disabled {
-    ul.radiogroup {
-      li.radio {
-        label {
-          color: var(--disabled-highlight-color);
-          text-decoration: none;
-        }
-      }
     }
   }
 }
