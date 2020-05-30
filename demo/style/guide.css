@@ -72,8 +72,6 @@ div#container header h1.cfbtitle:after {
   }
 }
 div#container nav {
-  --tabbar-tab-background-color: var(--tabbar-selected-tab-background-color);
-  --tabbar-background-color: var(--tabbar-selected-tab-background-color);
   position: sticky;
   top: 5em;
 }

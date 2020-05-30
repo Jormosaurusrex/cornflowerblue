@@ -1,34 +1,9 @@
 :root {
   // TabBars
-  --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-background-color: var(--canvas-color-primary);
-  --tabbar-subtab-background-color: var(--canvas-color-secondary);
-  --tabbar-interior-box-shadow: var(--interior-shadows-inside);
-  --tabbar-border-radius: var(--border-radius);
-
   --tabbar-tab-height: 3em;
-  --tabbar-tab-box-shadow: none;
-  --tabbar-tab-text-color: var(--grey-dark);
-  --tabbar-tab-background-color: var(--ultralight);
-  --tabbar-tab-text-shadow: none;
-
-  --tabbar-selected-tab-background-color: var(--ultralight);
-  --tabbar-selected-tab-highlight-color: var(--colors-focus);
-  --tabbar-selected-tab-text-color:var(--colors-focus);
-  --tabbar-selected-tab-text-shadow: none;
-
-  --tabbar-hover-tab-background-color: var(--colors-focus);
-  --tabbar-hover-tab-highlight-color: var(--colors-focus);
-  --tabbar-hover-tab-text-color: var(--ultralight);
-  --tabbar-hover-tab-text-shadow: var(--text-shadow);
-
+  --tabbar-background-color: var(--canvas-color-primary);
+  --tabbar-box-shadow: var(--panel-shadow-light);
   --tabbar-collapsed-height: 3.5em;
-  --tabbar-collapsed-background-color: var(--tabbar-background-color);
-  --tabbar-collapsed-open-background-color: var(--bright);
-  --tabbar-collapsed-button-color: var(--tabbar-selected-tab-highlight-color);
-  --tabbar-collapsed-open-menu-color: var(--tabbar-background-color);
-  --tabbar-collapsed-title-color: var(--grey-meddark);
-
 }
 ul.tabbar {
   list-style-type: none;
@@ -36,7 +11,7 @@ ul.tabbar {
   flex-direction: row;
   justify-content: space-around;
   align-items: stretch;
-  border-radius: var(--tabbar-border-radius);
+  border-radius: var(--border-radius);
   z-index: 2;
   background-color: var(--tabbar-background-color);
   box-shadow: var(--tabbar-box-shadow);
@@ -59,19 +34,11 @@ ul.tabbar {
         display: flex;
       }
     }
-    &:focus-within {
-      > a {
-        background-color: var(--colors-focus);
-        color: var(--tabbar-hover-tab-text-color);
-        text-shadow: var(--tabbar-hover-tab-text-shadow);
-      }
-    }
     > a {
       padding: 0 1em 0 1em;
       white-space: nowrap;
-      background-color: var(--tabbar-tab-background-color);
-      color: var(--tabbar-tab-text-color);
-      text-shadow: var(--tabbar-tab-text-shadow);
+      color: var(--colors-affordance);
+      text-shadow: var(--text-shadow);
       cursor: pointer;
       width: 100%;
       display: flex;
@@ -79,28 +46,49 @@ ul.tabbar {
       align-items: center;
       justify-content: flex-start;
       flex-grow: 1;
-      font-size: 1.3em;
+      font-size: 1.1rem;
       transition: all .1s linear;
-      &[aria-selected="true"] {
-        background-color: var(--tabbar-selected-tab-background-color);
-        box-shadow: inset 0px -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
-        color: var(--tabbar-selected-tab-text-color);
-        text-shadow: var(--tabbar-selected-tab-text-shadow);
-      }
       &:active,
       &:focus {
-        color: var(--tabbar-hover-tab-text-color);
-        background-color: var(--tabbar-hover-tab-background-color);
-        text-shadow: var(--tabbar-hover-tab-text-shadow);
+        color: var(--hot-text-color);
+        background-color: var(--colors-affordance);
+        text-shadow: var(--text-shadow);
         filter: none;
       }
       &:focus {
         outline: var(--hot-text-color) dashed .1em;
         outline-offset: -.3em;
         text-decoration: underline double;
+      }
+      @include for-hover-only {
+        &:hover {
+          color: var(--hot-text-color);
+          background-color: var(--colors-affordance);
+          text-shadow: var(--text-shadow);
+          filter: none;
+        }
+      }
+      &[aria-selected="true"] {
+        box-shadow: inset 0px -.3em 0 0 var(--colors-focus);
+        color: var(--colors-focus);
+        text-shadow: var(--text-shadow);
+        &:active,
+        &:focus {
+          color: var(--hot-text-color);
+          background-color: var(--colors-affordance);
+          text-shadow: var(--text-shadow);
+          filter: none;
+        }
+        &:focus {
+          outline: var(--hot-text-color) dashed .1em;
+          outline-offset: -.3em;
+          text-decoration: underline double;
+        }
         @include for-hover-only {
           &:hover {
-            outline-color: var(--ultralight);
+            background-color: var(--colors-focus);
+            color: var(--hot-text-color);
+            text-shadow: var(--text-shadow);
           }
         }
       }
@@ -108,27 +96,6 @@ ul.tabbar {
         margin-right: .5em;
         &.secondicon{
           margin-right: 0;
-        }
-      }
-    }
-    @include for-hover-only {
-      &:hover {
-        > a {
-          color: var(--tabbar-hover-tab-text-color);
-          background-color: var(--tabbar-hover-tab-background-color);
-          text-shadow: var(--tabbar-hover-tab-text-shadow);
-          filter: none;
-        }
-      }
-    }
-    &[aria-selected="true"] {
-      box-shadow: inset 0 -.3em 0 0 var(--tabbar-selected-tab-highlight-color);
-      color: var(--tabbar-hover-tab-text-color);
-      text-shadow: var(--tabbar-selected-tab-text-shadow);
-      @include for-hover-only {
-        &:hover {
-          color: var(--tabbar-hover-tab-text-color);
-          text-shadow: var(--tabbar-hover-tab-text-shadow);
         }
       }
     }
@@ -141,10 +108,9 @@ ul.tabbar {
       overflow: visible;
       padding: 0;
       list-style-type: none;
-      border-radius: var(--tabbar-border-radius);
+      border-radius: var(--border-radius);
       z-index: 3;
-      background-color: var(--tabbar-subtab-background-color);
-      --tabbar-tab-background-color: var(--tabbar-subtab-background-color);
+      background-color: var(--tabbar-background-color);
       box-shadow: none;
       filter: var(--panel-shadow-filter);
       &:before {
@@ -157,7 +123,7 @@ ul.tabbar {
         top: -.7em;
         border-width: 0 .7em .7em .7em;
         border-style: solid;
-        border-color: var(--tabbar-subtab-background-color) transparent;
+        border-color: var(--tabbar-background-color) transparent;
       }
       > li {
         align-items: flex-start;
@@ -187,12 +153,12 @@ ul.tabbar {
         justify-content: flex-start;
         &:focus {
           margin: 0;
-          outline: var(--ultralight) dashed .1em;
+          outline: var(--hot-text-color) dashed .1em;
           outline-offset: -.3em;
           text-decoration: underline double;
           @include for-hover-only {
             &:hover {
-              outline-color: var(--ultralight);
+              outline-color: var(--hot-text-color);
             }
           }
         }
@@ -217,7 +183,7 @@ div.tablist-container {
       top: 0;
       z-index: 500;
       display: flex;
-      background-color: var(--tabbar-collapsed-background-color);
+      background-color: var(--tabbar-background-color);
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
@@ -232,7 +198,7 @@ div.tablist-container {
         min-height: var(--tabbar-collapsed-height);
         max-height: var(--tabbar-collapsed-height);
         width: 100%;
-        background-color: var(--tabbar-collapsed-background-color);
+        background-color: var(--tabbar-background-color);
         > button.hamburger {
           margin: 0;
           width: var(--tabbar-collapsed-height);
@@ -248,7 +214,7 @@ div.tablist-container {
             span {
               width: 2em;
               height: .3em;
-              background-color: var(--tabbar-collapsed-button-color);
+              background-color: var(--tabbar-background-color);
               border-radius: .1em;
               &:first-child {
                 margin-top: .1em;
@@ -262,13 +228,13 @@ div.tablist-container {
             }
           }
           &:focus {
-            background-color: var(--tabbar-collapsed-open-menu-color);
-            outline: var(--tabbar-collapsed-button-color) dashed .2em;
+            background-color: var(--tabbar-background-color);
+            outline: var(--colors-affordance) dashed .2em;
             outline-offset: -.3em;
             filter: none;
           }
           &[aria-expanded='true'] {
-            background-color: var(--tabbar-collapsed-open-menu-color);
+            background-color: var(--tabbar-background-color);
             filter: none;
             > span.magichamburger {
               span {
@@ -292,7 +258,7 @@ div.tablist-container {
         div.menutitle {
           font-size: 1.5em;
           padding: 0 .5em 0 .5em;
-          color: var(--tabbar-collapsed-title-color);
+          color: var(--colors-highlight);
         }
       }
       ul.tabbar {
@@ -303,7 +269,7 @@ div.tablist-container {
         height: 0;
         min-height: 0;
         max-height: 0;
-        background-color: var(--tabbar-collapsed-open-menu-color);
+        background-color: var(--tabbar-background-color);
         width: 100%;
         transition: all 0.1s;
         padding: 0;
@@ -322,13 +288,12 @@ div.tablist-container {
             padding: .5em 1em .5em 4em;
             justify-content: flex-start;
             &[aria-selected="true"] {
-              box-shadow: inset .5em 0 0 var(--tabbar-selected-tab-highlight-color);
+              box-shadow: inset .5em 0 0 var(--colors-focus);
             }
           }
         }
       }
       &[aria-expanded="true"] {
-        //min-height: 90vh;
         max-height: 90vh;
         bottom: 0;
         padding-bottom: 1em;
@@ -341,7 +306,7 @@ div.tablist-container {
             display: block;
             min-height: unset;
             ul.submenu {
-              border-top: .1em solid var(--tabbar-collapsed-open-background-color);
+              border-top: .1em solid var(--tabbar-background-color);
               display: block;
               justify-content: flex-end;
               position: relative;

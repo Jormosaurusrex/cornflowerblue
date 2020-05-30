@@ -63,8 +63,6 @@ div#container {
     }
   }
   nav {
-    --tabbar-tab-background-color: var(--tabbar-selected-tab-background-color);
-    --tabbar-background-color: var(--tabbar-selected-tab-background-color);
     position: sticky;
     top: 5em;
     @include for-phone-only {
@@ -79,7 +77,6 @@ div#container {
         a {
           text-transform: uppercase;
           &[aria-selected="true"] {
-            //background-color: transparent;
             color: var(--tabbar-selected-tab-text-color);
             text-shadow: var(--tabbar-selected-tab-text-shadow);
           }

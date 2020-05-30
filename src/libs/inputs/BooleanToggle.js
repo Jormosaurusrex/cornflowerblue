@@ -71,13 +71,13 @@ class BooleanToggle {
             this.container.classList.add(c);
         }
 
-        if (this.labelside === 'right') {
-            this.container.classList.add('rightside');
-            this.container.appendChild(this.toggle);
+        if (this.labelside === 'left') {
+            this.container.classList.add('leftside');
             this.container.appendChild(this.labelobj);
+            this.container.appendChild(this.toggle);
         } else {
-            this.container.appendChild(this.labelobj);
             this.container.appendChild(this.toggle);
+            this.container.appendChild(this.labelobj);
         }
     }
 
