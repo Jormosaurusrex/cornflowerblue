@@ -22,11 +22,11 @@ div.tooltip {
   min-height: 2.7em;
   overflow: visible;
   z-index: 21000;
-  border-radius: var(--tooltip-border-radius);
-  background-color: var(--tooltip-background-color);
-  color: var(--tooltip-text-color);
-  text-shadow: var(--tooltip-text-shadow);
-  filter: var(--tooltip-box-shadow);
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
+  filter: var(--shadows-dropshadow-filter);
   &[aria-hidden='true'] {
     display: none;
   }
@@ -36,7 +36,7 @@ div.tooltip {
     height: 0;
     position: absolute;
     border-style: solid;
-    border-color: var(--tooltip-background-color) transparent;
+    border-color: var(--canvas-color-highlight) transparent;
     left: 1em;
     bottom: -.5em;
     border-width: .5em .5em 0 .5em;
@@ -47,7 +47,6 @@ div.tooltip {
   }
   div.tiptext {
     max-width: 33em;
-    //min-width: 15em;
     white-space: normal;
     line-height: 1.2;
     text-align: left;
@@ -71,7 +70,7 @@ div.tooltip {
       right: -.5em;
       bottom: unset;
       top: .5em;
-      border-color: transparent var(--tooltip-background-color);
+      border-color: transparent var(--canvas-color-highlight);
       border-width: .5em 0 .5em .5em;
     }
   }
@@ -80,7 +79,7 @@ div.tooltip {
       left: -.5em;
       bottom: unset;
       top: .5em;
-      border-color: transparent var(--tooltip-background-color);
+      border-color: transparent var(--canvas-color-highlight);
       border-width: .5em .5em .5em 0;
     }
   }

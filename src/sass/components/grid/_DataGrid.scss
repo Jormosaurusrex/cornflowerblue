@@ -6,14 +6,14 @@
   --datagrid-gridheader-text-color: var(--grey-darkest);
   --datagrid-gridheader-grid-text-color: var(--grey-darker);
   --datagrid-gridheader-hover-text-shadow: var(--text-shadow);
-  --datagrid-gridheader-hover-text-color: var(--hot-text-color);
+  --datagrid-gridheader-hover-text-color: var(--colors-text-hot);
   --datagrid-gridheader-sort-highlight-color: var(--focus-color);
   --datagrid-gridheader-hover-background-color: var(--focus-color);
 
   --datagrid-grid-color: transparent;
   --datagrid-grid-text-color: var(--grey-darkest);
   --datagrid-grid-selected-background-color: var(--focus-color);
-  --datagrid-grid-selected-text-color: var(--hot-text-color);
+  --datagrid-grid-selected-text-color: var(--colors-text-hot);
 
   --datagrid-grid-multiselected-selected-background-color: var(--focus-color-half);
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
@@ -22,7 +22,7 @@
   --datagrid-grid-alternate-background-color: var(--ultralight);
   --datagrid-grid-mechanical-background-color: var(--ultralight);
   --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
-  --datagrid-grid-hover-text-color: var(--hot-text-color);
+  --datagrid-grid-hover-text-color: var(--colors-text-hot);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
 
   --datagrid-line-color: var(--sublight);
@@ -234,7 +234,7 @@ div.datagrid-container {
           }
           &:focus,
           &.focus {
-            outline: var(--hot-text-color) dashed .1em;
+            outline: var(--colors-text-hot) dashed .1em;
             outline-offset: -.3em;
             text-decoration: underline double;
           }
@@ -445,15 +445,15 @@ div.datagrid-container {
                 box-shadow: none;
                 &.mechanical {
                   input[type='checkbox'] {
-                    --checkbox-checked-checkmark-hover-text-color: var(--hot-text-color);
-                    --checkbox-checked-checkmark-text-color: var(--hot-text-color);
-                    --checkbox-checkmark-text-color: var(--hot-text-color);
-                    border-color: var(--hot-text-color);
+                    --checkbox-checked-checkmark-hover-text-color: var(--colors-text-hot);
+                    --checkbox-checked-checkmark-text-color: var(--colors-text-hot);
+                    --checkbox-checkmark-text-color: var(--colors-text-hot);
+                    border-color: var(--colors-text-hot);
                   }
                   button {
-                    --button-default-color: var(--hot-text-color);
-                    --button-default-text-color: var(--hot-text-color);
-                    --button-border-color: var(--hot-text-color);
+                    --button-default-color: var(--colors-text-hot);
+                    --button-default-text-color: var(--colors-text-hot);
+                    --button-border-color: var(--colors-text-hot);
                   }
                 }
               }

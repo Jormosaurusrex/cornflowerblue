@@ -771,7 +771,7 @@
   --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
   --text-color: var(--grey-dark);
-  --hot-text-color: var(--ultralight);
+  --colors-text-hot: var(--ultralight);
   --required-color: var(--red);
   --text-shadow: var(--text-shadow-light);
   --wide-measure: 40em;
@@ -866,7 +866,7 @@ body {
 html ::selection,
 body ::selection {
   background-color: var(--colors-highlight);
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
 }
 
 body.noisy:after {
@@ -1256,24 +1256,22 @@ div.selectmenu-menu {
   opacity: 1;
   position: absolute;
   z-index: 20000;
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
 }
 div.selectmenu-menu ul.selectmenu {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  background-color: var(--selectmenu-menu-background-color);
+  background-color: var(--canvas-color-secondary);
   border: 0.1em solid var(--input-default-border-color);
   border-top: none;
+  filter: var(--shadows-dropshadow-filter);
   padding: 0;
   overflow: auto;
   max-height: 10em;
   z-index: 201;
   position: absolute;
   margin: 0;
-  box-shadow: var(--panel-shadow-light);
   width: 100%;
   transition: all 0.2s;
 }
@@ -1291,25 +1289,26 @@ div.selectmenu-menu ul.selectmenu li {
 div.selectmenu-menu ul.selectmenu li > input[type=radio] {
   display: none;
 }
+div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
+  box-shadow: inset 0.5em 0 0 var(--colors-affordance);
+}
+div.selectmenu-menu ul.selectmenu li:nth-child(even) {
+  background-color: var(--canvas-color-primary);
+}
 div.selectmenu-menu ul.selectmenu li:focus {
-  outline: var(--selectmenu-menu-background-color) dashed 0.1em;
+  background-color: var(--colors-affordance);
+  color: var(--colors-text-hot);
+  outline: var(--colors-affordance) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
-div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
-  box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
-}
-div.selectmenu-menu ul.selectmenu li:nth-child(even) {
-  background-color: var(--selectmenu-menu-alternate-background-color);
-}
-div.selectmenu-menu ul.selectmenu li:focus {
-  background-color: var(--selectmenu-menu-item-hover-background-color);
-  color: var(--selectmenu-menu-item-hover-text-color);
+div.selectmenu-menu ul.selectmenu li:focus[aria-selected=true] {
+  box-shadow: inset 0.5em 0 0 var(--colors-text-hot);
 }
 @media (hover: hover) and (pointer: fine) {
   div.selectmenu-menu ul.selectmenu li:hover {
-    background-color: var(--selectmenu-menu-item-hover-background-color);
-    color: var(--selectmenu-menu-item-hover-text-color);
+    background-color: var(--colors-affordance);
+    color: var(--colors-text-hot);
   }
 }
 div.selectmenu-menu ul.selectmenu.vert {
@@ -1337,10 +1336,10 @@ form.button-menu {
   padding: 0;
   overflow: visible;
   z-index: 20000;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-menu-background-color);
-  color: var(--button-menu-item-text-color);
-  filter: var(--panel-shadow-filter);
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-secondary);
+  color: var(--colors-affordance);
+  filter: var(--shadows-dropshadow-filter);
 }
 ul.button-menu[aria-hidden=true],
 div.button-menu[aria-hidden=true],
@@ -1354,19 +1353,19 @@ form.button-menu:before {
   width: 0;
   height: 0;
   position: absolute;
-  right: 0.25em;
-  top: -0.7em;
-  border-width: 0 0.7em 0.7em 0.7em;
+  right: 0.25rem;
+  top: -0.7rem;
+  border-width: 0 0.7rem 0.7rem 0.7rem;
   border-style: solid;
-  border-color: var(--button-menu-background-color) transparent;
+  border-color: var(--canvas-color-secondary) transparent;
 }
 ul.button-menu.southeast:before, ul.button-menu.se:before,
 div.button-menu.southeast:before,
 div.button-menu.se:before,
 form.button-menu.southeast:before,
 form.button-menu.se:before {
-  left: 0.2em;
-  top: -0.7em;
+  left: 0.2rem;
+  top: -0.7rem;
 }
 ul.button-menu.north:before, ul.button-menu.n:before, ul.button-menu.ne:before, ul.button-menu.northeast:before,
 div.button-menu.north:before,
@@ -1377,21 +1376,21 @@ form.button-menu.north:before,
 form.button-menu.n:before,
 form.button-menu.ne:before,
 form.button-menu.northeast:before {
-  bottom: -0.7em;
-  right: 0.2em;
+  bottom: -0.7rem;
+  right: 0.2rem;
   left: unset;
   top: unset;
-  border-width: 0.7em 0.7em 0 0.7em;
+  border-width: 0.7rem 0.7rem 0 0.7rem;
 }
 ul.button-menu.nw:before, ul.button-menu.northwest:before,
 div.button-menu.nw:before,
 div.button-menu.northwest:before,
 form.button-menu.nw:before,
 form.button-menu.northwest:before {
-  bottom: -0.7em;
-  left: 0.2em;
+  bottom: -0.7rem;
+  left: 0.2rem;
   top: unset;
-  border-width: 0.7em 0.7em 0 0.7em;
+  border-width: 0.7rem 0.7rem 0 0.7rem;
 }
 ul.button-menu.west:before, ul.button-menu.w:before,
 div.button-menu.west:before,
@@ -1399,28 +1398,26 @@ div.button-menu.w:before,
 form.button-menu.west:before,
 form.button-menu.w:before {
   left: unset;
-  right: -0.5em;
+  right: -0.5rem;
   bottom: unset;
-  top: 0.5em;
-  border-color: transparent var(--button-menu-background-color);
-  border-width: 0.5em 0 0.5em 0.5em;
+  top: 0.5rem;
+  border-color: transparent var(--canvas-color-secondary);
+  border-width: 0.5rem 0 0.5rem 0.5rem;
 }
 ul.button-menu.east:before, ul.button-menu.e:before,
 div.button-menu.east:before,
 div.button-menu.e:before,
 form.button-menu.east:before,
 form.button-menu.e:before {
-  left: -0.5em;
+  left: -0.5rem;
   bottom: unset;
-  top: 0.5em;
-  border-color: transparent var(--button-menu-background-color);
-  border-width: 0.5em 0.5em 0.5em 0;
+  top: 0.5rem;
+  border-color: transparent var(--canvas-color-secondary);
+  border-width: 0.5rem 0.5rem 0.5rem 0;
 }
 
 ul.button-menu {
   display: flex;
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
 }
 ul.button-menu li {
   padding: 0;
@@ -1430,21 +1427,17 @@ ul.button-menu li {
   justify-content: flex-start;
 }
 ul.button-menu li:active, ul.button-menu li:focus {
-  background-color: var(--button-menu-item-hover-background-color);
-  color: var(--button-menu-item-hover-text-color);
-  text-shadow: var(--button-menu-item-hover-text-shadow);
-}
-ul.button-menu li:active a, ul.button-menu li:focus a {
-  color: var(--button-menu-item-hover-text-color);
+  --link-color: var(--colors-text-hot);
+  background-color: var(--colors-affordance);
+  color: var(--colors-text-hot);
+  text-shadow: var(--text-shadow);
 }
 @media (hover: hover) and (pointer: fine) {
   ul.button-menu li:hover {
-    background-color: var(--button-menu-item-hover-background-color);
-    color: var(--button-menu-item-hover-text-color);
-    text-shadow: var(--button-menu-item-hover-text-shadow);
-  }
-  ul.button-menu li:hover a {
-    color: var(--button-menu-item-hover-text-color);
+    --link-color: var(--colors-text-hot);
+    background-color: var(--colors-affordance);
+    color: var(--colors-text-hot);
+    text-shadow: var(--text-shadow);
   }
 }
 ul.button-menu li a {
@@ -1452,8 +1445,6 @@ ul.button-menu li a {
   white-space: nowrap;
   background-color: transparent;
   font-size: 1em;
-  color: var(--button-menu-item-text-color);
-  text-shadow: var(--button-menu-item-text-shadow);
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -1461,14 +1452,10 @@ ul.button-menu li a {
   align-items: center;
   flex-grow: 1;
 }
-ul.button-menu li a:active {
-  color: var(--button-menu-item-hover-text-color);
-  filter: none;
-}
 ul.button-menu li a:focus {
   margin: 0.3rem;
-  outline: var(--hot-text-color) dashed 0.1em;
-  outline-offset: 0.2em;
+  outline: var(--colors-text-hot) dashed 0.1rem;
+  outline-offset: 0.2rem;
   text-decoration: underline double;
 }
 ul.button-menu li a span.icon {
@@ -1477,8 +1464,6 @@ ul.button-menu li a span.icon {
 
 form.button-menu {
   min-width: 20em;
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
 }
 form.button-menu div.elements {
   text-align: unset;
@@ -1582,8 +1567,8 @@ form.passive div.passiveactions {
   --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
   --button-border-radius: var(--border-radius);
   --button-default-color: var(--colors-affordance);
-  --button-default-text-color: var(--hot-text-color);
-  --button-hover-text-color: var(--hot-text-color);
+  --button-default-text-color: var(--colors-text-hot);
+  --button-hover-text-color: var(--colors-text-hot);
   --button-hover-highlight-color: var(--white-half);
   --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
   --button-hover-filter: brightness(120%);
@@ -1592,13 +1577,6 @@ form.passive div.passiveactions {
   --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
   --button-font-family: var(--default-font-family);
   --button-text-shadow: var(--text-shadow);
-  --button-menu-box-shadow: var(--panel-shadow);
-  --button-menu-background-color: var(--canvas-color-primary);
-  --button-menu-item-text-color: var(--button-default-color);
-  --button-menu-item-text-shadow: none;
-  --button-menu-item-hover-background-color: var(--button-default-color);
-  --button-menu-item-hover-text-color: var(--hot-text-color);
-  --button-menu-item-hover-text-shadow: var(--text-shadow);
 }
 
 button,
@@ -2320,7 +2298,7 @@ input[type=reset].closebutton,
 input[type=reset].togglebutton,
 a.button.closebutton,
 a.button.togglebutton {
-  --button-default-color: var(--hot-text-color);
+  --button-default-color: var(--colors-text-hot);
   opacity: 0.5;
   box-shadow: none;
   background: none;
@@ -2350,7 +2328,7 @@ a.button.closebutton:focus,
 a.button.closebutton:active,
 a.button.togglebutton:focus,
 a.button.togglebutton:active {
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   background: none;
 }
 button.closebutton:focus span.text, button.togglebutton:focus span.text,
@@ -2372,7 +2350,7 @@ input[type=reset].togglebutton:hover,
 a.button.closebutton:hover,
 a.button.togglebutton:hover {
     opacity: 1;
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
     background: none;
   }
   button.closebutton:hover span.text, button.togglebutton:hover span.text,
@@ -2675,7 +2653,7 @@ input[type=radio]:before {
   position: absolute;
   left: 0;
   top: -0.05em;
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   text-shadow: var(--text-shadow);
 }
 input[type=checkbox]:checked,
@@ -2687,7 +2665,7 @@ input[type=checkbox]:checked:before,
 input[type=radio]:checked:before {
   opacity: 1;
   display: inline-block;
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
 }
 input[type=checkbox]:checked:focus,
 input[type=radio]:checked:focus {
@@ -2698,7 +2676,7 @@ input[type=checkbox]:checked:focus:before,
 input[type=radio]:checked:focus:before {
   opacity: 1;
   display: inline-block;
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
 }
 @media (hover: hover) and (pointer: fine) {
   input[type=checkbox]:checked:hover,
@@ -2708,7 +2686,7 @@ input[type=radio]:checked:hover {
   }
   input[type=checkbox]:checked:hover:before,
 input[type=radio]:checked:hover:before {
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
   }
 }
 input[type=checkbox]:focus, input[type=checkbox]:active,
@@ -2767,7 +2745,7 @@ input[type=radio].square:checked:focus:after,
 input[type=radio].square:checked:hover:after,
 input[type=radio].round:checked:focus:after,
 input[type=radio].round:checked:hover:after {
-  background-color: var(--hot-text-color);
+  background-color: var(--colors-text-hot);
   border: 0.4em solid var(--colors-affordance);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -2783,7 +2761,7 @@ input[type=radio].square:hover:after,
 input[type=radio].round:hover:after {
     display: block;
     background-color: transparent;
-    border: 0.2em dotted var(--hot-text-color);
+    border: 0.2em dotted var(--colors-text-hot);
   }
   input[type=checkbox][type=radio]:hover:checked:before, input[type=checkbox].square:hover:checked:before, input[type=checkbox].round:hover:checked:before,
 input[type=radio][type=radio]:hover:checked:before,
@@ -2795,7 +2773,7 @@ input[type=radio].round:hover:checked:before {
 input[type=radio][type=radio]:hover:checked:after,
 input[type=radio].square:hover:checked:after,
 input[type=radio].round:hover:checked:after {
-    background-color: var(--hot-text-color);
+    background-color: var(--colors-text-hot);
     border: 0.3em solid var(--colors-affordance);
   }
 }
@@ -2881,7 +2859,7 @@ input[type=radio].toggle:active:after,
 input[type=radio].switch:focus:after,
 input[type=radio].switch:focus-within:after,
 input[type=radio].switch:active:after {
-  border-color: var(--hot-text-color);
+  border-color: var(--colors-text-hot);
   background-color: var(--colors-affordance);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -2893,7 +2871,7 @@ input[type=radio].switch:hover {
   input[type=checkbox].toggle:hover:after, input[type=checkbox].switch:hover:after,
 input[type=radio].toggle:hover:after,
 input[type=radio].switch:hover:after {
-    border-color: var(--hot-text-color);
+    border-color: var(--colors-text-hot);
     background-color: var(--colors-affordance);
   }
 }
@@ -2946,16 +2924,6 @@ input[type=radio]:checked + label:disabled:checked:after {
 }
 
 :root {
-  --input-passivebox-background-color: transparent;
-  --input-passivebox-text-color: var(--grey-dark);
-  --input-passivebox-text-shadow: var(--text-shadow);
-  --input-subline-text-color: var(--grey-dark);
-  --input-subline-warning-text-color: var(--warning-color);
-  --input-subline-error-text-color: var(--error-color);
-  --input-messages-background-color: transparent;
-  --input-messages-text-color: var(--grey-darkest);
-  --input-messages-warning-text-color: var(--grey-darkest);
-  --input-messages-error-text-color: var(--error-color);
   --input-status-default-background-color: var(--grey-dark);
   --input-status-icon-color: var(--morelight);
   --input-status-icon-text-shadow: var(--text-shadow);
@@ -3002,7 +2970,7 @@ div.textarea-container div.wrap div.inputcontrol.calbutton,
 p.textarea-container div.wrap div.inputcontrol.stepbuttons,
 p.textarea-container div.wrap div.inputcontrol.visbutton,
 p.textarea-container div.wrap div.inputcontrol.calbutton {
-  --button-default-color: var(--colors-standard);
+  --button-default-color: var(--input-border-color);
   display: flex;
   top: 0.2em;
   bottom: 0.2em;
@@ -3084,7 +3052,7 @@ p.textarea-container div.wrap:before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--input-default-placeholder-color);
+  color: rgba(var(--input-border-color-rgb), 0.7);
 }
 div.input-container div.wrap:after,
 p.input-container div.wrap:after,
@@ -3126,8 +3094,8 @@ p.textarea-container div.topcontrol {
   top: 0;
   z-index: 10;
   transition: all 0.2s;
-  --button-default-color: var(--input-subline-text-color);
-  --button-hover-text-color: var(--input-subline-text-color);
+  --button-default-color: var(--input-border-color);
+  --button-hover-text-color: var(--input-border-color);
   --button-text-shadow: none;
 }
 div.input-container div.charcounter,
@@ -3142,7 +3110,7 @@ div.textarea-container div.datedisplay,
 p.textarea-container div.charcounter,
 p.textarea-container div.searchdisplay,
 p.textarea-container div.datedisplay {
-  color: var(--input-subline-text-color);
+  color: var(--input-border-color);
   display: block;
   font-size: 0.85em;
   font-style: oblique;
@@ -3160,7 +3128,7 @@ div.textarea-container div.datedisplay.danger,
 p.textarea-container div.charcounter.danger,
 p.textarea-container div.searchdisplay.danger,
 p.textarea-container div.datedisplay.danger {
-  color: var(--input-subline-warning-text-color);
+  color: var(--colors-warning);
 }
 div.input-container div.charcounter.outofbounds,
 div.input-container div.searchdisplay.outofbounds,
@@ -3174,7 +3142,7 @@ div.textarea-container div.datedisplay.outofbounds,
 p.textarea-container div.charcounter.outofbounds,
 p.textarea-container div.searchdisplay.outofbounds,
 p.textarea-container div.datedisplay.outofbounds {
-  color: var(--input-subline-error-text-color);
+  color: var(--colors-error);
 }
 div.input-container ul.messagebox,
 p.input-container ul.messagebox,
@@ -3186,7 +3154,7 @@ p.textarea-container ul.messagebox {
   opacity: 1;
   height: auto;
   padding: 0.5rem 1rem 0.5rem 2rem;
-  background-color: var(--input-messages-background-color);
+  background-color: var(--canvas-color-primary);
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
   border: 0.1em dashed rgba(var(--input-status-color-rgb), 0.5);
   border-top: none;
@@ -3228,9 +3196,7 @@ p.input-container div.passivebox,
 div.textarea-container div.passivebox,
 p.textarea-container div.passivebox {
   transition: opacity 0.2s;
-  background-color: var(--input-passivebox-background-color);
   vertical-align: middle;
-  color: var(--input-passivebox-text-color);
   width: 100%;
   padding: var(--input-default-padding);
   padding-left: 0;
@@ -3496,7 +3462,7 @@ div.textarea-container.active label,
 div.textarea-container:focus-within label,
 p.textarea-container.active label,
 p.textarea-container:focus-within label {
-  color: var(--focus-color);
+  color: var(--colors-affordance);
 }
 div.input-container.active div.wrap:after, div.input-container:focus-within div.wrap:after,
 p.input-container.active div.wrap:after,
@@ -3628,7 +3594,7 @@ input[type=number]::placeholder,
 input[type=password]::placeholder,
 input[type=search]::placeholder,
 textarea::placeholder {
-  color: var(--input-default-placeholder-color);
+  color: rgba(var(--input-border-color-rgb), 0.7);
   font-weight: normal;
   text-shadow: none;
 }
@@ -3807,7 +3773,7 @@ div.file-container.disabled {
   --selectmenu-menu-background-color: var(--ultralight);
   --selectmenu-menu-alternate-background-color: var(--grey-translucent);
   --selectmenu-menu-item-hover-background-color: var(--focus-color);
-  --selectmenu-menu-item-hover-text-color: var(--hot-text-color);
+  --selectmenu-menu-item-hover-text-color: var(--colors-text-hot);
   --selectmenu-menu-item-hover-text-shadow: var(--text-shadow);
 }
 
@@ -3914,7 +3880,7 @@ div.datepicker div.monthbox div.month table.month td a.cmonth {
   background-color: var(--canvas-color-callout-lightweight);
 }
 div.datepicker div.monthbox div.month table.month td a.today {
-  --link-color: var(--hot-text-color);
+  --link-color: var(--colors-text-hot);
   background-color: var(--colors-highlight);
   font-weight: bold;
 }
@@ -3929,7 +3895,7 @@ div.datepicker div.monthbox div.month table.month td a.future {
 }
 @media (hover: hover) and (pointer: fine) {
   div.datepicker div.monthbox div.month table.month td a:hover {
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
     background-color: var(--colors-affordance);
     filter: none;
   }
@@ -3939,9 +3905,9 @@ div.datepicker div.monthbox div.month table.month td a.future {
 }
 div.datepicker div.monthbox div.month table.month td a:active, div.datepicker div.monthbox div.month table.month td a:focus {
   opacity: 1;
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   background-color: var(--colors-affordance);
-  outline: var(--hot-text-color) dashed 0.1em;
+  outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
 }
 div.datepicker div.monthbox div.month table.month td a:disabled {
@@ -4022,7 +3988,7 @@ div.window-container div.dialog {
 }
 div.window-container div.dialog h2 {
   background-color: var(--colors-standard);
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   text-shadow: var(--text-shadow);
   margin: 0;
   font-weight: normal;
@@ -4043,7 +4009,7 @@ div.window-container div.dialog h2:after {
 }
 div.window-container div.dialog h2 button.closebutton {
   position: relative;
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   text-shadow: var(--text-shadow);
 }
 div.window-container div.dialog div.content {
@@ -4147,7 +4113,7 @@ div.window-container div.trailer {
   align-items: center;
   font-size: 2em;
   width: 100%;
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   pointer-events: auto;
 }
 @media (max-width: 599px) {
@@ -4170,9 +4136,11 @@ div.window-mask {
 }
 
 :root {
-  --growlbox-max-width: 22em;
-  --growler-core-color: var(--blue);
   --growler-max-width: 20em;
+  --growler-core-color-rgb: var(--colors-highlight-rgb);
+  --growler-core-color: rgb(var(--growler-core-color-rgb));
+  --growler-header-text-color: var(--colors-hot-text);
+  --growler-core-color: var(--blue);
   --growler-border-radius: var(--border-radius);
   --growler-box-shadow: var(--panel-shadow);
   --growler-text-color: var(--grey-darkest);
@@ -4230,16 +4198,16 @@ div.growler {
   animation: cfb-fadein 0.5s;
   opacity: 1;
   position: relative;
-  border-radius: var(--growler-border-radius);
+  border-radius: var(--border-radius);
   transition: all 0.5s ease-in-out;
-  border: 0.1em solid var(--growler-default-border-color);
-  box-shadow: var(--growler-box-shadow);
-  color: var(--growler-default-text-color);
-  background-color: var(--growler-default-background-color);
+  filter: var(--shadows-dropshadow-filter);
+  color: var(--colors-standard);
+  background-color: var(--canvas-color-secondary);
   margin: 0 auto 1rem auto;
   padding: 0;
   width: var(--growler-max-width);
   max-width: var(--growler-max-width);
+  min-width: var(--growler-max-width);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -4248,17 +4216,17 @@ div.growler {
 div.growler[aria-hidden=true] {
   opacity: 0;
 }
-div.growler button.closebutton {
+div.growler > button.closebutton {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
   margin: 0;
   padding: 0;
-  color: var(--growler-text-color);
-  text-shadow: var(--growler-text-shadow);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
   font-size: 1em;
 }
-div.growler button.closebutton:active, div.growler button.closebutton:focus, div.growler button.closebutton:hover {
+div.growler > button.closebutton:active, div.growler > button.closebutton:focus, div.growler > button.closebutton:hover {
   opacity: 1;
 }
 div.growler h3 {
@@ -4266,16 +4234,17 @@ div.growler h3 {
   color: var(--growler-header-text-color);
   display: flex;
   margin: 0;
-  padding: 0.5em 0 0.5em 1em;
+  padding: 0.5em 1em;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+  align-content: center;
   text-transform: unset;
   white-space: nowrap;
 }
 div.growler h3 span.text {
-  text-shadow: var(--growler-header-text-shadow);
+  text-shadow: var(--text-shadow);
 }
 div.growler h3 button.closebutton {
   color: var(--growler-header-text-color);
@@ -4288,18 +4257,19 @@ div.growler h3 button.closebutton {
 }
 @media (hover: hover) and (pointer: fine) {
   div.growler h3 button.closebutton:hover {
-    text-shadow: var(--growler-header-text-shadow);
+    text-shadow: var(--text-shadow);
   }
 }
 div.growler div.payload {
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--growler-core-color-rgb), 0.05) 0.5rem, rgba(var(--growler-core-color-rgb), 0.05) 1rem);
   padding: 1em;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  color: var(--growler-text-color);
-  text-shadow: var(--growler-text-shadow);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
 }
 div.growler div.payload span.icon.i {
   font-size: 30pt;
@@ -4308,41 +4278,30 @@ div.growler div.payload span.icon.i {
   align-items: center;
   justify-content: center;
   margin: 0;
-  color: var(--growler-text-color);
-  text-shadow: var(--growler-text-shadow);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
 }
 div.growler div.payload div.text {
   font-size: 1.1em;
   padding: 0 0 0 0.5em;
 }
 div.growler.error {
-  --growler-core-color: var(--error-color);
-  border-color: var(--error-color);
-}
-div.growler.error div.payload {
-  background-image: var(--error-stripes);
+  --growler-core-color-rgb: var(--colors-error-rgb);
+  --growler-core-color: var(--colors-error);
 }
 div.growler.warn {
-  --growler-core-color: var(--warning-color);
-  border-color: var(--warning-color);
-}
-div.growler.warn div.payload {
-  background-image: var(--warning-stripes);
+  --growler-core-color-rgb: var(--colors-warning-rgb);
+  --growler-header-text-color: var(--colors-standard);
+  --growler-core-color: var(--colors-warning);
 }
 div.growler.caution {
-  --growler-header-text-color: var(--growler-text-color);
-  --growler-core-color: var(--caution-color);
-  border-color: var(--caution-color);
-}
-div.growler.caution div.payload {
-  background-image: var(--caution-stripes);
+  --growler-core-color-rgb: var(--colors-caution-rgb);
+  --growler-header-text-color: var(--colors-standard);
+  --growler-core-color: var(--colors-caution);
 }
 div.growler.success {
-  --growler-core-color: var(--success-color);
-  border-color: var(--success-color);
-}
-div.growler.success div.payload {
-  background-image: var(--success-stripes);
+  --growler-core-color-rgb: var(--colors-success-rgb);
+  --growler-core-color: var(--colors-success);
 }
 
 :root {
@@ -4431,7 +4390,7 @@ div.spinner.bounce:after {
   --messagebox-text-shadow: var(--text-shadow);
   --messagebox-icon-color: var(--colors-standard);
   --messagebox-icon-text-shadow: none;
-  --resultsbox-header-text-color: var(--hot-text-color);
+  --resultsbox-header-text-color: var(--colors-text-hot);
   --resultsbox-header-text-shadow: var(--text-shadow);
   --resultsbox-background-color: var(--canvas-color-primary);
   --resultsbox-icon-text-shadow: var(--text-shadow);
@@ -4581,7 +4540,7 @@ div.resultsbox {
   --panel-text-shadow: var(--text-shadow);
   --panel-padding: .5em 1em .5em 1em;
   --panel-closed-hover-background-color: var(--focus-color);
-  --panel-closed-hover-text-color: var(--hot-text-color);
+  --panel-closed-hover-text-color: var(--colors-text-hot);
 }
 
 div.panel {
@@ -4715,7 +4674,7 @@ div.panel.bottom-center {
   --progressmeter-radial-gutter-color: var(--blue-quarter);
   --progressmeter-radial-decal-text-color: var(--grey-dark);
   --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
-  --progressmeter-radial-tick-color: var(--hot-text-color);
+  --progressmeter-radial-tick-color: var(--colors-text-hot);
 }
 
 div.progressbar-container {
@@ -4991,19 +4950,19 @@ ul.tabbar li > a {
   transition: all 0.1s linear;
 }
 ul.tabbar li > a:active, ul.tabbar li > a:focus {
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   background-color: var(--colors-affordance);
   text-shadow: var(--text-shadow);
   filter: none;
 }
 ul.tabbar li > a:focus {
-  outline: var(--hot-text-color) dashed 0.1em;
+  outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
 @media (hover: hover) and (pointer: fine) {
   ul.tabbar li > a:hover {
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
     background-color: var(--colors-affordance);
     text-shadow: var(--text-shadow);
     filter: none;
@@ -5015,20 +4974,20 @@ ul.tabbar li > a[aria-selected=true] {
   text-shadow: var(--text-shadow);
 }
 ul.tabbar li > a[aria-selected=true]:active, ul.tabbar li > a[aria-selected=true]:focus {
-  color: var(--hot-text-color);
+  color: var(--colors-text-hot);
   background-color: var(--colors-affordance);
   text-shadow: var(--text-shadow);
   filter: none;
 }
 ul.tabbar li > a[aria-selected=true]:focus {
-  outline: var(--hot-text-color) dashed 0.1em;
+  outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
 @media (hover: hover) and (pointer: fine) {
   ul.tabbar li > a[aria-selected=true]:hover {
     background-color: var(--colors-focus);
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
     text-shadow: var(--text-shadow);
   }
 }
@@ -5092,13 +5051,13 @@ ul.tabbar.vertical > li > a {
 }
 ul.tabbar.vertical > li > a:focus {
   margin: 0;
-  outline: var(--hot-text-color) dashed 0.1em;
+  outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
 @media (hover: hover) and (pointer: fine) {
   ul.tabbar.vertical > li > a:focus:hover {
-    outline-color: var(--hot-text-color);
+    outline-color: var(--colors-text-hot);
   }
 }
 ul.tabbar.vertical > li > ul.submenu {
@@ -5317,11 +5276,11 @@ div.tooltip {
   min-height: 2.7em;
   overflow: visible;
   z-index: 21000;
-  border-radius: var(--tooltip-border-radius);
-  background-color: var(--tooltip-background-color);
-  color: var(--tooltip-text-color);
-  text-shadow: var(--tooltip-text-shadow);
-  filter: var(--tooltip-box-shadow);
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
+  filter: var(--shadows-dropshadow-filter);
 }
 div.tooltip[aria-hidden=true] {
   display: none;
@@ -5332,7 +5291,7 @@ div.tooltip:before {
   height: 0;
   position: absolute;
   border-style: solid;
-  border-color: var(--tooltip-background-color) transparent;
+  border-color: var(--canvas-color-highlight) transparent;
   left: 1em;
   bottom: -0.5em;
   border-width: 0.5em 0.5em 0 0.5em;
@@ -5361,14 +5320,14 @@ div.tooltip.west:before {
   right: -0.5em;
   bottom: unset;
   top: 0.5em;
-  border-color: transparent var(--tooltip-background-color);
+  border-color: transparent var(--canvas-color-highlight);
   border-width: 0.5em 0 0.5em 0.5em;
 }
 div.tooltip.east:before {
   left: -0.5em;
   bottom: unset;
   top: 0.5em;
-  border-color: transparent var(--tooltip-background-color);
+  border-color: transparent var(--canvas-color-highlight);
   border-width: 0.5em 0.5em 0.5em 0;
 }
 
@@ -5378,20 +5337,20 @@ div.tooltip.east:before {
   --datagrid-gridheader-text-color: var(--grey-darkest);
   --datagrid-gridheader-grid-text-color: var(--grey-darker);
   --datagrid-gridheader-hover-text-shadow: var(--text-shadow);
-  --datagrid-gridheader-hover-text-color: var(--hot-text-color);
+  --datagrid-gridheader-hover-text-color: var(--colors-text-hot);
   --datagrid-gridheader-sort-highlight-color: var(--focus-color);
   --datagrid-gridheader-hover-background-color: var(--focus-color);
   --datagrid-grid-color: transparent;
   --datagrid-grid-text-color: var(--grey-darkest);
   --datagrid-grid-selected-background-color: var(--focus-color);
-  --datagrid-grid-selected-text-color: var(--hot-text-color);
+  --datagrid-grid-selected-text-color: var(--colors-text-hot);
   --datagrid-grid-multiselected-selected-background-color: var(--focus-color-half);
   --datagrid-grid-multiselected-selected-text-color: var(--grey-darkest);
   --datagrid-grid-background-color: var(--ultralight);
   --datagrid-grid-alternate-background-color: var(--ultralight);
   --datagrid-grid-mechanical-background-color: var(--ultralight);
   --datagrid-grid-hover-background-color: var(--focus-color-half-solid);
-  --datagrid-grid-hover-text-color: var(--hot-text-color);
+  --datagrid-grid-hover-text-color: var(--colors-text-hot);
   --datagrid-grid-hover-text-shadow: var(--text-shadow);
   --datagrid-line-color: var(--sublight);
   --datagrid-messagebox-color-base: var(--grey-darkest);
@@ -5593,7 +5552,7 @@ div.datagrid-container table.grid thead tr th:active, div.datagrid-container tab
   box-shadow: none;
 }
 div.datagrid-container table.grid thead tr th:focus, div.datagrid-container table.grid thead tr th.focus {
-  outline: var(--hot-text-color) dashed 0.1em;
+  outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
   text-decoration: underline double;
 }
@@ -5800,15 +5759,15 @@ div.datagrid-container table.grid.selectable tbody tr {
     box-shadow: none;
   }
   div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical input[type=checkbox] {
-    --checkbox-checked-checkmark-hover-text-color: var(--hot-text-color);
-    --checkbox-checked-checkmark-text-color: var(--hot-text-color);
-    --checkbox-checkmark-text-color: var(--hot-text-color);
-    border-color: var(--hot-text-color);
+    --checkbox-checked-checkmark-hover-text-color: var(--colors-text-hot);
+    --checkbox-checked-checkmark-text-color: var(--colors-text-hot);
+    --checkbox-checkmark-text-color: var(--colors-text-hot);
+    border-color: var(--colors-text-hot);
   }
   div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical button {
-    --button-default-color: var(--hot-text-color);
-    --button-default-text-color: var(--hot-text-color);
-    --button-border-color: var(--hot-text-color);
+    --button-default-color: var(--colors-text-hot);
+    --button-default-text-color: var(--colors-text-hot);
+    --button-border-color: var(--colors-text-hot);
   }
 }
 div.datagrid-container table.grid.selectable tbody tr:focus {

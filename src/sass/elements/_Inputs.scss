@@ -38,7 +38,7 @@ textarea {
   text-shadow:var(--input-default-text-shadow);
   vertical-align: middle;
   &::placeholder {
-    color: var(--input-default-placeholder-color);
+    color: rgba(var(--input-border-color-rgb), 0.7);
     font-weight: normal;
     text-shadow: none;
   }

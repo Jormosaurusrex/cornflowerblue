@@ -4,23 +4,21 @@ div.selectmenu-menu {
   opacity: 1;
   position: absolute;
   z-index: 20000;
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
   ul.selectmenu {
     list-style-type: none;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    background-color: var(--selectmenu-menu-background-color);
+    background-color: var(--canvas-color-secondary);
     border: .1em solid var(--input-default-border-color);
     border-top: none;
+    filter: var(--shadows-dropshadow-filter);
     padding: 0;
     overflow: auto;
     max-height: 10em;
     z-index: 201;
     position: absolute;
     margin: 0;
-    box-shadow: var(--panel-shadow-light);
     width: 100%;
     transition: all .2s;
     li {
@@ -36,27 +34,26 @@ div.selectmenu-menu {
       > input[type='radio'] {
         display: none;
       }
-      &:focus {
-        outline: var(--selectmenu-menu-background-color) dashed .1em;
-        outline-offset: -.3em;
-        text-decoration: underline double;
-      }
       &[aria-selected=true] {
-        box-shadow: inset .5em 0 0 var(--input-focused-border-color);
+        box-shadow: inset .5em 0 0 var(--colors-affordance);
       }
       &:nth-child(even) {
-        background-color: var(--selectmenu-menu-alternate-background-color);
+        background-color: var(--canvas-color-primary);
       }
       &:focus {
-        background-color: var(--selectmenu-menu-item-hover-background-color);
-        color: var(--selectmenu-menu-item-hover-text-color);
+        background-color: var(--colors-affordance);
+        color: var(--colors-text-hot);
+        outline: var(--colors-affordance) dashed .1em;
+        outline-offset: -.3em;
+        text-decoration: underline double;
         &[aria-selected=true] {
+          box-shadow: inset .5em 0 0 var(--colors-text-hot);
         }
       }
       @include for-hover-only {
         &:hover {
-          background-color: var(--selectmenu-menu-item-hover-background-color);
-          color: var(--selectmenu-menu-item-hover-text-color);
+          background-color: var(--colors-affordance);
+          color: var(--colors-text-hot);
         }
       }
     }
@@ -75,8 +72,6 @@ div.selectmenu-menu {
     display: none;
   }
 }
-
-// These are button menus
 ul.button-menu,
 div.button-menu,
 form.button-menu {
@@ -88,10 +83,10 @@ form.button-menu {
   padding: 0;
   overflow: visible;
   z-index: 20000;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-menu-background-color);
-  color: var(--button-menu-item-text-color);
-  filter: var(--panel-shadow-filter);
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-secondary);
+  color: var(--colors-affordance);
+  filter: var(--shadows-dropshadow-filter);
   &[aria-hidden='true'] {
     display: none;
   }
@@ -100,17 +95,17 @@ form.button-menu {
     width: 0;
     height: 0;
     position: absolute;
-    right: .25em;
-    top: -.7em;
-    border-width: 0 .7em .7em .7em;
+    right: .25rem;
+    top: -.7rem;
+    border-width: 0 .7rem .7rem .7rem;
     border-style: solid;
-    border-color: var(--button-menu-background-color) transparent;
+    border-color: var(--canvas-color-secondary) transparent;
   }
   &.southeast,
   &.se {
     &:before {
-      left: .2em;
-      top: -.7em;
+      left: .2rem;
+      top: -.7rem;
     }
   }
   &.north,
@@ -118,48 +113,46 @@ form.button-menu {
   &.ne,
   &.northeast {
     &:before {
-      bottom: -.7em;
-      right: .2em;
+      bottom: -.7rem;
+      right: .2rem;
       left: unset;
       top: unset;
-      border-width: .7em .7em 0 .7em;
+      border-width: .7rem .7rem 0 .7rem;
     }
   }
   &.nw,
   &.northwest {
     &:before {
-      bottom: -.7em;
-      left: .2em;
+      bottom: -.7rem;
+      left: .2rem;
       top: unset;
-      border-width: .7em .7em 0 .7em;
+      border-width: .7rem .7rem 0 .7rem;
     }
   }
   &.west,
   &.w {
     &:before {
       left: unset;
-      right: -.5em;
+      right: -.5rem;
       bottom: unset;
-      top: .5em;
-      border-color: transparent var(--button-menu-background-color);
-      border-width: .5em 0 .5em .5em;
+      top: .5rem;
+      border-color: transparent var(--canvas-color-secondary);
+      border-width: .5rem 0 .5rem .5rem;
     }
   }
   &.east,
   &.e {
     &:before {
-      left: -.5em;
+      left: -.5rem;
       bottom: unset;
-      top: .5em;
-      border-color: transparent var(--button-menu-background-color);
-      border-width: .5em .5em .5em 0;
+      top: .5rem;
+      border-color: transparent var(--canvas-color-secondary);
+      border-width: .5rem .5rem .5rem 0;
     }
   }
 }
 ul.button-menu {
   display: flex;
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
   li {
     padding: 0;
     display: flex;
@@ -168,21 +161,17 @@ ul.button-menu {
     justify-content: flex-start;
     &:active,
     &:focus {
-      background-color: var(--button-menu-item-hover-background-color);
-      color: var(--button-menu-item-hover-text-color);
-      text-shadow: var(--button-menu-item-hover-text-shadow);
-      a {
-        color: var(--button-menu-item-hover-text-color);
-      }
+      --link-color: var(--colors-text-hot);
+      background-color: var(--colors-affordance);
+      color: var(--colors-text-hot);
+      text-shadow: var(--text-shadow);
     }
     @include for-hover-only {
       &:hover {
-        background-color: var(--button-menu-item-hover-background-color);
-        color: var(--button-menu-item-hover-text-color);
-        text-shadow: var(--button-menu-item-hover-text-shadow);
-        a {
-          color: var(--button-menu-item-hover-text-color);
-        }
+        --link-color: var(--colors-text-hot);
+        background-color: var(--colors-affordance);
+        color: var(--colors-text-hot);
+        text-shadow: var(--text-shadow);
       }
     }
     a {
@@ -190,22 +179,16 @@ ul.button-menu {
       white-space: nowrap;
       background-color: transparent;
       font-size: 1em;
-      color: var(--button-menu-item-text-color);
-      text-shadow: var(--button-menu-item-text-shadow);
       cursor: pointer;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
       flex-grow: 1;
-      &:active {
-        color: var(--button-menu-item-hover-text-color);
-        filter: none;
-      }
       &:focus {
         margin: .3rem;
-        outline: var(--hot-text-color) dashed .1em;
-        outline-offset: .2em;
+        outline: var(--colors-text-hot) dashed .1rem;
+        outline-offset: .2rem;
         text-decoration: underline double;
       }
       span.icon {
@@ -216,8 +199,6 @@ ul.button-menu {
 }
 form.button-menu {
   min-width: 20em;
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
   div.elements {
     text-align: unset;
     div.input-container {

@@ -125,7 +125,7 @@ input[type="radio"] {
     position: absolute;
     left: 0;
     top: -.05em;
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
     text-shadow: var(--text-shadow);
   }
   &:checked {
@@ -134,7 +134,7 @@ input[type="radio"] {
     &:before {
       opacity: 1;
       display: inline-block;
-      color: var(--hot-text-color);
+      color: var(--colors-text-hot);
     }
     &:focus {
       border-color: var(--colors-affordance);
@@ -142,7 +142,7 @@ input[type="radio"] {
       &:before {
         opacity: 1;
         display: inline-block;
-        color: var(--hot-text-color);
+        color: var(--colors-text-hot);
       }
     }
     @include for-hover-only {
@@ -150,7 +150,7 @@ input[type="radio"] {
         border-color: var(--colors-affordance);
         background-color: var(--colors-affordance);
         &:before {
-          color: var(--hot-text-color);
+          color: var(--colors-text-hot);
         }
       }
     }
@@ -200,7 +200,7 @@ input[type="radio"] {
       &:focus,
       &:hover {
         &:after {
-          background-color: var(--hot-text-color);
+          background-color: var(--colors-text-hot);
           border: .4em solid var(--colors-affordance);
         }
       }
@@ -213,14 +213,14 @@ input[type="radio"] {
         &:after {
           display: block;
           background-color: transparent;
-          border: .2em dotted var(--hot-text-color);
+          border: .2em dotted var(--colors-text-hot);
         }
         &:checked {
           &:before {
             display: none;
           }
           &:after {
-            background-color: var(--hot-text-color);
+            background-color: var(--colors-text-hot);
             border: .3em solid var(--colors-affordance);
           }
         }
@@ -285,7 +285,7 @@ input[type="radio"] {
     &:active {
       background-color: var(--colors-affordance);
       &:after {
-        border-color: var(--hot-text-color);
+        border-color: var(--colors-text-hot);
         background-color: var(--colors-affordance);
       }
     }
@@ -293,7 +293,7 @@ input[type="radio"] {
       &:hover {
         background-color: var(--colors-affordance);
         &:after {
-          border-color: var(--hot-text-color);
+          border-color: var(--colors-text-hot);
           background-color: var(--colors-affordance);
         }
       }

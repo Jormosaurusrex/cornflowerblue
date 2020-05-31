@@ -1,21 +1,8 @@
 :root {
-  --input-passivebox-background-color: transparent;
-  --input-passivebox-text-color: var(--grey-dark);
-  --input-passivebox-text-shadow: var(--text-shadow);
-
-  --input-subline-text-color: var(--grey-dark);
-  --input-subline-warning-text-color: var(--warning-color);
-  --input-subline-error-text-color: var(--error-color);
-
-  --input-messages-background-color: transparent;
-  --input-messages-text-color: var(--grey-darkest);
-  --input-messages-warning-text-color: var(--grey-darkest);
-  --input-messages-error-text-color: var(--error-color);
 
   --input-status-default-background-color: var(--grey-dark);
   --input-status-icon-color: var(--morelight);
   --input-status-icon-text-shadow: var(--text-shadow);
-
   --input-status-color-rgb: var(--blue-rgb);  // This is going to be the primary color for this
 
 }
@@ -40,7 +27,7 @@ p.textarea-container {
       &.stepbuttons,
       &.visbutton,
       &.calbutton {
-        --button-default-color: var(--colors-standard);
+        --button-default-color: var(--input-border-color);
         display: flex;
         top: .2em;
         bottom: .2em;
@@ -85,7 +72,7 @@ p.textarea-container {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: var(--input-default-placeholder-color);
+      color: rgba(var(--input-border-color-rgb), 0.7);
     }
     &:after {
       opacity: 0;
@@ -122,23 +109,23 @@ p.textarea-container {
     top: 0;
     z-index: 10;
     transition: all .2s;
-    --button-default-color: var(--input-subline-text-color);
-    --button-hover-text-color: var(--input-subline-text-color);
+    --button-default-color: var(--input-border-color);
+    --button-hover-text-color: var(--input-border-color);
     --button-text-shadow: none;
   }
   div.charcounter,
   div.searchdisplay,
   div.datedisplay {
-    color: var(--input-subline-text-color);
+    color: var(--input-border-color);
     display: block;
     font-size: .85em;
     font-style: oblique;
     text-align: right;
     &.danger {
-      color: var(--input-subline-warning-text-color);
+      color: var(--colors-warning);
     }
     &.outofbounds {
-      color: var(--input-subline-error-text-color);
+      color: var(--colors-error);
     }
   }
   ul.messagebox {
@@ -148,7 +135,7 @@ p.textarea-container {
     opacity: 1;
     height: auto;
     padding: .5rem 1rem .5rem 2rem;
-    background-color: var(--input-messages-background-color);
+    background-color: var(--canvas-color-primary);
     background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--input-status-color-rgb), 0.05) .5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
     border: .1em dashed rgba(var(--input-status-color-rgb), 0.5);
     border-top: none;
@@ -172,9 +159,7 @@ p.textarea-container {
   }
   div.passivebox {
     transition: opacity .2s;
-    background-color: var(--input-passivebox-background-color);
     vertical-align: middle;
-    color: var(--input-passivebox-text-color);
     width: 100%;
     padding: var(--input-default-padding);
     padding-left: 0;
@@ -290,7 +275,7 @@ p.textarea-container {
   &.active,
   &:focus-within {
     label {
-      color: var(--focus-color);
+      color: var(--colors-affordance);
     }
     div.wrap {
       &:after {

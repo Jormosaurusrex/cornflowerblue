@@ -50,7 +50,7 @@ div.window-container {
     z-index: 2002;
     h2 {
       background-color: var(--colors-standard);
-      color: var(--hot-text-color);
+      color: var(--colors-text-hot);
       text-shadow: var(--text-shadow);
       margin: 0;
       font-weight: normal;
@@ -70,7 +70,7 @@ div.window-container {
       }
       button.closebutton {
         position: relative;
-        color: var(--hot-text-color);
+        color: var(--colors-text-hot);
         text-shadow: var(--text-shadow);
       }
     }
@@ -185,7 +185,7 @@ div.window-container {
     align-items: center;
     font-size: 2em;
     width: 100%;
-    color: var(--hot-text-color);
+    color: var(--colors-text-hot);
     pointer-events: auto;
     @include for-phone-only {
       padding: .5em;

@@ -50,19 +50,19 @@ ul.tabbar {
       transition: all .1s linear;
       &:active,
       &:focus {
-        color: var(--hot-text-color);
+        color: var(--colors-text-hot);
         background-color: var(--colors-affordance);
         text-shadow: var(--text-shadow);
         filter: none;
       }
       &:focus {
-        outline: var(--hot-text-color) dashed .1em;
+        outline: var(--colors-text-hot) dashed .1em;
         outline-offset: -.3em;
         text-decoration: underline double;
       }
       @include for-hover-only {
         &:hover {
-          color: var(--hot-text-color);
+          color: var(--colors-text-hot);
           background-color: var(--colors-affordance);
           text-shadow: var(--text-shadow);
           filter: none;
@@ -74,20 +74,20 @@ ul.tabbar {
         text-shadow: var(--text-shadow);
         &:active,
         &:focus {
-          color: var(--hot-text-color);
+          color: var(--colors-text-hot);
           background-color: var(--colors-affordance);
           text-shadow: var(--text-shadow);
           filter: none;
         }
         &:focus {
-          outline: var(--hot-text-color) dashed .1em;
+          outline: var(--colors-text-hot) dashed .1em;
           outline-offset: -.3em;
           text-decoration: underline double;
         }
         @include for-hover-only {
           &:hover {
             background-color: var(--colors-focus);
-            color: var(--hot-text-color);
+            color: var(--colors-text-hot);
             text-shadow: var(--text-shadow);
           }
         }
@@ -153,12 +153,12 @@ ul.tabbar {
         justify-content: flex-start;
         &:focus {
           margin: 0;
-          outline: var(--hot-text-color) dashed .1em;
+          outline: var(--colors-text-hot) dashed .1em;
           outline-offset: -.3em;
           text-decoration: underline double;
           @include for-hover-only {
             &:hover {
-              outline-color: var(--hot-text-color);
+              outline-color: var(--colors-text-hot);
             }
           }
         }

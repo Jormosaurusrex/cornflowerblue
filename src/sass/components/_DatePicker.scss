@@ -60,7 +60,7 @@ div.datepicker {
               background-color: var(--canvas-color-callout-lightweight);
             }
             &.today {
-              --link-color: var(--hot-text-color);
+              --link-color: var(--colors-text-hot);
               background-color: var(--colors-highlight);
               font-weight: bold;
             }
@@ -76,7 +76,7 @@ div.datepicker {
             }
             @include for-hover-only {
               &:hover {
-                color: var(--hot-text-color);
+                color: var(--colors-text-hot);
                 background-color: var(--colors-affordance);
                 filter: none;
                 &.past {
@@ -87,9 +87,9 @@ div.datepicker {
             &:active,
             &:focus {
               opacity: 1;
-              color: var(--hot-text-color);
+              color: var(--colors-text-hot);
               background-color: var(--colors-affordance);
-              outline: var(--hot-text-color) dashed .1em;
+              outline: var(--colors-text-hot) dashed .1em;
               outline-offset: -.3em;
             }
             &:disabled {

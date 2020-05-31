@@ -1,8 +1,11 @@
 :root {
   // Growler keys
-  --growlbox-max-width: 22em;
-  --growler-core-color: var(--blue);
   --growler-max-width: 20em;
+  --growler-core-color-rgb: var(--colors-highlight-rgb);
+  --growler-core-color: rgb(var(--growler-core-color-rgb));
+  --growler-header-text-color: var(--colors-hot-text);
+
+  --growler-core-color: var(--blue);
   --growler-border-radius: var(--border-radius);
   --growler-box-shadow: var(--panel-shadow);
   --growler-text-color: var(--grey-darkest);
@@ -58,16 +61,16 @@ div.growler {
   animation: cfb-fadein .5s;
   opacity: 1;
   position: relative;
-  border-radius: var(--growler-border-radius);
+  border-radius: var(--border-radius);
   transition: all .5s ease-in-out;
-  border: .1em solid var(--growler-default-border-color);
-  box-shadow: var(--growler-box-shadow);
-  color: var(--growler-default-text-color);
-  background-color: var(--growler-default-background-color);
+  filter: var(--shadows-dropshadow-filter);
+  color: var(--colors-standard);
+  background-color: var(--canvas-color-secondary);
   margin: 0 auto 1rem auto;
   padding: 0;
   width: var(--growler-max-width);
   max-width: var(--growler-max-width);
+  min-width: var(--growler-max-width);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -75,14 +78,14 @@ div.growler {
   &[aria-hidden=true] {
     opacity: 0;
   }
-  button.closebutton {
+  > button.closebutton {
     position: absolute;
     top: .5em;
     right: .5em;
     margin: 0;
     padding: 0;
-    color: var(--growler-text-color);
-    text-shadow: var(--growler-text-shadow);
+    color: var(--colors-standard);
+    text-shadow: var(--text-shadow);
     font-size: 1em;
     &:active,
     &:focus,
@@ -95,15 +98,16 @@ div.growler {
     color: var(--growler-header-text-color);
     display: flex;
     margin: 0;
-    padding: .5em 0 .5em 1em;
+    padding: .5em 1em;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+    align-content: center;
     text-transform: unset;
     white-space: nowrap;
     span.text {
-      text-shadow: var(--growler-header-text-shadow);
+      text-shadow: var(--text-shadow);
     }
     button.closebutton {
       color: var(--growler-header-text-color);
@@ -115,20 +119,21 @@ div.growler {
       height: unset;
       @include for-hover-only {
         &:hover {
-          text-shadow: var(--growler-header-text-shadow);
+          text-shadow: var(--text-shadow);
         }
       }
     }
   }
   div.payload {
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--growler-core-color-rgb), 0.05) .5rem, rgba(var(--growler-core-color-rgb), 0.05) 1rem);
     padding: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    color: var(--growler-text-color);
-    text-shadow: var(--growler-text-shadow);
+    color: var(--colors-standard);
+    text-shadow: var(--text-shadow);
     span.icon.i {
       font-size: 30pt;
       display: flex;
@@ -136,8 +141,8 @@ div.growler {
       align-items: center;
       justify-content: center;
       margin: 0;
-      color: var(--growler-text-color);
-      text-shadow: var(--growler-text-shadow);
+      color: var(--colors-standard);
+      text-shadow: var(--text-shadow);
     }
     div.text {
       font-size: 1.1em;
@@ -145,33 +150,22 @@ div.growler {
     }
   }
   &.error {
-    --growler-core-color: var(--error-color);
-    border-color: var(--error-color);
-    div.payload {
-      background-image: var(--error-stripes);
-    }
+    --growler-core-color-rgb: var(--colors-error-rgb);
+    --growler-core-color: var(--colors-error);
   }
   &.warn {
-    --growler-core-color: var(--warning-color);
-    border-color: var(--warning-color);
-    div.payload {
-      background-image: var(--warning-stripes);
-    }
+    --growler-core-color-rgb: var(--colors-warning-rgb);
+    --growler-header-text-color: var(--colors-standard);
+    --growler-core-color: var(--colors-warning);
   }
   &.caution {
-    --growler-header-text-color: var(--growler-text-color);
-    --growler-core-color: var(--caution-color);
-    border-color: var(--caution-color);
-    div.payload {
-      background-image: var(--caution-stripes);
-    }
+    --growler-core-color-rgb: var(--colors-caution-rgb);
+    --growler-header-text-color: var(--colors-standard);
+    --growler-core-color: var(--colors-caution);
   }
   &.success {
-    --growler-core-color: var(--success-color);
-    border-color: var(--success-color);
-    div.payload {
-      background-image: var(--success-stripes);
-    }
+    --growler-core-color-rgb: var(--colors-success-rgb);
+    --growler-core-color: var(--colors-success);
   }
 }
 
