@@ -40,7 +40,7 @@ p.textarea-container {
       &.stepbuttons,
       &.visbutton,
       &.calbutton {
-        --button-default-color: var(--standard-color);
+        --button-default-color: var(--colors-standard);
         display: flex;
         top: .2em;
         bottom: .2em;
@@ -277,8 +277,13 @@ p.textarea-container {
     }
   }
   &.disabled {
-    background-image: var(--dark-grey-stripes);
-    label {
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--input-status-color-rgb), 0.05) .5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
+    cursor: not-allowed;
+    text-shadow: none;
+    pointer-events: none;
+    label,
+    div.topcontrol {
+      opacity: .5;
       text-shadow: none;
     }
   }

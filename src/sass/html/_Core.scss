@@ -24,7 +24,7 @@ html,
 body {
   color: var(--text-color);
   ::selection {
-    background-color: var(--highlight-color);
+    background-color: var(--colors-highlight);
     color: var(--hot-text-color);
   }
 }

@@ -1,17 +1,7 @@
 :root {
   // Dialog keys
-  --dialog-background-color: var(--ultralight);
-  --dialog-border-radius: var(--border-radius);
-  --dialog-box-shadow: var(--panel-shadow);
-  --dialog-header-background-color: var(--grey-dark);
-  --dialog-header-text-color: var(--ultralight);
-  --dialog-header-text-shadow: var(--text-shadow);
-  --dialog-header-border-color: var(--grey-darkest);
-  --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
-  --dialog-actions-box-shadow: var(--interior-shadow-inverse);
-  --dialog-side-padding: 1.5rem;
 }
 body.modalopen {
   height: 100vh;
@@ -36,16 +26,16 @@ div.window-container {
   flex-direction: column;
   pointer-events: none;
   div.dialog {
-    background-color: var(--dialog-background-color);
+    background-color: var(--canvas-color-primary);
     padding: 0;
     text-align: left;
     max-height: 90%;
     min-width: 25em;
     margin: 2rem auto;
     position: relative;
-    border-radius: var(--dialog-border-radius);
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: var(--dialog-box-shadow);
+    filter: var(--shadows-dropshadow-filter);
     flex-grow: 0;
     pointer-events: auto;
     display: flex;
@@ -59,29 +49,29 @@ div.window-container {
     animation-name: cfb-pushup;
     z-index: 2002;
     h2 {
-      background-color: var(--dialog-header-background-color);
-      color: var(--dialog-header-text-color);
-      text-shadow: var(--dialog-header-text-shadow);
+      background-color: var(--colors-standard);
+      color: var(--hot-text-color);
+      text-shadow: var(--text-shadow);
       margin: 0;
       font-weight: normal;
       font-size: 1.5em;
-      padding: 1rem var(--dialog-side-padding);
+      padding: 1rem 1.5rem;
       position: relative;
       width: 100%;
-      border-bottom: .1em solid var(--dialog-header-border-color);
-      box-shadow: var(--dialog-header-box-shadow);
+      border-bottom: .1em solid var(--colors-standard);
+      box-shadow: var(--shadows-interior-frombelow);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      z-index: 2003;
+      z-index: 2009;
       &:after {
         display: none;
       }
       button.closebutton {
         position: relative;
-        color: var(--dialog-header-text-color);
-        text-shadow: var(--dialog-header-text-shadow);
+        color: var(--hot-text-color);
+        text-shadow: var(--text-shadow);
       }
     }
     div.content {
@@ -95,17 +85,18 @@ div.window-container {
       flex-grow: 0;
       flex-shrink: 0;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       align-content: center;
       justify-content: space-between;
       height: 5em;
       min-height: 5em;
       max-height: 5em;
-      overflow: auto;
+      overflow: hidden;
       z-index: 9;
-      padding: 1rem var(--dialog-side-padding);
-      background-color: var(--form-actions-background-color);
-      border-top: .1em solid var(--form-actions-border-color);
+      padding: 1rem 1.5rem;
+      background-color: var(--canvas-color-tertiary);
+      border-top: .1em solid rgba(var(--colors-standard-rgb), 0.5);
+      box-shadow: var(--shadows-interior-fromabove);
       button {
         margin-right: 1em;
         &.fill {
@@ -116,14 +107,12 @@ div.window-container {
         margin-left: 0;
       }
       button:last-child:not(:only-of-type) {
-        align-self: flex-end;
         margin-left: auto;
         margin-right: 0;
         &:first-child {
           margin-left: 0;
         }
         &:last-child:not(:only-of-type) {
-          align-self: flex-end;
           margin-left: auto;
           margin-right: 0;
         }
@@ -146,25 +135,23 @@ div.window-container {
           div.contentbox {
             position: relative;
             flex-grow: 1;
-            //max-height: 30%;
-            padding: .5em 1.5em .5em 1.5em;
+            padding: .5rem 1.5rem;
             overflow: auto;
             z-index: 10;
             div.header,
             div.elements {
-              min-width: 35em;
+              min-width: 35rem;
               padding: 0;
             }
           }
           div.actions {
-            padding: .5em 1.5em .5em 1.5em;
             position: relative;
             flex-grow: 0;
             flex-shrink: 0;
-            height: 5em;
-            min-height: 5em;
-            max-height: 5em;
-            overflow: auto;
+            height: 5rem;
+            min-height: 5rem;
+            max-height: 5rem;
+            overflow: hidden;
             z-index: 9;
           }
         }
@@ -198,7 +185,7 @@ div.window-container {
     align-items: center;
     font-size: 2em;
     width: 100%;
-    color: var(--white-half);
+    color: var(--hot-text-color);
     pointer-events: auto;
     @include for-phone-only {
       padding: .5em;

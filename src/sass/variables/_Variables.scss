@@ -24,6 +24,7 @@
   --canvas-color-secondary: var(--morelight);
   --canvas-color-tertiary: var(--light);
   --canvas-color-highlight: var(--cornflowerblue-light);
+  --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
 
   // Semantic colors
 
@@ -41,8 +42,8 @@
   --colors-destructive: rgb(var(--colors-destructive-rgb));
 
   // Fields (input elements)
-  --standard-color-rgb: var(--grey-dark-rgb); // Chrome: input borders, input chrome buttons, toggles, etc.
-  --standard-color: var(--grey-dark);
+  --colors-standard-rgb: var(--grey-dark-rgb); // Chrome: input borders, input chrome buttons, toggles, etc.
+  --colors-standard: var(--grey-dark);
 
   --placeholder-color-rgb: var(--grey-medium-rgb); // Input placeholders
   --placeholder-color: var(--grey-medium);
@@ -73,6 +74,10 @@
   --disabled-color-quarter: var(--grey-quarter);
   --disabled-color-translucent: var(--grey-translucent);
 
+
+  --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
+  --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
 
   // Misc Values
   --border-radius: .2rem;

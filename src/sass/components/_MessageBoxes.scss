@@ -2,9 +2,9 @@
   // Boxes
   // MessageBoxen
   --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--standard-color);
+  --messagebox-text-color: var(--colors-standard);
   --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--standard-color);
+  --messagebox-icon-color: var(--colors-standard);
   --messagebox-icon-text-shadow: none;
 
   // Results box keys
@@ -26,10 +26,10 @@
   // Instruction box keys
   --instructions-background-color: var(--canvas-color-secondary);
   --instructions-border-color: var(--canvas-color-tertiary);
-  --instructions-text-color: var(--standard-color);
+  --instructions-text-color: var(--colors-standard);
   --instructions-text-shadow: var(--text-shadow);
   --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--standard-color);
+  --instructions-icon-color: var(--colors-standard);
 
 }
 div.messagebox {

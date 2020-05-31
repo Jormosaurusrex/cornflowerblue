@@ -14,7 +14,9 @@ p {
 label,
 legend {
   transition: all .2s;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
   position: relative;
   margin-top: 1rem;
   margin-bottom: .5rem;
@@ -28,6 +30,7 @@ legend {
     font-size: .75rem;
     margin-left: .5rem;
     display: none;
+    align-self: flex-end;
   }
   button.help {
     color: var(--colors-hightlight);

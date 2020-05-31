@@ -780,6 +780,7 @@
   --canvas-color-secondary: var(--morelight);
   --canvas-color-tertiary: var(--light);
   --canvas-color-highlight: var(--cornflowerblue-light);
+  --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
   --colors-affordance-rgb: var(--darkblue-rgb);
   --colors-affordance: rgb(var(--colors-affordance-rgb));
   --colors-highlight-rgb: var(--darkblue-rgb);
@@ -788,8 +789,8 @@
   --colors-constructive: rgb(var(--colors-constructive-rgb));
   --colors-destructive-rgb: var(--red-rgb);
   --colors-destructive: rgb(var(--colors-destructive-rgb));
-  --standard-color-rgb: var(--grey-dark-rgb);
-  --standard-color: var(--grey-dark);
+  --colors-standard-rgb: var(--grey-dark-rgb);
+  --colors-standard: var(--grey-dark);
   --placeholder-color-rgb: var(--grey-medium-rgb);
   --placeholder-color: var(--grey-medium);
   --colors-focus-rgb: var(--green-rgb);
@@ -810,6 +811,9 @@
   --disabled-color-half: var(--grey-half);
   --disabled-color-quarter: var(--grey-quarter);
   --disabled-color-translucent: var(--grey-translucent);
+  --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
+  --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
   --border-radius: .2rem;
   --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
   --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
@@ -861,7 +865,7 @@ body {
 }
 html ::selection,
 body ::selection {
-  background-color: var(--highlight-color);
+  background-color: var(--colors-highlight);
   color: var(--hot-text-color);
 }
 
@@ -1191,7 +1195,9 @@ p.dropcap:first-letter {
 label,
 legend {
   transition: all 0.2s;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
   position: relative;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
@@ -1207,6 +1213,7 @@ legend:after {
   font-size: 0.75rem;
   margin-left: 0.5rem;
   display: none;
+  align-self: flex-end;
 }
 label button.help,
 legend button.help {
@@ -1585,8 +1592,6 @@ form.passive div.passiveactions {
   --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
   --button-font-family: var(--default-font-family);
   --button-text-shadow: var(--text-shadow);
-  --button-disabled-color: var(--disabled-base-color);
-  --button-disabled-text-color: var(--disabled-highlight-color);
   --button-menu-box-shadow: var(--panel-shadow);
   --button-menu-background-color: var(--canvas-color-primary);
   --button-menu-item-text-color: var(--button-default-color);
@@ -2555,7 +2560,7 @@ a.button.menu[aria-expanded=true] ul.menu {
 }
 
 :root {
-  --checkbox-border-color-rgb: var(--standard-color-rgb);
+  --checkbox-border-color-rgb: var(--colors-standard-rgb);
   --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
   --checkbox-size: 2em;
   --checkbox-font-size: 2em;
@@ -2997,7 +3002,7 @@ div.textarea-container div.wrap div.inputcontrol.calbutton,
 p.textarea-container div.wrap div.inputcontrol.stepbuttons,
 p.textarea-container div.wrap div.inputcontrol.visbutton,
 p.textarea-container div.wrap div.inputcontrol.calbutton {
-  --button-default-color: var(--standard-color);
+  --button-default-color: var(--colors-standard);
   display: flex;
   top: 0.2em;
   bottom: 0.2em;
@@ -3468,12 +3473,20 @@ div.input-container.disabled,
 p.input-container.disabled,
 div.textarea-container.disabled,
 p.textarea-container.disabled {
-  background-image: var(--dark-grey-stripes);
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
+  cursor: not-allowed;
+  text-shadow: none;
+  pointer-events: none;
 }
 div.input-container.disabled label,
+div.input-container.disabled div.topcontrol,
 p.input-container.disabled label,
+p.input-container.disabled div.topcontrol,
 div.textarea-container.disabled label,
-p.textarea-container.disabled label {
+div.textarea-container.disabled div.topcontrol,
+p.textarea-container.disabled label,
+p.textarea-container.disabled div.topcontrol {
+  opacity: 0.5;
   text-shadow: none;
 }
 div.input-container.active label, div.input-container:focus-within label,
@@ -3574,16 +3587,12 @@ div.textarea-container div.passivebox {
 :root {
   --input-default-padding: .5em 1em .5em 1.5em;
   --input-border-radius: .1em;
-  --input-border-color-rgb: var(--standard-color-rgb);
+  --input-border-color-rgb: var(--colors-standard-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
   --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
   --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
   --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
   --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
-  --input-disabled-background-color: var(--disabled-base-color);
-  --input-disabled-border-color: var(--disabled-highlight-color);
-  --input-disabled-text-color: var(--disabled-highlight-color);
-  --input-disabled-placeholder-color: var(--disabled-highlight-color);
 }
 
 [hidden] {
@@ -3604,9 +3613,9 @@ textarea {
   word-spacing: inherit;
   font-size: 1em;
   width: 100%;
-  background-color: rgba(var(--input-border-color-rgb), 0.1);
   margin: 0;
   border: none;
+  background-color: rgba(var(--input-border-color-rgb), 0.1);
   box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
@@ -3628,11 +3637,10 @@ input[type=number]:disabled,
 input[type=password]:disabled,
 input[type=search]:disabled,
 textarea:disabled {
-  border-color: var(--input-disabled-border-color);
-  background-color: var(--input-disabled-background-color);
-  color: var(--input-disabled-text-color);
+  opacity: 0.5;
   cursor: not-allowed;
   text-shadow: none;
+  pointer-events: none;
 }
 input[type=text]:focus, input[type=text]:focus-within,
 input[type=number]:focus,
@@ -3700,22 +3708,6 @@ textarea.mute:focus::placeholder,
 textarea.mute:focus-within::placeholder {
   opacity: 0;
 }
-input[type=text].mute:disabled,
-input[type=number].mute:disabled,
-input[type=password].mute:disabled,
-input[type=search].mute:disabled,
-textarea.mute:disabled {
-  --input-default-border-color: var(--input-disabled-placeholder-color);
-  background-color: var(--input-mute-disabled-background-color);
-}
-input[type=text].mute:disabled::placeholder,
-input[type=number].mute:disabled::placeholder,
-input[type=password].mute:disabled::placeholder,
-input[type=search].mute:disabled::placeholder,
-textarea.mute:disabled::placeholder {
-  color: var(--input-disabled-placeholder-color);
-  text-shadow: none;
-}
 
 textarea {
   height: 4em;
@@ -3756,8 +3748,8 @@ div.file-container div.trigger {
   width: 100%;
   margin: 0;
   font-size: 1em;
-  background-color: var(--input-default-background-color);
-  border: 0.1em solid var(--input-default-border-color);
+  background-color: rgba(var(--input-border-color-rgb), 0.1);
+  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
   border-radius: 0.1em;
   color: var(--input-default-placeholder-color);
@@ -3781,60 +3773,34 @@ div.file-container div.trigger:before {
   color: var(--input-default-placeholder-color);
 }
 div.file-container div.trigger:focus {
-  border-color: var(--input-focused-border-color);
-  background-color: var(--input-focused-background-color);
-  box-shadow: inset 0.5em 0 0 var(--input-focused-border-color);
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  --input-border-color: rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
 }
 div.file-container div.trigger:focus::placeholder {
   opacity: 0.3;
 }
 div.file-container div.trigger.mute {
-  background-color: var(--input-mute-background-color);
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
 }
-div.file-container div.trigger.mute:focus {
-  border-bottom-color: var(--focus-color);
-  background-color: var(--input-focused-background-color);
-  box-shadow: inset 0px -0.2em 0 0 var(--focus-color);
+div.file-container div.trigger.mute:focus, div.file-container div.trigger.mute:focus-within {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
 }
-div.file-container div.trigger.mute:focus::placeholder {
+div.file-container div.trigger.mute:focus::placeholder, div.file-container div.trigger.mute:focus-within::placeholder {
   opacity: 0;
 }
 div.file-container.mute label {
   opacity: 1;
 }
-div.file-container.disabled label {
-  text-shadow: none;
-}
-div.file-container.disabled div.trigger {
-  border-color: var(--input-disabled-border-color);
-  background-color: var(--input-disabled-background-color);
-  color: var(--input-disabled-text-color);
+div.file-container.disabled {
+  opacity: 0.5;
   cursor: not-allowed;
   text-shadow: none;
-}
-div.file-container.disabled div.trigger:active, div.file-container.disabled div.trigger:focus {
-  border-color: var(--input-disabled-border-color);
-  background-color: var(--input-disabled-background-color);
-  color: var(--input-disabled-text-color);
-  box-shadow: none;
-}
-div.file-container.disabled div.trigger:active:before, div.file-container.disabled div.trigger:focus:before {
-  color: var(--input-disabled-text-color);
-}
-@media (hover: hover) and (pointer: fine) {
-  div.file-container.disabled div.trigger:hover {
-    border-color: var(--input-disabled-border-color);
-    background-color: var(--input-disabled-background-color);
-    color: var(--input-disabled-text-color);
-    box-shadow: none;
-  }
-  div.file-container.disabled div.trigger:hover:before {
-    color: var(--input-disabled-text-color);
-  }
+  pointer-events: none;
 }
 
 :root {
@@ -3886,17 +3852,6 @@ div.select-container.disabled.mute input.trigger {
 
 :root {
   --datepicker-cell-dimensions: 2.5em;
-  --datepicker-header-color: var(--blue);
-  --datepicker-background-color: var(--canvas-color-primary);
-  --datepicker-month-header-background-color: var(--canvas-color-tertiary);
-  --datepicker-month-header-text-color: var(--grey-darkest);
-  --datepicker-day-today-background-color: var(--blue);
-  --datepicker-day-today-text-color: var(--ultralight);
-  --datepicker-day-past-text-color: var(--grey-medium);
-  --datepicker-day-background-color: var(--canvas-color-secondary);
-  --datepicker-day-text-color: var(--blue);
-  --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
-  --datepicker-day-currentmonth-text-color: var(--blue);
 }
 
 div.datepicker {
@@ -3904,7 +3859,7 @@ div.datepicker {
   display: flex;
   flex-direction: column;
   opacity: 1;
-  background-color: var(--canvas-color-callout-lightweight);
+  background-color: var(--canvas-color-tertiary);
   z-index: 4000;
   margin: 1em;
 }
@@ -3927,14 +3882,11 @@ div.datepicker div.monthbox div.month div.datepicker-header {
 }
 div.datepicker div.monthbox div.month div.datepicker-header div.name {
   text-transform: uppercase;
-  color: var(--datepicker-header-color);
+  color: var(--colors-highlight);
   margin-right: auto;
 }
 div.datepicker div.monthbox div.month div.datepicker-header button {
   margin: 0;
-}
-div.datepicker div.monthbox div.month table.month thead tr {
-  border-bottom: 0.2em solid red;
 }
 div.datepicker div.monthbox div.month table.month th,
 div.datepicker div.monthbox div.month table.month td {
@@ -3948,11 +3900,7 @@ div.datepicker div.monthbox div.month table.month td {
   padding: 0;
   font-size: 0.8em;
 }
-div.datepicker div.monthbox div.month table.month th {
-  color: var(--datepicker-month-header-text-color);
-}
 div.datepicker div.monthbox div.month table.month td a {
-  --link-color: var(--datepicker-day-text-color);
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -3960,23 +3908,19 @@ div.datepicker div.monthbox div.month table.month td a {
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: var(--datepicker-day-background-color);
+  background-color: var(--canvas-color-tertiary);
 }
 div.datepicker div.monthbox div.month table.month td a.cmonth {
-  --link-color: var(--datepicker-day-currentmonth-text-color);
   background-color: var(--canvas-color-callout-lightweight);
 }
 div.datepicker div.monthbox div.month table.month td a.today {
-  --link-color: var(--datepicker-day-today-text-color);
-  background-color: var(--datepicker-day-today-background-color);
+  --link-color: var(--hot-text-color);
+  background-color: var(--colors-highlight);
   font-weight: bold;
 }
-div.datepicker div.monthbox div.month table.month td a.past {
-  --link-color: var(--datepicker-day-past-text-color);
-}
 div.datepicker div.monthbox div.month table.month td a[aria-selected=true] {
-  border: 0.2em solid var(--focus-color);
-  --link-color: var(--focus-color);
+  border: 0.2em solid var(--colors-focus);
+  --link-color: var(--colors-focus);
   opacity: 1;
   font-weight: bold;
 }
@@ -3986,7 +3930,7 @@ div.datepicker div.monthbox div.month table.month td a.future {
 @media (hover: hover) and (pointer: fine) {
   div.datepicker div.monthbox div.month table.month td a:hover {
     color: var(--hot-text-color);
-    background-color: var(--focus-color);
+    background-color: var(--colors-affordance);
     filter: none;
   }
   div.datepicker div.monthbox div.month table.month td a:hover.past {
@@ -3996,13 +3940,16 @@ div.datepicker div.monthbox div.month table.month td a.future {
 div.datepicker div.monthbox div.month table.month td a:active, div.datepicker div.monthbox div.month table.month td a:focus {
   opacity: 1;
   color: var(--hot-text-color);
-  background-color: var(--focus-color);
+  background-color: var(--colors-affordance);
   outline: var(--hot-text-color) dashed 0.1em;
   outline-offset: -0.3em;
 }
 div.datepicker div.monthbox div.month table.month td a:disabled {
-  color: var(--button-disabled-text-color);
+  opacity: 0.5;
+  cursor: not-allowed;
   text-shadow: none;
+  box-shadow: none;
+  pointer-events: none;
 }
 div.datepicker.button-menu {
   padding: 0;
@@ -4010,29 +3957,17 @@ div.datepicker.button-menu {
   margin: 0 0 0 0.3em;
   overflow: visible;
   z-index: 20000;
-  border-radius: var(--button-border-radius);
-  border: 0.1em solid var(--button-menu-border-color);
-  background-color: var(--button-menu-background-color);
-  color: var(--button-menu-item-text-color);
-  box-shadow: var(--button-menu-box-shadow);
+  border-radius: var(--border-radius);
+  border: 0.1em solid var(--canvas-color-primary);
+  background-color: var(--canvas-color-primary);
 }
 div.datepicker.button-menu div.monthbox {
   padding: 0;
 }
 
 :root {
-  --dialog-background-color: var(--ultralight);
-  --dialog-border-radius: var(--border-radius);
-  --dialog-box-shadow: var(--panel-shadow);
-  --dialog-header-background-color: var(--grey-dark);
-  --dialog-header-text-color: var(--ultralight);
-  --dialog-header-text-shadow: var(--text-shadow);
-  --dialog-header-border-color: var(--grey-darkest);
-  --dialog-header-box-shadow: var(--interior-shadow);
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
-  --dialog-actions-box-shadow: var(--interior-shadow-inverse);
-  --dialog-side-padding: 1.5rem;
 }
 
 body.modalopen {
@@ -4062,16 +3997,16 @@ div.window-container {
   pointer-events: none;
 }
 div.window-container div.dialog {
-  background-color: var(--dialog-background-color);
+  background-color: var(--canvas-color-primary);
   padding: 0;
   text-align: left;
   max-height: 90%;
   min-width: 25em;
   margin: 2rem auto;
   position: relative;
-  border-radius: var(--dialog-border-radius);
+  border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: var(--dialog-box-shadow);
+  filter: var(--shadows-dropshadow-filter);
   flex-grow: 0;
   pointer-events: auto;
   display: flex;
@@ -4086,30 +4021,30 @@ div.window-container div.dialog {
   z-index: 2002;
 }
 div.window-container div.dialog h2 {
-  background-color: var(--dialog-header-background-color);
-  color: var(--dialog-header-text-color);
-  text-shadow: var(--dialog-header-text-shadow);
+  background-color: var(--colors-standard);
+  color: var(--hot-text-color);
+  text-shadow: var(--text-shadow);
   margin: 0;
   font-weight: normal;
   font-size: 1.5em;
-  padding: 1rem var(--dialog-side-padding);
+  padding: 1rem 1.5rem;
   position: relative;
   width: 100%;
-  border-bottom: 0.1em solid var(--dialog-header-border-color);
-  box-shadow: var(--dialog-header-box-shadow);
+  border-bottom: 0.1em solid var(--colors-standard);
+  box-shadow: var(--shadows-interior-frombelow);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  z-index: 2003;
+  z-index: 2009;
 }
 div.window-container div.dialog h2:after {
   display: none;
 }
 div.window-container div.dialog h2 button.closebutton {
   position: relative;
-  color: var(--dialog-header-text-color);
-  text-shadow: var(--dialog-header-text-shadow);
+  color: var(--hot-text-color);
+  text-shadow: var(--text-shadow);
 }
 div.window-container div.dialog div.content {
   margin: 0;
@@ -4122,17 +4057,18 @@ div.window-container div.dialog div.actions {
   flex-grow: 0;
   flex-shrink: 0;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   align-content: center;
   justify-content: space-between;
   height: 5em;
   min-height: 5em;
   max-height: 5em;
-  overflow: auto;
+  overflow: hidden;
   z-index: 9;
-  padding: 1rem var(--dialog-side-padding);
-  background-color: var(--form-actions-background-color);
-  border-top: 0.1em solid var(--form-actions-border-color);
+  padding: 1rem 1.5rem;
+  background-color: var(--canvas-color-tertiary);
+  border-top: 0.1em solid rgba(var(--colors-standard-rgb), 0.5);
+  box-shadow: var(--shadows-interior-fromabove);
 }
 div.window-container div.dialog div.actions button {
   margin-right: 1em;
@@ -4144,7 +4080,6 @@ div.window-container div.dialog div.actions button:first-child {
   margin-left: 0;
 }
 div.window-container div.dialog div.actions button:last-child:not(:only-of-type) {
-  align-self: flex-end;
   margin-left: auto;
   margin-right: 0;
 }
@@ -4152,7 +4087,6 @@ div.window-container div.dialog div.actions button:last-child:not(:only-of-type)
   margin-left: 0;
 }
 div.window-container div.dialog div.actions button:last-child:not(:only-of-type):last-child:not(:only-of-type) {
-  align-self: flex-end;
   margin-left: auto;
   margin-right: 0;
 }
@@ -4173,24 +4107,23 @@ div.window-container div.dialog.isform div.content form {
 div.window-container div.dialog.isform div.content form div.contentbox {
   position: relative;
   flex-grow: 1;
-  padding: 0.5em 1.5em 0.5em 1.5em;
+  padding: 0.5rem 1.5rem;
   overflow: auto;
   z-index: 10;
 }
 div.window-container div.dialog.isform div.content form div.contentbox div.header,
 div.window-container div.dialog.isform div.content form div.contentbox div.elements {
-  min-width: 35em;
+  min-width: 35rem;
   padding: 0;
 }
 div.window-container div.dialog.isform div.content form div.actions {
-  padding: 0.5em 1.5em 0.5em 1.5em;
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
-  height: 5em;
-  min-height: 5em;
-  max-height: 5em;
-  overflow: auto;
+  height: 5rem;
+  min-height: 5rem;
+  max-height: 5rem;
+  overflow: hidden;
   z-index: 9;
 }
 @media (max-width: 599px) {
@@ -4214,7 +4147,7 @@ div.window-container div.trailer {
   align-items: center;
   font-size: 2em;
   width: 100%;
-  color: var(--white-half);
+  color: var(--hot-text-color);
   pointer-events: auto;
 }
 @media (max-width: 599px) {
@@ -4494,9 +4427,9 @@ div.spinner.bounce:after {
 
 :root {
   --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--standard-color);
+  --messagebox-text-color: var(--colors-standard);
   --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--standard-color);
+  --messagebox-icon-color: var(--colors-standard);
   --messagebox-icon-text-shadow: none;
   --resultsbox-header-text-color: var(--hot-text-color);
   --resultsbox-header-text-shadow: var(--text-shadow);
@@ -4512,10 +4445,10 @@ div.spinner.bounce:after {
   --errorbox-stripes: var(--error-stripes);
   --instructions-background-color: var(--canvas-color-secondary);
   --instructions-border-color: var(--canvas-color-tertiary);
-  --instructions-text-color: var(--standard-color);
+  --instructions-text-color: var(--colors-standard);
   --instructions-text-shadow: var(--text-shadow);
   --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--standard-color);
+  --instructions-icon-color: var(--colors-standard);
 }
 
 div.messagebox {
@@ -5363,7 +5296,7 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu:b
 :root {
   --tooltip-border-radius: var(--border-radius);
   --tooltip-background-color: var(--canvas-color-highlight);
-  --tooltip-text-color: var(--standard-color);
+  --tooltip-text-color: var(--colors-standard);
   --tooltip-text-shadow: var(--text-shadow);
   --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
 }

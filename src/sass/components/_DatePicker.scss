@@ -1,23 +1,12 @@
 :root {
   --datepicker-cell-dimensions: 2.5em;
-  --datepicker-header-color: var(--blue);
-  --datepicker-background-color: var(--canvas-color-primary);
-  --datepicker-month-header-background-color: var(--canvas-color-tertiary);
-  --datepicker-month-header-text-color: var(--grey-darkest);
-  --datepicker-day-today-background-color: var(--blue);
-  --datepicker-day-today-text-color: var(--ultralight);
-  --datepicker-day-past-text-color: var(--grey-medium);
-  --datepicker-day-background-color: var(--canvas-color-secondary);
-  --datepicker-day-text-color: var(--blue);
-  --datepicker-day-currentmonth-background-color: var(--canvas-color-callout-lightweight);
-  --datepicker-day-currentmonth-text-color: var(--blue);
 }
 div.datepicker {
   position: relative;
   display: flex;
   flex-direction: column;
   opacity: 1;
-  background-color: var(--canvas-color-callout-lightweight);
+  background-color: var(--canvas-color-tertiary);
   z-index: 4000;
   margin: 1em;
   div.monthbox {
@@ -36,7 +25,7 @@ div.datepicker {
         padding: .5em;
         div.name {
           text-transform: uppercase;
-          color: var(--datepicker-header-color);
+          color: var(--colors-highlight);
           margin-right: auto;
         }
         button{
@@ -44,13 +33,6 @@ div.datepicker {
         }
       }
       table.month {
-        //border-collapse: collapse;
-        thead {
-          tr {
-            //background-color: var(--datepicker-month-header-background-color);
-            border-bottom: .2em solid red;
-          }
-        }
         th,
         td {
           width: var(--datepicker-cell-dimensions);
@@ -63,12 +45,9 @@ div.datepicker {
           padding: 0;
           font-size: .8em;
         }
-        th {
-          color: var(--datepicker-month-header-text-color);
-        }
+        th { }
         td {
           a {
-            --link-color: var(--datepicker-day-text-color);
             display: flex;
             flex-direction: column;
             align-content: center;
@@ -76,23 +55,19 @@ div.datepicker {
             justify-content: center;
             width: 100%;
             height: 100%;
-            background-color: var(--datepicker-day-background-color);
+            background-color: var(--canvas-color-tertiary);
             &.cmonth {
-              --link-color: var(--datepicker-day-currentmonth-text-color);
               background-color: var(--canvas-color-callout-lightweight);
             }
             &.today {
-              --link-color: var(--datepicker-day-today-text-color);
-              background-color: var(--datepicker-day-today-background-color);
+              --link-color: var(--hot-text-color);
+              background-color: var(--colors-highlight);
               font-weight: bold;
             }
-            &.past {
-              //opacity: .5;
-              --link-color: var(--datepicker-day-past-text-color);
-            }
+            &.past { }
             &[aria-selected='true'] {
-              border: .2em solid var(--focus-color);
-              --link-color: var(--focus-color);
+              border: .2em solid var(--colors-focus);
+              --link-color: var(--colors-focus);
               opacity: 1;
               font-weight: bold;
             }
@@ -102,7 +77,7 @@ div.datepicker {
             @include for-hover-only {
               &:hover {
                 color: var(--hot-text-color);
-                background-color: var(--focus-color);
+                background-color: var(--colors-affordance);
                 filter: none;
                 &.past {
                   opacity: 1;
@@ -113,13 +88,16 @@ div.datepicker {
             &:focus {
               opacity: 1;
               color: var(--hot-text-color);
-              background-color: var(--focus-color);
+              background-color: var(--colors-affordance);
               outline: var(--hot-text-color) dashed .1em;
               outline-offset: -.3em;
             }
             &:disabled {
-              color: var(--button-disabled-text-color);
+              opacity: .5;
+              cursor: not-allowed;
               text-shadow: none;
+              box-shadow: none;
+              pointer-events: none;
             }
           }
         }
@@ -132,11 +110,9 @@ div.datepicker {
     margin: 0 0 0 .3em;
     overflow: visible;
     z-index: 20000;
-    border-radius: var(--button-border-radius);
-    border: .1em solid var(--button-menu-border-color);
-    background-color: var(--button-menu-background-color);
-    color: var(--button-menu-item-text-color);
-    box-shadow: var(--button-menu-box-shadow);
+    border-radius: var(--border-radius);
+    border: .1em solid var(--canvas-color-primary);
+    background-color: var(--canvas-color-primary);
     div.monthbox {
       padding: 0;
     }
