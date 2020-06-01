@@ -22,7 +22,7 @@
   // Canvas colors
   --canvas-color-primary: var(--ultralight);
   --canvas-color-secondary: var(--morelight);
-  --canvas-color-tertiary: var(--light);
+  --canvas-color-tertiary: var(--sublight);
   --canvas-color-highlight: var(--cornflowerblue-light);
   --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
 
@@ -78,6 +78,8 @@
   --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
   --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
+  --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
+
 
   // Misc Values
   --border-radius: .2rem;

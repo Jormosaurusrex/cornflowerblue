@@ -139,10 +139,13 @@ h6 {
       border-top: .05em solid;
       border-bottom: .05em solid;
       flex: 1 0 2rem;
-      margin: 0 0 0 .5rem;
+      margin: 0;
     }
     &:before {
-      margin: 0 .5em 0 0;
+      margin-right: 0.5rem;
+    }
+    &:after {
+      margin-left: 0.5rem;
     }
   }
 }

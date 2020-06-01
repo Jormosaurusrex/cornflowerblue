@@ -142,10 +142,10 @@ class InputElement {
         }
         if ((this.errors.length > 0) || (this.warnings.length > 0)) {
             this.showMessages();
+            this.container.classList.remove('valid');
+            this.input.removeAttribute('aria-invalid');
             if (this.errors.length > 0) {
                 this.input.setAttribute('aria-invalid', 'true');
-            } else {
-                this.input.removeAttribute('aria-invalid');
             }
         } else {
             this.clearMessages();

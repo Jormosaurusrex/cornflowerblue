@@ -94,8 +94,8 @@ div.window-container {
       overflow: hidden;
       z-index: 9;
       padding: 1rem 1.5rem;
-      background-color: var(--canvas-color-tertiary);
-      border-top: .1em solid rgba(var(--colors-standard-rgb), 0.5);
+      background-color: var(--canvas-color-secondary);
+      border-top: .1em solid var(--canvas-color-tertiary);
       box-shadow: var(--shadows-interior-fromabove);
       button {
         margin-right: 1em;

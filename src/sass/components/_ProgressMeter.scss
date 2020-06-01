@@ -1,25 +1,12 @@
 :root {
   // Progressmeter
-  --progressmeter-simple-background-color: var(--ultralight);
-  --progressmeter-simple-background-image: var(--darker-grey-stripes);
-  --progressmeter-simple-border-color: var(--grey-light);
-  --progressmeter-simple-marker-color: var(--blue);
-  --progressmeter-simple-progress-background-color: var(--blue-half);
-  --progressmeter-simple-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
-  --progressmeter-simple-progress-background-image: var(--blue-stripes);
-  --progressmeter-simple-decal-text-color: var(--grey-dark);
-  --progressmeter-simple-decal-text-shadow: var(--text-shadow-heavy);
-
-  --progressmeter-radial-background-color: transparent;
-  --progressmeter-radial-stroke-color: var(--darkblue);
-  --progressmeter-radial-gutter-color: var(--blue-quarter);
-  --progressmeter-radial-decal-text-color: var(--grey-dark);
-  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
-  --progressmeter-radial-tick-color: var(--colors-text-hot);
-
+  --progressmeter-core-color-rgb: var(--colors-highlight-rgb);
+  --progressmeter-core-color: rgb(var(--progressmeter-core-color-rgb));
+  --progressmeter-gutter-color: rgba(var(--progressmeter-core-color-rgb), 0.25);
+  --progressmeter-tick-color: var(--colors-text-hot);
 }
 div.progressbar-container {
-  margin: .5rem 0 .5rem 0;
+  margin: .5rem 0;
   position: relative;
   .decals {
     display: flex;
@@ -34,8 +21,8 @@ div.progressbar-container {
       margin: 0;
       div.name,
       div.value {
-        color: var(--progressmeter-simple-decal-text-color);
-        text-shadow: var(--progressmeter-simple-decal-text-shadow);
+        color: var(--colors-standard);
+        text-shadow: var(--text-shadow);
       }
       div.name {
         text-transform: uppercase;
@@ -87,26 +74,27 @@ div.progressbar-container {
         transform-origin: 50% 50%;
         stroke-linecap: butt;
         &.gutter {
-          stroke: var(--progressmeter-radial-gutter-color);
-          fill: var(--progressmeter-radial-background-color);
+          //background-color: red;
+          stroke: var(--progressmeter-gutter-color);
+          fill: transparent;
         }
         &.radialcircle {
           stroke-dasharray: 10, 20;
           transition: stroke-dashoffset 1s ease-in-out;
-          stroke: var(--progressmeter-radial-stroke-color);
-          fill: var(--progressmeter-radial-background-color);
+          stroke: var(--progressmeter-core-color);
+          fill: transparent;
           box-shadow: var(--panel-shadow);
         }
         &.tickmarks {
           stroke-dasharray: 1, 10%;
-          stroke: var(--progressmeter-radial-tick-color);
+          stroke: var(--progressmeter-tick-color);
           fill: transparent;
         }
       }
       &.ticks {
         circle {
           &.tickmarks {
-            stroke: var(--canvas-color-primary);
+            stroke: var(--progressmeter-tick-color);
             stroke-dasharray: 2, 2;
           }
         }
@@ -152,21 +140,22 @@ div.progressbar-container {
     position: relative;
     margin: 1rem 0 1rem 0;
     padding: 0;
-    background-color: var(--progressmeter-simple-background-color);
-    background-image: var(--progressmeter-simple-background-image);
+    border-radius: var(--border-radius);
+    background-color: var(--canvas-color-secondary);
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--progressmeter-core-color-rgb), 0.05) .5rem, rgba(var(--progressmeter-core-color-rgb), 0.05) 1rem);
     height: 2em;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: stretch;
-    border-bottom: .1em solid var(--progressmeter-simple-border-color);
+    border-bottom: .1em solid rgba(var(--progressmeter-core-color-rgb), .5);
     overflow: hidden;
     div.progress {
       margin: 0;
-      background-color: var(--progressmeter-simple-progress-background-color);
-      border-right: .2em solid var(--progressmeter-simple-marker-color);
-      box-shadow: var(--progressmeter-simple-progress-box-shadow);
+      background-color: rgba(var(--progressmeter-core-color-rgb), .5);
+      border-right: .2em solid var(--progressmeter-core-color);
+      box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
       height: 100%;
       width: 0;
       transition: width 1s ease-in-out;

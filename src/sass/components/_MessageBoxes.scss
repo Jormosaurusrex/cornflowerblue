@@ -35,9 +35,9 @@
 div.messagebox {
   margin: 1rem 0 1rem 0;
   padding: 1em;
-  background-color: var(--messagebox-background-color);
-  color: var(--messagebox-text-color);
-  text-shadow: var(--messagebox-text-shadow);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -59,8 +59,8 @@ div.messagebox {
       justify-content: center;
       font-size: 72pt;
       margin: 0;
-      color: var(--messagebox-icon-color);
-      text-shadow: var(--messagebox-icon-text-shadow);
+      color: var(--colors-standard);
+      text-shadow: var(--text-shadow);
     }
     .content {
       p:last-child {
@@ -75,8 +75,8 @@ div.messagebox {
     }
   }
   &.instructions {
-    border: .1em dotted var(--instructions-border-color);
-    background-color: var(--instructions-background-color);
+    border: .1em dotted var(--canvas-color-tertiary);
+    background-color: var(--canvas-color-secondary);
     div.payload {
       ul {
         flex-grow: 2;
@@ -85,8 +85,8 @@ div.messagebox {
         flex-wrap: nowrap;
         margin: 0;
         padding: 0 0 0 1.2em;
-        color: var(--instructions-text-color);
-        text-shadow: var(--instructions-text-shadow);
+        color: var(--colors-standard-rgb);
+        text-shadow: var(--text-shadow);
       }
     }
     &.size-1 {
@@ -128,33 +128,32 @@ div.messagebox {
     }
   }
   &.results {
-    --color-base: var(--successbox-color-base);
-    --stripe-base: var(--successbox-stripes);
-    background-color: var(--resultsbox-background-color);
+    --color-base: var(--colors-success);
+    --color-base-rgb: var(--colors-success-rgb);
+    background-color: var(--canvas-color-secondary);
     border: .1em solid var(--color-base);
-    background-image: var(--stripe-base);
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--color-base-rgb), 0.05) .5rem, rgba(var(--color-base-rgb), 0.05) 1rem);
     padding: 0;
     h3 {
       padding: .5em 1em .5em 1em;
       background-color: var(--color-base);
-      color: var(--resultsbox-header-text-color);
-      text-shadow: var(--resultsbox-header-text-shadow);
+      color: var(--colors-text-hot);
+      text-shadow: var(--text-shadow);
     }
     div.payload {
       padding: 1em;
       > span.icon {
         color: var(--color-base);
-        text-shadow: var(--resultsbox-icon-text-shadow);
+        text-shadow: var(--text-shadow);
       }
     }
     &.errors {
-      --color-base: var(--errorbox-color-base);
-      --stripe-base: var(--errorbox-stripes);
+      --color-base: var(--colors-error);
+      --color-base-rgb: var(--colors-error-rgb);
     }
     &.warnings {
-      --color-base: var(--warningbox-color-base);
-      --stripe-base: var(--warningbox-stripes);
-      --resultsbox-header-text-color: var(--warningbox-title-color);
+      --color-base: var(--colors-warning);
+      --color-base-rgb: var(--colors-warning-rgb);
     }
   }
 }

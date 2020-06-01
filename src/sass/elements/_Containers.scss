@@ -218,7 +218,7 @@ p.textarea-container {
   &.error,
   &.warning {
     --input-status-color-rgb: var(--colors-success-rgb);
-    --input-border-color-rgb: var(--input-status-color-rgb);
+    --input-border-color: rgb(var(--input-status-color-rgb));
     div.wrap {
       &:after {
         opacity: 1;
@@ -228,6 +228,7 @@ p.textarea-container {
       input[type="text"],
       input[type="number"],
       input[type="password"],
+      input[type="search"],
       textarea {
         border-color: rgb(var(--input-status-color-rgb));
         &:focus {
@@ -238,6 +239,8 @@ p.textarea-container {
   }
   &.error {
     --input-status-color-rgb: var(--colors-error-rgb);
+    --input-border-color-rgb: var(--input-status-color-rgb);
+    --input-border-color: rgb(var(--input-status-color-rgb));
     div.wrap {
       &:after {
         content: '\51';
@@ -246,6 +249,7 @@ p.textarea-container {
   }
   &.valid {
     --input-status-color-rgb: var(--colors-success-rgb);
+    --input-border-color: rgb(var(--input-status-color-rgb));
     div.wrap {
       &:after {
         opacity: 1;
@@ -255,6 +259,7 @@ p.textarea-container {
   }
   &.warning {
     --input-status-color-rgb: var(--colors-warning-rgb);
+    --input-border-color: rgb(var(--input-status-color-rgb));
     div.wrap {
       &:after {
         content: '\53';

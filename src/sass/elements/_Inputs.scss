@@ -30,7 +30,7 @@ textarea {
   width: 100%;
   margin: 0;
   border: none;
-  background-color: rgba(var(--input-border-color-rgb), 0.1);
+  background-color: var(--canvas-color-secondary);
   box-shadow: inset -.1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
@@ -58,7 +58,7 @@ textarea {
     }
   }
   &.mute {
-    background-color: rgba(var(--input-border-color-rgb), 0.05);
+    background-color: var(--canvas-color-secondary);
     box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
     padding: .5em 1em .5em 1.5em;
     &::placeholder {

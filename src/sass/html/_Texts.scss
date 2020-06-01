@@ -10,6 +10,9 @@ p {
       margin-right: 0.05rem;
     }
   }
+  &:only-child {
+    margin: 0;
+  }
 }
 label,
 legend {

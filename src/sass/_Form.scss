@@ -1,15 +1,7 @@
-:root {
-  // Form keys
-  --form-background-color: transparent;
-  --form-border-color: transparent;
-  --form-actions-background-color: var(--morelight);
-  --form-actions-border-color: var(--light);
-}
 form {
   margin: 0;
   position: relative;
-  border: .1em solid var(--form-border-color);
-  background-color: var(--form-background-color);
+  background-color: var(--canvas-color-primary);
   display: block;
   padding: 0;
   &.shaded {
@@ -26,13 +18,13 @@ form {
   }
   div.header {
     flex-grow: 1;
-    padding: .5em 1.5em .5em 1.5em;
+    padding: .5rem 1.5rem;
     div.instructions {
-      margin: 1rem 0 1rem 0;
+      margin: 1rem 0;
     }
   }
   div.elements {
-    padding: .5em 1.5em .5em 1.5em;
+    padding: .5rem 1.5rem;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -40,7 +32,7 @@ form {
     box-sizing: border-box;
     div.input-container,
     div.textarea-container {
-      margin: 1rem 0 1rem 0;
+      margin: 1rem 0;
     }
   }
   div.actions,
@@ -51,9 +43,9 @@ form {
     align-items: flex-start;
     align-content: center;
     box-sizing: border-box;
-    background-color: var(--form-actions-background-color);
-    border-top: .1em solid var(--form-actions-border-color);
-    padding: .5em 1.5em .5em 1.5em;
+    background-color: var(--canvas-color-secondary);
+    border-top: .1em solid var(--canvas-color-tertiary);
+    padding: .5rem 1.5rem;
     button {
       margin-right: 1rem;
       &.fill {

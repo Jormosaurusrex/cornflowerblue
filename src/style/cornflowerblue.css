@@ -778,7 +778,7 @@
   --thin-measure: 25em;
   --canvas-color-primary: var(--ultralight);
   --canvas-color-secondary: var(--morelight);
-  --canvas-color-tertiary: var(--light);
+  --canvas-color-tertiary: var(--sublight);
   --canvas-color-highlight: var(--cornflowerblue-light);
   --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
   --colors-affordance-rgb: var(--darkblue-rgb);
@@ -814,6 +814,7 @@
   --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
   --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
+  --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
   --border-radius: .2rem;
   --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
   --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
@@ -1121,7 +1122,7 @@ h6.fancy:after {
   border-top: 0.05em solid;
   border-bottom: 0.05em solid;
   flex: 1 0 2rem;
-  margin: 0 0 0 0.5rem;
+  margin: 0;
 }
 h1.fancy:before,
 h2.fancy:before,
@@ -1129,7 +1130,15 @@ h3.fancy:before,
 h4.fancy:before,
 h5.fancy:before,
 h6.fancy:before {
-  margin: 0 0.5em 0 0;
+  margin-right: 0.5rem;
+}
+h1.fancy:after,
+h2.fancy:after,
+h3.fancy:after,
+h4.fancy:after,
+h5.fancy:after,
+h6.fancy:after {
+  margin-left: 0.5rem;
 }
 
 :root {
@@ -1190,6 +1199,9 @@ p.dropcap:first-letter {
   line-height: 0.6;
   /* from 1 */
   margin-right: 0.05rem;
+}
+p:only-child {
+  margin: 0;
 }
 
 label,
@@ -1481,18 +1493,10 @@ form.button-menu.noactions div.header {
   display: none;
 }
 
-:root {
-  --form-background-color: transparent;
-  --form-border-color: transparent;
-  --form-actions-background-color: var(--morelight);
-  --form-actions-border-color: var(--light);
-}
-
 form {
   margin: 0;
   position: relative;
-  border: 0.1em solid var(--form-border-color);
-  background-color: var(--form-background-color);
+  background-color: var(--canvas-color-primary);
   display: block;
   padding: 0;
 }
@@ -1510,13 +1514,13 @@ form.shaded div.actions {
 }
 form div.header {
   flex-grow: 1;
-  padding: 0.5em 1.5em 0.5em 1.5em;
+  padding: 0.5rem 1.5rem;
 }
 form div.header div.instructions {
-  margin: 1rem 0 1rem 0;
+  margin: 1rem 0;
 }
 form div.elements {
-  padding: 0.5em 1.5em 0.5em 1.5em;
+  padding: 0.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -1525,7 +1529,7 @@ form div.elements {
 }
 form div.elements div.input-container,
 form div.elements div.textarea-container {
-  margin: 1rem 0 1rem 0;
+  margin: 1rem 0;
 }
 form div.actions,
 form div.passiveactions {
@@ -1535,9 +1539,9 @@ form div.passiveactions {
   align-items: flex-start;
   align-content: center;
   box-sizing: border-box;
-  background-color: var(--form-actions-background-color);
-  border-top: 0.1em solid var(--form-actions-border-color);
-  padding: 0.5em 1.5em 0.5em 1.5em;
+  background-color: var(--canvas-color-secondary);
+  border-top: 0.1em solid var(--canvas-color-tertiary);
+  padding: 0.5rem 1.5rem;
 }
 form div.actions button,
 form div.passiveactions button {
@@ -3288,7 +3292,7 @@ p.textarea-container.valid,
 p.textarea-container.error,
 p.textarea-container.warning {
   --input-status-color-rgb: var(--colors-success-rgb);
-  --input-border-color-rgb: var(--input-status-color-rgb);
+  --input-border-color: rgb(var(--input-status-color-rgb));
 }
 div.input-container.valid div.wrap:after, div.input-container.error div.wrap:after, div.input-container.warning div.wrap:after,
 p.input-container.valid div.wrap:after,
@@ -3305,96 +3309,120 @@ p.textarea-container.warning div.wrap:after {
 div.input-container.valid.mute input[type=text],
 div.input-container.valid.mute input[type=number],
 div.input-container.valid.mute input[type=password],
+div.input-container.valid.mute input[type=search],
 div.input-container.valid.mute textarea, div.input-container.error.mute input[type=text],
 div.input-container.error.mute input[type=number],
 div.input-container.error.mute input[type=password],
+div.input-container.error.mute input[type=search],
 div.input-container.error.mute textarea, div.input-container.warning.mute input[type=text],
 div.input-container.warning.mute input[type=number],
 div.input-container.warning.mute input[type=password],
+div.input-container.warning.mute input[type=search],
 div.input-container.warning.mute textarea,
 p.input-container.valid.mute input[type=text],
 p.input-container.valid.mute input[type=number],
 p.input-container.valid.mute input[type=password],
+p.input-container.valid.mute input[type=search],
 p.input-container.valid.mute textarea,
 p.input-container.error.mute input[type=text],
 p.input-container.error.mute input[type=number],
 p.input-container.error.mute input[type=password],
+p.input-container.error.mute input[type=search],
 p.input-container.error.mute textarea,
 p.input-container.warning.mute input[type=text],
 p.input-container.warning.mute input[type=number],
 p.input-container.warning.mute input[type=password],
+p.input-container.warning.mute input[type=search],
 p.input-container.warning.mute textarea,
 div.textarea-container.valid.mute input[type=text],
 div.textarea-container.valid.mute input[type=number],
 div.textarea-container.valid.mute input[type=password],
+div.textarea-container.valid.mute input[type=search],
 div.textarea-container.valid.mute textarea,
 div.textarea-container.error.mute input[type=text],
 div.textarea-container.error.mute input[type=number],
 div.textarea-container.error.mute input[type=password],
+div.textarea-container.error.mute input[type=search],
 div.textarea-container.error.mute textarea,
 div.textarea-container.warning.mute input[type=text],
 div.textarea-container.warning.mute input[type=number],
 div.textarea-container.warning.mute input[type=password],
+div.textarea-container.warning.mute input[type=search],
 div.textarea-container.warning.mute textarea,
 p.textarea-container.valid.mute input[type=text],
 p.textarea-container.valid.mute input[type=number],
 p.textarea-container.valid.mute input[type=password],
+p.textarea-container.valid.mute input[type=search],
 p.textarea-container.valid.mute textarea,
 p.textarea-container.error.mute input[type=text],
 p.textarea-container.error.mute input[type=number],
 p.textarea-container.error.mute input[type=password],
+p.textarea-container.error.mute input[type=search],
 p.textarea-container.error.mute textarea,
 p.textarea-container.warning.mute input[type=text],
 p.textarea-container.warning.mute input[type=number],
 p.textarea-container.warning.mute input[type=password],
+p.textarea-container.warning.mute input[type=search],
 p.textarea-container.warning.mute textarea {
   border-color: rgb(var(--input-status-color-rgb));
 }
 div.input-container.valid.mute input[type=text]:focus,
 div.input-container.valid.mute input[type=number]:focus,
 div.input-container.valid.mute input[type=password]:focus,
+div.input-container.valid.mute input[type=search]:focus,
 div.input-container.valid.mute textarea:focus, div.input-container.error.mute input[type=text]:focus,
 div.input-container.error.mute input[type=number]:focus,
 div.input-container.error.mute input[type=password]:focus,
+div.input-container.error.mute input[type=search]:focus,
 div.input-container.error.mute textarea:focus, div.input-container.warning.mute input[type=text]:focus,
 div.input-container.warning.mute input[type=number]:focus,
 div.input-container.warning.mute input[type=password]:focus,
+div.input-container.warning.mute input[type=search]:focus,
 div.input-container.warning.mute textarea:focus,
 p.input-container.valid.mute input[type=text]:focus,
 p.input-container.valid.mute input[type=number]:focus,
 p.input-container.valid.mute input[type=password]:focus,
+p.input-container.valid.mute input[type=search]:focus,
 p.input-container.valid.mute textarea:focus,
 p.input-container.error.mute input[type=text]:focus,
 p.input-container.error.mute input[type=number]:focus,
 p.input-container.error.mute input[type=password]:focus,
+p.input-container.error.mute input[type=search]:focus,
 p.input-container.error.mute textarea:focus,
 p.input-container.warning.mute input[type=text]:focus,
 p.input-container.warning.mute input[type=number]:focus,
 p.input-container.warning.mute input[type=password]:focus,
+p.input-container.warning.mute input[type=search]:focus,
 p.input-container.warning.mute textarea:focus,
 div.textarea-container.valid.mute input[type=text]:focus,
 div.textarea-container.valid.mute input[type=number]:focus,
 div.textarea-container.valid.mute input[type=password]:focus,
+div.textarea-container.valid.mute input[type=search]:focus,
 div.textarea-container.valid.mute textarea:focus,
 div.textarea-container.error.mute input[type=text]:focus,
 div.textarea-container.error.mute input[type=number]:focus,
 div.textarea-container.error.mute input[type=password]:focus,
+div.textarea-container.error.mute input[type=search]:focus,
 div.textarea-container.error.mute textarea:focus,
 div.textarea-container.warning.mute input[type=text]:focus,
 div.textarea-container.warning.mute input[type=number]:focus,
 div.textarea-container.warning.mute input[type=password]:focus,
+div.textarea-container.warning.mute input[type=search]:focus,
 div.textarea-container.warning.mute textarea:focus,
 p.textarea-container.valid.mute input[type=text]:focus,
 p.textarea-container.valid.mute input[type=number]:focus,
 p.textarea-container.valid.mute input[type=password]:focus,
+p.textarea-container.valid.mute input[type=search]:focus,
 p.textarea-container.valid.mute textarea:focus,
 p.textarea-container.error.mute input[type=text]:focus,
 p.textarea-container.error.mute input[type=number]:focus,
 p.textarea-container.error.mute input[type=password]:focus,
+p.textarea-container.error.mute input[type=search]:focus,
 p.textarea-container.error.mute textarea:focus,
 p.textarea-container.warning.mute input[type=text]:focus,
 p.textarea-container.warning.mute input[type=number]:focus,
 p.textarea-container.warning.mute input[type=password]:focus,
+p.textarea-container.warning.mute input[type=search]:focus,
 p.textarea-container.warning.mute textarea:focus {
   box-shadow: inset 0 -0.4rem 0 0 rgb(var(--input-status-color-rgb));
 }
@@ -3403,6 +3431,8 @@ p.input-container.error,
 div.textarea-container.error,
 p.textarea-container.error {
   --input-status-color-rgb: var(--colors-error-rgb);
+  --input-border-color-rgb: var(--input-status-color-rgb);
+  --input-border-color: rgb(var(--input-status-color-rgb));
 }
 div.input-container.error div.wrap:after,
 p.input-container.error div.wrap:after,
@@ -3415,6 +3445,7 @@ p.input-container.valid,
 div.textarea-container.valid,
 p.textarea-container.valid {
   --input-status-color-rgb: var(--colors-success-rgb);
+  --input-border-color: rgb(var(--input-status-color-rgb));
 }
 div.input-container.valid div.wrap:after,
 p.input-container.valid div.wrap:after,
@@ -3428,6 +3459,7 @@ p.input-container.warning,
 div.textarea-container.warning,
 p.textarea-container.warning {
   --input-status-color-rgb: var(--colors-warning-rgb);
+  --input-border-color: rgb(var(--input-status-color-rgb));
 }
 div.input-container.warning div.wrap:after,
 p.input-container.warning div.wrap:after,
@@ -3581,7 +3613,7 @@ textarea {
   width: 100%;
   margin: 0;
   border: none;
-  background-color: rgba(var(--input-border-color-rgb), 0.1);
+  background-color: var(--canvas-color-secondary);
   box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
@@ -3637,7 +3669,7 @@ input[type=number].mute,
 input[type=password].mute,
 input[type=search].mute,
 textarea.mute {
-  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  background-color: var(--canvas-color-secondary);
   box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
 }
@@ -3714,7 +3746,7 @@ div.file-container div.trigger {
   width: 100%;
   margin: 0;
   font-size: 1em;
-  background-color: rgba(var(--input-border-color-rgb), 0.1);
+  background-color: var(--canvas-color-secondary);
   box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
   border-radius: 0.1em;
@@ -3747,7 +3779,7 @@ div.file-container div.trigger:focus::placeholder {
   opacity: 0.3;
 }
 div.file-container div.trigger.mute {
-  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  background-color: var(--canvas-color-secondary);
   box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
 }
@@ -4032,8 +4064,8 @@ div.window-container div.dialog div.actions {
   overflow: hidden;
   z-index: 9;
   padding: 1rem 1.5rem;
-  background-color: var(--canvas-color-tertiary);
-  border-top: 0.1em solid rgba(var(--colors-standard-rgb), 0.5);
+  background-color: var(--canvas-color-secondary);
+  border-top: 0.1em solid var(--canvas-color-tertiary);
   box-shadow: var(--shadows-interior-fromabove);
 }
 div.window-container div.dialog div.actions button {
@@ -4304,15 +4336,6 @@ div.growler.success {
   --growler-core-color: var(--colors-success);
 }
 
-:root {
-  --shade-background-color: var(--white-half);
-  --shade-border-color: var(--white-half);
-  --shade-spinner-color: var(--darkblue);
-  --shade-spinner-downcolor: var(--light);
-  --shade-text-color: var(--blue);
-  --shade-text-shadow: var(--text-shadow);
-}
-
 div.loading-shade {
   display: flex;
   position: absolute;
@@ -4321,8 +4344,7 @@ div.loading-shade {
   top: 0;
   bottom: 0;
   z-index: 2000;
-  background-color: var(--shade-background-color);
-  border: 0.1em solid var(--shade-border-color);
+  background-color: var(--canvas-color-primary);
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -4330,9 +4352,9 @@ div.loading-shade {
 }
 div.loading-shade div.spinner span.icon {
   display: block;
-  color: var(--shade-icon-color);
+  color: var(--colors-highlight);
   font-size: 100pt;
-  text-shadow: var(--shade-icon-shadow);
+  text-shadow: var(--text-shadow);
   margin-top: -1em;
   animation: cfb-localspin 2s linear infinite;
 }
@@ -4340,9 +4362,9 @@ div.loading-shade div.spinner span.icon:before {
   line-height: normal;
 }
 div.loading-shade div.spinnertext {
-  color: var(--shade-text-color);
+  color: var(--colors-highlight);
   font-size: 2em;
-  text-shadow: var(--shade-text-shadow);
+  text-shadow: var(--text-shadow);
   text-transform: uppercase;
   font-weight: 100;
 }
@@ -4356,8 +4378,8 @@ div.spinner.spin {
   height: 10em;
   position: relative;
   margin: 1rem 0 1rem 0;
-  border: 0.75em solid var(--shade-spinner-downcolor);
-  border-top-color: var(--shade-spinner-color);
+  border: 0.75em solid rgba(var(--colors-highlight-rgb), 0.3);
+  border-top-color: var(--colors-highlight);
   animation: cfb-localspin 1.1s infinite linear;
 }
 
@@ -4373,7 +4395,7 @@ div.spinner.bounce:before, div.spinner.bounce:after {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: var(--shade-spinner-color);
+  background-color: var(--colors-highlight);
   opacity: 0.6;
   position: absolute;
   top: 0;
@@ -4413,9 +4435,9 @@ div.spinner.bounce:after {
 div.messagebox {
   margin: 1rem 0 1rem 0;
   padding: 1em;
-  background-color: var(--messagebox-background-color);
-  color: var(--messagebox-text-color);
-  text-shadow: var(--messagebox-text-shadow);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -4439,8 +4461,8 @@ div.messagebox div.payload > span.icon {
   justify-content: center;
   font-size: 72pt;
   margin: 0;
-  color: var(--messagebox-icon-color);
-  text-shadow: var(--messagebox-icon-text-shadow);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
 }
 div.messagebox div.payload .content p:last-child {
   margin-bottom: 0;
@@ -4454,8 +4476,8 @@ div.messagebox div.payload .content p:last-child {
   }
 }
 div.messagebox.instructions {
-  border: 0.1em dotted var(--instructions-border-color);
-  background-color: var(--instructions-background-color);
+  border: 0.1em dotted var(--canvas-color-tertiary);
+  background-color: var(--canvas-color-secondary);
 }
 div.messagebox.instructions div.payload ul {
   flex-grow: 2;
@@ -4464,8 +4486,8 @@ div.messagebox.instructions div.payload ul {
   flex-wrap: nowrap;
   margin: 0;
   padding: 0 0 0 1.2em;
-  color: var(--instructions-text-color);
-  text-shadow: var(--instructions-text-shadow);
+  color: var(--colors-standard-rgb);
+  text-shadow: var(--text-shadow);
 }
 div.messagebox.instructions.size-1 div.payload {
   align-items: center;
@@ -4491,34 +4513,33 @@ div.messagebox.instructions.size-3 div.payload > span.icon {
   }
 }
 div.messagebox.results {
-  --color-base: var(--successbox-color-base);
-  --stripe-base: var(--successbox-stripes);
-  background-color: var(--resultsbox-background-color);
+  --color-base: var(--colors-success);
+  --color-base-rgb: var(--colors-success-rgb);
+  background-color: var(--canvas-color-secondary);
   border: 0.1em solid var(--color-base);
-  background-image: var(--stripe-base);
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--color-base-rgb), 0.05) 0.5rem, rgba(var(--color-base-rgb), 0.05) 1rem);
   padding: 0;
 }
 div.messagebox.results h3 {
   padding: 0.5em 1em 0.5em 1em;
   background-color: var(--color-base);
-  color: var(--resultsbox-header-text-color);
-  text-shadow: var(--resultsbox-header-text-shadow);
+  color: var(--colors-text-hot);
+  text-shadow: var(--text-shadow);
 }
 div.messagebox.results div.payload {
   padding: 1em;
 }
 div.messagebox.results div.payload > span.icon {
   color: var(--color-base);
-  text-shadow: var(--resultsbox-icon-text-shadow);
+  text-shadow: var(--text-shadow);
 }
 div.messagebox.results.errors {
-  --color-base: var(--errorbox-color-base);
-  --stripe-base: var(--errorbox-stripes);
+  --color-base: var(--colors-error);
+  --color-base-rgb: var(--colors-error-rgb);
 }
 div.messagebox.results.warnings {
-  --color-base: var(--warningbox-color-base);
-  --stripe-base: var(--warningbox-stripes);
-  --resultsbox-header-text-color: var(--warningbox-title-color);
+  --color-base: var(--colors-warning);
+  --color-base-rgb: var(--colors-warning-rgb);
 }
 
 div.resultsbox {
@@ -4660,25 +4681,14 @@ div.panel.bottom-center {
 }
 
 :root {
-  --progressmeter-simple-background-color: var(--ultralight);
-  --progressmeter-simple-background-image: var(--darker-grey-stripes);
-  --progressmeter-simple-border-color: var(--grey-light);
-  --progressmeter-simple-marker-color: var(--blue);
-  --progressmeter-simple-progress-background-color: var(--blue-half);
-  --progressmeter-simple-progress-box-shadow: .2em 0 .5em -.1em rgba(0, 0, 0, 0.2);
-  --progressmeter-simple-progress-background-image: var(--blue-stripes);
-  --progressmeter-simple-decal-text-color: var(--grey-dark);
-  --progressmeter-simple-decal-text-shadow: var(--text-shadow-heavy);
-  --progressmeter-radial-background-color: transparent;
-  --progressmeter-radial-stroke-color: var(--darkblue);
-  --progressmeter-radial-gutter-color: var(--blue-quarter);
-  --progressmeter-radial-decal-text-color: var(--grey-dark);
-  --progressmeter-radial-decal-text-shadow: var(--text-shadow-heavy);
-  --progressmeter-radial-tick-color: var(--colors-text-hot);
+  --progressmeter-core-color-rgb: var(--colors-highlight-rgb);
+  --progressmeter-core-color: rgb(var(--progressmeter-core-color-rgb));
+  --progressmeter-gutter-color: rgba(var(--progressmeter-core-color-rgb), 0.25);
+  --progressmeter-tick-color: var(--colors-text-hot);
 }
 
 div.progressbar-container {
-  margin: 0.5rem 0 0.5rem 0;
+  margin: 0.5rem 0;
   position: relative;
 }
 div.progressbar-container .decals {
@@ -4698,8 +4708,8 @@ div.progressbar-container .decals div.current div.name,
 div.progressbar-container .decals div.current div.value,
 div.progressbar-container .decals div.next div.name,
 div.progressbar-container .decals div.next div.value {
-  color: var(--progressmeter-simple-decal-text-color);
-  text-shadow: var(--progressmeter-simple-decal-text-shadow);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
 }
 div.progressbar-container .decals div.current div.name,
 div.progressbar-container .decals div.next div.name {
@@ -4742,23 +4752,23 @@ div.progressbar-container div.circlewrap svg circle {
   stroke-linecap: butt;
 }
 div.progressbar-container div.circlewrap svg circle.gutter {
-  stroke: var(--progressmeter-radial-gutter-color);
-  fill: var(--progressmeter-radial-background-color);
+  stroke: var(--progressmeter-gutter-color);
+  fill: transparent;
 }
 div.progressbar-container div.circlewrap svg circle.radialcircle {
   stroke-dasharray: 10, 20;
   transition: stroke-dashoffset 1s ease-in-out;
-  stroke: var(--progressmeter-radial-stroke-color);
-  fill: var(--progressmeter-radial-background-color);
+  stroke: var(--progressmeter-core-color);
+  fill: transparent;
   box-shadow: var(--panel-shadow);
 }
 div.progressbar-container div.circlewrap svg circle.tickmarks {
   stroke-dasharray: 1, 10%;
-  stroke: var(--progressmeter-radial-tick-color);
+  stroke: var(--progressmeter-tick-color);
   fill: transparent;
 }
 div.progressbar-container div.circlewrap svg.ticks circle.tickmarks {
-  stroke: var(--canvas-color-primary);
+  stroke: var(--progressmeter-tick-color);
   stroke-dasharray: 2, 2;
 }
 div.progressbar-container div.circlewrap div.decals {
@@ -4800,22 +4810,23 @@ div.progressbar-container div.simpleprogress {
   position: relative;
   margin: 1rem 0 1rem 0;
   padding: 0;
-  background-color: var(--progressmeter-simple-background-color);
-  background-image: var(--progressmeter-simple-background-image);
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-secondary);
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--progressmeter-core-color-rgb), 0.05) 0.5rem, rgba(var(--progressmeter-core-color-rgb), 0.05) 1rem);
   height: 2em;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: stretch;
-  border-bottom: 0.1em solid var(--progressmeter-simple-border-color);
+  border-bottom: 0.1em solid rgba(var(--progressmeter-core-color-rgb), 0.5);
   overflow: hidden;
 }
 div.progressbar-container div.simpleprogress div.progress {
   margin: 0;
-  background-color: var(--progressmeter-simple-progress-background-color);
-  border-right: 0.2em solid var(--progressmeter-simple-marker-color);
-  box-shadow: var(--progressmeter-simple-progress-box-shadow);
+  background-color: rgba(var(--progressmeter-core-color-rgb), 0.5);
+  border-right: 0.2em solid var(--progressmeter-core-color);
+  box-shadow: 0.2em 0 0.5em -0.1em rgba(0, 0, 0, 0.2);
   height: 100%;
   width: 0;
   transition: width 1s ease-in-out;
@@ -5250,14 +5261,6 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu >
 div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu:before {
     display: none;
   }
-}
-
-:root {
-  --tooltip-border-radius: var(--border-radius);
-  --tooltip-background-color: var(--canvas-color-highlight);
-  --tooltip-text-color: var(--colors-standard);
-  --tooltip-text-shadow: var(--text-shadow);
-  --tooltip-box-shadow: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
 }
 
 div.tooltip {
