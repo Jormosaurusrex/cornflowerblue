@@ -3970,6 +3970,8 @@ div.datepicker.button-menu div.monthbox {
 :root {
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
+  --dialog-lightbox-background-color: var(--black);
+  --dialog-lightbox-text-color: var(--colors-text-hot);
 }
 
 body.modalopen {
@@ -4128,6 +4130,39 @@ div.window-container div.dialog.isform div.content form div.actions {
   overflow: hidden;
   z-index: 9;
 }
+div.window-container div.dialog.lightbox {
+  margin: 1rem;
+  min-height: 99vh;
+  max-height: 99vh;
+  height: 99vh;
+  min-width: 99vw;
+  max-width: 99vw;
+  width: 99vw;
+}
+div.window-container div.dialog.lightbox h2 {
+  background-color: var(--dialog-lightbox-background-color);
+  color: var(--dialog-lightbox-text-color);
+}
+div.window-container div.dialog.lightbox div.content {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--dialog-lightbox-background-color);
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+div.window-container div.dialog.lightbox div.content img {
+  display: inline-block;
+  max-height: 100%;
+  max-width: 100%;
+  padding: 0;
+  width: auto;
+  height: auto;
+  vertical-align: middle;
+}
 @media (max-width: 599px) {
   div.window-container div.dialog {
     width: 100%;
@@ -4156,6 +4191,9 @@ div.window-container div.trailer {
   div.window-container div.trailer {
     padding: 0.5em;
   }
+}
+div.window-container.lightbox {
+  background-color: var(--dialog-lightbox-background-color);
 }
 
 div.window-mask {
@@ -4879,6 +4917,9 @@ div.searchcontrol input {
   border: none;
   box-shadow: none;
 }
+div.searchcontrol input::placeholder {
+  opacity: 0;
+}
 div.searchcontrol button {
   margin: 0;
 }
@@ -4886,6 +4927,9 @@ div.searchcontrol.open input, div.searchcontrol:focus-within input {
   width: 100%;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   padding: var(--input-default-padding);
+}
+div.searchcontrol.open input::placeholder, div.searchcontrol:focus-within input::placeholder {
+  opacity: 1;
 }
 div.searchcontrol.open button, div.searchcontrol:focus-within button {
   border-top-left-radius: 0;
@@ -5499,14 +5543,17 @@ div.datagrid-container table.grid thead tr th:focus, div.datagrid-container tabl
   outline: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.datagrid-container table.grid thead tr th:hover, div.datagrid-container table.grid thead tr th.hover {
+  div.datagrid-container table.grid thead tr th:hover {
     outline: none;
     text-decoration: underline;
   }
-  div.datagrid-container table.grid thead tr th:hover:not(.mechanical), div.datagrid-container table.grid thead tr th.hover:not(.mechanical) {
-    color: var(--colors-affordance);
+  div.datagrid-container table.grid thead tr th:hover:not(.mechanical) {
+    color: var(--colors-text-hot);
     text-shadow: var(--text-shadow);
-    background-color: var(--canvas-color-secondary);
+    background-color: var(--colors-affordance);
+  }
+  div.datagrid-container table.grid thead tr th:hover:not(.mechanical) div.th:before {
+    color: var(--colors-text-hot);
   }
 }
 div.datagrid-container table.grid thead tr th:active, div.datagrid-container table.grid thead tr th.active {
@@ -5526,6 +5573,11 @@ div.datagrid-container table.grid thead tr th[data-sort=asc] div.th, div.datagri
 }
 div.datagrid-container table.grid thead tr th[data-sort=asc] div.th:before, div.datagrid-container table.grid thead tr th[data-sort=desc] div.th:before {
   opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid thead tr th[data-sort=asc]:hover div.th, div.datagrid-container table.grid thead tr th[data-sort=desc]:hover div.th {
+    box-shadow: none;
+  }
 }
 div.datagrid-container table.grid thead tr th[data-sort=desc] div.th:before {
   transform: rotate(180deg);
@@ -5582,6 +5634,9 @@ div.datagrid-container table.grid tbody tr[data-matched-filters][data-search-hid
 div.datagrid-container table.grid tbody tr:focus-within button {
   box-shadow: none;
   background-color: transparent;
+}
+div.datagrid-container table.grid tbody tr.updated {
+  animation: cfb-row-update 8s;
 }
 div.datagrid-container table.grid th.hidden,
 div.datagrid-container table.grid td.hidden {
@@ -5744,9 +5799,8 @@ div.datagrid-container table.grid.selectable tbody tr:focus > td, div.datagrid-c
 }
 div.datagrid-container table.grid.selectable tbody tr:focus > td.mechanical, div.datagrid-container table.grid.selectable tbody tr:focus-within > td.mechanical {
   background-color: var(--colors-affordance);
-}
-div.datagrid-container table.grid.selectable tbody tr:focus > td.mechanical button, div.datagrid-container table.grid.selectable tbody tr:focus-within > td.mechanical button {
   outline: var(--colors-text-hot) dashed 0.1rem;
+  outline-offset: -0.3em;
 }
 div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] {
   background-color: var(--colors-focus);
@@ -5813,6 +5867,20 @@ div.datagrid-container[aria-expanded=false] div.messagebox {
   display: none;
 }
 
+@keyframes cfb-row-update {
+  0% {
+    background-color: var(--canvas-color-primary);
+  }
+  10% {
+    background-color: var(--canvas-color-highlight);
+  }
+  80% {
+    background-color: var(--canvas-color-highlight);
+  }
+  100% {
+    background-color: var(--canvas-color-primary);
+  }
+}
 div.column-configurator {
   padding: 2rem;
 }

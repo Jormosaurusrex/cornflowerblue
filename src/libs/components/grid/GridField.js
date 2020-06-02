@@ -27,6 +27,7 @@ class GridField {
                                //  ]
             separator: ', ',   // Used when rendering array values
             placeholder: null, // The placeholder to use in the field
+            lightbox: true,    // For image types, if true, open the image in a lightbox
             minnumber: null,   // The minnumber to use in the field
             maxnumber: null,   // The maxnumber to use in the field
             nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
@@ -113,8 +114,27 @@ class GridField {
                 break;
             case 'imageurl':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return `<a href="${d}"><img src="${d}" /></a>`;
+                    if (this.lightbox) {
+                        this.renderer = function(d) {
+                            let img = document.createElement('img');
+                            img.setAttribute('src', d);
+                            let anchor = document.createElement('a');
+                            anchor.append(img);
+                            anchor.addEventListener('click', function() {
+                                let i = document.createElement('img');
+                                i.setAttribute('src', d);
+                                new DialogWindow({
+                                    lightbox: true,
+                                    title: me.label,
+                                    content: i
+                                }).open();
+                            });
+                            return anchor;
+                        }
+                    } else {
+                        this.renderer = function(d) {
+                            return `<a href="${d}"><img src="${d}" /></a>`;
+                        }
                     }
                 }
                 break;
@@ -310,6 +330,9 @@ class GridField {
 
     get label() { return this.config.label ; }
     set label(label) { this.config.label = label; }
+
+    get lightbox() { return this.config.lightbox ; }
+    set lightbox(lightbox) { this.config.lightbox = lightbox; }
 
     get maxnumber() { return this.config.maxnumber ; }
     set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }

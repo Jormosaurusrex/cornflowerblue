@@ -2,6 +2,8 @@
   // Dialog keys
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
+  --dialog-lightbox-background-color: var(--black);
+  --dialog-lightbox-text-color: var(--colors-text-hot);
 }
 body.modalopen {
   height: 100vh;
@@ -157,6 +159,39 @@ div.window-container {
         }
       }
     }
+    &.lightbox {
+      margin: 1rem;
+      min-height: 99vh;
+      max-height: 99vh;
+      height: 99vh;
+      min-width: 99vw;
+      max-width: 99vw;
+      width: 99vw;
+      h2 {
+        background-color: var(--dialog-lightbox-background-color);
+        color: var(--dialog-lightbox-text-color);
+      }
+      div.content {
+        text-align: center;
+        padding: 1rem;
+        background-color: var(--dialog-lightbox-background-color);
+        height: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+          display: inline-block;
+          max-height: 100%;
+          max-width: 100%;
+          padding: 0;
+          width: auto;
+          height: auto;
+          vertical-align: middle;
+        }
+      }
+    }
     @include for-phone-only {
       width: 100%;
       max-width: 100%;
@@ -190,6 +225,9 @@ div.window-container {
     @include for-phone-only {
       padding: .5em;
     }
+  }
+  &.lightbox {
+    background-color: var(--dialog-lightbox-background-color);
   }
 }
 

@@ -858,6 +858,10 @@ class DataGrid extends Panel {
             let c = this.buildCell(entry, this.getField(key));
             rowDOM.replaceChild(c, oldCell);
         }
+        rowDOM.classList.add('updated');
+        window.setTimeout(function() {
+            rowDOM.classList.remove('updated');
+        }, 10000);
     }
 
     /**
@@ -1841,7 +1845,7 @@ class DataGrid extends Panel {
         cell.setAttribute('data-datatype', field.type);
         cell.classList.add(field.name);
         cell.classList.add(field.type);
-        cell.innerHTML = content;
+        cell.append(content);
 
         if (field.classes) {
             for (let c of field.classes) {

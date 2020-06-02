@@ -9,6 +9,7 @@ class DialogWindow {
            content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
+           lightbox: true,    // For image types, if true, open the image in a lightbox
            title: null,  // Adds a title to the dialog if present. header must be null.
            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                           // or a string.  If it's a string, it creates a div at the bottom
@@ -131,6 +132,10 @@ class DialogWindow {
         for (let c of this.classes) {
             this.container.classList.add(c);
             this.window.classList.add(c);
+        }
+        if (this.lightbox) {
+            this.container.classList.add('lightbox');
+            this.window.classList.add('lightbox');
         }
 
         if ((this.title) || (this.header)) {
@@ -297,6 +302,9 @@ class DialogWindow {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get lightbox() { return this.config.lightbox ; }
+    set lightbox(lightbox) { this.config.lightbox = lightbox; }
 
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }

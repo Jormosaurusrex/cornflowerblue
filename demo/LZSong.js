@@ -31,6 +31,7 @@ class LZSong extends BusinessObject {
                     label: "Cover",
                     resize: true,
                     type: "imageurl",
+                    lightbox: true,
                     description: "The album cover."
                 }),
                 new GridField({
