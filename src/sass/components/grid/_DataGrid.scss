@@ -131,6 +131,9 @@ div.datagrid-container {
         filter: blur(3px);
       }
     }
+    &.hidden {
+      //display: none;
+    }
   }
   table.grid {
     width: 100%;

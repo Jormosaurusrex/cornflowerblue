@@ -348,6 +348,7 @@ class DataGrid extends Panel {
      */
     search(value) {
         this.messagebox.classList.add('hidden');
+        this.gridwrapper.classList.remove('hidden');
 
         let rows = Array.from(this.gridbody.childNodes);
 
@@ -386,12 +387,14 @@ class DataGrid extends Panel {
             if (matchesHiddenColumns) {
                 warnings.push(TextFactory.get('matches_hidden_columns'));
             }
-            this.messagebox.append(new MessageBox({
-                warningstitle: TextFactory.get('no_results'),
+            let mb = new WarningBox({
+                title: null,
                 warnings: warnings,
                 classes: ['hidden']
-            }).container);
+            });
+            this.messagebox.append(mb.container);
             this.messagebox.classList.remove('hidden');
+            this.gridwrapper.classList.add('hidden');
         }
     }
 
@@ -1379,7 +1382,7 @@ class DataGrid extends Panel {
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
-        this.container.append(this.messagebox);
+        this.gridwrapper.append(this.messagebox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
