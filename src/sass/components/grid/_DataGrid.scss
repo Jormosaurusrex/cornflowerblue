@@ -35,9 +35,8 @@
 
   --datagrid-title-background-color: var(--sublight);
   --datagrid-title-text-color: var(--grey-dark);
-
-
 }
+
 div.datagrid-container {
   position: relative;
   display: flex;
@@ -47,10 +46,10 @@ div.datagrid-container {
   max-height: 80vh;
   overflow: visible;
   padding: 0;
-  background-color: var(--datagrid-background-color);
+  background-color: var(--canvas-color-primary);
   h3 {
-    --panel-text-color: var(--datagrid-title-text-color);
-    background-color: var(--datagrid-title-background-color);
+    --panel-text-color: var(--colors-standard);
+    background-color: var(--canvas-color-secondary);
   }
   div.grid-info,
   div.grid-filterinfo {
@@ -59,27 +58,27 @@ div.datagrid-container {
     flex-direction: row;
     align-content: center;
     align-items: center;
-    padding: 0 1em 0 1em;
+    padding: 0 1rem;
     justify-content: flex-end;
   }
   div.grid-info {
     z-index: 900;
     flex-grow: 1;
-    height: 3em;
-    min-height: 3em;
+    height: 3rem;
+    min-height: 3rem;
     div.countbox {
       margin-right: auto;
       white-space: nowrap;
-      padding-right: 1em;
+      padding-right: 1rem;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       label {
         display: inline-block;
-        margin: 0 .5em 0 0;
+        margin: 0 .5rem 0 0;
       }
       div.activity {
-        margin-left: .5em;
+        margin-left: .5rem;
         color: var(--focus-color-half);
         > span.icon {
           display: inline-block;
@@ -97,30 +96,29 @@ div.datagrid-container {
       flex-wrap: wrap;
       height: unset;
       min-height: unset;
-      padding: .5em 0 .5em 0;
+      padding: .5rem 0;
       div.searchcontrol {
         order: -1;
-        margin-bottom: .5em;
+        margin-bottom: .5rem;
         margin-left: 0;
         align-self: center;
         input {
-          --input-focus-box-shadow: inset .5em 0 0 var(--input-focused-border-color), inset .1em -.1em 0 0 var(--input-focused-border-color), inset .1em .1em 0 0 var(--input-focused-border-color);
           width: auto;
-          border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+          border-radius: var(--border-radius) 0 0 var(--border-radius);
           padding: var(--input-default-padding);
-          background-color: var(--input-default-background-color);
+          background-color: var(--canvas-color-secondary);
         }
         button {
-          --button-border-color: var(--button-default-color);
+          //--button-border-color: var(--button-default-color);
+          //box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
           border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
-          box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
-          padding-left: .5em;
-          padding-right: .5em;
+          padding-left: .5rem;
+          padding-right: .5rem;
         }
       }
       button {
         margin: 0;
-        padding: .6em;
+        padding: .6rem;
         &.filter {
           span.icon {
             margin: 0;
@@ -134,9 +132,9 @@ div.datagrid-container {
   }
   div.grid-filterinfo {
     display: none;
-    background-color: var(--datagrid-filterinfo-background-color);
+    background-color: var(--canvas-color-secondary);
     label {
-      margin: 0 .5em 0 0;
+      margin: 0 .5rem 0 0;
     }
     div.grid-filtertags {
       flex-grow: 2;
@@ -146,7 +144,7 @@ div.datagrid-container {
       align-items: flex-start;
       justify-content: flex-start;
       button.tagbutton {
-        margin: .5em;
+        margin: .5rem;
       }
     }
     &[aria-expanded='true'] {
@@ -181,8 +179,8 @@ div.datagrid-container {
         th {
           cursor: pointer;
           padding: 0;
-          color: var(--datagrid-gridheader-text-color);
-          background-color: var(--datagrid-gridheader-background-color);
+          color: var(--colors-standard);
+          background-color: var(--canvas-color-tertiary);
           text-align: left;
           font-weight: normal;
           position: sticky;
@@ -202,7 +200,7 @@ div.datagrid-container {
               justify-content: center;
               align-items: center;
               transition: all .2s;
-              color: var(--datagrid-gridheader-color);
+              color: var(--colors-standard);
               opacity: 0;
             }
           }
@@ -210,9 +208,9 @@ div.datagrid-container {
           &:active,
           &.focus,
           &.active {
-            color: var(--datagrid-gridheader-hover-text-color);
-            text-shadow: var(--datagrid-gridheader-hover-text-shadow);
-            background-color: var(--datagrid-gridheader-hover-background-color);
+            color: var(--colors-affordance);
+            text-shadow: var(--text-shadow);
+            background-color: var(--canvas-color-secondary);
             outline: none;
           }
           @include for-hover-only {
@@ -221,9 +219,9 @@ div.datagrid-container {
               outline: none;
               text-decoration: underline;
               &:not(.mechanical) {
-                color: var(--datagrid-gridheader-hover-text-color);
-                text-shadow: var(--datagrid-gridheader-hover-text-shadow);
-                background-color: var(--datagrid-gridheader-hover-background-color);
+                color: var(--colors-affordance);
+                text-shadow: var(--text-shadow);
+                background-color: var(--canvas-color-secondary);
               }
             }
           }
@@ -244,7 +242,7 @@ div.datagrid-container {
           &[data-sort='asc'],
           &[data-sort='desc']{
             div.th {
-              box-shadow: inset 0px -.2em 0 0 var(--datagrid-gridheader-sort-highlight-color);
+              box-shadow: inset 0 -.2em 0 0 var(--colors-focus);
               &:before {
                 opacity: 1;
               }
@@ -261,12 +259,12 @@ div.datagrid-container {
       }
     }
     tbody {
+      background-color: var(--canvas-color-primary);
       tr {
-        background-color: var(--datagrid-grid-background-color);
-        color: var(--datagrid-grid-text-color);
-        box-shadow: inset 0 -.05em 0 0 var(--datagrid-line-color), inset 0 .05em 0 0 var(--datagrid-line-color);
+        color: var(--colors-standard);
+        box-shadow: inset 0 -.05em 0 0 var(--canvas-color-tertiary), inset 0 .05em 0 0 var(--canvas-color-tertiary);
         td {
-          padding: 1em;
+          padding: 1rem;
           white-space: nowrap;
           button {
             background-color: transparent;
@@ -278,12 +276,12 @@ div.datagrid-container {
             }
             &.menu {
               &[aria-expanded=true] {
-                --button-border-color: var(--focus-color);
-                --button-default-color: var(--focus-color);
-                --button-default-text-color: var(--focus-color);
+                --button-border-color: var(--colors-affordance);
+                --button-default-color: var(--colors-affordance);
+                --button-default-text-color: var(--colors-affordance);
                 opacity: 1;
                 background-image: none;
-                box-shadow: var(--button-ghost-box-shadow);
+                box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
               }
             }
           }
@@ -294,19 +292,14 @@ div.datagrid-container {
             font-size: .8em;
           }
           &.mechanical {
-            background-color: var(--datagrid-grid-mechanical-background-color);
+            background-color: var(--canvas-color-secondary);
             z-index: 102;
             opacity: 1;
-            box-shadow: inset 0 -.05em 0 0 var(--datagrid-line-color), inset 0 .05em 0 0 var(--datagrid-line-color);
+            box-shadow: inset 0 -.05em 0 0 var(--canvas-color-tertiary), inset 0 .05em 0 0 var(--canvas-color-tertiary);
           }
         }
         &:nth-child(even) {
-          background-color: var(--datagrid-grid-alternate-background-color);
-          td {
-            &.mechanical {
-              background-color: var(--datagrid-grid-mechanical-background-color);
-            }
-          }
+          background-color: rgba(var(--canvas-color-secondary-rgb), .8);
         }
         &.hidden,
         &.filtered,
@@ -347,10 +340,10 @@ div.datagrid-container {
       &.time {
         text-align: right;
         > div {
-          padding: .75em 1em .75em 1.5em;
+          padding: .75rem 1rem .75rem 1.5rem;
           &:before {
             right: unset;
-            left: 0.5em;
+            left: 0.5rem;
           }
         }
       }
@@ -381,14 +374,14 @@ div.datagrid-container {
           width: 0;
           max-width: 0;
           padding: 0;
-          --checkbox-size: 2em;
-          --checkbox-font-size: 2em;
+          --checkbox-size: 1.5em;
+          --checkbox-font-size: 1.5em;
           input {
             display: none;
           }
         }
         &.actions {
-          padding: 0 1em 0 1em;
+          padding: 0 1rem 0 1rem;
           button {
             font-size: .8em;
             opacity: .5;
@@ -411,7 +404,7 @@ div.datagrid-container {
       th,
       td {
         &.selector {
-          padding: 0 1em 0 1em;
+          padding: 0 1rem 0 1rem;
           width: auto;
           max-width: unset;
           display: table-cell;
@@ -433,17 +426,16 @@ div.datagrid-container {
       tbody {
         tr {
           cursor: pointer;
-          background-color: var(--ultralight);
           @include for-hover-only {
             &:hover {
-              background-color: var(--datagrid-grid-hover-background-color);
-              color: var(--datagrid-grid-hover-text-color);
-              text-shadow: var(--datagrid-grid-hover-text-shadow);
+              background-color: rgba(var(--colors-affordance-rgb), .5);
+              color: var(--colors-text-hot);
+              text-shadow: var(--text-shadow);
               > td {
                 opacity: 1;
-                background-color: var(--datagrid-grid-hover-background-color);
                 box-shadow: none;
                 &.mechanical {
+                  background-color: var(--colors-affordance);
                   input[type='checkbox'] {
                     --checkbox-checked-checkmark-hover-text-color: var(--colors-text-hot);
                     --checkbox-checked-checkmark-text-color: var(--colors-text-hot);
@@ -459,50 +451,50 @@ div.datagrid-container {
               }
             }
           }
-          &:focus {
-            outline: var(--datagrid-grid-selected-background-color) dashed .1em;
+          &:focus,
+          &:focus-within {
+            background-color: rgba(var(--colors-affordance-rgb), .5);
+            color: var(--colors-text-hot);
+            text-shadow: var(--text-shadow);
+            outline: var(--colors-text-hot) dashed .1rem;
             outline-offset: -.3em;
             > td {
               opacity: 1;
               &.mechanical {
-                outline: var(--datagrid-grid-selected-background-color) dashed .1em;
-                outline-offset: -.3em;
+                background-color: var(--colors-affordance);
+                button {
+                  outline: var(--colors-text-hot) dashed .1rem;
+                }
               }
             }
           }
           &[aria-selected=true] {
-            background-color: var(--datagrid-grid-multiselected-selected-background-color);
-            color: var(--datagrid-grid-multiselected-selected-text-color);
-            box-shadow: inset 0 -.05em 0 0 var(--datagrid-grid-multiselected-selected-background-color), inset 0 .05em 0 0 var(--datagrid-grid-multiselected-selected-background-color);
+            background-color: var(--colors-focus);
+            color: var(--colors-text-hot);
             > td {
               opacity: 1;
               &.mechanical {
-                box-shadow: inset 0 -.05em 0 0 var(--datagrid-grid-multiselected-selected-background-color), inset 0 .05em 0 0 var(--datagrid-grid-multiselected-selected-background-color);
-                background-color: var(--datagrid-grid-multiselected-selected-background-color);
+                background-color: var(--colors-focus);
                 button {
-                  color: var(--datagrid-grid-selected-text-color);
+                  color: var(--colors-text-hot);
                   opacity: 1;
                 }
               }
             }
             &:focus {
-              outline: var(--datagrid-grid-selected-text-color) dashed .1em;
-              > td.mechanical {
-                outline: var(--datagrid-grid-selected-text-color) dashed .1em;
-                outline-offset: -.3em;
-              }
+              background-color: var(--colors-focus);
+              outline: var(--colors-text-hot) dashed .1rem;
             }
             @include for-hover-only {
               &:hover {
-                background-color: var(--datagrid-grid-hover-background-color);
-                color: var(--datagrid-grid-hover-text-color);
-                text-shadow: var(--datagrid-grid-hover-text-shadow);
+                background-color: var(--colors-affordance);
+                color: var(--colors-text-hot);
+                text-shadow: var(--text-shadow);
                 > td {
                   opacity: 1;
-                  background-color: var(--datagrid-grid-hover-background-color);
                   box-shadow: none;
                   &.mechanical {
-                    //background-color: transparent;
+                    background-color: var(--colors-affordance);
                   }
                 }
               }
@@ -514,16 +506,14 @@ div.datagrid-container {
     &.schoriz {
       td.mechanical,
       th.mechanical {
-        box-shadow: .1em 0 .1em -.05em rgba(0, 0, 0, 0.25)
+        box-shadow: .1rem 0 .1rem -.05rem rgba(0, 0, 0, 0.5)
       }
     }
     &.scvert {
       thead {
         tr.header {
           th {
-            //box-shadow: 0 .2em .1em -.05em rgba(0, 0, 0, 0.25)
-            //box-shadow: 0 .3em .1em -.001em rgba(0, 0, 0, 0.25);
-            //box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+            box-shadow: inset 0 -.1rem 0 0 rgba(0, 0, 0, 0.5);
           }
         }
       }
@@ -533,7 +523,7 @@ div.datagrid-container {
     &.hidden {
       display: none;
     }
-    div.messagebox {
+    div.messagebox2 { // XXX FIX
       div.box.warnings {
         --color-base: var(--datagrid-messagebox-color-base);
         --stripe-base: var(--datagrid-messagebox-stripes-base);

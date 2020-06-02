@@ -1,5 +1,5 @@
 div.filter-configurator {
-  padding: 2em;
+  padding: 2rem;
   ul.filter-list {
     display: flex;
     flex-direction: column;
@@ -20,7 +20,6 @@ div.filter-configurator {
         cursor: pointer;
       }
       div.valueinput {
-
       }
       div.validmarker {
         opacity: 0;
@@ -29,8 +28,8 @@ div.filter-configurator {
         vertical-align: middle;
         line-height: 1em;
         font-size: 20pt;
-        text-shadow: var(--input-status-valid-icon-text-shadow);
-        color: var(--input-status-valid-icon-color);
+        text-shadow: var(--text-shadow);
+        color: var(--colors-success);
         flex-direction: column;
         justify-content: center;
         align-content: center;
@@ -60,8 +59,8 @@ div.filter-configurator {
           min-width: 75%;
         }
         div.comparator {
-          margin-top: .5em;
-          margin-bottom: .5em;
+          margin-top: .5rem;
+          margin-bottom: .5rem;
         }
         div.valueinput {
           margin-right: 0;
@@ -78,7 +77,6 @@ div.filter-configurator {
             width: auto;
           }
         }
-
       }
     }
   }

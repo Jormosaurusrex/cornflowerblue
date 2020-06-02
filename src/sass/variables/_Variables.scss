@@ -20,10 +20,14 @@
   --thin-measure: 25em;
 
   // Canvas colors
-  --canvas-color-primary: var(--ultralight);
-  --canvas-color-secondary: var(--morelight);
-  --canvas-color-tertiary: var(--sublight);
-  --canvas-color-highlight: var(--cornflowerblue-light);
+  --canvas-color-primary-rgb: var(--ultralight-rgb);
+  --canvas-color-primary: rgb(var(--canvas-color-primary-rgb));
+  --canvas-color-secondary-rgb: var(--morelight-rgb);
+  --canvas-color-secondary: rgb(var(--canvas-color-secondary-rgb));
+  --canvas-color-tertiary-rgb: var(--sublight-rgb);
+  --canvas-color-tertiary: rgb(var(--canvas-color-tertiary-rgb));
+  --canvas-color-highlight-rgb: var(--cornflowerblue-light-rgb);
+  --canvas-color-highlight: rgb(var(--canvas-color-highlight-rgb));
   --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
 
   // Semantic colors

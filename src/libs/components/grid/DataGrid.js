@@ -1283,7 +1283,6 @@ class DataGrid extends Panel {
             }
             row.setAttribute('aria-selected', 'true');
             row.querySelector('input.selector').checked = true;
-
         } else {
 
             row.setAttribute('aria-selected', 'true');
