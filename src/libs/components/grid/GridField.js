@@ -128,7 +128,7 @@ class GridField {
             case 'enumeration':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return this.getValue(d);
+                        return me.getValue(d);
                     }
                 }
                 break;
@@ -161,7 +161,7 @@ class GridField {
         let value;
         if ((this.values) && (this.values.length > 0)) {
             for (let def of this.values) {
-                if (def.key === 'key') {
+                if (def.key === key) {
                     value = def.value;
                     break;
                 }

@@ -763,7 +763,7 @@ class CornflowerBlueDemo {
         console.log(element);
     }
 
-    grindDataGrids() {;
+    grindDataGrids() {
 
         let dg = new DataGrid({
             id: 'cfb-demo-grid-lz',

@@ -76,8 +76,8 @@ class LZSong extends BusinessObject {
                     description: "The record label the album was released by.",
                     type: "enumeration",
                     values: [
-                        { label: 'Atlantic', value: 'Atlantic', default: true },
-                        { label: 'Swan Song', value: 'Swan Song', default: true }
+                        { key: 'Atlantic', value: 'Atlantic', default: true },
+                        { key: 'Swan Song', value: 'Swan Song', default: true }
                     ]
                 }),
                 new GridField({
