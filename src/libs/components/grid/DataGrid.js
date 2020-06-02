@@ -5,6 +5,7 @@ class DataGrid extends Panel {
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
+            collapsible: true, // can the panel collapse (passed to the Panel)
 
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -1932,12 +1933,6 @@ class DataGrid extends Panel {
     get duplicateiteminstructions() { return this.config.duplicateiteminstructions; }
     set duplicateiteminstructions(duplicateiteminstructions) { this.config.duplicateiteminstructions = duplicateiteminstructions; }
 
-    get edititeminstructions() { return this.config.edititeminstructions; }
-    set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
-
-    get elementname() { return this.config.elementname; }
-    set elementname(elementname) { this.config.elementname = elementname; }
-
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
 
@@ -1962,6 +1957,12 @@ class DataGrid extends Panel {
         }
         this.config.doubleclick = doubleclick;
     }
+
+    get edititeminstructions() { return this.config.edititeminstructions; }
+    set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
+
+    get elementname() { return this.config.elementname; }
+    set elementname(elementname) { this.config.elementname = elementname; }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }

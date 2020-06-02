@@ -1,15 +1,15 @@
 div.searchcontrol {
+  --button-default-color: var(--input-default-border-color);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: stretch;
-  --button-default-color: var(--input-default-border-color);
+  justify-content: flex-end;
   input {
     width: 0;
     padding: .6em 0 .6em 0;
     font-size: 1em;
     border: none;
-    background-color: transparent;
     box-shadow: none;
   }
   button {
@@ -19,32 +19,14 @@ div.searchcontrol {
   &:focus-within {
     input {
       width: 100%;
-      border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
       padding: var(--input-default-padding);
-      background-color: var(--input-default-background-color);
     }
     button {
-      --button-border-color: transparent;
-      border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
-      box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
-      &.mute,
-      &.ghost {
-        --button-border-color: var(--input-focused-border-color);
-      }
-      &:hover {
-        --button-border-color: transparent;
-        &.mute,
-        &.ghost {
-          --button-border-color: var(--focus-color);
-        }
-      }
-      &:focus {
-        --button-border-color: transparent;
-        &.mute,
-        &.ghost {
-          --button-border-color: var(--focus-color);
-        }
-      }
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      background-color: var(--colors-affordance);
+      color: var(--colors-text-hot);
     }
   }
 }

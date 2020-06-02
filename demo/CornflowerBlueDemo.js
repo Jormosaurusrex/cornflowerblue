@@ -769,6 +769,7 @@ class CornflowerBlueDemo {
             id: 'cfb-demo-grid-lz',
             title: 'Songs by Led Zeppelin',
             elementname: 'Song',
+            collapsible: false,
             warehouse: new LZSong(),
             //minimized: true,
             //data: this.getLZDiscograpy(),
