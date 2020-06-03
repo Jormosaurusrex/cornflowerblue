@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-05-28
+/*! Cornflower Blue - v0.1.1 - 2020-06-02
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2616,6 +2616,7 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
+            stayopen: false, // Set true for it to stay open when elements are clicked within.
             gravity: 's', // Gravity direction for the menu
             tooltipgravity: 'e', // Gravity direction for the tooltips
             data: null, // A place to store information that the button actions may need, if the menu is
@@ -2731,6 +2732,9 @@ class ButtonMenu extends SimpleButton {
 
     }
 
+    /**
+     * Position the menu
+     */
     setPosition() {
         if (!ButtonMenu.activeMenu) { return; }
         let self = ButtonMenu.activeMenu;
@@ -2796,9 +2800,7 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '-1');
             }
         }
-
         ButtonMenu.activeMenu = null;
-
     }
 
     /**
@@ -2813,8 +2815,9 @@ class ButtonMenu extends SimpleButton {
 
         window.addEventListener('click', function(e) {
             let tag = me.menu.tagName.toLowerCase();
-            if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+            if (((me.menu.contains(e.target))) && (me.stayopen)) {
                 me.setCloseListener();
+            } else if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
             } else if (me.menu.contains(e.target)) {
                 me.close();
             } else if (me.button.contains(e.target)) {
@@ -2939,6 +2942,9 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get stayopen() { return this.config.stayopen; }
+    set stayopen(stayopen) { this.config.stayopen = stayopen; }
 
     get tooltipgravity() { return this.config.tooltipgravity; }
     set tooltipgravity(tooltipgravity) { this.config.tooltipgravity = tooltipgravity; }
@@ -4311,6 +4317,7 @@ class DataGrid extends Panel {
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
+            collapsible: true, // can the panel collapse (passed to the Panel)
 
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -4653,6 +4660,7 @@ class DataGrid extends Panel {
      */
     search(value) {
         this.messagebox.classList.add('hidden');
+        this.gridwrapper.classList.remove('hidden');
 
         let rows = Array.from(this.gridbody.childNodes);
 
@@ -4691,12 +4699,14 @@ class DataGrid extends Panel {
             if (matchesHiddenColumns) {
                 warnings.push(TextFactory.get('matches_hidden_columns'));
             }
-            this.messagebox.append(new MessageBox({
-                warningstitle: TextFactory.get('no_results'),
+            let mb = new WarningBox({
+                title: null,
                 warnings: warnings,
                 classes: ['hidden']
-            }).container);
+            });
+            this.messagebox.append(mb.container);
             this.messagebox.classList.remove('hidden');
+            this.gridwrapper.classList.add('hidden');
         }
     }
 
@@ -5160,6 +5170,10 @@ class DataGrid extends Panel {
             let c = this.buildCell(entry, this.getField(key));
             rowDOM.replaceChild(c, oldCell);
         }
+        rowDOM.classList.add('updated');
+        window.setTimeout(function() {
+            rowDOM.classList.remove('updated');
+        }, 10000);
     }
 
     /**
@@ -5589,7 +5603,6 @@ class DataGrid extends Panel {
             }
             row.setAttribute('aria-selected', 'true');
             row.querySelector('input.selector').checked = true;
-
         } else {
 
             row.setAttribute('aria-selected', 'true');
@@ -5685,7 +5698,7 @@ class DataGrid extends Panel {
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
-        this.container.append(this.messagebox);
+        this.gridwrapper.append(this.messagebox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
@@ -6144,7 +6157,7 @@ class DataGrid extends Panel {
         cell.setAttribute('data-datatype', field.type);
         cell.classList.add(field.name);
         cell.classList.add(field.type);
-        cell.innerHTML = content;
+        cell.append(content);
 
         if (field.classes) {
             for (let c of field.classes) {
@@ -6239,12 +6252,6 @@ class DataGrid extends Panel {
     get duplicateiteminstructions() { return this.config.duplicateiteminstructions; }
     set duplicateiteminstructions(duplicateiteminstructions) { this.config.duplicateiteminstructions = duplicateiteminstructions; }
 
-    get edititeminstructions() { return this.config.edititeminstructions; }
-    set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
-
-    get elementname() { return this.config.elementname; }
-    set elementname(elementname) { this.config.elementname = elementname; }
-
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
 
@@ -6269,6 +6276,12 @@ class DataGrid extends Panel {
         }
         this.config.doubleclick = doubleclick;
     }
+
+    get edititeminstructions() { return this.config.edititeminstructions; }
+    set edititeminstructions(edititeminstructions) { this.config.edititeminstructions = edititeminstructions; }
+
+    get elementname() { return this.config.elementname; }
+    set elementname(elementname) { this.config.elementname = elementname; }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }
@@ -6850,6 +6863,7 @@ class GridField {
                                //  ]
             separator: ', ',   // Used when rendering array values
             placeholder: null, // The placeholder to use in the field
+            lightbox: true,    // For image types, if true, open the image in a lightbox
             minnumber: null,   // The minnumber to use in the field
             maxnumber: null,   // The maxnumber to use in the field
             nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
@@ -6936,8 +6950,27 @@ class GridField {
                 break;
             case 'imageurl':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return `<a href="${d}"><img src="${d}" /></a>`;
+                    if (this.lightbox) {
+                        this.renderer = function(d) {
+                            let img = document.createElement('img');
+                            img.setAttribute('src', d);
+                            let anchor = document.createElement('a');
+                            anchor.append(img);
+                            anchor.addEventListener('click', function() {
+                                let i = document.createElement('img');
+                                i.setAttribute('src', d);
+                                new DialogWindow({
+                                    lightbox: true,
+                                    title: me.label,
+                                    content: i
+                                }).open();
+                            });
+                            return anchor;
+                        }
+                    } else {
+                        this.renderer = function(d) {
+                            return `<a href="${d}"><img src="${d}" /></a>`;
+                        }
                     }
                 }
                 break;
@@ -6951,7 +6984,7 @@ class GridField {
             case 'enumeration':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return this.getValue(d);
+                        return me.getValue(d);
                     }
                 }
                 break;
@@ -6984,7 +7017,7 @@ class GridField {
         let value;
         if ((this.values) && (this.values.length > 0)) {
             for (let def of this.values) {
-                if (def.key === 'key') {
+                if (def.key === key) {
                     value = def.value;
                     break;
                 }
@@ -7133,6 +7166,9 @@ class GridField {
 
     get label() { return this.config.label ; }
     set label(label) { this.config.label = label; }
+
+    get lightbox() { return this.config.lightbox ; }
+    set lightbox(lightbox) { this.config.lightbox = lightbox; }
 
     get maxnumber() { return this.config.maxnumber ; }
     set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
@@ -7499,6 +7535,7 @@ class DialogWindow {
            content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
+           lightbox: true,    // For image types, if true, open the image in a lightbox
            title: null,  // Adds a title to the dialog if present. header must be null.
            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                           // or a string.  If it's a string, it creates a div at the bottom
@@ -7621,6 +7658,10 @@ class DialogWindow {
         for (let c of this.classes) {
             this.container.classList.add(c);
             this.window.classList.add(c);
+        }
+        if (this.lightbox) {
+            this.container.classList.add('lightbox');
+            this.window.classList.add('lightbox');
         }
 
         if ((this.title) || (this.header)) {
@@ -7787,6 +7828,9 @@ class DialogWindow {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get lightbox() { return this.config.lightbox ; }
+    set lightbox(lightbox) { this.config.lightbox = lightbox; }
 
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }
@@ -10048,10 +10092,10 @@ class InputElement {
         }
         if ((this.errors.length > 0) || (this.warnings.length > 0)) {
             this.showMessages();
+            this.container.classList.remove('valid');
+            this.input.removeAttribute('aria-invalid');
             if (this.errors.length > 0) {
                 this.input.setAttribute('aria-invalid', 'true');
-            } else {
-                this.input.removeAttribute('aria-invalid');
             }
         } else {
             this.clearMessages();
@@ -11382,7 +11426,7 @@ class BooleanToggle {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
-        this.container.classList.add('checkbox');
+        this.container.classList.add('checkbox-container');
 
         if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }
@@ -11391,13 +11435,13 @@ class BooleanToggle {
             this.container.classList.add(c);
         }
 
-        if (this.labelside === 'right') {
-            this.container.classList.add('rightside');
-            this.container.appendChild(this.toggle);
+        if (this.labelside === 'left') {
+            this.container.classList.add('leftside');
             this.container.appendChild(this.labelobj);
+            this.container.appendChild(this.toggle);
         } else {
-            this.container.appendChild(this.labelobj);
             this.container.appendChild(this.toggle);
+            this.container.appendChild(this.labelobj);
         }
     }
 

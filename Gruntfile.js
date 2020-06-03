@@ -82,6 +82,13 @@ module.exports = function(grunt) {
 
                 ],
                 dest: 'dist/lib/cornflowerblue.js'
+            },
+            pwgenerator: {
+                src: [
+                    'example/passwordgenerator/src/lib/PasswordChangeForm.js',
+                    'example/passwordgenerator/src/lib/PasswordGenerator.js'
+                ],
+                dest: 'example/passwordgenerator/dist/cfb-passwordgenerator.js'
             }
         },
         uglify: {
@@ -91,6 +98,10 @@ module.exports = function(grunt) {
             dist: {
                 src: '<%= concat.dist.dest %>',
                 dest: 'dist/lib/cornflowerblue.min.js'
+            },
+            pwgenerator: {
+                src: '<%= concat.pwgenerator.dest %>',
+                dest: 'example/passwordgenerator/dist/lib/cfb-passwordgenerator.min.js'
             }
         },
         jshint: {
@@ -122,6 +133,30 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'dist/style/cornflowerblue.css': 'src/sass/cornflowerblue.scss'
+                }
+            },
+            bodylevels: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'dist/style/cornflowerblue-bodylevel.css': 'src/sass/cornflowerblue-bodylevel.scss'
+                }
+            },
+            sandbox: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'dist/style/cornflowerblue-sandbox.css': 'src/sass/cornflowerblue-sandbox.scss'
+                }
+            },
+            pwgenerator: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'example/passwordgenerator/dist/style/passwordgenerator.css': 'example/passwordgenerator/src/sass/passwordgenerator.scss'
                 }
             }
         },

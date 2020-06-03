@@ -34,8 +34,8 @@ textarea {
   box-shadow: inset -.1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
-  color: var(--input-default-text-color);
-  text-shadow:var(--input-default-text-shadow);
+  color: var(--colors-standard);
+  text-shadow:var(--text-shadow);
   vertical-align: middle;
   &::placeholder {
     color: rgba(var(--input-border-color-rgb), 0.7);

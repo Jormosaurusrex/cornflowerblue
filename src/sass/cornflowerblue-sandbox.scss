@@ -3,7 +3,6 @@
 
 @import "lib/Mixins";
 @import "lib/Animations";
-@import "lib/Font";
 
 @import "html/Core.scss";
 @import "html/Blocks.scss";
@@ -14,13 +13,11 @@
 @import "html/Texts.scss";
 
 @import "elements/Buttons";
-@import "elements/ButtonMenuBodyLevel"; // Body level button menus
 @import "elements/ChecksAndRadios";
 @import "elements/Containers";
 @import "elements/Inputs";
 @import "elements/FileInput";
 @import "elements/SelectMenu";
-@import "elements/SelectMenuBodyLevel"; // The body-level elements for SelectBoxes
 
 @import "components/DatePicker";
 @import "components/DialogWindow";
@@ -31,7 +28,6 @@
 @import "components/ProgressMeter";
 @import "components/SearchControl";
 @import "components/TabBar";
-@import "components/Tooltip";  // Tooltips are body level
 
 // The Datagrid, which is multiple files
 @import "components/grid/DataGrid";
