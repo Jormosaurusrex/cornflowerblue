@@ -1,11 +1,3 @@
-:root {
-  --checkbox-border-color-rgb: var(--colors-standard-rgb);
-  --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
-  --checkbox-size: 2em; // Total box size
-  --checkbox-font-size: 2em; // For the checkmark symbol
-  --checkbox-toggle-size: 1.3em; // For filled checkboxes and radios
-  --checkbox-toggle-offset: 0.2em;
-}
 div.checkbox-container {
   display: flex;
   flex-direction: row;

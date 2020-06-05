@@ -1,37 +1,3 @@
-:root {
-  // Boxes
-  // MessageBoxen
-  --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--colors-standard);
-  --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--colors-standard);
-  --messagebox-icon-text-shadow: none;
-
-  // Results box keys
-  --resultsbox-header-text-color: var(--colors-text-hot);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-background-color: var(--canvas-color-primary);
-  --resultsbox-icon-text-shadow: var(--text-shadow);
-  --resultsbox-text-shadow: var(--text-shadow);
-
-  --successbox-color-base: var(--success-color);
-  --successbox-stripes: var(--success-stripes);
-
-  --warningbox-title-color: var(--grey-darkest);
-  --warningbox-color-base: var(--warning-color);
-  --warningbox-stripes: var(--warning-stripes);
-  --errorbox-color-base: var(--error-color);
-  --errorbox-stripes: var(--error-stripes);
-
-  // Instruction box keys
-  --instructions-background-color: var(--canvas-color-secondary);
-  --instructions-border-color: var(--canvas-color-tertiary);
-  --instructions-text-color: var(--colors-standard);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--colors-standard);
-
-}
 div.messagebox {
   margin: 1rem 0 1rem 0;
   padding: 1em;

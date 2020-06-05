@@ -92,8 +92,8 @@ class DateInput extends TextInput {
                     me.input.focus();
                 } else {
                     self.open();
+                    me.datepicker.renderMonth(me.value);
                 }
-                me.datepicker.renderMonth(me.value);
                 e.stopPropagation();
             },
         });

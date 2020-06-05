@@ -1,11 +1,3 @@
-:root {
-
-  --input-status-default-background-color: var(--grey-dark);
-  --input-status-icon-color: var(--morelight);
-  --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-color-rgb: var(--blue-rgb);  // This is going to be the primary color for this
-
-}
 div.input-container,
 p.input-container,
 div.textarea-container,
@@ -69,6 +61,7 @@ p.textarea-container {
       right: 3.5em;
       top: .7em;
       margin: 0;
+      z-index: 500;
       flex-direction: column;
       justify-content: center;
       align-items: center;

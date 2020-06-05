@@ -1,18 +1,3 @@
-:root {
-  // Input
-  --input-default-padding: .5em 1em .5em 1.5em;
-  --input-border-radius: .1em;
-
-  --input-border-color-rgb: var(--colors-standard-rgb);
-  --input-border-color: rgb(var(--input-border-color-rgb));
-
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
-
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
-
-}
 [hidden] { display: none; }
 input[type="text"],
 input[type="number"],

@@ -306,6 +306,7 @@ class TabBar {
                 } else if (me.action) {
                     me.action(tabdef.id, me);
                 }
+                link.blur();
             });
         }
 
@@ -349,7 +350,6 @@ class TabBar {
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
-
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
         }, 200);

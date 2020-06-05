@@ -106,9 +106,11 @@ class ButtonMenu extends SimpleButton {
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        if ((focusable) && (focusable.length > 0)) {
-            focusable[0].focus();
-        }
+        window.setTimeout(function() { // Do the focus thing late
+            if ((focusable) && (focusable.length > 0)) {
+                focusable[0].focus();
+            }
+        }, 200);
 
         if (this.autoclose) {
             window.setTimeout(function() { // Set this after, or else we'll get bouncing.

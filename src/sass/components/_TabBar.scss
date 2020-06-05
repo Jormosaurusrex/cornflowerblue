@@ -1,10 +1,3 @@
-:root {
-  // TabBars
-  --tabbar-tab-height: 3em;
-  --tabbar-background-color: var(--canvas-color-primary);
-  --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-collapsed-height: 3.5em;
-}
 ul.tabbar {
   list-style-type: none;
   display: flex;

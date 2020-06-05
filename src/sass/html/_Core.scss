@@ -1,8 +1,3 @@
-:root {
-  // Horizontal rules
-  --hr-background-color: transparent;
-  --hr-border-color: var(--grey-medium);
-}
 * {
   padding: 0;
   margin: 0;
@@ -22,7 +17,7 @@ html {
 }
 html,
 body {
-  color: var(--text-color);
+  color: var(--colors-text-default);
   ::selection {
     background-color: var(--colors-highlight);
     color: var(--colors-text-hot);

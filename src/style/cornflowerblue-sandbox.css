@@ -7,9 +7,8 @@
   --fontstack-monospace: "Lucida Console", Monaco, monospace;
   --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
-  --text-color: var(--grey-dark);
+  --colors-text-default: var(--grey-dark);
   --colors-text-hot: var(--ultralight);
-  --required-color: var(--red);
   --text-shadow: var(--text-shadow-light);
   --wide-measure: 40em;
   --thin-measure: 25em;
@@ -73,6 +72,132 @@
   --interior-shadows-inside-dark: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
   --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
   --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  --dialog-window-mask-color: var(--white);
+  --dialog-window-mask-opacity: .25;
+  --dialog-lightbox-background-color: var(--black);
+  --dialog-lightbox-text-color: var(--colors-text-hot);
+  --messagebox-background-color: var(--canvas-color-colored);
+  --messagebox-text-color: var(--colors-standard);
+  --messagebox-text-shadow: var(--text-shadow);
+  --messagebox-icon-color: var(--colors-standard);
+  --messagebox-icon-text-shadow: none;
+  --resultsbox-header-text-color: var(--colors-text-hot);
+  --resultsbox-header-text-shadow: var(--text-shadow);
+  --resultsbox-background-color: var(--canvas-color-primary);
+  --resultsbox-icon-text-shadow: var(--text-shadow);
+  --resultsbox-text-shadow: var(--text-shadow);
+  --successbox-color-base: var(--success-color);
+  --successbox-stripes: var(--success-stripes);
+  --warningbox-title-color: var(--grey-darkest);
+  --warningbox-color-base: var(--warning-color);
+  --warningbox-stripes: var(--warning-stripes);
+  --errorbox-color-base: var(--error-color);
+  --errorbox-stripes: var(--error-stripes);
+  --instructions-background-color: var(--canvas-color-secondary);
+  --instructions-border-color: var(--canvas-color-tertiary);
+  --instructions-text-color: var(--colors-standard);
+  --instructions-text-shadow: var(--text-shadow);
+  --instructions-icon-text-shadow: none;
+  --instructions-icon-color: var(--colors-standard);
+  --code-font-family: var(--fontstack-monospace);
+  --hr-background-color: transparent;
+  --hr-border-color: var(--grey-medium);
+  --link-color: var(--colors-affordance);
+  --link-text-shadow: var(--on-white-text-shadow);
+  --panel-max-width: 22em;
+  --panel-border-radius: var(--border-radius);
+  --panel-background-color: var(--canvas-color-primary);
+  --panel-box-shadow: var(--panel-shadow);
+  --panel-text-color: var(--grey-darkest);
+  --panel-text-shadow: var(--text-shadow);
+  --panel-padding: .5em 1em .5em 1em;
+  --panel-closed-hover-background-color: var(--focus-color);
+  --panel-closed-hover-text-color: var(--colors-text-hot);
+  --progressmeter-core-color-rgb: var(--colors-highlight-rgb);
+  --progressmeter-core-color: rgb(var(--progressmeter-core-color-rgb));
+  --progressmeter-gutter-color: rgba(var(--progressmeter-core-color-rgb), 0.25);
+  --progressmeter-tick-color: var(--colors-text-hot);
+  --tabbar-tab-height: 3em;
+  --tabbar-background-color: var(--canvas-color-primary);
+  --tabbar-box-shadow: var(--panel-shadow-light);
+  --tabbar-collapsed-height: 3.5em;
+  --checkbox-border-color-rgb: var(--colors-standard-rgb);
+  --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
+  --checkbox-size: 2em;
+  --checkbox-font-size: 2em;
+  --checkbox-toggle-size: 1.3em;
+  --checkbox-toggle-offset: 0.2em;
+  --button-box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
+  --button-hover-box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+  --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
+  --button-border-radius: var(--border-radius);
+  --button-default-color: var(--colors-affordance);
+  --button-default-text-color: var(--colors-text-hot);
+  --button-hover-text-color: var(--colors-text-hot);
+  --button-hover-highlight-color: var(--white-half);
+  --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
+  --button-hover-filter: brightness(120%);
+  --button-active-gradient: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);
+  --button-active-filter: brightness(90%);
+  --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
+  --button-font-family: var(--default-font-family);
+  --button-text-shadow: var(--text-shadow);
+  --input-status-default-background-color: var(--grey-dark);
+  --input-status-icon-color: var(--morelight);
+  --input-status-icon-text-shadow: var(--text-shadow);
+  --input-status-color-rgb: var(--blue-rgb);
+  --input-default-padding: .5em 1em .5em 1.5em;
+  --input-border-radius: .1em;
+  --input-border-color-rgb: var(--colors-standard-rgb);
+  --input-border-color: rgb(var(--input-border-color-rgb));
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
+  --growler-max-width: 20em;
+  --growler-core-color-rgb: var(--colors-highlight-rgb);
+  --growler-core-color: rgb(var(--growler-core-color-rgb));
+  --growler-header-text-color: var(--colors-hot-text);
+  --growler-core-color: var(--blue);
+  --growler-border-radius: var(--border-radius);
+  --growler-box-shadow: var(--panel-shadow);
+  --growler-text-color: var(--grey-darkest);
+  --growler-text-shadow: var(--text-shadow);
+  --growler-default-background-color: var(--ultralight);
+  --growler-default-border-color: var(--growler-core-color);
+  --growler-header-text-color: var(--ultralight);
+  --growler-header-text-shadow: var(--text-shadow);
+  --growler-header-background-color: var(--growler-core-color);
+  --headers-h1-text-color: var(--grey-meddark);
+  --headers-h1-text-shadow: none;
+  --headers-h1-text-transform: uppercase;
+  --headers-h1-background-color: transparent;
+  --headers-h1-border-color: var(--grey-medium);
+  --headers-h2-text-color: var(--grey-meddark);
+  --headers-h2-text-shadow: none;
+  --headers-h2-text-transform: uppercase;
+  --headers-h2-background-color: transparent;
+  --headers-h2-border-color: var(--grey-medium);
+  --headers-h3-text-color: var(--grey-darker);
+  --headers-h3-text-shadow: none;
+  --headers-h3-text-transform: uppercase;
+  --headers-h3-background-color: transparent;
+  --headers-h3-border-color: var(--grey-medium);
+  --headers-h4-text-color: var(--grey-darker);
+  --headers-h4-text-shadow: none;
+  --headers-h4-text-transform: uppercase;
+  --headers-h4-background-color: transparent;
+  --headers-h4-border-color: var(--grey-medium);
+  --headers-h5-text-color: var(--grey-darkest);
+  --headers-h5-text-shadow: none;
+  --headers-h5-text-transform: uppercase;
+  --headers-h5-background-color: transparent;
+  --headers-h5-border-color: var(--grey-medium);
+  --headers-h6-text-color: var(--grey-darkest);
+  --headers-h6-text-shadow: none;
+  --headers-h6-text-transform: uppercase;
+  --headers-h6-background-color: transparent;
+  --headers-h6-border-color: var(--grey-medium);
 }
 
 :root {
@@ -286,11 +411,6 @@
     width: auto;
   }
 }
-:root {
-  --hr-background-color: transparent;
-  --hr-border-color: var(--grey-medium);
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -314,7 +434,7 @@ html {
 
 html,
 body {
-  color: var(--text-color);
+  color: var(--colors-text-default);
 }
 html ::selection,
 body ::selection {
@@ -342,10 +462,6 @@ hr {
   border-bottom: none;
   border-left: none;
   border-right: none;
-}
-
-:root {
-  --code-font-family: var(--fontstack-monospace);
 }
 
 blockquote {
@@ -493,39 +609,6 @@ form.passive div.passiveactions {
   display: flex;
 }
 
-:root {
-  --headers-h1-text-color: var(--grey-meddark);
-  --headers-h1-text-shadow: none;
-  --headers-h1-text-transform: uppercase;
-  --headers-h1-background-color: transparent;
-  --headers-h1-border-color: var(--grey-medium);
-  --headers-h2-text-color: var(--grey-meddark);
-  --headers-h2-text-shadow: none;
-  --headers-h2-text-transform: uppercase;
-  --headers-h2-background-color: transparent;
-  --headers-h2-border-color: var(--grey-medium);
-  --headers-h3-text-color: var(--grey-darker);
-  --headers-h3-text-shadow: none;
-  --headers-h3-text-transform: uppercase;
-  --headers-h3-background-color: transparent;
-  --headers-h3-border-color: var(--grey-medium);
-  --headers-h4-text-color: var(--grey-darker);
-  --headers-h4-text-shadow: none;
-  --headers-h4-text-transform: uppercase;
-  --headers-h4-background-color: transparent;
-  --headers-h4-border-color: var(--grey-medium);
-  --headers-h5-text-color: var(--grey-darkest);
-  --headers-h5-text-shadow: none;
-  --headers-h5-text-transform: uppercase;
-  --headers-h5-background-color: transparent;
-  --headers-h5-border-color: var(--grey-medium);
-  --headers-h6-text-color: var(--grey-darkest);
-  --headers-h6-text-shadow: none;
-  --headers-h6-text-transform: uppercase;
-  --headers-h6-background-color: transparent;
-  --headers-h6-border-color: var(--grey-medium);
-}
-
 h1 {
   font-size: 3.5rem;
   font-weight: 500;
@@ -665,11 +748,6 @@ h6.fancy:after {
   margin-left: 0.5rem;
 }
 
-:root {
-  --link-color: var(--colors-affordance);
-  --link-text-shadow: var(--on-white-text-shadow);
-}
-
 a {
   color: var(--link-color);
   text-shadow: var(--link-text-shadow);
@@ -785,24 +863,6 @@ sup {
   font-size: 0.8rem;
   line-height: 1;
   background-color: transparent;
-}
-
-:root {
-  --button-box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
-  --button-hover-box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
-  --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
-  --button-border-radius: var(--border-radius);
-  --button-default-color: var(--colors-affordance);
-  --button-default-text-color: var(--colors-text-hot);
-  --button-hover-text-color: var(--colors-text-hot);
-  --button-hover-highlight-color: var(--white-half);
-  --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
-  --button-hover-filter: brightness(120%);
-  --button-active-gradient: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);
-  --button-active-filter: brightness(90%);
-  --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
-  --button-font-family: var(--default-font-family);
-  --button-text-shadow: var(--text-shadow);
 }
 
 button,
@@ -1763,15 +1823,6 @@ a.button.menu[aria-expanded=true] ul.menu {
   display: flex;
 }
 
-:root {
-  --checkbox-border-color-rgb: var(--colors-standard-rgb);
-  --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
-  --checkbox-size: 2em;
-  --checkbox-font-size: 2em;
-  --checkbox-toggle-size: 1.3em;
-  --checkbox-toggle-offset: 0.2em;
-}
-
 div.checkbox-container {
   display: flex;
   flex-direction: row;
@@ -2149,13 +2200,6 @@ input[type=radio]:checked + label:disabled:checked:after {
   text-shadow: none !important;
 }
 
-:root {
-  --input-status-default-background-color: var(--grey-dark);
-  --input-status-icon-color: var(--morelight);
-  --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-color-rgb: var(--blue-rgb);
-}
-
 div.input-container,
 p.input-container,
 div.textarea-container,
@@ -2275,6 +2319,7 @@ p.textarea-container div.wrap:before {
   right: 3.5em;
   top: 0.7em;
   margin: 0;
+  z-index: 500;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -2804,17 +2849,6 @@ div.textarea-container div.passivebox {
   min-height: 4em;
 }
 
-:root {
-  --input-default-padding: .5em 1em .5em 1.5em;
-  --input-border-radius: .1em;
-  --input-border-color-rgb: var(--colors-standard-rgb);
-  --input-border-color: rgb(var(--input-border-color-rgb));
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
-}
-
 [hidden] {
   display: none;
 }
@@ -3026,12 +3060,6 @@ div.file-container.disabled {
 div.select-container {
   position: relative;
 }
-div.select-container.disabled label {
-  text-shadow: none;
-}
-div.select-container.disabled div[role=listbox] {
-  display: none;
-}
 div.select-container div.wrap {
   display: block;
   position: relative;
@@ -3051,19 +3079,22 @@ div.select-container div.wrap[aria-expanded=true]:before {
 div.select-container.mute label {
   opacity: 1;
 }
-div.select-container.mute[aria-expanded=true] input.trigger, div.select-container.mute:focus-within input.trigger {
+div.select-container.mute div.wrap[aria-expanded=true] input.trigger, div.select-container.mute div.wrap:focus-within input.trigger {
   --input-border-color-rgb: var(--colors-affordance-rgb);
   background-color: rgba(var(--input-border-color-rgb), 0.05);
   box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
 }
+div.select-container.disabled label {
+  text-shadow: none;
+}
+div.select-container.disabled div[role=listbox] {
+  display: none;
+}
 div.select-container.disabled input.trigger:before {
   opacity: 0.5;
 }
-:root {
-  --datepicker-cell-dimensions: 2.5em;
-}
-
 div.datepicker {
+  --datepicker-cell-dimensions: 2.5em;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -3172,13 +3203,6 @@ div.datepicker.button-menu {
 }
 div.datepicker.button-menu div.monthbox {
   padding: 0;
-}
-
-:root {
-  --dialog-window-mask-color: var(--white);
-  --dialog-window-mask-opacity: .25;
-  --dialog-lightbox-background-color: var(--black);
-  --dialog-lightbox-text-color: var(--colors-text-hot);
 }
 
 body.modalopen {
@@ -3416,23 +3440,6 @@ div.window-mask {
   z-index: 2000;
 }
 
-:root {
-  --growler-max-width: 20em;
-  --growler-core-color-rgb: var(--colors-highlight-rgb);
-  --growler-core-color: rgb(var(--growler-core-color-rgb));
-  --growler-header-text-color: var(--colors-hot-text);
-  --growler-core-color: var(--blue);
-  --growler-border-radius: var(--border-radius);
-  --growler-box-shadow: var(--panel-shadow);
-  --growler-text-color: var(--grey-darkest);
-  --growler-text-shadow: var(--text-shadow);
-  --growler-default-background-color: var(--ultralight);
-  --growler-default-border-color: var(--growler-core-color);
-  --growler-header-text-color: var(--ultralight);
-  --growler-header-text-shadow: var(--text-shadow);
-  --growler-header-background-color: var(--growler-core-color);
-}
-
 div.growlbox {
   z-index: 50000;
   position: fixed;
@@ -3655,32 +3662,6 @@ div.spinner.bounce:after {
   animation-delay: -1s;
 }
 
-:root {
-  --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--colors-standard);
-  --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--colors-standard);
-  --messagebox-icon-text-shadow: none;
-  --resultsbox-header-text-color: var(--colors-text-hot);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-background-color: var(--canvas-color-primary);
-  --resultsbox-icon-text-shadow: var(--text-shadow);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --successbox-color-base: var(--success-color);
-  --successbox-stripes: var(--success-stripes);
-  --warningbox-title-color: var(--grey-darkest);
-  --warningbox-color-base: var(--warning-color);
-  --warningbox-stripes: var(--warning-stripes);
-  --errorbox-color-base: var(--error-color);
-  --errorbox-stripes: var(--error-stripes);
-  --instructions-background-color: var(--canvas-color-secondary);
-  --instructions-border-color: var(--canvas-color-tertiary);
-  --instructions-text-color: var(--colors-standard);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--colors-standard);
-}
-
 div.messagebox {
   margin: 1rem 0 1rem 0;
   padding: 1em;
@@ -3801,18 +3782,6 @@ div.resultsbox {
   align-content: flex-start;
 }
 
-:root {
-  --panel-max-width: 22em;
-  --panel-border-radius: var(--border-radius);
-  --panel-background-color: var(--canvas-color-primary);
-  --panel-box-shadow: var(--panel-shadow);
-  --panel-text-color: var(--grey-darkest);
-  --panel-text-shadow: var(--text-shadow);
-  --panel-padding: .5em 1em .5em 1em;
-  --panel-closed-hover-background-color: var(--focus-color);
-  --panel-closed-hover-text-color: var(--colors-text-hot);
-}
-
 div.panel {
   transition: all 0.2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
@@ -3927,13 +3896,6 @@ div.panel.bottom-center {
   left: 1em;
   margin-left: auto;
   margin-right: auto;
-}
-
-:root {
-  --progressmeter-core-color-rgb: var(--colors-highlight-rgb);
-  --progressmeter-core-color: rgb(var(--progressmeter-core-color-rgb));
-  --progressmeter-gutter-color: rgba(var(--progressmeter-core-color-rgb), 0.25);
-  --progressmeter-tick-color: var(--colors-text-hot);
 }
 
 div.progressbar-container {
@@ -4143,13 +4105,6 @@ div.searchcontrol.open button, div.searchcontrol:focus-within button {
   border-bottom-left-radius: 0;
   background-color: var(--colors-affordance);
   color: var(--colors-text-hot);
-}
-
-:root {
-  --tabbar-tab-height: 3em;
-  --tabbar-background-color: var(--canvas-color-primary);
-  --tabbar-box-shadow: var(--panel-shadow-light);
-  --tabbar-collapsed-height: 3.5em;
 }
 
 ul.tabbar {

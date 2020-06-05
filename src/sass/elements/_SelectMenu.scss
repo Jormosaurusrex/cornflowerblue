@@ -1,13 +1,5 @@
 div.select-container {
   position: relative;
-  &.disabled {
-    label {
-      text-shadow: none;
-    }
-    div[role='listbox'] {
-      display: none;
-    }
-  }
   div.wrap {
     display: block;
     position: relative;
@@ -34,18 +26,28 @@ div.select-container {
     label {
       opacity: 1;
     }
-    &[aria-expanded="true"],
-    &:focus-within {
+    div.wrap {
       input.trigger {
-        --input-border-color-rgb: var(--colors-affordance-rgb);
-        background-color: rgba(var(--input-border-color-rgb), 0.05);
-        box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
-        //color: rgba(var(--colors-standard-rgb), 0.5);
+      }
+      &[aria-expanded="true"],
+      &:focus-within {
+        input.trigger {
+          --input-border-color-rgb: var(--colors-affordance-rgb);
+          background-color: rgba(var(--input-border-color-rgb), 0.05);
+          box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
+          //color: rgba(var(--colors-standard-rgb), 0.5);
+        }
       }
     }
 
   }
   &.disabled {
+    label {
+      text-shadow: none;
+    }
+    div[role='listbox'] {
+      display: none;
+    }
     input.trigger {
       &:before {
         opacity: .5;
