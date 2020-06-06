@@ -573,7 +573,7 @@ form div.elements {
 }
 form div.elements div.input-container,
 form div.elements div.textarea-container {
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
 }
 form div.actions,
 form div.passiveactions {
@@ -2205,7 +2205,7 @@ p.input-container,
 div.textarea-container,
 p.textarea-container {
   margin: 0;
-  padding: 0.5em 0 0.5em 0;
+  padding: 0.5rem 0 0.5rem 0;
   position: relative;
 }
 div.input-container label,
@@ -2213,6 +2213,16 @@ p.input-container label,
 div.textarea-container label,
 p.textarea-container label {
   margin-top: 0;
+}
+div.input-container label button.help, div.input-container label:after,
+p.input-container label button.help,
+p.input-container label:after,
+div.textarea-container label button.help,
+div.textarea-container label:after,
+p.textarea-container label button.help,
+p.textarea-container label:after {
+  opacity: 1;
+  transition: opacity 0.2s;
 }
 div.input-container div.wrap,
 p.input-container div.wrap,
@@ -2804,7 +2814,7 @@ div.textarea-container.passive label button.help,
 div.textarea-container.passive label:after,
 p.textarea-container.passive label button.help,
 p.textarea-container.passive label:after {
-  display: none;
+  opacity: 0;
 }
 div.input-container.passive div.wrap,
 div.input-container.passive div.topcontrol,
@@ -2840,7 +2850,7 @@ p.textarea-container.passive div.passivebox a img {
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
-  padding-top: 0.5em;
+  padding-top: 0.5rem;
 }
 div.textarea-container.mute div.charcounter {
   top: 0.3em;

@@ -3,10 +3,15 @@ p.input-container,
 div.textarea-container,
 p.textarea-container {
   margin: 0;
-  padding: .5em 0 .5em 0;
+  padding: .5rem 0 .5rem 0;
   position: relative;
   label {
     margin-top: 0;
+    button.help,
+    &:after {
+      opacity: 1;
+      transition: opacity .2s;
+    }
   }
   div.wrap {
     position: relative;
@@ -293,7 +298,7 @@ p.textarea-container {
       opacity: 1;
       button.help,
       &:after {
-        display: none;
+        opacity: 0;
       }
     }
     div.wrap,
@@ -317,7 +322,7 @@ div.textarea-container {
   div.wrap {
     &:after {
       justify-content: flex-start;
-      padding-top: .5em;
+      padding-top: .5rem;
     }
   }
   &.mute {

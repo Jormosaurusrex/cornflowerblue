@@ -558,6 +558,8 @@
 ul.button-menu,
 div.button-menu,
 form.button-menu {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
   flex-direction: column;
   flex-wrap: nowrap;
   list-style-type: none;
@@ -693,6 +695,8 @@ ul.button-menu li a span.icon {
 }
 
 form.button-menu {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
   min-width: 20em;
 }
 form.button-menu div.elements {
@@ -712,6 +716,8 @@ form.button-menu.noactions div.header {
 }
 
 div.selectmenu-menu {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
   animation: cfb-fadein 0.5s;
   opacity: 1;
   position: absolute;
@@ -785,6 +791,8 @@ div.selectmenu-menu[aria-hidden=true] {
 }
 
 div.tooltip {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
   animation: cfb-fadein 0.5s;
   opacity: 1;
   position: absolute;

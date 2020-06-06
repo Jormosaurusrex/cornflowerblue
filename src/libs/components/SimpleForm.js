@@ -365,6 +365,7 @@ class SimpleForm {
     buildElementBox() {
         this.elementbox = document.createElement('div');
         this.elementbox.classList.add('elements');
+        let animOrder = 0;
         for (let element of this.elements) {
             element.form = this;
             if (element.type === 'file') {
@@ -375,6 +376,9 @@ class SimpleForm {
             } else if (!element.id) {
                 element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
             }
+            element.container.classList.add('popin');
+            element.container.style.setProperty('--anim-order', animOrder);
+            animOrder++;
             this.addElement(element);
             this.elementbox.appendChild(element.container);
         }
