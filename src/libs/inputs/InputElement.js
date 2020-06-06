@@ -318,7 +318,6 @@ class InputElement {
             }
             return v;
         }
-
         return this.unsettext;
     }
 

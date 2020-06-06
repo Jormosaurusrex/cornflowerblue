@@ -1,5 +1,80 @@
+div.file-container2 {
+  div.wrap {
+    &:after {
+      display: none;
+    }
+  }
+  div.trigger {
+    transition: all .2s;
+    box-sizing: border-box;
+    outline: none;
+    position: relative;
+    font-family: inherit;
+    width: 100%;
+    margin: 0;
+    font-size: 1em;
+    background-color: var(--canvas-color-secondary);
+    box-shadow: inset -.1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
+    padding: .5em 1em .5em 1.5em;
+    border-radius: .1em;
+    color: var(--input-default-placeholder-color);
+    font-weight: normal;
+    text-shadow: none;
+    vertical-align: middle;
+    cursor: pointer;
+    &.files {
+      color: var(--input-default-text-color);
+      text-shadow: var(--input-default-text-shadow);
+    }
+    &:before {
+      position: absolute;
+      right: 3.5em;
+      top: .7em;
+      margin: 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--input-default-placeholder-color);
+    }
+    &:focus {
+      --input-border-color-rgb: var(--colors-affordance-rgb);
+      --input-border-color: rgb(var(--input-border-color-rgb));
+      box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
+      &::placeholder {
+        opacity: 0.3;
+      }
+    }
+    &.mute {
+      background-color: var(--canvas-color-secondary);
+      box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
+      padding: .5em 1em .5em 1.5em;
+      &:focus,
+      &:focus-within {
+        --input-border-color-rgb: var(--colors-affordance-rgb);
+        background-color: rgba(var(--input-border-color-rgb), 0.05);
+        box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
+        &::placeholder {
+          opacity: 0;
+        }
+      }
+    }
+  }
+  &.mute {
+    label {
+      opacity: 1;
+    }
+  }
+  &.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    text-shadow: none;
+    pointer-events: none;
+  }
+}
+
 div.input-container,
 p.input-container,
+div.file-container,
 div.textarea-container,
 p.textarea-container {
   margin: 0;
@@ -24,7 +99,7 @@ p.textarea-container {
     div.charcounter,
     div.searchdisplay,
     div.datedisplay {
-      color: var(--input-border-color);
+      color: var(--colors-standard);
       display: block;
       font-size: .85em;
       font-style: oblique;
@@ -40,14 +115,69 @@ p.textarea-container {
       opacity: 1;
       z-index: 10;
       transition: all .2s;
-      --button-default-color: var(--input-border-color);
-      --button-hover-text-color: var(--input-border-color);
+      --button-default-color: var(--colors-standard);
+      --button-hover-text-color: var(--colors-standard);
       --button-text-shadow: none;
     }
   }
   div.wrap {
     position: relative;
     z-index: 9;
+    div.trigger {
+      transition: all .2s;
+      box-sizing: border-box;
+      outline: none;
+      position: relative;
+      font-family: inherit;
+      width: 100%;
+      margin: 0;
+      font-size: 1em;
+      background-color: var(--canvas-color-secondary);
+      box-shadow: inset -.1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
+      padding: .5em 1em .5em 1.5em;
+      border-radius: .1em;
+      color: var(--input-default-placeholder-color);
+      font-weight: normal;
+      text-shadow: none;
+      vertical-align: middle;
+      cursor: pointer;
+      &.files {
+        color: var(--input-default-text-color);
+        text-shadow: var(--input-default-text-shadow);
+      }
+      &:before {
+        position: absolute;
+        right: 3.5em;
+        top: .7em;
+        margin: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: var(--input-default-placeholder-color);
+      }
+      &:focus {
+        --input-border-color-rgb: var(--colors-affordance-rgb);
+        --input-border-color: rgb(var(--input-border-color-rgb));
+        box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
+        &::placeholder {
+          opacity: 0.3;
+        }
+      }
+      &.mute {
+        background-color: var(--canvas-color-secondary);
+        box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
+        padding: .5em 1em .5em 1.5em;
+        &:focus,
+        &:focus-within {
+          --input-border-color-rgb: var(--colors-affordance-rgb);
+          background-color: rgba(var(--input-border-color-rgb), 0.05);
+          box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
+          &::placeholder {
+            opacity: 0;
+          }
+        }
+      }
+    }
     div.inputcontrol {
       transition: all .2s;
       position: absolute;
@@ -202,18 +332,16 @@ p.textarea-container {
         padding-left: 1.5em;
         font-size: 1em;
         transition: all .2s;
+        button.help,
+        &:after {
+          opacity: 0;
+          display: inline-block;
+          transition: opacity .2s;
+        }
       }
       div.topcontrol {
-        //top: .3rem;
-      }
-    }
-    &.active,
-    &.filled {
-      label {
-        opacity: 1;
-      }
-      div.topcontrol {
-        opacity: 1;
+        display: inline-block;
+        opacity: 0;
       }
     }
     div.wrap {
@@ -226,6 +354,8 @@ p.textarea-container {
         right: 0;
       }
     }
+    &.active,
+    &.filled,
     &:focus-within {
       div.topline {
         margin-top: 0;
@@ -233,6 +363,14 @@ p.textarea-container {
         pointer-events: unset;
         label {
           padding-left: 0;
+          button.help,
+          &:after {
+            opacity: 1;
+          }
+        }
+        div.topcontrol {
+          opacity: 1;
+          display: inline-block;
         }
       }
     }
@@ -331,10 +469,12 @@ p.textarea-container {
         opacity: 1;
         button.help,
         &:after {
+          display: none;
           opacity: 0;
         }
       }
       div.topcontrol {
+        display: none;
         opacity: 0;
       }
     }

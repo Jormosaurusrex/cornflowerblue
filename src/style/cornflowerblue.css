@@ -2912,8 +2912,76 @@ input[type=radio]:checked + label:disabled:checked:after {
   text-shadow: none !important;
 }
 
+div.file-container2 div.wrap:after {
+  display: none;
+}
+div.file-container2 div.trigger {
+  transition: all 0.2s;
+  box-sizing: border-box;
+  outline: none;
+  position: relative;
+  font-family: inherit;
+  width: 100%;
+  margin: 0;
+  font-size: 1em;
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+  padding: 0.5em 1em 0.5em 1.5em;
+  border-radius: 0.1em;
+  color: var(--input-default-placeholder-color);
+  font-weight: normal;
+  text-shadow: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+div.file-container2 div.trigger.files {
+  color: var(--input-default-text-color);
+  text-shadow: var(--input-default-text-shadow);
+}
+div.file-container2 div.trigger:before {
+  position: absolute;
+  right: 3.5em;
+  top: 0.7em;
+  margin: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-default-placeholder-color);
+}
+div.file-container2 div.trigger:focus {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  --input-border-color: rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+}
+div.file-container2 div.trigger:focus::placeholder {
+  opacity: 0.3;
+}
+div.file-container2 div.trigger.mute {
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
+  padding: 0.5em 1em 0.5em 1.5em;
+}
+div.file-container2 div.trigger.mute:focus, div.file-container2 div.trigger.mute:focus-within {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
+}
+div.file-container2 div.trigger.mute:focus::placeholder, div.file-container2 div.trigger.mute:focus-within::placeholder {
+  opacity: 0;
+}
+div.file-container2.mute label {
+  opacity: 1;
+}
+div.file-container2.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-shadow: none;
+  pointer-events: none;
+}
+
 div.input-container,
 p.input-container,
+div.file-container,
 div.textarea-container,
 p.textarea-container {
   margin: 0;
@@ -2922,6 +2990,7 @@ p.textarea-container {
 }
 div.input-container div.topline,
 p.input-container div.topline,
+div.file-container div.topline,
 div.textarea-container div.topline,
 p.textarea-container div.topline {
   position: relative;
@@ -2934,6 +3003,7 @@ p.textarea-container div.topline {
 }
 div.input-container div.topline label,
 p.input-container div.topline label,
+div.file-container div.topline label,
 div.textarea-container div.topline label,
 p.textarea-container div.topline label {
   margin-top: 0;
@@ -2941,6 +3011,8 @@ p.textarea-container div.topline label {
 div.input-container div.topline label button.help, div.input-container div.topline label:after,
 p.input-container div.topline label button.help,
 p.input-container div.topline label:after,
+div.file-container div.topline label button.help,
+div.file-container div.topline label:after,
 div.textarea-container div.topline label button.help,
 div.textarea-container div.topline label:after,
 p.textarea-container div.topline label button.help,
@@ -2954,13 +3026,16 @@ div.input-container div.topline div.datedisplay,
 p.input-container div.topline div.charcounter,
 p.input-container div.topline div.searchdisplay,
 p.input-container div.topline div.datedisplay,
+div.file-container div.topline div.charcounter,
+div.file-container div.topline div.searchdisplay,
+div.file-container div.topline div.datedisplay,
 div.textarea-container div.topline div.charcounter,
 div.textarea-container div.topline div.searchdisplay,
 div.textarea-container div.topline div.datedisplay,
 p.textarea-container div.topline div.charcounter,
 p.textarea-container div.topline div.searchdisplay,
 p.textarea-container div.topline div.datedisplay {
-  color: var(--input-border-color);
+  color: var(--colors-standard);
   display: block;
   font-size: 0.85em;
   font-style: oblique;
@@ -2972,6 +3047,9 @@ div.input-container div.topline div.datedisplay.danger,
 p.input-container div.topline div.charcounter.danger,
 p.input-container div.topline div.searchdisplay.danger,
 p.input-container div.topline div.datedisplay.danger,
+div.file-container div.topline div.charcounter.danger,
+div.file-container div.topline div.searchdisplay.danger,
+div.file-container div.topline div.datedisplay.danger,
 div.textarea-container div.topline div.charcounter.danger,
 div.textarea-container div.topline div.searchdisplay.danger,
 div.textarea-container div.topline div.datedisplay.danger,
@@ -2986,6 +3064,9 @@ div.input-container div.topline div.datedisplay.outofbounds,
 p.input-container div.topline div.charcounter.outofbounds,
 p.input-container div.topline div.searchdisplay.outofbounds,
 p.input-container div.topline div.datedisplay.outofbounds,
+div.file-container div.topline div.charcounter.outofbounds,
+div.file-container div.topline div.searchdisplay.outofbounds,
+div.file-container div.topline div.datedisplay.outofbounds,
 div.textarea-container div.topline div.charcounter.outofbounds,
 div.textarea-container div.topline div.searchdisplay.outofbounds,
 div.textarea-container div.topline div.datedisplay.outofbounds,
@@ -2996,24 +3077,121 @@ p.textarea-container div.topline div.datedisplay.outofbounds {
 }
 div.input-container div.topline div.topcontrol,
 p.input-container div.topline div.topcontrol,
+div.file-container div.topline div.topcontrol,
 div.textarea-container div.topline div.topcontrol,
 p.textarea-container div.topline div.topcontrol {
   opacity: 1;
   z-index: 10;
   transition: all 0.2s;
-  --button-default-color: var(--input-border-color);
-  --button-hover-text-color: var(--input-border-color);
+  --button-default-color: var(--colors-standard);
+  --button-hover-text-color: var(--colors-standard);
   --button-text-shadow: none;
 }
 div.input-container div.wrap,
 p.input-container div.wrap,
+div.file-container div.wrap,
 div.textarea-container div.wrap,
 p.textarea-container div.wrap {
   position: relative;
   z-index: 9;
 }
+div.input-container div.wrap div.trigger,
+p.input-container div.wrap div.trigger,
+div.file-container div.wrap div.trigger,
+div.textarea-container div.wrap div.trigger,
+p.textarea-container div.wrap div.trigger {
+  transition: all 0.2s;
+  box-sizing: border-box;
+  outline: none;
+  position: relative;
+  font-family: inherit;
+  width: 100%;
+  margin: 0;
+  font-size: 1em;
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+  padding: 0.5em 1em 0.5em 1.5em;
+  border-radius: 0.1em;
+  color: var(--input-default-placeholder-color);
+  font-weight: normal;
+  text-shadow: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+div.input-container div.wrap div.trigger.files,
+p.input-container div.wrap div.trigger.files,
+div.file-container div.wrap div.trigger.files,
+div.textarea-container div.wrap div.trigger.files,
+p.textarea-container div.wrap div.trigger.files {
+  color: var(--input-default-text-color);
+  text-shadow: var(--input-default-text-shadow);
+}
+div.input-container div.wrap div.trigger:before,
+p.input-container div.wrap div.trigger:before,
+div.file-container div.wrap div.trigger:before,
+div.textarea-container div.wrap div.trigger:before,
+p.textarea-container div.wrap div.trigger:before {
+  position: absolute;
+  right: 3.5em;
+  top: 0.7em;
+  margin: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-default-placeholder-color);
+}
+div.input-container div.wrap div.trigger:focus,
+p.input-container div.wrap div.trigger:focus,
+div.file-container div.wrap div.trigger:focus,
+div.textarea-container div.wrap div.trigger:focus,
+p.textarea-container div.wrap div.trigger:focus {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  --input-border-color: rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+}
+div.input-container div.wrap div.trigger:focus::placeholder,
+p.input-container div.wrap div.trigger:focus::placeholder,
+div.file-container div.wrap div.trigger:focus::placeholder,
+div.textarea-container div.wrap div.trigger:focus::placeholder,
+p.textarea-container div.wrap div.trigger:focus::placeholder {
+  opacity: 0.3;
+}
+div.input-container div.wrap div.trigger.mute,
+p.input-container div.wrap div.trigger.mute,
+div.file-container div.wrap div.trigger.mute,
+div.textarea-container div.wrap div.trigger.mute,
+p.textarea-container div.wrap div.trigger.mute {
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
+  padding: 0.5em 1em 0.5em 1.5em;
+}
+div.input-container div.wrap div.trigger.mute:focus, div.input-container div.wrap div.trigger.mute:focus-within,
+p.input-container div.wrap div.trigger.mute:focus,
+p.input-container div.wrap div.trigger.mute:focus-within,
+div.file-container div.wrap div.trigger.mute:focus,
+div.file-container div.wrap div.trigger.mute:focus-within,
+div.textarea-container div.wrap div.trigger.mute:focus,
+div.textarea-container div.wrap div.trigger.mute:focus-within,
+p.textarea-container div.wrap div.trigger.mute:focus,
+p.textarea-container div.wrap div.trigger.mute:focus-within {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
+}
+div.input-container div.wrap div.trigger.mute:focus::placeholder, div.input-container div.wrap div.trigger.mute:focus-within::placeholder,
+p.input-container div.wrap div.trigger.mute:focus::placeholder,
+p.input-container div.wrap div.trigger.mute:focus-within::placeholder,
+div.file-container div.wrap div.trigger.mute:focus::placeholder,
+div.file-container div.wrap div.trigger.mute:focus-within::placeholder,
+div.textarea-container div.wrap div.trigger.mute:focus::placeholder,
+div.textarea-container div.wrap div.trigger.mute:focus-within::placeholder,
+p.textarea-container div.wrap div.trigger.mute:focus::placeholder,
+p.textarea-container div.wrap div.trigger.mute:focus-within::placeholder {
+  opacity: 0;
+}
 div.input-container div.wrap div.inputcontrol,
 p.input-container div.wrap div.inputcontrol,
+div.file-container div.wrap div.inputcontrol,
 div.textarea-container div.wrap div.inputcontrol,
 p.textarea-container div.wrap div.inputcontrol {
   transition: all 0.2s;
@@ -3026,6 +3204,9 @@ div.input-container div.wrap div.inputcontrol.stepbuttons, div.input-container d
 p.input-container div.wrap div.inputcontrol.stepbuttons,
 p.input-container div.wrap div.inputcontrol.visbutton,
 p.input-container div.wrap div.inputcontrol.calbutton,
+div.file-container div.wrap div.inputcontrol.stepbuttons,
+div.file-container div.wrap div.inputcontrol.visbutton,
+div.file-container div.wrap div.inputcontrol.calbutton,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons,
 div.textarea-container div.wrap div.inputcontrol.visbutton,
 div.textarea-container div.wrap div.inputcontrol.calbutton,
@@ -3048,6 +3229,9 @@ p.textarea-container div.wrap div.inputcontrol.calbutton {
 p.input-container div.wrap div.inputcontrol.stepbuttons:hover,
 p.input-container div.wrap div.inputcontrol.visbutton:hover,
 p.input-container div.wrap div.inputcontrol.calbutton:hover,
+div.file-container div.wrap div.inputcontrol.stepbuttons:hover,
+div.file-container div.wrap div.inputcontrol.visbutton:hover,
+div.file-container div.wrap div.inputcontrol.calbutton:hover,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons:hover,
 div.textarea-container div.wrap div.inputcontrol.visbutton:hover,
 div.textarea-container div.wrap div.inputcontrol.calbutton:hover,
@@ -3062,6 +3246,9 @@ div.input-container div.wrap div.inputcontrol.stepbuttons button span.icon, div.
 p.input-container div.wrap div.inputcontrol.stepbuttons button span.icon,
 p.input-container div.wrap div.inputcontrol.visbutton button span.icon,
 p.input-container div.wrap div.inputcontrol.calbutton button span.icon,
+div.file-container div.wrap div.inputcontrol.stepbuttons button span.icon,
+div.file-container div.wrap div.inputcontrol.visbutton button span.icon,
+div.file-container div.wrap div.inputcontrol.calbutton button span.icon,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons button span.icon,
 div.textarea-container div.wrap div.inputcontrol.visbutton button span.icon,
 div.textarea-container div.wrap div.inputcontrol.calbutton button span.icon,
@@ -3075,6 +3262,9 @@ p.textarea-container div.wrap div.inputcontrol.calbutton button span.icon {
 p.input-container div.wrap div.inputcontrol.stepbuttons button:hover,
 p.input-container div.wrap div.inputcontrol.visbutton button:hover,
 p.input-container div.wrap div.inputcontrol.calbutton button:hover,
+div.file-container div.wrap div.inputcontrol.stepbuttons button:hover,
+div.file-container div.wrap div.inputcontrol.visbutton button:hover,
+div.file-container div.wrap div.inputcontrol.calbutton button:hover,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons button:hover,
 div.textarea-container div.wrap div.inputcontrol.visbutton button:hover,
 div.textarea-container div.wrap div.inputcontrol.calbutton button:hover,
@@ -3088,6 +3278,9 @@ div.input-container div.wrap div.inputcontrol.stepbuttons button .menu, div.inpu
 p.input-container div.wrap div.inputcontrol.stepbuttons button .menu,
 p.input-container div.wrap div.inputcontrol.visbutton button .menu,
 p.input-container div.wrap div.inputcontrol.calbutton button .menu,
+div.file-container div.wrap div.inputcontrol.stepbuttons button .menu,
+div.file-container div.wrap div.inputcontrol.visbutton button .menu,
+div.file-container div.wrap div.inputcontrol.calbutton button .menu,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons button .menu,
 div.textarea-container div.wrap div.inputcontrol.visbutton button .menu,
 div.textarea-container div.wrap div.inputcontrol.calbutton button .menu,
@@ -3099,12 +3292,14 @@ p.textarea-container div.wrap div.inputcontrol.calbutton button .menu {
 }
 div.input-container div.wrap:focus-within div.inputcontrol,
 p.input-container div.wrap:focus-within div.inputcontrol,
+div.file-container div.wrap:focus-within div.inputcontrol,
 div.textarea-container div.wrap:focus-within div.inputcontrol,
 p.textarea-container div.wrap:focus-within div.inputcontrol {
   opacity: 1;
 }
 div.input-container div.wrap:before,
 p.input-container div.wrap:before,
+div.file-container div.wrap:before,
 div.textarea-container div.wrap:before,
 p.textarea-container div.wrap:before {
   position: absolute;
@@ -3119,6 +3314,7 @@ p.textarea-container div.wrap:before {
 }
 div.input-container div.wrap:after,
 p.input-container div.wrap:after,
+div.file-container div.wrap:after,
 div.textarea-container div.wrap:after,
 p.textarea-container div.wrap:after {
   opacity: 0;
@@ -3150,6 +3346,7 @@ p.textarea-container div.wrap:after {
 }
 div.input-container ul.messagebox,
 p.input-container ul.messagebox,
+div.file-container ul.messagebox,
 div.textarea-container ul.messagebox,
 p.textarea-container ul.messagebox {
   transition: all 0.2s;
@@ -3165,24 +3362,28 @@ p.textarea-container ul.messagebox {
 }
 div.input-container ul.messagebox li,
 p.input-container ul.messagebox li,
+div.file-container ul.messagebox li,
 div.textarea-container ul.messagebox li,
 p.textarea-container ul.messagebox li {
   margin: 0.5rem 0 0.5rem 0;
 }
 div.input-container ul.messagebox li.error,
 p.input-container ul.messagebox li.error,
+div.file-container ul.messagebox li.error,
 div.textarea-container ul.messagebox li.error,
 p.textarea-container ul.messagebox li.error {
   color: var(--input-messages-error-text-color);
 }
 div.input-container ul.messagebox li.warning,
 p.input-container ul.messagebox li.warning,
+div.file-container ul.messagebox li.warning,
 div.textarea-container ul.messagebox li.warning,
 p.textarea-container ul.messagebox li.warning {
   color: var(--input-messages-warning-text-color);
 }
 div.input-container ul.messagebox[aria-hidden=true],
 p.input-container ul.messagebox[aria-hidden=true],
+div.file-container ul.messagebox[aria-hidden=true],
 div.textarea-container ul.messagebox[aria-hidden=true],
 p.textarea-container ul.messagebox[aria-hidden=true] {
   opacity: 0;
@@ -3191,12 +3392,14 @@ p.textarea-container ul.messagebox[aria-hidden=true] {
 }
 div.input-container ul.messagebox[aria-hidden=true] li,
 p.input-container ul.messagebox[aria-hidden=true] li,
+div.file-container ul.messagebox[aria-hidden=true] li,
 div.textarea-container ul.messagebox[aria-hidden=true] li,
 p.textarea-container ul.messagebox[aria-hidden=true] li {
   display: none;
 }
 div.input-container div.passivebox,
 p.input-container div.passivebox,
+div.file-container div.passivebox,
 div.textarea-container div.passivebox,
 p.textarea-container div.passivebox {
   transition: opacity 0.2s;
@@ -3208,6 +3411,7 @@ p.textarea-container div.passivebox {
 }
 div.input-container.minimal,
 p.input-container.minimal,
+div.file-container.minimal,
 div.textarea-container.minimal,
 p.textarea-container.minimal {
   display: inline-block;
@@ -3215,30 +3419,35 @@ p.textarea-container.minimal {
 }
 div.input-container.minimal div.wrap div.inputcontrol,
 p.input-container.minimal div.wrap div.inputcontrol,
+div.file-container.minimal div.wrap div.inputcontrol,
 div.textarea-container.minimal div.wrap div.inputcontrol,
 p.textarea-container.minimal div.wrap div.inputcontrol {
   right: 1rem;
 }
 div.input-container.minimal div.wrap:after,
 p.input-container.minimal div.wrap:after,
+div.file-container.minimal div.wrap:after,
 div.textarea-container.minimal div.wrap:after,
 p.textarea-container.minimal div.wrap:after {
   display: none;
 }
 div.input-container.minimal div.wrap:before,
 p.input-container.minimal div.wrap:before,
+div.file-container.minimal div.wrap:before,
 div.textarea-container.minimal div.wrap:before,
 p.textarea-container.minimal div.wrap:before {
   right: 1rem;
 }
 div.input-container.minimal input.trigger,
 p.input-container.minimal input.trigger,
+div.file-container.minimal input.trigger,
 div.textarea-container.minimal input.trigger,
 p.textarea-container.minimal input.trigger {
   padding-right: 2rem;
 }
 div.input-container.mute div.topline,
 p.input-container.mute div.topline,
+div.file-container.mute div.topline,
 div.textarea-container.mute div.topline,
 p.textarea-container.mute div.topline {
   margin-top: 2.1em;
@@ -3249,6 +3458,7 @@ p.textarea-container.mute div.topline {
 }
 div.input-container.mute div.topline label,
 p.input-container.mute div.topline label,
+div.file-container.mute div.topline label,
 div.textarea-container.mute div.topline label,
 p.textarea-container.mute div.topline label {
   opacity: 1;
@@ -3257,52 +3467,119 @@ p.textarea-container.mute div.topline label {
   font-size: 1em;
   transition: all 0.2s;
 }
-div.input-container.mute.active label, div.input-container.mute.filled label,
-p.input-container.mute.active label,
-p.input-container.mute.filled label,
-div.textarea-container.mute.active label,
-div.textarea-container.mute.filled label,
-p.textarea-container.mute.active label,
-p.textarea-container.mute.filled label {
-  opacity: 1;
+div.input-container.mute div.topline label button.help, div.input-container.mute div.topline label:after,
+p.input-container.mute div.topline label button.help,
+p.input-container.mute div.topline label:after,
+div.file-container.mute div.topline label button.help,
+div.file-container.mute div.topline label:after,
+div.textarea-container.mute div.topline label button.help,
+div.textarea-container.mute div.topline label:after,
+p.textarea-container.mute div.topline label button.help,
+p.textarea-container.mute div.topline label:after {
+  opacity: 0;
+  display: inline-block;
+  transition: opacity 0.2s;
 }
-div.input-container.mute.active div.topcontrol, div.input-container.mute.filled div.topcontrol,
-p.input-container.mute.active div.topcontrol,
-p.input-container.mute.filled div.topcontrol,
-div.textarea-container.mute.active div.topcontrol,
-div.textarea-container.mute.filled div.topcontrol,
-p.textarea-container.mute.active div.topcontrol,
-p.textarea-container.mute.filled div.topcontrol {
-  opacity: 1;
+div.input-container.mute div.topline div.topcontrol,
+p.input-container.mute div.topline div.topcontrol,
+div.file-container.mute div.topline div.topcontrol,
+div.textarea-container.mute div.topline div.topcontrol,
+p.textarea-container.mute div.topline div.topcontrol {
+  display: inline-block;
+  opacity: 0;
 }
 div.input-container.mute div.wrap input::placeholder,
 p.input-container.mute div.wrap input::placeholder,
+div.file-container.mute div.wrap input::placeholder,
 div.textarea-container.mute div.wrap input::placeholder,
 p.textarea-container.mute div.wrap input::placeholder {
   opacity: 0;
 }
 div.input-container.mute div.wrap:after,
 p.input-container.mute div.wrap:after,
+div.file-container.mute div.wrap:after,
 div.textarea-container.mute div.wrap:after,
 p.textarea-container.mute div.wrap:after {
   right: 0;
 }
-div.input-container.mute:focus-within div.topline,
+div.input-container.mute.active div.topline, div.input-container.mute.filled div.topline, div.input-container.mute:focus-within div.topline,
+p.input-container.mute.active div.topline,
+p.input-container.mute.filled div.topline,
 p.input-container.mute:focus-within div.topline,
+div.file-container.mute.active div.topline,
+div.file-container.mute.filled div.topline,
+div.file-container.mute:focus-within div.topline,
+div.textarea-container.mute.active div.topline,
+div.textarea-container.mute.filled div.topline,
 div.textarea-container.mute:focus-within div.topline,
+p.textarea-container.mute.active div.topline,
+p.textarea-container.mute.filled div.topline,
 p.textarea-container.mute:focus-within div.topline {
   margin-top: 0;
   margin-bottom: 0;
   pointer-events: unset;
 }
-div.input-container.mute:focus-within div.topline label,
+div.input-container.mute.active div.topline label, div.input-container.mute.filled div.topline label, div.input-container.mute:focus-within div.topline label,
+p.input-container.mute.active div.topline label,
+p.input-container.mute.filled div.topline label,
 p.input-container.mute:focus-within div.topline label,
+div.file-container.mute.active div.topline label,
+div.file-container.mute.filled div.topline label,
+div.file-container.mute:focus-within div.topline label,
+div.textarea-container.mute.active div.topline label,
+div.textarea-container.mute.filled div.topline label,
 div.textarea-container.mute:focus-within div.topline label,
+p.textarea-container.mute.active div.topline label,
+p.textarea-container.mute.filled div.topline label,
 p.textarea-container.mute:focus-within div.topline label {
   padding-left: 0;
 }
+div.input-container.mute.active div.topline label button.help, div.input-container.mute.active div.topline label:after, div.input-container.mute.filled div.topline label button.help, div.input-container.mute.filled div.topline label:after, div.input-container.mute:focus-within div.topline label button.help, div.input-container.mute:focus-within div.topline label:after,
+p.input-container.mute.active div.topline label button.help,
+p.input-container.mute.active div.topline label:after,
+p.input-container.mute.filled div.topline label button.help,
+p.input-container.mute.filled div.topline label:after,
+p.input-container.mute:focus-within div.topline label button.help,
+p.input-container.mute:focus-within div.topline label:after,
+div.file-container.mute.active div.topline label button.help,
+div.file-container.mute.active div.topline label:after,
+div.file-container.mute.filled div.topline label button.help,
+div.file-container.mute.filled div.topline label:after,
+div.file-container.mute:focus-within div.topline label button.help,
+div.file-container.mute:focus-within div.topline label:after,
+div.textarea-container.mute.active div.topline label button.help,
+div.textarea-container.mute.active div.topline label:after,
+div.textarea-container.mute.filled div.topline label button.help,
+div.textarea-container.mute.filled div.topline label:after,
+div.textarea-container.mute:focus-within div.topline label button.help,
+div.textarea-container.mute:focus-within div.topline label:after,
+p.textarea-container.mute.active div.topline label button.help,
+p.textarea-container.mute.active div.topline label:after,
+p.textarea-container.mute.filled div.topline label button.help,
+p.textarea-container.mute.filled div.topline label:after,
+p.textarea-container.mute:focus-within div.topline label button.help,
+p.textarea-container.mute:focus-within div.topline label:after {
+  opacity: 1;
+}
+div.input-container.mute.active div.topline div.topcontrol, div.input-container.mute.filled div.topline div.topcontrol, div.input-container.mute:focus-within div.topline div.topcontrol,
+p.input-container.mute.active div.topline div.topcontrol,
+p.input-container.mute.filled div.topline div.topcontrol,
+p.input-container.mute:focus-within div.topline div.topcontrol,
+div.file-container.mute.active div.topline div.topcontrol,
+div.file-container.mute.filled div.topline div.topcontrol,
+div.file-container.mute:focus-within div.topline div.topcontrol,
+div.textarea-container.mute.active div.topline div.topcontrol,
+div.textarea-container.mute.filled div.topline div.topcontrol,
+div.textarea-container.mute:focus-within div.topline div.topcontrol,
+p.textarea-container.mute.active div.topline div.topcontrol,
+p.textarea-container.mute.filled div.topline div.topcontrol,
+p.textarea-container.mute:focus-within div.topline div.topcontrol {
+  opacity: 1;
+  display: inline-block;
+}
 div.input-container.required label:after,
 p.input-container.required label:after,
+div.file-container.required label:after,
 div.textarea-container.required label:after,
 p.textarea-container.required label:after {
   content: attr(data-required-text);
@@ -3312,6 +3589,9 @@ div.input-container.valid, div.input-container.error, div.input-container.warnin
 p.input-container.valid,
 p.input-container.error,
 p.input-container.warning,
+div.file-container.valid,
+div.file-container.error,
+div.file-container.warning,
 div.textarea-container.valid,
 div.textarea-container.error,
 div.textarea-container.warning,
@@ -3325,6 +3605,9 @@ div.input-container.valid div.wrap:after, div.input-container.error div.wrap:aft
 p.input-container.valid div.wrap:after,
 p.input-container.error div.wrap:after,
 p.input-container.warning div.wrap:after,
+div.file-container.valid div.wrap:after,
+div.file-container.error div.wrap:after,
+div.file-container.warning div.wrap:after,
 div.textarea-container.valid div.wrap:after,
 div.textarea-container.error div.wrap:after,
 div.textarea-container.warning div.wrap:after,
@@ -3361,6 +3644,21 @@ p.input-container.warning.mute input[type=number],
 p.input-container.warning.mute input[type=password],
 p.input-container.warning.mute input[type=search],
 p.input-container.warning.mute textarea,
+div.file-container.valid.mute input[type=text],
+div.file-container.valid.mute input[type=number],
+div.file-container.valid.mute input[type=password],
+div.file-container.valid.mute input[type=search],
+div.file-container.valid.mute textarea,
+div.file-container.error.mute input[type=text],
+div.file-container.error.mute input[type=number],
+div.file-container.error.mute input[type=password],
+div.file-container.error.mute input[type=search],
+div.file-container.error.mute textarea,
+div.file-container.warning.mute input[type=text],
+div.file-container.warning.mute input[type=number],
+div.file-container.warning.mute input[type=password],
+div.file-container.warning.mute input[type=search],
+div.file-container.warning.mute textarea,
 div.textarea-container.valid.mute input[type=text],
 div.textarea-container.valid.mute input[type=number],
 div.textarea-container.valid.mute input[type=password],
@@ -3421,6 +3719,21 @@ p.input-container.warning.mute input[type=number]:focus,
 p.input-container.warning.mute input[type=password]:focus,
 p.input-container.warning.mute input[type=search]:focus,
 p.input-container.warning.mute textarea:focus,
+div.file-container.valid.mute input[type=text]:focus,
+div.file-container.valid.mute input[type=number]:focus,
+div.file-container.valid.mute input[type=password]:focus,
+div.file-container.valid.mute input[type=search]:focus,
+div.file-container.valid.mute textarea:focus,
+div.file-container.error.mute input[type=text]:focus,
+div.file-container.error.mute input[type=number]:focus,
+div.file-container.error.mute input[type=password]:focus,
+div.file-container.error.mute input[type=search]:focus,
+div.file-container.error.mute textarea:focus,
+div.file-container.warning.mute input[type=text]:focus,
+div.file-container.warning.mute input[type=number]:focus,
+div.file-container.warning.mute input[type=password]:focus,
+div.file-container.warning.mute input[type=search]:focus,
+div.file-container.warning.mute textarea:focus,
 div.textarea-container.valid.mute input[type=text]:focus,
 div.textarea-container.valid.mute input[type=number]:focus,
 div.textarea-container.valid.mute input[type=password]:focus,
@@ -3455,6 +3768,7 @@ p.textarea-container.warning.mute textarea:focus {
 }
 div.input-container.error,
 p.input-container.error,
+div.file-container.error,
 div.textarea-container.error,
 p.textarea-container.error {
   --input-status-color-rgb: var(--colors-error-rgb);
@@ -3463,12 +3777,14 @@ p.textarea-container.error {
 }
 div.input-container.error div.wrap:after,
 p.input-container.error div.wrap:after,
+div.file-container.error div.wrap:after,
 div.textarea-container.error div.wrap:after,
 p.textarea-container.error div.wrap:after {
   content: "Q";
 }
 div.input-container.valid,
 p.input-container.valid,
+div.file-container.valid,
 div.textarea-container.valid,
 p.textarea-container.valid {
   --input-status-color-rgb: var(--colors-success-rgb);
@@ -3476,6 +3792,7 @@ p.textarea-container.valid {
 }
 div.input-container.valid div.wrap:after,
 p.input-container.valid div.wrap:after,
+div.file-container.valid div.wrap:after,
 div.textarea-container.valid div.wrap:after,
 p.textarea-container.valid div.wrap:after {
   opacity: 1;
@@ -3483,6 +3800,7 @@ p.textarea-container.valid div.wrap:after {
 }
 div.input-container.warning,
 p.input-container.warning,
+div.file-container.warning,
 div.textarea-container.warning,
 p.textarea-container.warning {
   --input-status-color-rgb: var(--colors-warning-rgb);
@@ -3490,12 +3808,14 @@ p.textarea-container.warning {
 }
 div.input-container.warning div.wrap:after,
 p.input-container.warning div.wrap:after,
+div.file-container.warning div.wrap:after,
 div.textarea-container.warning div.wrap:after,
 p.textarea-container.warning div.wrap:after {
   content: "S";
 }
 div.input-container.disabled,
 p.input-container.disabled,
+div.file-container.disabled,
 div.textarea-container.disabled,
 p.textarea-container.disabled {
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
@@ -3505,6 +3825,7 @@ p.textarea-container.disabled {
 }
 div.input-container.disabled div.topline,
 p.input-container.disabled div.topline,
+div.file-container.disabled div.topline,
 div.textarea-container.disabled div.topline,
 p.textarea-container.disabled div.topline {
   opacity: 0.5;
@@ -3513,6 +3834,8 @@ p.textarea-container.disabled div.topline {
 div.input-container.active label, div.input-container:focus-within label,
 p.input-container.active label,
 p.input-container:focus-within label,
+div.file-container.active label,
+div.file-container:focus-within label,
 div.textarea-container.active label,
 div.textarea-container:focus-within label,
 p.textarea-container.active label,
@@ -3522,6 +3845,8 @@ p.textarea-container:focus-within label {
 div.input-container.active div.wrap:after, div.input-container:focus-within div.wrap:after,
 p.input-container.active div.wrap:after,
 p.input-container:focus-within div.wrap:after,
+div.file-container.active div.wrap:after,
+div.file-container:focus-within div.wrap:after,
 div.textarea-container.active div.wrap:after,
 div.textarea-container:focus-within div.wrap:after,
 p.textarea-container.active div.wrap:after,
@@ -3531,6 +3856,8 @@ p.textarea-container:focus-within div.wrap:after {
 div.input-container.active div.wrap div.stepbuttons, div.input-container:focus-within div.wrap div.stepbuttons,
 p.input-container.active div.wrap div.stepbuttons,
 p.input-container:focus-within div.wrap div.stepbuttons,
+div.file-container.active div.wrap div.stepbuttons,
+div.file-container:focus-within div.wrap div.stepbuttons,
 div.textarea-container.active div.wrap div.stepbuttons,
 div.textarea-container:focus-within div.wrap div.stepbuttons,
 p.textarea-container.active div.wrap div.stepbuttons,
@@ -3540,6 +3867,8 @@ p.textarea-container:focus-within div.wrap div.stepbuttons {
 div.input-container.active div.wrap div.topcontrol, div.input-container:focus-within div.wrap div.topcontrol,
 p.input-container.active div.wrap div.topcontrol,
 p.input-container:focus-within div.wrap div.topcontrol,
+div.file-container.active div.wrap div.topcontrol,
+div.file-container:focus-within div.wrap div.topcontrol,
 div.textarea-container.active div.wrap div.topcontrol,
 div.textarea-container:focus-within div.wrap div.topcontrol,
 p.textarea-container.active div.wrap div.topcontrol,
@@ -3549,6 +3878,7 @@ p.textarea-container:focus-within div.wrap div.topcontrol {
 }
 div.input-container.passive div.topline label,
 p.input-container.passive div.topline label,
+div.file-container.passive div.topline label,
 div.textarea-container.passive div.topline label,
 p.textarea-container.passive div.topline label {
   opacity: 1;
@@ -3556,16 +3886,21 @@ p.textarea-container.passive div.topline label {
 div.input-container.passive div.topline label button.help, div.input-container.passive div.topline label:after,
 p.input-container.passive div.topline label button.help,
 p.input-container.passive div.topline label:after,
+div.file-container.passive div.topline label button.help,
+div.file-container.passive div.topline label:after,
 div.textarea-container.passive div.topline label button.help,
 div.textarea-container.passive div.topline label:after,
 p.textarea-container.passive div.topline label button.help,
 p.textarea-container.passive div.topline label:after {
+  display: none;
   opacity: 0;
 }
 div.input-container.passive div.topline div.topcontrol,
 p.input-container.passive div.topline div.topcontrol,
+div.file-container.passive div.topline div.topcontrol,
 div.textarea-container.passive div.topline div.topcontrol,
 p.textarea-container.passive div.topline div.topcontrol {
+  display: none;
   opacity: 0;
 }
 div.input-container.passive div.wrap,
@@ -3574,6 +3909,9 @@ div.input-container.passive ul.selectmenu,
 p.input-container.passive div.wrap,
 p.input-container.passive ul.messagebox,
 p.input-container.passive ul.selectmenu,
+div.file-container.passive div.wrap,
+div.file-container.passive ul.messagebox,
+div.file-container.passive ul.selectmenu,
 div.textarea-container.passive div.wrap,
 div.textarea-container.passive ul.messagebox,
 div.textarea-container.passive ul.selectmenu,
@@ -3584,12 +3922,14 @@ p.textarea-container.passive ul.selectmenu {
 }
 div.input-container.passive div.passivebox,
 p.input-container.passive div.passivebox,
+div.file-container.passive div.passivebox,
 div.textarea-container.passive div.passivebox,
 p.textarea-container.passive div.passivebox {
   display: block;
 }
 div.input-container.passive div.passivebox a img,
 p.input-container.passive div.passivebox a img,
+div.file-container.passive div.passivebox a img,
 div.textarea-container.passive div.passivebox a img,
 p.textarea-container.passive div.passivebox a img {
   height: 3em;
@@ -3746,73 +4086,6 @@ input[type=file] {
   overflow: hidden;
   position: absolute;
   z-index: -1;
-}
-
-div.file-container div.wrap:after {
-  display: none;
-}
-div.file-container div.trigger {
-  transition: all 0.2s;
-  box-sizing: border-box;
-  outline: none;
-  position: relative;
-  font-family: inherit;
-  width: 100%;
-  margin: 0;
-  font-size: 1em;
-  background-color: var(--canvas-color-secondary);
-  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
-  padding: 0.5em 1em 0.5em 1.5em;
-  border-radius: 0.1em;
-  color: var(--input-default-placeholder-color);
-  font-weight: normal;
-  text-shadow: none;
-  vertical-align: middle;
-  cursor: pointer;
-}
-div.file-container div.trigger.files {
-  color: var(--input-default-text-color);
-  text-shadow: var(--input-default-text-shadow);
-}
-div.file-container div.trigger:before {
-  position: absolute;
-  right: 3.5em;
-  top: 0.7em;
-  margin: 0;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: var(--input-default-placeholder-color);
-}
-div.file-container div.trigger:focus {
-  --input-border-color-rgb: var(--colors-affordance-rgb);
-  --input-border-color: rgb(var(--input-border-color-rgb));
-  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
-}
-div.file-container div.trigger:focus::placeholder {
-  opacity: 0.3;
-}
-div.file-container div.trigger.mute {
-  background-color: var(--canvas-color-secondary);
-  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
-  padding: 0.5em 1em 0.5em 1.5em;
-}
-div.file-container div.trigger.mute:focus, div.file-container div.trigger.mute:focus-within {
-  --input-border-color-rgb: var(--colors-affordance-rgb);
-  background-color: rgba(var(--input-border-color-rgb), 0.05);
-  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
-}
-div.file-container div.trigger.mute:focus::placeholder, div.file-container div.trigger.mute:focus-within::placeholder {
-  opacity: 0;
-}
-div.file-container.mute label {
-  opacity: 1;
-}
-div.file-container.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  text-shadow: none;
-  pointer-events: none;
 }
 
 div.select-container {
