@@ -47,9 +47,9 @@ textarea {
     box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
     padding: .5em 1em .5em 1.5em;
     &::placeholder {
-      color: var(--label-color);
-      text-shadow:var(--label-text-shadow);
-      text-transform: var(--label-text-transform);
+      color: var(--colors-highlight);
+      text-shadow: var(--text-shadow);
+      text-transform: uppercase;
     }
     &:focus,
     &:focus-within {

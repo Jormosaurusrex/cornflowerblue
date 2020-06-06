@@ -2208,27 +2208,97 @@ p.textarea-container {
   padding: 0.5rem 0 0.5rem 0;
   position: relative;
 }
-div.input-container label,
-p.input-container label,
-div.textarea-container label,
-p.textarea-container label {
+div.input-container div.topline,
+p.input-container div.topline,
+div.textarea-container div.topline,
+p.textarea-container div.topline {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: nowrap;
+}
+div.input-container div.topline label,
+p.input-container div.topline label,
+div.textarea-container div.topline label,
+p.textarea-container div.topline label {
   margin-top: 0;
 }
-div.input-container label button.help, div.input-container label:after,
-p.input-container label button.help,
-p.input-container label:after,
-div.textarea-container label button.help,
-div.textarea-container label:after,
-p.textarea-container label button.help,
-p.textarea-container label:after {
+div.input-container div.topline label button.help, div.input-container div.topline label:after,
+p.input-container div.topline label button.help,
+p.input-container div.topline label:after,
+div.textarea-container div.topline label button.help,
+div.textarea-container div.topline label:after,
+p.textarea-container div.topline label button.help,
+p.textarea-container div.topline label:after {
   opacity: 1;
   transition: opacity 0.2s;
+}
+div.input-container div.topline div.charcounter,
+div.input-container div.topline div.searchdisplay,
+div.input-container div.topline div.datedisplay,
+p.input-container div.topline div.charcounter,
+p.input-container div.topline div.searchdisplay,
+p.input-container div.topline div.datedisplay,
+div.textarea-container div.topline div.charcounter,
+div.textarea-container div.topline div.searchdisplay,
+div.textarea-container div.topline div.datedisplay,
+p.textarea-container div.topline div.charcounter,
+p.textarea-container div.topline div.searchdisplay,
+p.textarea-container div.topline div.datedisplay {
+  color: var(--input-border-color);
+  display: block;
+  font-size: 0.85em;
+  font-style: oblique;
+  text-align: right;
+}
+div.input-container div.topline div.charcounter.danger,
+div.input-container div.topline div.searchdisplay.danger,
+div.input-container div.topline div.datedisplay.danger,
+p.input-container div.topline div.charcounter.danger,
+p.input-container div.topline div.searchdisplay.danger,
+p.input-container div.topline div.datedisplay.danger,
+div.textarea-container div.topline div.charcounter.danger,
+div.textarea-container div.topline div.searchdisplay.danger,
+div.textarea-container div.topline div.datedisplay.danger,
+p.textarea-container div.topline div.charcounter.danger,
+p.textarea-container div.topline div.searchdisplay.danger,
+p.textarea-container div.topline div.datedisplay.danger {
+  color: var(--colors-warning);
+}
+div.input-container div.topline div.charcounter.outofbounds,
+div.input-container div.topline div.searchdisplay.outofbounds,
+div.input-container div.topline div.datedisplay.outofbounds,
+p.input-container div.topline div.charcounter.outofbounds,
+p.input-container div.topline div.searchdisplay.outofbounds,
+p.input-container div.topline div.datedisplay.outofbounds,
+div.textarea-container div.topline div.charcounter.outofbounds,
+div.textarea-container div.topline div.searchdisplay.outofbounds,
+div.textarea-container div.topline div.datedisplay.outofbounds,
+p.textarea-container div.topline div.charcounter.outofbounds,
+p.textarea-container div.topline div.searchdisplay.outofbounds,
+p.textarea-container div.topline div.datedisplay.outofbounds {
+  color: var(--colors-error);
+}
+div.input-container div.topline div.topcontrol,
+p.input-container div.topline div.topcontrol,
+div.textarea-container div.topline div.topcontrol,
+p.textarea-container div.topline div.topcontrol {
+  opacity: 1;
+  z-index: 10;
+  transition: all 0.2s;
+  --button-default-color: var(--input-border-color);
+  --button-hover-text-color: var(--input-border-color);
+  --button-text-shadow: none;
 }
 div.input-container div.wrap,
 p.input-container div.wrap,
 div.textarea-container div.wrap,
 p.textarea-container div.wrap {
   position: relative;
+  z-index: 9;
 }
 div.input-container div.wrap div.inputcontrol,
 p.input-container div.wrap div.inputcontrol,
@@ -2366,65 +2436,6 @@ p.textarea-container div.wrap:after {
   justify-content: center;
   align-items: center;
 }
-div.input-container div.topcontrol,
-p.input-container div.topcontrol,
-div.textarea-container div.topcontrol,
-p.textarea-container div.topcontrol {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 10;
-  transition: all 0.2s;
-  --button-default-color: var(--input-border-color);
-  --button-hover-text-color: var(--input-border-color);
-  --button-text-shadow: none;
-}
-div.input-container div.charcounter,
-div.input-container div.searchdisplay,
-div.input-container div.datedisplay,
-p.input-container div.charcounter,
-p.input-container div.searchdisplay,
-p.input-container div.datedisplay,
-div.textarea-container div.charcounter,
-div.textarea-container div.searchdisplay,
-div.textarea-container div.datedisplay,
-p.textarea-container div.charcounter,
-p.textarea-container div.searchdisplay,
-p.textarea-container div.datedisplay {
-  color: var(--input-border-color);
-  display: block;
-  font-size: 0.85em;
-  font-style: oblique;
-  text-align: right;
-}
-div.input-container div.charcounter.danger,
-div.input-container div.searchdisplay.danger,
-div.input-container div.datedisplay.danger,
-p.input-container div.charcounter.danger,
-p.input-container div.searchdisplay.danger,
-p.input-container div.datedisplay.danger,
-div.textarea-container div.charcounter.danger,
-div.textarea-container div.searchdisplay.danger,
-div.textarea-container div.datedisplay.danger,
-p.textarea-container div.charcounter.danger,
-p.textarea-container div.searchdisplay.danger,
-p.textarea-container div.datedisplay.danger {
-  color: var(--colors-warning);
-}
-div.input-container div.charcounter.outofbounds,
-div.input-container div.searchdisplay.outofbounds,
-div.input-container div.datedisplay.outofbounds,
-p.input-container div.charcounter.outofbounds,
-p.input-container div.searchdisplay.outofbounds,
-p.input-container div.datedisplay.outofbounds,
-div.textarea-container div.charcounter.outofbounds,
-div.textarea-container div.searchdisplay.outofbounds,
-div.textarea-container div.datedisplay.outofbounds,
-p.textarea-container div.charcounter.outofbounds,
-p.textarea-container div.searchdisplay.outofbounds,
-p.textarea-container div.datedisplay.outofbounds {
-  color: var(--colors-error);
-}
 div.input-container ul.messagebox,
 p.input-container ul.messagebox,
 div.textarea-container ul.messagebox,
@@ -2514,18 +2525,25 @@ div.textarea-container.minimal input.trigger,
 p.textarea-container.minimal input.trigger {
   padding-right: 2rem;
 }
-div.input-container.mute label,
-p.input-container.mute label,
-div.textarea-container.mute label,
-p.textarea-container.mute label {
-  opacity: 0;
-  margin-top: 0;
+div.input-container.mute div.topline,
+p.input-container.mute div.topline,
+div.textarea-container.mute div.topline,
+p.textarea-container.mute div.topline {
+  margin-top: 2.1em;
+  transition: all 0.2s;
+  z-index: 10;
+  margin-bottom: -2.1em;
+  pointer-events: none;
 }
-div.input-container.mute div.topcontrol,
-p.input-container.mute div.topcontrol,
-div.textarea-container.mute div.topcontrol,
-p.textarea-container.mute div.topcontrol {
-  top: 0.3rem;
+div.input-container.mute div.topline label,
+p.input-container.mute div.topline label,
+div.textarea-container.mute div.topline label,
+p.textarea-container.mute div.topline label {
+  opacity: 1;
+  margin-top: 1rem;
+  padding-left: 1.5em;
+  font-size: 1em;
+  transition: all 0.2s;
 }
 div.input-container.mute.active label, div.input-container.mute.filled label,
 p.input-container.mute.active label,
@@ -2545,11 +2563,31 @@ p.textarea-container.mute.active div.topcontrol,
 p.textarea-container.mute.filled div.topcontrol {
   opacity: 1;
 }
+div.input-container.mute div.wrap input::placeholder,
+p.input-container.mute div.wrap input::placeholder,
+div.textarea-container.mute div.wrap input::placeholder,
+p.textarea-container.mute div.wrap input::placeholder {
+  opacity: 0;
+}
 div.input-container.mute div.wrap:after,
 p.input-container.mute div.wrap:after,
 div.textarea-container.mute div.wrap:after,
 p.textarea-container.mute div.wrap:after {
   right: 0;
+}
+div.input-container.mute:focus-within div.topline,
+p.input-container.mute:focus-within div.topline,
+div.textarea-container.mute:focus-within div.topline,
+p.textarea-container.mute:focus-within div.topline {
+  margin-top: 0;
+  margin-bottom: 0;
+  pointer-events: unset;
+}
+div.input-container.mute:focus-within div.topline label,
+p.input-container.mute:focus-within div.topline label,
+div.textarea-container.mute:focus-within div.topline label,
+p.textarea-container.mute:focus-within div.topline label {
+  padding-left: 0;
 }
 div.input-container.required label:after,
 p.input-container.required label:after,
@@ -2753,14 +2791,10 @@ p.textarea-container.disabled {
   text-shadow: none;
   pointer-events: none;
 }
-div.input-container.disabled label,
-div.input-container.disabled div.topcontrol,
-p.input-container.disabled label,
-p.input-container.disabled div.topcontrol,
-div.textarea-container.disabled label,
-div.textarea-container.disabled div.topcontrol,
-p.textarea-container.disabled label,
-p.textarea-container.disabled div.topcontrol {
+div.input-container.disabled div.topline,
+p.input-container.disabled div.topline,
+div.textarea-container.disabled div.topline,
+p.textarea-container.disabled div.topline {
   opacity: 0.5;
   text-shadow: none;
 }
@@ -2801,35 +2835,37 @@ p.textarea-container:focus-within div.wrap div.topcontrol {
   opacity: 1;
   top: 0.3em;
 }
-div.input-container.passive label,
-p.input-container.passive label,
-div.textarea-container.passive label,
-p.textarea-container.passive label {
+div.input-container.passive div.topline label,
+p.input-container.passive div.topline label,
+div.textarea-container.passive div.topline label,
+p.textarea-container.passive div.topline label {
   opacity: 1;
 }
-div.input-container.passive label button.help, div.input-container.passive label:after,
-p.input-container.passive label button.help,
-p.input-container.passive label:after,
-div.textarea-container.passive label button.help,
-div.textarea-container.passive label:after,
-p.textarea-container.passive label button.help,
-p.textarea-container.passive label:after {
+div.input-container.passive div.topline label button.help, div.input-container.passive div.topline label:after,
+p.input-container.passive div.topline label button.help,
+p.input-container.passive div.topline label:after,
+div.textarea-container.passive div.topline label button.help,
+div.textarea-container.passive div.topline label:after,
+p.textarea-container.passive div.topline label button.help,
+p.textarea-container.passive div.topline label:after {
+  opacity: 0;
+}
+div.input-container.passive div.topline div.topcontrol,
+p.input-container.passive div.topline div.topcontrol,
+div.textarea-container.passive div.topline div.topcontrol,
+p.textarea-container.passive div.topline div.topcontrol {
   opacity: 0;
 }
 div.input-container.passive div.wrap,
-div.input-container.passive div.topcontrol,
 div.input-container.passive ul.messagebox,
 div.input-container.passive ul.selectmenu,
 p.input-container.passive div.wrap,
-p.input-container.passive div.topcontrol,
 p.input-container.passive ul.messagebox,
 p.input-container.passive ul.selectmenu,
 div.textarea-container.passive div.wrap,
-div.textarea-container.passive div.topcontrol,
 div.textarea-container.passive ul.messagebox,
 div.textarea-container.passive ul.selectmenu,
 p.textarea-container.passive div.wrap,
-p.textarea-container.passive div.topcontrol,
 p.textarea-container.passive ul.messagebox,
 p.textarea-container.passive ul.selectmenu {
   display: none;
@@ -2944,9 +2980,9 @@ input[type=number].mute::placeholder,
 input[type=password].mute::placeholder,
 input[type=search].mute::placeholder,
 textarea.mute::placeholder {
-  color: var(--label-color);
-  text-shadow: var(--label-text-shadow);
-  text-transform: var(--label-text-transform);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
+  text-transform: uppercase;
 }
 input[type=text].mute:focus, input[type=text].mute:focus-within,
 input[type=number].mute:focus,

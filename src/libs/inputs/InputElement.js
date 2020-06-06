@@ -336,7 +336,12 @@ class InputElement {
                 this.container.classList.add(c);
             }
         }
-        if (this.label) { this.container.appendChild(this.labelobj); }
+
+        let topline = document.createElement('div');
+        topline.classList.add('topline');
+        if (this.label) { topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { topline.appendChild(this.topcontrol); }
+        this.container.appendChild(topline);
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');
@@ -346,7 +351,6 @@ class InputElement {
 
         if (!this.minimal) {
             this.container.appendChild(this.passivebox);
-            if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
             this.container.appendChild(this.messagebox);
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
