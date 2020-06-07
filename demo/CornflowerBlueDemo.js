@@ -1561,6 +1561,7 @@ class CornflowerBlueDemo {
             name: "year-select",
             required: true,
             prefix: 'Year:',
+            unselectedtext: '(No selection)',
             options: [
                 { label: "2019", value: "2019" },
                 { label: "2018", value: "2018" },
@@ -1575,6 +1576,7 @@ class CornflowerBlueDemo {
         standard.appendChild(new SelectMenu({
             label: "Favorite Album",
             name: "favorite_album",
+            unselectedtext: '(No selection)',
             options: [
                 { label: "Sgt. Pepper's Lonely Hearts Club Band", value: "Sgt. Pepper's Lonely Hearts Club Band" },
                 { label: "The Nylon Curtain", value: "The Nylon Curtain" },

@@ -2,9 +2,9 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             combobox: false,
-            unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
+            placeholder: TextFactory.get('selectmenu-placeholder-default'),
+            unselectedtext: null, // If present, allow for a deselect and use this text.
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
             value: null,    // Use this to set the value of the item
@@ -33,7 +33,6 @@ class SelectMenu extends InputElement {
             config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
         }
         super(config);
-
         if (config.value) {
             this.origval = config.value;
         }
@@ -172,15 +171,6 @@ class SelectMenu extends InputElement {
             li.setAttribute('tabindex', '-1');
         }
 
-        if (!this.combobox) {
-            if (this.selected) {
-                let seltext = this.selected.parentNode.querySelector('span.text');
-                if (seltext) {
-                    this.triggerbox.value = seltext.innerHTML;
-                }
-            }
-        }
-
         this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
     }
@@ -210,6 +200,24 @@ class SelectMenu extends InputElement {
         this.container.classList.remove('passive');
         this.optionlist.removeAttribute('aria-hidden');
         this.passive = false;
+    }
+
+    /**
+     * Select a specific entry, given a value
+     * @param value the value to select
+     */
+    select(value) {
+        let allopts = this.listbox.querySelectorAll('li');
+        for (let o of allopts) {
+            let radio = o.querySelector(`input[name=${this.name}`);
+            if (o.getAttribute('data-value') === value) {
+                o.setAttribute('aria-selected', true);
+                radio.checked = true;
+            } else {
+                o.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -261,24 +269,6 @@ class SelectMenu extends InputElement {
         }
 
         this.postContainerScrub();
-    }
-
-    /**
-     * Select a specific entry, given a value
-     * @param value the value to select
-     */
-    select(value) {
-        let allopts = this.listbox.querySelectorAll('li');
-        for (let o of allopts) {
-            let radio = o.querySelector(`input[name=${this.name}`);
-            if (o.getAttribute('data-value') === value) {
-                o.setAttribute('aria-selected', true);
-                radio.checked = true;
-            } else {
-                o.removeAttribute('aria-selected');
-                radio.checked = false;
-            }
-        }
     }
 
     /**
@@ -344,12 +334,6 @@ class SelectMenu extends InputElement {
         });
 
         if (this.mute) { this.triggerbox.classList.add('mute'); }
-
-    }
-
-    calculatePlaceholder() {
-        if (this.unselectedtext) { return this.unselectedtext; }
-        return TextFactory.get('selectmenu-placeholder-default');
     }
 
     buildOptions() {
@@ -359,8 +343,20 @@ class SelectMenu extends InputElement {
         this.optionlist.setAttribute('id', this.id);
         this.optionlist.setAttribute('tabindex', '-1');
 
-        let order = 1;
-        let minchars = 5;
+        let order = 0;
+        if (this.unselectedtext) {
+            let unsel = {
+                label: this.unselectedtext,
+                value: '',
+                unselectoption: true
+            };
+            if (!this.value) {
+                unsel.checked = true;
+                this.selectedoption = unsel;
+            }
+            this.options.unshift(unsel);
+        }
+
         for (let opt of this.options) {
             if ((this.origval) && (this.origval === opt.value)) {
                 opt.checked = true;
@@ -369,15 +365,8 @@ class SelectMenu extends InputElement {
                 delete opt.checked;
             }
 
-            let o = this.buildOption(opt, order);
-
-            if ((opt.label) && (opt.label.length > minchars)) {
-                minchars = opt.label.length;
-            }
-            order++;
-            this.optionlist.appendChild(o);
+            this.optionlist.appendChild(this.buildOption(opt, order++));
         }
-        //this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
     }
 
     buildOption(def, order) {
@@ -466,7 +455,9 @@ class SelectMenu extends InputElement {
             li.setAttribute('aria-selected', 'true');
             li.querySelector(`input[name=${me.name}]`).checked = true;
 
-            if (me.prefix) {
+            if (def.unselectoption) {
+                me.triggerbox.value = '';
+            } else if (me.prefix) {
                 me.triggerbox.value = `${me.prefix} ${def.label}`;
             } else {
                 me.triggerbox.value = def.label;
@@ -474,7 +465,7 @@ class SelectMenu extends InputElement {
 
             me.selectedoption = def;
 
-            if (def.label === me.unselectedtext) {
+            if (def.unselectoption) {
                 me.passivebox.innerHTML = me.unsettext;
             } else {
                 me.passivebox.innerHTML = def.label;
@@ -498,7 +489,9 @@ class SelectMenu extends InputElement {
 
         if (def.checked) {
             this.origval = def.value;
-            if (this.prefix) {
+            if (def.unselectoption) {
+                this.triggerbox.value = '';
+            } else if (this.prefix) {
                 this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
                 this.triggerbox.value = def.label;
@@ -555,20 +548,11 @@ class SelectMenu extends InputElement {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get attributes() { return this.config.attributes; }
-    set attributes(attributes) { this.config.attributes = attributes; }
-
     get combobox() { return this.config.combobox; }
     set combobox(combobox) { this.config.combobox = combobox; }
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
-
-    get minimal() { return this.config.minimal; }
-    set minimal(minimal) { this.config.minimal = minimal; }
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) { this.config.onchange = onchange; }
 
     get optionlist() {
         if (!this._optionlist) { this.buildOptions(); }
