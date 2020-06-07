@@ -223,6 +223,11 @@ class SelectMenu extends InputElement {
         }
         if (this.labelobj) { this.container.appendChild(this.labelobj); }
 
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        this.container.appendChild(this.topline);
+
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('wrap');
         this.wrapper.setAttribute('role', 'combobox');
@@ -243,7 +248,6 @@ class SelectMenu extends InputElement {
 
         CFBUtils.applyDataAttributes(this.attributes, this.listbox);
 
-
         this.container.appendChild(this.listbox);
 
         if (!this.minimal) {
@@ -253,7 +257,7 @@ class SelectMenu extends InputElement {
         if (this.minimal) { this.container.classList.add('minimal'); }
 
         if (this.value) {
-            //this.select(this.value);
+            this.select(this.value);
         }
 
         this.postContainerScrub();

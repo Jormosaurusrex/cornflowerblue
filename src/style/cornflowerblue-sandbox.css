@@ -2501,7 +2501,7 @@ div.textarea-container div.wrap div.inputcontrol.calbutton,
 p.textarea-container div.wrap div.inputcontrol.stepbuttons,
 p.textarea-container div.wrap div.inputcontrol.visbutton,
 p.textarea-container div.wrap div.inputcontrol.calbutton {
-  --button-default-color: var(--input-border-color);
+  --button-default-color: var(--colors-standard);
   display: flex;
   top: 0.2em;
   bottom: 0.2em;
@@ -2598,6 +2598,7 @@ p.textarea-container div.wrap:before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
   color: rgba(var(--input-border-color-rgb), 0.7);
 }
 div.input-container div.wrap:after,

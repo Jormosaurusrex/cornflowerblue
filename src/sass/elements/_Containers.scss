@@ -187,7 +187,7 @@ p.textarea-container {
       &.stepbuttons,
       &.visbutton,
       &.calbutton {
-        --button-default-color: var(--input-border-color);
+        --button-default-color: var(--colors-standard);
         display: flex;
         top: .2em;
         bottom: .2em;
@@ -233,6 +233,7 @@ p.textarea-container {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      pointer-events: none;
       color: rgba(var(--input-border-color-rgb), 0.7);
     }
     &:after {

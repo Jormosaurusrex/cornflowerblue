@@ -150,8 +150,12 @@ class InputElement {
         } else {
             this.clearMessages();
             this.input.removeAttribute('aria-invalid');
-            if ((this.isDirty()) && (!onload)) { // This has to be valid
+            if ((!this.value) || ((this.value) && (this.value.length === 0))) { // it's cleared.
+                this.container.classList.remove('valid');
+                this.container.classList.remove('filled');
+            } else if ((this.isDirty()) && (!onload)) { // This has to be valid
                 this.container.classList.add('valid');
+                this.container.classList.add('filled');
             } else {
                 this.container.classList.remove('valid');
             }
@@ -336,11 +340,11 @@ class InputElement {
             }
         }
 
-        let topline = document.createElement('div');
-        topline.classList.add('topline');
-        if (this.label) { topline.appendChild(this.labelobj); }
-        if (this.topcontrol) { topline.appendChild(this.topcontrol); }
-        this.container.appendChild(topline);
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');
@@ -782,6 +786,9 @@ class InputElement {
 
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
+
+    get topline() { return this._topline; }
+    set topline(topline) { this._topline = topline; }
 
     get touched() { return this._touched; }
     set touched(touched) { this._touched = touched; }
