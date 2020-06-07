@@ -4,6 +4,12 @@ input[type="number"],
 input[type="password"],
 input[type="search"],
 textarea {
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
+
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
+
   transition: all .2s;
   box-sizing: border-box;
   outline: none;

@@ -41,8 +41,8 @@ body {
 }
 hr {
   margin: 1rem 2.5rem 1rem 2.5rem;
-  background-color: var(--hr-background-color);
-  border-top: .2rem double var(--hr-border-color);
+  background-color: transparent;
+  border-top: .2rem double var(--canvas-color-tertiary);
   border-bottom: none;
   border-left: none;
   border-right: none;

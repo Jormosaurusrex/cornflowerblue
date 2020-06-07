@@ -1,6 +1,6 @@
 a {
-  color: var(--link-color);
-  text-shadow: var(--link-text-shadow);
+  color: var(--colors-affordance);
+  text-shadow: var(--text-shadow);
   &:link {
     text-decoration: underline;
   }

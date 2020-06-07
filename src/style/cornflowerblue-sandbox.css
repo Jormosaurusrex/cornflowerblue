@@ -45,69 +45,20 @@
   --colors-warning: rgb(var(--colors-warning-rgb));
   --colors-caution-rgb: var(--yellow-rgb);
   --colors-caution: rgb(var(--colors-caution-rgb));
-  --disabled-base-color: var(--light);
-  --disabled-base-color-light: var(--morelight);
-  --disabled-highlight-color: var(--grey-medium);
-  --disabled-color-half: var(--grey-half);
-  --disabled-color-quarter: var(--grey-quarter);
-  --disabled-color-translucent: var(--grey-translucent);
   --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
   --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
   --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
+  --shadows-panel-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --border-radius: .2rem;
-  --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
-  --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
-  --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
-  --on-white-text-shadow: 0 .03em .03em rgba(50,50,50,0.3);
-  --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
-  --box-shadow: .1em .1em .5em 0 rgba(50, 50, 50, 0.5);
-  --hover-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
-  --panel-shadow: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
-  --panel-shadow-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.4);
-  --panel-shadow-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
-  --panel-shadow-light-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
-  --interior-shadow-inverse: 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside-dark: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
-  --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
   --dialog-lightbox-background-color: var(--black);
   --dialog-lightbox-text-color: var(--colors-text-hot);
-  --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--colors-standard);
-  --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--colors-standard);
-  --messagebox-icon-text-shadow: none;
-  --resultsbox-header-text-color: var(--colors-text-hot);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-background-color: var(--canvas-color-primary);
-  --resultsbox-icon-text-shadow: var(--text-shadow);
-  --resultsbox-text-shadow: var(--text-shadow);
-  --successbox-color-base: var(--success-color);
-  --successbox-stripes: var(--success-stripes);
-  --warningbox-title-color: var(--grey-darkest);
-  --warningbox-color-base: var(--warning-color);
-  --warningbox-stripes: var(--warning-stripes);
-  --errorbox-color-base: var(--error-color);
-  --errorbox-stripes: var(--error-stripes);
-  --instructions-background-color: var(--canvas-color-secondary);
-  --instructions-border-color: var(--canvas-color-tertiary);
-  --instructions-text-color: var(--colors-standard);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--colors-standard);
-  --code-font-family: var(--fontstack-monospace);
-  --hr-background-color: transparent;
-  --hr-border-color: var(--grey-medium);
-  --link-color: var(--colors-affordance);
-  --link-text-shadow: var(--on-white-text-shadow);
   --panel-max-width: 22em;
   --panel-border-radius: var(--border-radius);
   --panel-background-color: var(--canvas-color-primary);
-  --panel-box-shadow: var(--panel-shadow);
+  --panel-box-shadow: var(--shadows-panel-light);
   --panel-text-color: var(--grey-darkest);
   --panel-text-shadow: var(--text-shadow);
   --panel-padding: .5em 1em .5em 1em;
@@ -119,85 +70,18 @@
   --progressmeter-tick-color: var(--colors-text-hot);
   --tabbar-tab-height: 3em;
   --tabbar-background-color: var(--canvas-color-primary);
-  --tabbar-box-shadow: var(--panel-shadow-light);
+  --tabbar-box-shadow: var(--shadows-panel-light);
   --tabbar-collapsed-height: 3.5em;
-  --checkbox-border-color-rgb: var(--colors-standard-rgb);
-  --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
   --checkbox-size: 2em;
   --checkbox-font-size: 2em;
   --checkbox-toggle-size: 1.3em;
   --checkbox-toggle-offset: 0.2em;
-  --button-box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
-  --button-hover-box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
-  --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
-  --button-border-radius: var(--border-radius);
-  --button-default-color: var(--colors-affordance);
-  --button-default-text-color: var(--colors-text-hot);
-  --button-hover-text-color: var(--colors-text-hot);
-  --button-hover-highlight-color: var(--white-half);
-  --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
-  --button-hover-filter: brightness(120%);
-  --button-active-gradient: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);
-  --button-active-filter: brightness(90%);
-  --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
-  --button-font-family: var(--default-font-family);
-  --button-text-shadow: var(--text-shadow);
-  --input-status-default-background-color: var(--grey-dark);
-  --input-status-icon-color: var(--morelight);
-  --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-color-rgb: var(--blue-rgb);
   --input-default-padding: .5em 1em .5em 1.5em;
-  --input-border-radius: .1em;
   --input-border-color-rgb: var(--colors-standard-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
-  --growler-max-width: 20em;
   --growler-core-color-rgb: var(--colors-highlight-rgb);
   --growler-core-color: rgb(var(--growler-core-color-rgb));
   --growler-header-text-color: var(--colors-hot-text);
-  --growler-core-color: var(--blue);
-  --growler-border-radius: var(--border-radius);
-  --growler-box-shadow: var(--panel-shadow);
-  --growler-text-color: var(--grey-darkest);
-  --growler-text-shadow: var(--text-shadow);
-  --growler-default-background-color: var(--ultralight);
-  --growler-default-border-color: var(--growler-core-color);
-  --growler-header-text-color: var(--ultralight);
-  --growler-header-text-shadow: var(--text-shadow);
-  --growler-header-background-color: var(--growler-core-color);
-  --headers-h1-text-color: var(--grey-meddark);
-  --headers-h1-text-shadow: none;
-  --headers-h1-text-transform: uppercase;
-  --headers-h1-background-color: transparent;
-  --headers-h1-border-color: var(--grey-medium);
-  --headers-h2-text-color: var(--grey-meddark);
-  --headers-h2-text-shadow: none;
-  --headers-h2-text-transform: uppercase;
-  --headers-h2-background-color: transparent;
-  --headers-h2-border-color: var(--grey-medium);
-  --headers-h3-text-color: var(--grey-darker);
-  --headers-h3-text-shadow: none;
-  --headers-h3-text-transform: uppercase;
-  --headers-h3-background-color: transparent;
-  --headers-h3-border-color: var(--grey-medium);
-  --headers-h4-text-color: var(--grey-darker);
-  --headers-h4-text-shadow: none;
-  --headers-h4-text-transform: uppercase;
-  --headers-h4-background-color: transparent;
-  --headers-h4-border-color: var(--grey-medium);
-  --headers-h5-text-color: var(--grey-darkest);
-  --headers-h5-text-shadow: none;
-  --headers-h5-text-transform: uppercase;
-  --headers-h5-background-color: transparent;
-  --headers-h5-border-color: var(--grey-medium);
-  --headers-h6-text-color: var(--grey-darkest);
-  --headers-h6-text-shadow: none;
-  --headers-h6-text-transform: uppercase;
-  --headers-h6-background-color: transparent;
-  --headers-h6-border-color: var(--grey-medium);
 }
 
 :root {
@@ -457,8 +341,8 @@ body.noisy:after {
 
 hr {
   margin: 1rem 2.5rem 1rem 2.5rem;
-  background-color: var(--hr-background-color);
-  border-top: 0.2rem double var(--hr-border-color);
+  background-color: transparent;
+  border-top: 0.2rem double var(--canvas-color-tertiary);
   border-bottom: none;
   border-left: none;
   border-right: none;
@@ -518,7 +402,7 @@ figure figcaption {
 }
 
 code {
-  font-family: var(--code-font-family);
+  font-family: var(--fontstack-monospace);
   background-color: var(--canvas-color-highlight);
   color: var(--colors-highlight);
   text-shadow: var(--text-shadow);
@@ -610,12 +494,13 @@ form.passive div.passiveactions {
 }
 
 h1 {
+  --colors-local: var(--colors-standard);
   font-size: 3.5rem;
   font-weight: 500;
   margin: 0.5rem 0;
-  color: var(--headers-h1-text-color);
-  text-shadow: var(--headers-h1-text-shadow);
-  text-transform: var(--headers-h1-text-transform);
+  color: var(--colors-base);
+  text-shadow: none;
+  text-transform: uppercase;
   letter-spacing: -0.1em;
   display: flex;
   justify-content: flex-start;
@@ -625,14 +510,14 @@ h1 {
 }
 h1:after {
   content: "";
-  border-top: 0.05em solid var(--headers-h1-border-color);
+  border-top: 0.05em solid var(--colors-local);
   flex: 1 0 2rem;
   margin: 0 0 0 0.1rem;
 }
 h1.inset {
-  background-color: var(--headers-h1-text-color);
+  background-color: var(--colors-local);
   color: transparent;
-  text-shadow: 0 0.05em 0.05em var(--white-half);
+  text-shadow: 0 0.05em 0.05em rgba(var(--colors-text-hot-rgb), 0.5);
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
@@ -644,12 +529,13 @@ h1.inset {
 }
 
 h2 {
+  --colors-local: var(--colors-standard);
   font-weight: 400;
   font-size: 2.5rem;
   margin: 0.5rem 0;
-  text-transform: var(--headers-h2-text-transform);
-  color: var(--headers-h2-text-color);
-  text-shadow: var(--headers-h2-text-shadow);
+  text-transform: none;
+  color: var(--colors-local);
+  text-shadow: none;
   letter-spacing: -0.05em;
   display: flex;
   justify-content: flex-start;
@@ -658,7 +544,7 @@ h2 {
 }
 h2:after {
   content: "";
-  border-top: 0.05em solid var(--headers-h2-border-color);
+  border-top: 0.05em solid var(--colors-local);
   flex: 1 0 2rem;
   margin: 0 0 0 0.1rem;
 }
@@ -669,36 +555,40 @@ h2:after {
 }
 
 h3 {
+  --colors-local: var(--colors-standard);
   font-weight: 400;
   font-size: 1.3rem;
   margin: 0.5rem 0 1rem 0;
-  text-transform: var(--headers-h3-text-transform);
-  color: var(--headers-h3-text-color);
-  text-shadow: var(--headers-h3-text-shadow);
+  text-transform: uppercase;
+  color: var(--colors-local);
+  text-shadow: none;
 }
 
 h4 {
+  --colors-local: var(--colors-standard);
   font-weight: 400;
   font-size: 1.2rem;
   margin: 0.5rem 0 1rem 0;
-  text-transform: var(--headers-h4-text-transform);
-  color: var(--headers-h4-text-color);
+  text-transform: uppercase;
+  color: var(--colors-local);
 }
 
 h5 {
+  --colors-local: var(--colors-standard);
   font-weight: 200;
   font-size: 1.1rem;
   margin: 0.5rem 0 1rem 0;
-  text-transform: var(--headers-h5-text-transform);
-  color: var(--headers-h5-text-color);
+  text-transform: uppercase;
+  color: var(--colors-local);
 }
 
 h6 {
+  --colors-local: var(--colors-standard);
   font-weight: 100;
   font-size: 1.1rem;
   margin: 0.5rem 0 1rem 0;
-  text-transform: var(--headers-h6-text-transform);
-  color: var(--headers-h6-text-color);
+  text-transform: uppercase;
+  color: var(--colors-local);
 }
 
 h1.fancy,
@@ -749,8 +639,8 @@ h6.fancy:after {
 }
 
 a {
-  color: var(--link-color);
-  text-shadow: var(--link-text-shadow);
+  color: var(--colors-affordance);
+  text-shadow: var(--text-shadow);
 }
 a:link {
   text-decoration: underline;
@@ -869,6 +759,7 @@ button,
 input[type=submit],
 input[type=reset],
 a.button {
+  --colors-local: var(--colors-affordance);
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -882,36 +773,98 @@ a.button {
   white-space: nowrap;
   margin: 0.8em 0.4em 0.8em 0.4em;
   padding: 0.6em 1em 0.6em 1em;
-  font-family: var(--button-font-family);
+  font-family: var(--default-font-family);
   font-weight: normal;
   font-size: 1em;
   line-height: 1;
   touch-action: manipulation;
   cursor: pointer;
-  color: var(--button-default-text-color);
-  text-shadow: var(--button-text-shadow);
-  background-color: var(--button-default-color);
+  color: var(--colors-text-hot);
+  background-color: var(--colors-local);
+  text-shadow: var(--text-shadow);
   border: none;
-  border-radius: var(--button-border-radius);
-  box-shadow: var(--button-box-shadow);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0.1em 0.2em 0 rgba(var(--grey-darker-rgb), 0.5);
 }
-button span.icon,
-input[type=submit] span.icon,
-input[type=reset] span.icon,
-a.button span.icon {
+button > span.icon,
+input[type=submit] > span.icon,
+input[type=reset] > span.icon,
+a.button > span.icon {
   margin: 0 0.5em 0 0;
 }
-button span.icon:before,
-input[type=submit] span.icon:before,
-input[type=reset] span.icon:before,
-a.button span.icon:before {
+button > span.icon:before,
+input[type=submit] > span.icon:before,
+input[type=reset] > span.icon:before,
+a.button > span.icon:before {
   margin: 0;
 }
-button span.icon.secondicon,
-input[type=submit] span.icon.secondicon,
-input[type=reset] span.icon.secondicon,
-a.button span.icon.secondicon {
+button > span.icon.secondicon,
+input[type=submit] > span.icon.secondicon,
+input[type=reset] > span.icon.secondicon,
+a.button > span.icon.secondicon {
   margin: 0 0 0 0.5em;
+}
+@media (hover: hover) and (pointer: fine) {
+  button:hover, button.hover,
+input[type=submit]:hover,
+input[type=submit].hover,
+input[type=reset]:hover,
+input[type=reset].hover,
+a.button:hover,
+a.button.hover {
+    outline: none;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);
+    text-decoration: underline;
+    box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
+    filter: brightness(120%);
+  }
+}
+button:focus, button.focus,
+input[type=submit]:focus,
+input[type=submit].focus,
+input[type=reset]:focus,
+input[type=reset].focus,
+a.button:focus,
+a.button.focus {
+  outline: var(--colors-local) dashed 0.1rem;
+  outline-offset: 0.2em;
+  text-decoration: underline double;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+button:active, button.active,
+input[type=submit]:active,
+input[type=submit].active,
+input[type=reset]:active,
+input[type=reset].active,
+a.button:active,
+a.button.active {
+  box-shadow: 0 0.1em 0.1em 0 rgba(var(--grey-darker-rgb), 0.5);
+  text-decoration: none;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);
+  filter: brightness(90%);
+  outline: none;
+}
+button:disabled,
+input[type=submit]:disabled,
+input[type=reset]:disabled,
+a.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-shadow: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+button.constructive,
+input[type=submit].constructive,
+input[type=reset].constructive,
+a.button.constructive {
+  --colors-local: var(--colors-constructive);
+}
+button.destructive,
+input[type=submit].destructive,
+input[type=reset].destructive,
+a.button.destructive {
+  --colors-local: var(--colors-destructive);
 }
 button.righticon,
 input[type=submit].righticon,
@@ -997,7 +950,7 @@ input[type=reset].hamburger span.magichamburger > span,
 a.button.hamburger span.magichamburger > span {
   width: 1em;
   height: 0.2em;
-  background-color: var(--button-default-text-color);
+  background-color: var(--colors-text-hot);
   display: block;
   margin: 0;
   transition: all 0.5s;
@@ -1050,115 +1003,57 @@ button.ghost,
 input[type=submit].ghost,
 input[type=reset].ghost,
 a.button.ghost {
-  --button-border-color: var(--button-default-color);
+  --button-border-color: var(--colors-local);
   box-shadow: inset -0.1em -0.1em 0 0 var(--button-border-color), inset 0.1em -0.1em 0 0 var(--button-border-color), inset -0.1em 0.1em 0 0 var(--button-border-color), inset 0.1em 0.1em 0 0 var(--button-border-color);
-  color: var(--button-default-color);
+  color: var(--colors-local);
   background-color: transparent;
 }
-button:focus, button:active, button.focus, button.active,
-input[type=submit]:focus,
-input[type=submit]:active,
-input[type=submit].focus,
-input[type=submit].active,
-input[type=reset]:focus,
-input[type=reset]:active,
-input[type=reset].focus,
-input[type=reset].active,
-a.button:focus,
-a.button:active,
-a.button.focus,
-a.button.active {
-  color: var(--button-hover-text-color);
-  text-shadow: var(--button-text-shadow);
-  background-color: var(--button-default-color);
-  outline: none;
-  background-image: var(--button-hover-gradient);
+button.ghost:focus, button.ghost.focus, button.ghost:active, button.ghost.active,
+input[type=submit].ghost:focus,
+input[type=submit].ghost.focus,
+input[type=submit].ghost:active,
+input[type=submit].ghost.active,
+input[type=reset].ghost:focus,
+input[type=reset].ghost.focus,
+input[type=reset].ghost:active,
+input[type=reset].ghost.active,
+a.button.ghost:focus,
+a.button.ghost.focus,
+a.button.ghost:active,
+a.button.ghost.active {
+  color: var(--colors-text-hot);
+  background-color: var(--colors-local);
+  text-shadow: var(--text-shadow);
 }
 @media (hover: hover) and (pointer: fine) {
-  button:hover, button.hover,
-input[type=submit]:hover,
-input[type=submit].hover,
-input[type=reset]:hover,
-input[type=reset].hover,
-a.button:hover,
-a.button.hover {
-    color: var(--button-hover-text-color);
-    text-shadow: var(--button-text-shadow);
-    background-color: var(--button-default-color);
-    outline: none;
-    background-image: var(--button-hover-gradient);
-    text-decoration: underline;
-    box-shadow: var(--button-hover-box-shadow);
-    filter: var(--button-hover-filter);
+  button.ghost:hover, button.ghost.hover,
+input[type=submit].ghost:hover,
+input[type=submit].ghost.hover,
+input[type=reset].ghost:hover,
+input[type=reset].ghost.hover,
+a.button.ghost:hover,
+a.button.ghost.hover {
+    color: var(--colors-text-hot);
+    background-color: var(--colors-local);
+    text-shadow: var(--text-shadow);
   }
-}
-button:focus, button.focus,
-input[type=submit]:focus,
-input[type=submit].focus,
-input[type=reset]:focus,
-input[type=reset].focus,
-a.button:focus,
-a.button.focus {
-  outline: var(--button-default-color) dashed 0.1rem;
-  outline-offset: 0.2em;
-  text-decoration: underline double;
-}
-button:active, button.active,
-input[type=submit]:active,
-input[type=submit].active,
-input[type=reset]:active,
-input[type=reset].active,
-a.button:active,
-a.button.active {
-  box-shadow: var(--button-active-box-shadow);
-  text-decoration: none;
-  background-image: var(--button-active-gradient);
-  filter: var(--button-active-filter);
-  outline: none;
-}
-button.constructive,
-input[type=submit].constructive,
-input[type=reset].constructive,
-a.button.constructive {
-  --button-default-color: var(--colors-constructive);
-}
-button.destructive,
-input[type=submit].destructive,
-input[type=reset].destructive,
-a.button.destructive {
-  --button-default-color: var(--colors-destructive);
-}
-button:disabled,
-input[type=submit]:disabled,
-input[type=reset]:disabled,
-a.button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  text-shadow: none;
-  box-shadow: none;
-  pointer-events: none;
 }
 button.mute,
 input[type=submit].mute,
 input[type=reset].mute,
 a.button.mute {
-  color: var(--button-default-color);
+  color: var(--colors-local);
   background-color: transparent;
   border-color: transparent;
   box-shadow: none;
 }
-button.mute.constructive,
+button.mute.constructive, button.mute.destructive,
 input[type=submit].mute.constructive,
-input[type=reset].mute.constructive,
-a.button.mute.constructive {
-  color: var(--colors-constructive);
-  text-shadow: none;
-}
-button.mute.destructive,
 input[type=submit].mute.destructive,
+input[type=reset].mute.constructive,
 input[type=reset].mute.destructive,
+a.button.mute.constructive,
 a.button.mute.destructive {
-  color: var(--colors-destructive);
   text-shadow: none;
 }
 button.mute:active, button.mute.active, button.mute:focus, button.mute.focus,
@@ -1174,40 +1069,7 @@ a.button.mute:active,
 a.button.mute.active,
 a.button.mute:focus,
 a.button.mute.focus {
-  color: var(--button-hover-text-color);
-  text-shadow: var(--button-text-shadow);
-  background-color: var(--button-default-color);
-  box-shadow: var(--button-hover-box-shadow);
-}
-button.mute:active.constructive, button.mute.active.constructive, button.mute:focus.constructive, button.mute.focus.constructive,
-input[type=submit].mute:active.constructive,
-input[type=submit].mute.active.constructive,
-input[type=submit].mute:focus.constructive,
-input[type=submit].mute.focus.constructive,
-input[type=reset].mute:active.constructive,
-input[type=reset].mute.active.constructive,
-input[type=reset].mute:focus.constructive,
-input[type=reset].mute.focus.constructive,
-a.button.mute:active.constructive,
-a.button.mute.active.constructive,
-a.button.mute:focus.constructive,
-a.button.mute.focus.constructive {
-  background-color: var(--colors-constructive);
-}
-button.mute:active.destructive, button.mute.active.destructive, button.mute:focus.destructive, button.mute.focus.destructive,
-input[type=submit].mute:active.destructive,
-input[type=submit].mute.active.destructive,
-input[type=submit].mute:focus.destructive,
-input[type=submit].mute.focus.destructive,
-input[type=reset].mute:active.destructive,
-input[type=reset].mute.active.destructive,
-input[type=reset].mute:focus.destructive,
-input[type=reset].mute.focus.destructive,
-a.button.mute:active.destructive,
-a.button.mute.active.destructive,
-a.button.mute:focus.destructive,
-a.button.mute.focus.destructive {
-  background-color: var(--colors-destructive);
+  box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
 }
 @media (hover: hover) and (pointer: fine) {
   button.mute:hover, button.mute.hover,
@@ -1219,28 +1081,37 @@ a.button.mute:hover,
 a.button.mute.hover {
     text-decoration: underline;
     filter: brightness(120%);
-    color: var(--button-hover-text-color);
-    text-shadow: var(--button-text-shadow);
-    background-color: var(--button-default-color);
-    box-shadow: var(--button-hover-box-shadow);
+    box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
   }
-  button.mute:hover.constructive, button.mute.hover.constructive,
-input[type=submit].mute:hover.constructive,
-input[type=submit].mute.hover.constructive,
-input[type=reset].mute:hover.constructive,
-input[type=reset].mute.hover.constructive,
-a.button.mute:hover.constructive,
-a.button.mute.hover.constructive {
-    background-color: var(--colors-constructive);
-  }
-  button.mute:hover.destructive, button.mute.hover.destructive,
-input[type=submit].mute:hover.destructive,
-input[type=submit].mute.hover.destructive,
-input[type=reset].mute:hover.destructive,
-input[type=reset].mute.hover.destructive,
-a.button.mute:hover.destructive,
-a.button.mute.hover.destructive {
-    background-color: var(--colors-destructive);
+}
+button.mute:focus, button.mute.focus, button.mute:active, button.mute.active,
+input[type=submit].mute:focus,
+input[type=submit].mute.focus,
+input[type=submit].mute:active,
+input[type=submit].mute.active,
+input[type=reset].mute:focus,
+input[type=reset].mute.focus,
+input[type=reset].mute:active,
+input[type=reset].mute.active,
+a.button.mute:focus,
+a.button.mute.focus,
+a.button.mute:active,
+a.button.mute.active {
+  color: var(--colors-text-hot);
+  background-color: var(--colors-local);
+  text-shadow: var(--text-shadow);
+}
+@media (hover: hover) and (pointer: fine) {
+  button.mute:hover, button.mute.hover,
+input[type=submit].mute:hover,
+input[type=submit].mute.hover,
+input[type=reset].mute:hover,
+input[type=reset].mute.hover,
+a.button.mute:hover,
+a.button.mute.hover {
+    color: var(--colors-text-hot);
+    background-color: var(--colors-local);
+    text-shadow: var(--text-shadow);
   }
 }
 button.mute:active, button.mute.active,
@@ -1263,29 +1134,6 @@ a.button.mute.focus {
   outline: var(--button-default-color) dashed 0.1em;
   outline-offset: 0.2em;
   text-decoration: underline double;
-}
-button.hot,
-input[type=submit].hot,
-input[type=reset].hot,
-a.button.hot {
-  color: var(--button-default-text-color);
-  text-shadow: var(--button-text-shadow);
-  background-color: var(--button-default-color);
-  border-color: var(--button-default-color);
-}
-button.hot.constructive,
-input[type=submit].hot.constructive,
-input[type=reset].hot.constructive,
-a.button.hot.constructive {
-  background-color: var(--colors-constructive);
-  border-color: var(--colors-constructive);
-}
-button.hot.destructive,
-input[type=submit].hot.destructive,
-input[type=reset].hot.destructive,
-a.button.hot.destructive {
-  background-color: var(--colors-destructive);
-  border-color: var(--colors-destructive);
 }
 button.square, button.circle,
 input[type=submit].square,
@@ -1355,7 +1203,7 @@ button.circle,
 input[type=submit].circle,
 input[type=reset].circle,
 a.button.circle {
-  border: 0.1em solid var(--button-default-color);
+  border: 0.1em solid var(--colors-local);
   box-shadow: none;
   border-radius: 50%;
 }
@@ -1375,13 +1223,42 @@ input[type=reset].circle:active,
 a.button.circle:hover,
 a.button.circle:focus,
 a.button.circle:active {
-  box-shadow: var(--button-circle-hover-box-shadow);
+  box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
 }
 button.circle:disabled,
 input[type=submit].circle:disabled,
 input[type=reset].circle:disabled,
 a.button.circle:disabled {
   box-shadow: none;
+  border: none;
+}
+button.pill,
+input[type=submit].pill,
+input[type=reset].pill,
+a.button.pill {
+  border-radius: 1.5em;
+  margin: 0;
+}
+button.pill.ghost,
+input[type=submit].pill.ghost,
+input[type=reset].pill.ghost,
+a.button.pill.ghost {
+  box-shadow: none;
+  border: 0.1em solid var(--colors-local);
+}
+button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled,
+input[type=submit].pill:hover,
+input[type=submit].pill:active,
+input[type=submit].pill:focus,
+input[type=submit].pill:disabled,
+input[type=reset].pill:hover,
+input[type=reset].pill:active,
+input[type=reset].pill:focus,
+input[type=reset].pill:disabled,
+a.button.pill:hover,
+a.button.pill:active,
+a.button.pill:focus,
+a.button.pill:disabled {
   border: none;
 }
 button.naked, button.link,
@@ -1427,7 +1304,7 @@ a.button.link:active,
 a.button.link.active {
   background-color: transparent;
   background-image: none;
-  color: var(--button-default-color);
+  color: var(--colors-local);
 }
 @media (hover: hover) and (pointer: fine) {
   button.naked:hover, button.naked.hover, button.link:hover, button.link.hover,
@@ -1445,21 +1322,21 @@ a.button.link:hover,
 a.button.link.hover {
     background-color: transparent;
     background-image: none;
-    color: var(--button-default-color);
+    color: var(--colors-local);
   }
 }
 button.naked,
 input[type=submit].naked,
 input[type=reset].naked,
 a.button.naked {
-  color: var(--button-default-color);
+  color: var(--colors-local);
 }
 button.link,
 input[type=submit].link,
 input[type=reset].link,
 a.button.link {
-  color: var(--link-color);
-  text-shadow: var(--link-text-shadow);
+  color: var(--colors-affordance);
+  text-shadow: var(--text-shadow);
   text-decoration: underline;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -1470,7 +1347,7 @@ input[type=reset].link:hover,
 input[type=reset].link.hover,
 a.button.link:hover,
 a.button.link.hover {
-    color: var(--link-color);
+    color: var(--colors-affordance);
     filter: brightness(120%);
     text-decoration: underline double;
   }
@@ -1482,7 +1359,7 @@ input[type=reset].link:active,
 input[type=reset].link.active,
 a.button.link:active,
 a.button.link.active {
-  color: var(--link-color);
+  color: var(--colors-affordance);
 }
 button.link:focus, button.link.focus,
 input[type=submit].link:focus,
@@ -1491,7 +1368,7 @@ input[type=reset].link:focus,
 input[type=reset].link.focus,
 a.button.link:focus,
 a.button.link.focus {
-  color: var(--link-color);
+  color: var(--colors-affordance);
   text-decoration: underline double;
 }
 button.link:disabled,
@@ -1541,35 +1418,6 @@ input[type=reset].fill,
 a.button.fill {
     font-size: 1em;
   }
-}
-button.pill,
-input[type=submit].pill,
-input[type=reset].pill,
-a.button.pill {
-  border-radius: 1.5em;
-  margin: 0;
-}
-button.pill.ghost,
-input[type=submit].pill.ghost,
-input[type=reset].pill.ghost,
-a.button.pill.ghost {
-  box-shadow: none;
-  border: 0.1em solid var(--button-default-color);
-}
-button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled,
-input[type=submit].pill:hover,
-input[type=submit].pill:active,
-input[type=submit].pill:focus,
-input[type=submit].pill:disabled,
-input[type=reset].pill:hover,
-input[type=reset].pill:active,
-input[type=reset].pill:focus,
-input[type=reset].pill:disabled,
-a.button.pill:hover,
-a.button.pill:active,
-a.button.pill:focus,
-a.button.pill:disabled {
-  border: none;
 }
 button.hidden,
 input[type=submit].hidden,
@@ -1718,8 +1566,8 @@ a.button.tagbutton span.tagicon {
   margin-right: 1em;
   margin-left: 0;
   border-radius: 50%;
-  color: var(--button-default-color);
-  background-color: var(--button-hover-text-color);
+  color: var(--colors-local);
+  background-color: var(--colors-text-hot);
   padding: 0.2em;
 }
 button.tagbutton div.tooltip,
@@ -1809,10 +1657,10 @@ button.menu[aria-expanded=true],
 input[type=submit].menu[aria-expanded=true],
 input[type=reset].menu[aria-expanded=true],
 a.button.menu[aria-expanded=true] {
-  color: var(--button-default-text-color);
-  text-shadow: var(--button-text-shadow);
-  background-color: var(--button-default-color);
-  box-shadow: var(--hover-box-shadow);
+  color: var(--colors-text-hot);
+  text-shadow: var(--text-shadow);
+  background-color: var(--colors-local);
+  box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
   outline: none;
   text-decoration: none;
 }
@@ -1892,8 +1740,8 @@ input[type=checkbox],
 input[type=radio] {
   transition: all 0.2s;
   box-sizing: border-box;
-  background-color: rgba(var(--checkbox-border-color-rgb), 0.1);
-  border: 0.15em solid var(--checkbox-border-color);
+  background-color: var(--canvas-color-secondary);
+  border: 0.15em solid var(--input-border-color);
   border-radius: var(--border-radius);
   display: inline-block;
   position: relative;
@@ -1916,8 +1764,8 @@ input[type=radio]:after {
   position: absolute;
   left: var(--checkbox-toggle-offset);
   top: var(--checkbox-toggle-offset);
-  border: 0.5em solid var(--checkbox-border-color);
-  border-radius: var(--border-radius);
+  border: 0.5em solid var(--input-border-color);
+  border-radius: var(--input-border-color);
   box-shadow: none;
 }
 input[type=checkbox]:before,
@@ -1935,8 +1783,8 @@ input[type=radio]:before {
 }
 input[type=checkbox]:checked,
 input[type=radio]:checked {
-  border-color: var(--checkbox-border-color);
-  background-color: var(--checkbox-border-color);
+  border-color: var(--input-border-color);
+  background-color: var(--input-border-color);
 }
 input[type=checkbox]:checked:before,
 input[type=radio]:checked:before {
@@ -1971,7 +1819,7 @@ input[type=radio]:focus,
 input[type=radio]:active {
   border-color: var(--colors-affordance);
   background-color: rgba(var(--colors-affordance-rgb), 0.5);
-  box-shadow: var(--hover-box-shadow);
+  box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.5);
 }
 input[type=checkbox]:focus, input[type=checkbox].focus,
 input[type=radio]:focus,
@@ -1986,7 +1834,7 @@ input[type=radio].focus {
 input[type=radio]:hover {
     border-color: var(--colors-affordance);
     background-color: rgba(var(--colors-affordance-rgb), 0.5);
-    box-shadow: var(--hover-box-shadow);
+    box-shadow: 0 0.1em 0.1em 0 rgba(50, 50, 50, 0.5);
   }
 }
 input[type=checkbox]:focus:checked:before, input[type=checkbox]:hover:checked:before,
@@ -2501,7 +2349,6 @@ div.textarea-container div.wrap div.inputcontrol.calbutton,
 p.textarea-container div.wrap div.inputcontrol.stepbuttons,
 p.textarea-container div.wrap div.inputcontrol.visbutton,
 p.textarea-container div.wrap div.inputcontrol.calbutton {
-  --button-default-color: var(--colors-standard);
   display: flex;
   top: 0.2em;
   bottom: 0.2em;
@@ -2511,6 +2358,21 @@ p.textarea-container div.wrap div.inputcontrol.calbutton {
   align-items: center;
   justify-content: center;
   align-content: center;
+}
+div.input-container div.wrap div.inputcontrol.stepbuttons > button, div.input-container div.wrap div.inputcontrol.visbutton > button, div.input-container div.wrap div.inputcontrol.calbutton > button,
+p.input-container div.wrap div.inputcontrol.stepbuttons > button,
+p.input-container div.wrap div.inputcontrol.visbutton > button,
+p.input-container div.wrap div.inputcontrol.calbutton > button,
+div.file-container div.wrap div.inputcontrol.stepbuttons > button,
+div.file-container div.wrap div.inputcontrol.visbutton > button,
+div.file-container div.wrap div.inputcontrol.calbutton > button,
+div.textarea-container div.wrap div.inputcontrol.stepbuttons > button,
+div.textarea-container div.wrap div.inputcontrol.visbutton > button,
+div.textarea-container div.wrap div.inputcontrol.calbutton > button,
+p.textarea-container div.wrap div.inputcontrol.stepbuttons > button,
+p.textarea-container div.wrap div.inputcontrol.visbutton > button,
+p.textarea-container div.wrap div.inputcontrol.calbutton > button {
+  --colors-local: var(--colors-standard);
 }
 @media (hover: hover) and (pointer: fine) {
   div.input-container div.wrap div.inputcontrol.stepbuttons:hover, div.input-container div.wrap div.inputcontrol.visbutton:hover, div.input-container div.wrap div.inputcontrol.calbutton:hover,
@@ -3245,6 +3107,10 @@ input[type=number],
 input[type=password],
 input[type=search],
 textarea {
+  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
+  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
   transition: all 0.2s;
   box-sizing: border-box;
   outline: none;
@@ -3768,25 +3634,25 @@ div.growlbox {
   max-width: var(--growlbox-max-width);
 }
 div.growlbox.top-left {
-  top: 1em;
-  left: 1em;
+  top: 1rem;
+  left: 1rem;
 }
 div.growlbox.top-right {
-  top: 1em;
-  right: 1em;
+  top: 1rem;
+  right: 1rem;
 }
 div.growlbox.bottom-left {
-  bottom: 1em;
-  left: 1em;
+  bottom: 1rem;
+  left: 1rem;
 }
 div.growlbox.bottom-right {
-  bottom: 1em;
-  right: 1em;
+  bottom: 1rem;
+  right: 1rem;
 }
 div.growlbox.top-center {
-  top: 1em;
-  right: 1em;
-  left: 1em;
+  top: 1rem;
+  right: 1rem;
+  left: 1rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -3795,9 +3661,9 @@ div.growlbox.top-center .growler {
   margin-right: auto;
 }
 div.growlbox.bottom-center {
-  bottom: 1em;
-  right: 1em;
-  left: 1em;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -3832,7 +3698,7 @@ div.growler > button.closebutton {
   padding: 0;
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
-  font-size: 1em;
+  font-size: 1rem;
 }
 div.growler > button.closebutton:active, div.growler > button.closebutton:focus, div.growler > button.closebutton:hover {
   opacity: 1;
@@ -3842,7 +3708,7 @@ div.growler h3 {
   color: var(--growler-header-text-color);
   display: flex;
   margin: 0;
-  padding: 0.5em 1em;
+  padding: 0.5em 1rem;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -3870,7 +3736,7 @@ div.growler h3 button.closebutton {
 }
 div.growler div.payload {
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--growler-core-color-rgb), 0.05) 0.5rem, rgba(var(--growler-core-color-rgb), 0.05) 1rem);
-  padding: 1em;
+  padding: 1rem;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -3890,7 +3756,7 @@ div.growler div.payload span.icon.i {
   text-shadow: var(--text-shadow);
 }
 div.growler div.payload div.text {
-  font-size: 1.1em;
+  font-size: 1.1rem;
   padding: 0 0 0 0.5em;
 }
 div.growler.error {
@@ -4291,7 +4157,7 @@ div.progressbar-container div.circlewrap svg circle.radialcircle {
   transition: stroke-dashoffset 1s ease-in-out;
   stroke: var(--progressmeter-core-color);
   fill: transparent;
-  box-shadow: var(--panel-shadow);
+  filter: var(--shadows-panel);
 }
 div.progressbar-container div.circlewrap svg circle.tickmarks {
   stroke-dasharray: 1, 10%;
@@ -4536,7 +4402,7 @@ ul.tabbar li ul.submenu {
   z-index: 3;
   background-color: var(--tabbar-background-color);
   box-shadow: none;
-  filter: var(--panel-shadow-filter);
+  filter: var(--shadows-panel);
 }
 ul.tabbar li ul.submenu:before {
   display: none;

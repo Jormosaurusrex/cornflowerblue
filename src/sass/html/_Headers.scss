@@ -1,10 +1,11 @@
 h1 {
+  --colors-local: var(--colors-standard);
   font-size: 3.5rem;
   font-weight: 500;
   margin: .5rem 0;
-  color: var(--headers-h1-text-color);
-  text-shadow: var(--headers-h1-text-shadow);
-  text-transform: var(--headers-h1-text-transform);
+  color: var(--colors-base);
+  text-shadow: none;
+  text-transform: uppercase;
   letter-spacing: -.1em;
   display: flex;
   justify-content: flex-start;
@@ -13,14 +14,14 @@ h1 {
   box-sizing: border-box;
   &:after {
     content: '';
-    border-top: .05em solid var(--headers-h1-border-color);
+    border-top: .05em solid var(--colors-local);
     flex: 1 0 2rem;
     margin: 0 0 0 .1rem;
   }
   &.inset {
-    background-color: var(--headers-h1-text-color);
+    background-color: var(--colors-local);
     color: transparent;
-    text-shadow: 0 .05em .05em var(--white-half);
+    text-shadow: 0 .05em .05em rgba(var(--colors-text-hot-rgb), .5);
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
@@ -30,12 +31,13 @@ h1 {
   }
 }
 h2 {
+  --colors-local: var(--colors-standard);
   font-weight: 400;
   font-size: 2.5rem;
   margin: .5rem 0;
-  text-transform: var(--headers-h2-text-transform);
-  color: var(--headers-h2-text-color);
-  text-shadow: var(--headers-h2-text-shadow);
+  text-transform: none;
+  color: var(--colors-local);
+  text-shadow: none;
   letter-spacing: -.05em;
   display: flex;
   justify-content: flex-start;
@@ -43,7 +45,7 @@ h2 {
   text-align: left;
   &:after {
     content: '';
-    border-top: .05em solid var(--headers-h2-border-color);
+    border-top: .05em solid var(--colors-local);
     flex: 1 0 2rem;
     margin: 0 0 0 .1rem;
   }
@@ -52,33 +54,37 @@ h2 {
   }
 }
 h3 {
+  --colors-local: var(--colors-standard);
   font-weight: 400;
   font-size: 1.3rem;
   margin: .5rem 0 1rem 0;
-  text-transform: var(--headers-h3-text-transform);
-  color: var(--headers-h3-text-color);
-  text-shadow: var(--headers-h3-text-shadow);
+  text-transform: uppercase;
+  color: var(--colors-local);
+  text-shadow: none;
 }
 h4 {
+  --colors-local: var(--colors-standard);
   font-weight: 400;
   font-size: 1.2rem;
   margin: .5rem 0 1rem 0;
-  text-transform: var(--headers-h4-text-transform);
-  color: var(--headers-h4-text-color);
+  text-transform: uppercase;
+  color: var(--colors-local);
 }
 h5 {
+  --colors-local: var(--colors-standard);
   font-weight: 200;
   font-size: 1.1rem;
   margin: .5rem 0 1rem 0;
-  text-transform: var(--headers-h5-text-transform);
-  color: var(--headers-h5-text-color);
+  text-transform: uppercase;
+  color: var(--colors-local);
 }
 h6 {
+  --colors-local: var(--colors-standard);
   font-weight: 100;
   font-size: 1.1rem;
   margin: .5rem 0 1rem 0;
-  text-transform: var(--headers-h6-text-transform);
-  color: var(--headers-h6-text-color);
+  text-transform: uppercase;
+  color: var(--colors-local);
 }
 h1,
 h2,

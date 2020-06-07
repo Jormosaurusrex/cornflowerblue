@@ -187,7 +187,9 @@ p.textarea-container {
       &.stepbuttons,
       &.visbutton,
       &.calbutton {
-        --button-default-color: var(--colors-standard);
+        > button {
+          --colors-local: var(--colors-standard);
+        }
         display: flex;
         top: .2em;
         bottom: .2em;

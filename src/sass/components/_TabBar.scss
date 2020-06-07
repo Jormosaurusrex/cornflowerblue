@@ -105,7 +105,7 @@ ul.tabbar {
       z-index: 3;
       background-color: var(--tabbar-background-color);
       box-shadow: none;
-      filter: var(--panel-shadow-filter);
+      filter: var(--shadows-panel);
       &:before {
         display: none;
         content: "";

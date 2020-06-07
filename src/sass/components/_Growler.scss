@@ -1,6 +1,3 @@
-:root {
-
-}
 div.growlbox {
   z-index: 50000;
   position: fixed;
@@ -8,25 +5,25 @@ div.growlbox {
   flex-direction: column;
   max-width: var(--growlbox-max-width);
   &.top-left {
-    top: 1em;
-    left: 1em;
+    top: 1rem;
+    left: 1rem;
   }
   &.top-right {
-    top: 1em;
-    right: 1em;
+    top: 1rem;
+    right: 1rem;
   }
   &.bottom-left {
-    bottom: 1em;
-    left: 1em;
+    bottom: 1rem;
+    left: 1rem;
   }
   &.bottom-right {
-    bottom: 1em;
-    right: 1em;
+    bottom: 1rem;
+    right: 1rem;
   }
   &.top-center {
-    top: 1em;
-    right: 1em;
-    left: 1em;
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
     margin-left: auto;
     margin-right: auto;
     .growler {
@@ -35,9 +32,9 @@ div.growlbox {
     }
   }
   &.bottom-center {
-    bottom: 1em;
-    right: 1em;
-    left: 1em;
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
     margin-left: auto;
     margin-right: auto;
   }
@@ -71,7 +68,7 @@ div.growler {
     padding: 0;
     color: var(--colors-standard);
     text-shadow: var(--text-shadow);
-    font-size: 1em;
+    font-size: 1rem;
     &:active,
     &:focus,
     &:hover {
@@ -83,7 +80,7 @@ div.growler {
     color: var(--growler-header-text-color);
     display: flex;
     margin: 0;
-    padding: .5em 1em;
+    padding: .5em 1rem;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -111,7 +108,7 @@ div.growler {
   }
   div.payload {
     background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--growler-core-color-rgb), 0.05) .5rem, rgba(var(--growler-core-color-rgb), 0.05) 1rem);
-    padding: 1em;
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -130,7 +127,7 @@ div.growler {
       text-shadow: var(--text-shadow);
     }
     div.text {
-      font-size: 1.1em;
+      font-size: 1.1rem;
       padding: 0 0 0 .5em;
     }
   }

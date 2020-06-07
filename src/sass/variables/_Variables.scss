@@ -70,42 +70,14 @@
   --colors-caution-rgb: var(--yellow-rgb); // Operation or element is in an caution state
   --colors-caution: rgb(var(--colors-caution-rgb));
 
-  --disabled-base-color: var(--light);
-  --disabled-base-color-light: var(--morelight);
-  --disabled-highlight-color: var(--grey-medium);
-  --disabled-color-half: var(--grey-half);
-  --disabled-color-quarter: var(--grey-quarter);
-  --disabled-color-translucent: var(--grey-translucent);
-
-
   --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
   --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
   --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
-
+  --shadows-panel-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
 
   // Misc Values
-  --border-radius: .2rem;
-
-  // Shadows
-  --text-shadow-heavy: 0 -.03em .03em rgba(0,0,0, 1), 0 .03em .03em rgba(255,255,255, 1);
-  --text-shadow-light: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
-  --text-shadow-singular: 0 -.03em .03em rgba(0,0,0, .3);
-  --on-white-text-shadow: 0 .03em .03em rgba(50,50,50,0.3);
-  --text-shadow-heavier: 0 .07em .07em rgba(0,0,0,0.7);
-
-  --box-shadow: .1em .1em .5em 0 rgba(50, 50, 50, 0.5);
-  --hover-box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
-  --panel-shadow: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
-  --panel-shadow-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.4);
-  --panel-shadow-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
-  --panel-shadow-light-inverse: 0 -.5em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
-  --interior-shadow-inverse: 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside-dark: inset 0 .3em .5em 0 rgba(0, 0, 0, 0.2), inset 0 -.3em .5em 0 rgba(0, 0, 0, 0.2);
-  --interior-shadows-inside: inset 0 .2em .2em 0 rgba(0, 0, 0, 0.1), inset 0 -.2em .2em 0 rgba(0, 0, 0, 0.2);
-
-  --panel-shadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  --border-radius: .2rem; // Applies to evverything except form inputs
 
   // Dialog keys
   --dialog-window-mask-color: var(--white);
@@ -113,56 +85,11 @@
   --dialog-lightbox-background-color: var(--black);
   --dialog-lightbox-text-color: var(--colors-text-hot);
 
-  // Boxes
-  // MessageBoxen
-  --messagebox-background-color: var(--canvas-color-colored);
-  --messagebox-text-color: var(--colors-standard);
-  --messagebox-text-shadow: var(--text-shadow);
-  --messagebox-icon-color: var(--colors-standard);
-  --messagebox-icon-text-shadow: none;
-
-  // Results box keys
-  --resultsbox-header-text-color: var(--colors-text-hot);
-  --resultsbox-header-text-shadow: var(--text-shadow);
-  --resultsbox-background-color: var(--canvas-color-primary);
-  --resultsbox-icon-text-shadow: var(--text-shadow);
-  --resultsbox-text-shadow: var(--text-shadow);
-
-  --successbox-color-base: var(--success-color);
-  --successbox-stripes: var(--success-stripes);
-
-  --warningbox-title-color: var(--grey-darkest);
-  --warningbox-color-base: var(--warning-color);
-  --warningbox-stripes: var(--warning-stripes);
-  --errorbox-color-base: var(--error-color);
-  --errorbox-stripes: var(--error-stripes);
-
-  // Instruction box keys
-  --instructions-background-color: var(--canvas-color-secondary);
-  --instructions-border-color: var(--canvas-color-tertiary);
-  --instructions-text-color: var(--colors-standard);
-  --instructions-text-shadow: var(--text-shadow);
-  --instructions-icon-text-shadow: none;
-  --instructions-icon-color: var(--colors-standard);
-
-
-
-  // Code
-  --code-font-family: var(--fontstack-monospace);
-
-  // Horizontal rules
-  --hr-background-color: transparent;
-  --hr-border-color: var(--grey-medium);
-
-  // Links
-  --link-color: var(--colors-affordance);
-  --link-text-shadow: var(--on-white-text-shadow);
-
   // Panels
   --panel-max-width: 22em;
   --panel-border-radius: var(--border-radius);
   --panel-background-color: var(--canvas-color-primary);
-  --panel-box-shadow: var(--panel-shadow);
+  --panel-box-shadow: var(--shadows-panel-light);
   --panel-text-color: var(--grey-darkest);
   --panel-text-shadow: var(--text-shadow);
   --panel-padding: .5em 1em .5em 1em;
@@ -178,106 +105,25 @@
   // TabBars
   --tabbar-tab-height: 3em;
   --tabbar-background-color: var(--canvas-color-primary);
-  --tabbar-box-shadow: var(--panel-shadow-light);
+  --tabbar-box-shadow: var(--shadows-panel-light);
   --tabbar-collapsed-height: 3.5em;
 
   // Checkboxes
-  --checkbox-border-color-rgb: var(--colors-standard-rgb);
-  --checkbox-border-color: rgb(var(--checkbox-border-color-rgb));
   --checkbox-size: 2em; // Total box size
   --checkbox-font-size: 2em; // For the checkmark symbol
   --checkbox-toggle-size: 1.3em; // For filled checkboxes and radios
   --checkbox-toggle-offset: 0.2em;
 
-
-  // Button keys
-  --button-box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
-  --button-hover-box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
-  --button-active-box-shadow: 0 .1em .1em 0 rgba(v, 0.5);
-  --button-border-radius: var(--border-radius);
-  --button-default-color: var(--colors-affordance);
-
-  --button-default-text-color: var(--colors-text-hot);
-  --button-hover-text-color: var(--colors-text-hot);
-  --button-hover-highlight-color: var(--white-half);
-  --button-hover-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
-  --button-hover-filter: brightness(120%);
-  --button-active-gradient: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);
-  --button-active-filter: brightness(90%);
-
-  --button-circle-hover-box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
-  --button-font-family: var(--default-font-family);
-  --button-text-shadow: var(--text-shadow);
-
-  --input-status-default-background-color: var(--grey-dark);
-  --input-status-icon-color: var(--morelight);
-  --input-status-icon-text-shadow: var(--text-shadow);
-  --input-status-color-rgb: var(--blue-rgb);  // This is going to be the primary color for this
-
   // Input
   --input-default-padding: .5em 1em .5em 1.5em;
-  --input-border-radius: .1em;
 
+  // This is more like a "chrome" color. Input borders but also specific controls like steppers.
   --input-border-color-rgb: var(--colors-standard-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
 
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
-
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
-
   // Growler keys
-  --growler-max-width: 20em;
   --growler-core-color-rgb: var(--colors-highlight-rgb);
   --growler-core-color: rgb(var(--growler-core-color-rgb));
   --growler-header-text-color: var(--colors-hot-text);
 
-  --growler-core-color: var(--blue);
-  --growler-border-radius: var(--border-radius);
-  --growler-box-shadow: var(--panel-shadow);
-  --growler-text-color: var(--grey-darkest);
-  --growler-text-shadow: var(--text-shadow);
-  --growler-default-background-color: var(--ultralight);
-  --growler-default-border-color: var(--growler-core-color);
-  --growler-header-text-color: var(--ultralight);
-  --growler-header-text-shadow: var(--text-shadow);
-  --growler-header-background-color: var(--growler-core-color);
-
-  // Headers
-  --headers-h1-text-color: var(--grey-meddark);
-  --headers-h1-text-shadow: none;
-  --headers-h1-text-transform: uppercase;
-  --headers-h1-background-color: transparent;
-  --headers-h1-border-color: var(--grey-medium);
-
-  --headers-h2-text-color: var(--grey-meddark);
-  --headers-h2-text-shadow: none;
-  --headers-h2-text-transform: uppercase;
-  --headers-h2-background-color: transparent;
-  --headers-h2-border-color: var(--grey-medium);
-
-  --headers-h3-text-color: var(--grey-darker);
-  --headers-h3-text-shadow: none;
-  --headers-h3-text-transform: uppercase;
-  --headers-h3-background-color: transparent;
-  --headers-h3-border-color: var(--grey-medium);
-
-  --headers-h4-text-color: var(--grey-darker);
-  --headers-h4-text-shadow: none;
-  --headers-h4-text-transform: uppercase;
-  --headers-h4-background-color: transparent;
-  --headers-h4-border-color: var(--grey-medium);
-
-  --headers-h5-text-color: var(--grey-darkest);
-  --headers-h5-text-shadow: none;
-  --headers-h5-text-transform: uppercase;
-  --headers-h5-background-color: transparent;
-  --headers-h5-border-color: var(--grey-medium);
-
-  --headers-h6-text-color: var(--grey-darkest);
-  --headers-h6-text-shadow: none;
-  --headers-h6-text-transform: uppercase;
-  --headers-h6-background-color: transparent;
-  --headers-h6-border-color: var(--grey-medium);
 }

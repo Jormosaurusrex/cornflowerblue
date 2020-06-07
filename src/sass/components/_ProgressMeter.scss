@@ -76,7 +76,7 @@ div.progressbar-container {
           transition: stroke-dashoffset 1s ease-in-out;
           stroke: var(--progressmeter-core-color);
           fill: transparent;
-          box-shadow: var(--panel-shadow);
+          filter: var(--shadows-panel);
         }
         &.tickmarks {
           stroke-dasharray: 1, 10%;
