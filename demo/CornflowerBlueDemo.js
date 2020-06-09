@@ -416,6 +416,8 @@ class CornflowerBlueDemo {
         }
     }
 
+
+
     grindButtons() {
         const me = this;
 
@@ -606,7 +608,74 @@ class CornflowerBlueDemo {
             }).button);
         }
         document.getElementById('buttons-sizes').appendChild(sizediv);
+
+        document.getElementById('buttons-docbox').appendChild(this.getOptionGrid(SimpleButton).container);
+
     }
+
+    getOptionGrid(obj) {
+        let fields = [],
+            data = [],
+            options = obj.DEFAULT_CONFIG,
+            docs = obj.DEFAULT_CONFIG_DOCUMENTATION;
+
+        let keys = Object.keys(options).sort(function(a, b){
+            let a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if(a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+
+        fields.push(new GridField({
+            name: "key",
+            label: "Key",
+            type: "string",
+            nodupe: true,
+            hidden: false,
+            classes: ['nowrap', 'code'],
+            description: "The programmatic name for the option"
+        }));
+        fields.push(new GridField({
+            name: "default",
+            label: "Default",
+            type: "string",
+            nodupe: true,
+            hidden: false,
+            classes: ['nowrap', 'italic'],
+            description: "The default value, if any"
+
+        }));
+        fields.push(new GridField({
+            name: "description",
+            label: "Description",
+            type: "string",
+            nodupe: true,
+            hidden: false,
+            description: "The description of the option"
+        }));
+
+        for (let k of keys) {
+            let row = {
+                key: k,
+                default: options[k],
+                description: docs[k]
+            };
+            data.push(row);
+        }
+        return new DataGrid({
+            title: 'Object Options',
+            collapsible: true,
+            minimized: true,
+            data: data,
+            selectable: false,
+            searchable: false,
+            filterable: false,
+            exportable: false,
+            rowactions: null,
+            fields: fields
+        });
+    }
+
 
     grindCheckboxes() {
 
@@ -1493,6 +1562,7 @@ class CornflowerBlueDemo {
     }
 
     grindSelects() {
+
         let passiveTest = new SelectMenu({
             label: "Year",
             name: "year-passive",

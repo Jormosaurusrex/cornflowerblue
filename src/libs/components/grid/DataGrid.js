@@ -1052,6 +1052,7 @@ class DataGrid extends Panel {
      * Apply all filters
      */
     applyFilters() {
+        if (!this.filterable) return;
         const me = this;
         let rows = Array.from(this.gridbody.childNodes);
 
@@ -1498,7 +1499,7 @@ class DataGrid extends Panel {
 
         let items = [];
 
-        if (this.multiselect) {
+        if ((this.selectable) && (this.multiselect)) {
             items.push({
                 label: TextFactory.get('bulk_select'),
                 tooltip: TextFactory.get('datagrid-tooltip-bulk_select'),

@@ -2,7 +2,7 @@ class SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
+            id: null, // the id
             dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
             submits: false, // If true, force "type='submit'"
@@ -10,16 +10,16 @@ class SimpleButton {
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
-            text : null, // The text for the button. This is also used as aria-label.
-            shape : null, // (null|square|circle|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
-            size : 'medium', // size of the button: micro, small, medium (default), large, fill
+            text: null, // The text for the button. This is also used as aria-label.
+            shape: null, // (null|square|circle|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
+            size: 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             hidden: false, // Start hidden or not.
             tooltip: null, // An optional tooltip
             tipicon: null, // An icon for the tooltip
             tipgravity: 'n', // Tooltip gravity
             classes: [], //Extra css classes to apply
-            icon : null, // If present, will be attached to the text inside the button
+            icon: null, // If present, will be attached to the text inside the button
                          // This can be passed a DOM object
             iconclasses: [], // Classes to apply to icons
             iconside: 'left', // The side the icon displays on
@@ -39,6 +39,42 @@ class SimpleButton {
             hoverout: null // The off hover handler.  Passed (event, self) as arguments.
         };
     }
+
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            id: "A unique id value. The button object will have this as it's id.",
+            dataattributes: "A dictionary, key: value, which will end up with data-$key = value on elements.",
+            attributes: "A dictionary, key: value, which will end up with $key = value on elements",
+            submits: "If true, forces the button type to be type='submit'",
+            arialabel: "The aria-label attribute",
+            cansubmit: "If true, advertizes to Form objects that it can be used to submit them, if submits is true.",
+            text: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset",
+            shape: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle.",
+            size: "The size of the button: micro, small, medium (default), large, fill",
+            form: "A SimpleForm object this element this is in",
+            hidden: "If true, start hidden or not.",
+            tooltip: "An optional tooltip.",
+            tipicon: "An icon for the tooltip.",
+            tipgravity: "Tooltip gravity, default 'n'.",
+            classes: "An array of css class names to apply.",
+            icon: "If present, will be attached to the text inside the button. This can be passed a DOM object.",
+            iconclasses: "An array of css class names to apply to icons.",
+            iconside: "The side the icon displays on - left or right.",
+            secondicon : "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons.",
+            notab: "If true, don't be tabindexed.",
+            disabled: "If true, make the button disabled.",
+            mute: "If true, make the button mute.",
+            ghost: "If true, make the button ghost.",
+            link: "If true, make the button behave like a normal link.",
+            naked: "If true, remove all styles from the button.",
+            action: "The click handler. Passed (event, self) as arguments. NOT used if <code>submits</code> is true.",
+            focusin: "The focus in handler.  Passed (event, self) as arguments.",
+            focusout: "The focus out handler.  Passed (event, self) as arguments.",
+            hoverin: "The on hover handler.  Passed (event, self) as arguments.",
+            hoverout: "The off hover handler.  Passed (event, self) as arguments."
+        };
+    }
+
 
     /**
      * Define the element

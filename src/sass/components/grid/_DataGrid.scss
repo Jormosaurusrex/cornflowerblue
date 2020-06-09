@@ -266,6 +266,12 @@ div.datagrid-container {
               }
             }
           }
+          &.code {
+            font-family: var(--fontstack-monospace);
+            color: var(--colors-highlight);
+            text-shadow: var(--text-shadow);
+            white-space: nowrap;
+          }
           &.italic {
             font-style: oblique;
           }

@@ -2,6 +2,9 @@ class CFBUtils {
 
     /* GLOBAL METHODS___________________________________________________________________ */
 
+    /**
+     * Close all open panel elements. This is for things like tooltips or select menu elements which get put in the <body>.
+     */
     static closeOpen() {
         // Tooltips
         clearTimeout(ToolTip.timer);
@@ -56,7 +59,6 @@ class CFBUtils {
             hour = minute * 60,
             day = hour * 24,
             week = day * 7;
-
 
         let difference = date.getTime() - now.getTime();
         if (difference > (week * 4)) { // In 3 Months
@@ -116,7 +118,6 @@ class CFBUtils {
 
         return formatted;
     }
-
 
     /**
      * Change the timezone on a date.

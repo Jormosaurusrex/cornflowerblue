@@ -9,7 +9,7 @@ class DialogWindow {
            content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
-           lightbox: true,    // For image types, if true, open the image in a lightbox
+           lightbox: false,    // For image types, if true, open the image in a lightbox
            title: null,  // Adds a title to the dialog if present. header must be null.
            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                           // or a string.  If it's a string, it creates a div at the bottom
