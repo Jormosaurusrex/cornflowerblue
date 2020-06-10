@@ -10,6 +10,14 @@ class FileInput extends InputElement {
         };
     }
 
+    static get DOCUMENTATION() {
+        return {
+            icon: { type: 'option', datatype: 'string', description: "The icon to use for the upload trigger." },
+            accept: { type: 'option', datatype: 'string', description: "The default accept mime-type value." },
+            multiple: { type: 'option', datatype: 'boolean', description: "If true, accept multiple files for upload." }
+        };
+    }
+
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, FileInput.DEFAULT_CONFIG, config);

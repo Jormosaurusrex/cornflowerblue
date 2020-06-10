@@ -40,41 +40,112 @@ class SimpleButton {
         };
     }
 
-    static get DEFAULT_CONFIG_DOCUMENTATION() {
+    static get DOCUMENTATION() {
         return {
-            id: "A unique id value. The button object will have this as it's id.",
-            dataattributes: "A dictionary, key: value, which will end up with data-$key = value on elements.",
-            attributes: "A dictionary, key: value, which will end up with $key = value on elements",
-            submits: "If true, forces the button type to be type='submit'",
-            arialabel: "The aria-label attribute",
-            cansubmit: "If true, advertizes to Form objects that it can be used to submit them, if submits is true.",
-            text: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset",
-            shape: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle.",
-            size: "The size of the button: micro, small, medium (default), large, fill",
-            form: "A SimpleForm object this element this is in",
-            hidden: "If true, start hidden or not.",
-            tooltip: "An optional tooltip.",
-            tipicon: "An icon for the tooltip.",
-            tipgravity: "Tooltip gravity, default 'n'.",
-            classes: "An array of css class names to apply.",
-            icon: "If present, will be attached to the text inside the button. This can be passed a DOM object.",
-            iconclasses: "An array of css class names to apply to icons.",
-            iconside: "The side the icon displays on - left or right.",
-            secondicon : "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons.",
-            notab: "If true, don't be tabindexed.",
-            disabled: "If true, make the button disabled.",
-            mute: "If true, make the button mute.",
-            ghost: "If true, make the button ghost.",
-            link: "If true, make the button behave like a normal link.",
-            naked: "If true, remove all styles from the button.",
-            action: "The click handler. Passed (event, self) as arguments. NOT used if <code>submits</code> is true.",
-            focusin: "The focus in handler.  Passed (event, self) as arguments.",
-            focusout: "The focus out handler.  Passed (event, self) as arguments.",
-            hoverin: "The on hover handler.  Passed (event, self) as arguments.",
-            hoverout: "The off hover handler.  Passed (event, self) as arguments."
-        };
+            id: {
+                type: 'option',
+                datatype: 'string',
+                description: "A unique id value. The button object will have this as it's id."
+            },
+            dataattributes: {
+                type: 'option',
+                datatype: 'dictionary',
+                description: "A dictionary, key: value, which will end up with data-$key = value on elements."
+            },
+            attributes: {
+                type: 'option',
+                datatype: 'dictionary',
+                description: "A dictionary, key: value, which will end up with $key = value on elements"
+            },
+            arialabel: {type: 'option', datatype: 'string', description: "The aria-label attribute"},
+            hidden: {type: 'option', datatype: 'boolean', description: "If true, start hidden or not."},
+            classes: {type: 'option', datatype: 'stringarray', description: "An array of css class names to apply."},
+            form: {type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
+            submits: {
+                type: 'option',
+                datatype: 'boolean',
+                description: "If true, forces the button type to be type='submit'"
+            },
+            cansubmit: {
+                type: 'option',
+                datatype: 'boolean',
+                description: "If true, advertises to Form objects that it can be used to submit them, if submits is true."
+            },
+            text: {
+                type: 'option',
+                datatype: 'string',
+                description: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset"
+            },
+            shape: {
+                type: 'option',
+                datatype: 'string',
+                description: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle."
+            },
+            size: {
+                type: 'option',
+                datatype: 'string',
+                description: "The size of the button: micro, small, medium (default), large, fill"
+            },
+            tooltip: {type: 'option', datatype: 'string', description: "An optional tooltip."},
+            tipicon: {type: 'option', datatype: 'string', description: "An icon for the tooltip."},
+            tipgravity: {type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
+            icon: {
+                type: 'option',
+                datatype: 'string',
+                description: "If present, will be attached to the text inside the button. This can be passed a DOM object."
+            },
+            iconclasses: {
+                type: 'option',
+                datatype: 'stringarray',
+                description: "An array of css class names to apply to icons."
+            },
+            iconside: {
+                type: 'option',
+                datatype: 'string',
+                description: "The side the icon displays on - left or right."
+            },
+            secondicon: {
+                type: 'option',
+                datatype: 'string',
+                description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons."
+            },
+            notab: {type: 'boolean', datatype: 'string', description: "If true, don't be tabindexed."},
+            disabled: {type: 'boolean', datatype: 'string', description: "If true, make the button disabled."},
+            mute: {type: 'boolean', datatype: 'string', description: "If true, make the button mute."},
+            ghost: {type: 'boolean', datatype: 'string', description: "If true, make the button ghost."},
+            link: {
+                type: 'option',
+                datatype: 'boolean',
+                description: "If true, make the button behave like a normal link."
+            },
+            naked: {type: 'option', datatype: 'boolean', description: "If true, remove all styles from the button."},
+            action: {
+                type: 'option',
+                datatype: 'function',
+                description: "The click handler. Passed (event, self) as arguments. NOT used if 'submits' is true."
+            },
+            focusin: {
+                type: 'option',
+                datatype: 'function',
+                description: "The focus in handler. Passed (event, self) as arguments."
+            },
+            focusout: {
+                type: 'option',
+                datatype: 'function',
+                description: "The focus out handler. Passed (event, self) as arguments."
+            },
+            hoverin: {
+                type: 'option',
+                datatype: 'function',
+                description: "The on hover handler. Passed (event, self) as arguments."
+            },
+            hoverout: {
+                type: 'option',
+                datatype: 'function',
+                description: "The off hover handler. Passed (event, self) as arguments."
+            }
+        }
     }
-
 
     /**
      * Define the element
@@ -148,7 +219,7 @@ class SimpleButton {
         if (!this.tooltipobj) { return; }
         this.tooltipobj.close();
     }
-
+    
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     setIcon(newicon) {

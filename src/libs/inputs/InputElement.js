@@ -2,7 +2,7 @@ class InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // Component id
+            id: null, // Component id
             attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             name: null, // Name attribute
             form: null, // A form element this is in
@@ -10,7 +10,7 @@ class InputElement {
             // Possible values: null, 'remaining', 'limit', and 'sky'
             forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
             type: 'text', // Type of input, defaults to "text"
-            label : null, // Input label. If null, does not show up.
+            label: null, // Input label. If null, does not show up.
             placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
                                // To insure a blank placeholder, set the value to ""
             title: null,
@@ -43,10 +43,49 @@ class InputElement {
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
             validator: null, // A function to run to test validity. Passed the self.
-            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
-                return `${data}`;
-            }
+            renderer: function(data) { return `${data}`; }
 
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements." },
+            form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
+            name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
+            label: { type: 'option', datatype: 'string', description: "Input label. If null, no label will be shown." },
+            title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
+            pattern: { type: 'option', datatype: 'string', description: "Input pattern attribute." },
+            icon: { type: 'option', datatype: 'string', description: "Use to define a specific icon, used in some specific controls." },
+            minimal: { type: 'option', datatype: 'boolean', description: "If true, build with the intent that it is part of a larger component. This removes things like the secondary controls and validation boxes." },
+            counter: { type: 'option', datatype: 'enumeration', description: "A value for a character counter. Null means 'no counter'. Possible values: null, 'remaining', 'limit', and 'sky'." },
+            forceconstraints:"If true, force constraints defined in sub classes (many inputs don't have any).",
+            placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
+            passive: { type: 'option', datatype: 'boolean', description: "Start life in passive mode." },
+            unsettext: { type: 'option', datatype: 'string', description: "Text to display in passive mode if the value is empty." },
+            help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
+            helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
+            required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
+            requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
+            requirederror: { type: 'option', datatype: 'string', description: "The error message to display if required item isn't filled." },
+            hidden: { type: 'option', datatype: 'boolean', description: "Whether or not to bea hidden element." },
+            autocomplete: { type: 'option', datatype: 'boolean', description: "Enable browser autocomplete. Default is off." },
+            maxlength: { type: 'option', datatype: 'number', description: "If set, applies a maxlength to the element." },
+            value: { type: 'option', datatype: 'string', description: "Value to use for the element." },
+            disabled: { type: 'option', datatype: 'boolean', description: "If true, disable the field." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." },
+            onreturn: { type: 'option', datatype: 'function', description: "The action to execute on hitting the return key. Passed (event, self) as arguments." },
+            ontab: { type: 'option', datatype: 'function', description: "The action to execute on hitting the tab key. Passed (event, self) as arguments." },
+            onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
+            onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
+            focusin: { type: 'option', datatype: 'function', description: "The action to execute on focus in. Passed (event, self) as arguments." },
+            focusout: { type: 'option', datatype: 'function', description: "The action to execute on focus out. Passed (event, self) as arguments." },
+            validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
+            renderer: { type: 'option', datatype: 'function', description: "A function that can be used to format the in the field in passive mode." }
         };
     }
 
@@ -521,6 +560,7 @@ class InputElement {
         }
 
         CFBUtils.applyDataAttributes(this.attributes, this.input);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         if (this.mute) {
             this.input.classList.add('mute');
@@ -623,6 +663,9 @@ class InputElement {
 
     get counter() { return this.config.counter; }
     set counter(counter) { this.config.counter = counter; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }

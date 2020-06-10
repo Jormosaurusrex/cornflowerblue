@@ -2,8 +2,13 @@ class TextArea extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            counter: 'sky', // A value for a character counter. Null means 'no counter'
-            // Possible values: null, 'remaining', 'limit', and 'sky'
+            counter: 'sky'
+        };
+    }
+
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            counter: { type: 'option', datatype: 'string', description: "A value for a character counter. Null means 'no counter'. Possible values: null, 'remaining', 'limit', and 'sky'." }
         };
     }
 

@@ -100,7 +100,7 @@ input[type="radio"] {
     height: var(--checkbox-toggle-size);
     max-width: var(--checkbox-toggle-size);
     max-height: var(--checkbox-toggle-size);
-    background-color: var(--checkbox-border-color);
+    background-color: var(--input-border-color);
     position: absolute;
     left: var(--checkbox-toggle-offset);
     top: var(--checkbox-toggle-offset);
@@ -183,7 +183,7 @@ input[type="radio"] {
       display: none;
     }
     &:checked {
-      background-color: rgba(var(--checkbox-border-color-rgb), 0.1);
+      background-color: rgba(var(--input-border-color-rgb), 0.1);
     }
     &:checked {
       &:after {
@@ -237,7 +237,7 @@ input[type="radio"] {
     max-height: var(--checkbox-size);
     width: calc(var(--checkbox-size) * 2.2);
     max-width: calc(var(--checkbox-size) * 2.2);
-    background-color: rgba(var(--checkbox-border-color-rgb), 0.1);
+    background-color: rgba(var(--input-border-color-rgb), 0.1);
     &:hover,
     &:focus,
     &:active,
@@ -258,8 +258,8 @@ input[type="radio"] {
       left: var(--checkbox-toggle-offset);
       top: var(--checkbox-toggle-offset);
 
-      border: .3em solid var(--checkbox-border-color);
-      background-color: var(--checkbox-border-color);
+      border: .3em solid var(--input-border-color);
+      background-color: var(--input-border-color);
 
       box-shadow: none;
       transition: all .2s;
@@ -267,7 +267,7 @@ input[type="radio"] {
     &:checked {
       &:before { display: none; }
       &:after {
-        border: .3em solid var(--checkbox-border-color);
+        border: .3em solid var(--input-border-color);
         left: auto;
         right: var(--checkbox-toggle-offset);
       }

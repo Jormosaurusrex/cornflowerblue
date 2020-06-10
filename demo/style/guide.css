@@ -54,7 +54,7 @@ div#container header h1.cfbtitle {
   color: #6495ED;
   margin: 0 0.5em 0.5em 0.5em;
   justify-content: flex-end;
-  text-shadow: var(--text-shadow-heavier);
+  text-shadow: var(--text-shadow);
 }
 div#container header h1.cfbtitle:after {
   display: none;
@@ -85,10 +85,6 @@ div#container nav {
   }
   div#container nav li a {
     text-transform: uppercase;
-  }
-  div#container nav li a[aria-selected=true] {
-    color: var(--tabbar-selected-tab-text-color);
-    text-shadow: var(--tabbar-selected-tab-text-shadow);
   }
   div#container nav li:hover {
     background-color: transparent;
@@ -141,6 +137,14 @@ article h2 {
     min-width: 100%;
     max-width: 100%;
   }
+}
+
+div.docbox {
+  clear: both;
+  margin: 1rem 0 2rem 0;
+}
+div.docbox div.datagrid-container h3.panelheader {
+  background-color: var(--canvas-color-highlight);
 }
 
 code.invoker {

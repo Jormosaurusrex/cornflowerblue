@@ -2,11 +2,11 @@ class BooleanToggle {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The button id
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            id : null,
+            attributes: null,
             name: null,
-            form: null, // A form element this is in
-            label: null, // The text for the label.
+            form: null,
+            label: null,
             checked: false, // Initial state.
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make the checkbox disabled.
@@ -18,6 +18,28 @@ class BooleanToggle {
             renderer: function(data) { // A function that can be used to format the in the field in passive mode.
                 return `${data}`;
             }
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements." },
+            form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
+            name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
+            label: { type: 'option', datatype: 'string', description: "Input label. If null, no label will be shown." },
+            title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            disabled: { type: 'option', datatype: 'boolean', description: "If true, disable the field." },
+            onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." },
+            validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
+            renderer: { type: 'option', datatype: 'function', description: "A function that can be used to format the in the field in passive mode." },
+            value: { type: 'option', datatype: 'string', description: "Value to use for the element." },
+            checked: { type: 'option', datatype: 'boolean', description: "Should the toggle be checked or not" },
+            labelside: { type: 'option', datatype: 'string', description: "Which side to put the label on." },
+            style: { type: 'option', datatype: 'enumeration', description: "The style of the toggle. Options are: square, circle, toggle, and switch. Null means a standard checkbox style" },
         };
     }
 
@@ -100,7 +122,7 @@ class BooleanToggle {
         }
 
         CFBUtils.applyDataAttributes(this.attributes, this.toggle);
-
+        CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         this.toggle.addEventListener('change', function() {
             if (me.toggle.checked) {
@@ -188,6 +210,9 @@ class BooleanToggle {
         return this._container;
     }
     set container(container) { this._container = container; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }

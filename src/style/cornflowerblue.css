@@ -2472,7 +2472,7 @@ input[type=radio]:after {
   height: var(--checkbox-toggle-size);
   max-width: var(--checkbox-toggle-size);
   max-height: var(--checkbox-toggle-size);
-  background-color: var(--checkbox-border-color);
+  background-color: var(--input-border-color);
   position: absolute;
   left: var(--checkbox-toggle-offset);
   top: var(--checkbox-toggle-offset);
@@ -2567,7 +2567,7 @@ input[type=checkbox][type=radio]:checked, input[type=checkbox].square:checked, i
 input[type=radio][type=radio]:checked,
 input[type=radio].square:checked,
 input[type=radio].round:checked {
-  background-color: rgba(var(--checkbox-border-color-rgb), 0.1);
+  background-color: rgba(var(--input-border-color-rgb), 0.1);
 }
 input[type=checkbox][type=radio]:checked:after, input[type=checkbox].square:checked:after, input[type=checkbox].round:checked:after,
 input[type=radio][type=radio]:checked:after,
@@ -2637,7 +2637,7 @@ input[type=radio].switch {
   max-height: var(--checkbox-size);
   width: calc(var(--checkbox-size) * 2.2);
   max-width: calc(var(--checkbox-size) * 2.2);
-  background-color: rgba(var(--checkbox-border-color-rgb), 0.1);
+  background-color: rgba(var(--input-border-color-rgb), 0.1);
 }
 input[type=checkbox].toggle:hover:before, input[type=checkbox].toggle:focus:before, input[type=checkbox].toggle:active:before, input[type=checkbox].toggle:checked:before, input[type=checkbox].switch:hover:before, input[type=checkbox].switch:focus:before, input[type=checkbox].switch:active:before, input[type=checkbox].switch:checked:before,
 input[type=radio].toggle:hover:before,
@@ -2663,8 +2663,8 @@ input[type=radio].switch:after {
   position: absolute;
   left: var(--checkbox-toggle-offset);
   top: var(--checkbox-toggle-offset);
-  border: 0.3em solid var(--checkbox-border-color);
-  background-color: var(--checkbox-border-color);
+  border: 0.3em solid var(--input-border-color);
+  background-color: var(--input-border-color);
   box-shadow: none;
   transition: all 0.2s;
 }
@@ -2676,7 +2676,7 @@ input[type=radio].switch:checked:before {
 input[type=checkbox].toggle:checked:after, input[type=checkbox].switch:checked:after,
 input[type=radio].toggle:checked:after,
 input[type=radio].switch:checked:after {
-  border: 0.3em solid var(--checkbox-border-color);
+  border: 0.3em solid var(--input-border-color);
   left: auto;
   right: var(--checkbox-toggle-offset);
 }
@@ -5626,7 +5626,6 @@ div.datagrid-container div.grid-wrapper {
   width: 100%;
   height: 100%;
   flex-grow: 2;
-  min-height: 50vh;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }

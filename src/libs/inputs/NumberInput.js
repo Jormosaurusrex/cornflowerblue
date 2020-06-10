@@ -15,6 +15,20 @@ class NumberInput extends TextInput {
         };
     }
 
+    static get DOCUMENTATION() {
+        return {
+            pattern: { type: 'option', datatype: 'string', description: "The input pattern used to force a valid number." },
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid number." },
+            minnumber: { type: 'option', datatype: 'number', description: "The minimum acceptable value." },
+            maxnumber: { type: 'option', datatype: 'number', description: "The maximum acceptable value." },
+            downbuttonarialabel: { type: 'option', datatype: 'string', description: "The aria-label text for the decrement button" },
+            upbuttonarialabel: { type: 'option', datatype: 'string', description: "The aria-label text for the increment button" },
+            wholenumbers: { type: 'option', datatype: 'boolean', description: "If true, require whole numbers" },
+            steppers: { type: 'option', datatype: 'boolean', description: "If true, show increment and decrement buttons" },
+            step: { type: 'option', datatype: 'number', description: "The value that the increment and decrement buttons change the value by" }
+        };
+    }
+
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, NumberInput.DEFAULT_CONFIG, config);

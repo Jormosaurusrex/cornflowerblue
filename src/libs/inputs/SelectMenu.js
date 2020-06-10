@@ -14,6 +14,19 @@ class SelectMenu extends InputElement {
         };
     }
 
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            combobox: { type: 'option', datatype: 'boolean', description: "If true, treat the SelectMenu as combobox" },
+            unselectedtext: { type: 'option', datatype: 'string', description: "If present, allow for a deselect and use this text for the 'unselect' value." },
+            placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
+            icon: { type: 'option', datatype: 'string', description: "Use to define a specific icon, used in some specific controls." },
+            prefix: { type: 'option', datatype: 'string', description: "A prefix to display in the trigger box." },
+            value: { type: 'option', datatype: 'string', description: "Value to use for the element. This is the option value not the option label" },
+            options: { type: 'option', datatype: 'array', description: "Array of option dictionaries. { label: 'Label to show', value: 'value_to_save', checked: false }" },
+            onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." }
+        };
+    }
+
     /**
      * Close open menus
      */

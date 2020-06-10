@@ -8,6 +8,13 @@ class EmailInput extends TextInput {
         };
     }
 
+    static get DOCUMENTATION() {
+        return {
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid email address." },
+            pattern: { type: 'option', datatype: 'string', description: "The input pattern used to force a valid email address." }
+        };
+    }
+
     /**
      * Tests whether or not a string is a valid email address.
      * @param email The email address to check

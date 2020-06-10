@@ -4,12 +4,24 @@ class PasswordInput extends TextInput {
         return {
             minlength: 5,
             suggestedlength: 8,
-            maxlength: 30,
+            maxlength: 250,
             hideicon: 'eye-slash',
             showicon: 'eye',
             obscured: true, // If true, start with password hidden
             forceconstraints: false,
             type: 'password'
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            minlength: { type: 'option', datatype: 'number', description: "The minimum length of a password." },
+            suggestedlength: { type: 'option', datatype: 'number', description: "The suggested length for a password." },
+            maxlength: { type: 'option', datatype: 'number', description: "The maxlength for the password field." },
+            hideicon: { type: 'option', datatype: 'string', description: "The icon to show on the hide/show password control for 'hide'." },
+            showicon: { type: 'option', datatype: 'string', description: "The icon to show on the hide/show password control for 'show'." },
+            obscured: { type: 'option', datatype: 'boolean', description: "If true, start with password hidden." },
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value meets all other constraints." }
         };
     }
 

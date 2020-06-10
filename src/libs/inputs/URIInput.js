@@ -1,9 +1,14 @@
-class URLInput extends TextInput {
+class URIInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
             type: 'text',
             forceconstraints: true
+        };
+    }
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid web address address." }
         };
     }
 
@@ -28,9 +33,9 @@ class URLInput extends TextInput {
 
     constructor(config) {
         if (!config) { config = {}; }
-        config = Object.assign({}, URLInput.DEFAULT_CONFIG, config);
+        config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
 
-        if ((config.value) && (URLInput.isEncoded(config.value))) {
+        if ((config.value) && (URIInput.isEncoded(config.value))) {
             config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
         }
         super(config);
@@ -48,11 +53,11 @@ class URLInput extends TextInput {
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
-            if (!URLInput.isValid(this.value)) {
+            if (!URIInput.isValid(this.value)) {
                 this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
             }
         }
     }
 
 }
-window.URLInput = URLInput;
+window.URLInput = URIInput;

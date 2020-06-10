@@ -11,6 +11,13 @@ class HamburgerButton extends SimpleButton {
             action: function(e, self) { self.toggle(); }
         };
     }
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            toggletarget: { type: 'option', datatype: 'object', description: "The menu object to open or close." },
+            text: { type: 'option', datatype: 'string', description: "The text for the button. This is used as an aria-label only." },
+            toggleaction: { type: 'option', datatype: 'function', description: "A function to execute when the button is toggled." },
+        };
+    }
 
     static get MAGIC_HAMBURGER() {
         let hb = document.createElement('span');
@@ -18,7 +25,6 @@ class HamburgerButton extends SimpleButton {
         hb.innerHTML = "<span></span><span></span><span></span>";
         return hb;
     }
-
 
     constructor(config) {
         config = Object.assign({}, HamburgerButton.DEFAULT_CONFIG, config);

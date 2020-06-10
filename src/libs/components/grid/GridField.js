@@ -235,10 +235,10 @@ class GridField {
                 e = new TimezoneMenu(config);
                 break;
             case 'url':
-                e = new URLInput(config);
+                e = new URIInput(config);
                 break;
             case 'imageurl':
-                e = new URLInput(config);
+                e = new URIInput(config);
                 break;
             case 'email':
                 e = new EmailInput(config);

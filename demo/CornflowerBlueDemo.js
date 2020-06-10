@@ -325,6 +325,20 @@ class CornflowerBlueDemo {
 
         this.container.insertBefore(this.navigation.container, this.main);
 
+
+        document.getElementById('inputs-textinput-docbox').appendChild(this.getOptionGrid(TextInput).container);
+        document.getElementById('inputs-date-docbox').appendChild(this.getOptionGrid(DateInput).container);
+        document.getElementById('inputs-file-docbox').appendChild(this.getOptionGrid(FileInput).container);
+        document.getElementById('inputs-number-docbox').appendChild(this.getOptionGrid(NumberInput).container);
+        document.getElementById('inputs-password-docbox').appendChild(this.getOptionGrid(PasswordInput).container);
+        document.getElementById('inputs-email-docbox').appendChild(this.getOptionGrid(EmailInput).container);
+        document.getElementById('inputs-uri-docbox').appendChild(this.getOptionGrid(URIInput).container);
+        document.getElementById('inputs-selects-docbox').appendChild(this.getOptionGrid(SelectMenu).container);
+        document.getElementById('inputs-radiogroup-docbox').appendChild(this.getOptionGrid(RadioGroup).container);
+        document.getElementById('inputs-booleantoggle-docbox').appendChild(this.getOptionGrid(BooleanToggle).container);
+        document.getElementById('buttons-docbox').appendChild(this.getOptionGrid(SimpleButton).container);
+
+
         this.grindButtons();
         this.grindCheckboxes();
         this.grindDataGrids();
@@ -396,7 +410,6 @@ class CornflowerBlueDemo {
     }
 
     handleWikiCitations() {
-
         let citations = document.querySelectorAll('sup.reference');
         for (let cite of citations) {
             let a = cite.querySelector('a');
@@ -416,7 +429,194 @@ class CornflowerBlueDemo {
         }
     }
 
+    /**
+     * Get a class's options blob and build the data for documentation. Recurses all the way down.
+     * @param obj the object class to start with
+     * @return {[]} a dictionary, where key = { definition }
+     */
+    getOptionsGridData2(obj) {
+        let instance = new obj(),
+            dictionary = [],
+            options = obj.DEFAULT_CONFIG,
+            docs = obj.DEFAULT_CONFIG_DOCUMENTATION,
+            parentclass = Object.getPrototypeOf(Object.getPrototypeOf(instance)).constructor;
 
+        if ((parentclass) && (parentclass.name !== 'Object')) {
+            dictionary = this.getOptionsGridData(parentclass);
+        }
+        for (let k of Object.keys(docs)) {
+            let defvalue = options[k];
+            if (Array.isArray(options[k])) {
+                defvalue = "[";
+                if ((options[k] !== null) && (options[k].length > 0)) {
+                    let elements = [];
+                    for (let c of options[k]) {
+                        if (typeof c === 'string') {
+                            elements.push(`"<span class="value">${c}</span>"`);
+                        } else {
+                            elements.push(`<span class="value">${c}</span>`);
+                        }
+                    }
+                    defvalue += elements.join(", ");
+                }
+                defvalue += "]";
+            } else if (typeof options[k] === 'function') {
+                defvalue = 'function(...) { ... }';
+            }
+
+            dictionary[k] = {
+                key: k,
+                default: defvalue,
+                inherited: instance.constructor.name,
+                description: docs[k]
+            };
+        }
+        return dictionary;
+    }
+    getOptionsGridData(obj) {
+        let instance = new obj(),
+            dictionary = [],
+            options = obj.DEFAULT_CONFIG,
+            docs = obj.DOCUMENTATION,
+            parentclass = Object.getPrototypeOf(Object.getPrototypeOf(instance)).constructor;
+
+        if ((parentclass) && (parentclass.name !== 'Object')) {
+            dictionary = this.getOptionsGridData(parentclass);
+        }
+        for (let k of Object.keys(docs)) {
+            let defvalue = options[k];
+            if (Array.isArray(options[k])) {
+                defvalue = "[";
+                if ((options[k] !== null) && (options[k].length > 0)) {
+                    let elements = [];
+                    for (let c of options[k]) {
+                        if (typeof c === 'string') {
+                            elements.push(`"<span class="value">${c}</span>"`);
+                        } else {
+                            elements.push(`<span class="value">${c}</span>`);
+                        }
+                    }
+                    defvalue += elements.join(", ");
+                }
+                defvalue += "]";
+            } else if (typeof options[k] === 'function') {
+                defvalue = 'function(...) { ... }';
+            }
+
+            dictionary[k] = {
+                key: k,
+                default: defvalue,
+                datatype: docs[k].datatype,
+                inherited: instance.constructor.name,
+                description: docs[k].description
+            };
+        }
+        return dictionary;
+    }
+
+    getOptionGrid(obj) {
+        let instance = new obj(),
+            dictionary = this.getOptionsGridData(obj),
+            fields = [],
+            data = [],
+            parentclass = Object.getPrototypeOf(Object.getPrototypeOf(instance)).constructor;
+
+        let title = `${instance.constructor.name} Options`;
+        if (parentclass.name !== 'Object') {
+            title = `${instance.constructor.name} Options (inherits ${parentclass.name})`;
+        }
+
+        // Use the "docs" keys because we only want to display keys we have values for.
+        let keys = Object.keys(dictionary).sort(function(a, b){
+            let a1 = a.toLowerCase(),
+                b1 = b.toLowerCase();
+            if (a1 === b1) return 0;
+            return a1 > b1 ? 1 : -1;
+        });
+        for (let k of keys) {
+            data.push(dictionary[k]);
+        }
+
+        fields.push(new GridField({
+            name: "key",
+            label: "Key",
+            type: "string",
+            nodupe: true,
+            hidden: false,
+            classes: ['nowrap'],
+            description: "The programmatic name for the option.",
+            renderer: function(data) {
+                let c = document.createElement('code');
+                c.innerHTML = data;
+                return c;
+            }
+        }));
+        fields.push(new GridField({
+            name: "datatype",
+            label: "Datatype",
+            type: "enumeration",
+            hidden: false,
+            classes: ['nowrap'],
+            values: [
+                { key: "boolean", value: "Boolean" },
+                { key: "string", value: "String" },
+                { key: "stringarray", value: "String Array" },
+                { key: "dictionary", value: "Dictionary" },
+                { key: "function", value: "Function" },
+                { key: "number", value: "Number" },
+                { key: "object", value: "Number" },
+                { key: "enumeration", value: "Enumeration" },
+                { key: "array", value: "Array" },
+                { key: "simpleform", value: "SimpleForm" }
+            ],
+            description: "The datatype of this option",
+        }));
+        fields.push(new GridField({
+            name: "default",
+            label: "Default",
+            type: "string",
+            nodupe: true,
+            hidden: false,
+            classes: ['nowrap', 'italic'],
+            description: "The default value, if any.",
+            renderer: function(data) {
+                let c = document.createElement('code');
+                c.innerHTML = data;
+                return c;
+            }
+
+        }));
+        fields.push(new GridField({
+            name: "inherited",
+            label: "Inherited From",
+            type: "string",
+            hidden: false,
+            classes: ['nowrap'],
+            description: "The class this variable is inherited from."
+
+        }));
+        fields.push(new GridField({
+            name: "description",
+            label: "Description",
+            type: "string",
+            nodupe: true,
+            hidden: false,
+            description: "The description of the option"
+        }));
+
+        return new DataGrid({
+            title: title,
+            collapsible: true,
+            minimized: false,
+            data: data,
+            selectable: false,
+            searchable: false,
+            filterable: false,
+            exportable: false,
+            rowactions: null,
+            fields: fields
+        });
+    }
 
     grindButtons() {
         const me = this;
@@ -609,73 +809,8 @@ class CornflowerBlueDemo {
         }
         document.getElementById('buttons-sizes').appendChild(sizediv);
 
-        document.getElementById('buttons-docbox').appendChild(this.getOptionGrid(SimpleButton).container);
 
     }
-
-    getOptionGrid(obj) {
-        let fields = [],
-            data = [],
-            options = obj.DEFAULT_CONFIG,
-            docs = obj.DEFAULT_CONFIG_DOCUMENTATION;
-
-        let keys = Object.keys(options).sort(function(a, b){
-            let a1 = a.toLowerCase(),
-                b1 = b.toLowerCase();
-            if(a1 === b1) return 0;
-            return a1 > b1 ? 1 : -1;
-        });
-
-        fields.push(new GridField({
-            name: "key",
-            label: "Key",
-            type: "string",
-            nodupe: true,
-            hidden: false,
-            classes: ['nowrap', 'code'],
-            description: "The programmatic name for the option"
-        }));
-        fields.push(new GridField({
-            name: "default",
-            label: "Default",
-            type: "string",
-            nodupe: true,
-            hidden: false,
-            classes: ['nowrap', 'italic'],
-            description: "The default value, if any"
-
-        }));
-        fields.push(new GridField({
-            name: "description",
-            label: "Description",
-            type: "string",
-            nodupe: true,
-            hidden: false,
-            description: "The description of the option"
-        }));
-
-        for (let k of keys) {
-            let row = {
-                key: k,
-                default: options[k],
-                description: docs[k]
-            };
-            data.push(row);
-        }
-        return new DataGrid({
-            title: 'Object Options',
-            collapsible: true,
-            minimized: true,
-            data: data,
-            selectable: false,
-            searchable: false,
-            filterable: false,
-            exportable: false,
-            rowactions: null,
-            fields: fields
-        });
-    }
-
 
     grindCheckboxes() {
 
@@ -1155,6 +1290,7 @@ class CornflowerBlueDemo {
     }
 
     grindInputs() {
+
         let standard = document.createElement('div');
         standard.classList.add('example');
         standard.classList.add('vert');
@@ -1166,7 +1302,7 @@ class CornflowerBlueDemo {
             placeholder: "Your full name",
             help: "Use your full name, in whatever manner befits your culture."
         }).container);
-        document.getElementById('inputs-standard').appendChild(standard);
+        document.getElementById('inputs-text').appendChild(standard);
 
 
         let file = document.createElement('div');
@@ -1286,10 +1422,10 @@ class CornflowerBlueDemo {
         let uri = document.createElement('div');
         uri.classList.add('example');
         uri.classList.add('vert');
-        uri.appendChild(new URLInput({
+        uri.appendChild(new URIInput({
             label: "Web Page (valid required)"
         }).container);
-        uri.appendChild(new URLInput({
+        uri.appendChild(new URIInput({
             label: "Web Page (invalid allowed)",
             forceconstraints: false,
         }).container);
@@ -1944,7 +2080,6 @@ class CornflowerBlueDemo {
 
     }
 
-
     /* UTILITY METHODS__________________________________________________________________ */
 
     /**
@@ -1973,7 +2108,6 @@ class CornflowerBlueDemo {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
-
     get body() { return this._body; }
     set body(body) { this._body = body; }
 

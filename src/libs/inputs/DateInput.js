@@ -2,13 +2,23 @@ class DateInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
-            basetime: '12:00:00', // Time to set dates on
+            basetime: '12:00:00',
             timezone: 'GMT',
             type: 'text',
-            gravity: 's', // The direction to open the datepicker
+            gravity: 'south',
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             dateicon: 'calendar'
+        };
+    }
+    static get DOCUMENTATION() {
+        return {
+            basetime: { type: 'option', datatype: 'string', description: "Time of day to set dates to." },
+            timezone: { type: 'option', datatype: 'string', description: "The default timezone to set the datepicker to (unused)." },
+            gravity: { type: 'option', datatype: 'string', description: "The direction to open the datepicker when it's clicked open." },
+            triggerarialabel: { type: 'option', datatype: 'string', description: "The aria-label for the datepicker trigger button." },
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid date." },
+            dateicon: { type: 'option', datatype: 'string', description: "The icon to use for the datpicker trigger button." }
         };
     }
 

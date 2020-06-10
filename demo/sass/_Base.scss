@@ -48,7 +48,7 @@ div#container {
       color: #6495ED;
       margin: 0 .5em .5em .5em;
       justify-content: flex-end;
-      text-shadow: var(--text-shadow-heavier);
+      text-shadow: var(--text-shadow);
       &:after {
         display: none;
       }
@@ -76,10 +76,7 @@ div#container {
       li {
         a {
           text-transform: uppercase;
-          &[aria-selected="true"] {
-            color: var(--tabbar-selected-tab-text-color);
-            text-shadow: var(--tabbar-selected-tab-text-shadow);
-          }
+
         }
         &:hover {
           background-color: transparent;
@@ -130,6 +127,16 @@ article {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+  }
+}
+
+div.docbox {
+  clear: both;
+  margin: 1rem 0 2rem 0;
+  div.datagrid-container {
+    h3.panelheader {
+      background-color: var(--canvas-color-highlight);
+    }
   }
 }
 
