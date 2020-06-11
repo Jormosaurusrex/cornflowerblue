@@ -4307,6 +4307,7 @@ ul.tabbar {
   box-shadow: var(--tabbar-box-shadow);
   overflow: visible;
   padding: 0;
+  font-size: 1.1rem;
 }
 ul.tabbar li {
   display: flex;
@@ -4340,7 +4341,6 @@ ul.tabbar li > a {
   align-items: center;
   justify-content: flex-start;
   flex-grow: 1;
-  font-size: 1.1rem;
   transition: all 0.1s linear;
 }
 ul.tabbar li > a:active, ul.tabbar li > a:focus {
