@@ -186,7 +186,14 @@ class CornflowerBlueDemo {
         this.build();
 
         if (window.location.hash.substr(1)) {
-            this.switchTab(window.location.hash.substr(1));
+            let hash = window.location.hash.substr(1);
+            if (hash.indexOf('-') !== -1) {
+                let harr = hash.split('-');
+                this.switchTab(harr[0]) ;
+                this.switchSection(harr[1], harr[0]);
+            } else {
+                this.switchTab(window.location.hash.substr(1));
+            }
         } else {
             this.switchTab('intro');
         }
@@ -197,20 +204,53 @@ class CornflowerBlueDemo {
      * @param tab
      */
     switchTab(tab) {
-        let articles = document.querySelectorAll('article');
-        for (let a of articles) {
+        for (let a of document.querySelectorAll('article')) {
             a.setAttribute('aria-hidden', true);
         }
+
         let t = document.getElementById(`t-${tab}`);
         if (t) {
-            t.removeAttribute('aria-hidden');
+            this.activearticle = t;
+            this.activearticle.removeAttribute('aria-hidden');
+            let s = this.activearticle.querySelector('section'); // show first section, if any
+            if (s) { s.removeAttribute('aria-hidden'); }
         }
-
         this.navigation.select(tab);
-        if(history.pushState) {
+
+        if (history.pushState) {
             history.pushState(null, null, `#${tab}`);
         } else {
             location.hash = `#${tab}`;
+        }
+        window.scrollTo(0,0);
+    }
+
+    switchSection(tab, type='elements') {
+
+        if (this.activearticle) {
+            for (let s of this.activearticle.querySelectorAll('section')) {
+                s.setAttribute('aria-hidden', true);
+            }
+        }
+
+        let section = document.getElementById(`section-${tab}`);
+        if (section) {
+            this.activesection = section;
+            this.activesection.removeAttribute('aria-hidden');
+            switch(type) {
+                case 'complex':
+                    this.complexnav.select(tab);
+                    break;
+                case 'elements':
+                default:
+                    this.elementsnav.select(tab);
+                    break;
+            }
+        }
+        if (history.pushState) {
+            history.pushState(null, null, `#${type}-${tab}`);
+        } else {
+            location.hash = `#${type}-${tab}`;
         }
         window.scrollTo(0,0);
     }
@@ -223,107 +263,66 @@ class CornflowerBlueDemo {
 
         this.container = document.getElementById('container');
 
-        /*
-        let tabs = [
+        let maintabs = [
             { label: 'Intro', id: 'intro' },
             { label: 'cornflowerblue', id: 'wiki' },
             { label: 'Font Glyphs', id: 'fontglyphs' },
             { label: 'Text',  id: 'text' },
-            { label: 'Buttons', id: 'buttons' },
-            { label: 'Inputs', id: 'inputs' },
-            { label: 'Text Areas', id: 'textareas' },
-            { label: 'Select', id: 'selects' },
-            { label: 'Radio Buttons', id: 'radiobuttons' },
-            { label: 'Toggles', id: 'toggles' },
-            { label: 'Message Boxes', id: 'messageboxes' },
-            { label: 'Tabs and menu', id: 'tabsmenus' },
-            { label: 'Forms', id: 'forms' },
-            { label: 'Dialogs', id: 'dialogs' },
-            { label: 'Growlers', id: 'growlers' },
-            { label: 'Password Changer', id: 'pwchanger' },
-            { label: 'Progress Meters', id: 'progressmeter' },
-            { label: 'Data Grid', id: 'datagrid' }
+            { label: 'Elements',  id: 'elements' },
+            { label: 'Complex Components',  id: 'complex' }
         ];
-        let newtabs = [
-            { label: 'Intro', id: 'intro' },
-            { label: 'cornflowerblue', id: 'wiki' },
-            { label: 'Text Playground',  id: 'text' },
-            { label: 'Basic Components',  id: 'basiccomponents' },
-            { label: 'Complex Components',  id: 'complexcomponents' },
-            { label: 'Font Glyphs', id: 'fontglyphs' }
-        ];
-        let basictabs = [
-            { label: 'Buttons', id: 'buttons' },
-            { label: 'Inputs', id: 'inputs' },
-            { label: 'Text Areas', id: 'textareas' },
-            { label: 'Select', id: 'selects' },
-            { label: 'Radio Buttons', id: 'radiobuttons' },
-            { label: 'Toggles', id: 'toggles' }
-        ];
-        let complextabs = [
-            { label: 'Message Boxes', id: 'messageboxes' },
-            { label: 'Tabs and menu', id: 'tabsmenus' },
-            { label: 'Forms', id: 'forms' },
-            { label: 'Dialogs', id: 'dialogs' },
-            { label: 'Growlers', id: 'growlers' },
-            { label: 'Password Changer', id: 'pwchanger' },
-            { label: 'Progress Meters', id: 'progressmeter' },
-            { label: 'Data Grid', id: 'datagrids' }
-        ];
-         */
-        let tabstight = [
-            { label: 'Intro', id: 'intro' },
-            { label: 'cornflowerblue', id: 'wiki' },
-            { label: 'Font Glyphs', id: 'fontglyphs' },
-            { label: 'Text',  id: 'text' },
-            {
-                label: 'Basic Components',
-                id: 'basic',
-                subtabs: [
-                    { label: 'Buttons', id: 'buttons' },
-                    { label: 'Inputs', id: 'inputs' },
-                    { label: 'Select', id: 'selects' },
-                    { label: 'Radio Buttons', id: 'radiobuttons' },
-                    { label: 'Toggles', id: 'toggles' },
-                    { label: 'Text Areas', id: 'textareas' },
-                    { label: 'Message Boxes', id: 'messageboxes' }
-                ]
-            },
-            {
-                label: 'Complex Components',
-                id: 'complex',
-                subtabs: [
-                    { label: 'Tabs and menu', id: 'tabsmenus' },
-                    { label: 'Forms', id: 'forms' },
-                    { label: 'Dialogs', id: 'dialogs',
-                        action: function(tabid, self) {
-                            self.action(tabid, self);
-                            me.dialog = new DialogWindow({
-                                title: "Login",
-                                form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
-                            }).open();
-                        }
-                    },
-                    { label: 'Growlers', id: 'growlers' },
-                    { label: 'Password Changer', id: 'pwchanger' },
-                    { label: 'Progress Meters', id: 'progressmeter' },
-                    { label: 'Data Grid', id: 'datagrid' }
-                ]
-            },
-        ];
-
-
         this.navigation = new TabBar({
             classes: ['demo'],
             navigation: true,
             animation: null,
-            tabs: tabstight,
+            tabs: maintabs,
             action: function(tab) {
                 me.switchTab(tab);
             }
         });
-
         this.container.insertBefore(this.navigation.container, this.main);
+
+
+        let elementtabs = [
+            { label: 'Buttons', id: 'buttons' },
+            { label: 'Inputs', id: 'inputs' },
+            { label: 'Text Areas', id: 'textareas' },
+            { label: 'Select Menus', id: 'selects' },
+            { label: 'Radio Buttons', id: 'radiobuttons' },
+            { label: 'Toggles', id: 'toggles' }
+        ];
+        this.elementsnav = new TabBar({
+            classes: ['submav'],
+            navigation: true,
+            vertical: true,
+            animation: null,
+            tabs: elementtabs,
+            action: function(tab) {
+                me.switchSection(tab, 'elements');
+            }
+        });
+        document.getElementById('t-elements').insertBefore(this.elementsnav.container, document.getElementById('elements-sections'));
+
+        let complextabs = [
+            { label: 'Message Boxes', id: 'messageboxes' },
+            { label: 'Forms', id: 'forms' },
+            { label: 'Data Grids', id: 'datagrid' },
+            { label: 'Growlers', id: 'growler' },
+            { label: 'Progress Meters', id: 'progressmeter' },
+            { label: 'Dialogs', id: 'dialogs' },
+            { label: 'Tabs and Menus', id: 'tabsandmenus' }
+        ];
+        this.complexnav = new TabBar({
+            classes: ['submav'],
+            navigation: true,
+            vertical: true,
+            animation: null,
+            tabs: complextabs,
+            action: function(tab) {
+                me.switchSection(tab, 'complex');
+            }
+        });
+        document.getElementById('t-complex').insertBefore(this.complexnav.container, document.getElementById('complex-sections'));
 
 
         document.getElementById('inputs-textinput-docbox').appendChild(this.getOptionGrid(TextInput).container);
@@ -347,7 +346,6 @@ class CornflowerBlueDemo {
         this.grindGrowlers();
         this.grindInputs();
         this.grindMessageBoxes();
-        this.grindPWChange();
         this.grindProgressMeters();
         this.grindRadioGroups();
         this.grindSelects();
@@ -434,45 +432,6 @@ class CornflowerBlueDemo {
      * @param obj the object class to start with
      * @return {[]} a dictionary, where key = { definition }
      */
-    getOptionsGridData2(obj) {
-        let instance = new obj(),
-            dictionary = [],
-            options = obj.DEFAULT_CONFIG,
-            docs = obj.DEFAULT_CONFIG_DOCUMENTATION,
-            parentclass = Object.getPrototypeOf(Object.getPrototypeOf(instance)).constructor;
-
-        if ((parentclass) && (parentclass.name !== 'Object')) {
-            dictionary = this.getOptionsGridData(parentclass);
-        }
-        for (let k of Object.keys(docs)) {
-            let defvalue = options[k];
-            if (Array.isArray(options[k])) {
-                defvalue = "[";
-                if ((options[k] !== null) && (options[k].length > 0)) {
-                    let elements = [];
-                    for (let c of options[k]) {
-                        if (typeof c === 'string') {
-                            elements.push(`"<span class="value">${c}</span>"`);
-                        } else {
-                            elements.push(`<span class="value">${c}</span>`);
-                        }
-                    }
-                    defvalue += elements.join(", ");
-                }
-                defvalue += "]";
-            } else if (typeof options[k] === 'function') {
-                defvalue = 'function(...) { ... }';
-            }
-
-            dictionary[k] = {
-                key: k,
-                default: defvalue,
-                inherited: instance.constructor.name,
-                description: docs[k]
-            };
-        }
-        return dictionary;
-    }
     getOptionsGridData(obj) {
         let instance = new obj(),
             dictionary = [],
@@ -963,9 +922,6 @@ class CornflowerBlueDemo {
         ]
     }
 
-    doTheThing(element) {
-        console.log(element);
-    }
 
     grindDataGrids() {
 
@@ -1618,12 +1574,6 @@ class CornflowerBlueDemo {
         document.getElementById('progressmeter-radial').appendChild(radial2);
     }
 
-    grindPWChange() {
-        document.getElementById('pwchanger-simple').appendChild(new PasswordChangeForm({
-            cannotbe: ['password', '']
-        }).container);
-    }
-
     grindRadioGroups() {
 
         let standard = document.createElement('div');
@@ -2108,8 +2058,20 @@ class CornflowerBlueDemo {
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+    get activearticle() { return this._activearticle; }
+    set activearticle(activearticle) { this._activearticle = activearticle; }
+
+    get activesection() { return this._activesection; }
+    set activesection(activesection) { this._activesection = activesection; }
+
     get body() { return this._body; }
     set body(body) { this._body = body; }
+
+    get elementsnav() { return this._elementsnav; }
+    set elementsnav(elementsnav) { this._elementsnav = elementsnav; }
+
+    get complexnav() { return this._complexnav; }
+    set complexnav(complexnav) { this._complexnav = complexnav; }
 
     get container() { return this._container; }
     set container(container) { this._container = container; }

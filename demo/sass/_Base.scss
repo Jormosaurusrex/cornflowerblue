@@ -25,7 +25,7 @@ div#container {
     --contentbox-width: 100%;
     margin: 0;
   }
-  header {
+  > header {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -62,7 +62,7 @@ div#container {
       height: var(--mobile-banner-height);
     }
   }
-  nav {
+  > nav {
     position: sticky;
     top: 5em;
     @include for-phone-only {
@@ -85,7 +85,7 @@ div#container {
       }
     }
   }
-  main {
+  > main {
     align-self: center;
     display: flex;
     flex-direction: row;
@@ -94,9 +94,9 @@ div#container {
     position: relative;
     background-color: var(--canvas-color-primary);
     padding: 2em;
-    width: var(--content-width);
-    min-width: var(--content-width);
-    max-width: var(--content-width);
+    width: var(--contentbox-width);
+    min-width: var(--contentbox-width);
+    max-width: var(--contentbox-width);
     scroll-snap-type: y mandatory;
     @include for-phone-only {
       overflow: scroll;
@@ -104,6 +104,35 @@ div#container {
       width: 100%;
       min-width: 100%;
       max-width: 100%;
+    }
+    > article {
+      position: relative;
+      &.sectioned {
+        width: var(--contentbox-width);
+        min-width: var(--contentbox-width);
+        max-width: var(--contentbox-width);
+        > nav {
+          //display: inline-block;
+          position: fixed;
+          top: 15rem;
+          width: 12rem;
+          max-width: 12rem;
+          ul.tabbar {
+            box-shadow: none;
+          }
+        }
+        > div.sectionholder {
+          //--content-width: 30rem;
+          align-self: flex-end;
+          margin: 0 2rem 0 14rem;
+          section {
+
+            &[aria-hidden='true'] {
+              display: none;
+            }
+          }
+        }
+      }
     }
   }
 }

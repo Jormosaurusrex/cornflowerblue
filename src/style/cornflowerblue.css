@@ -4456,6 +4456,7 @@ div.growlbox.bottom-center {
 }
 
 div.growler {
+  --growler-max-width: 20rem;
   animation: cfb-fadein 0.5s;
   opacity: 1;
   position: relative;
@@ -4491,6 +4492,7 @@ div.growler > button.closebutton:active, div.growler > button.closebutton:focus,
   opacity: 1;
 }
 div.growler h3 {
+  --growler-header-text-color: var(--colors-text-hot);
   background-color: var(--growler-core-color);
   color: var(--growler-header-text-color);
   display: flex;

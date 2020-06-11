@@ -57,9 +57,9 @@ class SimpleButton {
                 datatype: 'dictionary',
                 description: "A dictionary, key: value, which will end up with $key = value on elements"
             },
-            arialabel: {type: 'option', datatype: 'string', description: "The aria-label attribute"},
-            hidden: {type: 'option', datatype: 'boolean', description: "If true, start hidden or not."},
-            classes: {type: 'option', datatype: 'stringarray', description: "An array of css class names to apply."},
+            arialabel: {type: 'option', datatype: 'string', description: "The aria-label attribute" },
+            hidden: {type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            classes: {type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             form: {type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
             submits: {
                 type: 'option',
@@ -219,7 +219,7 @@ class SimpleButton {
         if (!this.tooltipobj) { return; }
         this.tooltipobj.close();
     }
-    
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     setIcon(newicon) {

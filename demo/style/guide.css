@@ -30,7 +30,7 @@ div#container {
     margin: 0;
   }
 }
-div#container header {
+div#container > header {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -44,54 +44,54 @@ div#container header {
   background-position: bottom;
   background-repeat: no-repeat;
 }
-div#container header #content-jump {
+div#container > header #content-jump {
   position: absolute;
   left: 1em;
   bottom: 1em;
   z-index: 90000;
 }
-div#container header h1.cfbtitle {
+div#container > header h1.cfbtitle {
   color: #6495ED;
   margin: 0 0.5em 0.5em 0.5em;
   justify-content: flex-end;
   text-shadow: var(--text-shadow);
 }
-div#container header h1.cfbtitle:after {
+div#container > header h1.cfbtitle:after {
   display: none;
 }
 @media (max-width: 599px) {
-  div#container header h1.cfbtitle {
+  div#container > header h1.cfbtitle {
     margin: 0 0.5em 0 0.5em;
   }
 }
 @media (max-width: 599px) {
-  div#container header {
+  div#container > header {
     position: relative;
     top: unset;
     height: var(--mobile-banner-height);
   }
 }
-div#container nav {
+div#container > nav {
   position: sticky;
   top: 5em;
 }
 @media (max-width: 599px) {
-  div#container nav {
+  div#container > nav {
     padding: 0;
     top: 0;
   }
-  div#container nav div.responsivebox div.menutitle {
+  div#container > nav div.responsivebox div.menutitle {
     text-transform: uppercase;
   }
-  div#container nav li a {
+  div#container > nav li a {
     text-transform: uppercase;
   }
-  div#container nav li:hover {
+  div#container > nav li:hover {
     background-color: transparent;
     border-color: transparent;
   }
 }
-div#container main {
+div#container > main {
   align-self: center;
   display: flex;
   flex-direction: row;
@@ -100,19 +100,43 @@ div#container main {
   position: relative;
   background-color: var(--canvas-color-primary);
   padding: 2em;
-  width: var(--content-width);
-  min-width: var(--content-width);
-  max-width: var(--content-width);
+  width: var(--contentbox-width);
+  min-width: var(--contentbox-width);
+  max-width: var(--contentbox-width);
   scroll-snap-type: y mandatory;
 }
 @media (max-width: 599px) {
-  div#container main {
+  div#container > main {
     overflow: scroll;
     padding: 2em 1em 2em 1em;
     width: 100%;
     min-width: 100%;
     max-width: 100%;
   }
+}
+div#container > main > article {
+  position: relative;
+}
+div#container > main > article.sectioned {
+  width: var(--contentbox-width);
+  min-width: var(--contentbox-width);
+  max-width: var(--contentbox-width);
+}
+div#container > main > article.sectioned > nav {
+  position: fixed;
+  top: 15rem;
+  width: 12rem;
+  max-width: 12rem;
+}
+div#container > main > article.sectioned > nav ul.tabbar {
+  box-shadow: none;
+}
+div#container > main > article.sectioned > div.sectionholder {
+  align-self: flex-end;
+  margin: 0 2rem 0 14rem;
+}
+div#container > main > article.sectioned > div.sectionholder section[aria-hidden=true] {
+  display: none;
 }
 
 article {
