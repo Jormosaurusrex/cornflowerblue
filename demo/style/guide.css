@@ -116,30 +116,6 @@ div#container > main {
 }
 div#container > main > article {
   position: relative;
-}
-div#container > main > article.sectioned {
-  width: var(--contentbox-width);
-  min-width: var(--contentbox-width);
-  max-width: var(--contentbox-width);
-}
-div#container > main > article.sectioned > nav {
-  position: fixed;
-  top: 15rem;
-  width: 12rem;
-  max-width: 12rem;
-}
-div#container > main > article.sectioned > nav ul.tabbar {
-  box-shadow: none;
-}
-div#container > main > article.sectioned > div.sectionholder {
-  align-self: flex-end;
-  margin: 0 2rem 0 14rem;
-}
-div#container > main > article.sectioned > div.sectionholder section[aria-hidden=true] {
-  display: none;
-}
-
-article {
   animation-name: cfb-fadein;
   animation-duration: 250ms;
   animation-fill-mode: both;
@@ -147,20 +123,55 @@ article {
   width: var(--content-width);
   min-width: var(--content-width);
   max-width: var(--content-width);
-  position: relative;
 }
-article[aria-hidden=true] {
+div#container > main > article[aria-hidden=true] {
   display: none;
 }
-article h2 {
+div#container > main > article h2 {
   margin: 0 0 0.5em 0;
 }
 @media (max-width: 599px) {
-  article {
+  div#container > main > article {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
   }
+}
+div#container > main > article.sectioned {
+  width: var(--contentbox-width);
+  min-width: var(--contentbox-width);
+  max-width: var(--contentbox-width);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+div#container > main > article.sectioned > nav {
+  position: sticky;
+  top: 11rem;
+  --subnav-width: 12rem;
+  width: var(--subnav-width);
+  min-width: var(--subnav-width);
+  max-width: var(--subnav-width);
+}
+div#container > main > article.sectioned > nav ul.tabbar {
+  box-shadow: none;
+}
+div#container > main > article.sectioned > div.sectionholder {
+  --content-width: 48rem;
+  margin: 0 2rem;
+}
+div#container > main > article.sectioned > div.sectionholder section {
+  width: var(--content-width);
+  min-width: var(--content-width);
+  max-width: var(--content-width);
+}
+div#container > main > article.sectioned > div.sectionholder section[aria-hidden=true] {
+  display: none;
+}
+div#container > main > article.sectioned[aria-hidden=true] {
+  display: none;
 }
 
 div.docbox {

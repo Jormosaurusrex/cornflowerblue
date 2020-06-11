@@ -226,6 +226,8 @@ class CornflowerBlueDemo {
     }
 
     switchSection(tab, type='elements') {
+        this.complexnav.container.setAttribute('aria-hidden', true);
+        this.elementsnav.container.setAttribute('aria-hidden', true);
 
         if (this.activearticle) {
             for (let s of this.activearticle.querySelectorAll('section')) {
@@ -240,10 +242,12 @@ class CornflowerBlueDemo {
             switch(type) {
                 case 'complex':
                     this.complexnav.select(tab);
+                    this.complexnav.container.removeAttribute('aria-hidden');
                     break;
                 case 'elements':
                 default:
                     this.elementsnav.select(tab);
+                    this.elementsnav.container.removeAttribute('aria-hidden');
                     break;
             }
         }

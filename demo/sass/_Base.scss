@@ -107,30 +107,59 @@ div#container {
     }
     > article {
       position: relative;
+      animation-name: cfb-fadein;
+      animation-duration: 250ms;
+      animation-fill-mode: both;
+      animation-timing-function: ease-in-out;
+      width: var(--content-width);
+      min-width: var(--content-width);
+      max-width: var(--content-width);
+      &[aria-hidden='true'] {
+        display: none;
+      }
+      h2 {
+        margin: 0 0 .5em 0;
+      }
+      @include for-phone-only {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+      }
       &.sectioned {
         width: var(--contentbox-width);
         min-width: var(--contentbox-width);
         max-width: var(--contentbox-width);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: flex-start;
         > nav {
           //display: inline-block;
-          position: fixed;
-          top: 15rem;
-          width: 12rem;
-          max-width: 12rem;
+          position: sticky;
+          top: 11rem;
+          --subnav-width: 12rem;
+          width: var(--subnav-width);
+          min-width: var(--subnav-width);
+          max-width: var(--subnav-width);
           ul.tabbar {
             box-shadow: none;
           }
         }
         > div.sectionholder {
-          //--content-width: 30rem;
-          align-self: flex-end;
-          margin: 0 2rem 0 14rem;
+          --content-width: 48rem;
+          margin: 0 2rem;
           section {
-
+            width: var(--content-width);
+            min-width: var(--content-width);
+            max-width: var(--content-width);
             &[aria-hidden='true'] {
               display: none;
             }
           }
+        }
+        &[aria-hidden='true'] {
+          display: none;
         }
       }
     }
@@ -138,25 +167,7 @@ div#container {
 }
 
 article {
-  animation-name: cfb-fadein;
-  animation-duration: 250ms;
-  animation-fill-mode: both;
-  animation-timing-function: ease-in-out;
-  width: var(--content-width);
-  min-width: var(--content-width);
-  max-width: var(--content-width);
-  position: relative;
-  &[aria-hidden='true'] {
-    display: none;
-  }
-  h2 {
-    margin: 0 0 .5em 0;
-  }
-  @include for-phone-only {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-  }
+
 }
 
 div.docbox {
