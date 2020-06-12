@@ -2477,7 +2477,6 @@ p.textarea-container div.wrap:after {
   bottom: 0;
   width: 2em;
   margin: 0;
-  background-color: rgb(var(--input-status-color-rgb));
   font-family: "cornflowerblue", serif;
   font-style: normal;
   font-weight: normal;
@@ -2488,8 +2487,9 @@ p.textarea-container div.wrap:after {
   text-transform: none;
   line-height: 1em;
   content: "0";
-  font-size: 20pt;
-  color: var(--colors-text-hot);
+  font-size: 1.5em;
+  background-color: transparent;
+  color: rgb(var(--input-status-color-rgb));
   text-shadow: var(--text-shadow);
   flex-direction: column;
   justify-content: center;

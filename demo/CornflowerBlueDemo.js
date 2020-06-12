@@ -531,7 +531,8 @@ class CornflowerBlueDemo {
                 { key: "dictionary", value: "Dictionary" },
                 { key: "function", value: "Function" },
                 { key: "number", value: "Number" },
-                { key: "object", value: "Number" },
+                { key: "object", value: "Object" },
+                { key: "domobject", value: "DOM Object" },
                 { key: "enumeration", value: "Enumeration" },
                 { key: "array", value: "Array" },
                 { key: "simpleform", value: "SimpleForm" }

@@ -1,25 +1,46 @@
 class DialogWindow {
 
     static get DEFAULT_CONFIG() {
-       return {
-           id: null,
-           form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-           actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
-                            // Possible keywords:  closebutton, cancelbutton
-           content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
-           classes: [],             // apply these classes to the dialog, if any.
-           header: null, // DOM object, will be used if passed before title.
-           lightbox: false,    // For image types, if true, open the image in a lightbox
-           title: null,  // Adds a title to the dialog if present. header must be null.
-           trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
-                          // or a string.  If it's a string, it creates a div at the bottom
-                          // with the value of the text.
-           clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
-           escapecloses: true, // Allow the window to be closed by the escape key
-           nofocus: false, // If true, do not auto focus anything.
-           canceltext: TextFactory.get('cancel'),
-           closetext: TextFactory.get('close'), // Text for the closebutton, if any
-           showclose: true  // Show or hide the X button in the corner (requires title != null)
+        return {
+            id: null,
+            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+            actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
+            // Possible keywords:  closebutton, cancelbutton
+            content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
+            classes: [],             // apply these classes to the dialog, if any.
+            header: null, // DOM object, will be used if passed before title.
+            lightbox: false,    // For image types, if true, open the image in a lightbox
+            title: null,  // Adds a title to the dialog if present. header must be null.
+            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
+                           // or a string.  If it's a string, it creates a div at the bottom
+                           // with the value of the text.
+            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+            escapecloses: true, // Allow the window to be closed by the escape key
+            nofocus: false, // If true, do not auto focus anything.
+            canceltext: TextFactory.get('cancel'),
+            closetext: TextFactory.get('close'), // Text for the closebutton, if any
+            showclose: true  // Show or hide the X button in the corner (requires title != null)
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The dialog object will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            form: { type: 'option', datatype: 'simpleform', description: "If present, displays and renders the form as its content. If not, uses the value of <code>content</code>."},
+            actions: { type: 'option', datatype: 'array', description: "An array of actions. Can be SimpleButtons or keyword strings. Only used if form is null (actions exist on SimpleForm objects as well).  Possible keywords:  closebutton, cancelbutton" },
+            content: { type: 'option', datatype: 'domobject', description: "This is the content of the dialog.  Ignored if provided a <code>form</code>."},
+            header: { type: 'option', datatype: 'domobject', description: "DOM object, will be used if passed before title."},
+            title: { type: 'option', datatype: 'string', description: "Adds a title to the dialog if present. header must be null." },
+            trailer: { type: 'option', datatype: 'domobject', description: "Adds a trailing chunk of DOM.  Can be provided a full dom object or a string.  If it's a string, it creates a div at the bottom with the value of the text." },
+            canceltext: { type: 'option', datatype: 'string', description: "Text used for cancel buttons provided as keywords." },
+            closetext: { type: 'option', datatype: 'string', description: "Text used for close buttons provided as keywords." },
+
+            lightbox: { type: 'option', datatype: 'boolean', description: "For image types, if true, open the image in a lightbox." },
+            clickoutsidetoclose: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by clicking outside." },
+            escapecloses: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by the escape key." },
+            nofocus: { type: 'option', datatype: 'boolean', description: "If true, do not auto focus anything." },
+            showclose: { type: 'option', datatype: 'boolean', description: "Show or hide the CloseButton in the corner (requires title != null)" }
         };
     }
 
