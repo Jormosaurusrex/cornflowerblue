@@ -11,11 +11,13 @@ class CornflowerBlueDemo {
             elements: [
                 new EmailInput({
                     label: TextFactory.get('email'),
+                    mute: true,
                     autocomplete: 'off',
                     required: true
                 }),
                 new PasswordInput({
                     label: TextFactory.get('password'),
+                    mute: true,
                     forceconstraints: false,
                     placeholder: TextFactory.get('passwordinput-placeholder-enter_password'),
                     required: true
@@ -29,7 +31,7 @@ class CornflowerBlueDemo {
             handler: function(self, callback) {
                 let results = {
                     success: false,
-                    errors: [TextFactory.get('error-login-passwords_dont_match')]
+                    errors: [TextFactory.get('loginform-error-passwords_dont_match')]
                 };
                 callback(results);
             },

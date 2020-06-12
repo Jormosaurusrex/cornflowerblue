@@ -3201,8 +3201,8 @@ p.textarea-container div.wrap:after {
   line-height: 1em;
   content: "0";
   font-size: 20pt;
-  color: var(--input-status-icon-color);
-  text-shadow: var(--input-status-icon-text-shadow);
+  color: var(--colors-text-hot);
+  text-shadow: var(--text-shadow);
   flex-direction: column;
   justify-content: center;
   align-items: center;
