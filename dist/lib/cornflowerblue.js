@@ -1,10 +1,13 @@
-/*! Cornflower Blue - v0.1.1 - 2020-06-05
+/*! Cornflower Blue - v0.1.1 - 2020-06-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
 
     /* GLOBAL METHODS___________________________________________________________________ */
 
+    /**
+     * Close all open panel elements. This is for things like tooltips or select menu elements which get put in the <body>.
+     */
     static closeOpen() {
         // Tooltips
         clearTimeout(ToolTip.timer);
@@ -59,7 +62,6 @@ class CFBUtils {
             hour = minute * 60,
             day = hour * 24,
             week = day * 7;
-
 
         let difference = date.getTime() - now.getTime();
         if (difference > (week * 4)) { // In 3 Months
@@ -119,7 +121,6 @@ class CFBUtils {
 
         return formatted;
     }
-
 
     /**
      * Change the timezone on a date.
@@ -2209,7 +2210,7 @@ class SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
+            id: null, // the id
             dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
             submits: false, // If true, force "type='submit'"
@@ -2217,16 +2218,16 @@ class SimpleButton {
             cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
                             // This should be on an interface (e.g., SimpleButton implements Submittor)
                             // but Javascript is poor with regards to that.
-            text : null, // The text for the button. This is also used as aria-label.
-            shape : null, // (null|square|circle|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
-            size : 'medium', // size of the button: micro, small, medium (default), large, fill
+            text: null, // The text for the button. This is also used as aria-label.
+            shape: null, // (null|square|circle|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
+            size: 'medium', // size of the button: micro, small, medium (default), large, fill
             form: null, // A form element this is in
             hidden: false, // Start hidden or not.
             tooltip: null, // An optional tooltip
             tipicon: null, // An icon for the tooltip
             tipgravity: 'n', // Tooltip gravity
             classes: [], //Extra css classes to apply
-            icon : null, // If present, will be attached to the text inside the button
+            icon: null, // If present, will be attached to the text inside the button
                          // This can be passed a DOM object
             iconclasses: [], // Classes to apply to icons
             iconside: 'left', // The side the icon displays on
@@ -2245,6 +2246,113 @@ class SimpleButton {
             hoverin: null, // The on hover handler.  Passed (event, self) as arguments.
             hoverout: null // The off hover handler.  Passed (event, self) as arguments.
         };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: {
+                type: 'option',
+                datatype: 'string',
+                description: "A unique id value. The button object will have this as it's id."
+            },
+            dataattributes: {
+                type: 'option',
+                datatype: 'dictionary',
+                description: "A dictionary, key: value, which will end up with data-$key = value on elements."
+            },
+            attributes: {
+                type: 'option',
+                datatype: 'dictionary',
+                description: "A dictionary, key: value, which will end up with $key = value on elements"
+            },
+            arialabel: {type: 'option', datatype: 'string', description: "The aria-label attribute" },
+            hidden: {type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            classes: {type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            form: {type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
+            submits: {
+                type: 'option',
+                datatype: 'boolean',
+                description: "If true, forces the button type to be type='submit'"
+            },
+            cansubmit: {
+                type: 'option',
+                datatype: 'boolean',
+                description: "If true, advertises to Form objects that it can be used to submit them, if submits is true."
+            },
+            text: {
+                type: 'option',
+                datatype: 'string',
+                description: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset"
+            },
+            shape: {
+                type: 'option',
+                datatype: 'string',
+                description: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle."
+            },
+            size: {
+                type: 'option',
+                datatype: 'string',
+                description: "The size of the button: micro, small, medium (default), large, fill"
+            },
+            tooltip: {type: 'option', datatype: 'string', description: "An optional tooltip."},
+            tipicon: {type: 'option', datatype: 'string', description: "An icon for the tooltip."},
+            tipgravity: {type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
+            icon: {
+                type: 'option',
+                datatype: 'string',
+                description: "If present, will be attached to the text inside the button. This can be passed a DOM object."
+            },
+            iconclasses: {
+                type: 'option',
+                datatype: 'stringarray',
+                description: "An array of css class names to apply to icons."
+            },
+            iconside: {
+                type: 'option',
+                datatype: 'string',
+                description: "The side the icon displays on - left or right."
+            },
+            secondicon: {
+                type: 'option',
+                datatype: 'string',
+                description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons."
+            },
+            notab: {type: 'boolean', datatype: 'string', description: "If true, don't be tabindexed."},
+            disabled: {type: 'boolean', datatype: 'string', description: "If true, make the button disabled."},
+            mute: {type: 'boolean', datatype: 'string', description: "If true, make the button mute."},
+            ghost: {type: 'boolean', datatype: 'string', description: "If true, make the button ghost."},
+            link: {
+                type: 'option',
+                datatype: 'boolean',
+                description: "If true, make the button behave like a normal link."
+            },
+            naked: {type: 'option', datatype: 'boolean', description: "If true, remove all styles from the button."},
+            action: {
+                type: 'option',
+                datatype: 'function',
+                description: "The click handler. Passed (event, self) as arguments. NOT used if 'submits' is true."
+            },
+            focusin: {
+                type: 'option',
+                datatype: 'function',
+                description: "The focus in handler. Passed (event, self) as arguments."
+            },
+            focusout: {
+                type: 'option',
+                datatype: 'function',
+                description: "The focus out handler. Passed (event, self) as arguments."
+            },
+            hoverin: {
+                type: 'option',
+                datatype: 'function',
+                description: "The on hover handler. Passed (event, self) as arguments."
+            },
+            hoverout: {
+                type: 'option',
+                datatype: 'function',
+                description: "The off hover handler. Passed (event, self) as arguments."
+            }
+        }
     }
 
     /**
@@ -3004,6 +3112,13 @@ class HamburgerButton extends SimpleButton {
             action: function(e, self) { self.toggle(); }
         };
     }
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            toggletarget: { type: 'option', datatype: 'object', description: "The menu object to open or close." },
+            text: { type: 'option', datatype: 'string', description: "The text for the button. This is used as an aria-label only." },
+            toggleaction: { type: 'option', datatype: 'function', description: "A function to execute when the button is toggled." },
+        };
+    }
 
     static get MAGIC_HAMBURGER() {
         let hb = document.createElement('span');
@@ -3011,7 +3126,6 @@ class HamburgerButton extends SimpleButton {
         hb.innerHTML = "<span></span><span></span><span></span>";
         return hb;
     }
-
 
     constructor(config) {
         config = Object.assign({}, HamburgerButton.DEFAULT_CONFIG, config);
@@ -5366,6 +5480,7 @@ class DataGrid extends Panel {
      * Apply all filters
      */
     applyFilters() {
+        if (!this.filterable) return;
         const me = this;
         let rows = Array.from(this.gridbody.childNodes);
 
@@ -5812,7 +5927,7 @@ class DataGrid extends Panel {
 
         let items = [];
 
-        if (this.multiselect) {
+        if ((this.selectable) && (this.multiselect)) {
             items.push({
                 label: TextFactory.get('bulk_select'),
                 tooltip: TextFactory.get('datagrid-tooltip-bulk_select'),
@@ -7073,10 +7188,10 @@ class GridField {
                 e = new TimezoneMenu(config);
                 break;
             case 'url':
-                e = new URLInput(config);
+                e = new URIInput(config);
                 break;
             case 'imageurl':
-                e = new URLInput(config);
+                e = new URIInput(config);
                 break;
             case 'email':
                 e = new EmailInput(config);
@@ -7537,7 +7652,7 @@ class DialogWindow {
            content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
            classes: [],             // apply these classes to the dialog, if any.
            header: null, // DOM object, will be used if passed before title.
-           lightbox: true,    // For image types, if true, open the image in a lightbox
+           lightbox: false,    // For image types, if true, open the image in a lightbox
            title: null,  // Adds a title to the dialog if present. header must be null.
            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
                           // or a string.  If it's a string, it creates a div at the bottom
@@ -8977,6 +9092,7 @@ class SimpleForm {
     buildElementBox() {
         this.elementbox = document.createElement('div');
         this.elementbox.classList.add('elements');
+        let animOrder = 0;
         for (let element of this.elements) {
             element.form = this;
             if (element.type === 'file') {
@@ -8987,6 +9103,9 @@ class SimpleForm {
             } else if (!element.id) {
                 element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
             }
+            element.container.classList.add('popin');
+            element.container.style.setProperty('--anim-order', animOrder);
+            animOrder++;
             this.addElement(element);
             this.elementbox.appendChild(element.container);
         }
@@ -9954,7 +10073,7 @@ class InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // Component id
+            id: null, // Component id
             attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             name: null, // Name attribute
             form: null, // A form element this is in
@@ -9962,7 +10081,7 @@ class InputElement {
             // Possible values: null, 'remaining', 'limit', and 'sky'
             forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
             type: 'text', // Type of input, defaults to "text"
-            label : null, // Input label. If null, does not show up.
+            label: null, // Input label. If null, does not show up.
             placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
                                // To insure a blank placeholder, set the value to ""
             title: null,
@@ -9995,10 +10114,49 @@ class InputElement {
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
             validator: null, // A function to run to test validity. Passed the self.
-            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
-                return `${data}`;
-            }
+            renderer: function(data) { return `${data}`; }
 
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements." },
+            form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
+            name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
+            label: { type: 'option', datatype: 'string', description: "Input label. If null, no label will be shown." },
+            title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
+            pattern: { type: 'option', datatype: 'string', description: "Input pattern attribute." },
+            icon: { type: 'option', datatype: 'string', description: "Use to define a specific icon, used in some specific controls." },
+            minimal: { type: 'option', datatype: 'boolean', description: "If true, build with the intent that it is part of a larger component. This removes things like the secondary controls and validation boxes." },
+            counter: { type: 'option', datatype: 'enumeration', description: "A value for a character counter. Null means 'no counter'. Possible values: null, 'remaining', 'limit', and 'sky'." },
+            forceconstraints:"If true, force constraints defined in sub classes (many inputs don't have any).",
+            placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
+            passive: { type: 'option', datatype: 'boolean', description: "Start life in passive mode." },
+            unsettext: { type: 'option', datatype: 'string', description: "Text to display in passive mode if the value is empty." },
+            help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
+            helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
+            required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
+            requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
+            requirederror: { type: 'option', datatype: 'string', description: "The error message to display if required item isn't filled." },
+            hidden: { type: 'option', datatype: 'boolean', description: "Whether or not to bea hidden element." },
+            autocomplete: { type: 'option', datatype: 'boolean', description: "Enable browser autocomplete. Default is off." },
+            maxlength: { type: 'option', datatype: 'number', description: "If set, applies a maxlength to the element." },
+            value: { type: 'option', datatype: 'string', description: "Value to use for the element." },
+            disabled: { type: 'option', datatype: 'boolean', description: "If true, disable the field." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." },
+            onreturn: { type: 'option', datatype: 'function', description: "The action to execute on hitting the return key. Passed (event, self) as arguments." },
+            ontab: { type: 'option', datatype: 'function', description: "The action to execute on hitting the tab key. Passed (event, self) as arguments." },
+            onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
+            onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
+            focusin: { type: 'option', datatype: 'function', description: "The action to execute on focus in. Passed (event, self) as arguments." },
+            focusout: { type: 'option', datatype: 'function', description: "The action to execute on focus out. Passed (event, self) as arguments." },
+            validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
+            renderer: { type: 'option', datatype: 'function', description: "A function that can be used to format the in the field in passive mode." }
         };
     }
 
@@ -10102,8 +10260,12 @@ class InputElement {
         } else {
             this.clearMessages();
             this.input.removeAttribute('aria-invalid');
-            if ((this.isDirty()) && (!onload)) { // This has to be valid
+            if ((!this.value) || ((this.value) && (this.value.length === 0))) { // it's cleared.
+                this.container.classList.remove('valid');
+                this.container.classList.remove('filled');
+            } else if ((this.isDirty()) && (!onload)) { // This has to be valid
                 this.container.classList.add('valid');
+                this.container.classList.add('filled');
             } else {
                 this.container.classList.remove('valid');
             }
@@ -10270,7 +10432,6 @@ class InputElement {
             }
             return v;
         }
-
         return this.unsettext;
     }
 
@@ -10288,7 +10449,12 @@ class InputElement {
                 this.container.classList.add(c);
             }
         }
-        if (this.label) { this.container.appendChild(this.labelobj); }
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');
@@ -10298,7 +10464,6 @@ class InputElement {
 
         if (!this.minimal) {
             this.container.appendChild(this.passivebox);
-            if (this.topcontrol) { this.container.appendChild(this.topcontrol); }
             this.container.appendChild(this.messagebox);
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
@@ -10466,6 +10631,7 @@ class InputElement {
         }
 
         CFBUtils.applyDataAttributes(this.attributes, this.input);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         if (this.mute) {
             this.input.classList.add('mute');
@@ -10568,6 +10734,9 @@ class InputElement {
 
     get counter() { return this.config.counter; }
     set counter(counter) { this.config.counter = counter; }
+
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
@@ -10732,6 +10901,9 @@ class InputElement {
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
 
+    get topline() { return this._topline; }
+    set topline(topline) { this._topline = topline; }
+
     get touched() { return this._touched; }
     set touched(touched) { this._touched = touched; }
 
@@ -10768,15 +10940,28 @@ class SelectMenu extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
             combobox: false,
-            unselectedtext: TextFactory.get('selectmenu-placeholder-default'), // Default value to use when unselected
+            placeholder: TextFactory.get('selectmenu-placeholder-default'),
+            unselectedtext: null, // If present, allow for a deselect and use this text.
             icon: "chevron-down",
             prefix: null,   // a prefix to display in the trigger box.
             value: null,    // Use this to set the value of the item
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onchange: null  // The change handler. Passed (self).
+        };
+    }
+
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            combobox: { type: 'option', datatype: 'boolean', description: "If true, treat the SelectMenu as combobox" },
+            unselectedtext: { type: 'option', datatype: 'string', description: "If present, allow for a deselect and use this text for the 'unselect' value." },
+            placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
+            icon: { type: 'option', datatype: 'string', description: "Use to define a specific icon, used in some specific controls." },
+            prefix: { type: 'option', datatype: 'string', description: "A prefix to display in the trigger box." },
+            value: { type: 'option', datatype: 'string', description: "Value to use for the element. This is the option value not the option label" },
+            options: { type: 'option', datatype: 'array', description: "Array of option dictionaries. { label: 'Label to show', value: 'value_to_save', checked: false }" },
+            onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." }
         };
     }
 
@@ -10799,7 +10984,6 @@ class SelectMenu extends InputElement {
             config.name = `sel-name-${CFBUtils.getUniqueKey(5)}`;
         }
         super(config);
-
         if (config.value) {
             this.origval = config.value;
         }
@@ -10938,15 +11122,6 @@ class SelectMenu extends InputElement {
             li.setAttribute('tabindex', '-1');
         }
 
-        if (!this.combobox) {
-            if (this.selected) {
-                let seltext = this.selected.parentNode.querySelector('span.text');
-                if (seltext) {
-                    this.triggerbox.value = seltext.innerHTML;
-                }
-            }
-        }
-
         this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
     }
@@ -10978,6 +11153,24 @@ class SelectMenu extends InputElement {
         this.passive = false;
     }
 
+    /**
+     * Select a specific entry, given a value
+     * @param value the value to select
+     */
+    select(value) {
+        let allopts = this.listbox.querySelectorAll('li');
+        for (let o of allopts) {
+            let radio = o.querySelector(`input[name=${this.name}`);
+            if (o.getAttribute('data-value') === value) {
+                o.setAttribute('aria-selected', true);
+                radio.checked = true;
+            } else {
+                o.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
@@ -10988,6 +11181,11 @@ class SelectMenu extends InputElement {
             this.container.classList.add(c);
         }
         if (this.labelobj) { this.container.appendChild(this.labelobj); }
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        this.container.appendChild(this.topline);
 
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('wrap');
@@ -11009,7 +11207,6 @@ class SelectMenu extends InputElement {
 
         CFBUtils.applyDataAttributes(this.attributes, this.listbox);
 
-
         this.container.appendChild(this.listbox);
 
         if (!this.minimal) {
@@ -11019,28 +11216,10 @@ class SelectMenu extends InputElement {
         if (this.minimal) { this.container.classList.add('minimal'); }
 
         if (this.value) {
-            //this.select(this.value);
+            this.select(this.value);
         }
 
         this.postContainerScrub();
-    }
-
-    /**
-     * Select a specific entry, given a value
-     * @param value the value to select
-     */
-    select(value) {
-        let allopts = this.listbox.querySelectorAll('li');
-        for (let o of allopts) {
-            let radio = o.querySelector(`input[name=${this.name}`);
-            if (o.getAttribute('data-value') === value) {
-                o.setAttribute('aria-selected', true);
-                radio.checked = true;
-            } else {
-                o.removeAttribute('aria-selected');
-                radio.checked = false;
-            }
-        }
     }
 
     /**
@@ -11106,12 +11285,6 @@ class SelectMenu extends InputElement {
         });
 
         if (this.mute) { this.triggerbox.classList.add('mute'); }
-
-    }
-
-    calculatePlaceholder() {
-        if (this.unselectedtext) { return this.unselectedtext; }
-        return TextFactory.get('selectmenu-placeholder-default');
     }
 
     buildOptions() {
@@ -11121,8 +11294,20 @@ class SelectMenu extends InputElement {
         this.optionlist.setAttribute('id', this.id);
         this.optionlist.setAttribute('tabindex', '-1');
 
-        let order = 1;
-        let minchars = 5;
+        let order = 0;
+        if (this.unselectedtext) {
+            let unsel = {
+                label: this.unselectedtext,
+                value: '',
+                unselectoption: true
+            };
+            if (!this.value) {
+                unsel.checked = true;
+                this.selectedoption = unsel;
+            }
+            this.options.unshift(unsel);
+        }
+
         for (let opt of this.options) {
             if ((this.origval) && (this.origval === opt.value)) {
                 opt.checked = true;
@@ -11131,15 +11316,8 @@ class SelectMenu extends InputElement {
                 delete opt.checked;
             }
 
-            let o = this.buildOption(opt, order);
-
-            if ((opt.label) && (opt.label.length > minchars)) {
-                minchars = opt.label.length;
-            }
-            order++;
-            this.optionlist.appendChild(o);
+            this.optionlist.appendChild(this.buildOption(opt, order++));
         }
-        //this.triggerbox.style.minWidth = `${(minchars * CFBUtils.getSingleEmInPixels())}px`;
     }
 
     buildOption(def, order) {
@@ -11228,7 +11406,9 @@ class SelectMenu extends InputElement {
             li.setAttribute('aria-selected', 'true');
             li.querySelector(`input[name=${me.name}]`).checked = true;
 
-            if (me.prefix) {
+            if (def.unselectoption) {
+                me.triggerbox.value = '';
+            } else if (me.prefix) {
                 me.triggerbox.value = `${me.prefix} ${def.label}`;
             } else {
                 me.triggerbox.value = def.label;
@@ -11236,7 +11416,7 @@ class SelectMenu extends InputElement {
 
             me.selectedoption = def;
 
-            if (def.label === me.unselectedtext) {
+            if (def.unselectoption) {
                 me.passivebox.innerHTML = me.unsettext;
             } else {
                 me.passivebox.innerHTML = def.label;
@@ -11260,7 +11440,9 @@ class SelectMenu extends InputElement {
 
         if (def.checked) {
             this.origval = def.value;
-            if (this.prefix) {
+            if (def.unselectoption) {
+                this.triggerbox.value = '';
+            } else if (this.prefix) {
                 this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
                 this.triggerbox.value = def.label;
@@ -11317,20 +11499,11 @@ class SelectMenu extends InputElement {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get attributes() { return this.config.attributes; }
-    set attributes(attributes) { this.config.attributes = attributes; }
-
     get combobox() { return this.config.combobox; }
     set combobox(combobox) { this.config.combobox = combobox; }
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
-
-    get minimal() { return this.config.minimal; }
-    set minimal(minimal) { this.config.minimal = minimal; }
-
-    get onchange() { return this.config.onchange; }
-    set onchange(onchange) { this.config.onchange = onchange; }
 
     get optionlist() {
         if (!this._optionlist) { this.buildOptions(); }
@@ -11368,11 +11541,11 @@ class BooleanToggle {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The button id
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
+            id : null,
+            attributes: null,
             name: null,
-            form: null, // A form element this is in
-            label: null, // The text for the label.
+            form: null,
+            label: null,
             checked: false, // Initial state.
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make the checkbox disabled.
@@ -11384,6 +11557,28 @@ class BooleanToggle {
             renderer: function(data) { // A function that can be used to format the in the field in passive mode.
                 return `${data}`;
             }
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements." },
+            form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
+            name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
+            label: { type: 'option', datatype: 'string', description: "Input label. If null, no label will be shown." },
+            title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            disabled: { type: 'option', datatype: 'boolean', description: "If true, disable the field." },
+            onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." },
+            validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
+            renderer: { type: 'option', datatype: 'function', description: "A function that can be used to format the in the field in passive mode." },
+            value: { type: 'option', datatype: 'string', description: "Value to use for the element." },
+            checked: { type: 'option', datatype: 'boolean', description: "Should the toggle be checked or not" },
+            labelside: { type: 'option', datatype: 'string', description: "Which side to put the label on." },
+            style: { type: 'option', datatype: 'enumeration', description: "The style of the toggle. Options are: square, circle, toggle, and switch. Null means a standard checkbox style" },
         };
     }
 
@@ -11466,7 +11661,7 @@ class BooleanToggle {
         }
 
         CFBUtils.applyDataAttributes(this.attributes, this.toggle);
-
+        CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         this.toggle.addEventListener('change', function() {
             if (me.toggle.checked) {
@@ -11555,6 +11750,9 @@ class BooleanToggle {
     }
     set container(container) { this._container = container; }
 
+    get dataattributes() { return this.config.dataattributes; }
+    set dataattributes(dataattributes) { this.config.dataattributes = dataattributes; }
+
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
 
@@ -11628,13 +11826,23 @@ class DateInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
-            basetime: '12:00:00', // Time to set dates on
+            basetime: '12:00:00',
             timezone: 'GMT',
             type: 'text',
-            gravity: 's', // The direction to open the datepicker
+            gravity: 'south',
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             dateicon: 'calendar'
+        };
+    }
+    static get DOCUMENTATION() {
+        return {
+            basetime: { type: 'option', datatype: 'string', description: "Time of day to set dates to." },
+            timezone: { type: 'option', datatype: 'string', description: "The default timezone to set the datepicker to (unused)." },
+            gravity: { type: 'option', datatype: 'string', description: "The direction to open the datepicker when it's clicked open." },
+            triggerarialabel: { type: 'option', datatype: 'string', description: "The aria-label for the datepicker trigger button." },
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid date." },
+            dateicon: { type: 'option', datatype: 'string', description: "The icon to use for the datpicker trigger button." }
         };
     }
 
@@ -11793,6 +12001,13 @@ class EmailInput extends TextInput {
         };
     }
 
+    static get DOCUMENTATION() {
+        return {
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid email address." },
+            pattern: { type: 'option', datatype: 'string', description: "The input pattern used to force a valid email address." }
+        };
+    }
+
     /**
      * Tests whether or not a string is a valid email address.
      * @param email The email address to check
@@ -11838,6 +12053,14 @@ class FileInput extends InputElement {
             accept: 'image/png,image/gif,image/jpg,image/jpeg', // the default accept mime-type
             multiple: false, // Should the file uploader accept multiple files?
             onchange: null // The change handler. Passed (self).
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            icon: { type: 'option', datatype: 'string', description: "The icon to use for the upload trigger." },
+            accept: { type: 'option', datatype: 'string', description: "The default accept mime-type value." },
+            multiple: { type: 'option', datatype: 'boolean', description: "If true, accept multiple files for upload." }
         };
     }
 
@@ -12034,6 +12257,20 @@ class NumberInput extends TextInput {
             wholenumbers: false, // Require whole numbers
             steppers: true,
             step: 1
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            pattern: { type: 'option', datatype: 'string', description: "The input pattern used to force a valid number." },
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid number." },
+            minnumber: { type: 'option', datatype: 'number', description: "The minimum acceptable value." },
+            maxnumber: { type: 'option', datatype: 'number', description: "The maximum acceptable value." },
+            downbuttonarialabel: { type: 'option', datatype: 'string', description: "The aria-label text for the decrement button" },
+            upbuttonarialabel: { type: 'option', datatype: 'string', description: "The aria-label text for the increment button" },
+            wholenumbers: { type: 'option', datatype: 'boolean', description: "If true, require whole numbers" },
+            steppers: { type: 'option', datatype: 'boolean', description: "If true, show increment and decrement buttons" },
+            step: { type: 'option', datatype: 'number', description: "The value that the increment and decrement buttons change the value by" }
         };
     }
 
@@ -12295,12 +12532,24 @@ class PasswordInput extends TextInput {
         return {
             minlength: 5,
             suggestedlength: 8,
-            maxlength: 30,
+            maxlength: 250,
             hideicon: 'eye-slash',
             showicon: 'eye',
             obscured: true, // If true, start with password hidden
             forceconstraints: false,
             type: 'password'
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            minlength: { type: 'option', datatype: 'number', description: "The minimum length of a password." },
+            suggestedlength: { type: 'option', datatype: 'number', description: "The suggested length for a password." },
+            maxlength: { type: 'option', datatype: 'number', description: "The maxlength for the password field." },
+            hideicon: { type: 'option', datatype: 'string', description: "The icon to show on the hide/show password control for 'hide'." },
+            showicon: { type: 'option', datatype: 'string', description: "The icon to show on the hide/show password control for 'show'." },
+            obscured: { type: 'option', datatype: 'boolean', description: "If true, start with password hidden." },
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value meets all other constraints." }
         };
     }
 
@@ -12428,23 +12677,6 @@ class PasswordInput extends TextInput {
 }
 window.PasswordInput = PasswordInput;
 class RadioGroup extends SelectMenu {
-
-    static get DEFAULT_CONFIG() {
-        return {
-            id : null, // The button id
-            name: null,
-            form: null, // A form element this is in
-            label: null, // The text for the label.
-            passive: false, // Start life in "passive" mode.
-            required: false, // Is this a required field or not
-            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
-            classes: [], // Extra css classes to apply
-            disabled: false, // If true, make this disabled.
-            options: [], // Array of option dictionary objects.  Printed in order given.
-                         // { label: "Label to show", value: "v", checked: true }
-            validator: null // A function to run to test validity. Passed the self; returns true or false.
-        };
-    }
 
     /**
      * Define the RadioGroup
@@ -12607,8 +12839,13 @@ class TextArea extends InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            counter: 'sky', // A value for a character counter. Null means 'no counter'
-            // Possible values: null, 'remaining', 'limit', and 'sky'
+            counter: 'sky'
+        };
+    }
+
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            counter: { type: 'option', datatype: 'string', description: "A value for a character counter. Null means 'no counter'. Possible values: null, 'remaining', 'limit', and 'sky'." }
         };
     }
 
@@ -12641,12 +12878,17 @@ class TextArea extends InputElement {
 
 }
 window.TextArea = TextArea;
-class URLInput extends TextInput {
+class URIInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
         return {
             type: 'text',
             forceconstraints: true
+        };
+    }
+    static get DEFAULT_CONFIG_DOCUMENTATION() {
+        return {
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, enforce that the value is a valid web address address." }
         };
     }
 
@@ -12671,9 +12913,9 @@ class URLInput extends TextInput {
 
     constructor(config) {
         if (!config) { config = {}; }
-        config = Object.assign({}, URLInput.DEFAULT_CONFIG, config);
+        config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
 
-        if ((config.value) && (URLInput.isEncoded(config.value))) {
+        if ((config.value) && (URIInput.isEncoded(config.value))) {
             config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
         }
         super(config);
@@ -12691,14 +12933,14 @@ class URLInput extends TextInput {
 
     localValidator() {
         if ((this.value) && (this.forceconstraints)) {
-            if (!URLInput.isValid(this.value)) {
+            if (!URIInput.isValid(this.value)) {
                 this.errors.push(TextFactory.get('urlinput-error-invalid_web_address'));
             }
         }
     }
 
 }
-window.URLInput = URLInput;
+window.URLInput = URIInput;
 class CountryMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {
