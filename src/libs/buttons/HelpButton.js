@@ -26,7 +26,6 @@ class HelpButton extends SimpleButton {
             config.id = `${CFBUtils.getUniqueKey(5)}-help`;
         }
         super(config);
-
     }
 
 }

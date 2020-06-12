@@ -180,11 +180,18 @@ class CornflowerBlueDemo {
      * Builds the demo page.
      */
     constructor() {
+        const me = this;
         this.body = document.body;
 
         this.main = document.getElementById('articlebox');
         this.build();
 
+        window.setTimeout(function() {
+            me.handleURLState();
+        }, 100);
+    }
+
+    handleURLState() {
         if (window.location.hash.substr(1)) {
             let hash = window.location.hash.substr(1);
             if (hash.indexOf('-') !== -1) {
@@ -212,8 +219,6 @@ class CornflowerBlueDemo {
         if (t) {
             this.activearticle = t;
             this.activearticle.removeAttribute('aria-hidden');
-            let s = this.activearticle.querySelector('section'); // show first section, if any
-            if (s) { s.removeAttribute('aria-hidden'); }
         }
         this.navigation.select(tab);
 
@@ -237,20 +242,18 @@ class CornflowerBlueDemo {
 
         let section = document.getElementById(`section-${tab}`);
         if (section) {
-            this.activesection = section;
-            this.activesection.removeAttribute('aria-hidden');
             switch(type) {
                 case 'complex':
                     this.complexnav.select(tab);
-                    this.complexnav.container.removeAttribute('aria-hidden');
                     break;
                 case 'elements':
                 default:
                     this.elementsnav.select(tab);
-                    this.elementsnav.container.removeAttribute('aria-hidden');
                     break;
             }
+            section.removeAttribute('aria-hidden');
         }
+
         if (history.pushState) {
             history.pushState(null, null, `#${type}-${tab}`);
         } else {
@@ -286,9 +289,8 @@ class CornflowerBlueDemo {
         });
         this.container.insertBefore(this.navigation.container, this.main);
 
-
         let elementtabs = [
-            { label: 'Buttons', id: 'buttons' },
+            { label: 'Buttons', id: 'buttons', selected: true },
             { label: 'Inputs', id: 'inputs' },
             { label: 'Text Areas', id: 'textareas' },
             { label: 'Select Menus', id: 'selects' },
@@ -296,7 +298,7 @@ class CornflowerBlueDemo {
             { label: 'Toggles', id: 'toggles' }
         ];
         this.elementsnav = new TabBar({
-            classes: ['submav'],
+            classes: ['subnav'],
             navigation: true,
             vertical: true,
             animation: null,
@@ -308,7 +310,7 @@ class CornflowerBlueDemo {
         document.getElementById('t-elements').insertBefore(this.elementsnav.container, document.getElementById('elements-sections'));
 
         let complextabs = [
-            { label: 'Message Boxes', id: 'messageboxes' },
+            { label: 'Message Boxes', id: 'messageboxes', selected: true },
             { label: 'Forms', id: 'forms' },
             { label: 'Data Grids', id: 'datagrid' },
             { label: 'Growlers', id: 'growler' },
@@ -317,7 +319,7 @@ class CornflowerBlueDemo {
             { label: 'Tabs and Menus', id: 'tabsandmenus' }
         ];
         this.complexnav = new TabBar({
-            classes: ['submav'],
+            classes: ['subnav'],
             navigation: true,
             vertical: true,
             animation: null,
@@ -925,7 +927,6 @@ class CornflowerBlueDemo {
             { "track" :  7, "album" :  "In Through the Out Door", "released" :  "1979-08-15", "label" :  "Swan Song", "title" :  "I'm Gonna Crawl", "writers" :  ["Page", "Plant", "Jones"], "length" :  "5:28", "image" :  "https://upload.wikimedia.org/wikipedia/en/b/ba/Led_Zeppelin_-_In_Through_the_Out_Door.jpg" }
         ]
     }
-
 
     grindDataGrids() {
 
@@ -2064,9 +2065,6 @@ class CornflowerBlueDemo {
     /* ACCESSOR METHODS_________________________________________________________________ */
     get activearticle() { return this._activearticle; }
     set activearticle(activearticle) { this._activearticle = activearticle; }
-
-    get activesection() { return this._activesection; }
-    set activesection(activesection) { this._activesection = activesection; }
 
     get body() { return this._body; }
     set body(body) { this._body = body; }

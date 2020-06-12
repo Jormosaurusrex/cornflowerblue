@@ -20,10 +20,34 @@ class Panel {
             closeicon: 'chevron-up',
             minimized: false, // Start minimized
             classes: [], //Extra css classes to apply,
-
             onclose: null, // A function to run to when the panel closes. Passed the self.
             onopen: null // A function to run to when the panel opens. Passed the self.
+        };
+    }
 
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The panel will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements" },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
+            hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            minimized: { type: 'option', datatype: 'boolean', description: "Start collapsed/minimized." },
+            collapsible: { type: 'option', datatype: 'boolean', description: "Can the panel collapse? If false, minimized is ignored." },
+            onclose: { type: 'option', datatype: 'function', description: "A function to run to when the panel closes. Passed the self." },
+            onopen: { type: 'option', datatype: 'function', description: "A function to run to when the panel opens. Passed the self as argument." },
+            closeicon: { type: 'option', datatype: 'string', description: "The icon to use in for the close/open button.." },
+            contentid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's content." },
+            headerid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's header." },
+            title: { type: 'option', datatype: 'string', description: "The title to use for the panel." },
+            content: { type: 'option', datatype: 'object', description: "The panel content payload." },
+            style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain', 'ghost', or 'invisible'." }
+                             // Various styles that can be applied to the panel.
+                            // - 'plain': simple, spartan, solid.
+                            // - 'ghost': similar to 'plain' except that it turns
+                            //            translucent when not in focus or hover
+                            // - 'invisible: panel behaves as normal but the background is transparent
         };
     }
 

@@ -1,10 +1,19 @@
 class LoadingShade {
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
-            spinnerstyle: 'spin', //
-            spinnertext: TextFactory.get('simpleform-spinnertext'), //
-            classes: [] //Extra css classes to apply
+            id : null,
+            spinnerstyle: 'spin',
+            spinnertext: TextFactory.get('simpleform-spinnertext'),
+            classes: []
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            spinnerstyle: { type: 'option', datatype: 'enumeration', description: "The type of spinner to show (spin|bounce)" },
+            spinnertext: { type: 'option', datatype: 'string', description: "The text to show on the loading shade." }
         };
     }
 

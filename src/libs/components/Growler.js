@@ -2,14 +2,21 @@ class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
         return {
-            text : null, // The growler payload
+            text : null,
             closeicon: 'echx',
-            duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
-            icon: null, // An optional icon. Position of this depends on whether there is text or a title.
-                        // If a title is given but no text, it will be in the titlebar. Else it
-                        // gets placed in the text area.
-            position: 'bottom-right' // Position for the growler. Valid values:
-                        // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+            duration: 4000,
+            icon: null,
+            position: 'bottom-right'
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            icon: { type: 'option', datatype: 'string', description: "The icon to use in the growler." },
+            closeicon: { type: 'option', datatype: 'string', description: "The icon to use in the growler's CloseButton." },
+            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
+            text: { type: 'option', datatype: 'string', description: "The growler payload" },
+            duration: { type: 'option', datatype: 'number', description: "Length of time in milliseconds to display. If 0 or negative, stays open." }
         };
     }
 

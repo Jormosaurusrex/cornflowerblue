@@ -2,7 +2,6 @@ class DatePicker {
 
     static get DEFAULT_CONFIG() {
         return {
-            dateicon: 'calendar',
             startdate: null,
             value: null,
             timezone: 'GMT',
@@ -10,9 +9,18 @@ class DatePicker {
             locale: 'en-US',
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            onselect: null, // A function to be called on selection. Passed the date selected, as a string.
-            classes: [] // Extra css classes to apply
+            onselect: null,
+            classes: []
         };
+    }
+
+    static get DOCUMETATION() {
+        return {
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            startdate: { type: 'option', datatype: 'date', description: "The date to start the calendar on. Can also be a readable string." },
+            value: { type: 'option', datatype: 'date', description: "The date to preselect. Can also be a readable string." },
+            onselect: { type: 'option', datatype: 'function', description: "A function to be called on selection. Passed the date selected, as a string." }
+        }
     }
 
     /**
@@ -277,9 +285,6 @@ class DatePicker {
         return this._container;
     }
     set container(container) { this._container = container; }
-
-    get dateicon() { return this.config.dateicon; }
-    set dateicon(dateicon) { this.config.dateicon = dateicon; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }

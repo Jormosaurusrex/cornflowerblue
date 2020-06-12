@@ -5,7 +5,6 @@ class SkipButton extends SimpleButton {
             text: TextFactory.get('skip_to_content'),
             classes: ['visually-hidden', 'skipbutton'],
             id: 'content-jump',
-            hot: true,
             contentstart: "#content-start",
             focusin: function(e, self) {
                 self.button.classList.remove('visually-hidden');
@@ -21,6 +20,12 @@ class SkipButton extends SimpleButton {
         };
     }
 
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. This is predefined on a SkipButton." },
+            contentstart: { type: 'option', datatype: 'string', description: "The id of the element to jump to that marks the start of the content." }
+        };
+    }
     constructor(config) {
         config = Object.assign({}, SkipButton.DEFAULT_CONFIG, config);
         super(config);

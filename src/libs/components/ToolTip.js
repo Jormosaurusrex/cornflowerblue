@@ -2,14 +2,27 @@ class ToolTip {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
+            id : null,
             icon: 'help-circle',
             gravity: 'n',
-            iconclasses: [], // Classes to apply to the icon
-            text: null, // The text to use,
-            parent: null, // the parent object to fire off
-            waittime: 1000, // how long to wait before activating
-            classes: [] //Extra css classes to apply
+            iconclasses: [],
+            text: null,
+            parent: null,
+            waittime: 1000,
+            classes: []
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The tooltip wrapper object will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            icon: { type: 'option', datatype: 'string', description: "The icon to use in the tooltip." },
+            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
+            gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip whe." },
+            text: { type: 'option', datatype: 'string', description: "The text to use in the tooltip." },
+            parent: { type: 'option', datatype: 'object', description: "The parent object this fires off." },
+            waittime: { type: 'option', datatype: 'number', description: "How long to wait (in milliseconds) before activating." }
         };
     }
 

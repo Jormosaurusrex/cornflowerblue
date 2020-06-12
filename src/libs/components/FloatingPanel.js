@@ -2,13 +2,14 @@ class FloatingPanel extends Panel {
 
     static get DEFAULT_CONFIG() {
         return {
-            style: 'plain', // Various styles that can be applied to the panel.
-                            // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
-                            // - 'invisible: panel behaves as normal but the background is transparent
-            position: 'top-left' // Position for the panel. Valid values:
-                                 // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+            style: 'plain',
+            position: 'top-left'
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            position: { type: 'option', datatype: 'enumeration', description: "Position for the growler. Valid values: (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)" }
         };
     }
 
