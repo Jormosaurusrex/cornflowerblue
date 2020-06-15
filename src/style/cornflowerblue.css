@@ -1401,6 +1401,7 @@ input[type=submit]:disabled,
 input[type=reset]:disabled,
 a.button:disabled {
   opacity: 0.5;
+  filter: grayscale(50%);
   cursor: not-allowed;
   text-shadow: none;
   box-shadow: none;
