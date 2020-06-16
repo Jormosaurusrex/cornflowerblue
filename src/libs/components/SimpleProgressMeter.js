@@ -2,42 +2,43 @@ class SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            classes: [], // Extra css classes to apply
-            label: null, // The title
-            help: null, // Help text.
-
-            style: null, // One of a handful of styles:
-                        // * roundcap : both sides of the progress bar will be round capped.
-                        // * interiorroundcap : the progress bar's right side will be round capped.
-
-            commaseparate: true, // set to false to not comma separate numbers
-            currentrank: null, // A string, if present, will be displayed inside (along with minvalue)
-            nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
-            showcaps: true, // if true, show the min and max values.  True by default if currentrank or nextrank is set.
-            decalposition: 'interior', // Where should the decals appear?
-                        // * 'none' : Don't show any decals
-                        // * 'exterior' : decals are drawn outside of and above the bar
-                        // * 'exterior-bottom' : decals are drawn outside of and below the bar
-
-            /*
-                The meter can have a variable scale, but the width of its progressbar is absolute within
-                the scale.
-
-                Consider a progress system made of multiple progress steps, perhaps of different length
-                (like a loyalty program).  Progress in the first rank is 0 - 25 points, in the second
-                rank is 25 - 75, in the third is 76 - 150, and the fourth is 151 - 300.
-                  - minnumber would be the start of the "rank" (ex 76 for rank 3)
-                  - maxnumber would be the end of the "rank" (ex 150)
-                  - value is absolute, considered along the whole sequence (0 - 300), ex 123.
-             */
-            maxvalue: 100, // the max value
-            minvalue: 0, // the min value
-            value: 50, // the current score, calculated absolute.
-
-            width: null, // width of the progressbar to fill.  Used if provided, or else calculated from other values.
+            id: null,
+            classes: [],
+            label: null,
+            help: null,
+            style: null,
+            commaseparate: true,
+            currentrank: null,
+            nextrank: null,
+            showcaps: true,
+            decalposition: 'interior',
+            maxvalue: 100,
+            minvalue: 0,
+            value: 50,
+            width: null
         };
     }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The dialog object will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            label: { type: 'option', datatype: 'string', description: "The title for the progress meter." },
+            help: { type: 'option', datatype: 'string', description: "Help text." },
+            style: { type: 'option', datatype: 'enmumeration', description: "One of a handful of additional styles: roundcap or interiorroundcamp" },
+            commaseparate: { type: 'option', datatype: 'boolean', description: "Set to false to not comma separate numbers." },
+            currentrank: { type: 'option', datatype: 'string', description: "A string, if present, will be displayed inside (along with minvalue)." },
+            nextrank: { type: 'option', datatype: 'string', description: "A string, if present, will be displayed inside (along with maxvalue)." },
+            showcaps: { type: 'option', datatype: 'boolean', description: "if true, show the min and max values.  True by default if currentrank or nextrank is set." },
+
+            decalposition: { type: 'option', datatype: 'enumeration', description: "Where should the decals appear. Values: non, exterior, exterior-bottom" },
+            maxvalue: { type: 'option', datatype: 'number', description: "The maximum score value for the meter." },
+            minvalue: { type: 'option', datatype: 'number', description: "The minimum score value for the meter." },
+            value: { type: 'option', datatype: 'number', description: "The current score, absolute." },
+            width: { type: 'option', datatype: 'number', description: "Width of the progressbar to fill.  Used if provided, or else calculated from other values." }
+        };
+    }
+
 
     /**
      * Define a SimpleProgressMeter

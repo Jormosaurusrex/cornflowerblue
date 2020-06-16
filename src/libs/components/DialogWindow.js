@@ -6,7 +6,7 @@ class DialogWindow {
             form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
             actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
             // Possible keywords:  closebutton, cancelbutton
-            content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
+            content: null,
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // DOM object, will be used if passed before title.
             lightbox: false,    // For image types, if true, open the image in a lightbox
@@ -178,8 +178,6 @@ class DialogWindow {
                 });
                 this.header.appendChild(this.closebutton.button);
             }
-        } else if (this.showclose) {
-            console.error("Dialog defines 'showclose' but no title is defined.");
         }
 
         if (this.form) { // it's a SimpleForm
@@ -217,7 +215,6 @@ class DialogWindow {
                 }
             }
 
-
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.form.form);
@@ -226,7 +223,7 @@ class DialogWindow {
             this.window.appendChild(this.contentbox);
 
         } else if (this.content) { // It's a DOM object
-
+            console.log(this.content);
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.content);

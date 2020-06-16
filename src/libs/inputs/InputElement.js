@@ -168,7 +168,7 @@ class InputElement {
     validate(onload) {
         this.errors = [];
         this.warnings = [];
-
+        
         if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
             this.errors.push(this.requirederror);
         }

@@ -491,7 +491,7 @@
                             <p>A <dfn>Growler</dfn> is a short-lived, auto-dismissable notifications that presents a simple payloads.</p>
                             <p>They can be targeted to open in any one of six positions. They can be configured to show title or text payload individually.  Supplied icons will be included in the title if no payload is provided.</p>
                             <p>It is possible to set them to require manual dismissal by setting the <code>duration</code> to 0 or -1.</p>
-
+                            <div class="docbox" id="growlers-docbox"></div>
                             <div class="demobox" id="growlers-positions">
                                 <h3 role="heading" aria-level="3">Positions</h3>
                             </div>
@@ -515,6 +515,13 @@
                                 <p>The <code>SimpleProgressMeter</code> component is designed to display one point of data along a single axis. By default it, it assumes a scale between 0 and 100.</p>
                                 <p>If given <code>previousrank</code> or <code>nextrank</code> parameters, it will grow taller and display them inside of the bar, a long with the scale values (which can be disabled with <code>showcaps: false</code>).</p>
                                 <p>Adding the <code>pillcap</code> class makes the endpoint circular, but this looks weird if the bar is taller.</p>
+<p>>The meter can have a variable scale, but the width of its progressbar is absolute within the scale. Consider a progress system made of multiple progress steps, perhaps of different length (like a loyalty program).  Progress in the first rank is 0 - 25 points, in the second rank is 25 - 75, in the third is 76 - 150, and the fourth is 151 - 300.</p>
+                                <ul>
+                                    <li><code>minnumber</code> would be the start of the "rank" (ex 76 for rank 3)</li>
+                                    <li><code>maxnumber</code> would be the end of the "rank" (ex 150)</li>
+                                    <li><code>value</code> is absolute, considered along the whole sequence (0 - 300), ex 123.</li>
+                                </ul>
+                                <div class="docbox" id="simpleprogress-docbox"></div>
                             </div>
                             <div class="demobox" id="progressmeter-radial">
                                 <h3 role="heading" aria-level="3">Radial</h3>
@@ -522,6 +529,8 @@
                                 <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
                                 <p>Since they are implemented in SVG they cannot be easily sized via css. They take a <code>size</code> parameter which can be a string ('small', 'medium', 'large', 'huge'), values in 'px' or 'em', or a number (which gets interpreted as pixels).  The default is <code>medium</code>.</p>
                                 <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
+                                <div class="docbox" id="radialprogress-docbox"></div>
+
                             </div>
                         </section>
                         <section aria-hidden="true" tabindex="-1" id="section-dialogs">
@@ -530,6 +539,7 @@
                             <p>The <code>DialogWindow</code> class can display a simple title (with <code>title:</code>) or define its own header (with <code>header</code>, which takes a DOM object to display). Dialog content is provided with one of two attributes: <code>content</code> (which takes a DOM object) or <code>form</code> (which takes a <code>SimpleForm</code>).</p>
                             <p>If passed a form, the dialog will render the form's <code>header</code>, <code>elements</code>, and <code>actions</code> in a way that compliments the dialog.</p>
                             <p>If passed a DOM object with <code>content</code>, no special formatting is applied; the content must be styled on its own. This can be passed a selector (and thus drawing content from the existing DOM), but it will remove that content from wherever it was and destroy it when the window is closed, so use <code>.clone()</code>.</p>
+                            <div class="docbox" id="dialogwindow-docbox"></div>
 
                             <div class="demobox" id="inputs-dialogs">
                             </div>

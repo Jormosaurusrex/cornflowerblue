@@ -2,21 +2,25 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {
         return {
-            numberposition: 'center', // where to display the badge and stinger.
-                                    // Values include: center, bottomleft, bottomright, topleft, topright
-            badge: null, // the large central number to show. If left empty, it will display the percentage.
-            stinger: null, // A small text to display below the main badge
-            size: 'medium', // Can be one of several values or metrics!
-                        // Accepts: 'small', 'medium', 'large', 'huge' as strings
-                        // Numbers in pixels and ems, as strings ('300px' or '5em')
-                        // Or if given a number, assumes pixels
-            style: 'solid', // 'solid' or 'ticks'.
-                        // If set to 'ticks', disables any 'segments' value.
-            segments: null, // Displays tick marks in the circle.
-                        // Takes a number; this is the number of divisions. If you want segments of 10%, set it
-                        // to 10.  If you want segments of 25%, set it to 4.
-            strokewidth: null // If provided, the stroke will be this wide.
-                            // If not provided, the width will be 5% of the circle's whole size
+            numberposition: 'center',
+            badge: null,
+            stinger: null,
+            size: 'medium',
+            style: 'solid',
+            segments: null,
+            strokewidth: null
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            numberposition: { type: 'option', datatype: 'enumeration', description: "Where to display the badge and stinger. Values: center, bottomleft, bottomright, topleft, topright" },
+            badge: { type: 'option', datatype: 'number', description: "The central number to show. If left empty, it will display the percentage." },
+            stinger: { type: 'option', datatype: 'string', description: "Text to display below the main badge." },
+            size: { type: 'option', datatype: 'enumeration', description: "Can be one of several values or metrics. Accepts: 'small', 'medium', 'large', 'huge' as strings; Numbers in pixels and ems, as strings ('300px' or '5em'). If given a number, assumes pixels" },
+            style: { type: 'option', datatype: 'enumeration', description: "'solid' or 'ticks'. If set to 'ticks', disables any 'segments' value." },
+            segments: { type: 'option', datatype: 'number', description: "Displays tick marks in the circle. Takes a number; this is the number of divisions. If you want segments of 10%, set it.to 10.  If you want segments of 25%, set it to 4." },
+            strokewidth: { type: 'option', datatype: 'number', description: "If provided, the stroke will be this wide. If not provided, the width will be 5% of the circle's whole size" }
         };
     }
 

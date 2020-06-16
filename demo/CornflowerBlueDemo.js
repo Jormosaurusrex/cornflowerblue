@@ -316,7 +316,7 @@ class CornflowerBlueDemo {
             { label: 'Forms', id: 'forms' },
             { label: 'Data Grids', id: 'datagrid' },
             { label: 'Growlers', id: 'growler' },
-            { label: 'Progress Meters', id: 'progressmeter' },
+            { label: 'Progress Meters', id: 'progressmeters' },
             { label: 'Dialogs', id: 'dialogs' },
             { label: 'Tabs and Menus', id: 'tabsandmenus' }
         ];
@@ -345,6 +345,10 @@ class CornflowerBlueDemo {
         document.getElementById('inputs-booleantoggle-docbox').appendChild(this.getOptionGrid(BooleanToggle).container);
         document.getElementById('buttons-docbox').appendChild(this.getOptionGrid(SimpleButton).container);
 
+        document.getElementById('growlers-docbox').appendChild(this.getOptionGrid(Growler).container);
+        document.getElementById('dialogwindow-docbox').appendChild(this.getOptionGrid(DialogWindow).container);
+        document.getElementById('simpleprogress-docbox').appendChild(this.getOptionGrid(SimpleProgressMeter).container);
+        document.getElementById('radialprogress-docbox').appendChild(this.getOptionGrid(RadialProgressMeter).container);
 
         this.grindButtons();
         this.grindCheckboxes();
