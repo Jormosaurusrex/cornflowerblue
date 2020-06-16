@@ -46,10 +46,11 @@
   --colors-warning: rgb(var(--colors-warning-rgb));
   --colors-caution-rgb: var(--yellow-rgb);
   --colors-caution: rgb(var(--colors-caution-rgb));
-  --shadows-dropshadow-filter: drop-shadow(0 .5em .5em rgba(0, 0, 0, 0.4));
+  --shadows-dropshadow-filter: drop-shadow(0 .5rem .5rem rgba(0, 0, 0, 0.2));
+  --shadows-dropshadow-filter-vertical: drop-shadow(0 -.5rem .5rem rgba(0, 0, 0, 0.2));
   --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
-  --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.4);
+  --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --shadows-panel-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
@@ -4054,10 +4055,8 @@ div.selectmenu-menu ul.selectmenu li:focus, div.selectmenu-menu ul.selectmenu li
     color: var(--colors-text-hot);
   }
 }
-div.selectmenu-menu ul.selectmenu.vert {
-  bottom: 2.5em;
-  border-top: 0.1em solid var(--input-border-color);
-  border-bottom: none;
+div.selectmenu-menu.vert ul.selectmenu {
+  filter: var(--shadows-dropshadow-filter-vertical);
 }
 div.selectmenu-menu[aria-hidden=true] {
   height: 0;

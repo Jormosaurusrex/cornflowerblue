@@ -777,10 +777,8 @@ div.selectmenu-menu ul.selectmenu li:focus, div.selectmenu-menu ul.selectmenu li
     color: var(--colors-text-hot);
   }
 }
-div.selectmenu-menu ul.selectmenu.vert {
-  bottom: 2.5em;
-  border-top: 0.1em solid var(--input-border-color);
-  border-bottom: none;
+div.selectmenu-menu.vert ul.selectmenu {
+  filter: var(--shadows-dropshadow-filter-vertical);
 }
 div.selectmenu-menu[aria-hidden=true] {
   height: 0;

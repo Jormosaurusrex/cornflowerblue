@@ -59,12 +59,11 @@ div.selectmenu-menu {
           color: var(--colors-text-hot);
         }
       }
-
     }
-    &.vert {
-      bottom: 2.5em;
-      border-top: .1em solid var(--input-border-color);
-      border-bottom: none;
+  }
+  &.vert {
+    ul.selectmenu {
+      filter: var(--shadows-dropshadow-filter-vertical);
     }
   }
   &[aria-hidden='true'] {
@@ -74,4 +73,5 @@ div.selectmenu-menu {
     border: none;
     display: none;
   }
+
 }

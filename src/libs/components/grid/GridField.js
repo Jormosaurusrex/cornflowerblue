@@ -71,7 +71,6 @@ class GridField {
         return GridField.COMPARATORS[comparator];
     }
 
-
     /**
      * Define the gridfield
      * @param config a dictionary object

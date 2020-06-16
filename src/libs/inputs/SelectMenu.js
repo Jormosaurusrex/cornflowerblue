@@ -144,9 +144,12 @@ class SelectMenu extends InputElement {
             SelectMenu.activeMenu = this;
         }
 
-        this.setPosition();
+        //window.addEventListener('scroll', this.setPosition, true);
+        let x = window.scrollX,
+            y = window.scrollY;
+        window.onscroll = function(){ window.scrollTo(x, y); };
 
-        window.addEventListener('scroll', this.setPosition, true);
+        this.setPosition();
 
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
@@ -158,23 +161,38 @@ class SelectMenu extends InputElement {
      */
     setPosition() {
         if (!SelectMenu.activeMenu) { return; }
-        let self = SelectMenu.activeMenu;
-
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.wrapper.getBoundingClientRect(),
+        
+        let self = SelectMenu.activeMenu,
+            bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.triggerbox.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top;
+            offsetTop = elemRect.top - bodyRect.top,
+            sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
 
-        self.listbox.style.top = `${(offsetTop + self.wrapper.clientHeight)}px`;
         self.listbox.style.left = `${offsetLeft}px`;
         self.listbox.style.width = `${self.container.clientWidth}px`;
+
+        if ((elemRect.top + sumHeight) > window.innerHeight) {
+            self.listbox.classList.add('vert');
+            self.listbox.style.top = `${(offsetTop - self.optionlist.clientHeight)}px`;
+            self.listbox.style.bottom = `${offsetTop}px`;
+        } else {
+            self.listbox.classList.remove('vert');
+            self.listbox.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
+        }
     }
 
     /**
      * Closes the option list.
      */
     close() {
-        window.removeEventListener('scroll', this.setPosition, true);
+        //window.removeEventListener('scroll', this.setPosition, true);
+        window.onscroll=function(){};
+
+        this.listbox.style.top = null;
+        this.listbox.style.bottom = null;
+        this.listbox.style.left = null;
+        this.listbox.style.width = null;
 
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');

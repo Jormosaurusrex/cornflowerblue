@@ -150,13 +150,19 @@ class SimpleForm {
      * Get the form value as a dictionary
      * @return the values of the form as a key=value dictionary
      */
-    dictionary() {
+    get dictionary() {
         let dictionary = {};
         for (let i of this.elements) {
             dictionary[i.name] = i.value;
         }
         return dictionary;
     }
+
+    /**
+     * Get the form value as a dictionary
+     * @return the values of the form as a key=value dictionary
+     */
+    get json() { return this.dictionary; }
 
     /**
      * Execute an ajax call
