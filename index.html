@@ -337,69 +337,48 @@
                         <section aria-hidden="true" tabindex="-1" id="section-textareas">
                             <h2 role="heading" aria-level="2">Text Areas</h2>
                             <code class="invoker">new TextArea({options});</code>
-                            <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  Text Areas accept "large" data.  Short form data entry should be done with various TextInput elements. TextAreas extend InputElement.</p>
+                            <p>A <dfn>TextArea</dfn> is used for large freeform data entry.  TextArea elements accept "large" data.  Short form data entry should be done with various TextInput elements. TextArea extends <code>InputElement</code>.</p>
                             <div class="docbox" id="inputs-textarea-docbox"></div>
-                            <div class="demobox" id="textareas-standard">
-                                <h3 role="heading" aria-level="3">Standard</h3>
-                                <p>The standard TextArea is configured with <code>counter: sky</code>.</p>
-                            </div>
-                            <div class="demobox" id="textareas-mute">
-                                <h3 role="heading" aria-level="3">Mute</h3>
-                                <p>TextAreas can be made <code>mute</code>, though the displayed border changes.</p>
-                            </div>
-                            <div class="demobox" id="textareas-passive">
-                                <h3 role="heading" aria-level="3">Passive</h3>
-                                <p><dfn>TextArea</dfn> elements can also be made passive, like other inputs.</p>
-                            </div>
-                            <div class="demobox" id="textareas-disabled">
-                                <h3 role="heading" aria-level="3">Disabled</h3>
-                                <p>Disabled <code>TextArea</code> elements behave like disabled TextInputs in nearly all respects.</p>
-                            </div>
+                            <h3 role="heading" aria-level="3">Standard</h3>
+                            <p>By default, a TextArea is configured with <code>counter: sky</code>. They can be made <code>mute</code> and when disabled behave like disabled TextInputs in nearly all respects.</p>
+                            <div class="demobox" id="textareas-standard"></div>
+                            <h3 role="heading" aria-level="3">Passive</h3>
+                            <p><dfn>TextArea</dfn> elements can also be made passive, like other inputs.</p>
+                            <div class="demobox" id="textareas-passive"></div>
+
                         </section>
                         <section aria-hidden="true" tabindex="-1" id="section-selects">
                             <h2 role="heading" aria-level="2">Selects</h2>
-                            <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected and replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
-                            <p>This component allows for great keyboard navigation and searching and is smart about the direction it opens, doing its best to not open off-screen.</p>
-                            <p>Under the hood, the <code>SelectMenu</code> is implemented with Radio Buttons so it maintains compatibility.</p>
+                            <code class="invoker">new SelectMenu({options});</code>
+                            <p>A <dfn>SelectMenu</dfn> is an enumerated list of options from which only one item may be selected. It replaces the standard html <code>&lt;select&gt;</code> element. Use a <code>SelectMenu</code> when you have more 5 or more options; otherwise, consider using a <code>RadioGroup</code>.</p>
+                            <p>The user can search the options list by default simply by typing. The menu is smart about the direction it opens, doing its best to not open off-screen.</p>
+                            <p>Under the hood, the <code>SelectMenu</code> is implemented with radio buttons so it maintains compatibility.</p>
+                            <p>Options for the <code>SelectMenu</code> list are provided with the <code>options:</code> parameter.  This is an array of option definitions, which look like <code>{ label: "Label to show", value: "v" }</code>. Include <code>checked: true</code> to automatically select that option.</p>
+                            <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element. Giving it a <code>prefix</code> will attach that before options when they're selected.</p>
                             <div class="docbox" id="inputs-selects-docbox"></div>
-                            <div class="demobox" id="selects-standard">
-                                <h3 role="heading" aria-level="3">Standard</h3>
-                                <code class="invoker">new SelectMenu({options});</code>
-                                <p>Options for the <code>SelectMenu</code> list are provided with the <code>options:</code> parameter.  This is an array of option definitions, which look like <code>{ label: "Label to show", value: "v" }</code>. Include <code>checked: true</code> to automatically select that option.</p>
-                                <p>Use the <code>unselectedtext</code> option to set the "non" option. Set to null to prevent the inclusion of an unselected element. Giving it a <code>prefix</code> will attach that before options when they're selected.</p>
-                                <p>Typing in the trigger box will start searching the options list.</p>
-                            </div>
-                            <div class="demobox" id="selects-passive">
-                                <h3 role="heading" aria-level="3">Passive</h3>
-                                <p><dfn>SelectMenu</dfn> elements can also be made passive, like other inputs.</p>
-                            </div>
-                            <div class="demobox" id="selects-mute">
-                                <h3 role="heading" aria-level="3">Mute</h3>
-                                <p><dfn>SelectMenu</dfn> elements can also be made <i>mute</i>, like other inputs.</p>
-                                <p>Note that the label is always in the "focused" position, as <dfn>SelectMenu</dfn> elements always have a value, even if that value is "unset".</p>
-                            </div>
-                            <div class="demobox" id="selects-disabled">
-                                <h3 role="heading" aria-level="3">Disabled</h3>
-                                <p><dfn>SelectMenu</dfn> elements can also be made disabled, like other inputs.</p>
-                            </div>
-                            <div class="demobox" id="selects-state">
-                                <h3 role="heading" aria-level="3">State Menu</h3>
-                                <code class="invoker">new StateMenu({options});</code>
-                                <p>A <code>StateMenu</code> is a pre-purposed <code>SelectMenu</code>.  It supports both the United States and Canada.  By default, all the states are included in the option list, but it can take a <code>filter</code> option to restrict to a single country (values of <code>us</code> or <code>ca</code>).</p>
-                                <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
-                            </div>
-                            <div class="demobox" id="selects-country">
-                                <h3 role="heading" aria-level="3">Country Menu</h3>
-                                <code class="invoker">new CountryMenu({options});</code>
-                                <p>A <code>CountryMenu</code> is a pre-purposed <code>SelectMenu</code>.</p>
-                                <p>By default, the value provided by the menu will be the capitalized 2 letter code for the country. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
-                            </div>
-                            <div class="demobox" id="selects-timezone">
-                                <h3 role="heading" aria-level="3">Timezone Menu</h3>
-                                <code class="invoker">new TimezoneMenu({options});</code>
-                                <p>A <code>TimezoneMenu</code> is a pre-purposed <code>SelectMenu</code> for the selection of timezones.</p>
-                                <p>By default, the value provided by the menu will be the capitalized UTC offset. This can be changed with <code>valuesas</code> (takes "offset" or "name") to change.</p>
-                            </div>
+                            <h3 role="heading" aria-level="3">Standard</h3>
+                            <div class="demobox example vert" id="selects-standard"></div>
+                            <h3 role="heading" aria-level="3">Pre-Designed</h3>
+                            <p>There are several pre-built, pre-purposed SelectMenu drop-in components for selecting common things, such as states or timezones.  These components are built using defined <code>BusinessObject</code> classes.</p>
+                            <h4 role="heading" aria-level="4">State Menu</h4>
+                            <code class="invoker">new StateMenu({options});</code>
+                            <p>A <code>StateMenu</code> is a pre-purposed <code>SelectMenu</code>.  It supports both the United States and Canada.  By default, all the states are included in the option list, but it can take a <code>filter</code> option to restrict to a single country (values of <code>us</code> or <code>ca</code>).</p>
+                            <p>By default, the value provided by the menu will be the capitalized 2 letter code for the state. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
+                            <div class="demobox example vert" id="selects-state"></div>
+                            <h4 role="heading" aria-level="4">Country Menu</h4>
+                            <code class="invoker">new CountryMenu({options});</code>
+                            <p>A <code>CountryMenu</code> is a pre-purposed <code>SelectMenu</code>.</p>
+                            <p>By default, the value provided by the menu will be the capitalized 2 letter code for the country. This can be changed with <code>valuesas</code> (takes "code" or "name") to change.</p>
+                            <div class="demobox example vert" id="selects-country"></div>
+                            <h4 role="heading" aria-level="4">Timezone Menu</h4>
+                            <code class="invoker">new TimezoneMenu({options});</code>
+                            <p>A <code>TimezoneMenu</code> is a pre-purposed <code>SelectMenu</code> for the selection of timezones.</p>
+                            <p>By default, the value provided by the menu will be the capitalized UTC offset. This can be changed with <code>valuesas</code> (takes "offset" or "name") to change.</p>
+                            <div class="demobox example vert" id="selects-timezone"></div>
+
+                            <h3 role="heading" aria-level="3">Passive</h3>
+                            <p><dfn>SelectMenu</dfn> elements can also be made passive, like other inputs.</p>
+                            <div class="demobox example vert" id="selects-passive"></div>
                         </section>
                         <section aria-hidden="true" tabindex="-1" id="section-radiobuttons">
                             <h2 role="heading" aria-level="2">Radio Buttons</h2>

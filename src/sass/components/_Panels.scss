@@ -8,6 +8,7 @@ div.panel {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  height: auto;
   h3.panelheader {
     display: flex;
     flex-direction: row;
@@ -55,6 +56,7 @@ div.panel {
     flex-wrap: nowrap;
     align-items: stretch;
     transition: all .2s;
+    height: auto;
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
   }

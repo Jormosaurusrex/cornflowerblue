@@ -14,7 +14,7 @@ class SelectMenu extends InputElement {
         };
     }
 
-    static get DEFAULT_CONFIG_DOCUMENTATION() {
+    static get DOCUMENTATION() {
         return {
             combobox: { type: 'option', datatype: 'boolean', description: "If true, treat the SelectMenu as combobox" },
             unselectedtext: { type: 'option', datatype: 'string', description: "If present, allow for a deselect and use this text for the 'unselect' value." },
@@ -161,7 +161,7 @@ class SelectMenu extends InputElement {
      */
     setPosition() {
         if (!SelectMenu.activeMenu) { return; }
-        
+
         let self = SelectMenu.activeMenu,
             bodyRect = document.body.getBoundingClientRect(),
             elemRect = self.triggerbox.getBoundingClientRect(),

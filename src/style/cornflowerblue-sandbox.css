@@ -2050,73 +2050,6 @@ input[type=radio]:checked + label:disabled:checked:after {
   text-shadow: none !important;
 }
 
-div.file-container2 div.wrap:after {
-  display: none;
-}
-div.file-container2 div.trigger {
-  transition: all 0.2s;
-  box-sizing: border-box;
-  outline: none;
-  position: relative;
-  font-family: inherit;
-  width: 100%;
-  margin: 0;
-  font-size: 1em;
-  background-color: var(--canvas-color-secondary);
-  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
-  padding: 0.5em 1em 0.5em 1.5em;
-  border-radius: 0.1em;
-  color: var(--input-default-placeholder-color);
-  font-weight: normal;
-  text-shadow: none;
-  vertical-align: middle;
-  cursor: pointer;
-}
-div.file-container2 div.trigger.files {
-  color: var(--input-default-text-color);
-  text-shadow: var(--input-default-text-shadow);
-}
-div.file-container2 div.trigger:before {
-  position: absolute;
-  right: 3.5em;
-  top: 0.7em;
-  margin: 0;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: var(--input-default-placeholder-color);
-}
-div.file-container2 div.trigger:focus {
-  --input-border-color-rgb: var(--colors-affordance-rgb);
-  --input-border-color: rgb(var(--input-border-color-rgb));
-  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
-}
-div.file-container2 div.trigger:focus::placeholder {
-  opacity: 0.3;
-}
-div.file-container2 div.trigger.mute {
-  background-color: var(--canvas-color-secondary);
-  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
-  padding: 0.5em 1em 0.5em 1.5em;
-}
-div.file-container2 div.trigger.mute:focus, div.file-container2 div.trigger.mute:focus-within {
-  --input-border-color-rgb: var(--colors-affordance-rgb);
-  background-color: rgba(var(--input-border-color-rgb), 0.05);
-  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
-}
-div.file-container2 div.trigger.mute:focus::placeholder, div.file-container2 div.trigger.mute:focus-within::placeholder {
-  opacity: 0;
-}
-div.file-container2.mute label {
-  opacity: 1;
-}
-div.file-container2.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  text-shadow: none;
-  pointer-events: none;
-}
-
 div.input-container,
 p.input-container,
 div.file-container,
@@ -2615,7 +2548,6 @@ div.file-container.mute div.topline label,
 div.textarea-container.mute div.topline label,
 p.textarea-container.mute div.topline label {
   opacity: 1;
-  margin-top: 1rem;
   padding-left: 1.5em;
   font-size: 1em;
   transition: all 0.2s;
@@ -3096,6 +3028,12 @@ div.textarea-container div.wrap:after {
 div.textarea-container.mute div.charcounter {
   top: 0.3em;
 }
+div.textarea-container.mute div.wrap textarea::placeholder {
+  opacity: 0;
+}
+div.textarea-container.mute div.wrap.filled textarea::placeholder, div.textarea-container.mute div.wrap:focus-within textarea::placeholder {
+  opacity: 0.5;
+}
 div.textarea-container div.passivebox {
   min-height: 4em;
 }
@@ -3183,15 +3121,6 @@ textarea.mute {
   background-color: var(--canvas-color-secondary);
   box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
-}
-input[type=text].mute::placeholder,
-input[type=number].mute::placeholder,
-input[type=password].mute::placeholder,
-input[type=search].mute::placeholder,
-textarea.mute::placeholder {
-  color: var(--colors-highlight);
-  text-shadow: var(--text-shadow);
-  text-transform: uppercase;
 }
 input[type=text].mute:focus, input[type=text].mute:focus-within,
 input[type=number].mute:focus,
@@ -3982,6 +3911,7 @@ div.panel {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  height: auto;
 }
 div.panel h3.panelheader {
   display: flex;
@@ -4026,6 +3956,7 @@ div.panel div.content {
   flex-wrap: nowrap;
   align-items: stretch;
   transition: all 0.2s;
+  height: auto;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }
@@ -4654,7 +4585,6 @@ div.datagrid-container {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
-  max-height: 80vh;
   overflow: visible;
   padding: 0;
   background-color: var(--canvas-color-primary);
@@ -4672,6 +4602,10 @@ div.datagrid-container div.grid-filterinfo {
   align-items: center;
   padding: 0 1rem;
   justify-content: flex-end;
+  opacity: 1;
+  transition: height, max-height, min-height, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
 }
 div.datagrid-container div.grid-info {
   z-index: 900;
@@ -4768,10 +4702,18 @@ div.datagrid-container div.grid-wrapper {
   overflow: auto;
   position: relative;
   width: 100%;
-  height: 100%;
+  max-height: 30rem;
+  height: auto;
   flex-grow: 2;
+  transition: height, max-height, min-height;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
+}
+div.datagrid-container div.grid-wrapper table.grid {
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
 }
 div.datagrid-container div.grid-wrapper.shaded {
   overflow: hidden;
@@ -5147,10 +5089,22 @@ div.datagrid-container div.messages div.messagebox2 div.box.warnings div.lbox {
 }
 div.datagrid-container[aria-expanded=false] div.grid-info,
 div.datagrid-container[aria-expanded=false] div.grid-actions,
-div.datagrid-container[aria-expanded=false] div.grid-filterinfo,
-div.datagrid-container[aria-expanded=false] div.grid-wrapper,
-div.datagrid-container[aria-expanded=false] div.messagebox {
-  display: none;
+div.datagrid-container[aria-expanded=false] div.grid-filterinfo {
+  max-height: 0;
+  min-height: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+div.datagrid-container[aria-expanded=false] div.grid-wrapper {
+  max-height: 0;
+  min-height: 0;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+div.datagrid-container[aria-expanded=false] div.grid-wrapper table.grid {
+  opacity: 0;
 }
 
 @keyframes cfb-row-update {

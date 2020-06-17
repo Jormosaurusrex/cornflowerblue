@@ -2,47 +2,42 @@ class InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            id: null, // Component id
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
-            name: null, // Name attribute
-            form: null, // A form element this is in
-            counter: null, // A value for a character counter. Null means 'no counter'
-            // Possible values: null, 'remaining', 'limit', and 'sky'
-            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
-            type: 'text', // Type of input, defaults to "text"
-            label: null, // Input label. If null, does not show up.
-            placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
-                               // To insure a blank placeholder, set the value to ""
+            id: null,
+            attributes: null,
+            dataattributes: null,
+            name: null,
+            form: null,
+            counter: null,
+            forceconstraints: null,
+            type: 'text',
+            label: null,
+            placeholder: null,
             title: null,
             pattern: null,
-            icon: null, // Use to define a specific icon, used in some specific controls.
-
-            minimal: false, // if true, build with the intent that it is part of a larger component.
-                            // this removes things like the search controls and validation boxes.
-
-            passive: false, // Start life in "passive" mode.
-            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
-
-            help: null, // Help text.
-            helpwaittime: 5000, // How long to wait before automatically showing help tooltip
-            required: false, // Is this a required field or not
-            requiredtext: TextFactory.get('required_lc'), // text to display on required items
-            requirederror: TextFactory.get('input-error-required'), // error to display if required item isn't filled.
-            hidden: false, // Whether or not to be hidden
-            autocomplete: 'off', // Enable browser autocomplete. Default is off.
-            arialabel: null, // The aria-label value. If null, follows: label > title > null
-            maxlength: null, // Value for maxlength.
-            value: '', // Value to use (pre-population).  Used during construction and then discarded.
-            disabled: false, // If true, disable the field.
-            classes: [], // Extra css classes to apply
-            onchange: null, // The change handler. Passed (self).
-            onreturn: null, // action to execute on hitting the return key. Passed (event, self).
-            ontab: null, // action to execute on hitting the tab key. Passed (event, self).
-            onkeyup: null, // action to execute on key up. Passed (event, self).
-            onkeydown: null, // action to execute on key down. Passed (event, self).
-            focusin: null, // action to execute on focus in. Passed (event, self).
-            focusout: null, // action to execute on focus out. Passed (event, self).
-            validator: null, // A function to run to test validity. Passed the self.
+            icon: null,
+            minimal: false,
+            passive: false,
+            unsettext: TextFactory.get('not_set'),
+            help: null,
+            helpwaittime: 5000,
+            required: false,
+            requiredtext: TextFactory.get('required_lc'),
+            requirederror: TextFactory.get('input-error-required'),
+            hidden: false,
+            autocomplete: 'off',
+            arialabel: null,
+            maxlength: null,
+            value: '',
+            disabled: false,
+            classes: [],
+            onchange: null,
+            onreturn: null,
+            ontab: null,
+            onkeyup: null,
+            onkeydown: null,
+            focusin: null,
+            focusout: null,
+            validator: null,
             renderer: function(data) { return `${data}`; }
 
         };
@@ -62,7 +57,7 @@ class InputElement {
             icon: { type: 'option', datatype: 'string', description: "Use to define a specific icon, used in some specific controls." },
             minimal: { type: 'option', datatype: 'boolean', description: "If true, build with the intent that it is part of a larger component. This removes things like the secondary controls and validation boxes." },
             counter: { type: 'option', datatype: 'enumeration', description: "A value for a character counter. Null means 'no counter'. Possible values: null, 'remaining', 'limit', and 'sky'." },
-            forceconstraints:"If true, force constraints defined in sub classes (many inputs don't have any).",
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, force constraints defined in sub classes (many inputs don't have any)." },
             placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
             passive: { type: 'option', datatype: 'boolean', description: "Start life in passive mode." },
             unsettext: { type: 'option', datatype: 'string', description: "Text to display in passive mode if the value is empty." },

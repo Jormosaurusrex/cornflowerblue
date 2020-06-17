@@ -177,6 +177,39 @@ div.docbox {
     h3.panelheader {
       background-color: var(--canvas-color-highlight);
     }
+    td {
+      span {
+        &.enumeration {
+
+        }
+        &.string {
+          color: var(--colors-highlight);
+        }
+        &.number {
+
+        }
+        &.object {
+
+        }
+        &.function {
+          color: var(--orange);
+        }
+        &.value {
+
+        }
+        &.boolean {
+          font-family: var(--fontstack-monospace);
+          color: var(--purple);
+          &.true {
+            color: var(--green);
+          }
+        }
+        &.null {
+          font-family: var(--fontstack-monospace);
+          opacity: .7;
+        }
+      }
+    }
   }
 }
 

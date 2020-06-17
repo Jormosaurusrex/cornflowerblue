@@ -40,8 +40,6 @@ class GridField {
         };
     }
 
-
-
     /**
      * Supported comparators
      * @return a comparator dictionary.

@@ -333,6 +333,8 @@ class CornflowerBlueDemo {
         document.getElementById('t-complex').insertBefore(this.complexnav.container, document.getElementById('complex-sections'));
 
 
+        document.getElementById('inputs-textarea-docbox').appendChild(this.getOptionGrid(TextArea).container);
+        /*
         document.getElementById('inputs-textinput-docbox').appendChild(this.getOptionGrid(TextInput).container);
         document.getElementById('inputs-date-docbox').appendChild(this.getOptionGrid(DateInput).container);
         document.getElementById('inputs-file-docbox').appendChild(this.getOptionGrid(FileInput).container);
@@ -349,6 +351,7 @@ class CornflowerBlueDemo {
         document.getElementById('dialogwindow-docbox').appendChild(this.getOptionGrid(DialogWindow).container);
         document.getElementById('simpleprogress-docbox').appendChild(this.getOptionGrid(SimpleProgressMeter).container);
         document.getElementById('radialprogress-docbox').appendChild(this.getOptionGrid(RadialProgressMeter).container);
+        */
 
         this.grindButtons();
         this.grindCheckboxes();
@@ -446,7 +449,7 @@ class CornflowerBlueDemo {
      */
     getOptionsGridData(obj) {
         let instance = new obj(),
-            dictionary = [],
+            dictionary = {},
             options = obj.DEFAULT_CONFIG,
             docs = obj.DOCUMENTATION,
             parentclass = Object.getPrototypeOf(Object.getPrototypeOf(instance)).constructor;
@@ -455,33 +458,71 @@ class CornflowerBlueDemo {
             dictionary = this.getOptionsGridData(parentclass);
         }
         for (let k of Object.keys(docs)) {
-            let defvalue = options[k];
-            if (Array.isArray(options[k])) {
-                defvalue = "[";
-                if ((options[k] !== null) && (options[k].length > 0)) {
+            let defvalue,
+                type = typeof options[k],
+                working = options[k];
+
+            if (options[k] === null) {
+                defvalue = '<span class="null">null</span>';
+            } else if (typeof options[k] === 'boolean') {
+                defvalue = `<span class="boolean ${options[k]}">${options[k]}</span>`;
+                //console.log(`${k} :${options[k]}`);
+            } else if (Array.isArray(working)) {
+                defvalue = "[&nbsp;";
+                if ((working !== null) && (working.length > 0)) {
                     let elements = [];
-                    for (let c of options[k]) {
+                    for (let c of working) {
                         if (typeof c === 'string') {
-                            elements.push(`"<span class="value">${c}</span>"`);
+                            elements.push(`"<span class="string">${c}</span>"`);
                         } else {
                             elements.push(`<span class="value">${c}</span>`);
                         }
                     }
                     defvalue += elements.join(", ");
                 }
-                defvalue += "]";
-            } else if (typeof options[k] === 'function') {
-                defvalue = 'function(...) { ... }';
+                defvalue += "&nbsp;]";
+            } else {
+                switch(type) {
+                    case 'function':
+                        defvalue =  `<span class="function">${working}</span>`;
+                        break;
+                    case 'number':
+                        defvalue = `<span class="number">${working}</span>`;
+                        break;
+                    case 'string':
+                        if (docs[k].datatype === 'enumeration') {
+                            defvalue = `<span class="enumeration">${working}</span>`;
+                        } else {
+                            defvalue = `"<span class="string">${working}</span>"`;
+                        }
+                        break;
+                    case 'object':
+                        defvalue = `<span class="object">${working}</span>`;
+                        break;
+                    default:
+                        defvalue = working;
+                        break;
+                }
             }
-
-            dictionary[k] = {
-                key: k,
-                default: defvalue,
-                datatype: docs[k].datatype,
-                inherited: instance.constructor.name,
-                description: docs[k].description
-            };
+            if (!dictionary[k]) {
+                dictionary[k] = {
+                    key: k,
+                    default: defvalue,
+                    datatype: docs[k].datatype,
+                    inherited: instance.constructor.name,
+                    description: docs[k].description
+                };
+            } else if (options[k]) {
+                dictionary[k] = {
+                    key: k,
+                    default: defvalue,
+                    datatype: docs[k].datatype,
+                    inherited: instance.constructor.name,
+                    description: docs[k].description
+                };
+            }
         }
+        console.log(dictionary);
         return dictionary;
     }
 
@@ -517,9 +558,7 @@ class CornflowerBlueDemo {
             classes: ['nowrap'],
             description: "The programmatic name for the option.",
             renderer: function(data) {
-                let c = document.createElement('code');
-                c.innerHTML = data;
-                return c;
+                return data;
             }
         }));
         fields.push(new GridField({
@@ -527,6 +566,7 @@ class CornflowerBlueDemo {
             label: "Datatype",
             type: "enumeration",
             hidden: false,
+            nodupe: true,
             classes: ['nowrap'],
             values: [
                 { key: "boolean", value: "Boolean" },
@@ -547,22 +587,21 @@ class CornflowerBlueDemo {
             name: "default",
             label: "Default",
             type: "string",
-            nodupe: true,
             hidden: false,
-            classes: ['nowrap', 'italic'],
+            nodupe: true,
             description: "The default value, if any.",
             renderer: function(data) {
-                let c = document.createElement('code');
-                c.innerHTML = data;
-                return c;
+                let s = document.createElement('span');
+                s.innerHTML = data;
+                return s;
             }
-
         }));
         fields.push(new GridField({
             name: "inherited",
             label: "Inherited From",
             type: "string",
             hidden: false,
+            nodupe: true,
             classes: ['nowrap'],
             description: "The class this variable is inherited from."
 
@@ -579,7 +618,7 @@ class CornflowerBlueDemo {
         return new DataGrid({
             title: title,
             collapsible: true,
-            minimized: false,
+            minimized: true,
             data: data,
             selectable: false,
             searchable: false,
@@ -1661,6 +1700,82 @@ class CornflowerBlueDemo {
 
     grindSelects() {
 
+        let yearOptions = [
+            { label: "2019", value: "2019" },
+            { label: "2018", value: "2018" },
+            { label: "2017", value: "2017" },
+            { label: "2016", value: "2016" },
+            { label: "2015", value: "2015" },
+            { label: "2014", value: "2014" },
+            { label: "2013", value: "2013" },
+            { label: "2012", value: "2012" }
+        ];
+        let albumOptions = [
+            { label: "Sgt. Pepper's Lonely Hearts Club Band", value: "Sgt. Pepper's Lonely Hearts Club Band" },
+            { label: "The Nylon Curtain", value: "The Nylon Curtain" },
+            { label: "Reign in Blood", value: "Reign in Blood" },
+            { label: "Back in Black", value: "Back in Black" },
+            { label: "Nevermind", value: "Nevermind" },
+            { label: "Master of Reality", value: "Master of Reality" },
+            { label: "Doolittle", value: "Doolittle" },
+            { label: "Blizzard of Ozz", value: "Blizzard of Ozz" },
+            { label: "Purple Rain", value: "Purple Rain" },
+            { label: "1989", value: "1989" },
+            { label: "Crystal Visions", value: "Crystal Visions" },
+            { label: "Led Zeppelin IV", value: "Led Zeppelin IV", checked: true },
+            { label: "Congregation", value: "Congregation" },
+            { label: "Pet Sounds", value: "Pet Sounds" },
+            { label: "...And Justice for All", value: "...And Justice for All" },
+            { label: "Welcome to Sky Valley", value: "Welcome to Sky Valley" },
+            { label: "Live Through This", value: "Live Through This" },
+            { label: "Nothing's Shocking", value: "Nothing's Shocking" },
+            { label: "Thriller", value: "Thriller" },
+            { label: "Appetite for Destruction", value: "Appetite for Destruction" }
+        ];
+
+        let standard = document.getElementById('selects-standard');
+        standard.appendChild(new SelectMenu({
+            label: "Year",
+            name: "year-select",
+            required: true,
+            prefix: 'Year:',
+            unselectedtext: '(No selection)',
+            options: yearOptions
+        }).container);
+        standard.appendChild(new SelectMenu({
+            label: "Year",
+            name: "year-select",
+            required: true,
+            prefix: 'Year:',
+            unselectedtext: '(No selection)',
+            options: yearOptions
+        }).container);
+        standard.appendChild(new SelectMenu({
+            label: "Favorite Album",
+            name: "favorite_album",
+            mute: true,
+            unselectedtext: '(No selection)',
+            options: albumOptions
+        }).container);
+        standard.appendChild(new SelectMenu({
+            label: "Favorite Album",
+            name: "favorite_album",
+            mute: true,
+            disabled: true,
+            unselectedtext: '(No selection)',
+            options: albumOptions
+        }).container);
+
+        document.getElementById('selects-state').appendChild(new StateMenu({
+            value: 'WV'
+        }).container);
+        document.getElementById('selects-country').appendChild(new CountryMenu({
+            value: 'FM'
+        }).container);
+        document.getElementById('selects-timezone').appendChild(new TimezoneMenu({
+            value: 'America/Los_Angeles'
+        }).container);
+
         let passiveTest = new SelectMenu({
             label: "Year",
             name: "year-passive",
@@ -1677,8 +1792,8 @@ class CornflowerBlueDemo {
                 { label: "2012", value: "2012" }
             ]
         });
-
-        let toggleButton = new SimpleButton({
+        document.getElementById('selects-passive').appendChild(passiveTest.container);
+        document.getElementById('selects-passive').appendChild(new SimpleButton({
             text: ".activate()",
             action: function(e, self) {
                 passiveTest.toggleActivation();
@@ -1688,133 +1803,46 @@ class CornflowerBlueDemo {
                     self.text = ".pacify()";
                 }
             }
-        });
+        }).button);
+    }
 
-        let passive = document.createElement('div');
-        passive.classList.add('example');
-        passive.classList.add('vert');
-        passive.appendChild(passiveTest.container);
-        passive.appendChild(toggleButton.button);
-        document.getElementById('selects-passive').appendChild(passive);
-
-        let state = document.createElement('div');
-        state.classList.add('example');
-        state.classList.add('vert');
-        state.appendChild(new StateMenu({
-            value: 'WV'
+    grindTextAreas() {
+        document.getElementById('textareas-standard').appendChild(new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
+            placeholder: "Write your post here!"
         }).container);
-        document.getElementById('selects-state').appendChild(state);
-
-        let country = document.createElement('div');
-        country.classList.add('example');
-        country.classList.add('vert');
-        country.appendChild( new CountryMenu({
-            value: 'FM'
-        }).container);
-        document.getElementById('selects-country').appendChild(country);
-
-        let timezone = document.createElement('div');
-        timezone.classList.add('example');
-        timezone.classList.add('vert');
-        timezone.appendChild( new TimezoneMenu({
-            value: 'America/Los_Angeles'
-        }).container);
-        document.getElementById('selects-timezone').appendChild(timezone);
-
-        let standard = document.createElement('div');
-        standard.classList.add('example');
-        standard.classList.add('vert');
-        standard.appendChild(new SelectMenu({
-            label: "Year",
-            name: "year-select",
-            required: true,
-            prefix: 'Year:',
-            unselectedtext: '(No selection)',
-            options: [
-                { label: "2019", value: "2019" },
-                { label: "2018", value: "2018" },
-                { label: "2017", value: "2017" },
-                { label: "2016", value: "2016" },
-                { label: "2015", value: "2015" },
-                { label: "2014", value: "2014" },
-                { label: "2013", value: "2013" },
-                { label: "2012", value: "2012" }
-            ]
-        }).container);
-        standard.appendChild(new SelectMenu({
-            label: "Favorite Album",
-            name: "favorite_album",
-            unselectedtext: '(No selection)',
-            options: [
-                { label: "Sgt. Pepper's Lonely Hearts Club Band", value: "Sgt. Pepper's Lonely Hearts Club Band" },
-                { label: "The Nylon Curtain", value: "The Nylon Curtain" },
-                { label: "Reign in Blood", value: "Reign in Blood" },
-                { label: "Back in Black", value: "Back in Black" },
-                { label: "Nevermind", value: "Nevermind" },
-                { label: "Master of Reality", value: "Master of Reality" },
-                { label: "Doolittle", value: "Doolittle" },
-                { label: "Blizzard of Ozz", value: "Blizzard of Ozz" },
-                { label: "Purple Rain", value: "Purple Rain" },
-                { label: "1989", value: "1989" },
-                { label: "Crystal Visions", value: "Crystal Visions" },
-                { label: "Led Zeppelin IV", value: "Led Zeppelin IV", checked: true },
-                { label: "Congregation", value: "Congregation" },
-                { label: "Pet Sounds", value: "Pet Sounds" },
-                { label: "...And Justice for All", value: "...And Justice for All" },
-                { label: "Welcome to Sky Valley", value: "Welcome to Sky Valley" },
-                { label: "Live Through This", value: "Live Through This" },
-                { label: "Nothing's Shocking", value: "Nothing's Shocking" },
-                { label: "Thriller", value: "Thriller" },
-                { label: "Appetite for Destruction", value: "Appetite for Destruction" }
-            ]
-        }).container);
-        document.getElementById('selects-standard').appendChild(standard);
-
-        let mute = document.createElement('div');
-        mute.classList.add('example');
-        mute.classList.add('vert');
-        mute.appendChild(new SelectMenu({
-            label: "Year",
-            name: "year-select-mute",
+        document.getElementById('textareas-standard').appendChild(new TextArea({
+            label: "Post Content",
             mute: true,
-            options: [
-                { label: "2019", value: "2019" },
-                { label: "2018", value: "2018" },
-                { label: "2017", value: "2017" },
-                { label: "2016", value: "2016" },
-                { label: "2015", value: "2015" },
-                { label: "2014", value: "2014" },
-                { label: "2013", value: "2013" },
-                { label: "2012", value: "2012" }
-            ]
+            maxlength: 2000,
+            placeholder: "Write your post here!"
         }).container);
-        mute.appendChild(new StateMenu({
-            value: 'WV',
-            label: 'State',
-            mute: true
-        }).container);
-        document.getElementById('selects-mute').appendChild(mute);
-
-        let disabled = document.createElement('div');
-        disabled.classList.add('example');
-        disabled.classList.add('vert');
-        disabled.appendChild(new SelectMenu({
-            label: "Year",
-            name: "year-select-disabled",
+        document.getElementById('textareas-standard').appendChild(new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
             disabled: true,
-            options: [
-                { label: "2019", value: "2019" },
-                { label: "2018", value: "2018" },
-                { label: "2017", value: "2017" },
-                { label: "2016", value: "2016" },
-                { label: "2015", value: "2015" },
-                { label: "2014", value: "2014" },
-                { label: "2013", value: "2013" },
-                { label: "2012", value: "2012" }
-            ]
+            placeholder: "Write your post here!"
         }).container);
-        document.getElementById('selects-disabled').appendChild(disabled);
 
+        let passiveTest = new TextArea({
+            label: "Post Content",
+            maxlength: 2000,
+            passive: true,
+            placeholder: "Write your post here!"
+        });
+        document.getElementById('textareas-passive').appendChild(passiveTest.container);
+        document.getElementById('textareas-passive').appendChild(new SimpleButton({
+            text: ".activate()",
+            action: function(e, self) {
+                passiveTest.toggleActivation();
+                if (passiveTest.passive) {
+                    self.text = ".activate()";
+                } else {
+                    self.text = ".pacify()";
+                }
+            }
+        }).button);
     }
 
     grindStyledCheckboxes() {
@@ -1972,75 +2000,6 @@ class CornflowerBlueDemo {
 
     }
 
-    grindTextAreas() {
-
-        let standard = document.createElement('div');
-        standard.classList.add('example');
-        standard.classList.add('vert');
-        standard.appendChild(new TextArea({
-            label: "Post Content",
-            maxlength: 2000,
-            placeholder: "Write your post here!"
-        }).container);
-        document.getElementById('textareas-standard').appendChild(standard);
-
-        let mute = document.createElement('div');
-        mute.classList.add('example');
-        mute.classList.add('vert');
-        mute.appendChild(new TextArea({
-            label: "Post Content",
-            mute: true,
-            maxlength: 2000,
-            placeholder: "Write your post here!"
-        }).container);
-        document.getElementById('textareas-mute').appendChild(mute);
-
-        let disabled = document.createElement('div');
-        disabled.classList.add('example');
-        disabled.classList.add('vert');
-        disabled.appendChild(new TextArea({
-            label: "Post Content",
-            maxlength: 2000,
-            disabled: true,
-            placeholder: "Write your post here!"
-        }).container);
-        disabled.appendChild(new TextArea({
-            label: "Post Content",
-            maxlength: 2000,
-            disabled: true,
-            mute: true,
-            placeholder: "Write your post here!"
-        }).container);
-        document.getElementById('textareas-disabled').appendChild(disabled);
-
-        let passiveTest = new TextArea({
-            label: "Post Content",
-            maxlength: 2000,
-            passive: true,
-            placeholder: "Write your post here!"
-        });
-
-        let toggleButton = new SimpleButton({
-            text: ".activate()",
-            action: function(e, self) {
-                passiveTest.toggleActivation();
-                if (passiveTest.passive) {
-                    self.text = ".activate()";
-                } else {
-                    self.text = ".pacify()";
-                }
-            }
-        });
-
-        let passive = document.createElement('div');
-        passive.classList.add('example');
-        passive.classList.add('vert');
-        passive.appendChild(passiveTest.container);
-        passive.appendChild(toggleButton.button);
-        document.getElementById('textareas-passive').appendChild(passive);
-
-
-    }
 
     /* UTILITY METHODS__________________________________________________________________ */
 

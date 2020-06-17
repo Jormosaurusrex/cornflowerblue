@@ -24,8 +24,12 @@ class TextArea extends InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('textarea-container');
-        this.container.appendChild(this.labelobj);
-        this.container.appendChild(this.charactercounter);
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');

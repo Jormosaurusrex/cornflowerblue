@@ -64,6 +64,8 @@ div.selectmenu-menu {
   &.vert {
     ul.selectmenu {
       filter: var(--shadows-dropshadow-filter-vertical);
+      border-top: .1em solid var(--input-border-color);
+      border-bottom: none;
     }
   }
   &[aria-hidden='true'] {

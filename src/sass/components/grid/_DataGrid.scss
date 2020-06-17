@@ -4,7 +4,6 @@ div.datagrid-container {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
-  max-height: 80vh;
   overflow: visible;
   padding: 0;
   background-color: var(--canvas-color-primary);
@@ -21,6 +20,10 @@ div.datagrid-container {
     align-items: center;
     padding: 0 1rem;
     justify-content: flex-end;
+    opacity: 1;
+    transition: height, max-height, min-height, opacity;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
   }
   div.grid-info {
     z-index: 900;
@@ -120,18 +123,23 @@ div.datagrid-container {
     overflow: auto;
     position: relative;
     width: 100%;
-    height: 100%;
+    max-height: 30rem;
+    height: auto;
     flex-grow: 2;
+    transition: height, max-height, min-height;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
+    table.grid {
+      opacity: 1;
+      transition: opacity .4s ease-in-out;
+    }
     &.shaded {
       overflow: hidden;
       table.grid {
         filter: blur(3px);
       }
-    }
-    &.hidden {
-      //display: none;
     }
   }
   table.grid {
@@ -535,10 +543,22 @@ div.datagrid-container {
   &[aria-expanded=false] {
     div.grid-info,
     div.grid-actions,
-    div.grid-filterinfo,
-    div.grid-wrapper,
-    div.messagebox {
-      display: none;
+    div.grid-filterinfo {
+      max-height: 0;
+      min-height: 0;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+    div.grid-wrapper {
+      max-height: 0;
+      min-height: 0;
+      height: 0;
+      visibility: hidden;
+      overflow: hidden;
+      table.grid {
+        opacity: 0;
+      }
     }
   }
 }

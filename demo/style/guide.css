@@ -181,6 +181,23 @@ div.docbox {
 div.docbox div.datagrid-container h3.panelheader {
   background-color: var(--canvas-color-highlight);
 }
+div.docbox div.datagrid-container td span.string {
+  color: var(--colors-highlight);
+}
+div.docbox div.datagrid-container td span.function {
+  color: var(--orange);
+}
+div.docbox div.datagrid-container td span.boolean {
+  font-family: var(--fontstack-monospace);
+  color: var(--purple);
+}
+div.docbox div.datagrid-container td span.boolean.true {
+  color: var(--green);
+}
+div.docbox div.datagrid-container td span.null {
+  font-family: var(--fontstack-monospace);
+  opacity: 0.7;
+}
 
 code.invoker {
   display: block;

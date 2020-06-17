@@ -779,6 +779,8 @@ div.selectmenu-menu ul.selectmenu li:focus, div.selectmenu-menu ul.selectmenu li
 }
 div.selectmenu-menu.vert ul.selectmenu {
   filter: var(--shadows-dropshadow-filter-vertical);
+  border-top: 0.1em solid var(--input-border-color);
+  border-bottom: none;
 }
 div.selectmenu-menu[aria-hidden=true] {
   height: 0;
