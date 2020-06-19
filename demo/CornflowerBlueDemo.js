@@ -334,7 +334,7 @@ class CornflowerBlueDemo {
 
 
         document.getElementById('inputs-textarea-docbox').appendChild(this.getOptionGrid(TextArea).container);
-        /*
+
         document.getElementById('inputs-textinput-docbox').appendChild(this.getOptionGrid(TextInput).container);
         document.getElementById('inputs-date-docbox').appendChild(this.getOptionGrid(DateInput).container);
         document.getElementById('inputs-file-docbox').appendChild(this.getOptionGrid(FileInput).container);
@@ -351,7 +351,7 @@ class CornflowerBlueDemo {
         document.getElementById('dialogwindow-docbox').appendChild(this.getOptionGrid(DialogWindow).container);
         document.getElementById('simpleprogress-docbox').appendChild(this.getOptionGrid(SimpleProgressMeter).container);
         document.getElementById('radialprogress-docbox').appendChild(this.getOptionGrid(RadialProgressMeter).container);
-        */
+
 
         this.grindButtons();
         this.grindCheckboxes();
@@ -522,7 +522,6 @@ class CornflowerBlueDemo {
                 };
             }
         }
-        console.log(dictionary);
         return dictionary;
     }
 
@@ -1528,9 +1527,39 @@ class CornflowerBlueDemo {
 
     grindProgressMeters() {
 
-        let simple = document.createElement('div');
-        simple.classList.add('example');
-        simple.classList.add('vert');
+        let vert = document.getElementById('progressmeter-simple-vert');
+        let simple = document.getElementById('progressmeter-simple');
+        let radial = document.getElementById('progressmeter-radial');
+        let radial2 = document.getElementById('progressmeter-radial2');
+
+        vert.appendChild(new SimpleProgressMeter({
+            label: "Overall Progress",
+            direction: 'vertical',
+            value: 25
+        }).container);
+        vert.appendChild(new SimpleProgressMeter({
+            label: "Decalposition: interior",
+            decalposition: 'interior',
+            currentrank: "Bronze",
+            nextrank: "Silver",
+            direction: 'vertical',
+            minvalue: 200,
+            maxvalue: 600,
+            value: 335
+        }).container);
+        vert.appendChild(new SimpleProgressMeter({
+            label: "Decalposition: exterior",
+            decalposition: 'exterior',
+            currentrank: "Bronze",
+            nextrank: "Silver",
+            direction: 'vertical',
+            minvalue: 200,
+            maxvalue: 600,
+            value: 335
+        }).container);
+
+
+
         simple.appendChild(new SimpleProgressMeter({
             label: "Overall Progress",
             value: 25
@@ -1572,11 +1601,8 @@ class CornflowerBlueDemo {
             style: 'interiorroundcap',
             value: 23
         }).container);
-        document.getElementById('progressmeter-simple').appendChild(simple);
 
 
-        let radial = document.createElement('div');
-        radial.classList.add('example');
         radial.appendChild(new RadialProgressMeter({
             label: "Overall Progress",
             value: 37
@@ -1593,10 +1619,7 @@ class CornflowerBlueDemo {
             value: 60,
             segments: 10
         }).container);
-        document.getElementById('progressmeter-radial').appendChild(radial);
 
-        let radial2 = document.createElement('div');
-        radial2.classList.add('example');
         radial2.appendChild(new RadialProgressMeter({
             label: "style: 'ticks'",
             value: 37,
@@ -1622,7 +1645,6 @@ class CornflowerBlueDemo {
             size: 'small',
             segments: 10
         }).container);
-        document.getElementById('progressmeter-radial').appendChild(radial2);
     }
 
     grindRadioGroups() {

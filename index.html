@@ -488,29 +488,30 @@
                         </section>
                         <section aria-hidden="true" tabindex="-1" id="section-progressmeters">
                             <h2 role="heading" aria-level="2">Progress Meters</h2>
-                            <div class="demobox" id="progressmeter-simple">
-                                <h3 role="heading" aria-level="3">Simple</h3>
-                                <code class="invoker">new SimpleProgressMeter({options});</code>
-                                <p>The <code>SimpleProgressMeter</code> component is designed to display one point of data along a single axis. By default it, it assumes a scale between 0 and 100.</p>
-                                <p>If given <code>previousrank</code> or <code>nextrank</code> parameters, it will grow taller and display them inside of the bar, a long with the scale values (which can be disabled with <code>showcaps: false</code>).</p>
-                                <p>Adding the <code>pillcap</code> class makes the endpoint circular, but this looks weird if the bar is taller.</p>
-<p>>The meter can have a variable scale, but the width of its progressbar is absolute within the scale. Consider a progress system made of multiple progress steps, perhaps of different length (like a loyalty program).  Progress in the first rank is 0 - 25 points, in the second rank is 25 - 75, in the third is 76 - 150, and the fourth is 151 - 300.</p>
-                                <ul>
-                                    <li><code>minnumber</code> would be the start of the "rank" (ex 76 for rank 3)</li>
-                                    <li><code>maxnumber</code> would be the end of the "rank" (ex 150)</li>
-                                    <li><code>value</code> is absolute, considered along the whole sequence (0 - 300), ex 123.</li>
-                                </ul>
-                                <div class="docbox" id="simpleprogress-docbox"></div>
-                            </div>
-                            <div class="demobox" id="progressmeter-radial">
-                                <h3 role="heading" aria-level="3">Radial</h3>
-                                <code class="invoker">new RadialProgressMeter({options});</code>
-                                <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
-                                <p>Since they are implemented in SVG they cannot be easily sized via css. They take a <code>size</code> parameter which can be a string ('small', 'medium', 'large', 'huge'), values in 'px' or 'em', or a number (which gets interpreted as pixels).  The default is <code>medium</code>.</p>
-                                <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
-                                <div class="docbox" id="radialprogress-docbox"></div>
+                            <h3 role="heading" aria-level="3">Simple</h3>
+                            <code class="invoker">new SimpleProgressMeter({options});</code>
+                            <p>The <code>SimpleProgressMeter</code> component is designed to display one point of data along a single axis. By default it, it assumes a scale between 0 and 100.</p>
+                            <p>If given <code>previousrank</code> or <code>nextrank</code> parameters, it will grow taller and display them inside of the bar, a long with the scale values (which can be disabled with <code>showcaps: false</code>).</p>
+                            <p>Adding the <code>pillcap</code> class makes the endpoint circular, but this looks weird if the bar is taller.</p>
+                            <p>>The meter can have a variable scale, but the width of its progressbar is absolute within the scale. Consider a progress system made of multiple progress steps, perhaps of different length (like a loyalty program).  Progress in the first rank is 0 - 25 points, in the second rank is 25 - 75, in the third is 76 - 150, and the fourth is 151 - 300.</p>
+                            <ul>
+                                <li><code>minnumber</code> would be the start of the "rank" (ex 76 for rank 3)</li>
+                                <li><code>maxnumber</code> would be the end of the "rank" (ex 150)</li>
+                                <li><code>value</code> is absolute, considered along the whole sequence (0 - 300), ex 123.</li>
+                            </ul>
+                            <div class="docbox" id="simpleprogress-docbox"></div>
 
-                            </div>
+                            <div class="demobox example" id="progressmeter-simple-vert"></div>
+                            <div class="demobox example vert" id="progressmeter-simple"></div>
+
+                            <h3 role="heading" aria-level="3">Radial</h3>
+                            <code class="invoker">new RadialProgressMeter({options});</code>
+                            <p>A <dfn>RadialProgressMeter</dfn> is just that: circular.  This is implemented using in-line SVG objects and goofing around with the border dash attributes.</p>
+                            <p>Since they are implemented in SVG they cannot be easily sized via css. They take a <code>size</code> parameter which can be a string ('small', 'medium', 'large', 'huge'), values in 'px' or 'em', or a number (which gets interpreted as pixels).  The default is <code>medium</code>.</p>
+                            <p>There are two basic <code>style</code> values: <code>solid</code> (the default) and <code>ticks</code>, which causes the meter do display as fine lines.</p>
+                            <div class="docbox" id="radialprogress-docbox"></div>
+                            <div class="demobox example" id="progressmeter-radial"></div>
+                            <div class="demobox example" id="progressmeter-radial2"></div>
                         </section>
                         <section aria-hidden="true" tabindex="-1" id="section-dialogs">
                             <h2 role="heading" aria-level="2">Dialogs</h2>

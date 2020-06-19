@@ -13,7 +13,9 @@
 
   --colors-text-default: var(--grey-dark);
   --colors-text-hot: var(--ultralight);
-  --text-shadow: var(--text-shadow-light);
+
+  --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+  --text-shadow-corona: 0 -.03em .03em rgba(255, 255, 255, 0.1), 0 .03em .03em rgba(255, 255, 255, 0.1);
 
   --wide-measure: 40em;
   --thin-measure: 25em;

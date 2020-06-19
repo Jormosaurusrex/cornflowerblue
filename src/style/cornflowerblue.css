@@ -10,7 +10,8 @@
   --default-font-size: 13pt;
   --colors-text-default: var(--grey-dark);
   --colors-text-hot: var(--ultralight);
-  --text-shadow: var(--text-shadow-light);
+  --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
+  --text-shadow-corona: 0 -.03em .03em rgba(255, 255, 255, 0.1), 0 .03em .03em rgba(255, 255, 255, 0.1);
   --wide-measure: 40em;
   --thin-measure: 25em;
   --canvas-color-primary-rgb: var(--ultralight-rgb);
@@ -4809,6 +4810,8 @@ div.panel.bottom-center {
 div.progressbar-container {
   margin: 0.5rem 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 div.progressbar-container .decals {
   display: flex;
@@ -4827,13 +4830,13 @@ div.progressbar-container .decals div.current div.name,
 div.progressbar-container .decals div.current div.value,
 div.progressbar-container .decals div.next div.name,
 div.progressbar-container .decals div.next div.value {
-  color: var(--colors-standard);
-  text-shadow: var(--text-shadow);
+  color: var(--progressmeter-core-color);
+  text-shadow: var(--text-shadow-corona);
 }
 div.progressbar-container .decals div.current div.name,
 div.progressbar-container .decals div.next div.name {
   text-transform: uppercase;
-  font-weight: lighter;
+  font-weight: normal;
 }
 div.progressbar-container .decals div.current div.value,
 div.progressbar-container .decals div.next div.value {
@@ -4977,6 +4980,41 @@ div.progressbar-container div.simpleprogress.roundcap {
 }
 div.progressbar-container div.simpleprogress.roundcap div.progress {
   border-radius: 1.5em;
+}
+div.progressbar-container.vertical {
+  flex-direction: row;
+}
+div.progressbar-container.vertical div.simpleprogress {
+  min-width: 4em;
+  max-width: 6em;
+  min-height: 10em;
+  height: 10em;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-content: stretch;
+  align-items: flex-end;
+}
+div.progressbar-container.vertical div.simpleprogress div.progress {
+  height: 0;
+  width: 100%;
+  transition: height 1s ease-in-out;
+  border-right: none;
+  border-top: 0.2em solid var(--progressmeter-core-color);
+  box-shadow: 0 0.2em 0.5em -0.1em rgba(0, 0, 0, 0.2);
+}
+div.progressbar-container.vertical div.simpleprogress div.decals.interior {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+div.progressbar-container.vertical .decals {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 div.searchcontrol {

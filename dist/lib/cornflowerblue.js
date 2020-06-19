@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-06-11
+/*! Cornflower Blue - v0.1.1 - 2020-06-19
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2210,148 +2210,71 @@ class SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            id: null, // the id
-            dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
-            attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
-            submits: false, // If true, force "type='submit'"
-            arialabel: null, // THe aria-label attribute
-            cansubmit: true, // Advertizes to Forms that it can be used to submit them, if submits is true.
-                            // This should be on an interface (e.g., SimpleButton implements Submittor)
-                            // but Javascript is poor with regards to that.
-            text: null, // The text for the button. This is also used as aria-label.
-            shape: null, // (null|square|circle|pill) :: Make the button one of these shapes. Otherwise, makes a rectangle
-            size: 'medium', // size of the button: micro, small, medium (default), large, fill
-            form: null, // A form element this is in
-            hidden: false, // Start hidden or not.
-            tooltip: null, // An optional tooltip
-            tipicon: null, // An icon for the tooltip
-            tipgravity: 'n', // Tooltip gravity
-            classes: [], //Extra css classes to apply
-            icon: null, // If present, will be attached to the text inside the button
-                         // This can be passed a DOM object
-            iconclasses: [], // Classes to apply to icons
-            iconside: 'left', // The side the icon displays on
-            secondicon : null, // if present, this icon will be placed on the opposite side of the
-                                // defined 'iconside'.  If this is the only icon defined, it will
-                                // still be placed.  This is ignored in shaped buttons.
-            notab: false, // if true, don't be tabindexed.
-            disabled: false, // if true, make the button disabled.
-            mute: false, //if true, make the button mute.
-            ghost: false, //if true, make the button ghost.
-            link: false, //if true, make the button behave like a normal link.
-            naked: false, //if true, remove all styles from the button.
-            action: null, // The click handler. Passed (event, self) as arguments. NOT used if "submits" is true.
-            focusin: null, // The focus in handler.  Passed (event, self) as arguments.
-            focusout: null, // The focus out handler.  Passed (event, self) as arguments.
-            hoverin: null, // The on hover handler.  Passed (event, self) as arguments.
-            hoverout: null // The off hover handler.  Passed (event, self) as arguments.
+            id: null,
+            dataattributes: null,
+            attributes: null,
+            submits: false,
+            arialabel: null,
+            cansubmit: true,
+            text: null,
+            shape: null,
+            size: 'medium',
+            form: null,
+            hidden: false,
+            tooltip: null,
+            tipicon: null,
+            tipgravity: 'n',
+            classes: [],
+            icon: null,
+            iconclasses: [],
+            iconside: 'left',
+            secondicon : null,
+            notab: false,
+            disabled: false,
+            mute: false,
+            ghost: false,
+            link: false,
+            naked: false,
+            action: null,
+            focusin: null,
+            focusout: null,
+            hoverin: null,
+            hoverout: null
         };
     }
 
     static get DOCUMENTATION() {
         return {
-            id: {
-                type: 'option',
-                datatype: 'string',
-                description: "A unique id value. The button object will have this as it's id."
-            },
-            dataattributes: {
-                type: 'option',
-                datatype: 'dictionary',
-                description: "A dictionary, key: value, which will end up with data-$key = value on elements."
-            },
-            attributes: {
-                type: 'option',
-                datatype: 'dictionary',
-                description: "A dictionary, key: value, which will end up with $key = value on elements"
-            },
-            arialabel: {type: 'option', datatype: 'string', description: "The aria-label attribute" },
-            hidden: {type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
-            classes: {type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
-            form: {type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
-            submits: {
-                type: 'option',
-                datatype: 'boolean',
-                description: "If true, forces the button type to be type='submit'"
-            },
-            cansubmit: {
-                type: 'option',
-                datatype: 'boolean',
-                description: "If true, advertises to Form objects that it can be used to submit them, if submits is true."
-            },
-            text: {
-                type: 'option',
-                datatype: 'string',
-                description: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset"
-            },
-            shape: {
-                type: 'option',
-                datatype: 'string',
-                description: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle."
-            },
-            size: {
-                type: 'option',
-                datatype: 'string',
-                description: "The size of the button: micro, small, medium (default), large, fill"
-            },
-            tooltip: {type: 'option', datatype: 'string', description: "An optional tooltip."},
-            tipicon: {type: 'option', datatype: 'string', description: "An icon for the tooltip."},
-            tipgravity: {type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
-            icon: {
-                type: 'option',
-                datatype: 'string',
-                description: "If present, will be attached to the text inside the button. This can be passed a DOM object."
-            },
-            iconclasses: {
-                type: 'option',
-                datatype: 'stringarray',
-                description: "An array of css class names to apply to icons."
-            },
-            iconside: {
-                type: 'option',
-                datatype: 'string',
-                description: "The side the icon displays on - left or right."
-            },
-            secondicon: {
-                type: 'option',
-                datatype: 'string',
-                description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons."
-            },
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary',  description: "A dictionary, key: value, which will end up with $key = value on elements" },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
+            hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
+            submits: { type: 'option', datatype: 'boolean', description: "If true, forces the button type to be type='submit'" },
+            cansubmit: { type: 'option', datatype: 'boolean', description: "If true, advertises to Form objects that it can be used to submit them, if submits is true." },
+            text: { type: 'option', datatype: 'string', description: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset" },
+            shape: { type: 'option', datatype: 'string', description: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle." },
+            size: { type: 'option', datatype: 'string', description: "The size of the button: micro, small, medium (default), large, fill" },
+            tooltip: { type: 'option', datatype: 'string', description: "An optional tooltip."},
+            tipicon: { type: 'option', datatype: 'string', description: "An icon for the tooltip."},
+            tipgravity: { type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
+            icon: { type: 'option', datatype: 'string', description: "If present, will be attached to the text inside the button. This can be passed a DOM object." },
+            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply to icons." },
+            iconside: { type: 'option', datatype: 'string', description: "The side the icon displays on - left or right." },
+            secondicon: { type: 'option', datatype: 'string', description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons." },
             notab: {type: 'boolean', datatype: 'string', description: "If true, don't be tabindexed."},
             disabled: {type: 'boolean', datatype: 'string', description: "If true, make the button disabled."},
             mute: {type: 'boolean', datatype: 'string', description: "If true, make the button mute."},
             ghost: {type: 'boolean', datatype: 'string', description: "If true, make the button ghost."},
-            link: {
-                type: 'option',
-                datatype: 'boolean',
-                description: "If true, make the button behave like a normal link."
-            },
+            link: { type: 'option', datatype: 'boolean', description: "If true, make the button behave like a normal link." },
             naked: {type: 'option', datatype: 'boolean', description: "If true, remove all styles from the button."},
-            action: {
-                type: 'option',
-                datatype: 'function',
-                description: "The click handler. Passed (event, self) as arguments. NOT used if 'submits' is true."
-            },
-            focusin: {
-                type: 'option',
-                datatype: 'function',
-                description: "The focus in handler. Passed (event, self) as arguments."
-            },
-            focusout: {
-                type: 'option',
-                datatype: 'function',
-                description: "The focus out handler. Passed (event, self) as arguments."
-            },
-            hoverin: {
-                type: 'option',
-                datatype: 'function',
-                description: "The on hover handler. Passed (event, self) as arguments."
-            },
-            hoverout: {
-                type: 'option',
-                datatype: 'function',
-                description: "The off hover handler. Passed (event, self) as arguments."
-            }
+            action: { type: 'option', datatype: 'function', description: "The click handler. Passed (event, self) as arguments. NOT used if 'submits' is true." },
+            focusin: { type: 'option', datatype: 'function', description: "The focus in handler. Passed (event, self) as arguments." },
+            focusout: { type: 'option', datatype: 'function', description: "The focus out handler. Passed (event, self) as arguments." },
+            hoverin: { type: 'option', datatype: 'function', description: "The on hover handler. Passed (event, self) as arguments." },
+            hoverout: { type: 'option', datatype: 'function', description: "The off hover handler. Passed (event, self) as arguments." }
         }
     }
 
@@ -3216,7 +3139,6 @@ class HelpButton extends SimpleButton {
             config.id = `${CFBUtils.getUniqueKey(5)}-help`;
         }
         super(config);
-
     }
 
 }
@@ -3228,7 +3150,6 @@ class SkipButton extends SimpleButton {
             text: TextFactory.get('skip_to_content'),
             classes: ['visually-hidden', 'skipbutton'],
             id: 'content-jump',
-            hot: true,
             contentstart: "#content-start",
             focusin: function(e, self) {
                 self.button.classList.remove('visually-hidden');
@@ -3244,6 +3165,12 @@ class SkipButton extends SimpleButton {
         };
     }
 
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. This is predefined on a SkipButton." },
+            contentstart: { type: 'option', datatype: 'string', description: "The id of the element to jump to that marks the start of the content." }
+        };
+    }
     constructor(config) {
         config = Object.assign({}, SkipButton.DEFAULT_CONFIG, config);
         super(config);
@@ -3310,10 +3237,34 @@ class Panel {
             closeicon: 'chevron-up',
             minimized: false, // Start minimized
             classes: [], //Extra css classes to apply,
-
             onclose: null, // A function to run to when the panel closes. Passed the self.
             onopen: null // A function to run to when the panel opens. Passed the self.
+        };
+    }
 
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The panel will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements" },
+            arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
+            hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            minimized: { type: 'option', datatype: 'boolean', description: "Start collapsed/minimized." },
+            collapsible: { type: 'option', datatype: 'boolean', description: "Can the panel collapse? If false, minimized is ignored." },
+            onclose: { type: 'option', datatype: 'function', description: "A function to run to when the panel closes. Passed the self." },
+            onopen: { type: 'option', datatype: 'function', description: "A function to run to when the panel opens. Passed the self as argument." },
+            closeicon: { type: 'option', datatype: 'string', description: "The icon to use in for the close/open button.." },
+            contentid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's content." },
+            headerid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's header." },
+            title: { type: 'option', datatype: 'string', description: "The title to use for the panel." },
+            content: { type: 'option', datatype: 'object', description: "The panel content payload." },
+            style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain', 'ghost', or 'invisible'." }
+                             // Various styles that can be applied to the panel.
+                            // - 'plain': simple, spartan, solid.
+                            // - 'ghost': similar to 'plain' except that it turns
+                            //            translucent when not in focus or hover
+                            // - 'invisible: panel behaves as normal but the background is transparent
         };
     }
 
@@ -3557,10 +3508,19 @@ window.Panel = Panel;
 class LoadingShade {
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
-            spinnerstyle: 'spin', //
-            spinnertext: TextFactory.get('simpleform-spinnertext'), //
-            classes: [] //Extra css classes to apply
+            id : null,
+            spinnerstyle: 'spin',
+            spinnertext: TextFactory.get('simpleform-spinnertext'),
+            classes: []
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            spinnerstyle: { type: 'option', datatype: 'enumeration', description: "The type of spinner to show (spin|bounce)" },
+            spinnertext: { type: 'option', datatype: 'string', description: "The text to show on the loading shade." }
         };
     }
 
@@ -3657,42 +3617,45 @@ class SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            classes: [], // Extra css classes to apply
-            label: null, // The title
-            help: null, // Help text.
-
-            style: null, // One of a handful of styles:
-                        // * roundcap : both sides of the progress bar will be round capped.
-                        // * interiorroundcap : the progress bar's right side will be round capped.
-
-            commaseparate: true, // set to false to not comma separate numbers
-            currentrank: null, // A string, if present, will be displayed inside (along with minvalue)
-            nextrank: null, // A string, if present, will be displayed inside (along with maxvalue)
-            showcaps: true, // if true, show the min and max values.  True by default if currentrank or nextrank is set.
-            decalposition: 'interior', // Where should the decals appear?
-                        // * 'none' : Don't show any decals
-                        // * 'exterior' : decals are drawn outside of and above the bar
-                        // * 'exterior-bottom' : decals are drawn outside of and below the bar
-
-            /*
-                The meter can have a variable scale, but the width of its progressbar is absolute within
-                the scale.
-
-                Consider a progress system made of multiple progress steps, perhaps of different length
-                (like a loyalty program).  Progress in the first rank is 0 - 25 points, in the second
-                rank is 25 - 75, in the third is 76 - 150, and the fourth is 151 - 300.
-                  - minnumber would be the start of the "rank" (ex 76 for rank 3)
-                  - maxnumber would be the end of the "rank" (ex 150)
-                  - value is absolute, considered along the whole sequence (0 - 300), ex 123.
-             */
-            maxvalue: 100, // the max value
-            minvalue: 0, // the min value
-            value: 50, // the current score, calculated absolute.
-
-            width: null, // width of the progressbar to fill.  Used if provided, or else calculated from other values.
+            id: null,
+            classes: [],
+            label: null,
+            help: null,
+            style: 'boxed',
+            commaseparate: true,
+            direction: 'horizontal',
+            currentrank: null,
+            nextrank: null,
+            showcaps: true,
+            decalposition: 'interior',
+            maxvalue: 100,
+            minvalue: 0,
+            value: 50,
+            fill: null
         };
     }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The dialog object will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            label: { type: 'option', datatype: 'string', description: "The title for the progress meter." },
+            help: { type: 'option', datatype: 'string', description: "Help text." },
+            style: { type: 'option', datatype: 'enmumeration', description: "One of a handful of additional styles: boxed, roundcap or interiorroundcamp" },
+            commaseparate: { type: 'option', datatype: 'boolean', description: "Set to false to not comma separate numbers." },
+            currentrank: { type: 'option', datatype: 'string', description: "A string, if present, will be displayed inside (along with minvalue)." },
+            direction: { type: 'option', datatype: 'enumeration', description: "Which direction does the meter run? Values: 'vertical' or 'horizontal' (default)." },
+            nextrank: { type: 'option', datatype: 'string', description: "A string, if present, will be displayed inside (along with maxvalue)." },
+            showcaps: { type: 'option', datatype: 'boolean', description: "if true, show the min and max values.  True by default if currentrank or nextrank is set." },
+
+            decalposition: { type: 'option', datatype: 'enumeration', description: "Where should the decals appear. Values: non, exterior, exterior-bottom" },
+            maxvalue: { type: 'option', datatype: 'number', description: "The maximum score value for the meter." },
+            minvalue: { type: 'option', datatype: 'number', description: "The minimum score value for the meter." },
+            value: { type: 'option', datatype: 'number', description: "The current score, absolute." },
+            fill: { type: 'option', datatype: 'number', description: "Width of the progressbar to fill.  Used if provided, or else calculated from other values." }
+        };
+    }
+
 
     /**
      * Define a SimpleProgressMeter
@@ -3702,24 +3665,23 @@ class SimpleProgressMeter {
         this.config = Object.assign({}, SimpleProgressMeter.DEFAULT_CONFIG, config);
 
         if (!this.id) { this.id = `progress-${CFBUtils.getUniqueKey(5)}`; }
-        this.determineWidth();
+        this.determineFill();
     }
 
     /* CORE METHODS_____________________________________________________________________ */
 
-    determineWidth() {
-        if (this.width) return; // use provided width
+    determineFill() {
+        if (this.fill) return; // use provided fill
 
         // Figure out where value lies between minnumber and maxxnumber.
-        //let pointscale = (this.steps[this.current + 1].threshold - this.steps[this.current].threshold);
+        let pointscale = (this.maxvalue - this.minvalue),
+            subjectivevalue = this.value - this.minvalue;
 
-        let pointscale = (this.maxvalue - this.minvalue);
-        let subjectivevalue = this.value - this.minvalue;
         if (this.value < this.minvalue) {
             subjectivevalue = this.value;
         }
 
-        this.width =  (subjectivevalue / pointscale) * 100;
+        this.fill = (subjectivevalue / pointscale) * 100;
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -3730,6 +3692,10 @@ class SimpleProgressMeter {
     buildContainer() {
         const me = this;
 
+        this.container = document.createElement('div');
+        this.container.classList.add('progressbar-container');
+        this.container.classList.add(this.direction);
+
         this.progress = document.createElement('div');
         this.progress.classList.add('progress');
 
@@ -3738,8 +3704,6 @@ class SimpleProgressMeter {
         this.bar.classList.add(this.style);
         this.bar.appendChild(this.progress);
 
-        this.container = document.createElement('div');
-        this.container.classList.add('progressbar-container');
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
@@ -3754,7 +3718,8 @@ class SimpleProgressMeter {
         this.container.append(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
-            && (this.decalposition) && (this.decalposition !== 'exterior') && (this.decalposition !== 'none')) {
+            && (this.decalposition) && (this.decalposition !== 'exterior')
+            && (this.decalposition !== 'none')) {
             if (this.decalposition === 'exterior-bottom') {
                 this.container.appendChild(this.decallayer);
                 this.bar.classList.add('exteriordecal-bottom');
@@ -3764,9 +3729,13 @@ class SimpleProgressMeter {
             }
         }
 
-        // Don't allow the the width animation to fire until it's in the page
+        // Don't allow the the fill animation to fire until it's in the page
         setTimeout(function() {
-            me.progress.style.width = `${me.width}%`;
+            if (me.direction === 'vertical') {
+                me.progress.style.height = `${me.fill}%`;
+            } else {
+                me.progress.style.width = `${me.fill}%`;
+            }
         }, 500);
     }
 
@@ -3874,6 +3843,12 @@ class SimpleProgressMeter {
     get decalposition() { return this.config.decalposition; }
     set decalposition(decalposition) { this.config.decalposition = decalposition; }
 
+    get direction() { return this.config.direction; }
+    set direction(direction) { this.config.direction = direction; }
+
+    get fill() { return this.config.fill; }
+    set fill(fill) { this.config.fill = fill; }
+
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
@@ -3915,8 +3890,6 @@ class SimpleProgressMeter {
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }
 
-    get width() { return this.config.width; }
-    set width(width) { this.config.width = width; }
 }
 window.SimpleProgressMeter = SimpleProgressMeter;
 
@@ -6993,8 +6966,6 @@ class GridField {
         };
     }
 
-
-
     /**
      * Supported comparators
      * @return a comparator dictionary.
@@ -7023,7 +6994,6 @@ class GridField {
     static getComparatorLabel(comparator) {
         return GridField.COMPARATORS[comparator];
     }
-
 
     /**
      * Define the gridfield
@@ -7332,7 +7302,6 @@ class DatePicker {
 
     static get DEFAULT_CONFIG() {
         return {
-            dateicon: 'calendar',
             startdate: null,
             value: null,
             timezone: 'GMT',
@@ -7340,9 +7309,18 @@ class DatePicker {
             locale: 'en-US',
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            onselect: null, // A function to be called on selection. Passed the date selected, as a string.
-            classes: [] // Extra css classes to apply
+            onselect: null,
+            classes: []
         };
+    }
+
+    static get DOCUMETATION() {
+        return {
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            startdate: { type: 'option', datatype: 'date', description: "The date to start the calendar on. Can also be a readable string." },
+            value: { type: 'option', datatype: 'date', description: "The date to preselect. Can also be a readable string." },
+            onselect: { type: 'option', datatype: 'function', description: "A function to be called on selection. Passed the date selected, as a string." }
+        }
     }
 
     /**
@@ -7608,9 +7586,6 @@ class DatePicker {
     }
     set container(container) { this._container = container; }
 
-    get dateicon() { return this.config.dateicon; }
-    set dateicon(dateicon) { this.config.dateicon = dateicon; }
-
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
@@ -7644,25 +7619,46 @@ window.DatePicker = DatePicker;
 class DialogWindow {
 
     static get DEFAULT_CONFIG() {
-       return {
-           id: null,
-           form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
-           actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
-                            // Possible keywords:  closebutton, cancelbutton
-           content: `<p />${TextFactory.get('no_provided_content')}</p>`, // This is the content of the dialog
-           classes: [],             // apply these classes to the dialog, if any.
-           header: null, // DOM object, will be used if passed before title.
-           lightbox: false,    // For image types, if true, open the image in a lightbox
-           title: null,  // Adds a title to the dialog if present. header must be null.
-           trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
-                          // or a string.  If it's a string, it creates a div at the bottom
-                          // with the value of the text.
-           clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
-           escapecloses: true, // Allow the window to be closed by the escape key
-           nofocus: false, // If true, do not auto focus anything.
-           canceltext: TextFactory.get('cancel'),
-           closetext: TextFactory.get('close'), // Text for the closebutton, if any
-           showclose: true  // Show or hide the X button in the corner (requires title != null)
+        return {
+            id: null,
+            form: null,  // takes a SimpleForm.  If present, displays and renders that. If not, uses content.
+            actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
+            // Possible keywords:  closebutton, cancelbutton
+            content: null,
+            classes: [],             // apply these classes to the dialog, if any.
+            header: null, // DOM object, will be used if passed before title.
+            lightbox: false,    // For image types, if true, open the image in a lightbox
+            title: null,  // Adds a title to the dialog if present. header must be null.
+            trailer: null, // Adds a trailing chunk of DOM.  Can be provided a full dom object
+                           // or a string.  If it's a string, it creates a div at the bottom
+                           // with the value of the text.
+            clickoutsidetoclose: true, // Allow the window to be closed by clicking outside.
+            escapecloses: true, // Allow the window to be closed by the escape key
+            nofocus: false, // If true, do not auto focus anything.
+            canceltext: TextFactory.get('cancel'),
+            closetext: TextFactory.get('close'), // Text for the closebutton, if any
+            showclose: true  // Show or hide the X button in the corner (requires title != null)
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The dialog object will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            form: { type: 'option', datatype: 'simpleform', description: "If present, displays and renders the form as its content. If not, uses the value of <code>content</code>."},
+            actions: { type: 'option', datatype: 'array', description: "An array of actions. Can be SimpleButtons or keyword strings. Only used if form is null (actions exist on SimpleForm objects as well).  Possible keywords:  closebutton, cancelbutton" },
+            content: { type: 'option', datatype: 'domobject', description: "This is the content of the dialog.  Ignored if provided a <code>form</code>."},
+            header: { type: 'option', datatype: 'domobject', description: "DOM object, will be used if passed before title."},
+            title: { type: 'option', datatype: 'string', description: "Adds a title to the dialog if present. header must be null." },
+            trailer: { type: 'option', datatype: 'domobject', description: "Adds a trailing chunk of DOM.  Can be provided a full dom object or a string.  If it's a string, it creates a div at the bottom with the value of the text." },
+            canceltext: { type: 'option', datatype: 'string', description: "Text used for cancel buttons provided as keywords." },
+            closetext: { type: 'option', datatype: 'string', description: "Text used for close buttons provided as keywords." },
+
+            lightbox: { type: 'option', datatype: 'boolean', description: "For image types, if true, open the image in a lightbox." },
+            clickoutsidetoclose: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by clicking outside." },
+            escapecloses: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by the escape key." },
+            nofocus: { type: 'option', datatype: 'boolean', description: "If true, do not auto focus anything." },
+            showclose: { type: 'option', datatype: 'boolean', description: "Show or hide the CloseButton in the corner (requires title != null)" }
         };
     }
 
@@ -7800,8 +7796,6 @@ class DialogWindow {
                 });
                 this.header.appendChild(this.closebutton.button);
             }
-        } else if (this.showclose) {
-            console.error("Dialog defines 'showclose' but no title is defined.");
         }
 
         if (this.form) { // it's a SimpleForm
@@ -7839,7 +7833,6 @@ class DialogWindow {
                 }
             }
 
-
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.form.form);
@@ -7848,7 +7841,7 @@ class DialogWindow {
             this.window.appendChild(this.contentbox);
 
         } else if (this.content) { // It's a DOM object
-
+            console.log(this.content);
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.content);
@@ -7976,13 +7969,14 @@ class FloatingPanel extends Panel {
 
     static get DEFAULT_CONFIG() {
         return {
-            style: 'plain', // Various styles that can be applied to the panel.
-                            // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
-                            // - 'invisible: panel behaves as normal but the background is transparent
-            position: 'top-left' // Position for the panel. Valid values:
-                                 // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+            style: 'plain',
+            position: 'top-left'
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            position: { type: 'option', datatype: 'enumeration', description: "Position for the growler. Valid values: (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)" }
         };
     }
 
@@ -8012,14 +8006,21 @@ class Growler extends FloatingPanel {
 
     static get DEFAULT_CONFIG() {
         return {
-            text : null, // The growler payload
+            text : null,
             closeicon: 'echx',
-            duration: 4000, // Length of time in milliseconds to display. If 0 or negative, stays open.
-            icon: null, // An optional icon. Position of this depends on whether there is text or a title.
-                        // If a title is given but no text, it will be in the titlebar. Else it
-                        // gets placed in the text area.
-            position: 'bottom-right' // Position for the growler. Valid values:
-                        // (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)
+            duration: 4000,
+            icon: null,
+            position: 'bottom-right'
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            icon: { type: 'option', datatype: 'string', description: "The icon to use in the growler." },
+            closeicon: { type: 'option', datatype: 'string', description: "The icon to use in the growler's CloseButton." },
+            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
+            text: { type: 'option', datatype: 'string', description: "The growler payload" },
+            duration: { type: 'option', datatype: 'number', description: "Length of time in milliseconds to display. If 0 or negative, stays open." }
         };
     }
 
@@ -8253,21 +8254,25 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
     static get DEFAULT_CONFIG() {
         return {
-            numberposition: 'center', // where to display the badge and stinger.
-                                    // Values include: center, bottomleft, bottomright, topleft, topright
-            badge: null, // the large central number to show. If left empty, it will display the percentage.
-            stinger: null, // A small text to display below the main badge
-            size: 'medium', // Can be one of several values or metrics!
-                        // Accepts: 'small', 'medium', 'large', 'huge' as strings
-                        // Numbers in pixels and ems, as strings ('300px' or '5em')
-                        // Or if given a number, assumes pixels
-            style: 'solid', // 'solid' or 'ticks'.
-                        // If set to 'ticks', disables any 'segments' value.
-            segments: null, // Displays tick marks in the circle.
-                        // Takes a number; this is the number of divisions. If you want segments of 10%, set it
-                        // to 10.  If you want segments of 25%, set it to 4.
-            strokewidth: null // If provided, the stroke will be this wide.
-                            // If not provided, the width will be 5% of the circle's whole size
+            numberposition: 'center',
+            badge: null,
+            stinger: null,
+            size: 'medium',
+            style: 'solid',
+            segments: null,
+            strokewidth: null
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            numberposition: { type: 'option', datatype: 'enumeration', description: "Where to display the badge and stinger. Values: center, bottomleft, bottomright, topleft, topright" },
+            badge: { type: 'option', datatype: 'number', description: "The central number to show. If left empty, it will display the percentage." },
+            stinger: { type: 'option', datatype: 'string', description: "Text to display below the main badge." },
+            size: { type: 'option', datatype: 'enumeration', description: "Can be one of several values or metrics. Accepts: 'small', 'medium', 'large', 'huge' as strings; Numbers in pixels and ems, as strings ('300px' or '5em'). If given a number, assumes pixels" },
+            style: { type: 'option', datatype: 'enumeration', description: "'solid' or 'ticks'. If set to 'ticks', disables any 'segments' value." },
+            segments: { type: 'option', datatype: 'number', description: "Displays tick marks in the circle. Takes a number; this is the number of divisions. If you want segments of 10%, set it.to 10.  If you want segments of 25%, set it to 4." },
+            strokewidth: { type: 'option', datatype: 'number', description: "If provided, the stroke will be this wide. If not provided, the width will be 5% of the circle's whole size" }
         };
     }
 
@@ -8877,13 +8882,19 @@ class SimpleForm {
      * Get the form value as a dictionary
      * @return the values of the form as a key=value dictionary
      */
-    dictionary() {
+    get dictionary() {
         let dictionary = {};
         for (let i of this.elements) {
             dictionary[i.name] = i.value;
         }
         return dictionary;
     }
+
+    /**
+     * Get the form value as a dictionary
+     * @return the values of the form as a key=value dictionary
+     */
+    get json() { return this.dictionary; }
 
     /**
      * Execute an ajax call
@@ -9818,14 +9829,27 @@ class ToolTip {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // the id
+            id : null,
             icon: 'help-circle',
             gravity: 'n',
-            iconclasses: [], // Classes to apply to the icon
-            text: null, // The text to use,
-            parent: null, // the parent object to fire off
-            waittime: 1000, // how long to wait before activating
-            classes: [] //Extra css classes to apply
+            iconclasses: [],
+            text: null,
+            parent: null,
+            waittime: 1000,
+            classes: []
+        };
+    }
+
+    static get DOCUMENTATION() {
+        return {
+            id: { type: 'option', datatype: 'string', description: "A unique id value. The tooltip wrapper object will have this as it's id." },
+            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            icon: { type: 'option', datatype: 'string', description: "The icon to use in the tooltip." },
+            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
+            gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip whe." },
+            text: { type: 'option', datatype: 'string', description: "The text to use in the tooltip." },
+            parent: { type: 'option', datatype: 'object', description: "The parent object this fires off." },
+            waittime: { type: 'option', datatype: 'number', description: "How long to wait (in milliseconds) before activating." }
         };
     }
 
@@ -10073,47 +10097,42 @@ class InputElement {
 
     static get DEFAULT_CONFIG() {
         return {
-            id: null, // Component id
-            attributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
-            name: null, // Name attribute
-            form: null, // A form element this is in
-            counter: null, // A value for a character counter. Null means 'no counter'
-            // Possible values: null, 'remaining', 'limit', and 'sky'
-            forceconstraints: null, // if true, force constraints defined in sub classes (many inputs don't have any)
-            type: 'text', // Type of input, defaults to "text"
-            label: null, // Input label. If null, does not show up.
-            placeholder: null, // Input placeholder. Individual fields can calculate this if it's null.
-                               // To insure a blank placeholder, set the value to ""
+            id: null,
+            attributes: null,
+            dataattributes: null,
+            name: null,
+            form: null,
+            counter: null,
+            forceconstraints: null,
+            type: 'text',
+            label: null,
+            placeholder: null,
             title: null,
             pattern: null,
-            icon: null, // Use to define a specific icon, used in some specific controls.
-
-            minimal: false, // if true, build with the intent that it is part of a larger component.
-                            // this removes things like the search controls and validation boxes.
-
-            passive: false, // Start life in "passive" mode.
-            unsettext: TextFactory.get('not_set'), // what to display in passive mode if the value is empty
-
-            help: null, // Help text.
-            helpwaittime: 5000, // How long to wait before automatically showing help tooltip
-            required: false, // Is this a required field or not
-            requiredtext: TextFactory.get('required_lc'), // text to display on required items
-            requirederror: TextFactory.get('input-error-required'), // error to display if required item isn't filled.
-            hidden: false, // Whether or not to be hidden
-            autocomplete: 'off', // Enable browser autocomplete. Default is off.
-            arialabel: null, // The aria-label value. If null, follows: label > title > null
-            maxlength: null, // Value for maxlength.
-            value: '', // Value to use (pre-population).  Used during construction and then discarded.
-            disabled: false, // If true, disable the field.
-            classes: [], // Extra css classes to apply
-            onchange: null, // The change handler. Passed (self).
-            onreturn: null, // action to execute on hitting the return key. Passed (event, self).
-            ontab: null, // action to execute on hitting the tab key. Passed (event, self).
-            onkeyup: null, // action to execute on key up. Passed (event, self).
-            onkeydown: null, // action to execute on key down. Passed (event, self).
-            focusin: null, // action to execute on focus in. Passed (event, self).
-            focusout: null, // action to execute on focus out. Passed (event, self).
-            validator: null, // A function to run to test validity. Passed the self.
+            icon: null,
+            minimal: false,
+            passive: false,
+            unsettext: TextFactory.get('not_set'),
+            help: null,
+            helpwaittime: 5000,
+            required: false,
+            requiredtext: TextFactory.get('required_lc'),
+            requirederror: TextFactory.get('input-error-required'),
+            hidden: false,
+            autocomplete: 'off',
+            arialabel: null,
+            maxlength: null,
+            value: '',
+            disabled: false,
+            classes: [],
+            onchange: null,
+            onreturn: null,
+            ontab: null,
+            onkeyup: null,
+            onkeydown: null,
+            focusin: null,
+            focusout: null,
+            validator: null,
             renderer: function(data) { return `${data}`; }
 
         };
@@ -10133,7 +10152,7 @@ class InputElement {
             icon: { type: 'option', datatype: 'string', description: "Use to define a specific icon, used in some specific controls." },
             minimal: { type: 'option', datatype: 'boolean', description: "If true, build with the intent that it is part of a larger component. This removes things like the secondary controls and validation boxes." },
             counter: { type: 'option', datatype: 'enumeration', description: "A value for a character counter. Null means 'no counter'. Possible values: null, 'remaining', 'limit', and 'sky'." },
-            forceconstraints:"If true, force constraints defined in sub classes (many inputs don't have any).",
+            forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, force constraints defined in sub classes (many inputs don't have any)." },
             placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
             passive: { type: 'option', datatype: 'boolean', description: "Start life in passive mode." },
             unsettext: { type: 'option', datatype: 'string', description: "Text to display in passive mode if the value is empty." },
@@ -10952,7 +10971,7 @@ class SelectMenu extends InputElement {
         };
     }
 
-    static get DEFAULT_CONFIG_DOCUMENTATION() {
+    static get DOCUMENTATION() {
         return {
             combobox: { type: 'option', datatype: 'boolean', description: "If true, treat the SelectMenu as combobox" },
             unselectedtext: { type: 'option', datatype: 'string', description: "If present, allow for a deselect and use this text for the 'unselect' value." },
@@ -11082,9 +11101,12 @@ class SelectMenu extends InputElement {
             SelectMenu.activeMenu = this;
         }
 
-        this.setPosition();
+        //window.addEventListener('scroll', this.setPosition, true);
+        let x = window.scrollX,
+            y = window.scrollY;
+        window.onscroll = function(){ window.scrollTo(x, y); };
 
-        window.addEventListener('scroll', this.setPosition, true);
+        this.setPosition();
 
         setTimeout(function() { // Set this after, or else we'll get bouncing.
             me.setCloseListener();
@@ -11096,23 +11118,38 @@ class SelectMenu extends InputElement {
      */
     setPosition() {
         if (!SelectMenu.activeMenu) { return; }
-        let self = SelectMenu.activeMenu;
 
-        let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.wrapper.getBoundingClientRect(),
+        let self = SelectMenu.activeMenu,
+            bodyRect = document.body.getBoundingClientRect(),
+            elemRect = self.triggerbox.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top;
+            offsetTop = elemRect.top - bodyRect.top,
+            sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
 
-        self.listbox.style.top = `${(offsetTop + self.wrapper.clientHeight)}px`;
         self.listbox.style.left = `${offsetLeft}px`;
         self.listbox.style.width = `${self.container.clientWidth}px`;
+
+        if ((elemRect.top + sumHeight) > window.innerHeight) {
+            self.listbox.classList.add('vert');
+            self.listbox.style.top = `${(offsetTop - self.optionlist.clientHeight)}px`;
+            self.listbox.style.bottom = `${offsetTop}px`;
+        } else {
+            self.listbox.classList.remove('vert');
+            self.listbox.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
+        }
     }
 
     /**
      * Closes the option list.
      */
     close() {
-        window.removeEventListener('scroll', this.setPosition, true);
+        //window.removeEventListener('scroll', this.setPosition, true);
+        window.onscroll=function(){};
+
+        this.listbox.style.top = null;
+        this.listbox.style.bottom = null;
+        this.listbox.style.left = null;
+        this.listbox.style.width = null;
 
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
@@ -12861,8 +12898,12 @@ class TextArea extends InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('textarea-container');
-        this.container.appendChild(this.labelobj);
-        this.container.appendChild(this.charactercounter);
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
 
         let wrap = document.createElement('div');
         wrap.classList.add('wrap');

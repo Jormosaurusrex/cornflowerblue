@@ -1,6 +1,9 @@
 div.progressbar-container {
   margin: .5rem 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
+
   .decals {
     display: flex;
     flex-direction: row;
@@ -14,12 +17,12 @@ div.progressbar-container {
       margin: 0;
       div.name,
       div.value {
-        color: var(--colors-standard);
-        text-shadow: var(--text-shadow);
+        color: var(--progressmeter-core-color);
+        text-shadow: var(--text-shadow-corona);
       }
       div.name {
         text-transform: uppercase;
-        font-weight: lighter;
+        font-weight: normal;
       }
       div.value {
         font-style: italic;
@@ -184,6 +187,49 @@ div.progressbar-container {
       div.progress {
         border-radius: 1.5em;
       }
+    }
+  }
+  &.vertical {
+    flex-direction: row;
+
+    div.decals {
+      &.exterior {
+
+      }
+    }
+    div.simpleprogress {
+      min-width: 4em;
+      max-width: 6em;
+      min-height: 10em;
+      height: 10em; // Vertical ones MUST have a height or they just won't work.
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      align-content: stretch;
+      align-items: flex-end;
+      div.progress {
+        height: 0;
+        width: 100%;
+        transition: height 1s ease-in-out;
+        border-right: none;
+        border-top: .2em solid var(--progressmeter-core-color);
+        box-shadow: 0 .2em .5em -.1em rgba(0, 0, 0, 0.2);
+      }
+      div.decals {
+        &.interior {
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+    .decals {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

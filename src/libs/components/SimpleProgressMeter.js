@@ -6,8 +6,9 @@ class SimpleProgressMeter {
             classes: [],
             label: null,
             help: null,
-            style: null,
+            style: 'boxed',
             commaseparate: true,
+            direction: 'horizontal',
             currentrank: null,
             nextrank: null,
             showcaps: true,
@@ -15,7 +16,7 @@ class SimpleProgressMeter {
             maxvalue: 100,
             minvalue: 0,
             value: 50,
-            width: null
+            fill: null
         };
     }
 
@@ -25,9 +26,10 @@ class SimpleProgressMeter {
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             label: { type: 'option', datatype: 'string', description: "The title for the progress meter." },
             help: { type: 'option', datatype: 'string', description: "Help text." },
-            style: { type: 'option', datatype: 'enmumeration', description: "One of a handful of additional styles: roundcap or interiorroundcamp" },
+            style: { type: 'option', datatype: 'enmumeration', description: "One of a handful of additional styles: boxed, roundcap or interiorroundcamp" },
             commaseparate: { type: 'option', datatype: 'boolean', description: "Set to false to not comma separate numbers." },
             currentrank: { type: 'option', datatype: 'string', description: "A string, if present, will be displayed inside (along with minvalue)." },
+            direction: { type: 'option', datatype: 'enumeration', description: "Which direction does the meter run? Values: 'vertical' or 'horizontal' (default)." },
             nextrank: { type: 'option', datatype: 'string', description: "A string, if present, will be displayed inside (along with maxvalue)." },
             showcaps: { type: 'option', datatype: 'boolean', description: "if true, show the min and max values.  True by default if currentrank or nextrank is set." },
 
@@ -35,7 +37,7 @@ class SimpleProgressMeter {
             maxvalue: { type: 'option', datatype: 'number', description: "The maximum score value for the meter." },
             minvalue: { type: 'option', datatype: 'number', description: "The minimum score value for the meter." },
             value: { type: 'option', datatype: 'number', description: "The current score, absolute." },
-            width: { type: 'option', datatype: 'number', description: "Width of the progressbar to fill.  Used if provided, or else calculated from other values." }
+            fill: { type: 'option', datatype: 'number', description: "Width of the progressbar to fill.  Used if provided, or else calculated from other values." }
         };
     }
 
@@ -48,24 +50,23 @@ class SimpleProgressMeter {
         this.config = Object.assign({}, SimpleProgressMeter.DEFAULT_CONFIG, config);
 
         if (!this.id) { this.id = `progress-${CFBUtils.getUniqueKey(5)}`; }
-        this.determineWidth();
+        this.determineFill();
     }
 
     /* CORE METHODS_____________________________________________________________________ */
 
-    determineWidth() {
-        if (this.width) return; // use provided width
+    determineFill() {
+        if (this.fill) return; // use provided fill
 
         // Figure out where value lies between minnumber and maxxnumber.
-        //let pointscale = (this.steps[this.current + 1].threshold - this.steps[this.current].threshold);
+        let pointscale = (this.maxvalue - this.minvalue),
+            subjectivevalue = this.value - this.minvalue;
 
-        let pointscale = (this.maxvalue - this.minvalue);
-        let subjectivevalue = this.value - this.minvalue;
         if (this.value < this.minvalue) {
             subjectivevalue = this.value;
         }
 
-        this.width =  (subjectivevalue / pointscale) * 100;
+        this.fill = (subjectivevalue / pointscale) * 100;
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -76,6 +77,10 @@ class SimpleProgressMeter {
     buildContainer() {
         const me = this;
 
+        this.container = document.createElement('div');
+        this.container.classList.add('progressbar-container');
+        this.container.classList.add(this.direction);
+
         this.progress = document.createElement('div');
         this.progress.classList.add('progress');
 
@@ -84,8 +89,6 @@ class SimpleProgressMeter {
         this.bar.classList.add(this.style);
         this.bar.appendChild(this.progress);
 
-        this.container = document.createElement('div');
-        this.container.classList.add('progressbar-container');
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
@@ -100,7 +103,8 @@ class SimpleProgressMeter {
         this.container.append(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
-            && (this.decalposition) && (this.decalposition !== 'exterior') && (this.decalposition !== 'none')) {
+            && (this.decalposition) && (this.decalposition !== 'exterior')
+            && (this.decalposition !== 'none')) {
             if (this.decalposition === 'exterior-bottom') {
                 this.container.appendChild(this.decallayer);
                 this.bar.classList.add('exteriordecal-bottom');
@@ -110,9 +114,13 @@ class SimpleProgressMeter {
             }
         }
 
-        // Don't allow the the width animation to fire until it's in the page
+        // Don't allow the the fill animation to fire until it's in the page
         setTimeout(function() {
-            me.progress.style.width = `${me.width}%`;
+            if (me.direction === 'vertical') {
+                me.progress.style.height = `${me.fill}%`;
+            } else {
+                me.progress.style.width = `${me.fill}%`;
+            }
         }, 500);
     }
 
@@ -220,6 +228,12 @@ class SimpleProgressMeter {
     get decalposition() { return this.config.decalposition; }
     set decalposition(decalposition) { this.config.decalposition = decalposition; }
 
+    get direction() { return this.config.direction; }
+    set direction(direction) { this.config.direction = direction; }
+
+    get fill() { return this.config.fill; }
+    set fill(fill) { this.config.fill = fill; }
+
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
@@ -261,7 +275,5 @@ class SimpleProgressMeter {
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }
 
-    get width() { return this.config.width; }
-    set width(width) { this.config.width = width; }
 }
 window.SimpleProgressMeter = SimpleProgressMeter;
