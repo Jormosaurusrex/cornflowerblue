@@ -368,6 +368,9 @@ class InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         if (this.classes) {
             for (let c of this.classes) {
                 this.container.classList.add(c);

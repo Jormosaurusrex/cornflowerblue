@@ -43,7 +43,7 @@ div.window-container {
     animation-duration: .2s;
     animation-name: cfb-pushup;
     z-index: 2002;
-    h2 {
+    > h2 {
       background-color: var(--colors-standard);
       color: var(--colors-text-hot);
       text-shadow: var(--text-shadow);
@@ -63,13 +63,13 @@ div.window-container {
       &:after {
         display: none;
       }
-      button.closebutton {
+      > button.closebutton {
         position: relative;
         color: var(--colors-text-hot);
         text-shadow: var(--text-shadow);
       }
     }
-    div.content {
+    > div.content {
       margin: 0;
       overflow: auto;
       z-index: 2005;
@@ -183,6 +183,16 @@ div.window-container {
           height: auto;
           vertical-align: middle;
         }
+      }
+    }
+    &.noheader {
+      > button.closebutton {
+        position: absolute;
+        color: var(--colors-text-hot);
+        text-shadow: var(--text-shadow);
+        right: 1rem;
+        top: 1rem;
+        z-index: 5000;
       }
     }
     @include for-phone-only {

@@ -97,7 +97,7 @@ class LZSong extends BusinessObject {
         };
     }
 
-    static instance;
+    //static instance;
 
     constructor() {
         super();

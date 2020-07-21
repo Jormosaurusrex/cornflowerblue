@@ -207,10 +207,10 @@ p.textarea-container {
     li {
       margin: .5rem 0 .5rem 0;
       &.error {
-        color: var(--input-messages-error-text-color);
+        color: var(--colors-text-default);
       }
       &.warning {
-        color: var(--input-messages-warning-text-color);
+        color: var(--colors-text-default);
       }
     }
     &[aria-hidden=true] {
@@ -261,8 +261,7 @@ p.textarea-container {
         padding-left: 1.5em;
         font-size: 1em;
         transition: all .2s;
-        button.help,
-        &:after {
+        button.help {
           opacity: 0;
           display: inline-block;
           transition: opacity .2s;
@@ -285,6 +284,7 @@ p.textarea-container {
     }
     &.active,
     &.filled,
+    &.passive,
     &:focus-within {
       div.topline {
         margin-top: 0;
@@ -407,7 +407,6 @@ p.textarea-container {
         opacity: 0;
       }
     }
-
     div.wrap,
     ul.messagebox,
     ul.selectmenu {

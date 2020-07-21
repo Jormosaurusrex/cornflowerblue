@@ -40,7 +40,7 @@ class DialogWindow {
             clickoutsidetoclose: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by clicking outside." },
             escapecloses: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by the escape key." },
             nofocus: { type: 'option', datatype: 'boolean', description: "If true, do not auto focus anything." },
-            showclose: { type: 'option', datatype: 'boolean', description: "Show or hide the CloseButton in the corner (requires title != null)" }
+            showclose: { type: 'option', datatype: 'boolean', description: "Show or hide the CloseButton in the corner." }
         };
     }
 
@@ -168,15 +168,19 @@ class DialogWindow {
                 this.header.appendChild(span);
             }
             this.window.appendChild(this.header);
-
-            if (this.showclose) {
-                this.closebutton = new CloseButton({
-                    action: function(e) {
-                        e.preventDefault();
-                        me.close();
-                    }
-                });
+        }
+        if (this.showclose) {
+            this.closebutton = new CloseButton({
+                action: function(e) {
+                    e.preventDefault();
+                    me.close();
+                }
+            });
+            if ((this.title) || (this.header)) {
                 this.header.appendChild(this.closebutton.button);
+            } else {
+                this.window.classList.add('noheader');
+                this.window.appendChild(this.closebutton.button);
             }
         }
 
@@ -223,7 +227,6 @@ class DialogWindow {
             this.window.appendChild(this.contentbox);
 
         } else if (this.content) { // It's a DOM object
-            console.log(this.content);
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.content);

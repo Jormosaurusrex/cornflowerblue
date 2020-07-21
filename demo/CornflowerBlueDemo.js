@@ -1113,6 +1113,7 @@ class CornflowerBlueDemo {
                 new TextInput({
                     label: "Name",
                     autocomplete: 'off',
+                    mute: true,
                     placeholder: "Miyamoto Musashi",
                     help: "Enter your name in whatever manner befits your culture."
                 }),
@@ -1124,6 +1125,7 @@ class CornflowerBlueDemo {
                 }),
                 new EmailInput({
                     label: "Email",
+                    mute: true,
                     autocomplete: 'off',
                     required: true
                 })
@@ -1557,8 +1559,6 @@ class CornflowerBlueDemo {
             maxvalue: 600,
             value: 335
         }).container);
-
-
 
         simple.appendChild(new SimpleProgressMeter({
             label: "Overall Progress",

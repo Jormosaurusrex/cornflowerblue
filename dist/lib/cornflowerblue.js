@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-06-19
+/*! Cornflower Blue - v0.1.1 - 2020-07-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -7658,7 +7658,7 @@ class DialogWindow {
             clickoutsidetoclose: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by clicking outside." },
             escapecloses: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by the escape key." },
             nofocus: { type: 'option', datatype: 'boolean', description: "If true, do not auto focus anything." },
-            showclose: { type: 'option', datatype: 'boolean', description: "Show or hide the CloseButton in the corner (requires title != null)" }
+            showclose: { type: 'option', datatype: 'boolean', description: "Show or hide the CloseButton in the corner." }
         };
     }
 
@@ -7786,15 +7786,19 @@ class DialogWindow {
                 this.header.appendChild(span);
             }
             this.window.appendChild(this.header);
-
-            if (this.showclose) {
-                this.closebutton = new CloseButton({
-                    action: function(e) {
-                        e.preventDefault();
-                        me.close();
-                    }
-                });
+        }
+        if (this.showclose) {
+            this.closebutton = new CloseButton({
+                action: function(e) {
+                    e.preventDefault();
+                    me.close();
+                }
+            });
+            if ((this.title) || (this.header)) {
                 this.header.appendChild(this.closebutton.button);
+            } else {
+                this.window.classList.add('noheader');
+                this.window.appendChild(this.closebutton.button);
             }
         }
 
@@ -7841,7 +7845,6 @@ class DialogWindow {
             this.window.appendChild(this.contentbox);
 
         } else if (this.content) { // It's a DOM object
-            console.log(this.content);
             this.contentbox = document.createElement('div');
             this.contentbox.classList.add('content');
             this.contentbox.appendChild(this.content);
@@ -10463,6 +10466,9 @@ class InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         if (this.classes) {
             for (let c of this.classes) {
                 this.container.classList.add(c);
@@ -11214,6 +11220,9 @@ class SelectMenu extends InputElement {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('select-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
@@ -12150,6 +12159,9 @@ class FileInput extends InputElement {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('file-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
@@ -12768,6 +12780,9 @@ class RadioGroup extends SelectMenu {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('radiogroup-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
@@ -12898,7 +12913,9 @@ class TextArea extends InputElement {
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('textarea-container');
-
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         this.topline = document.createElement('div');
         this.topline.classList.add('topline');
         if (this.label) { this.topline.appendChild(this.labelobj); }

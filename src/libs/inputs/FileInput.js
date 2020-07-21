@@ -67,6 +67,9 @@ class FileInput extends InputElement {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('file-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
         for (let c of this.classes) {
             this.container.classList.add(c);
         }

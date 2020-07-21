@@ -280,7 +280,11 @@ class Panel {
     get title() { return this.config.title; }
     set title(title) {
         this.config.title = title;
-        if (this.titleactual) { this.titleactual.innerHTML = title; }
+        if (this.togglebutton) {
+            this.togglebutton.text = title;
+        } else if (this.header) {
+            this.header.innerHTML = title;
+        }
     }
 
     get titlecontainer() { return this._titlecontainer; }

@@ -190,8 +190,7 @@ div.progressbar-container {
     }
   }
   &.vertical {
-    flex-direction: row;
-
+    justify-content: center;
     div.decals {
       &.exterior {
 
