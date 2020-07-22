@@ -41,9 +41,6 @@ div.panel {
     &.nocollapse {
       padding: 1em;
     }
-    &:focus-within {
-
-    }
     @include for-hover-only {
       &:hover {
         color: var(--panel-text-color);
@@ -83,14 +80,6 @@ div.panel {
     box-shadow: var(--panel-box-shadow);
   }
   // Styles
-  &.ghost {
-    opacity: .5;
-    &:hover,
-    &:focus,
-    &:focus-within {
-      opacity: 1;
-    }
-  }
   &.invisible {
     background-color: transparent;
     box-shadow: none;

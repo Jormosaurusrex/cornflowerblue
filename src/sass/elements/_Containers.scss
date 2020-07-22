@@ -85,7 +85,8 @@ p.textarea-container {
         --input-border-color-rgb: var(--colors-affordance-rgb);
         --input-border-color: rgb(var(--input-border-color-rgb));
         box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
-        &::placeholder {
+        &::placeholder,
+        &::-ms-input-placeholder {
           opacity: 0.3;
         }
       }
@@ -93,12 +94,12 @@ p.textarea-container {
         background-color: var(--canvas-color-secondary);
         box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
         padding: .5em 1em .5em 1.5em;
-        &:focus,
-        &:focus-within {
+        &:focus {
           --input-border-color-rgb: var(--colors-affordance-rgb);
           background-color: rgba(var(--input-border-color-rgb), 0.05);
           box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
-          &::placeholder {
+          &::placeholder,
+          &::-ms-input-placeholder {
             opacity: 0;
           }
         }
@@ -145,11 +146,6 @@ p.textarea-container {
             right: -.5em;
           }
         }
-      }
-    }
-    &:focus-within {
-      div.inputcontrol {
-        opacity: 1;
       }
     }
     &:before {
@@ -284,8 +280,7 @@ p.textarea-container {
     }
     &.active,
     &.filled,
-    &.passive,
-    &:focus-within {
+    &.passive {
       div.topline {
         margin-top: 0;
         margin-bottom: 0;
@@ -374,8 +369,7 @@ p.textarea-container {
       text-shadow: none;
     }
   }
-  &.active,
-  &:focus-within {
+  &.active {
     label {
       color: var(--colors-affordance);
     }
@@ -389,6 +383,27 @@ p.textarea-container {
       div.topcontrol {
         opacity: 1;
         top: .3em;
+      }
+      div.inputcontrol {
+        opacity: 1;
+      }
+    }
+    &.mute {
+      div.topline {
+        margin-top: 0;
+        margin-bottom: 0;
+        pointer-events: unset;
+        label {
+          padding-left: 0;
+          button.help,
+          &:after {
+            opacity: 1;
+          }
+        }
+        div.topcontrol {
+          opacity: 1;
+          display: inline-block;
+        }
       }
     }
   }
@@ -436,13 +451,14 @@ div.textarea-container {
     }
     div.wrap {
       textarea {
+        &::-ms-input-placeholder,
         &::placeholder {
           opacity: 0;
         }
       }
-      &.filled,
-      &:focus-within {
+      &.filled {
         textarea {
+          &::-ms-input-placeholder,
           &::placeholder {
             opacity: .5;
           }

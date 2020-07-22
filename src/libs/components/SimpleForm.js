@@ -63,6 +63,13 @@ class SimpleForm {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
+     * Scroll it to the top
+     */
+    toTop() {
+        this.contentbox.scrollTo(0, 0);
+    }
+
+    /**
      * Switch to 'passive' mode.
      */
     pacify() {
@@ -74,6 +81,7 @@ class SimpleForm {
         if ((this.passiveinstructions) && (this.instructionbox)) {
             this.instructionbox.setInstructions(this.passiveinstructions.instructions);
         }
+        this.toTop();
     }
 
     /**
@@ -88,7 +96,7 @@ class SimpleForm {
         if ((this.instructions) && (this.instructionbox)) {
             this.instructionbox.setInstructions(this.instructions.instructions);
         }
-
+        this.toTop();
     }
 
     /**

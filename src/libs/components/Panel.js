@@ -11,8 +11,6 @@ class Panel {
             content : null, // The content payload
             style: 'plain', // Various styles that can be applied to the panel.
                             // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
                             // - 'invisible: panel behaves as normal but the background is transparent
 
             hidden: false, // set to true to hide
@@ -42,11 +40,9 @@ class Panel {
             headerid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's header." },
             title: { type: 'option', datatype: 'string', description: "The title to use for the panel." },
             content: { type: 'option', datatype: 'object', description: "The panel content payload." },
-            style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain', 'ghost', or 'invisible'." }
+            style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain' or 'invisible'." }
                              // Various styles that can be applied to the panel.
                             // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
                             // - 'invisible: panel behaves as normal but the background is transparent
         };
     }

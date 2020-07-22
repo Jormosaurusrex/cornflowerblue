@@ -28,10 +28,12 @@ textarea {
   color: var(--colors-standard);
   text-shadow:var(--text-shadow);
   vertical-align: middle;
-  &::placeholder {
+  &::placeholder,
+  &::-ms-input-placeholder {
     color: rgba(var(--input-border-color-rgb), 0.7);
-    font-weight: normal;
+    font-weight: bold;
     text-shadow: none;
+    color: blue;
   }
   &:disabled {
     opacity: .5;
@@ -39,12 +41,12 @@ textarea {
     text-shadow: none;
     pointer-events: none;
   }
-  &:focus,
-  &:focus-within {
+  &:focus {
     --input-border-color-rgb: var(--colors-affordance-rgb);
     --input-border-color: rgb(var(--input-border-color-rgb));
     box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
-    &::placeholder {
+    &::placeholder,
+    &::-ms-input-placeholder {
       opacity: 0.3;
     }
   }
@@ -52,14 +54,10 @@ textarea {
     background-color: var(--canvas-color-secondary);
     box-shadow: inset 0 -.1em 0 0 rgb(var(--input-border-color-rgb));
     padding: .5em 1em .5em 1.5em;
-    &:focus,
-    &:focus-within {
+    &:focus {
       --input-border-color-rgb: var(--colors-affordance-rgb);
       background-color: rgba(var(--input-border-color-rgb), 0.05);
       box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
-      &::placeholder {
-        opacity: 0;
-      }
     }
   }
 }

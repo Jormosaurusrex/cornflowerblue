@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-07-11
+/*! Cornflower Blue - v0.1.1 - 2020-07-22
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3228,8 +3228,6 @@ class Panel {
             content : null, // The content payload
             style: 'plain', // Various styles that can be applied to the panel.
                             // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
                             // - 'invisible: panel behaves as normal but the background is transparent
 
             hidden: false, // set to true to hide
@@ -3259,11 +3257,9 @@ class Panel {
             headerid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's header." },
             title: { type: 'option', datatype: 'string', description: "The title to use for the panel." },
             content: { type: 'option', datatype: 'object', description: "The panel content payload." },
-            style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain', 'ghost', or 'invisible'." }
+            style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain' or 'invisible'." }
                              // Various styles that can be applied to the panel.
                             // - 'plain': simple, spartan, solid.
-                            // - 'ghost': similar to 'plain' except that it turns
-                            //            translucent when not in focus or hover
                             // - 'invisible: panel behaves as normal but the background is transparent
         };
     }
@@ -3497,7 +3493,11 @@ class Panel {
     get title() { return this.config.title; }
     set title(title) {
         this.config.title = title;
-        if (this.titleactual) { this.titleactual.innerHTML = title; }
+        if (this.togglebutton) {
+            this.togglebutton.text = title;
+        } else if (this.header) {
+            this.header.innerHTML = title;
+        }
     }
 
     get titlecontainer() { return this._titlecontainer; }
@@ -4089,7 +4089,6 @@ class ResultsContainer {
         return {
             id : null, // Component id
             classes: [], // Extra css classes to apply,
-
             errors: null, // array of errors
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings
@@ -8798,6 +8797,13 @@ class SimpleForm {
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
+     * Scroll it to the top
+     */
+    toTop() {
+        this.contentbox.scrollTo(0, 0);
+    }
+
+    /**
      * Switch to 'passive' mode.
      */
     pacify() {
@@ -8809,6 +8815,7 @@ class SimpleForm {
         if ((this.passiveinstructions) && (this.instructionbox)) {
             this.instructionbox.setInstructions(this.passiveinstructions.instructions);
         }
+        this.toTop();
     }
 
     /**
@@ -8823,7 +8830,7 @@ class SimpleForm {
         if ((this.instructions) && (this.instructionbox)) {
             this.instructionbox.setInstructions(this.instructions.instructions);
         }
-
+        this.toTop();
     }
 
     /**
@@ -10554,7 +10561,12 @@ class InputElement {
         this.input.setAttribute('aria-describedby', `msg-${this.id}`);
         this.input.setAttribute('role', 'textbox');
         this.input.setAttribute('tabindex', '0');
-        this.input.setAttribute('placeholder', this.placeholder);
+        if (this.mute) {
+            this.input.setAttribute('placeholder', '');
+        } else {
+            this.input.setAttribute('placeholder', this.placeholder);
+        }
+
 
         if (this.title) { this.input.setAttribute('title', this.title); }
         if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
@@ -10634,7 +10646,8 @@ class InputElement {
             }
 
             if ((me.mute) && (me.label)) {
-                me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+                //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+                me.input.setAttribute('placeholder', '');
             }
 
             if (me.container) { me.container.classList.remove('active'); }
@@ -10660,9 +10673,6 @@ class InputElement {
 
         if (this.mute) {
             this.input.classList.add('mute');
-            if (this.label) {
-                this.input.setAttribute('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`);
-            }
         }
 
         if (this.hidden) { this.input.setAttribute('hidden', 'hidden'); }

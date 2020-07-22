@@ -4,7 +4,6 @@ class ResultsContainer {
         return {
             id : null, // Component id
             classes: [], // Extra css classes to apply,
-
             errors: null, // array of errors
             warnings: null, // array of warning strings
             results: null, // array of result or success message strings

@@ -456,7 +456,12 @@ class InputElement {
         this.input.setAttribute('aria-describedby', `msg-${this.id}`);
         this.input.setAttribute('role', 'textbox');
         this.input.setAttribute('tabindex', '0');
-        this.input.setAttribute('placeholder', this.placeholder);
+        if (this.mute) {
+            this.input.setAttribute('placeholder', '');
+        } else {
+            this.input.setAttribute('placeholder', this.placeholder);
+        }
+
 
         if (this.title) { this.input.setAttribute('title', this.title); }
         if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
@@ -536,7 +541,8 @@ class InputElement {
             }
 
             if ((me.mute) && (me.label)) {
-                me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+                //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+                me.input.setAttribute('placeholder', '');
             }
 
             if (me.container) { me.container.classList.remove('active'); }
@@ -562,9 +568,6 @@ class InputElement {
 
         if (this.mute) {
             this.input.classList.add('mute');
-            if (this.label) {
-                this.input.setAttribute('placeholder', `${this.label} ${this.required ? '(' + this.requiredtext + ')' : ''}`);
-            }
         }
 
         if (this.hidden) { this.input.setAttribute('hidden', 'hidden'); }
