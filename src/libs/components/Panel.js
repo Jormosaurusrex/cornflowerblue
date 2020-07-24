@@ -176,7 +176,9 @@ class Panel {
      * @param content the content to place
      */
     replace(content) {
-        this.content.parentNode.removeChild(this.content);
+        if ((this.content) && (this.content.parentNode)) {
+            this.content.parentNode.removeChild(this.content);
+        }
         this.content = content;
         this.container.appendChild(this.content);
     }
