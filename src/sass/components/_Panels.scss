@@ -4,7 +4,7 @@ div.panel {
   color: var(--panel-text-color);
   background-color: var(--panel-background-color);
   margin: 0;
-  padding: var(--panel-padding);
+  padding: 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -22,8 +22,8 @@ div.panel {
     color: var(--panel-text-color);
     --button-default-color: var(--panel-text-color);
     button.headerbutton {
-      padding: 1em;
-      outline-offset: -.3em;
+      padding: .5rem;
+      outline-offset: -.3rem;
       &:focus,
       &:active {
         opacity: 1;
@@ -54,6 +54,7 @@ div.panel {
     align-items: stretch;
     transition: all .2s;
     height: auto;
+    padding: .5rem;
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
   }
@@ -70,7 +71,13 @@ div.panel {
       }
     }
     div.content {
-      display: none;
+      height: 0;
+      max-height: 0;
+      visibility: hidden;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      overflow: hidden;
     }
   }
   &.floating {

@@ -4705,7 +4705,7 @@ div.panel {
   color: var(--panel-text-color);
   background-color: var(--panel-background-color);
   margin: 0;
-  padding: var(--panel-padding);
+  padding: 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -4725,8 +4725,8 @@ div.panel h3.panelheader {
   --button-default-color: var(--panel-text-color);
 }
 div.panel h3.panelheader button.headerbutton {
-  padding: 1em;
-  outline-offset: -0.3em;
+  padding: 0.5rem;
+  outline-offset: -0.3rem;
 }
 div.panel h3.panelheader button.headerbutton:focus, div.panel h3.panelheader button.headerbutton:active {
   opacity: 1;
@@ -4755,6 +4755,7 @@ div.panel div.content {
   align-items: stretch;
   transition: all 0.2s;
   height: auto;
+  padding: 0.5rem;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }
@@ -4768,7 +4769,13 @@ div.panel[aria-expanded=false] h3 button.headerbutton span.icon {
   transform: rotate(-180deg);
 }
 div.panel[aria-expanded=false] div.content {
-  display: none;
+  height: 0;
+  max-height: 0;
+  visibility: hidden;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
 }
 div.panel.floating {
   position: absolute;
