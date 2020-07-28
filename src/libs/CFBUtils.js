@@ -513,7 +513,15 @@ class CFBUtils {
         return text;
     }
 
-    /* MOBILE DETECTION METHODS_________________________________________________________ */
+    /* BROWSER AND MOBILE DETECTION METHODS_________________________________________________________ */
+
+    /**
+     * Check if the browser is Microsoft Edge
+     * @return {boolean} true or false, depending.
+     */
+    static isEdge() {
+        return navigator.userAgent.match(/Edge/i);
+    }
 
     /**
      * Check if the browser is an Android device

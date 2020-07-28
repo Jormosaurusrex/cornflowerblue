@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-07-22
+/*! Cornflower Blue - v0.1.1 - 2020-07-25
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3229,7 +3229,6 @@ class Panel {
             style: 'plain', // Various styles that can be applied to the panel.
                             // - 'plain': simple, spartan, solid.
                             // - 'invisible: panel behaves as normal but the background is transparent
-
             hidden: false, // set to true to hide
             collapsible: true, // can the panel collapse
             closeicon: 'chevron-up',
@@ -3393,9 +3392,9 @@ class Panel {
      * @param content the content to place
      */
     replace(content) {
-        this.content.parentNode.removeChild(this.content);
+        this.contentbox.innerHTML = '';
         this.content = content;
-        this.container.appendChild(this.content);
+        this.contentbox.appendChild(this.content);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -3419,9 +3418,6 @@ class Panel {
 
     get togglebutton() { return this._togglebutton; }
     set togglebutton(togglebutton) { this._togglebutton = togglebutton; }
-
-    get togglecontrol() { return this.config.togglecontrol; }
-    set togglecontrol(togglecontrol) { this.config.togglecontrol = togglecontrol; }
 
     get closeicon() { return this.config.closeicon; }
     set closeicon(closeicon) { this.config.closeicon = closeicon; }
