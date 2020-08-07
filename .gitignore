@@ -1,6 +1,0 @@
-.gitignore
-.idea
-.sass-cache
-node_modules/
-update.sh
-*~
