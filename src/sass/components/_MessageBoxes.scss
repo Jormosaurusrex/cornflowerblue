@@ -1,6 +1,6 @@
 div.messagebox {
   margin: 1rem 0 1rem 0;
-  padding: 1em;
+  padding: 1rem;
   background-color: var(--canvas-color-highlight);
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
@@ -50,7 +50,7 @@ div.messagebox {
         flex-direction: column;
         flex-wrap: nowrap;
         margin: 0;
-        padding: 0 0 0 1.2em;
+        padding: 0 0 0 1.2rem;
         color: var(--colors-standard-rgb);
         text-shadow: var(--text-shadow);
       }
@@ -101,13 +101,13 @@ div.messagebox {
     background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--color-base-rgb), 0.05) .5rem, rgba(var(--color-base-rgb), 0.05) 1rem);
     padding: 0;
     h3 {
-      padding: .5em 1em .5em 1em;
+      padding: .5rem 1rem .5rem 1rem;
       background-color: var(--color-base);
       color: var(--colors-text-hot);
       text-shadow: var(--text-shadow);
     }
     div.payload {
-      padding: 1em;
+      padding: 1rem;
       > span.icon {
         color: var(--color-base);
         text-shadow: var(--text-shadow);

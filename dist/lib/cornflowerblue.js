@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-07-25
+/*! Cornflower Blue - v0.1.1 - 2020-08-13
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -516,7 +516,15 @@ class CFBUtils {
         return text;
     }
 
-    /* MOBILE DETECTION METHODS_________________________________________________________ */
+    /* BROWSER AND MOBILE DETECTION METHODS_________________________________________________________ */
+
+    /**
+     * Check if the browser is Microsoft Edge
+     * @return {boolean} true or false, depending.
+     */
+    static isEdge() {
+        return navigator.userAgent.match(/Edge/i);
+    }
 
     /**
      * Check if the browser is an Android device

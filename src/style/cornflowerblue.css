@@ -4143,7 +4143,7 @@ div.window-container div.dialog {
   padding: 0;
   text-align: left;
   max-height: 90%;
-  min-width: 25em;
+  min-width: 25rem;
   margin: 2rem auto;
   position: relative;
   border-radius: var(--border-radius);
@@ -4581,7 +4581,7 @@ div.spinner.bounce:after {
 
 div.messagebox {
   margin: 1rem 0 1rem 0;
-  padding: 1em;
+  padding: 1rem;
   background-color: var(--canvas-color-highlight);
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
@@ -4632,7 +4632,7 @@ div.messagebox.instructions div.payload ul {
   flex-direction: column;
   flex-wrap: nowrap;
   margin: 0;
-  padding: 0 0 0 1.2em;
+  padding: 0 0 0 1.2rem;
   color: var(--colors-standard-rgb);
   text-shadow: var(--text-shadow);
 }
@@ -4668,13 +4668,13 @@ div.messagebox.results {
   padding: 0;
 }
 div.messagebox.results h3 {
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   background-color: var(--color-base);
   color: var(--colors-text-hot);
   text-shadow: var(--text-shadow);
 }
 div.messagebox.results div.payload {
-  padding: 1em;
+  padding: 1rem;
 }
 div.messagebox.results div.payload > span.icon {
   color: var(--color-base);
