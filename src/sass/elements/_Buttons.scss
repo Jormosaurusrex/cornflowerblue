@@ -116,13 +116,14 @@ a.button {
     }
   }
   &.hamburger {
+    --colors-local: var(--colors-text-hot);
     span.magichamburger {
       display: inline-block;
       width: 1em;
       > span {
         width: 1em;
         height: .2em;
-        background-color: var(--colors-text-hot);
+        background-color: var(--colors-local);
         display: block;
         margin: 0;
         transition: all 0.5s;
@@ -140,6 +141,9 @@ a.button {
           transform-origin: bottom left;
         }
       }
+    }
+    &.mute {
+      --colors-local: var(--colors-affordance);
     }
     &[aria-expanded='true'] {
       span.magichamburger {

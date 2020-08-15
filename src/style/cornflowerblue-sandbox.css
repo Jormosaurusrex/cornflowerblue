@@ -941,6 +941,12 @@ a.button.expander:hover span.secondicon {
     width: auto;
   }
 }
+button.hamburger,
+input[type=submit].hamburger,
+input[type=reset].hamburger,
+a.button.hamburger {
+  --colors-local: var(--colors-text-hot);
+}
 button.hamburger span.magichamburger,
 input[type=submit].hamburger span.magichamburger,
 input[type=reset].hamburger span.magichamburger,
@@ -954,7 +960,7 @@ input[type=reset].hamburger span.magichamburger > span,
 a.button.hamburger span.magichamburger > span {
   width: 1em;
   height: 0.2em;
-  background-color: var(--colors-text-hot);
+  background-color: var(--colors-local);
   display: block;
   margin: 0;
   transition: all 0.5s;
@@ -980,6 +986,12 @@ input[type=reset].hamburger span.magichamburger > span:last-child,
 a.button.hamburger span.magichamburger > span:last-child {
   transform: translateX(0) rotate(0);
   transform-origin: bottom left;
+}
+button.hamburger.mute,
+input[type=submit].hamburger.mute,
+input[type=reset].hamburger.mute,
+a.button.hamburger.mute {
+  --colors-local: var(--colors-affordance);
 }
 button.hamburger[aria-expanded=true] span.magichamburger span:first-child,
 input[type=submit].hamburger[aria-expanded=true] span.magichamburger span:first-child,

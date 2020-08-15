@@ -25,6 +25,7 @@ class SimpleForm {
 
             passive: false, // Start life in "passive" mode. This will set all form elements to "passive" and hide any controls.  This also shows the "passive" instructions, if any.
 
+            headers: null, // Possible headers to attach to a submitted form.
             instructions: null, // Instructions configuration.  See InstructionBox.
             passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
@@ -187,8 +188,13 @@ class SimpleForm {
         }
         const body = urlelements.join('&');
 
+        let headers = this.headers;
+        if (!headers) { headers = {}; }
+
+        headers['Content-Type'] = "application/x-www-form-urlencoded"
+
         fetch(this.handler, {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: headers,
             method: this.method,
             body: body
         })
@@ -557,6 +563,9 @@ class SimpleForm {
 
     get passiveinstructions() { return this.config.passiveinstructions; }
     set passiveinstructions(passiveinstructions) { this.config.passiveinstructions = passiveinstructions; }
+
+    get headers() { return this.config.headers; }
+    set headers(headers) { this.config.headers = headers; }
 
     get instructionbox() {
         if (!this._instructionbox) { this.buildInstructionBox(); }
