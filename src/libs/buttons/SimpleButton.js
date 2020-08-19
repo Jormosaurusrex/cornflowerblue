@@ -17,6 +17,7 @@ class SimpleButton {
             tipicon: null,
             tipgravity: 'n',
             classes: [],
+            image: null,
             icon: null,
             iconclasses: [],
             iconside: 'left',
@@ -44,6 +45,7 @@ class SimpleButton {
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
+            image: { type: 'option', datatype: 'url', description: "If provided, use this image for the button." },
             submits: { type: 'option', datatype: 'boolean', description: "If true, forces the button type to be type='submit'" },
             cansubmit: { type: 'option', datatype: 'boolean', description: "If true, advertises to Form objects that it can be used to submit them, if submits is true." },
             text: { type: 'option', datatype: 'string', description: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset" },
@@ -271,6 +273,14 @@ class SimpleButton {
         }
         if (this.shape) { this.button.classList.add(this.shape); }
 
+        if (this.image) {
+            this.button.classList.add('naked');
+            this.button.classList.add('image');
+            if (!this.shape) { this.button.classList.add('square'); }
+            this.button.style.backgroundImage = `url(${this.image})`;
+        }
+
+
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', function (e) {
                 if (!me.disabled) {
@@ -377,6 +387,9 @@ class SimpleButton {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get image() { return this.config.image; }
+    set image(image) { this.config.id = image; }
 
     get link() { return this.config.link; }
     set link(link) { this.config.link = link; }

@@ -115,3 +115,5 @@ class LZSong extends BusinessObject {
     }
 
 }
+
+window.LZSong = LZSong;

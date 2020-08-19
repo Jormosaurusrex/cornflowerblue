@@ -1319,7 +1319,6 @@ a.button {
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
   box-sizing: border-box;
   position: relative;
   text-align: left;
@@ -1987,6 +1986,18 @@ a.button.fill {
     font-size: 1em;
   }
 }
+button.image,
+input[type=submit].image,
+input[type=reset].image,
+a.button.image {
+  --image-width: 2rem;
+  --image-height: 2rem;
+  width: var(--image-width);
+  min-width: var(--image-width);
+  height: var(--image-height);
+  min-height: var(--image-height);
+  background-size: cover;
+}
 button.hidden,
 input[type=submit].hidden,
 input[type=reset].hidden,
@@ -2336,6 +2347,7 @@ ul.button-menu {
   display: flex;
 }
 ul.button-menu li {
+  --link-color: var(--colors-affordance);
   padding: 0;
   display: flex;
   flex-direction: row;
@@ -2357,6 +2369,7 @@ ul.button-menu li:active, ul.button-menu li:focus {
   }
 }
 ul.button-menu li a {
+  --colors-affordance: var(--link-color);
   padding: 0.6em 1em 0.6em 1em;
   white-space: nowrap;
   background-color: transparent;

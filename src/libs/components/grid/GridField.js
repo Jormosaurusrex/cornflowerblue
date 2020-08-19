@@ -32,6 +32,9 @@ class GridField {
             maxnumber: null,   // The maxnumber to use in the field
             nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
             resize: false,     // Whether or not to allow resizing of the column (default: false)
+            mute: false,       // If true, apply to elements.
+            required: false,   // If true, elements drawn from this will be required.
+
             description: null, // A string that describes the data in the column
             classes: [],       // Additional classes to apply to cells of this field
             filterable: false, // Is the field filterable?
@@ -202,6 +205,7 @@ class GridField {
                 disabled: this.readonly,
                 help: this.description,
                 placeholder: this.placeholder,
+                mute: this.mute,
                 maxnumber: this.maxnumber,
                 minnumber: this.minnumber,
                 classes: this.classes,
@@ -337,6 +341,9 @@ class GridField {
     get minnumber() { return this.config.minnumber ; }
     set minnumber(minnumber) { this.config.minnumber = minnumber; }
 
+    get mute() { return this.config.mute ; }
+    set mute(mute) { this.config.mute = mute; }
+
     get name() { return this.config.name ; }
     set name(name) { this.config.name = name; }
 
@@ -356,6 +363,9 @@ class GridField {
         }
         this.config.renderer = renderer;
     }
+
+    get required() { return this.config.required ; }
+    set required(required) { this.config.required = required; }
 
     get resize() { return this.config.resize ; }
     set resize(resize) { this.config.resize = resize; }

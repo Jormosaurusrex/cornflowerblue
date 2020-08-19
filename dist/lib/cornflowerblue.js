@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-15
+/*! Cornflower Blue - v0.1.1 - 2020-08-18
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -530,8 +530,9 @@ class BusinessObject {
             source: null,
             //cadence: (1000 * 60 * 10), // Time between update heartbeats in milliseconds
             cadence: (1000 * 60), // Time between update heartbeats in milliseconds
-                                       // Set to -1 to disable heartbeat
+                                  // Set to -1 to disable heartbeat
             dataprocessor: null,
+            sourcemethod: 'GET', // the method to get the source from.
             sortfunction: function(a, b) {
                 if (a.name > b.name) { return 1 }
                 if (a.name < b.name) { return -1 }
@@ -668,6 +669,7 @@ class BusinessObject {
 
         this.updating = true;
         await fetch(this.source, {
+            method: this.sourcemethod,
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
             .then(response => response.json()) // response -> json
@@ -763,6 +765,9 @@ class BusinessObject {
 
     get source() { return this.config.source; }
     set source(source) { this.config.source = source; }
+
+    get sourcemethod() { return this.config.sourcemethod; }
+    set sourcemethod(sourcemethod) { this.config.sourcemethod = sourcemethod; }
 
     get updated() { return this._updated; }
     set updated(updated) { this._updated = updated; }
@@ -2164,6 +2169,7 @@ class SimpleButton {
             tipicon: null,
             tipgravity: 'n',
             classes: [],
+            image: null,
             icon: null,
             iconclasses: [],
             iconside: 'left',
@@ -2191,6 +2197,7 @@ class SimpleButton {
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in"},
+            image: { type: 'option', datatype: 'url', description: "If provided, use this image for the button." },
             submits: { type: 'option', datatype: 'boolean', description: "If true, forces the button type to be type='submit'" },
             cansubmit: { type: 'option', datatype: 'boolean', description: "If true, advertises to Form objects that it can be used to submit them, if submits is true." },
             text: { type: 'option', datatype: 'string', description: "The text for the button. This is also used as aria-label, if <code>arialabel</code> is unset" },
@@ -2418,6 +2425,14 @@ class SimpleButton {
         }
         if (this.shape) { this.button.classList.add(this.shape); }
 
+        if (this.image) {
+            this.button.classList.add('naked');
+            this.button.classList.add('image');
+            if (!this.shape) { this.button.classList.add('square'); }
+            this.button.style.backgroundImage = `url(${this.image})`;
+        }
+
+
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', function (e) {
                 if (!me.disabled) {
@@ -2524,6 +2539,9 @@ class SimpleButton {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get image() { return this.config.image; }
+    set image(image) { this.config.id = image; }
 
     get link() { return this.config.link; }
     set link(link) { this.config.link = link; }
@@ -2812,6 +2830,10 @@ class ButtonMenu extends SimpleButton {
         this.menu.classList.add('button-menu');
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
+
+        for (let c of this.classes) {
+            this.menu.classList.add(c);
+        }
 
         let order = 1;
 
@@ -4350,6 +4372,7 @@ class DataGrid extends Panel {
             fields: [],  // The data fields for the grid and how they behave.
             data: null,   // The data to throw into the grid on load. This is an array of rows.
             source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
+            sourcemethod: 'GET', // the method to get the source from.
             dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
                                  // This is a function that data is passed through to massage.
                                  // Must accept a JSON blob as it's argument and return an array
@@ -5096,6 +5119,7 @@ class DataGrid extends Panel {
     fetchData(url=this.source, callback) {
         this.activitynotifier.removeAttribute('aria-hidden');
         fetch(url, {
+            method: this.sourcemethod,
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
             .then(response => response.json()) // response -> json
@@ -5567,7 +5591,7 @@ class DataGrid extends Panel {
             deselectOthers = false;
         }
 
-        let sels = this.gridbody.querySelectorAll("[aria-selected='true'");
+        let sels = this.gridbody.querySelectorAll("[aria-selected='true']");
 
         if ((sels) && (sels.length > 0)) {
             othersSelected = true;
@@ -6465,6 +6489,9 @@ class DataGrid extends Panel {
     get source() { return this.config.source; }
     set source(source) { this.config.source = source; }
 
+    get sourcemethod() { return this.config.sourcemethod; }
+    set sourcemethod(sourcemethod) { this.config.sourcemethod = sourcemethod; }
+
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
 
@@ -6892,6 +6919,9 @@ class GridField {
             maxnumber: null,   // The maxnumber to use in the field
             nodupe: false,     // If true, this column is ignored when deemphasizing duplicate rows.
             resize: false,     // Whether or not to allow resizing of the column (default: false)
+            mute: false,       // If true, apply to elements.
+            required: false,   // If true, elements drawn from this will be required.
+
             description: null, // A string that describes the data in the column
             classes: [],       // Additional classes to apply to cells of this field
             filterable: false, // Is the field filterable?
@@ -7062,6 +7092,7 @@ class GridField {
                 disabled: this.readonly,
                 help: this.description,
                 placeholder: this.placeholder,
+                mute: this.mute,
                 maxnumber: this.maxnumber,
                 minnumber: this.minnumber,
                 classes: this.classes,
@@ -7197,6 +7228,9 @@ class GridField {
     get minnumber() { return this.config.minnumber ; }
     set minnumber(minnumber) { this.config.minnumber = minnumber; }
 
+    get mute() { return this.config.mute ; }
+    set mute(mute) { this.config.mute = mute; }
+
     get name() { return this.config.name ; }
     set name(name) { this.config.name = name; }
 
@@ -7216,6 +7250,9 @@ class GridField {
         }
         this.config.renderer = renderer;
     }
+
+    get required() { return this.config.required ; }
+    set required(required) { this.config.required = required; }
 
     get resize() { return this.config.resize ; }
     set resize(resize) { this.config.resize = resize; }
@@ -8859,7 +8896,7 @@ class SimpleForm {
 
         let headers = this.headers;
         if (!headers) { headers = {}; }
-        
+
         headers['Content-Type'] = "application/x-www-form-urlencoded"
 
         fetch(this.handler, {

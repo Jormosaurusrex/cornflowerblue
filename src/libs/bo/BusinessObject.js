@@ -6,8 +6,9 @@ class BusinessObject {
             source: null,
             //cadence: (1000 * 60 * 10), // Time between update heartbeats in milliseconds
             cadence: (1000 * 60), // Time between update heartbeats in milliseconds
-                                       // Set to -1 to disable heartbeat
+                                  // Set to -1 to disable heartbeat
             dataprocessor: null,
+            sourcemethod: 'GET', // the method to get the source from.
             sortfunction: function(a, b) {
                 if (a.name > b.name) { return 1 }
                 if (a.name < b.name) { return -1 }
@@ -144,6 +145,7 @@ class BusinessObject {
 
         this.updating = true;
         await fetch(this.source, {
+            method: this.sourcemethod,
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
             .then(response => response.json()) // response -> json
@@ -239,6 +241,9 @@ class BusinessObject {
 
     get source() { return this.config.source; }
     set source(source) { this.config.source = source; }
+
+    get sourcemethod() { return this.config.sourcemethod; }
+    set sourcemethod(sourcemethod) { this.config.sourcemethod = sourcemethod; }
 
     get updated() { return this._updated; }
     set updated(updated) { this._updated = updated; }

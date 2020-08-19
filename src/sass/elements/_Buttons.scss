@@ -7,7 +7,6 @@ a.button {
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
   box-sizing: border-box;
   position: relative;
   text-align: left;
@@ -37,7 +36,6 @@ a.button {
       margin: 0 0 0 .5em;
     }
   }
-
   @include for-hover-only {
     &:hover,
     &.hover {
@@ -375,6 +373,17 @@ a.button {
       font-size: 1em;
     }
   }
+
+  &.image {
+    --image-width: 2rem;
+    --image-height: 2rem;
+    width: var(--image-width);
+    min-width: var(--image-width);
+    height: var(--image-height);
+    min-height: var(--image-height);
+    background-size: cover;
+  }
+
   &.hidden {
     display: none;
   }

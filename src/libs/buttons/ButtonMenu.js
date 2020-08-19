@@ -236,6 +236,10 @@ class ButtonMenu extends SimpleButton {
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
 
+        for (let c of this.classes) {
+            this.menu.classList.add(c);
+        }
+
         let order = 1;
 
         for (let item of this.items) {

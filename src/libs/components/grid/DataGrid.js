@@ -15,6 +15,7 @@ class DataGrid extends Panel {
             fields: [],  // The data fields for the grid and how they behave.
             data: null,   // The data to throw into the grid on load. This is an array of rows.
             source: null, // the url from which data is drawn.  Ignored if 'data' is not null.
+            sourcemethod: 'GET', // the method to get the source from.
             dataprocessor: null, // Data sources may not provide data in a way that the grid prefers.
                                  // This is a function that data is passed through to massage.
                                  // Must accept a JSON blob as it's argument and return an array
@@ -761,6 +762,7 @@ class DataGrid extends Panel {
     fetchData(url=this.source, callback) {
         this.activitynotifier.removeAttribute('aria-hidden');
         fetch(url, {
+            method: this.sourcemethod,
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
             .then(response => response.json()) // response -> json
@@ -1232,7 +1234,7 @@ class DataGrid extends Panel {
             deselectOthers = false;
         }
 
-        let sels = this.gridbody.querySelectorAll("[aria-selected='true'");
+        let sels = this.gridbody.querySelectorAll("[aria-selected='true']");
 
         if ((sels) && (sels.length > 0)) {
             othersSelected = true;
@@ -2129,6 +2131,9 @@ class DataGrid extends Panel {
 
     get source() { return this.config.source; }
     set source(source) { this.config.source = source; }
+
+    get sourcemethod() { return this.config.sourcemethod; }
+    set sourcemethod(sourcemethod) { this.config.sourcemethod = sourcemethod; }
 
     get sorticon() { return this.config.sorticon; }
     set sorticon(sorticon) { this.config.sorticon = sorticon; }
