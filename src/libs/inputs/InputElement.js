@@ -90,7 +90,7 @@ class InputElement {
      */
     constructor(config) {
         if (!config) { config = {}; }
-        this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
+        this.config = Object.assign({}, InputElement.DEFAULT_CONFIG, config);
 
         if (!this.arialabel) { // munch aria label.
             if (this.label) {

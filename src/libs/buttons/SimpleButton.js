@@ -3,6 +3,8 @@ class SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             id: null,
+            aslink: false,
+            href: null,
             dataattributes: null,
             attributes: null,
             submits: false,
@@ -39,6 +41,8 @@ class SimpleButton {
     static get DOCUMENTATION() {
         return {
             id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            aslink: { type: 'option', datatype: 'boolean', description: "Output an <a> object instead of a <button>." },
+            href: { type: 'option', datatype: 'url', description: "Use this as the link's href if aslink is true." },
             dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
             attributes: { type: 'option', datatype: 'dictionary',  description: "A dictionary, key: value, which will end up with $key = value on elements" },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
@@ -176,7 +180,15 @@ class SimpleButton {
             this.textobj.innerHTML = this.text;
         }
 
-        this.button = document.createElement('button');
+        if (this.aslink) {
+            this.button = document.createElement('a');
+            this.button.classList.add('button');
+            if (this.href) {
+                this.button.setAttribute('href', this.href);
+            }
+        } else {
+            this.button = document.createElement('button');
+        }
 
         if (this.icon) {
             this.iconactual = IconFactory.icon(this.icon);
@@ -311,6 +323,9 @@ class SimpleButton {
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
 
+    get aslink() { return this.config.aslink; }
+    set aslink(aslink) { this.config.aslink = aslink; }
+
     get attributes() { return this.config.attributes; }
     set attributes(attributes) { this.config.attributes = attributes; }
 
@@ -372,6 +387,9 @@ class SimpleButton {
         }
         this.config.hoverout = hoverout;
     }
+
+    get href() { return this.config.href; }
+    set href(href) { this.config.href = href; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

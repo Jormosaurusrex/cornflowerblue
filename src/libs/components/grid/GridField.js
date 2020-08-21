@@ -213,6 +213,9 @@ class GridField {
                 renderer: this.renderer
             };
         }
+        if (this.hidden) {
+            return new HiddenField(config);
+        }
 
         switch (this.type) {
             case 'number':

@@ -3025,8 +3025,8 @@ p.input-container.passive div.topline div.topcontrol,
 div.file-container.passive div.topline div.topcontrol,
 div.textarea-container.passive div.topline div.topcontrol,
 p.textarea-container.passive div.topline div.topcontrol {
-  display: none;
-  opacity: 0;
+  display: none !important;
+  opacity: 0 !important;
 }
 div.input-container.passive div.wrap,
 div.input-container.passive ul.messagebox,
@@ -4368,7 +4368,7 @@ ul.tabbar li > a:focus {
   }
 }
 ul.tabbar li > a[aria-selected=true] {
-  box-shadow: inset 0px -0.3em 0 0 var(--colors-focus);
+  box-shadow: inset 0 -0.3rem 0 0 var(--colors-focus);
   color: var(--colors-focus);
   text-shadow: var(--text-shadow);
 }
@@ -4398,10 +4398,9 @@ ul.tabbar li > a > span.icon.secondicon {
 }
 ul.tabbar li ul.submenu {
   display: none;
-  width: 100%;
   position: absolute;
-  left: 0;
-  top: 3em;
+  right: 0;
+  top: 3.1em;
   overflow: visible;
   padding: 0;
   list-style-type: none;
@@ -4417,7 +4416,7 @@ ul.tabbar li ul.submenu:before {
   width: 0;
   height: 0;
   position: absolute;
-  right: 1.15em;
+  right: 1em;
   top: -0.7em;
   border-width: 0 0.7em 0.7em 0.7em;
   border-style: solid;

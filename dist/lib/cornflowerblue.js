@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-18
+/*! Cornflower Blue - v0.1.1 - 2020-08-20
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -7100,6 +7100,9 @@ class GridField {
                 renderer: this.renderer
             };
         }
+        if (this.hidden) {
+            return new HiddenField(config);
+        }
 
         switch (this.type) {
             case 'number':
@@ -9513,6 +9516,7 @@ class TabBar {
 
         let li = document.createElement('li');
         li.setAttribute('role', 'none');
+        li.setAttribute('id', `parent-${tabdef.id}`);
         li.setAttribute('data-tabno', `${order}`);
         if (tabdef.classes) {
             for (let c of tabdef.classes) {

@@ -19,6 +19,7 @@ class TabBar {
             //    label: "Tab Text", // text, optional if given an icon
             //    id: null, // tab id, used with "activate(tabid)"
             //    icon: null, // an icon identifier, optional
+            //    tooltip: null, // an optional tooltip
             //    selected: false, // if true, start selected
             //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
             //    subtabs: null  // an array of tab definitions to indicate subtabs
@@ -152,11 +153,19 @@ class TabBar {
 
         let li = document.createElement('li');
         li.setAttribute('role', 'none');
+        li.setAttribute('id', `parent-${tabdef.id}`);
         li.setAttribute('data-tabno', `${order}`);
         if (tabdef.classes) {
             for (let c of tabdef.classes) {
                 li.classList.add(c);
             }
+        }
+        if (tabdef.tooltip) {
+            new ToolTip({
+                text: tabdef.tooltip,
+                icon: tabdef.tipicon,
+                gravity: (tabdef.tooltipgravity ? tabdef.tooltipgravity : 's')
+            }).attach(li);
         }
 
         let link = document.createElement('a');
