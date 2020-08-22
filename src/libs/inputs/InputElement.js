@@ -190,6 +190,9 @@ class InputElement {
             } else if ((this.isDirty()) && (!onload)) { // This has to be valid
                 this.container.classList.add('valid');
                 this.container.classList.add('filled');
+            } else if (this.value) {
+                this.container.classList.remove('valid');
+                this.container.classList.add('filled');
             } else {
                 this.container.classList.remove('valid');
             }

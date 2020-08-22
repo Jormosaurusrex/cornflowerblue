@@ -5124,7 +5124,7 @@ ul.tabbar li.mobileonly {
   }
 }
 ul.tabbar li > a {
-  padding: 0 1em 0 1em;
+  padding: 0 1rem 0 1rem;
   white-space: nowrap;
   color: var(--colors-affordance);
   text-shadow: var(--text-shadow);
@@ -5233,7 +5233,7 @@ ul.tabbar.vertical > li {
   margin: 0;
 }
 ul.tabbar.vertical > li > a {
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   justify-content: flex-start;
 }
 ul.tabbar.vertical > li > a:focus {

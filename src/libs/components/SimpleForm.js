@@ -8,6 +8,7 @@ class SimpleForm {
             /*
                 Only one of 'handler' or 'url'.  If both are present, 'handler' will take precedence.
                 The 'handler' can be a function or url.  If a function, it will be passed self.
+                The 'handler' can be a function or url.  If a function, it will be passed self.
                 If a URL, it will be the target of an internal fetch request
              */
             handler: null, // Where to submit this form. Can be URL or function.
@@ -16,7 +17,7 @@ class SimpleForm {
             target: null, // Target attribute.  Requires a URL.
             action: null, // A function to execute on submit that isn't a form handler. Basically this captures
                             // a return characters
-
+            contenttype: 'application/json',
             dialog: null, // A SimpleDialog window that this form may be included in.
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
@@ -181,17 +182,27 @@ class SimpleForm {
 
         // Edge is terrible and doesn't support FormData;
         //const body = new URLSearchParams(new FormData(this.form)).toString();
-
-        let urlelements = [];
-        for (let i of this.elements) {
-            urlelements.push(`${i.name}=${i.value}`);
+        let body;
+        if (this.contenttype === 'application/x-www-form-urlencoded') {
+            let urlelements = [];
+            for (let i of this.elements) {
+                urlelements.push(`${i.name}=${i.value}`);
+            }
+            body = urlelements.join('&');
+        } else {
+            let dict = {};
+            for (let i of this.elements) {
+                dict[i.name]  = i.value;
+            }
+            body = JSON.stringify(dict);
         }
-        const body = urlelements.join('&');
 
         let headers = this.headers;
         if (!headers) { headers = {}; }
 
-        headers['Content-Type'] = "application/x-www-form-urlencoded"
+        if (!headers['Content-Type']) {
+            headers['Content-Type'] = this.contenttype
+        }
 
         fetch(this.handler, {
             headers: headers,
@@ -217,7 +228,11 @@ class SimpleForm {
      */
     handleResults(results, noexecution) {
         if (this.resultscontainer) { this.resultscontainer.remove(); }
-        this.resultscontainer = new ResultsContainer(results).container;
+        this.resultscontainer = new ResultsContainer({
+            results: results.successes,
+            errors: results.errors,
+            warnings: results.warnings
+        }).container;
         this.headerbox.append(this.resultscontainer);
         this.shade.deactivate();
 
@@ -493,6 +508,9 @@ class SimpleForm {
         return this._contentbox;
     }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
+    get contenttype() { return this.config.contenttype; }
+    set contenttype(contenttype) { this.config.contenttype = contenttype; }
 
     get dialog() { return this.config.dialog; }
     set dialog(dialog) { this.config.dialog = dialog; }

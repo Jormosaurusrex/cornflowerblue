@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-20
+/*! Cornflower Blue - v0.1.1 - 2020-08-22
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -663,9 +663,6 @@ class BusinessObject {
     async load(callback) {
         if (this.updating) { return; }
         if (!this.source) { return; }
-        if ((this.initialized) && (!this.needsupdate())) {
-            return;
-        }
 
         this.updating = true;
         await fetch(this.source, {
@@ -2155,6 +2152,8 @@ class SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             id: null,
+            aslink: false,
+            href: null,
             dataattributes: null,
             attributes: null,
             submits: false,
@@ -2191,6 +2190,8 @@ class SimpleButton {
     static get DOCUMENTATION() {
         return {
             id: { type: 'option', datatype: 'string', description: "A unique id value. The button object will have this as it's id." },
+            aslink: { type: 'option', datatype: 'boolean', description: "Output an <a> object instead of a <button>." },
+            href: { type: 'option', datatype: 'url', description: "Use this as the link's href if aslink is true." },
             dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
             attributes: { type: 'option', datatype: 'dictionary',  description: "A dictionary, key: value, which will end up with $key = value on elements" },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
@@ -2328,7 +2329,15 @@ class SimpleButton {
             this.textobj.innerHTML = this.text;
         }
 
-        this.button = document.createElement('button');
+        if (this.aslink) {
+            this.button = document.createElement('a');
+            this.button.classList.add('button');
+            if (this.href) {
+                this.button.setAttribute('href', this.href);
+            }
+        } else {
+            this.button = document.createElement('button');
+        }
 
         if (this.icon) {
             this.iconactual = IconFactory.icon(this.icon);
@@ -2463,6 +2472,9 @@ class SimpleButton {
     get arialabel() { return this.config.arialabel; }
     set arialabel(arialabel) { this.config.arialabel = arialabel; }
 
+    get aslink() { return this.config.aslink; }
+    set aslink(aslink) { this.config.aslink = aslink; }
+
     get attributes() { return this.config.attributes; }
     set attributes(attributes) { this.config.attributes = attributes; }
 
@@ -2524,6 +2536,9 @@ class SimpleButton {
         }
         this.config.hoverout = hoverout;
     }
+
+    get href() { return this.config.href; }
+    set href(href) { this.config.href = href; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
@@ -8717,6 +8732,7 @@ class SimpleForm {
             /*
                 Only one of 'handler' or 'url'.  If both are present, 'handler' will take precedence.
                 The 'handler' can be a function or url.  If a function, it will be passed self.
+                The 'handler' can be a function or url.  If a function, it will be passed self.
                 If a URL, it will be the target of an internal fetch request
              */
             handler: null, // Where to submit this form. Can be URL or function.
@@ -8725,7 +8741,7 @@ class SimpleForm {
             target: null, // Target attribute.  Requires a URL.
             action: null, // A function to execute on submit that isn't a form handler. Basically this captures
                             // a return characters
-
+            contenttype: 'application/json',
             dialog: null, // A SimpleDialog window that this form may be included in.
             enctype: null, // Encapsulation type.
             autocomplete: 'off', // Autocomplete value
@@ -8890,17 +8906,27 @@ class SimpleForm {
 
         // Edge is terrible and doesn't support FormData;
         //const body = new URLSearchParams(new FormData(this.form)).toString();
-
-        let urlelements = [];
-        for (let i of this.elements) {
-            urlelements.push(`${i.name}=${i.value}`);
+        let body;
+        if (this.contenttype === 'application/x-www-form-urlencoded') {
+            let urlelements = [];
+            for (let i of this.elements) {
+                urlelements.push(`${i.name}=${i.value}`);
+            }
+            body = urlelements.join('&');
+        } else {
+            let dict = {};
+            for (let i of this.elements) {
+                dict[i.name]  = i.value;
+            }
+            body = JSON.stringify(dict);
         }
-        const body = urlelements.join('&');
 
         let headers = this.headers;
         if (!headers) { headers = {}; }
 
-        headers['Content-Type'] = "application/x-www-form-urlencoded"
+        if (!headers['Content-Type']) {
+            headers['Content-Type'] = this.contenttype
+        }
 
         fetch(this.handler, {
             headers: headers,
@@ -8926,7 +8952,11 @@ class SimpleForm {
      */
     handleResults(results, noexecution) {
         if (this.resultscontainer) { this.resultscontainer.remove(); }
-        this.resultscontainer = new ResultsContainer(results).container;
+        this.resultscontainer = new ResultsContainer({
+            results: results.successes,
+            errors: results.errors,
+            warnings: results.warnings
+        }).container;
         this.headerbox.append(this.resultscontainer);
         this.shade.deactivate();
 
@@ -9203,6 +9233,9 @@ class SimpleForm {
     }
     set contentbox(contentbox) { this._contentbox = contentbox; }
 
+    get contenttype() { return this.config.contenttype; }
+    set contenttype(contenttype) { this.config.contenttype = contenttype; }
+
     get dialog() { return this.config.dialog; }
     set dialog(dialog) { this.config.dialog = dialog; }
 
@@ -9383,6 +9416,7 @@ class TabBar {
             //    label: "Tab Text", // text, optional if given an icon
             //    id: null, // tab id, used with "activate(tabid)"
             //    icon: null, // an icon identifier, optional
+            //    tooltip: null, // an optional tooltip
             //    selected: false, // if true, start selected
             //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
             //    subtabs: null  // an array of tab definitions to indicate subtabs
@@ -9522,6 +9556,13 @@ class TabBar {
             for (let c of tabdef.classes) {
                 li.classList.add(c);
             }
+        }
+        if (tabdef.tooltip) {
+            new ToolTip({
+                text: tabdef.tooltip,
+                icon: tabdef.tipicon,
+                gravity: (tabdef.tooltipgravity ? tabdef.tooltipgravity : 's')
+            }).attach(li);
         }
 
         let link = document.createElement('a');
@@ -10180,7 +10221,7 @@ class InputElement {
      */
     constructor(config) {
         if (!config) { config = {}; }
-        this.config = Object.assign({}, TextInput.DEFAULT_CONFIG, config);
+        this.config = Object.assign({}, InputElement.DEFAULT_CONFIG, config);
 
         if (!this.arialabel) { // munch aria label.
             if (this.label) {
@@ -10279,6 +10320,9 @@ class InputElement {
                 this.container.classList.remove('filled');
             } else if ((this.isDirty()) && (!onload)) { // This has to be valid
                 this.container.classList.add('valid');
+                this.container.classList.add('filled');
+            } else if (this.value) {
+                this.container.classList.remove('valid');
                 this.container.classList.add('filled');
             } else {
                 this.container.classList.remove('valid');

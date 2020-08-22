@@ -139,9 +139,6 @@ class BusinessObject {
     async load(callback) {
         if (this.updating) { return; }
         if (!this.source) { return; }
-        if ((this.initialized) && (!this.needsupdate())) {
-            return;
-        }
 
         this.updating = true;
         await fetch(this.source, {
