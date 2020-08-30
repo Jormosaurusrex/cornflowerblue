@@ -7,6 +7,7 @@ class DialogWindow {
             actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
             // Possible keywords:  closebutton, cancelbutton
             content: null,
+            onclose: null,
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // DOM object, will be used if passed before title.
             lightbox: false,    // For image types, if true, open the image in a lightbox
@@ -35,6 +36,7 @@ class DialogWindow {
             trailer: { type: 'option', datatype: 'domobject', description: "Adds a trailing chunk of DOM.  Can be provided a full dom object or a string.  If it's a string, it creates a div at the bottom with the value of the text." },
             canceltext: { type: 'option', datatype: 'string', description: "Text used for cancel buttons provided as keywords." },
             closetext: { type: 'option', datatype: 'string', description: "Text used for close buttons provided as keywords." },
+            onclose: { type: 'option', datatype: 'function', description: "What to do when closing. Passed (self) as an argument." },
 
             lightbox: { type: 'option', datatype: 'boolean', description: "For image types, if true, open the image in a lightbox." },
             clickoutsidetoclose: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by clicking outside." },
@@ -123,6 +125,9 @@ class DialogWindow {
         }
         document.body.classList.remove('modalopen');
         document.removeEventListener('keyup', this.escapelistener);
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
     }
 
     /**
@@ -332,6 +337,9 @@ class DialogWindow {
 
     get nofocus() { return this.config.nofocus; }
     set nofocus(nofocus) { this.config.nofocus = nofocus; }
+
+    get onclose() { return this.config.onclose; }
+    set onclose(onclose) { this.config.onclose = onclose; }
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }

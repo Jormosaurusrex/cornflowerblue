@@ -64,6 +64,7 @@ class FileInput extends InputElement {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
+        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('file-container');
@@ -137,29 +138,27 @@ class FileInput extends InputElement {
         this.fileinput.addEventListener('focusin', function() {
                 me.triggerbox.focus();
         });
-
-        CFBUtils.applyDataAttributes(this.attributes, this.fileinput);
-
-        this.fileinput.addEventListener('change', function(me) {
-            if ((me.fileinput.files) && (me.fileinput.files.length > 0)) {
-                let farray =  me.fileinput.files;
+        this.fileinput.addEventListener('change', (event) => {
+            if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
+                let farray =  this.fileinput.files;
                 let fnames = [];
                 for (let i of farray) {
                     fnames.push(i.name);
                 }
                 if (fnames.length > 0) {
-                    me.triggerbox.classList.add('files');
-                    me.triggerbox.innerHTML = fnames.join(', ');
+                    this.triggerbox.classList.add('files');
+                    this.triggerbox.innerHTML = fnames.join(', ');
                 } else {
-                    me.triggerbox.classList.remove('files');
-                    me.triggerbox.innerHTML = me.placeholder;
-
+                    this.triggerbox.classList.remove('files');
+                    this.triggerbox.innerHTML = this.placeholder;
                 }
             }
             if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+                me.onchange(event, me);
             }
         });
+
+        CFBUtils.applyDataAttributes(this.attributes, this.fileinput);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

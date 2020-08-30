@@ -23,7 +23,7 @@ class LZSong extends BusinessObject {
                     filterable: true,
                     description: "The track number of the song.",
                     renderer: function(data) {
-                        return `${data}.`;
+                        return document.createTextNode(`${data}.`);
                     }
                 }),
                 new GridField({

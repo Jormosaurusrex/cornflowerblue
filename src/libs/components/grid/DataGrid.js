@@ -6,7 +6,7 @@ class DataGrid extends Panel {
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
             collapsible: true, // can the panel collapse (passed to the Panel)
-
+            elementname: null,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
                              // and will instead pull all information from the warehouse
@@ -667,10 +667,10 @@ class DataGrid extends Panel {
                 }
                 if ((this.deletehook) && (typeof this.deletehook === 'function')) {
                     form.handler = function(self, callback) {
-                        me.deletehook(self);
+                        me.deletehook(rowdata, self);
                     };
                 }
-                form.passive = true;
+                form.passive = false;
                 form.elements = [
                     new HiddenField({
                         name: this.identifier,
@@ -763,6 +763,12 @@ class DataGrid extends Panel {
         this.activitynotifier.removeAttribute('aria-hidden');
         fetch(url, {
             method: this.sourcemethod,
+            /*
+                XXX TO DO NEED TO ALLOW FOR
+                body:
+                headers:
+
+             */
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
             .then(response => response.json()) // response -> json
@@ -855,6 +861,8 @@ class DataGrid extends Panel {
         }
 
         for (let key in entry) {
+            let f = this.getField(key);
+            if (!f) { continue; } // Sometimes we get keys we don't want to display
             if (key === this.identifier) { continue; }
             let oldCell = rowDOM.querySelector(`[data-name=${key}`);
             let c = this.buildCell(entry, this.getField(key));
@@ -1841,14 +1849,17 @@ class DataGrid extends Panel {
         let content;
         let d = data[field.name];
 
-        content = field.renderer(d);
+        content = field.renderer(d, data);
 
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
         cell.setAttribute('data-datatype', field.type);
         cell.classList.add(field.name);
         cell.classList.add(field.type);
-        cell.append(content);
+        if (typeof content === 'string') {
+            content = document.createTextNode(content);
+        }
+        cell.appendChild(content);
 
         if (field.classes) {
             for (let c of field.classes) {

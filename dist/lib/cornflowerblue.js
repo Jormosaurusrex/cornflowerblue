@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-22
+/*! Cornflower Blue - v0.1.1 - 2020-08-27
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -5135,6 +5135,12 @@ class DataGrid extends Panel {
         this.activitynotifier.removeAttribute('aria-hidden');
         fetch(url, {
             method: this.sourcemethod,
+            /*
+                XXX TO DO NEED TO ALLOW FOR
+                body:
+                headers:
+
+             */
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
             .then(response => response.json()) // response -> json
@@ -7135,6 +7141,8 @@ class GridField {
                 e = new SelectMenu(config);
                 break;
             case 'boolean':
+                delete config.value;
+                config.checked = value;
                 e = new BooleanToggle(config);
                 break;
             case 'timezone':
@@ -8869,7 +8877,6 @@ class SimpleForm {
                         }
                     });
                 }
-
             } else if (this.url) {
                 this.form.submit();
             } else if (this.action) {
@@ -8903,10 +8910,13 @@ class SimpleForm {
      * @param callback the callback to fire when done
      */
     doAjax(callback) {
-
         // Edge is terrible and doesn't support FormData;
         //const body = new URLSearchParams(new FormData(this.form)).toString();
-        let body;
+        //console.log(new FormData(this.form).toString());
+        //let body = new FormData();
+        let body,
+            files;
+
         if (this.contenttype === 'application/x-www-form-urlencoded') {
             let urlelements = [];
             for (let i of this.elements) {
@@ -8931,6 +8941,7 @@ class SimpleForm {
         fetch(this.handler, {
             headers: headers,
             method: this.method,
+            enctype: this.enctype,
             body: body
         })
             .then(response => response.json()) // response -> json
@@ -9062,12 +9073,12 @@ class SimpleForm {
 
         this.form.appendChild(this.shade.container);
         this.form.appendChild(this.contentbox);
-        if (this.actions.length > 0) {
+        if ((this.actions) && (this.actions.length > 0)) {
             this.form.appendChild(this.actionbox);
         } else {
             this.form.classList.add('noactions');
         }
-        if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox); }
+        if ((this.passiveactions) && (this.passiveactions.length > 0)) { this.form.appendChild(this.passiveactionbox); }
 
         this.validate();
 
@@ -9129,6 +9140,7 @@ class SimpleForm {
             element.form = this;
             if (element.type === 'file') {
                 this.form.setAttribute('enctype', 'multipart/form-data');
+                this.enctype = 'multipart/form-data';
             }
             if ((!element.id) && (element.name)) {
                 element.id = `${this.id}-${element.name}`;
@@ -10274,6 +10286,13 @@ class InputElement {
      */
     get naked() { return this.input; }
 
+    /**
+     * Let us know if there's a container on this.
+     * @return {boolean}
+     */
+    get hascontainer() {
+        return !!this._container;
+    }
 
     /* CORE METHODS_____________________________________________________________________ */
 
@@ -10616,28 +10635,32 @@ class InputElement {
         this.input.addEventListener('keydown', function(e) {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
             me.input.removeAttribute('aria-invalid');
-            me.updateCounter();
+            if (me.hascontainer) {
+                me.updateCounter();
+            }
             me.touched = true; // set self as touched.
             if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
                 me.onkeydown(e, me);
             }
         });
         this.input.addEventListener('keyup', function(e) {
-            if (me.helptimer) {
-                clearTimeout(me.helptimer);
-                me.helpbutton.closeTooltip();
+            if (me.hascontainer) {
+                if (me.helptimer) {
+                    clearTimeout(me.helptimer);
+                    me.helpbutton.closeTooltip();
+                }
+
+                if ((me.value) && (me.value.length > 0)) {
+                    me.container.classList.add('filled');
+                } else {
+                    me.container.classList.remove('filled');
+                }
+                if ((me.form) && (me.required) // If this is the only thing required, tell the form.
+                    && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
+                    if (me.form) { me.form.validate(); }
+                }
             }
 
-            if ((me.value) && (me.value.length > 0) && (me.container)) {
-                me.container.classList.add('filled');
-            } else {
-                me.container.classList.remove('filled');
-            }
-
-            if ((me.form) && (me.required) // If this is the only thing required, tell the form.
-                && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
-                if (me.form) { me.form.validate(); }
-            }
             if ((e.key === 'Enter') // Return key
                 && (me.onreturn) && (typeof me.onreturn === 'function')) {
                 e.preventDefault();
@@ -10651,13 +10674,13 @@ class InputElement {
             if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
                 me.input.setAttribute('placeholder', me.placeholder);
             }
-            if (me.container) {
+            if (me.hascontainer) {
                 me.container.classList.add('active');
-            }
-            if (me.help) {
-                me.helptimer = setTimeout(function() {
-                    me.helpbutton.openTooltip();
-                }, me.helpwaittime);
+                if (me.help) {
+                    me.helptimer = setTimeout(function() {
+                        me.helpbutton.openTooltip();
+                    }, me.helpwaittime);
+                }
             }
             if ((me.focusin) && (typeof me.focusin === 'function')) {
                 me.focusin(e, me);
@@ -10665,24 +10688,25 @@ class InputElement {
         });
         this.input.addEventListener('focusout', function(e) {
 
-            if (me.passivebox) {
-                me.passivebox.innerHTML = me.passivetext;
+            if (me.hascontainer) {
+                if (me.passivebox) {
+                    me.passivebox.innerHTML = me.passivetext;
+                }
+
+                if (me.helptimer) {
+                    clearTimeout(me.helptimer);
+                    me.helpbutton.closeTooltip();
+                }
+                if ((me.mute) && (me.label)) {
+                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+                    me.input.setAttribute('placeholder', '');
+                }
+                me.container.classList.remove('active');
+                me.validate();
+
+                if (me.form) { me.form.validate(); }
+
             }
-
-            if (me.helptimer) {
-                clearTimeout(me.helptimer);
-                me.helpbutton.closeTooltip();
-            }
-
-            if ((me.mute) && (me.label)) {
-                //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
-                me.input.setAttribute('placeholder', '');
-            }
-
-            if (me.container) { me.container.classList.remove('active'); }
-            me.validate();
-
-            if (me.form) { me.form.validate(); }
 
             if ((me.focusout) && (typeof me.focusout === 'function')) {
                 me.focusout(e, me);
@@ -10692,7 +10716,7 @@ class InputElement {
 
         if (this.required) {
             this.input.setAttribute('required', 'true');
-            if (this.label) {
+            if ((me.hascontainer) && (this.label)) {
                 this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
             }
         }
@@ -12195,6 +12219,7 @@ class FileInput extends InputElement {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
+        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('file-container');
@@ -12268,29 +12293,27 @@ class FileInput extends InputElement {
         this.fileinput.addEventListener('focusin', function() {
                 me.triggerbox.focus();
         });
-
-        CFBUtils.applyDataAttributes(this.attributes, this.fileinput);
-
-        this.fileinput.addEventListener('change', function(me) {
-            if ((me.fileinput.files) && (me.fileinput.files.length > 0)) {
-                let farray =  me.fileinput.files;
+        this.fileinput.addEventListener('change', (event) => {
+            if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
+                let farray =  this.fileinput.files;
                 let fnames = [];
                 for (let i of farray) {
                     fnames.push(i.name);
                 }
                 if (fnames.length > 0) {
-                    me.triggerbox.classList.add('files');
-                    me.triggerbox.innerHTML = fnames.join(', ');
+                    this.triggerbox.classList.add('files');
+                    this.triggerbox.innerHTML = fnames.join(', ');
                 } else {
-                    me.triggerbox.classList.remove('files');
-                    me.triggerbox.innerHTML = me.placeholder;
-
+                    this.triggerbox.classList.remove('files');
+                    this.triggerbox.innerHTML = this.placeholder;
                 }
             }
             if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+                me.onchange(event, me);
             }
         });
+
+        CFBUtils.applyDataAttributes(this.attributes, this.fileinput);
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */

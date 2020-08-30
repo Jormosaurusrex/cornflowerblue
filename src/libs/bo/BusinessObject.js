@@ -215,7 +215,10 @@ class BusinessObject {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get cache() { return this._cache; }
+    get cache() {
+        if (!this._cache) { this._cache = {}; }
+        return this._cache;
+    }
     set cache(cache) { this._cache = cache; }
 
     get cadence() { return this.config.cadence; }

@@ -83,10 +83,18 @@ class SelectMenu extends InputElement {
     }
 
     get passivetext() {
-        if (this.selectedoption) { return this.selectedoption.label; }
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
-        return this.unsettext;
+        let p = this.unsettext;
+        if (this.selectedoption) { p = this.selectedoption.label; }
+        if (this.value) { p = this.value; }
+        if (this.config.value) { p = this.config.value; }
+        return document.createTextNode(p);
+    }
+
+    drawPayload(def) {
+        let text = document.createElement('span');
+        text.classList.add('text');
+        text.innerHTML = def.label;
+        return text;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -516,10 +524,7 @@ class SelectMenu extends InputElement {
             }
         });
 
-        let text = document.createElement('span');
-        text.classList.add('text');
-        text.innerHTML = def.label;
-        li.appendChild(text);
+        li.appendChild(this.drawPayload(def));
 
         if (def.checked) {
             this.origval = def.value;

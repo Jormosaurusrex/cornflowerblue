@@ -145,7 +145,6 @@ class SimpleForm {
                         }
                     });
                 }
-
             } else if (this.url) {
                 this.form.submit();
             } else if (this.action) {
@@ -179,10 +178,13 @@ class SimpleForm {
      * @param callback the callback to fire when done
      */
     doAjax(callback) {
-
         // Edge is terrible and doesn't support FormData;
         //const body = new URLSearchParams(new FormData(this.form)).toString();
-        let body;
+        //console.log(new FormData(this.form).toString());
+        //let body = new FormData();
+        let body,
+            files;
+
         if (this.contenttype === 'application/x-www-form-urlencoded') {
             let urlelements = [];
             for (let i of this.elements) {
@@ -207,6 +209,7 @@ class SimpleForm {
         fetch(this.handler, {
             headers: headers,
             method: this.method,
+            enctype: this.enctype,
             body: body
         })
             .then(response => response.json()) // response -> json
@@ -338,12 +341,12 @@ class SimpleForm {
 
         this.form.appendChild(this.shade.container);
         this.form.appendChild(this.contentbox);
-        if (this.actions.length > 0) {
+        if ((this.actions) && (this.actions.length > 0)) {
             this.form.appendChild(this.actionbox);
         } else {
             this.form.classList.add('noactions');
         }
-        if (this.passiveactions.length > 0) { this.form.appendChild(this.passiveactionbox); }
+        if ((this.passiveactions) && (this.passiveactions.length > 0)) { this.form.appendChild(this.passiveactionbox); }
 
         this.validate();
 
@@ -405,6 +408,7 @@ class SimpleForm {
             element.form = this;
             if (element.type === 'file') {
                 this.form.setAttribute('enctype', 'multipart/form-data');
+                this.enctype = 'multipart/form-data';
             }
             if ((!element.id) && (element.name)) {
                 element.id = `${this.id}-${element.name}`;

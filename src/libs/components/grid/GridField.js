@@ -89,26 +89,35 @@ class GridField {
         switch (this.type) {
             case 'number':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) { return document.createTextNode(d); }
                 }
                 break;
             case 'date':
             case 'time':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return d.toString();
+                        return document.createTextNode(d.toString());
                     }
                 }
                 break;
             case 'boolean':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) {
+                        if (typeof d === 'number') {
+                            if (d > 0) { return document.createTextNode('True'); }
+                            return document.createTextNode('False');
+                        }
+                        return d;
+                    }
                 }
                 break;
             case 'url':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return `<a href="${d}">${d}</a>`;
+                        let a = document.createElement('a');
+                        a.setAttribute('href', d);
+                        a.innerHTML = d;
+                        return a;
                     }
                 }
                 break;
@@ -133,7 +142,12 @@ class GridField {
                         }
                     } else {
                         this.renderer = function(d) {
-                            return `<a href="${d}"><img src="${d}" /></a>`;
+                            let img = document.createElement('img');
+                            img.setAttribute('src', d);
+                            let a = document.createElement('a');
+                            a.setAttribute('href', d);
+                            a.appendChild(img);
+                            return a;
                         }
                     }
                 }
@@ -141,27 +155,31 @@ class GridField {
             case 'email':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return `<a href="mailto:${d}">${d}</a>`;
+                        let a = document.createElement('a');
+                        a.setAttribute('href', `mailto:${d}`);
+                        a.innerHTML = d;
+                        return a;
                     }
                 }
                 break;
             case 'enumeration':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return me.getValue(d);
+                        console.log(me.values);
+                        return document.createTextNode(me.getValue(d));
                     }
                 }
                 break;
             case 'paragraph':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) { return document.createTextNode(d); }
                 }
                 break;
             case 'stringarray':
                 if (!this.renderer) {
                     this.renderer = function(d) {
                         if (Array.isArray(d)) {
-                            return d.join(me.separator);
+                            return document.createTextNode(d.join(me.separator));
                         }
                         return d;
                     }
@@ -170,7 +188,7 @@ class GridField {
             case 'string':
             default:
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) { return document.createTextNode(d); }
                 }
                 break;
         }
@@ -181,8 +199,9 @@ class GridField {
         let value;
         if ((this.values) && (this.values.length > 0)) {
             for (let def of this.values) {
-                if (def.key === key) {
-                    value = def.value;
+                if (def['key'] === key) {
+                    value = def['value'];
+                    console.log(`value! ${value}`);
                     break;
                 }
             }
@@ -233,6 +252,8 @@ class GridField {
                 e = new SelectMenu(config);
                 break;
             case 'boolean':
+                delete config.value;
+                config.checked = value;
                 e = new BooleanToggle(config);
                 break;
             case 'timezone':

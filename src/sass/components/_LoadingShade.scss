@@ -39,6 +39,8 @@ div.spinner.spin {
   border-radius: 50%;
   width: 10em;
   height: 10em;
+  min-width: 10em;
+  min-height: 10em;
   position: relative;
   margin: 1rem 0 1rem 0;
   border: .75em solid rgba(var(--colors-highlight-rgb), 0.3);
@@ -48,6 +50,8 @@ div.spinner.spin {
 div.spinner.bounce {
   width: 4em;
   height: 4em;
+  min-width: 4em;
+  min-height: 4em;
   position: relative;
   margin: -2rem 0 4rem 0;
   &:before,

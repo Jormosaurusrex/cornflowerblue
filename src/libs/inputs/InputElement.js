@@ -38,7 +38,7 @@ class InputElement {
             focusin: null,
             focusout: null,
             validator: null,
-            renderer: function(data) { return `${data}`; }
+            renderer: function(data) { return document.createTextNode(data); }
 
         };
     }
@@ -143,6 +143,13 @@ class InputElement {
      */
     get naked() { return this.input; }
 
+    /**
+     * Let us know if there's a container on this.
+     * @return {boolean}
+     */
+    get hascontainer() {
+        return !!this._container;
+    }
 
     /* CORE METHODS_____________________________________________________________________ */
 
@@ -163,7 +170,6 @@ class InputElement {
     validate(onload) {
         this.errors = [];
         this.warnings = [];
-
         if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
             this.errors.push(this.requirederror);
         }
@@ -357,9 +363,9 @@ class InputElement {
             if (this.renderer) {
                 return this.renderer(v);
             }
-            return v;
+            return document.createTextNode(v);
         }
-        return this.unsettext;
+        return document.createTextNode(this.unsettext);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -437,7 +443,7 @@ class InputElement {
     buildInactiveBox() {
         this.passivebox = document.createElement('div');
         this.passivebox.classList.add('passivebox');
-        this.passivebox.innerHTML = this.passivetext;
+        this.passivebox.appendChild(this.passivetext);
     }
 
     /**
@@ -485,28 +491,32 @@ class InputElement {
         this.input.addEventListener('keydown', function(e) {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
             me.input.removeAttribute('aria-invalid');
-            me.updateCounter();
+            if (me.hascontainer) {
+                me.updateCounter();
+            }
             me.touched = true; // set self as touched.
             if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
                 me.onkeydown(e, me);
             }
         });
         this.input.addEventListener('keyup', function(e) {
-            if (me.helptimer) {
-                clearTimeout(me.helptimer);
-                me.helpbutton.closeTooltip();
+            if (me.hascontainer) {
+                if (me.helptimer) {
+                    clearTimeout(me.helptimer);
+                    me.helpbutton.closeTooltip();
+                }
+
+                if ((me.value) && (me.value.length > 0)) {
+                    me.container.classList.add('filled');
+                } else {
+                    me.container.classList.remove('filled');
+                }
+                if ((me.form) && (me.required) // If this is the only thing required, tell the form.
+                    && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
+                    if (me.form) { me.form.validate(); }
+                }
             }
 
-            if ((me.value) && (me.value.length > 0) && (me.container)) {
-                me.container.classList.add('filled');
-            } else {
-                me.container.classList.remove('filled');
-            }
-
-            if ((me.form) && (me.required) // If this is the only thing required, tell the form.
-                && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
-                if (me.form) { me.form.validate(); }
-            }
             if ((e.key === 'Enter') // Return key
                 && (me.onreturn) && (typeof me.onreturn === 'function')) {
                 e.preventDefault();
@@ -520,13 +530,13 @@ class InputElement {
             if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
                 me.input.setAttribute('placeholder', me.placeholder);
             }
-            if (me.container) {
+            if (me.hascontainer) {
                 me.container.classList.add('active');
-            }
-            if (me.help) {
-                me.helptimer = setTimeout(function() {
-                    me.helpbutton.openTooltip();
-                }, me.helpwaittime);
+                if (me.help) {
+                    me.helptimer = setTimeout(function() {
+                        me.helpbutton.openTooltip();
+                    }, me.helpwaittime);
+                }
             }
             if ((me.focusin) && (typeof me.focusin === 'function')) {
                 me.focusin(e, me);
@@ -534,24 +544,26 @@ class InputElement {
         });
         this.input.addEventListener('focusout', function(e) {
 
-            if (me.passivebox) {
-                me.passivebox.innerHTML = me.passivetext;
+            if (me.hascontainer) {
+                if (me.passivebox) {
+                    me.passivebox.innerHTML = '';
+                    me.passivebox.appendChild(me.passivetext);
+                }
+
+                if (me.helptimer) {
+                    clearTimeout(me.helptimer);
+                    me.helpbutton.closeTooltip();
+                }
+                if ((me.mute) && (me.label)) {
+                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
+                    me.input.setAttribute('placeholder', '');
+                }
+                me.container.classList.remove('active');
+                me.validate();
+
+                if (me.form) { me.form.validate(); }
+
             }
-
-            if (me.helptimer) {
-                clearTimeout(me.helptimer);
-                me.helpbutton.closeTooltip();
-            }
-
-            if ((me.mute) && (me.label)) {
-                //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
-                me.input.setAttribute('placeholder', '');
-            }
-
-            if (me.container) { me.container.classList.remove('active'); }
-            me.validate();
-
-            if (me.form) { me.form.validate(); }
 
             if ((me.focusout) && (typeof me.focusout === 'function')) {
                 me.focusout(e, me);
@@ -561,7 +573,7 @@ class InputElement {
 
         if (this.required) {
             this.input.setAttribute('required', 'true');
-            if (this.label) {
+            if ((me.hascontainer) && (this.label)) {
                 this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
             }
         }
@@ -854,6 +866,7 @@ class InputElement {
         this.config.value = value;
         this.input.value = value;
         this.passivebox.value = value;
+        this.validate();
     }
 
     get warnings() { return this._warnings; }
