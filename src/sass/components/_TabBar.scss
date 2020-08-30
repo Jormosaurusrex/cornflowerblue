@@ -123,6 +123,20 @@ ul.tabbar {
         margin: 0;
       }
     }
+    &.icononly {
+      >a  {
+        >span.icon {
+          margin: 0;
+        }
+        >span.t {
+          display: none;
+        }
+      }
+    }
+    &.rightside {
+      margin-left: auto;
+      align-self: flex-end;
+    }
     &:focus-within {
       ul.submenu {
         display: block;

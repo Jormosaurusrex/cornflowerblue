@@ -5218,6 +5218,16 @@ ul.tabbar li ul.submenu > li {
   align-items: flex-start;
   margin: 0;
 }
+ul.tabbar li.icononly > a > span.icon {
+  margin: 0;
+}
+ul.tabbar li.icononly > a > span.t {
+  display: none;
+}
+ul.tabbar li.rightside {
+  margin-left: auto;
+  align-self: flex-end;
+}
 ul.tabbar li:focus-within ul.submenu {
   display: block;
 }

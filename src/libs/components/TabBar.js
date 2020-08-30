@@ -182,6 +182,7 @@ class TabBar {
         }
         if (tabdef.label) {
             let linktext = document.createElement('span');
+            linktext.classList.add('t');
             linktext.innerHTML = tabdef.label;
             link.appendChild(linktext);
         }

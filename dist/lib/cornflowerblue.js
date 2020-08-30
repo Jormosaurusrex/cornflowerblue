@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-27
+/*! Cornflower Blue - v0.1.1 - 2020-08-30
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -739,7 +739,10 @@ class BusinessObject {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get cache() { return this._cache; }
+    get cache() {
+        if (!this._cache) { this._cache = {}; }
+        return this._cache;
+    }
     set cache(cache) { this._cache = cache; }
 
     get cadence() { return this.config.cadence; }
@@ -4378,7 +4381,7 @@ class DataGrid extends Panel {
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
             collapsible: true, // can the panel collapse (passed to the Panel)
-
+            elementname: null,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
                              // and will instead pull all information from the warehouse
@@ -5039,10 +5042,10 @@ class DataGrid extends Panel {
                 }
                 if ((this.deletehook) && (typeof this.deletehook === 'function')) {
                     form.handler = function(self, callback) {
-                        me.deletehook(self);
+                        me.deletehook(rowdata, self);
                     };
                 }
-                form.passive = true;
+                form.passive = false;
                 form.elements = [
                     new HiddenField({
                         name: this.identifier,
@@ -5233,6 +5236,8 @@ class DataGrid extends Panel {
         }
 
         for (let key in entry) {
+            let f = this.getField(key);
+            if (!f) { continue; } // Sometimes we get keys we don't want to display
             if (key === this.identifier) { continue; }
             let oldCell = rowDOM.querySelector(`[data-name=${key}`);
             let c = this.buildCell(entry, this.getField(key));
@@ -6219,14 +6224,17 @@ class DataGrid extends Panel {
         let content;
         let d = data[field.name];
 
-        content = field.renderer(d);
+        content = field.renderer(d, data);
 
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
         cell.setAttribute('data-datatype', field.type);
         cell.classList.add(field.name);
         cell.classList.add(field.type);
-        cell.append(content);
+        if (typeof content === 'string') {
+            content = document.createTextNode(content);
+        }
+        cell.appendChild(content);
 
         if (field.classes) {
             for (let c of field.classes) {
@@ -6997,26 +7005,35 @@ class GridField {
         switch (this.type) {
             case 'number':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) { return document.createTextNode(d); }
                 }
                 break;
             case 'date':
             case 'time':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return d.toString();
+                        return document.createTextNode(d.toString());
                     }
                 }
                 break;
             case 'boolean':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) {
+                        if (typeof d === 'number') {
+                            if (d > 0) { return document.createTextNode('True'); }
+                            return document.createTextNode('False');
+                        }
+                        return d;
+                    }
                 }
                 break;
             case 'url':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return `<a href="${d}">${d}</a>`;
+                        let a = document.createElement('a');
+                        a.setAttribute('href', d);
+                        a.innerHTML = d;
+                        return a;
                     }
                 }
                 break;
@@ -7041,7 +7058,12 @@ class GridField {
                         }
                     } else {
                         this.renderer = function(d) {
-                            return `<a href="${d}"><img src="${d}" /></a>`;
+                            let img = document.createElement('img');
+                            img.setAttribute('src', d);
+                            let a = document.createElement('a');
+                            a.setAttribute('href', d);
+                            a.appendChild(img);
+                            return a;
                         }
                     }
                 }
@@ -7049,27 +7071,31 @@ class GridField {
             case 'email':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return `<a href="mailto:${d}">${d}</a>`;
+                        let a = document.createElement('a');
+                        a.setAttribute('href', `mailto:${d}`);
+                        a.innerHTML = d;
+                        return a;
                     }
                 }
                 break;
             case 'enumeration':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        return me.getValue(d);
+                        console.log(me.values);
+                        return document.createTextNode(me.getValue(d));
                     }
                 }
                 break;
             case 'paragraph':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) { return document.createTextNode(d); }
                 }
                 break;
             case 'stringarray':
                 if (!this.renderer) {
                     this.renderer = function(d) {
                         if (Array.isArray(d)) {
-                            return d.join(me.separator);
+                            return document.createTextNode(d.join(me.separator));
                         }
                         return d;
                     }
@@ -7078,7 +7104,7 @@ class GridField {
             case 'string':
             default:
                 if (!this.renderer) {
-                    this.renderer = function(d) { return d; }
+                    this.renderer = function(d) { return document.createTextNode(d); }
                 }
                 break;
         }
@@ -7089,8 +7115,9 @@ class GridField {
         let value;
         if ((this.values) && (this.values.length > 0)) {
             for (let def of this.values) {
-                if (def.key === key) {
-                    value = def.value;
+                if (def['key'] === key) {
+                    value = def['value'];
+                    console.log(`value! ${value}`);
                     break;
                 }
             }
@@ -7622,6 +7649,7 @@ class DialogWindow {
             actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
             // Possible keywords:  closebutton, cancelbutton
             content: null,
+            onclose: null,
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // DOM object, will be used if passed before title.
             lightbox: false,    // For image types, if true, open the image in a lightbox
@@ -7650,6 +7678,7 @@ class DialogWindow {
             trailer: { type: 'option', datatype: 'domobject', description: "Adds a trailing chunk of DOM.  Can be provided a full dom object or a string.  If it's a string, it creates a div at the bottom with the value of the text." },
             canceltext: { type: 'option', datatype: 'string', description: "Text used for cancel buttons provided as keywords." },
             closetext: { type: 'option', datatype: 'string', description: "Text used for close buttons provided as keywords." },
+            onclose: { type: 'option', datatype: 'function', description: "What to do when closing. Passed (self) as an argument." },
 
             lightbox: { type: 'option', datatype: 'boolean', description: "For image types, if true, open the image in a lightbox." },
             clickoutsidetoclose: { type: 'option', datatype: 'boolean', description: "Allow the window to be closed by clicking outside." },
@@ -7738,6 +7767,9 @@ class DialogWindow {
         }
         document.body.classList.remove('modalopen');
         document.removeEventListener('keyup', this.escapelistener);
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
     }
 
     /**
@@ -7947,6 +7979,9 @@ class DialogWindow {
 
     get nofocus() { return this.config.nofocus; }
     set nofocus(nofocus) { this.config.nofocus = nofocus; }
+
+    get onclose() { return this.config.onclose; }
+    set onclose(onclose) { this.config.onclose = onclose; }
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
@@ -9591,6 +9626,7 @@ class TabBar {
         }
         if (tabdef.label) {
             let linktext = document.createElement('span');
+            linktext.classList.add('t');
             linktext.innerHTML = tabdef.label;
             link.appendChild(linktext);
         }
@@ -10181,7 +10217,7 @@ class InputElement {
             focusin: null,
             focusout: null,
             validator: null,
-            renderer: function(data) { return `${data}`; }
+            renderer: function(data) { return document.createTextNode(data); }
 
         };
     }
@@ -10313,7 +10349,6 @@ class InputElement {
     validate(onload) {
         this.errors = [];
         this.warnings = [];
-
         if ((!onload) && (this.required) && ((!this.value) || (this.value.length === 0))) {
             this.errors.push(this.requirederror);
         }
@@ -10507,9 +10542,9 @@ class InputElement {
             if (this.renderer) {
                 return this.renderer(v);
             }
-            return v;
+            return document.createTextNode(v);
         }
-        return this.unsettext;
+        return document.createTextNode(this.unsettext);
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -10587,7 +10622,7 @@ class InputElement {
     buildInactiveBox() {
         this.passivebox = document.createElement('div');
         this.passivebox.classList.add('passivebox');
-        this.passivebox.innerHTML = this.passivetext;
+        this.passivebox.appendChild(this.passivetext);
     }
 
     /**
@@ -10690,7 +10725,8 @@ class InputElement {
 
             if (me.hascontainer) {
                 if (me.passivebox) {
-                    me.passivebox.innerHTML = me.passivetext;
+                    me.passivebox.innerHTML = '';
+                    me.passivebox.appendChild(me.passivetext);
                 }
 
                 if (me.helptimer) {
@@ -11009,6 +11045,7 @@ class InputElement {
         this.config.value = value;
         this.input.value = value;
         this.passivebox.value = value;
+        this.validate();
     }
 
     get warnings() { return this._warnings; }
@@ -11109,10 +11146,18 @@ class SelectMenu extends InputElement {
     }
 
     get passivetext() {
-        if (this.selectedoption) { return this.selectedoption.label; }
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
-        return this.unsettext;
+        let p = this.unsettext;
+        if (this.selectedoption) { p = this.selectedoption.label; }
+        if (this.value) { p = this.value; }
+        if (this.config.value) { p = this.config.value; }
+        return document.createTextNode(p);
+    }
+
+    drawPayload(def) {
+        let text = document.createElement('span');
+        text.classList.add('text');
+        text.innerHTML = def.label;
+        return text;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -11542,10 +11587,7 @@ class SelectMenu extends InputElement {
             }
         });
 
-        let text = document.createElement('span');
-        text.classList.add('text');
-        text.innerHTML = def.label;
-        li.appendChild(text);
+        li.appendChild(this.drawPayload(def));
 
         if (def.checked) {
             this.origval = def.value;
@@ -12810,10 +12852,11 @@ class RadioGroup extends SelectMenu {
     get input() { return this.optionlist; }
 
     get passivetext() {
-        if (this.selectedoption) { return this.selectedoption.label; }
-        if (this.value) { return this.value; }
-        if (this.config.value) { return this.config.value; }
-        return this.unsettext;
+        let p = this.unsettext;
+        if (this.selectedoption) { p = this.selectedoption.label; }
+        if (this.value) { p = this.value; }
+        if (this.config.value) { p = this.config.value; }
+        return document.createTextNode(p);
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
