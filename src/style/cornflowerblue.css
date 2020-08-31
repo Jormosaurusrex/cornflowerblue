@@ -4137,7 +4137,6 @@ div.datepicker.button-menu div.monthbox {
 }
 
 body.modalopen {
-  height: 100vh;
   overflow-y: hidden;
 }
 @media (max-width: 599px) {
@@ -4193,7 +4192,7 @@ div.window-container div.dialog > h2 {
   margin: 0;
   font-weight: normal;
   font-size: 1.5em;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   position: relative;
   width: 100%;
   border-bottom: 0.1em solid var(--colors-standard);

@@ -165,7 +165,6 @@ class GridField {
             case 'enumeration':
                 if (!this.renderer) {
                     this.renderer = function(d) {
-                        console.log(me.values);
                         return document.createTextNode(me.getValue(d));
                     }
                 }
@@ -195,13 +194,17 @@ class GridField {
 
     }
 
+    /**
+     * Get the value of a key in an enumeration options.
+     * @param key
+     * @return {*}
+     */
     getValue(key) {
         let value;
         if ((this.values) && (this.values.length > 0)) {
             for (let def of this.values) {
                 if (def['key'] === key) {
                     value = def['value'];
-                    console.log(`value! ${value}`);
                     break;
                 }
             }
