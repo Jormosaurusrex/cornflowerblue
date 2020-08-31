@@ -405,21 +405,27 @@ class SimpleForm {
         this.elementbox.classList.add('elements');
         let animOrder = 0;
         for (let element of this.elements) {
-            element.form = this;
-            if (element.type === 'file') {
-                this.form.setAttribute('enctype', 'multipart/form-data');
-                this.enctype = 'multipart/form-data';
+            if (typeof element === 'string') { // This is a text block, turn to paragraph
+                let p = document.createElement('p');
+                p.innerHTML = element;
+                this.elementbox.appendChild(p);
+            } else {
+                element.form = this;
+                if (element.type === 'file') {
+                    this.form.setAttribute('enctype', 'multipart/form-data');
+                    this.enctype = 'multipart/form-data';
+                }
+                if ((!element.id) && (element.name)) {
+                    element.id = `${this.id}-${element.name}`;
+                } else if (!element.id) {
+                    element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
+                }
+                element.container.classList.add('popin');
+                element.container.style.setProperty('--anim-order', animOrder);
+                animOrder++;
+                this.addElement(element);
+                this.elementbox.appendChild(element.container);
             }
-            if ((!element.id) && (element.name)) {
-                element.id = `${this.id}-${element.name}`;
-            } else if (!element.id) {
-                element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
-            }
-            element.container.classList.add('popin');
-            element.container.style.setProperty('--anim-order', animOrder);
-            animOrder++;
-            this.addElement(element);
-            this.elementbox.appendChild(element.container);
         }
     }
 

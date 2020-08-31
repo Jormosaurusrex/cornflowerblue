@@ -9175,21 +9175,27 @@ class SimpleForm {
         this.elementbox.classList.add('elements');
         let animOrder = 0;
         for (let element of this.elements) {
-            element.form = this;
-            if (element.type === 'file') {
-                this.form.setAttribute('enctype', 'multipart/form-data');
-                this.enctype = 'multipart/form-data';
+            if (typeof element === 'string') { // This is a text block, turn to paragraph
+                let p = document.createElement('p');
+                p.innerHTML = element;
+                this.elementbox.appendChild(p);
+            } else {
+                element.form = this;
+                if (element.type === 'file') {
+                    this.form.setAttribute('enctype', 'multipart/form-data');
+                    this.enctype = 'multipart/form-data';
+                }
+                if ((!element.id) && (element.name)) {
+                    element.id = `${this.id}-${element.name}`;
+                } else if (!element.id) {
+                    element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
+                }
+                element.container.classList.add('popin');
+                element.container.style.setProperty('--anim-order', animOrder);
+                animOrder++;
+                this.addElement(element);
+                this.elementbox.appendChild(element.container);
             }
-            if ((!element.id) && (element.name)) {
-                element.id = `${this.id}-${element.name}`;
-            } else if (!element.id) {
-                element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
-            }
-            element.container.classList.add('popin');
-            element.container.style.setProperty('--anim-order', animOrder);
-            animOrder++;
-            this.addElement(element);
-            this.elementbox.appendChild(element.container);
         }
     }
 
@@ -10194,6 +10200,7 @@ class InputElement {
             type: 'text',
             label: null,
             placeholder: null,
+            preamble: null,
             title: null,
             pattern: null,
             icon: null,
@@ -10242,6 +10249,7 @@ class InputElement {
             forceconstraints: { type: 'option', datatype: 'boolean', description: "If true, force constraints defined in sub classes (many inputs don't have any)." },
             placeholder: { type: 'option', datatype: 'string', description: "Input placeholder. Individual fields can calculate this if it's null. To insure a blank placeholder, set the value to ''." },
             passive: { type: 'option', datatype: 'boolean', description: "Start life in passive mode." },
+            preamble: { type: 'option', datatype: 'string', description: "This text will display before the element as additional explanation." },
             unsettext: { type: 'option', datatype: 'string', description: "Text to display in passive mode if the value is empty." },
             help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
             helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
@@ -10566,6 +10574,12 @@ class InputElement {
             for (let c of this.classes) {
                 this.container.classList.add(c);
             }
+        }
+
+        if (this.preamble) {
+            let p = document.createElement('p');
+            p.classList.add('preamble');
+            p.innerHTML = this.preamble;
         }
 
         this.topline = document.createElement('div');
@@ -11007,6 +11021,9 @@ class InputElement {
         return this.calculatePlaceholder();
     }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
+    get preamble() { return this.config.preamble; }
+    set preamble(preamble) { this.config.preamble = preamble; }
 
     get renderer() { return this.config.renderer; }
     set renderer(renderer) {

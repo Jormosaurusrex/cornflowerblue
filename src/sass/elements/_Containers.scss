@@ -6,6 +6,9 @@ p.textarea-container {
   margin: 0;
   padding: .5rem 0 .5rem 0;
   position: relative;
+  p.preamble {
+    margin: 1rem 0 0 0;
+  }
   div.topline {
     position: relative;
     z-index: 10;
@@ -16,10 +19,24 @@ p.textarea-container {
     flex-wrap: nowrap;
     label {
       margin-top: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
       button.help,
       &:after {
         opacity: 1;
         transition: opacity .2s;
+      }
+      > span.mutehelp {
+        opacity: 1;
+        transition: opacity .2s;
+        font-size: .75em;
+        color: var(--colors-text-default);
+        margin-left: .5rem;
+        &:before {
+          margin-right: .5rem;
+          content: '-';
+        }
       }
     }
     div.charcounter,
@@ -269,9 +286,10 @@ p.textarea-container {
       }
     }
     div.wrap {
-      input {
+      input,
+      textarea {
         &::placeholder {
-          opacity: 0;
+          opacity: .5;
         }
       }
       &:after {
@@ -408,11 +426,20 @@ p.textarea-container {
     }
   }
   &.passive {
+    p.preamble {
+      height: 0;
+      opacity: 0;
+      margin: 0;
+    }
     div.topline {
       label {
         opacity: 1;
         button.help,
         &:after {
+          display: none;
+          opacity: 0;
+        }
+        > span.mutehelp {
           display: none;
           opacity: 0;
         }
@@ -460,13 +487,12 @@ div.textarea-container {
         textarea {
           &::-ms-input-placeholder,
           &::placeholder {
-            opacity: .5;
+            opacity: .3;
           }
         }
       }
     }
   }
-
   div.passivebox {
     min-height: 4em;
   }

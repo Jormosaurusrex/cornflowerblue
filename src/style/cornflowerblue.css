@@ -1271,7 +1271,6 @@ legend:after {
   font-size: 0.75rem;
   margin-left: 0.5rem;
   display: none;
-  align-self: flex-end;
 }
 label button.help,
 legend button.help {
@@ -2797,6 +2796,13 @@ p.textarea-container {
   padding: 0.5rem 0 0.5rem 0;
   position: relative;
 }
+div.input-container p.preamble,
+p.input-container p.preamble,
+div.file-container p.preamble,
+div.textarea-container p.preamble,
+p.textarea-container p.preamble {
+  margin: 1rem 0 0 0;
+}
 div.input-container div.topline,
 p.input-container div.topline,
 div.file-container div.topline,
@@ -2816,6 +2822,9 @@ div.file-container div.topline label,
 div.textarea-container div.topline label,
 p.textarea-container div.topline label {
   margin-top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
 div.input-container div.topline label button.help, div.input-container div.topline label:after,
 p.input-container div.topline label button.help,
@@ -2828,6 +2837,25 @@ p.textarea-container div.topline label button.help,
 p.textarea-container div.topline label:after {
   opacity: 1;
   transition: opacity 0.2s;
+}
+div.input-container div.topline label > span.mutehelp,
+p.input-container div.topline label > span.mutehelp,
+div.file-container div.topline label > span.mutehelp,
+div.textarea-container div.topline label > span.mutehelp,
+p.textarea-container div.topline label > span.mutehelp {
+  opacity: 1;
+  transition: opacity 0.2s;
+  font-size: 0.75em;
+  color: var(--colors-text-default);
+  margin-left: 0.5rem;
+}
+div.input-container div.topline label > span.mutehelp:before,
+p.input-container div.topline label > span.mutehelp:before,
+div.file-container div.topline label > span.mutehelp:before,
+div.textarea-container div.topline label > span.mutehelp:before,
+p.textarea-container div.topline label > span.mutehelp:before {
+  margin-right: 0.5rem;
+  content: "-";
 }
 div.input-container div.topline div.charcounter,
 div.input-container div.topline div.searchdisplay,
@@ -3301,11 +3329,16 @@ p.textarea-container.mute div.topline div.topcontrol {
   opacity: 0;
 }
 div.input-container.mute div.wrap input::placeholder,
+div.input-container.mute div.wrap textarea::placeholder,
 p.input-container.mute div.wrap input::placeholder,
+p.input-container.mute div.wrap textarea::placeholder,
 div.file-container.mute div.wrap input::placeholder,
+div.file-container.mute div.wrap textarea::placeholder,
 div.textarea-container.mute div.wrap input::placeholder,
-p.textarea-container.mute div.wrap input::placeholder {
-  opacity: 0;
+div.textarea-container.mute div.wrap textarea::placeholder,
+p.textarea-container.mute div.wrap input::placeholder,
+p.textarea-container.mute div.wrap textarea::placeholder {
+  opacity: 0.5;
 }
 div.input-container.mute div.wrap:after,
 p.input-container.mute div.wrap:after,
@@ -3714,6 +3747,15 @@ p.textarea-container.active.mute div.topline div.topcontrol {
   opacity: 1;
   display: inline-block;
 }
+div.input-container.passive p.preamble,
+p.input-container.passive p.preamble,
+div.file-container.passive p.preamble,
+div.textarea-container.passive p.preamble,
+p.textarea-container.passive p.preamble {
+  height: 0;
+  opacity: 0;
+  margin: 0;
+}
 div.input-container.passive div.topline label,
 p.input-container.passive div.topline label,
 div.file-container.passive div.topline label,
@@ -3730,6 +3772,14 @@ div.textarea-container.passive div.topline label button.help,
 div.textarea-container.passive div.topline label:after,
 p.textarea-container.passive div.topline label button.help,
 p.textarea-container.passive div.topline label:after {
+  display: none;
+  opacity: 0;
+}
+div.input-container.passive div.topline label > span.mutehelp,
+p.input-container.passive div.topline label > span.mutehelp,
+div.file-container.passive div.topline label > span.mutehelp,
+div.textarea-container.passive div.topline label > span.mutehelp,
+p.textarea-container.passive div.topline label > span.mutehelp {
   display: none;
   opacity: 0;
 }
@@ -3785,7 +3835,7 @@ div.textarea-container.mute div.wrap textarea::-ms-input-placeholder, div.textar
   opacity: 0;
 }
 div.textarea-container.mute div.wrap.filled textarea::-ms-input-placeholder, div.textarea-container.mute div.wrap.filled textarea::placeholder {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 div.textarea-container div.passivebox {
   min-height: 4em;
