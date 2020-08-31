@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-30
+/*! Cornflower Blue - v0.1.1 - 2020-08-31
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -6943,6 +6943,7 @@ class GridField {
                                //  ]
             separator: ', ',   // Used when rendering array values
             placeholder: null, // The placeholder to use in the field
+            preamble: null,
             lightbox: true,    // For image types, if true, open the image in a lightbox
             minnumber: null,   // The minnumber to use in the field
             maxnumber: null,   // The maxnumber to use in the field
@@ -7144,6 +7145,8 @@ class GridField {
                 help: this.description,
                 placeholder: this.placeholder,
                 mute: this.mute,
+                required: this.required,
+                preamble: this.preamble,
                 maxnumber: this.maxnumber,
                 minnumber: this.minnumber,
                 classes: this.classes,
@@ -7295,6 +7298,9 @@ class GridField {
 
     get placeholder() { return this.config.placeholder ; }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
+
+    get preamble() { return this.config.preamble; }
+    set preamble(preamble) { this.config.preamble = preamble; }
 
     get readonly() { return this.config.readonly ; }
     set readonly(readonly) { this.config.readonly = readonly; }
@@ -9045,7 +9051,7 @@ class SimpleForm {
         } else {
             this.runInvalid();
         }
-
+        console.log(`valid: ${valid}`);
         return valid;
     }
 
@@ -10577,9 +10583,11 @@ class InputElement {
         }
 
         if (this.preamble) {
+            console.log('preamble');
             let p = document.createElement('p');
             p.classList.add('preamble');
             p.innerHTML = this.preamble;
+            this.container.appendChild(p);
         }
 
         this.topline = document.createElement('div');
@@ -10806,12 +10814,20 @@ class InputElement {
         }
 
         if (this.help) {
-            this.helpbutton = new HelpButton({
-                id: `${this.id}-help`,
-                tooltip: this.help
-            });
-            this.labelobj.appendChild(this.helpbutton.button);
+            if (this.mute) {
+                let s = document.createElement('span');
+                s.classList.add('mutehelp');
+                s.innerHTML = this.help;
+                this.labelobj.appendChild(s);
+            } else {
+                this.helpbutton = new HelpButton({
+                    id: `${this.id}-help`,
+                    tooltip: this.help
+                });
+                this.labelobj.appendChild(this.helpbutton.button);
+            }
         }
+
     }
 
     /**

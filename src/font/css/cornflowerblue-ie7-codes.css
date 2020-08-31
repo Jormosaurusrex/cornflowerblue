@@ -100,3 +100,6 @@
 .cfb-duplicate { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe804;&nbsp;'); }
 .cfb-dots-vertical { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe805;&nbsp;'); }
 .cfb-dots-horizontal { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe806;&nbsp;'); }
+.cfb-envelope-flat { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe871;&nbsp;'); }
+.cfb-envelope-angle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe872;&nbsp;'); }
+.cfb-bell { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe873;&nbsp;'); }

@@ -100,3 +100,6 @@
 .cfb-duplicate:before { content: '\e804'; } /* '' */
 .cfb-dots-vertical:before { content: '\e805'; } /* '' */
 .cfb-dots-horizontal:before { content: '\e806'; } /* '' */
+.cfb-envelope-flat:before { content: '\e871'; } /* '' */
+.cfb-envelope-angle:before { content: '\e872'; } /* '' */
+.cfb-bell:before { content: '\e873'; } /* '' */
