@@ -5,7 +5,7 @@ div.searchcontrol {
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: flex-end;
-  input {
+  >input {
     width: 0;
     padding: .6em 0 .6em 0;
     font-size: 1em;
@@ -13,6 +13,9 @@ div.searchcontrol {
     box-shadow: none;
     &::placeholder {
       opacity: 0;
+    }
+    &.mute {
+      padding: .6em 0 .6em 0;
     }
   }
   button {

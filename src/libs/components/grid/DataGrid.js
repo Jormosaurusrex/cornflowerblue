@@ -46,7 +46,7 @@ class DataGrid extends Panel {
             applyfiltersicon: 'checkmark-circle',
             actionsbuttonicon: 'menu',
             filterbuttonicon: 'filter',
-
+            mute: false, // if true, inputs are set to mute.
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
@@ -492,6 +492,7 @@ class DataGrid extends Panel {
 
                 let fc = new FilterConfigurator({
                     fields: this.fields,
+                    mute: this.mute,
                     filters: this.activefilters
                 });
                 dialogconfig.content = fc.container;
@@ -1485,6 +1486,7 @@ class DataGrid extends Panel {
             this.searchcontrol = new SearchControl({
                 arialabel: TextFactory.get('search_this_data'),
                 placeholder: TextFactory.get('search_this_data'),
+                mute: this.mute,
                 searchtext: TextFactory.get('search'),
                 action: function(value) {
                     me.search(value);
@@ -2098,6 +2100,9 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get passiveeditinstructions() { return this.config.passiveeditinstructions; }
     set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }

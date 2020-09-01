@@ -4421,7 +4421,7 @@ class DataGrid extends Panel {
             applyfiltersicon: 'checkmark-circle',
             actionsbuttonicon: 'menu',
             filterbuttonicon: 'filter',
-
+            mute: false, // if true, inputs are set to mute.
             selectable: true, //  Data rows can be selected.
             selectaction: function(self) {  // What to do when a single row is selected.
                 //console.log("row clicked");
@@ -4867,6 +4867,7 @@ class DataGrid extends Panel {
 
                 let fc = new FilterConfigurator({
                     fields: this.fields,
+                    mute: this.mute,
                     filters: this.activefilters
                 });
                 dialogconfig.content = fc.container;
@@ -5860,6 +5861,7 @@ class DataGrid extends Panel {
             this.searchcontrol = new SearchControl({
                 arialabel: TextFactory.get('search_this_data'),
                 placeholder: TextFactory.get('search_this_data'),
+                mute: this.mute,
                 searchtext: TextFactory.get('search'),
                 action: function(value) {
                     me.search(value);
@@ -6474,6 +6476,9 @@ class DataGrid extends Panel {
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
 
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
+
     get passiveeditinstructions() { return this.config.passiveeditinstructions; }
     set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }
 
@@ -6560,6 +6565,7 @@ class FilterConfigurator {
             classes: [], //Extra css classes to apply,
             filters: [], // Existing filters.
             fields: [], // Field definitions
+            mute: false, // Draw inputs as mute
             instructions: TextFactory.get('datagrid-filter-instructions')
 
         };
@@ -6770,6 +6776,7 @@ class FilterConfigurator {
             options: options,
             name: `primeselector-${filterid}`,
             value: fieldname,
+            mute: this.mute,
             placeholder: TextFactory.get('comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
@@ -6831,6 +6838,7 @@ class FilterConfigurator {
             value: ourValue,
             name: `comparator-${filterid}`,
             minimal: true,
+            mute: this.mute,
             classes: ['comparator'],
             onchange: function(self) {
                 let li = self.container.parentElement;
@@ -6856,6 +6864,7 @@ class FilterConfigurator {
             value: value,
             name: `valuefield-${filterid}`,
             minimal: true,
+            mute: this.mute,
             classes: ['valueinput'],
             onchange: function(self) {
                 let li = self.container.parentElement;
@@ -6909,6 +6918,9 @@ class FilterConfigurator {
 
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get workingfilters() { return this._workingfilters; }
     set workingfilters(workingfilters) { this._workingfilters = workingfilters; }
@@ -8558,6 +8570,7 @@ class SearchControl {
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
+            mute: false, // if true, controls are mute
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
             action: function(value, self) { // The search action. Passed the value of the input and the self
@@ -8643,6 +8656,8 @@ class SearchControl {
         this.searchinput.setAttribute('type', 'text');
         this.searchinput.setAttribute('role', 'search');
         this.searchinput.setAttribute('tabindex', '0');
+
+        if (this.mute) { this.searchinput.classList.add('mute'); }
 
         if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }
         if (this.arialabel) { this.searchinput.setAttribute('aria-label', this.arialabel); }
@@ -8752,6 +8767,9 @@ class SearchControl {
 
     get maxlength() { return this.config.maxlength; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get placeholder() { return this.config.placeholder; }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
@@ -10707,7 +10725,9 @@ class InputElement {
             if (me.hascontainer) {
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
-                    me.helpbutton.closeTooltip();
+                    if (me.helpbutton) {
+                        me.helpbutton.closeTooltip();
+                    }
                 }
 
                 if ((me.value) && (me.value.length > 0)) {
@@ -10736,7 +10756,7 @@ class InputElement {
             }
             if (me.hascontainer) {
                 me.container.classList.add('active');
-                if (me.help) {
+                if ((me.help) && (me.helpbutton)) {
                     me.helptimer = setTimeout(function() {
                         me.helpbutton.openTooltip();
                     }, me.helpwaittime);
@@ -10756,7 +10776,9 @@ class InputElement {
 
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
-                    me.helpbutton.closeTooltip();
+                    if (me.helpbutton) {
+                        me.helpbutton.closeTooltip();
+                    }
                 }
                 if ((me.mute) && (me.label)) {
                     //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);

@@ -513,7 +513,9 @@ class InputElement {
             if (me.hascontainer) {
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
-                    me.helpbutton.closeTooltip();
+                    if (me.helpbutton) {
+                        me.helpbutton.closeTooltip();
+                    }
                 }
 
                 if ((me.value) && (me.value.length > 0)) {
@@ -542,7 +544,7 @@ class InputElement {
             }
             if (me.hascontainer) {
                 me.container.classList.add('active');
-                if (me.help) {
+                if ((me.help) && (me.helpbutton)) {
                     me.helptimer = setTimeout(function() {
                         me.helpbutton.openTooltip();
                     }, me.helpwaittime);
@@ -562,7 +564,9 @@ class InputElement {
 
                 if (me.helptimer) {
                     clearTimeout(me.helptimer);
-                    me.helpbutton.closeTooltip();
+                    if (me.helpbutton) {
+                        me.helpbutton.closeTooltip();
+                    }
                 }
                 if ((me.mute) && (me.label)) {
                     //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);

@@ -6,6 +6,7 @@ class FilterConfigurator {
             classes: [], //Extra css classes to apply,
             filters: [], // Existing filters.
             fields: [], // Field definitions
+            mute: false, // Draw inputs as mute
             instructions: TextFactory.get('datagrid-filter-instructions')
 
         };
@@ -216,6 +217,7 @@ class FilterConfigurator {
             options: options,
             name: `primeselector-${filterid}`,
             value: fieldname,
+            mute: this.mute,
             placeholder: TextFactory.get('comparator-select_field'),
             classes: ['primeselector'],
             onchange: function(self) {
@@ -277,6 +279,7 @@ class FilterConfigurator {
             value: ourValue,
             name: `comparator-${filterid}`,
             minimal: true,
+            mute: this.mute,
             classes: ['comparator'],
             onchange: function(self) {
                 let li = self.container.parentElement;
@@ -302,6 +305,7 @@ class FilterConfigurator {
             value: value,
             name: `valuefield-${filterid}`,
             minimal: true,
+            mute: this.mute,
             classes: ['valueinput'],
             onchange: function(self) {
                 let li = self.container.parentElement;
@@ -355,6 +359,9 @@ class FilterConfigurator {
 
     get instructions() { return this.config.instructions; }
     set instructions(instructions) { this.config.instructions = instructions; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get workingfilters() { return this._workingfilters; }
     set workingfilters(workingfilters) { this._workingfilters = workingfilters; }

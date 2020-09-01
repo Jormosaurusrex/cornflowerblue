@@ -10,6 +10,7 @@ class SearchControl {
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
+            mute: false, // if true, controls are mute
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
             action: function(value, self) { // The search action. Passed the value of the input and the self
@@ -95,6 +96,8 @@ class SearchControl {
         this.searchinput.setAttribute('type', 'text');
         this.searchinput.setAttribute('role', 'search');
         this.searchinput.setAttribute('tabindex', '0');
+
+        if (this.mute) { this.searchinput.classList.add('mute'); }
 
         if (this.placeholder) { this.searchinput.setAttribute('placeholder', this.placeholder); }
         if (this.arialabel) { this.searchinput.setAttribute('aria-label', this.arialabel); }
@@ -204,6 +207,9 @@ class SearchControl {
 
     get maxlength() { return this.config.maxlength; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get placeholder() { return this.config.placeholder; }
     set placeholder(placeholder) { this.config.placeholder = placeholder; }
