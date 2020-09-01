@@ -20,6 +20,7 @@ class TabBar {
             //    id: null, // tab id, used with "activate(tabid)"
             //    icon: null, // an icon identifier, optional
             //    tooltip: null, // an optional tooltip
+            //    url: null, // just go to this url,
             //    selected: false, // if true, start selected
             //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
             //    subtabs: null  // an array of tab definitions to indicate subtabs
@@ -63,6 +64,14 @@ class TabBar {
 
         if ((this.responsive) && (this.menutitle)) {
             this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
+        }
+    }
+
+    deselectAll() {
+        if (this.selected) {
+            this.selected.removeAttribute('aria-selected');
+            this.selected.setAttribute('tabindex', '-1');
+            this.selected = null;
         }
     }
 
@@ -261,6 +270,8 @@ class TabBar {
                         break;
                 }
             });
+        } else if (tabdef.url) {
+            link.setAttribute('href', tabdef.url);
         } else { // Non-Master Tabs
             link.addEventListener('keydown', function (e) {
 

@@ -1037,6 +1037,7 @@ a.button.ghost.active {
   color: var(--colors-text-hot);
   background-color: var(--colors-local);
   text-shadow: var(--text-shadow);
+  box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
 }
 @media (hover: hover) and (pointer: fine) {
   button.ghost:hover, button.ghost.hover,
@@ -1049,6 +1050,7 @@ a.button.ghost.hover {
     color: var(--colors-text-hot);
     background-color: var(--colors-local);
     text-shadow: var(--text-shadow);
+    box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
   }
 }
 button.mute,

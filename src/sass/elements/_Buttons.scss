@@ -163,7 +163,6 @@ a.button {
       }
     }
   }
-
   &.ghost {
     --button-border-color: var(--colors-local);
     box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
@@ -176,6 +175,7 @@ a.button {
       color: var(--colors-text-hot);
       background-color: var(--colors-local);
       text-shadow: var(--text-shadow);
+      box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
     }
     @include for-hover-only {
       &:hover,
@@ -183,6 +183,7 @@ a.button {
         color: var(--colors-text-hot);
         background-color: var(--colors-local);
         text-shadow: var(--text-shadow);
+        box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
       }
     }
   }
