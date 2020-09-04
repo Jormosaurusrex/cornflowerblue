@@ -275,7 +275,6 @@ class SimpleForm {
         } else {
             this.runInvalid();
         }
-        console.log(`valid: ${valid}`);
         return valid;
     }
 

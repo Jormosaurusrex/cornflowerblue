@@ -28,13 +28,6 @@ textarea {
   color: var(--colors-standard);
   text-shadow:var(--text-shadow);
   vertical-align: middle;
-  &::placeholder,
-  &::-ms-input-placeholder {
-    color: rgba(var(--input-border-color-rgb), 0.7);
-    font-weight: bold;
-    text-shadow: none;
-    color: blue;
-  }
   &:disabled {
     opacity: .5;
     cursor: not-allowed;

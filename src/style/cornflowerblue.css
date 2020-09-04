@@ -3003,15 +3003,11 @@ p.textarea-container div.wrap div.trigger:focus {
   --input-border-color: rgb(var(--input-border-color-rgb));
   box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
 }
-div.input-container div.wrap div.trigger:focus::placeholder, div.input-container div.wrap div.trigger:focus::-ms-input-placeholder,
+div.input-container div.wrap div.trigger:focus::placeholder,
 p.input-container div.wrap div.trigger:focus::placeholder,
-p.input-container div.wrap div.trigger:focus::-ms-input-placeholder,
 div.file-container div.wrap div.trigger:focus::placeholder,
-div.file-container div.wrap div.trigger:focus::-ms-input-placeholder,
 div.textarea-container div.wrap div.trigger:focus::placeholder,
-div.textarea-container div.wrap div.trigger:focus::-ms-input-placeholder,
-p.textarea-container div.wrap div.trigger:focus::placeholder,
-p.textarea-container div.wrap div.trigger:focus::-ms-input-placeholder {
+p.textarea-container div.wrap div.trigger:focus::placeholder {
   opacity: 0.3;
 }
 div.input-container div.wrap div.trigger.mute,
@@ -3032,15 +3028,11 @@ p.textarea-container div.wrap div.trigger.mute:focus {
   background-color: rgba(var(--input-border-color-rgb), 0.05);
   box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
 }
-div.input-container div.wrap div.trigger.mute:focus::placeholder, div.input-container div.wrap div.trigger.mute:focus::-ms-input-placeholder,
+div.input-container div.wrap div.trigger.mute:focus::placeholder,
 p.input-container div.wrap div.trigger.mute:focus::placeholder,
-p.input-container div.wrap div.trigger.mute:focus::-ms-input-placeholder,
 div.file-container div.wrap div.trigger.mute:focus::placeholder,
-div.file-container div.wrap div.trigger.mute:focus::-ms-input-placeholder,
 div.textarea-container div.wrap div.trigger.mute:focus::placeholder,
-div.textarea-container div.wrap div.trigger.mute:focus::-ms-input-placeholder,
-p.textarea-container div.wrap div.trigger.mute:focus::placeholder,
-p.textarea-container div.wrap div.trigger.mute:focus::-ms-input-placeholder {
+p.textarea-container div.wrap div.trigger.mute:focus::placeholder {
   opacity: 0;
 }
 div.input-container div.wrap div.inputcontrol,
@@ -3848,14 +3840,39 @@ div.textarea-container div.wrap:after {
 div.textarea-container.mute div.charcounter {
   top: 0.3em;
 }
-div.textarea-container.mute div.wrap textarea::-ms-input-placeholder, div.textarea-container.mute div.wrap textarea::placeholder {
+div.textarea-container.mute div.wrap textarea::placeholder {
   opacity: 0;
 }
-div.textarea-container.mute div.wrap.filled textarea::-ms-input-placeholder, div.textarea-container.mute div.wrap.filled textarea::placeholder {
+div.textarea-container.mute div.wrap.filled textarea::placeholder {
   opacity: 0.3;
 }
 div.textarea-container div.passivebox {
   min-height: 4em;
+}
+
+div.select-container.mute > div.wrap > input.trigger::placeholder {
+  opacity: 0;
+}
+div.select-container.mute.filled > div.wrap > input.trigger::placeholder {
+  opacity: 0.3;
+}
+div.select-container.mute[aria-expanded=true] div.topline {
+  margin-top: 0;
+  margin-bottom: 0;
+  pointer-events: unset;
+}
+div.select-container.mute[aria-expanded=true] div.topline label {
+  padding-left: 0;
+}
+div.select-container.mute[aria-expanded=true] div.topline label button.help, div.select-container.mute[aria-expanded=true] div.topline label:after {
+  opacity: 1;
+}
+div.select-container.mute[aria-expanded=true] div.topline div.topcontrol {
+  opacity: 1;
+  display: inline-block;
+}
+div.select-container.mute[aria-expanded=true] > div.wrap > input.trigger::placeholder {
+  opacity: 0.3;
 }
 
 [hidden] {
@@ -3889,20 +3906,6 @@ textarea {
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
   vertical-align: middle;
-}
-input[type=text]::placeholder, input[type=text]::-ms-input-placeholder,
-input[type=number]::placeholder,
-input[type=number]::-ms-input-placeholder,
-input[type=password]::placeholder,
-input[type=password]::-ms-input-placeholder,
-input[type=search]::placeholder,
-input[type=search]::-ms-input-placeholder,
-textarea::placeholder,
-textarea::-ms-input-placeholder {
-  color: rgba(var(--input-border-color-rgb), 0.7);
-  font-weight: bold;
-  text-shadow: none;
-  color: blue;
 }
 input[type=text]:disabled,
 input[type=number]:disabled,
@@ -3986,6 +3989,9 @@ div.select-container {
 div.select-container div.wrap {
   display: block;
   position: relative;
+}
+div.select-container div.wrap input.trigger.mute::placeholder, div.select-container div.wrap input.trigger.mute::-ms-input-placeholder {
+  opacity: 0;
 }
 div.select-container div.wrap:before {
   cursor: pointer;
@@ -5942,6 +5948,8 @@ div.datagrid-container table.grid td.mechanical {
   transition: width 0.2s;
   resize: none;
   position: sticky;
+  min-width: 1em;
+  text-align: center;
   left: 0;
 }
 div.datagrid-container table.grid th.mechanical.selector,

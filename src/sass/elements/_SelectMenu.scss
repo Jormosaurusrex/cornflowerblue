@@ -3,7 +3,14 @@ div.select-container {
   div.wrap {
     display: block;
     position: relative;
-    input.trigger {}
+    input.trigger {
+      &.mute {
+        &::placeholder,
+        &::-ms-input-placeholder {
+          opacity: 0;
+        }
+      }
+    }
     &:before {
       cursor: pointer;
     }
@@ -28,6 +35,7 @@ div.select-container {
     }
     div.wrap {
       input.trigger {
+
       }
       &[aria-expanded="true"],
       &:focus-within {

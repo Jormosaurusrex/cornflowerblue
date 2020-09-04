@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-08-31
+/*! Cornflower Blue - v0.1.1 - 2020-09-04
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -9069,7 +9069,6 @@ class SimpleForm {
         } else {
             this.runInvalid();
         }
-        console.log(`valid: ${valid}`);
         return valid;
     }
 
@@ -9497,6 +9496,7 @@ class TabBar {
             //    id: null, // tab id, used with "activate(tabid)"
             //    icon: null, // an icon identifier, optional
             //    tooltip: null, // an optional tooltip
+            //    url: null, // just go to this url,
             //    selected: false, // if true, start selected
             //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
             //    subtabs: null  // an array of tab definitions to indicate subtabs
@@ -9540,6 +9540,14 @@ class TabBar {
 
         if ((this.responsive) && (this.menutitle)) {
             this.menutitle.innerHTML = this.selected.getAttribute('data-tabtext');
+        }
+    }
+
+    deselectAll() {
+        if (this.selected) {
+            this.selected.removeAttribute('aria-selected');
+            this.selected.setAttribute('tabindex', '-1');
+            this.selected = null;
         }
     }
 
@@ -9702,6 +9710,7 @@ class TabBar {
             for (let subdef of tabdef.subtabs) {
                 localorder = this.buildTab(subdef, localorder, li);
             }
+
             link.addEventListener('keydown', function (e) {
                 let setname = li.getAttribute('data-parent');
                 let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
@@ -9738,6 +9747,8 @@ class TabBar {
                         break;
                 }
             });
+        } else if (tabdef.url) {
+            link.setAttribute('href', tabdef.url);
         } else { // Non-Master Tabs
             link.addEventListener('keydown', function (e) {
 
@@ -11095,6 +11106,9 @@ class InputElement {
     get unsettext() { return this.config.unsettext; }
     set unsettext(unsettext) { this.config.unsettext = unsettext; }
 
+    get unselectedtext() { return this.config.unselectedtext; }
+    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
+
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 
@@ -11262,6 +11276,7 @@ class SelectMenu extends InputElement {
 
         this.listbox.removeAttribute('aria-hidden');
         this.wrapper.setAttribute('aria-expanded', true);
+        this.container.setAttribute('aria-expanded', true);
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '0');
@@ -11326,6 +11341,7 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
+        this.container.setAttribute('aria-expanded', false);
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
@@ -11737,9 +11753,6 @@ class SelectMenu extends InputElement {
         return this._triggerbox;
     }
     set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
-
-    get unselectedtext() { return this.config.unselectedtext; }
-    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
 
     get wrapper() { return this._wrapper; }
     set wrapper(wrapper) { this._wrapper = wrapper; }

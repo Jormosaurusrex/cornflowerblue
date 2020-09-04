@@ -141,6 +141,7 @@ class SelectMenu extends InputElement {
 
         this.listbox.removeAttribute('aria-hidden');
         this.wrapper.setAttribute('aria-expanded', true);
+        this.container.setAttribute('aria-expanded', true);
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '0');
@@ -205,6 +206,7 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
+        this.container.setAttribute('aria-expanded', false);
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
@@ -616,9 +618,6 @@ class SelectMenu extends InputElement {
         return this._triggerbox;
     }
     set triggerbox(triggerbox) { this._triggerbox = triggerbox; }
-
-    get unselectedtext() { return this.config.unselectedtext; }
-    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
 
     get wrapper() { return this._wrapper; }
     set wrapper(wrapper) { this._wrapper = wrapper; }

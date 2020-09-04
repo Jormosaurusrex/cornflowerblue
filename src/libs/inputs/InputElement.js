@@ -883,6 +883,9 @@ class InputElement {
     get unsettext() { return this.config.unsettext; }
     set unsettext(unsettext) { this.config.unsettext = unsettext; }
 
+    get unselectedtext() { return this.config.unselectedtext; }
+    set unselectedtext(unselectedtext) { this.config.unselectedtext = unselectedtext; }
+
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 

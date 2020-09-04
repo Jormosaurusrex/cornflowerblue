@@ -234,6 +234,7 @@ class TabBar {
             for (let subdef of tabdef.subtabs) {
                 localorder = this.buildTab(subdef, localorder, li);
             }
+
             link.addEventListener('keydown', function (e) {
                 let setname = li.getAttribute('data-parent');
                 let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
