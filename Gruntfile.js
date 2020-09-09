@@ -73,6 +73,7 @@ module.exports = function(grunt) {
                     'src/libs/inputs/NumberInput.js',
                     'src/libs/inputs/PasswordInput.js',
                     'src/libs/inputs/RadioGroup.js',
+                    'src/libs/inputs/ColorSelector.js',
                     'src/libs/inputs/TextArea.js',
                     'src/libs/inputs/URIInput.js',
 

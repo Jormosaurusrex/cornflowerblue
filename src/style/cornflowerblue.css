@@ -2264,6 +2264,24 @@ input[type=reset].menu[aria-expanded=true] ul.menu,
 a.button.menu[aria-expanded=true] ul.menu {
   display: flex;
 }
+button > span.badge,
+input[type=submit] > span.badge,
+input[type=reset] > span.badge,
+a.button > span.badge {
+  position: absolute;
+  left: 0.1rem;
+  bottom: 0.1rem;
+  background-color: var(--red);
+  color: var(--colors-highlight);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
 
 ul.button-menu,
 div.button-menu,
@@ -2482,6 +2500,54 @@ div.radiogroup-container.required ul.radiogroup li.radio label:after {
   display: none;
 }
 div.radiogroup-container.passive ul.radiogroup {
+  display: none;
+}
+
+div.colorselector-container ul.colorselector {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-inline-start: 0;
+}
+div.colorselector-container ul.colorselector li.radio {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: center;
+  margin: 0 1rem;
+}
+div.colorselector-container ul.colorselector li.radio:first-child {
+  margin-left: 0;
+}
+div.colorselector-container ul.colorselector li.radio input[type=radio] {
+  margin: 0;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  display: inline-block;
+}
+div.colorselector-container ul.colorselector li.radio input[type=radio]:after {
+  background-color: var(--white);
+  border: 0.1rem solid var(--grey-darkest);
+}
+div.colorselector-container ul.colorselector li.radio label {
+  display: block;
+  margin: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.colorselector-container ul.colorselector li.radio label:hover {
+    text-decoration: underline double;
+  }
+}
+div.colorselector-container ul.colorselector li.radio label.required:after {
+  display: none;
+}
+div.colorselector-container.required ul.radiogroup li.radio label:after {
+  display: none;
+}
+div.colorselector-container.passive ul.radiogroup {
   display: none;
 }
 
@@ -5601,6 +5667,8 @@ div.tooltip.east:before {
 }
 
 div.datagrid-container {
+  --vert-padding: 1rem;
+  --side-padding: 1rem;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -5833,7 +5901,7 @@ div.datagrid-container table.grid > tbody tr {
   box-shadow: inset 0 -0.05em 0 0 var(--canvas-color-tertiary), inset 0 0.05em 0 0 var(--canvas-color-tertiary);
 }
 div.datagrid-container table.grid > tbody tr td {
-  padding: 1rem;
+  padding: var(--vert-padding) var(--side-padding);
   white-space: nowrap;
 }
 div.datagrid-container table.grid > tbody tr td button {
@@ -5948,9 +6016,9 @@ div.datagrid-container table.grid td.mechanical {
   transition: width 0.2s;
   resize: none;
   position: sticky;
-  min-width: 1em;
   text-align: center;
   left: 0;
+  padding: 0;
 }
 div.datagrid-container table.grid th.mechanical.selector,
 div.datagrid-container table.grid td.mechanical.selector {
@@ -5966,10 +6034,6 @@ div.datagrid-container table.grid td.mechanical.selector {
 div.datagrid-container table.grid th.mechanical.selector input,
 div.datagrid-container table.grid td.mechanical.selector input {
   display: none;
-}
-div.datagrid-container table.grid th.mechanical.actions,
-div.datagrid-container table.grid td.mechanical.actions {
-  padding: 0;
 }
 div.datagrid-container table.grid th.mechanical.actions button,
 div.datagrid-container table.grid td.mechanical.actions button {

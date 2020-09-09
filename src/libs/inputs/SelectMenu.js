@@ -289,7 +289,7 @@ class SelectMenu extends InputElement {
         if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
         this.wrapper.appendChild(this.triggerbox);
 
-        this.container.append(this.wrapper);
+        this.container.appendChild(this.wrapper);
 
         this.listbox = document.createElement('div');
         this.listbox.setAttribute('id', `${this.id}-options`);

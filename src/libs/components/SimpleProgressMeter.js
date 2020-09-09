@@ -92,7 +92,7 @@ class SimpleProgressMeter {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        if (this.label) { this.container.append(this.labelobj); }
+        if (this.label) { this.container.appendChild(this.labelobj); }
 
         if (((this.currentrank) || (this.nextrank))
             && (this.decalposition) && (this.decalposition === 'exterior')) {
@@ -100,7 +100,7 @@ class SimpleProgressMeter {
             this.bar.classList.add('exteriordecal');
         }
 
-        this.container.append(this.bar);
+        this.container.appendChild(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
             && (this.decalposition) && (this.decalposition !== 'exterior')
@@ -150,7 +150,7 @@ class SimpleProgressMeter {
                 value.innerHTML = (this.commaseparate ? CFBUtils.readableNumber(this.minvalue) : this.minvalue);
                 p.appendChild(value);
             }
-            this.decallayer.append(p);
+            this.decallayer.appendChild(p);
         }
         if ((this.nextrank) || (this.showcaps)) {
             let p = document.createElement('div');

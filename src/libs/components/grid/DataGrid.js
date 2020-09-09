@@ -348,6 +348,7 @@ class DataGrid extends Panel {
      * @param value
      */
     search(value) {
+        console.log(`search: [${value}]`)
         this.messagebox.classList.add('hidden');
         this.gridwrapper.classList.remove('hidden');
 
@@ -382,7 +383,7 @@ class DataGrid extends Panel {
             }
         }
 
-        if (matches <= 0) {
+        if ((matches <= 0) && (value !== '')) {
             this.messagebox.innerHTML = "";
             let warnings = [TextFactory.get('search_noresults')];
             if (matchesHiddenColumns) {
@@ -393,9 +394,13 @@ class DataGrid extends Panel {
                 warnings: warnings,
                 classes: ['hidden']
             });
-            this.messagebox.append(mb.container);
+            this.messagebox.appendChild(mb.container);
             this.messagebox.classList.remove('hidden');
             this.gridwrapper.classList.add('hidden');
+        } else {
+            this.messagebox.innerHTML = "";
+            this.messagebox.classList.add('hidden');
+            this.gridwrapper.classList.remove('hidden');
         }
     }
 
@@ -930,7 +935,7 @@ class DataGrid extends Panel {
         }
         if (!colsvisible) {
             this.messagebox.innerHTML = "";
-            this.messagebox.append(new MessageBox({
+            this.messagebox.appendChild(new MessageBox({
                 warningstitle: TextFactory.get('no_columns'),
                 warnings: [TextFactory.get('datagrid-message-no_visible_columns')],
                 classes: ['hidden']
@@ -1116,7 +1121,7 @@ class DataGrid extends Panel {
         let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
         if ((!visible) || (visible.length === 0)) {
             this.messagebox.innerHTML = "";
-            this.messagebox.append(new MessageBox({
+            this.messagebox.appendChild(new MessageBox({
                 warningstitle: this.allfilteredtitle,
                 warnings: [this.allfilteredtext],
                 classes: ['hidden']
@@ -1364,13 +1369,13 @@ class DataGrid extends Panel {
         this.container.setAttribute('aria-expanded', 'true');
 
         if (this.title) {
-            this.container.append(this.header);
+            this.container.appendChild(this.header);
         }
 
-        this.container.append(this.gridinfo);
+        this.container.appendChild(this.gridinfo);
 
         if (this.filterable) {
-            this.container.append(this.filterinfo);
+            this.container.appendChild(this.filterinfo);
         }
 
         this.grid.appendChild(this.thead);
@@ -1380,7 +1385,7 @@ class DataGrid extends Panel {
         this.gridwrapper.classList.add('grid-wrapper');
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
-        this.container.append(this.gridwrapper);
+        this.container.appendChild(this.gridwrapper);
 
         this.gridwrapper.onscroll = function(e) {
             if (me.gridwrapper.scrollLeft > 0) {
@@ -1398,7 +1403,7 @@ class DataGrid extends Panel {
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
-        this.gridwrapper.append(this.messagebox);
+        this.gridwrapper.appendChild(this.messagebox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
@@ -1406,6 +1411,9 @@ class DataGrid extends Panel {
         }
 
         if (this.hidden) { this.hide(); }
+
+        // FINALLY, we
+        this.updateCount();
 
     }
 
@@ -1441,8 +1449,27 @@ class DataGrid extends Panel {
      * Update the count of elements in the data grid.
      */
     updateCount() {
+
+        let empty = true;
         if (this.data) {
             this.itemcount.innerHTML = this.data.length;
+            if (this.data.length > 0) { empty = false; }
+        }
+        if (empty) {
+            this.messagebox.innerHTML = "";
+            let warnings = [TextFactory.get('datagrid-message-empty_grid')];
+            let mb = new WarningBox({
+                title: null,
+                warnings: warnings,
+                classes: ['hidden']
+            });
+            this.messagebox.appendChild(mb.container);
+            this.messagebox.classList.remove('hidden');
+            this.gridwrapper.classList.add('hidden');
+        } else {
+            this.messagebox.innerHTML = "";
+            this.messagebox.classList.add('hidden');
+            this.gridwrapper.classList.remove('hidden');
         }
     }
 
@@ -1460,7 +1487,6 @@ class DataGrid extends Panel {
 
         this.itemcount = document.createElement('span');
         this.itemcount.classList.add('itemcount');
-        this.updateCount();
 
         this.activitynotifier = document.createElement('div');
         this.activitynotifier.classList.add('activity');
@@ -1492,7 +1518,7 @@ class DataGrid extends Panel {
                     me.search(value);
                 }
             });
-            this.gridinfo.append(this.searchcontrol.container);
+            this.gridinfo.appendChild(this.searchcontrol.container);
         }
 
         if (this.filterable) {
@@ -1506,7 +1532,7 @@ class DataGrid extends Panel {
                     me.configurator('filter');
                 }
             });
-            this.gridinfo.append(this.filterbutton.button);
+            this.gridinfo.appendChild(this.filterbutton.button);
         }
 
         let items = [];
@@ -1559,7 +1585,7 @@ class DataGrid extends Panel {
             items: items
         });
 
-        this.gridinfo.append(this.actionsbutton.button);
+        this.gridinfo.appendChild(this.actionsbutton.button);
     }
 
     /**

@@ -110,15 +110,16 @@ class IconFactory {
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
      * @param arialabel the aria label to use
+     * @param iconprefix an option icon prefix, for use with other icon libraries
      * @return {*}
      */
-    static icon(icon, arialabel) {
+    static icon(icon, arialabel, iconprefix='cfb') {
         if (icon instanceof Object) { // this is probably a pre-defined icon
             return icon;
         }
         let i = document.createElement('span');
         i.classList.add('icon');
-        i.classList.add(`cfb-${icon}`);
+        i.classList.add(`${iconprefix}-${icon}`);
         if (arialabel) {
             i.setAttribute('aria-label', arialabel);
         } else {
@@ -155,5 +156,6 @@ class IconFactory {
         }
         return i;
     }
+
 }
 window.IconFactory = IconFactory;

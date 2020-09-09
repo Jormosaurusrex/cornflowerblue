@@ -129,7 +129,7 @@ class GridField {
                             let img = document.createElement('img');
                             img.setAttribute('src', d);
                             let anchor = document.createElement('a');
-                            anchor.append(img);
+                            anchor.appendChild(img);
                             anchor.addEventListener('click', function() {
                                 let i = document.createElement('img');
                                 i.setAttribute('src', d);
@@ -172,7 +172,10 @@ class GridField {
                 break;
             case 'paragraph':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return document.createTextNode(d); }
+                    this.renderer = function(d) {
+                        if (!d) { d = ""; }
+                        return document.createTextNode(d);
+                    }
                 }
                 break;
             case 'stringarray':

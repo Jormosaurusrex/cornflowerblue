@@ -26,6 +26,7 @@ class SimpleButton {
             secondicon : null,
             notab: false,
             disabled: false,
+            badgevalue: null,
             mute: false,
             ghost: false,
             link: false,
@@ -64,6 +65,7 @@ class SimpleButton {
             secondicon: { type: 'option', datatype: 'string', description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons." },
             notab: {type: 'boolean', datatype: 'string', description: "If true, don't be tabindexed."},
             disabled: {type: 'boolean', datatype: 'string', description: "If true, make the button disabled."},
+            badgevalue: {type: 'option', datatype: 'number', description: "If this exists, it adds a badge to the button."},
             mute: {type: 'boolean', datatype: 'string', description: "If true, make the button mute."},
             ghost: {type: 'boolean', datatype: 'string', description: "If true, make the button ghost."},
             link: { type: 'option', datatype: 'boolean', description: "If true, make the button behave like a normal link." },
@@ -300,7 +302,31 @@ class SimpleButton {
                 }
             });
         }
+
+        if (this.badgevalue) {
+            this.badge = this.badgevalue;
+        }
     }
+
+
+    set badge(value) {
+        if ((value === null) || (value === 0)) {
+            if (this.badgeobj) {
+                this.button.removeChild(this.badgeobj);
+            }
+            this.badgeobj = null;
+            this.badgevalue = null;
+        } else {
+            this.badgevalue = value;
+            if (!this.badgeobj) {
+                this.badgeobj = document.createElement('span');
+                this.badgeobj.classList.add('badge');
+            }
+            this.badgeobj.innerHTML = this.badgevalue;
+            this.button.appendChild(this.badgeobj);
+        }
+    }
+
 
     /* UTILITY METHODS__________________________________________________________________ */
 
@@ -328,6 +354,12 @@ class SimpleButton {
 
     get attributes() { return this.config.attributes; }
     set attributes(attributes) { this.config.attributes = attributes; }
+
+    get badgeobj() { return this._badgeobj; }
+    set badgeobj(badgeobj) { this._badgeobj = badgeobj; }
+
+    get badgevalue() { return this.config.badgevalue; }
+    set badgevalue(badgevalue) { this.config.badgevalue = badgevalue; }
 
     get button() {
         if (!this._button) { this.buildButton(); }

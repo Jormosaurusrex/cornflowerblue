@@ -114,7 +114,7 @@ class FilterConfigurator {
 
         // instructions
         if (this.instructions) {
-            this.container.append(new InstructionBox({
+            this.container.appendChild(new InstructionBox({
                 instructions: [this.instructions]
             }).container);
         }
@@ -133,7 +133,7 @@ class FilterConfigurator {
             }
         }).button);
 
-        this.container.append(this.actions);
+        this.container.appendChild(this.actions);
 
         this.elements = document.createElement('ul');
         this.elements.classList.add('filter-list');
@@ -144,7 +144,7 @@ class FilterConfigurator {
             }
         }
 
-        this.container.append(this.elements);
+        this.container.appendChild(this.elements);
 
     }
 

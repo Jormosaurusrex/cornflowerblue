@@ -62,6 +62,10 @@ class BooleanToggle {
      */
     get naked() { return this.toggle; }
 
+    get touched() {
+        return this.checked !== this.origval;
+    }
+
     /* STATE METHODS____________________________________________________________________ */
 
     /**
@@ -125,6 +129,7 @@ class BooleanToggle {
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         this.toggle.addEventListener('change', function() {
+            console.log('change');
             if (me.toggle.checked) {
                 me.toggle.setAttribute('aria-checked','true');
                 me.toggle.checked = true;
@@ -133,6 +138,8 @@ class BooleanToggle {
                 me.toggle.checked = false;
             }
             me.checked = me.toggle.checked;
+
+            if (me.form) { me.form.validate(); }
 
             if ((me.onchange) && (typeof me.onchange === 'function')) {
                 me.onchange(me);

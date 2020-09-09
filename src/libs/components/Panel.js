@@ -150,7 +150,7 @@ class Panel {
         }
 
         if (this.title) {
-            this.container.append(this.header);
+            this.container.appendChild(this.header);
             this.contentbox.setAttribute('aria-labelledby', this.headerid);
         }
         if (this.content) {
@@ -215,10 +215,7 @@ class Panel {
     set container(container) { this._container = container; }
 
     get content() { return this.config.content; }
-    set content(content) {
-        if (this.pcontent) { this.pcontent.innerHTML = content; }
-        this.config.content = content;
-    }
+    set content(content) { this.config.content = content; }
 
     get contentid() { return this.config.contentid; }
     set contentid(contentid) { this.config.contentid = contentid; }
@@ -259,9 +256,6 @@ class Panel {
         }
         this.config.onopen = onopen;
     }
-
-    get pcontent() { return this._pcontent; }
-    set pcontent(pcontent) { this._pcontent = pcontent; }
 
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-04
+/*! Cornflower Blue - v0.1.1 - 2020-09-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1899,15 +1899,16 @@ class IconFactory {
      * Gets an icon defined by cornflower blue
      * @param icon the icon id. This is stacked with the cfb prefix.
      * @param arialabel the aria label to use
+     * @param iconprefix an option icon prefix, for use with other icon libraries
      * @return {*}
      */
-    static icon(icon, arialabel) {
+    static icon(icon, arialabel, iconprefix='cfb') {
         if (icon instanceof Object) { // this is probably a pre-defined icon
             return icon;
         }
         let i = document.createElement('span');
         i.classList.add('icon');
-        i.classList.add(`cfb-${icon}`);
+        i.classList.add(`${iconprefix}-${icon}`);
         if (arialabel) {
             i.setAttribute('aria-label', arialabel);
         } else {
@@ -1944,6 +1945,7 @@ class IconFactory {
         }
         return i;
     }
+
 }
 window.IconFactory = IconFactory;
 class TextFactory {
@@ -1995,6 +1997,7 @@ class TextFactory {
             "datagrid-column-config-instructions": "Select which columns to show in the grid. This does not hide the columns during export.",
             "datagrid-filter-instructions": "Columns that are filterable are shown below. Set the value of the column to filter it.",
             "datagrid-message-no_visible_columns": 'No columns are visible in this table.',
+            "datagrid-message-empty_grid": "There are no rows in this dataset.",
             "dateinput-error-invalid": 'This is an invalid date.',
             "datagrid-spinnertext": 'Loading',
             "dateinput-trigger-arialabel": 'Open date picker',
@@ -2148,6 +2151,7 @@ class TextFactory {
     }
     static set library(library) { TextFactory._library = library; }
 
+
 }
 window.TextFactory = TextFactory;
 class SimpleButton {
@@ -2178,6 +2182,7 @@ class SimpleButton {
             secondicon : null,
             notab: false,
             disabled: false,
+            badgevalue: null,
             mute: false,
             ghost: false,
             link: false,
@@ -2216,6 +2221,7 @@ class SimpleButton {
             secondicon: { type: 'option', datatype: 'string', description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons." },
             notab: {type: 'boolean', datatype: 'string', description: "If true, don't be tabindexed."},
             disabled: {type: 'boolean', datatype: 'string', description: "If true, make the button disabled."},
+            badgevalue: {type: 'option', datatype: 'number', description: "If this exists, it adds a badge to the button."},
             mute: {type: 'boolean', datatype: 'string', description: "If true, make the button mute."},
             ghost: {type: 'boolean', datatype: 'string', description: "If true, make the button ghost."},
             link: { type: 'option', datatype: 'boolean', description: "If true, make the button behave like a normal link." },
@@ -2452,7 +2458,31 @@ class SimpleButton {
                 }
             });
         }
+
+        if (this.badgevalue) {
+            this.badge = this.badgevalue;
+        }
     }
+
+
+    set badge(value) {
+        if ((value === null) || (value === 0)) {
+            if (this.badgeobj) {
+                this.button.removeChild(this.badgeobj);
+            }
+            this.badgeobj = null;
+            this.badgevalue = null;
+        } else {
+            this.badgevalue = value;
+            if (!this.badgeobj) {
+                this.badgeobj = document.createElement('span');
+                this.badgeobj.classList.add('badge');
+            }
+            this.badgeobj.innerHTML = this.badgevalue;
+            this.button.appendChild(this.badgeobj);
+        }
+    }
+
 
     /* UTILITY METHODS__________________________________________________________________ */
 
@@ -2480,6 +2510,12 @@ class SimpleButton {
 
     get attributes() { return this.config.attributes; }
     set attributes(attributes) { this.config.attributes = attributes; }
+
+    get badgeobj() { return this._badgeobj; }
+    set badgeobj(badgeobj) { this._badgeobj = badgeobj; }
+
+    get badgevalue() { return this.config.badgevalue; }
+    set badgevalue(badgevalue) { this.config.badgevalue = badgevalue; }
 
     get button() {
         if (!this._button) { this.buildButton(); }
@@ -3346,7 +3382,7 @@ class Panel {
         }
 
         if (this.title) {
-            this.container.append(this.header);
+            this.container.appendChild(this.header);
             this.contentbox.setAttribute('aria-labelledby', this.headerid);
         }
         if (this.content) {
@@ -3411,10 +3447,7 @@ class Panel {
     set container(container) { this._container = container; }
 
     get content() { return this.config.content; }
-    set content(content) {
-        if (this.pcontent) { this.pcontent.innerHTML = content; }
-        this.config.content = content;
-    }
+    set content(content) { this.config.content = content; }
 
     get contentid() { return this.config.contentid; }
     set contentid(contentid) { this.config.contentid = contentid; }
@@ -3455,9 +3488,6 @@ class Panel {
         }
         this.config.onopen = onopen;
     }
-
-    get pcontent() { return this._pcontent; }
-    set pcontent(pcontent) { this._pcontent = pcontent; }
 
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }
@@ -3548,13 +3578,13 @@ class LoadingShade {
             let d = document.createElement('div');
             d.classList.add('spinner');
             d.classList.add(this.spinnerstyle);
-            this.container.append(d);
+            this.container.appendChild(d);
         }
         if (this.spinnertext) {
             let d = document.createElement('div');
             d.classList.add('spinnertext');
             d.innerHTML = this.spinnertext;
-            this.container.append(d);
+            this.container.appendChild(d);
         }
     }
 
@@ -3682,7 +3712,7 @@ class SimpleProgressMeter {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        if (this.label) { this.container.append(this.labelobj); }
+        if (this.label) { this.container.appendChild(this.labelobj); }
 
         if (((this.currentrank) || (this.nextrank))
             && (this.decalposition) && (this.decalposition === 'exterior')) {
@@ -3690,7 +3720,7 @@ class SimpleProgressMeter {
             this.bar.classList.add('exteriordecal');
         }
 
-        this.container.append(this.bar);
+        this.container.appendChild(this.bar);
 
         if (((this.currentrank) || (this.nextrank))
             && (this.decalposition) && (this.decalposition !== 'exterior')
@@ -3740,7 +3770,7 @@ class SimpleProgressMeter {
                 value.innerHTML = (this.commaseparate ? CFBUtils.readableNumber(this.minvalue) : this.minvalue);
                 p.appendChild(value);
             }
-            this.decallayer.append(p);
+            this.decallayer.appendChild(p);
         }
         if ((this.nextrank) || (this.showcaps)) {
             let p = document.createElement('div');
@@ -4303,7 +4333,7 @@ class ColumnConfigurator {
 
         // instructions
         if (this.instructions) {
-            this.container.append(new InstructionBox({
+            this.container.appendChild(new InstructionBox({
                 instructions: [this.instructions]
             }).container);
         }
@@ -4334,7 +4364,7 @@ class ColumnConfigurator {
             this.elements.appendChild(li);
         }
 
-        this.container.append(this.elements);
+        this.container.appendChild(this.elements);
 
     }
 
@@ -4723,6 +4753,7 @@ class DataGrid extends Panel {
      * @param value
      */
     search(value) {
+        console.log(`search: [${value}]`)
         this.messagebox.classList.add('hidden');
         this.gridwrapper.classList.remove('hidden');
 
@@ -4757,7 +4788,7 @@ class DataGrid extends Panel {
             }
         }
 
-        if (matches <= 0) {
+        if ((matches <= 0) && (value !== '')) {
             this.messagebox.innerHTML = "";
             let warnings = [TextFactory.get('search_noresults')];
             if (matchesHiddenColumns) {
@@ -4768,9 +4799,13 @@ class DataGrid extends Panel {
                 warnings: warnings,
                 classes: ['hidden']
             });
-            this.messagebox.append(mb.container);
+            this.messagebox.appendChild(mb.container);
             this.messagebox.classList.remove('hidden');
             this.gridwrapper.classList.add('hidden');
+        } else {
+            this.messagebox.innerHTML = "";
+            this.messagebox.classList.add('hidden');
+            this.gridwrapper.classList.remove('hidden');
         }
     }
 
@@ -5305,7 +5340,7 @@ class DataGrid extends Panel {
         }
         if (!colsvisible) {
             this.messagebox.innerHTML = "";
-            this.messagebox.append(new MessageBox({
+            this.messagebox.appendChild(new MessageBox({
                 warningstitle: TextFactory.get('no_columns'),
                 warnings: [TextFactory.get('datagrid-message-no_visible_columns')],
                 classes: ['hidden']
@@ -5491,7 +5526,7 @@ class DataGrid extends Panel {
         let visible = this.gridbody.querySelector(`tr:not(.filtered)`);
         if ((!visible) || (visible.length === 0)) {
             this.messagebox.innerHTML = "";
-            this.messagebox.append(new MessageBox({
+            this.messagebox.appendChild(new MessageBox({
                 warningstitle: this.allfilteredtitle,
                 warnings: [this.allfilteredtext],
                 classes: ['hidden']
@@ -5739,13 +5774,13 @@ class DataGrid extends Panel {
         this.container.setAttribute('aria-expanded', 'true');
 
         if (this.title) {
-            this.container.append(this.header);
+            this.container.appendChild(this.header);
         }
 
-        this.container.append(this.gridinfo);
+        this.container.appendChild(this.gridinfo);
 
         if (this.filterable) {
-            this.container.append(this.filterinfo);
+            this.container.appendChild(this.filterinfo);
         }
 
         this.grid.appendChild(this.thead);
@@ -5755,7 +5790,7 @@ class DataGrid extends Panel {
         this.gridwrapper.classList.add('grid-wrapper');
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
-        this.container.append(this.gridwrapper);
+        this.container.appendChild(this.gridwrapper);
 
         this.gridwrapper.onscroll = function(e) {
             if (me.gridwrapper.scrollLeft > 0) {
@@ -5773,7 +5808,7 @@ class DataGrid extends Panel {
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
-        this.gridwrapper.append(this.messagebox);
+        this.gridwrapper.appendChild(this.messagebox);
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
@@ -5781,6 +5816,9 @@ class DataGrid extends Panel {
         }
 
         if (this.hidden) { this.hide(); }
+
+        // FINALLY, we
+        this.updateCount();
 
     }
 
@@ -5816,8 +5854,27 @@ class DataGrid extends Panel {
      * Update the count of elements in the data grid.
      */
     updateCount() {
+
+        let empty = true;
         if (this.data) {
             this.itemcount.innerHTML = this.data.length;
+            if (this.data.length > 0) { empty = false; }
+        }
+        if (empty) {
+            this.messagebox.innerHTML = "";
+            let warnings = [TextFactory.get('datagrid-message-empty_grid')];
+            let mb = new WarningBox({
+                title: null,
+                warnings: warnings,
+                classes: ['hidden']
+            });
+            this.messagebox.appendChild(mb.container);
+            this.messagebox.classList.remove('hidden');
+            this.gridwrapper.classList.add('hidden');
+        } else {
+            this.messagebox.innerHTML = "";
+            this.messagebox.classList.add('hidden');
+            this.gridwrapper.classList.remove('hidden');
         }
     }
 
@@ -5835,7 +5892,6 @@ class DataGrid extends Panel {
 
         this.itemcount = document.createElement('span');
         this.itemcount.classList.add('itemcount');
-        this.updateCount();
 
         this.activitynotifier = document.createElement('div');
         this.activitynotifier.classList.add('activity');
@@ -5867,7 +5923,7 @@ class DataGrid extends Panel {
                     me.search(value);
                 }
             });
-            this.gridinfo.append(this.searchcontrol.container);
+            this.gridinfo.appendChild(this.searchcontrol.container);
         }
 
         if (this.filterable) {
@@ -5881,7 +5937,7 @@ class DataGrid extends Panel {
                     me.configurator('filter');
                 }
             });
-            this.gridinfo.append(this.filterbutton.button);
+            this.gridinfo.appendChild(this.filterbutton.button);
         }
 
         let items = [];
@@ -5934,7 +5990,7 @@ class DataGrid extends Panel {
             items: items
         });
 
-        this.gridinfo.append(this.actionsbutton.button);
+        this.gridinfo.appendChild(this.actionsbutton.button);
     }
 
     /**
@@ -6673,7 +6729,7 @@ class FilterConfigurator {
 
         // instructions
         if (this.instructions) {
-            this.container.append(new InstructionBox({
+            this.container.appendChild(new InstructionBox({
                 instructions: [this.instructions]
             }).container);
         }
@@ -6692,7 +6748,7 @@ class FilterConfigurator {
             }
         }).button);
 
-        this.container.append(this.actions);
+        this.container.appendChild(this.actions);
 
         this.elements = document.createElement('ul');
         this.elements.classList.add('filter-list');
@@ -6703,7 +6759,7 @@ class FilterConfigurator {
             }
         }
 
-        this.container.append(this.elements);
+        this.container.appendChild(this.elements);
 
     }
 
@@ -7057,7 +7113,7 @@ class GridField {
                             let img = document.createElement('img');
                             img.setAttribute('src', d);
                             let anchor = document.createElement('a');
-                            anchor.append(img);
+                            anchor.appendChild(img);
                             anchor.addEventListener('click', function() {
                                 let i = document.createElement('img');
                                 i.setAttribute('src', d);
@@ -7100,7 +7156,10 @@ class GridField {
                 break;
             case 'paragraph':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return document.createTextNode(d); }
+                    this.renderer = function(d) {
+                        if (!d) { d = ""; }
+                        return document.createTextNode(d);
+                    }
                 }
                 break;
             case 'stringarray':
@@ -7599,7 +7658,7 @@ class DatePicker {
         }
         calendar.appendChild(tbody);
 
-        month.append(calendar);
+        month.appendChild(calendar);
 
         this.monthbox.innerHTML = "";
         this.monthbox.appendChild(month);
@@ -8032,7 +8091,7 @@ class FloatingPanel extends Panel {
 
     static get DOCUMENTATION() {
         return {
-            position: { type: 'option', datatype: 'enumeration', description: "Position for the growler. Valid values: (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)" }
+            position: { type: 'option', datatype: 'enumeration', description: "Position for the panel. Valid values: (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)" }
         };
     }
 
@@ -8261,7 +8320,7 @@ class Growler extends FloatingPanel {
             if (this.icon) {
                 let i = IconFactory.icon(this.icon);
                 i.classList.add('i');
-                payload.append(i);
+                payload.appendChild(i);
             }
 
             let d = document.createElement('div');
@@ -8843,6 +8902,7 @@ class SimpleForm {
             onfailure: null, // What to do if the handlercallback returns failure (passed self and results)
             onvalid: null, // What to do when the form becomes valid (passed self)
             oninvalid: null, // What to do when the form becomes invalid (passed self),
+            novalidate: false, // if true, don't do any validation (always return true)
             validator: null // validator function, passed self
         };
     }
@@ -9030,7 +9090,7 @@ class SimpleForm {
             errors: results.errors,
             warnings: results.warnings
         }).container;
-        this.headerbox.append(this.resultscontainer);
+        this.headerbox.appendChild(this.resultscontainer);
         this.shade.deactivate();
 
         if (!noexecution) {
@@ -9046,13 +9106,19 @@ class SimpleForm {
 
     /**
      * Validates the form. Runs all validators on registered elements.
+     * @param isFirstValidation set to true when the form loads so it doesn't auto-validate untouched forms
      * @return {boolean}
      */
-    validate() {
+    validate(isFirstValidataion = false) {
+        if (this.novalidate) {
+           this.runValid();
+           return true;
+        }
         let valid = true;
-
+        let touched = false;
         for (let element of this.elements) {
             if (element.touched) {
+                touched = true;
                 let localValid = element.validate();
                 if (!localValid) { valid = false; }
             } else if ((element.required) && (element.value === '')) {
@@ -9064,11 +9130,12 @@ class SimpleForm {
             valid = this.validator(this);
         }
 
-        if (valid) {
+        if ((valid) && (!isFirstValidataion)) {
             this.runValid();
         } else {
             this.runInvalid();
         }
+
         return valid;
     }
 
@@ -9141,7 +9208,7 @@ class SimpleForm {
         }
         if ((this.passiveactions) && (this.passiveactions.length > 0)) { this.form.appendChild(this.passiveactionbox); }
 
-        this.validate();
+        this.validate(true);
 
         if (this.passive) {
             this.pacify();
@@ -9405,6 +9472,9 @@ class SimpleForm {
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get novalidate() { return this.config.novalidate; }
+    set novalidate(novalidate) { this.config.novalidate = novalidate; }
 
     get onfailure() { return this.config.onfailure; }
     set onfailure(onfailure) {
@@ -11424,7 +11494,7 @@ class SelectMenu extends InputElement {
         if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
         this.wrapper.appendChild(this.triggerbox);
 
-        this.container.append(this.wrapper);
+        this.container.appendChild(this.wrapper);
 
         this.listbox = document.createElement('div');
         this.listbox.setAttribute('id', `${this.id}-options`);
@@ -11823,6 +11893,10 @@ class BooleanToggle {
      */
     get naked() { return this.toggle; }
 
+    get touched() {
+        return this.checked !== this.origval;
+    }
+
     /* STATE METHODS____________________________________________________________________ */
 
     /**
@@ -11886,6 +11960,7 @@ class BooleanToggle {
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         this.toggle.addEventListener('change', function() {
+            console.log('change');
             if (me.toggle.checked) {
                 me.toggle.setAttribute('aria-checked','true');
                 me.toggle.checked = true;
@@ -11894,6 +11969,8 @@ class BooleanToggle {
                 me.toggle.checked = false;
             }
             me.checked = me.toggle.checked;
+
+            if (me.form) { me.form.validate(); }
 
             if ((me.onchange) && (typeof me.onchange === 'function')) {
                 me.onchange(me);
@@ -12993,8 +13070,6 @@ class RadioGroup extends SelectMenu {
     }
 
     buildOption(def) {
-
-        const me = this;
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let op = document.createElement('input');
         op.setAttribute('id', lId);
@@ -13007,26 +13082,26 @@ class RadioGroup extends SelectMenu {
         for (let c of this.classes) {
             op.classList.add(c);
         }
-        op.addEventListener('change', function() {
+        op.addEventListener('change', () => {
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
             } else {
                 op.removeAttribute('aria-checked');
             }
 
-            me.selectedoption = def;
-            if (def.label === me.unselectedtext) {
-                me.passivebox.innerHTML = me.unsettext;
+            this.selectedoption = def;
+            if (def.label === this.unselectedtext) {
+                this.passivebox.innerHTML = this.unsettext;
             } else {
-                me.passivebox.innerHTML = def.label;
+                this.passivebox.innerHTML = def.label;
             }
 
-            me.validate();
+            this.validate();
 
-            if (me.form) { me.form.validate(); }
+            if (this.form) { this.form.validate(); }
 
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(this);
             }
         });
 
@@ -13063,6 +13138,151 @@ class RadioGroup extends SelectMenu {
 
 }
 window.RadioGroup = RadioGroup;
+class ColorSelector extends RadioGroup {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            options: [
+                { label: 'Red', value: 'var(--red)' },
+                { label: 'Orange', value: 'var(--orange)' },
+                { label: 'Yellow', value: 'var(--yellow)' },
+                { label: 'Green', value: 'var(--green)' },
+                { label: 'Blue', value: 'var(--blue)' },
+                { label: 'Purple', value: 'var(--purple)' },
+                { label: 'Black', value: 'var(--black)' },
+                { label: 'White', value: 'var(--white)' }
+            ],
+        };
+    }
+
+
+
+    /**
+     * Define the ColorSelecotr
+     * @param config a dictionary object
+     */
+    constructor(config) {
+        if (!config) { config = {}; }
+        console.log(`a: ${config.value}`);
+        config = Object.assign({}, ColorSelector.DEFAULT_CONFIG, config);
+        console.log(`b: ${config.value}`);
+
+        if (!config.id) { // need to generate an id for label stuff
+            config.id = `colorselector-${CFBUtils.getUniqueKey(5)}`;
+        }
+        if (!config.name) { config.name = config.id; }
+
+        super(config);
+        console.log(`c: ${config.value}`);
+    }
+
+    /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get input() { return this.optionlist; }
+
+    get passivetext() {
+        let p = this.unsettext;
+        if (this.selectedoption) { p = this.selectedoption.label; }
+        if (this.value) { p = this.value; }
+        if (this.config.value) { p = this.config.value; }
+        return document.createTextNode(p);
+    }
+
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('input-container');
+        this.container.classList.add('colorselector-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
+        this.container.appendChild(this.labelobj);
+        this.container.appendChild(this.optionlist);
+        this.container.appendChild(this.passivebox);
+        this.postContainerScrub();
+
+    }
+
+    buildOption(def) {
+        const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
+        let op = document.createElement('input');
+        op.setAttribute('id', lId);
+        op.setAttribute('type', 'radio');
+        op.setAttribute('name', this.name);
+        op.setAttribute('tabindex', '0'); // always 0
+        op.setAttribute('value', def.value);
+        op.setAttribute('aria-label', def.label);
+        op.setAttribute('role', 'radio');
+        for (let c of this.classes) {
+            op.classList.add(c);
+        }
+        op.addEventListener('change', () => {
+            if (op.checked) {
+                op.setAttribute('aria-checked', 'true');
+            } else {
+                op.removeAttribute('aria-checked');
+            }
+
+            this.selectedoption = def;
+            if (def.label === this.unselectedtext) {
+                this.passivebox.innerHTML = this.unsettext;
+            } else {
+                this.passivebox.innerHTML = def.label;
+            }
+
+            this.validate();
+
+            if (this.form) { this.form.validate(); }
+
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(this);
+            }
+        });
+        op.style.backgroundColor = def.value;
+
+        let opLabel = document.createElement('label');
+        opLabel.setAttribute('for', lId);
+        opLabel.innerHTML = def.label;
+
+        console.log(`${this.config.value} === ${def.value}`);
+        if ((this.config.value) && (def.value === this.config.value)) {
+            this.origval = def.value;
+            op.checked = true;
+            op.setAttribute('aria-checked', 'true');
+        } else if (def.checked) {
+            this.origval = def.value;
+            op.checked = true;
+            op.setAttribute('aria-checked', 'true');
+        }
+
+        let li = document.createElement('li');
+        li.classList.add('radio');
+        li.appendChild(op);
+        li.appendChild(opLabel);
+        return li;
+    }
+
+    buildOptions() {
+        this.optionlist = document.createElement('ul');
+        this.optionlist.classList.add('colorselector');
+        this.optionlist.setAttribute('tabindex', '-1');
+
+        for (let opt of this.options) {
+            let o = this.buildOption(opt);
+            if (opt.checked) {
+                this.selectedoption = opt;
+            }
+            this.optionlist.appendChild(o);
+        }
+    }
+
+}
+window.ColorSelector = ColorSelector;
 class TextArea extends InputElement {
 
     static get DEFAULT_CONFIG() {

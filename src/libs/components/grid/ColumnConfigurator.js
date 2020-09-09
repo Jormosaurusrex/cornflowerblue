@@ -36,7 +36,7 @@ class ColumnConfigurator {
 
         // instructions
         if (this.instructions) {
-            this.container.append(new InstructionBox({
+            this.container.appendChild(new InstructionBox({
                 instructions: [this.instructions]
             }).container);
         }
@@ -67,7 +67,7 @@ class ColumnConfigurator {
             this.elements.appendChild(li);
         }
 
-        this.container.append(this.elements);
+        this.container.appendChild(this.elements);
 
     }
 

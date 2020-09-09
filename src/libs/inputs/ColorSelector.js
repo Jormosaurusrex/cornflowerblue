@@ -1,19 +1,39 @@
-class RadioGroup extends SelectMenu {
+class ColorSelector extends RadioGroup {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            options: [
+                { label: 'Red', value: 'var(--red)' },
+                { label: 'Orange', value: 'var(--orange)' },
+                { label: 'Yellow', value: 'var(--yellow)' },
+                { label: 'Green', value: 'var(--green)' },
+                { label: 'Blue', value: 'var(--blue)' },
+                { label: 'Purple', value: 'var(--purple)' },
+                { label: 'Black', value: 'var(--black)' },
+                { label: 'White', value: 'var(--white)' }
+            ],
+        };
+    }
+
+
 
     /**
-     * Define the RadioGroup
+     * Define the ColorSelecotr
      * @param config a dictionary object
      */
     constructor(config) {
         if (!config) { config = {}; }
-        config = Object.assign({}, RadioGroup.DEFAULT_CONFIG, config);
+        console.log(`a: ${config.value}`);
+        config = Object.assign({}, ColorSelector.DEFAULT_CONFIG, config);
+        console.log(`b: ${config.value}`);
 
         if (!config.id) { // need to generate an id for label stuff
-            config.id = `radiogroup-${CFBUtils.getUniqueKey(5)}`;
+            config.id = `colorselector-${CFBUtils.getUniqueKey(5)}`;
         }
         if (!config.name) { config.name = config.id; }
 
         super(config);
+        console.log(`c: ${config.value}`);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -28,32 +48,13 @@ class RadioGroup extends SelectMenu {
         return document.createTextNode(p);
     }
 
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    disable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.setAttribute('disabled', 'disabled');
-        }
-        this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
-    }
-
-    enable() {
-        let radios = this.optionlist.querySelectorAll("input[type='radio']");
-        for (let r of radios) {
-            r.removeAttribute('disabled');
-        }
-        this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
-    }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
-        this.container.classList.add('radiogroup-container');
+        this.container.classList.add('colorselector-container');
         if (this.name) {
             this.container.classList.add(`name-${this.name}`);
         }
@@ -63,31 +64,8 @@ class RadioGroup extends SelectMenu {
         this.container.appendChild(this.labelobj);
         this.container.appendChild(this.optionlist);
         this.container.appendChild(this.passivebox);
-
         this.postContainerScrub();
 
-    }
-
-    postContainerScrub() {
-        if (this.hidden) { this.container.style.display = 'none'; }
-
-        if (this.required) {
-            this.container.classList.add('required');
-            this.optionlist.setAttribute('required', 'required');
-        }
-
-        if (this.hidden) {
-            this.container.style.display = 'none';
-            this.container.setAttribute('aria-hidden', 'true');
-        }
-
-        if (this.passive) { this.pacify(); }
-        if (this.disabled) { this.disable(); }
-
-        if (this.help) {
-            this.optionlist.setAttribute('aria-describedby', `${this.id}-help-tt`);
-            this.optionlist.setAttribute('aria-labelledby', `${this.id}-label`);
-        }
     }
 
     buildOption(def) {
@@ -125,12 +103,18 @@ class RadioGroup extends SelectMenu {
                 this.onchange(this);
             }
         });
+        op.style.backgroundColor = def.value;
 
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
 
-        if (def.checked) {
+        console.log(`${this.config.value} === ${def.value}`);
+        if ((this.config.value) && (def.value === this.config.value)) {
+            this.origval = def.value;
+            op.checked = true;
+            op.setAttribute('aria-checked', 'true');
+        } else if (def.checked) {
             this.origval = def.value;
             op.checked = true;
             op.setAttribute('aria-checked', 'true');
@@ -145,7 +129,7 @@ class RadioGroup extends SelectMenu {
 
     buildOptions() {
         this.optionlist = document.createElement('ul');
-        this.optionlist.classList.add('radiogroup');
+        this.optionlist.classList.add('colorselector');
         this.optionlist.setAttribute('tabindex', '-1');
 
         for (let opt of this.options) {
@@ -158,4 +142,4 @@ class RadioGroup extends SelectMenu {
     }
 
 }
-window.RadioGroup = RadioGroup;
+window.ColorSelector = ColorSelector;

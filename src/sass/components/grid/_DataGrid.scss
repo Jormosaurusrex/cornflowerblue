@@ -1,4 +1,6 @@
 div.datagrid-container {
+  --vert-padding: 1rem;
+  --side-padding: 1rem;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -253,7 +255,7 @@ div.datagrid-container {
         //transition: background-color 1s;
         box-shadow: inset 0 -.05em 0 0 var(--canvas-color-tertiary), inset 0 .05em 0 0 var(--canvas-color-tertiary);
         td {
-          padding: 1rem;
+          padding: var(--vert-padding) var(--side-padding);
           white-space: nowrap;
           button {
             background-color: transparent;
@@ -364,9 +366,9 @@ div.datagrid-container {
         transition: width .2s;
         resize: none;
         position: sticky;
-        min-width: 1em;
         text-align: center;
         left: 0;
+        padding: 0;
         &.selector {
           overflow: hidden;
           text-align: center;
@@ -381,7 +383,6 @@ div.datagrid-container {
           }
         }
         &.actions {
-          padding: 0;
           button {
             width: 100%;
             height: 100%;

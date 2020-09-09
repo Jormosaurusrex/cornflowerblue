@@ -201,7 +201,7 @@ class Growler extends FloatingPanel {
             if (this.icon) {
                 let i = IconFactory.icon(this.icon);
                 i.classList.add('i');
-                payload.append(i);
+                payload.appendChild(i);
             }
 
             let d = document.createElement('div');

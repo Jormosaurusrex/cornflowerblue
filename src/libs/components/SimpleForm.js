@@ -49,6 +49,7 @@ class SimpleForm {
             onfailure: null, // What to do if the handlercallback returns failure (passed self and results)
             onvalid: null, // What to do when the form becomes valid (passed self)
             oninvalid: null, // What to do when the form becomes invalid (passed self),
+            novalidate: false, // if true, don't do any validation (always return true)
             validator: null // validator function, passed self
         };
     }
@@ -236,7 +237,7 @@ class SimpleForm {
             errors: results.errors,
             warnings: results.warnings
         }).container;
-        this.headerbox.append(this.resultscontainer);
+        this.headerbox.appendChild(this.resultscontainer);
         this.shade.deactivate();
 
         if (!noexecution) {
@@ -252,13 +253,19 @@ class SimpleForm {
 
     /**
      * Validates the form. Runs all validators on registered elements.
+     * @param isFirstValidation set to true when the form loads so it doesn't auto-validate untouched forms
      * @return {boolean}
      */
-    validate() {
+    validate(isFirstValidataion = false) {
+        if (this.novalidate) {
+           this.runValid();
+           return true;
+        }
         let valid = true;
-
+        let touched = false;
         for (let element of this.elements) {
             if (element.touched) {
+                touched = true;
                 let localValid = element.validate();
                 if (!localValid) { valid = false; }
             } else if ((element.required) && (element.value === '')) {
@@ -270,11 +277,12 @@ class SimpleForm {
             valid = this.validator(this);
         }
 
-        if (valid) {
+        if ((valid) && (!isFirstValidataion)) {
             this.runValid();
         } else {
             this.runInvalid();
         }
+
         return valid;
     }
 
@@ -347,7 +355,7 @@ class SimpleForm {
         }
         if ((this.passiveactions) && (this.passiveactions.length > 0)) { this.form.appendChild(this.passiveactionbox); }
 
-        this.validate();
+        this.validate(true);
 
         if (this.passive) {
             this.pacify();
@@ -611,6 +619,9 @@ class SimpleForm {
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get novalidate() { return this.config.novalidate; }
+    set novalidate(novalidate) { this.config.novalidate = novalidate; }
 
     get onfailure() { return this.config.onfailure; }
     set onfailure(onfailure) {

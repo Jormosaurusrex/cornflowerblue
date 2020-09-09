@@ -47,6 +47,7 @@ class TextFactory {
             "datagrid-column-config-instructions": "Select which columns to show in the grid. This does not hide the columns during export.",
             "datagrid-filter-instructions": "Columns that are filterable are shown below. Set the value of the column to filter it.",
             "datagrid-message-no_visible_columns": 'No columns are visible in this table.',
+            "datagrid-message-empty_grid": "There are no rows in this dataset.",
             "dateinput-error-invalid": 'This is an invalid date.',
             "datagrid-spinnertext": 'Loading',
             "dateinput-trigger-arialabel": 'Open date picker',
@@ -199,6 +200,7 @@ class TextFactory {
         return TextFactory._library;
     }
     static set library(library) { TextFactory._library = library; }
+
 
 }
 window.TextFactory = TextFactory;

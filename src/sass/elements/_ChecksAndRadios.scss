@@ -70,6 +70,68 @@ div.radiogroup-container {
     }
   }
 }
+div.colorselector-container {
+  ul.colorselector {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-inline-start: 0;
+    li.radio {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: center;
+      margin: 0 1rem;
+      &:first-child {
+        margin-left: 0;
+      }
+      input[type="radio"] {
+        margin: 0;
+        width: var(--checkbox-size);
+        height:  var(--checkbox-size);
+        display: inline-block;
+        &:after {
+          background-color: var(--white);
+          border: .1rem solid var(--grey-darkest);
+        }
+      }
+      label {
+        display: block;
+        margin: 0;
+        @include for-hover-only {
+          &:hover {
+            text-decoration: underline double;
+          }
+        }
+        &.required {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  &.required {
+    ul.radiogroup {
+      li.radio {
+        label {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  &.passive {
+    ul.radiogroup {
+      display: none;
+    }
+  }
+}
+
 
 @supports(-webkit-appearance: none) or (-moz-appearance: none) {
   input[type='checkbox'],
@@ -151,7 +213,7 @@ input[type="radio"] {
   &:active{
     border-color: var(--colors-affordance);
     background-color: rgba(var(--colors-affordance-rgb), 0.5);
-    box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);;
+    box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
   }
   &:focus,
   &.focus {
@@ -164,7 +226,7 @@ input[type="radio"] {
     &:hover {
       border-color: var(--colors-affordance);
       background-color: rgba(var(--colors-affordance-rgb), 0.5);
-      box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);;
+      box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
     }
   }
   &:focus,

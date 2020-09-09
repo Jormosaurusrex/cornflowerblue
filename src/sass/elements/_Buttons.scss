@@ -514,5 +514,20 @@ a.button {
       }
     }
   }
+  >span.badge {
+    position: absolute;
+    left: .1rem;
+    bottom: .1rem;
+    background-color: var(--red);
+    color: var(--colors-highlight);
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
 }
 // various .button-menu elements is described in _ButtonMenuBodyLevel.scss

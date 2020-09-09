@@ -254,7 +254,7 @@ class DatePicker {
         }
         calendar.appendChild(tbody);
 
-        month.append(calendar);
+        month.appendChild(calendar);
 
         this.monthbox.innerHTML = "";
         this.monthbox.appendChild(month);

@@ -9,7 +9,7 @@ class FloatingPanel extends Panel {
 
     static get DOCUMENTATION() {
         return {
-            position: { type: 'option', datatype: 'enumeration', description: "Position for the growler. Valid values: (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)" }
+            position: { type: 'option', datatype: 'enumeration', description: "Position for the panel. Valid values: (top-center|bottom-center|top-right|bottom-right|bottom-left|top-left)" }
         };
     }
 

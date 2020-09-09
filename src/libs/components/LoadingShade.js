@@ -66,13 +66,13 @@ class LoadingShade {
             let d = document.createElement('div');
             d.classList.add('spinner');
             d.classList.add(this.spinnerstyle);
-            this.container.append(d);
+            this.container.appendChild(d);
         }
         if (this.spinnertext) {
             let d = document.createElement('div');
             d.classList.add('spinnertext');
             d.innerHTML = this.spinnertext;
-            this.container.append(d);
+            this.container.appendChild(d);
         }
     }
 
