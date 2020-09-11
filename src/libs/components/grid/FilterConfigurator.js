@@ -104,10 +104,9 @@ class FilterConfigurator {
      */
     buildContainer() {
         /*
-         * This this is gigantic and ugly.  Don't @ me.
+         * This this is gigantic and ugly.  Don't @me.
          * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
          */
-        const me = this;
 
         this.container = document.createElement('div');
         this.container.classList.add('filter-configurator');
@@ -125,10 +124,10 @@ class FilterConfigurator {
         this.actions.appendChild(new SimpleButton({
             icon: 'cfb-plus',
             text: TextFactory.get('filter-configurator-add_filter'),
-            action: function() {
-                let unsets = me.elements.querySelectorAll('[data-field="unset"]');
+            action: () => {
+                let unsets = this.elements.querySelectorAll('[data-field="unset"]');
                 if (unsets.length < 1) {
-                    me.addFilter();
+                    this.addFilter();
                 }
             }
         }).button);
@@ -153,8 +152,6 @@ class FilterConfigurator {
      * @param filter
      */
     addFilter(filter) {
-
-        const me = this;
 
         let li = document.createElement('li');
         let filterid = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
@@ -184,9 +181,9 @@ class FilterConfigurator {
             icon: 'minus',
             shape: 'square',
             classes: ['filterkiller'],
-            action: function() {
+            action: () => {
                 if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {
-                    delete me.workingfilters[li.getAttribute('data-filterid')];
+                    delete this.workingfilters[li.getAttribute('data-filterid')];
                 }
                 li.parentNode.removeChild(li);
             }
@@ -202,8 +199,6 @@ class FilterConfigurator {
      * @return {SelectMenu}
      */
     makePrimeSelector(filterid, fieldname) {
-        const me = this;
-
         let options = [];
 
         for (let f of this.fields) {
@@ -220,12 +215,12 @@ class FilterConfigurator {
             mute: this.mute,
             placeholder: TextFactory.get('comparator-select_field'),
             classes: ['primeselector'],
-            onchange: function(self) {
+            onchange: (self) => {
                 let li = self.container.parentElement,
                     validmarker = li.querySelector('div.validmarker'),
                     comparatorfield = li.querySelector('div.select-container.comparator'),
                     valuefield = li.querySelector('div.input-container.valueinput'),
-                    field = me.getField(primeSelector.value);
+                    field = this.getField(primeSelector.value);
 
                 li.setAttribute('data-valid', 'false');
                 if (comparatorfield) {
@@ -236,9 +231,9 @@ class FilterConfigurator {
                 }
                 if (field) {
                     li.setAttribute('data-field', field.name);
-                    li.insertBefore(me.makeComparatorSelector(filterid, field).container, validmarker);
-                    li.insertBefore(me.makeValueSelector(filterid, field).container, validmarker);
-                    me.checkValidity(li);
+                    li.insertBefore(this.makeComparatorSelector(filterid, field).container, validmarker);
+                    li.insertBefore(this.makeValueSelector(filterid, field).container, validmarker);
+                    this.checkValidity(li);
                 }
             }
         });
@@ -253,7 +248,6 @@ class FilterConfigurator {
      * @return {SelectMenu}
      */
     makeComparatorSelector(filterid, field, value) {
-        const me = this;
 
         let ourValue = 'contains';
         let comparators = field.getComparators();
@@ -281,9 +275,9 @@ class FilterConfigurator {
             minimal: true,
             mute: this.mute,
             classes: ['comparator'],
-            onchange: function(self) {
+            onchange: (self) => {
                 let li = self.container.parentElement;
-                me.checkValidity(li);
+                this.checkValidity(li);
             }
         });
         comparatorSelector.container.setAttribute('data-field', field.name);
@@ -299,17 +293,15 @@ class FilterConfigurator {
      * @return {URLInput|TextInput}
      */
     makeValueSelector(filterid, field, value) {
-        const me = this;
-
         let config = {
             value: value,
             name: `valuefield-${filterid}`,
             minimal: true,
             mute: this.mute,
             classes: ['valueinput'],
-            onchange: function(self) {
+            onchange: (self) => {
                 let li = self.container.parentElement;
-                me.checkValidity(li);
+                this.checkValidity(li);
             }
         };
 

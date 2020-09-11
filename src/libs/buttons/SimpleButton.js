@@ -174,7 +174,6 @@ class SimpleButton {
      * @returns DOM representation of the SimpleButton
      */
     buildButton() {
-        const me = this;
 
         if (this.text) {
             this.textobj = document.createElement('span');
@@ -236,24 +235,24 @@ class SimpleButton {
         CFBUtils.applyAttributes(this.attributes, this.button);
         CFBUtils.applyDataAttributes(this.dataattributes, this.button);
 
-        this.button.addEventListener('focusin', function(e) {
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
+        this.button.addEventListener('focusin', (e) => {
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, this);
             }
         });
-        this.button.addEventListener('focusout', function(e) {
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
+        this.button.addEventListener('focusout', (e) => {
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, this);
             }
         });
-        this.button.addEventListener('mouseover', function(e) {
-            if ((me.hoverin) && (typeof me.hoverin === 'function')) {
-                me.hoverin(e, me);
+        this.button.addEventListener('mouseover', (e) => {
+            if ((this.hoverin) && (typeof this.hoverin === 'function')) {
+                this.hoverin(e, this);
             }
         });
-        this.button.addEventListener('mouseout', function(e) {
-            if ((me.hoverout) && (typeof me.hoverout === 'function')) {
-                me.hoverout(e, me);
+        this.button.addEventListener('mouseout', (e) => {
+            if ((this.hoverout) && (typeof this.hoverout === 'function')) {
+                this.hoverout(e, this);
             }
         });
 
@@ -296,9 +295,9 @@ class SimpleButton {
 
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
-            this.button.addEventListener('click', function (e) {
-                if (!me.disabled) {
-                    me.action(e, me);
+            this.button.addEventListener('click', (e) => {
+                if (!this.disabled) {
+                    this.action(e, this);
                 }
             });
         }

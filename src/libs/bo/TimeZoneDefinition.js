@@ -36,7 +36,7 @@ class TimeZoneDefinition extends BusinessObject {
                     type: "string"
                 })
             ],
-            sortfunction: function(a, b) {
+            sortfunction: (a, b) => {
                 if (a.tz > b.tz) { return 1 }
                 if (a.tz < b.tz) { return -1 }
                 return 0;
@@ -496,7 +496,7 @@ class TimeZoneDefinition extends BusinessObject {
         for (let o of Object.values(this.cache)) {
             options.push({ value: o[this.identifier], label: `${o.name} (${o.offset})` });
         }
-        options.sort(function(a, b) {
+        options.sort((a, b) => {
             if (a.label > b.label) { return 1 }
             if (a.label < b.label) { return -1 }
             return 0;

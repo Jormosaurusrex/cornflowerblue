@@ -15,7 +15,7 @@ class BooleanToggle {
             onchange: null, // The change handler. Passed (self).
             validator: null, // A function to run to test validity. Passed the self; returns true or false.,
             value: null, // the value of the checkbox
-            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+            renderer: (data) => { // A function that can be used to format the in the field in passive mode.
                 return `${data}`;
             }
         };
@@ -111,7 +111,7 @@ class BooleanToggle {
      * Builds the DOM.
      */
     build() {
-        const me = this;
+
         this.toggle = document.createElement('input');
         this.toggle.setAttribute('type', "checkbox");
         this.toggle.setAttribute('id', this.id);
@@ -128,21 +128,21 @@ class BooleanToggle {
         CFBUtils.applyDataAttributes(this.attributes, this.toggle);
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
-        this.toggle.addEventListener('change', function() {
+        this.toggle.addEventListener('change', () => {
             console.log('change');
-            if (me.toggle.checked) {
-                me.toggle.setAttribute('aria-checked','true');
-                me.toggle.checked = true;
+            if (this.toggle.checked) {
+                this.toggle.setAttribute('aria-checked','true');
+                this.toggle.checked = true;
             } else {
-                me.toggle.removeAttribute('aria-checked');
-                me.toggle.checked = false;
+                this.toggle.removeAttribute('aria-checked');
+                this.toggle.checked = false;
             }
-            me.checked = me.toggle.checked;
+            this.checked = this.toggle.checked;
 
-            if (me.form) { me.form.validate(); }
+            if (this.form) { this.form.validate(); }
 
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(me);
             }
         });
 

@@ -2,7 +2,7 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) {
+            action: (e, self) => {
                 let focused = (document.activeElement === self.button);
                 if ((focused) && (!self.isopen)) {
                     self.open();
@@ -80,8 +80,6 @@ class ButtonMenu extends SimpleButton {
      * Opens the menu
      */
     open() {
-        const me = this;
-
         if (this.isopen) { return; }
 
         ButtonMenu.closeOpen(); // close open menus
@@ -106,22 +104,22 @@ class ButtonMenu extends SimpleButton {
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        window.setTimeout(function() { // Do the focus thing late
+        window.setTimeout(() => { // Do the focus thing late
             if ((focusable) && (focusable.length > 0)) {
                 focusable[0].focus();
             }
         }, 200);
 
         if (this.autoclose) {
-            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
-                me.setCloseListener();
+            window.setTimeout(() => { // Set this after, or else we'll get bouncing.
+                this.setCloseListener();
             }, 200);
         }
         window.addEventListener('scroll', this.setPosition, true);
 
         if (this.autoclose) {
-            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
-                me.setPosition();
+            window.setTimeout(() => { // Set this after, or else we'll get bouncing.
+                this.setPosition();
             }, 50);
         }
 
@@ -173,8 +171,6 @@ class ButtonMenu extends SimpleButton {
             default:
                 self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
-
-                //self.menu.style.right = `${offsetRight - (self.button.clientWidth)}px`;
                 break;
         }
 
@@ -202,23 +198,21 @@ class ButtonMenu extends SimpleButton {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        const me = this;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
-        window.addEventListener('click', function(e) {
-            let tag = me.menu.tagName.toLowerCase();
-            if (((me.menu.contains(e.target))) && (me.stayopen)) {
-                me.setCloseListener();
-            } else if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
-            } else if (me.menu.contains(e.target)) {
-                me.close();
-            } else if (me.button.contains(e.target)) {
-                me.toggle();
+        window.addEventListener('click', (e) => {
+            let tag = this.menu.tagName.toLowerCase();
+            if (((this.menu.contains(e.target))) && (this.stayopen)) {
+                this.setCloseListener();
+            } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+            } else if (this.menu.contains(e.target)) {
+                this.close();
+            } else if (this.button.contains(e.target)) {
+                this.toggle();
             } else {
-                me.close();
+                this.close();
             }
         }, { once: true, });
     }
@@ -230,7 +224,6 @@ class ButtonMenu extends SimpleButton {
      * @returns DOM representation
      */
     buildMenu() {
-        const me = this;
         this.menu = document.createElement('ul');
         this.menu.classList.add('button-menu');
         this.menu.setAttribute('aria-hidden', 'true');
@@ -253,23 +246,23 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keyup', function(e) {
+            menuitem.addEventListener('keyup', (e) => {
                 switch (e.key) {
                     case 'Tab':
                     case 'Escape':
-                        me.close();
+                        this.close();
                         break;
                     case 'ArrowUp':
                         e.preventDefault();
-                        me.menu.querySelector(`[data-order='${previous}']`).focus();
+                        this.menu.querySelector(`[data-order='${previous}']`).focus();
                         break;
                     case 'ArrowDown':
                         e.preventDefault();
-                        me.menu.querySelector(`[data-order='${next}']`).focus();
+                        this.menu.querySelector(`[data-order='${next}']`).focus();
                         break;
                     case 'Enter': // Enter
                     case ' ': // Space
-                        me.querySelector('a').click(); // click the one inside
+                        this.querySelector('a').click(); // click the one inside
                         break;
 
                 }
@@ -284,12 +277,12 @@ class ButtonMenu extends SimpleButton {
             s.innerHTML = item.label;
             anchor.appendChild(s);
 
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', (e) => {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
-                    item.action(e, me);
+                    item.action(e, this);
                 }
-                me.close();
+                this.close();
             });
 
             menuitem.appendChild(anchor);
@@ -313,14 +306,13 @@ class ButtonMenu extends SimpleButton {
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
-        const me = this;
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         this.menu.classList.add('button-menu');
         this.button.appendChild(this.menu);
-        this.menu.addEventListener('keyup', function(e) {
+        this.menu.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
-                me.close();
+                this.close();
             }
         });
     }

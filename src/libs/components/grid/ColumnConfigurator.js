@@ -23,11 +23,9 @@ class ColumnConfigurator {
      */
     buildContainer() {
         /*
-         * This this is gigantic and ugly.  Don't @ me.
+         * This this is gigantic and ugly.  Don't @me.
          * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
          */
-        const me = this;
-
         this.container = document.createElement('div');
         this.container.classList.add('column-configurator');
         for (let c of this.classes) {
@@ -51,8 +49,8 @@ class ColumnConfigurator {
                 label: f.label,
                 checked: !f.hidden,
                 classes: ['column'],
-                onchange: function() {
-                    me.grid.toggleColumn(f);
+                onchange: () => {
+                    this.grid.toggleColumn(f);
                 }
             });
 

@@ -2,7 +2,7 @@ class HelpButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) { self.tooltip.open(); },
+            action: (e, self) => { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
             tipgravity: 'n',

@@ -79,14 +79,14 @@ class DateInput extends TextInput {
      * Build the calendar button and attach the DatePicker
      */
     buildCalendarButton() {
-        const me = this;
+
         this.datepicker = new DatePicker({
             classes: ['menu'],
-            onselect: function(value) {
-                me.value = value;
-                me.triggerbutton.close();
-                me.input.focus();
-                me.validate();
+            onselect: (value) => {
+                this.value = value;
+                this.triggerbutton.close();
+                this.input.focus();
+                this.validate();
             }
         });
         this.triggerbutton = new ButtonMenu({
@@ -96,13 +96,13 @@ class DateInput extends TextInput {
             icon: this.dateicon,
             arialabel: this.triggerarialabel,
             menu: this.datepicker.container,
-            action: function(e, self) {
+            action: (e, self) => {
                 if (self.isopen) {
                     self.close();
-                    me.input.focus();
+                    this.input.focus();
                 } else {
                     self.open();
-                    me.datepicker.renderMonth(me.value);
+                    this.datepicker.renderMonth(this.value);
                 }
                 e.stopPropagation();
             },
@@ -113,7 +113,7 @@ class DateInput extends TextInput {
         this.calbutton.classList.add('inputcontrol');
         this.calbutton.appendChild(this.triggerbutton.button);
 
-        this.calbutton.addEventListener('mousedown', function(e) {
+        this.calbutton.addEventListener('mousedown', (e) => {
             e.preventDefault(); // Prevents focus shifting.
         });
 

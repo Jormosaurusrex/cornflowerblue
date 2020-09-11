@@ -50,7 +50,7 @@ class ToolTip {
      * @param parent
      */
     attach(parent) {
-        const me = this;
+
         if ((parent) && (parent.container)) {
            parent = parent.container;
         }
@@ -58,18 +58,18 @@ class ToolTip {
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
         this.parent.addEventListener('mouseover', function() {
-            me.open();
+            this.open();
         });
         this.parent.addEventListener('mouseout', function() {
             clearTimeout(ToolTip.timer);
-            me.close();
+            this.close();
         });
         this.parent.addEventListener('focusin', function() {
-            me.open();
+            this.open();
         });
         this.parent.addEventListener('focusout', function() {
             clearTimeout(ToolTip.timer);
-            me.close();
+            this.close();
         });
     }
 
@@ -80,10 +80,10 @@ class ToolTip {
      * This actually only starts a timer.  The actual opening happens in openGuts()
      */
     open() {
-        const me = this;
+
         ToolTip.closeOpen();
         ToolTip.timer = setTimeout(function() {
-            me.openGuts();
+            this.openGuts();
         }, this.waittime);
     }
 

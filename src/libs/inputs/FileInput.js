@@ -64,7 +64,7 @@ class FileInput extends InputElement {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
-        const me = this;
+
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('file-container');
@@ -91,26 +91,26 @@ class FileInput extends InputElement {
      * Builds the trigger box for the select.
      */
     buildTriggerBox() {
-        const me = this;
+
         this.triggerbox = document.createElement('div');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('tabindex', '-1');
         this.triggerbox.innerHTML = this.placeholder;
-        this.triggerbox.addEventListener('click', function(e) {
-            if (me.disabled) {
+        this.triggerbox.addEventListener('click', (e) => {
+            if (this.disabled) {
                 e.stopPropagation();
                 return;
             }
-            me.labelobj.click();
+            this.labelobj.click();
         });
-        this.triggerbox.addEventListener('keydown', function(e) {
+        this.triggerbox.addEventListener('keydown', (e) => {
             switch (e.key) {
                 case 'Tab':
-                    me.triggerbox.blur();
+                    this.triggerbox.blur();
                     break;
                 case 'Enter':
                 case ' ':
-                    me.labelobj.click();
+                    this.labelobj.click();
                     break;
                 default:
                     break;
@@ -126,7 +126,7 @@ class FileInput extends InputElement {
      * Build file input
      */
     buildFileInput() {
-        const me = this;
+
 
         this.fileinput = document.createElement('input');
         this.fileinput.setAttribute('type', this.type);
@@ -135,8 +135,8 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('accept', this.accept);
         this.fileinput.setAttribute('multiple', this.multiple);
         this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
-        this.fileinput.addEventListener('focusin', function() {
-                me.triggerbox.focus();
+        this.fileinput.addEventListener('focusin', () => {
+                this.triggerbox.focus();
         });
         this.fileinput.addEventListener('change', (event) => {
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
@@ -153,8 +153,8 @@ class FileInput extends InputElement {
                     this.triggerbox.innerHTML = this.placeholder;
                 }
             }
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(event, me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(event, me);
             }
         });
 

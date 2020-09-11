@@ -75,7 +75,7 @@ class SimpleProgressMeter {
      * Builds the container
      */
     buildContainer() {
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.classList.add('progressbar-container');
@@ -116,10 +116,10 @@ class SimpleProgressMeter {
 
         // Don't allow the the fill animation to fire until it's in the page
         setTimeout(function() {
-            if (me.direction === 'vertical') {
-                me.progress.style.height = `${me.fill}%`;
+            if (this.direction === 'vertical') {
+                this.progress.style.height = `${me.fill}%`;
             } else {
-                me.progress.style.width = `${me.fill}%`;
+                this.progress.style.width = `${me.fill}%`;
             }
         }, 500);
     }
@@ -175,7 +175,7 @@ class SimpleProgressMeter {
      * Builds the label
      */
     buildLabel() {
-        const me = this;
+
         if (!this.label) { return null; }
 
         this.labelobj = document.createElement('label');
@@ -186,10 +186,10 @@ class SimpleProgressMeter {
             this.helpicon = new HelpButton({ help: this.help });
             this.labelobj.appendChild(this.helpicon.button);
             this.labelobj.addEventListener('onmouseover', function() {
-                me.helpicon.open();
+                this.helpicon.open();
             });
             this.labelobj.addEventListener('onmouseout', function() {
-                me.helpicon.close();
+                this.helpicon.close();
             });
         }
     }

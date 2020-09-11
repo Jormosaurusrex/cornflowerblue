@@ -81,7 +81,7 @@ class TabBar {
      * Builds the DOM.
      */
     buildContainer() {
-        const me = this;
+
 
         if (this.navigation) {
             this.container = document.createElement('nav');
@@ -148,7 +148,7 @@ class TabBar {
      * @return the next in the order
      */
     buildTab(tabdef, order, parent) {
-        const me = this;
+
         let parentname = 'root',
             next = order + 1,
             previous = order - 1;
@@ -235,7 +235,7 @@ class TabBar {
                 localorder = this.buildTab(subdef, localorder, li);
             }
 
-            link.addEventListener('keydown', function (e) {
+            link.addEventListener('keydown', (e) => {
                 let setname = li.getAttribute('data-parent');
                 let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
                 let nexttab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${next}'] a[data-tabno='${next}']`);
@@ -274,7 +274,7 @@ class TabBar {
         } else if (tabdef.url) {
             link.setAttribute('href', tabdef.url);
         } else { // Non-Master Tabs
-            link.addEventListener('keydown', function (e) {
+            link.addEventListener('keydown', (e) => {
 
                 let setname = li.getAttribute('data-parent');
                 let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
@@ -320,13 +320,13 @@ class TabBar {
                         break;
                 }
             });
-            link.addEventListener('click', function (e) {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                me.select(tabdef.id);
+                this.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
                     tabdef.action(tabdef.id, me);
-                } else if (me.action) {
-                    me.action(tabdef.id, me);
+                } else if (this.action) {
+                    this.action(tabdef.id, me);
                 }
                 link.blur();
             });
@@ -334,7 +334,7 @@ class TabBar {
 
         if (tabdef.selected) {
             window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
-                me.select(tabdef.id);
+                this.select(tabdef.id);
             }, 100);
         }
 
@@ -368,12 +368,12 @@ class TabBar {
      * Opens the menu
      */
     open() {
-        const me = this;
+
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
         setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
+            this.setCloseListener();
         }, 200);
     }
 
@@ -389,17 +389,17 @@ class TabBar {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        const me = this;
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
-        window.addEventListener('click', function(e) {
-            if (e.target === me.list) {
-                me.setCloseListener();
+        window.addEventListener('click', (e) => {
+            if (e.target === this.list) {
+                this.setCloseListener();
             } else {
-                me.close();
+                this.close();
             }
         }, { once: true, });
     }

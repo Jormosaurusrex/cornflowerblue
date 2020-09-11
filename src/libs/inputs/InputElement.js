@@ -39,7 +39,7 @@ class InputElement {
             focusin: null,
             focusout: null,
             validator: null,
-            renderer: function(data) { return document.createTextNode(data); }
+            renderer: (data) => { return document.createTextNode(data); }
 
         };
     }
@@ -460,7 +460,7 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildInput() {
-        const me = this;
+
 
         if (this.type === 'textarea') {
             this.input = document.createElement('textarea');
@@ -492,102 +492,102 @@ class InputElement {
                 this.input.classList.add(c);
             }
         }
-        this.input.addEventListener('change', function(e) {
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+        this.input.addEventListener('change', (e) => {
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(me);
             }
         });
 
-        this.input.addEventListener('keydown', function(e) {
+        this.input.addEventListener('keydown', (e) => {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
-            me.input.removeAttribute('aria-invalid');
-            if (me.hascontainer) {
-                me.updateCounter();
+            this.input.removeAttribute('aria-invalid');
+            if (this.hascontainer) {
+                this.updateCounter();
             }
-            me.touched = true; // set self as touched.
-            if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
-                me.onkeydown(e, me);
+            this.touched = true; // set self as touched.
+            if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
+                this.onkeydown(e, me);
             }
         });
-        this.input.addEventListener('keyup', function(e) {
-            if (me.hascontainer) {
-                if (me.helptimer) {
-                    clearTimeout(me.helptimer);
-                    if (me.helpbutton) {
-                        me.helpbutton.closeTooltip();
+        this.input.addEventListener('keyup', (e) => {
+            if (this.hascontainer) {
+                if (this.helptimer) {
+                    clearTimeout(this.helptimer);
+                    if (this.helpbutton) {
+                        this.helpbutton.closeTooltip();
                     }
                 }
 
-                if ((me.value) && (me.value.length > 0)) {
-                    me.container.classList.add('filled');
+                if ((this.value) && (this.value.length > 0)) {
+                    this.container.classList.add('filled');
                 } else {
-                    me.container.classList.remove('filled');
+                    this.container.classList.remove('filled');
                 }
-                if ((me.form) && (me.required) // If this is the only thing required, tell the form.
-                    && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
-                    if (me.form) { me.form.validate(); }
+                if ((this.form) && (this.required) // If this is the only thing required, tell the form.
+                    && ((this.input.value.length === 0) || (this.input.value.length === 1))) { // Only these two lengths matter
+                    if (this.form) { this.form.validate(); }
                 }
             }
 
             if ((e.key === 'Enter') // Return key
-                && (me.onreturn) && (typeof me.onreturn === 'function')) {
+                && (this.onreturn) && (typeof this.onreturn === 'function')) {
                 e.preventDefault();
                 e.stopPropagation();
-                me.onreturn(e, me);
-            } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
-                me.onkeyup(e, me);
+                this.onreturn(e, me);
+            } else if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
+                this.onkeyup(e, me);
             }
         });
-        this.input.addEventListener('focusin', function(e) {
-            if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
-                me.input.setAttribute('placeholder', me.placeholder);
+        this.input.addEventListener('focusin', (e) => {
+            if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
+                this.input.setAttribute('placeholder', this.placeholder);
             }
-            if (me.hascontainer) {
-                me.container.classList.add('active');
-                if ((me.help) && (me.helpbutton)) {
-                    me.helptimer = setTimeout(function() {
-                        me.helpbutton.openTooltip();
-                    }, me.helpwaittime);
+            if (this.hascontainer) {
+                this.container.classList.add('active');
+                if ((this.help) && (this.helpbutton)) {
+                    this.helptimer = setTimeout(() => {
+                        this.helpbutton.openTooltip();
+                    }, this.helpwaittime);
                 }
             }
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, me);
             }
         });
-        this.input.addEventListener('focusout', function(e) {
+        this.input.addEventListener('focusout', (e) => {
 
-            if (me.hascontainer) {
-                if (me.passivebox) {
-                    me.passivebox.innerHTML = '';
-                    me.passivebox.appendChild(me.passivetext);
+            if (this.hascontainer) {
+                if (this.passivebox) {
+                    this.passivebox.innerHTML = '';
+                    this.passivebox.appendChild(this.passivetext);
                 }
 
-                if (me.helptimer) {
-                    clearTimeout(me.helptimer);
-                    if (me.helpbutton) {
-                        me.helpbutton.closeTooltip();
+                if (this.helptimer) {
+                    clearTimeout(this.helptimer);
+                    if (this.helpbutton) {
+                        this.helpbutton.closeTooltip();
                     }
                 }
-                if ((me.mute) && (me.label)) {
-                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
-                    me.input.setAttribute('placeholder', '');
+                if ((this.mute) && (this.label)) {
+                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + this.requiredtext + ')' : ''}`);
+                    this.input.setAttribute('placeholder', '');
                 }
-                me.container.classList.remove('active');
-                me.validate();
+                this.container.classList.remove('active');
+                this.validate();
 
-                if (me.form) { me.form.validate(); }
+                if (this.form) { this.form.validate(); }
 
             }
 
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, me);
             }
         });
         this.input.value = this.config.value;
 
         if (this.required) {
             this.input.setAttribute('required', 'true');
-            if ((me.hascontainer) && (this.label)) {
+            if ((this.hascontainer) && (this.label)) {
                 this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
             }
         }
@@ -610,7 +610,7 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildLabel() {
-        const me = this;
+
 
         if (!this.label) { return null; }
 

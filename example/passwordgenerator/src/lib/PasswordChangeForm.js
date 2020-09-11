@@ -34,7 +34,7 @@ class PasswordChangeForm {
 
     /* VALIDATION METHODS_______________________________________________________________ */
 
-    runChecks(self) {
+    runChecks() {
         let valid = true;
         if ((this.pwone.value) !== (this.pwtwo.value)) {
             this.pwone.errors.push(TextArea.get('passwordchanger-error-passwords_must_match'));
@@ -63,7 +63,6 @@ class PasswordChangeForm {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildForm() {
-        const me = this;
 
         this.pwcurr = new PasswordInput({
             id: `${this.id}-pwcurr`,
@@ -110,10 +109,10 @@ class PasswordChangeForm {
                 this.pwgen
 
             ],
-            validator: function(self) {
-                return me.runChecks(self);
+            validator: (self) => {
+                return this.runChecks(self);
             },
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: true,
                     results: [TextFactory.get('passwordchanger-results-changed_successfully')]

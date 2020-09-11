@@ -45,7 +45,7 @@ class SearchControl {
      * Build the full searchcontrol container
      */
     buildContainer() {
-        const me = this;
+
         this.container = document.createElement('div');
         this.container.classList.add('searchcontrol');
         for (let c of this.classes) {
@@ -61,11 +61,11 @@ class SearchControl {
             mute: true,
             focusin: this.focusin,
             focusout: this.focusout,
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                if (me.isopen) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+                if (this.isopen) {
+                    if ((this.action) && (typeof this.action === 'function')) {
+                        this.action(this.value, me);
                     }
                 }
             }
@@ -74,7 +74,7 @@ class SearchControl {
         // Open the search input if the user clicks on the button when it's not open
         this.container.addEventListener('click', function() {
             if (!me.isopen) {
-                me.searchinput.focus();
+                this.searchinput.focus();
             }
         });
 
@@ -90,7 +90,7 @@ class SearchControl {
      * Build the search input
      */
     buildSearchInput() {
-        const me = this;
+
         this.searchinput = document.createElement('input');
 
         this.searchinput.setAttribute('type', 'text');
@@ -107,24 +107,24 @@ class SearchControl {
             this.searchinput.classList.add(c);
         }
 
-        this.searchinput.addEventListener('keyup', function(e) {
+        this.searchinput.addEventListener('keyup', (e) => {
             switch (e.key) {
                 case 'Tab':
-                    if (me.autoexecute) {
-                        if ((me.action) && (typeof me.action === 'function')) {
-                            me.action(me.value, me);
+                    if (this.autoexecute) {
+                        if ((this.action) && (typeof this.action === 'function')) {
+                            this.action(this.value, me);
                         }
                     }
                     break;
                 case 'Enter':
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+                    if ((this.action) && (typeof this.action === 'function')) {
+                        this.action(this.value, me);
                     }
                     break;
                 default:
-                    if (me.autoexecute) {
-                        if ((me.action) && (typeof me.action === 'function')) {
-                            me.action(me.value, me);
+                    if (this.autoexecute) {
+                        if ((this.action) && (typeof this.action === 'function')) {
+                            this.action(this.value, me);
                         }
                     }
                     break;
@@ -132,25 +132,25 @@ class SearchControl {
             }
         });
 
-        this.searchinput.addEventListener('focusout', function(e) {
-            if (((me.value) && (me.value.length > 0)) || (me.stayopen)) {
-                me.container.classList.add('open');
-                if (me.autoexecute) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+        this.searchinput.addEventListener('focusout', (e) => {
+            if (((this.value) && (this.value.length > 0)) || (this.stayopen)) {
+                this.container.classList.add('open');
+                if (this.autoexecute) {
+                    if ((this.action) && (typeof this.action === 'function')) {
+                        this.action(this.value, me);
                     }
                 }
             } else {
-                me.container.classList.remove('open');
+                this.container.classList.remove('open');
             }
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, me);
             }
         });
 
-        this.searchinput.addEventListener('focusin', function(e) {
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
+        this.searchinput.addEventListener('focusin', (e) => {
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, me);
             }
         });
 

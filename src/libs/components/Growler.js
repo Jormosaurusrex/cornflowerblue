@@ -124,15 +124,15 @@ class Growler extends FloatingPanel {
      * Close the growler
      */
     close() {
-        const me = this;
+
         if (this.timer) { clearTimeout(this.timer); }
         this.container.setAttribute('aria-hidden', 'true');
 
         setTimeout(function() {
-            if ((me.onclose) && (typeof me.onclose === 'function')) {
-                me.onclose(me);
+            if ((this.onclose) && (typeof this.onclose === 'function')) {
+                this.onclose(me);
             }
-            me.container.parentNode.removeChild(me.container);
+            this.container.parentNode.removeChild(this.container);
         }, 100);
 
     }
@@ -152,12 +152,12 @@ class Growler extends FloatingPanel {
      * Show the growler
      */
     show() {
-        const me = this;
+
         this.container.removeAttribute('aria-hidden');
 
         if (this.duration > 0) {
             this.timer = setTimeout(function() {
-                me.close();
+                this.close();
             }, this.duration);
         }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
@@ -166,7 +166,7 @@ class Growler extends FloatingPanel {
     }
 
     buildContainer() {
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.setAttribute('aria-hidden', 'true');
@@ -177,9 +177,9 @@ class Growler extends FloatingPanel {
         }
 
         this.closebutton = new CloseButton({
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.quickClose();
+                this.quickClose();
             }
         });
 

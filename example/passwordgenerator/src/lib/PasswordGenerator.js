@@ -96,7 +96,6 @@ class PasswordGenerator {
      * Build the container for the generator
      */
     buildContainer() {
-        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('pwgenerator');
 
@@ -126,9 +125,9 @@ class PasswordGenerator {
         this.button = new SimpleButton({
             text: this.buttontext,
             naked: true,
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.generatePassword();
+                this.generatePassword();
             }
         });
 
@@ -143,23 +142,6 @@ class PasswordGenerator {
             menu: this.datasetblock
         });
 
-        /*
-        this.configbutton = new SimpleButton({
-            icon: 'gear',
-            naked: true,
-            arialabel: TextFactory.get('configure_generator'),
-            classes: ['config'],
-            action: function(e) {
-                e.preventDefault();
-                if (me.datasetblock.getAttribute('aria-hidden')) {
-                    me.datasetblock.removeAttribute('aria-hidden');
-                } else {
-                    me.datasetblock.setAttribute('aria-hidden', 'true');
-                }
-            }
-
-        });
-        */
         let controls = document.createElement('div');
         controls.classList.add('controls');
         controls.appendChild(this.button.button);

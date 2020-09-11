@@ -7,15 +7,15 @@ class HamburgerButton extends SimpleButton {
             shape: 'square',
             naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,
-            toggleaction: function(self) { },
-            action: function(e, self) { self.toggle(); }
+            toggleaction: () => { },
+            action: (e, self) => { self.toggle(); }
         };
     }
     static get DEFAULT_CONFIG_DOCUMENTATION() {
         return {
             toggletarget: { type: 'option', datatype: 'object', description: "The menu object to open or close." },
             text: { type: 'option', datatype: 'string', description: "The text for the button. This is used as an aria-label only." },
-            toggleaction: { type: 'option', datatype: 'function', description: "A function to execute when the button is toggled." },
+            toggleaction: { type: 'option', datatype: 'function', description: "A function to execute when the button is toggled. Passed 'self" },
         };
     }
 

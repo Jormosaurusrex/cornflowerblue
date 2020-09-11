@@ -63,7 +63,7 @@ class DialogWindow {
      * Opens the dialog window
      */
     open() {
-        const me = this;
+
 
         CFBUtils.closeOpen();
 
@@ -74,13 +74,13 @@ class DialogWindow {
         for (let c of this.classes) {
             this.mask.classList.add(c);
         }
-        this.mask.addEventListener('click', function(e) {
+        this.mask.addEventListener('click', (e) => {
             e.preventDefault();
-            if (me.clickoutsidetoclose) {
-                me.close();
+            if (this.clickoutsidetoclose) {
+                this.close();
             }
         });
-        this.container.appendChild(me.window);
+        this.container.appendChild(this.window);
 
         if ((this.trailer) && (typeof this.trailer === 'string')) {
             let trail = document.createElement('div');
@@ -95,21 +95,21 @@ class DialogWindow {
         document.body.appendChild(this.container);
         document.body.classList.add('modalopen');
 
-        this.escapelistener = function(e) {
+        this.escapelistener = (e) => {
             if (e.key === 'Escape') {
-                me.close();
+                this.close();
             }
         };
 
         setTimeout(function() {
             if (!me.nofocus) {
-                let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                let focusable = this.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                 if (focusable[0]) {
                     focusable[0].focus();
                 }
             }
-            if (me.escapecloses) {
-                document.addEventListener('keyup', me.escapelistener);
+            if (this.escapecloses) {
+                document.addEventListener('keyup', this.escapelistener);
             }
         }, 100);
     }
@@ -146,7 +146,7 @@ class DialogWindow {
      * Constructs the DialogWindow's DOM elements
      */
     build() {
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.classList.add('window-container');
@@ -176,9 +176,9 @@ class DialogWindow {
         }
         if (this.showclose) {
             this.closebutton = new CloseButton({
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
-                    me.close();
+                    this.close();
                 }
             });
             if ((this.title) || (this.header)) {
@@ -202,7 +202,7 @@ class DialogWindow {
                                     text: this.closetext,
                                     ghost: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }));
                                 break;
@@ -211,7 +211,7 @@ class DialogWindow {
                                     text: this.canceltext,
                                     mute: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }));
                                 break;
@@ -249,7 +249,7 @@ class DialogWindow {
                                     text: this.closetext,
                                     ghost: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }).container);
                                 break;
@@ -258,7 +258,7 @@ class DialogWindow {
                                     text: this.canceltext,
                                     mute: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }).container);
                                 break;

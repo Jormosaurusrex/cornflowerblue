@@ -22,7 +22,7 @@ class LZSong extends BusinessObject {
                     nodupe: true,
                     filterable: true,
                     description: "The track number of the song.",
-                    renderer: function(data) {
+                    renderer: (data) => {
                         return document.createTextNode(`${data}.`);
                     }
                 }),
@@ -89,7 +89,7 @@ class LZSong extends BusinessObject {
                     type: "time"
                 })
             ],
-            sortfunction: function(a, b) {
+            sortfunction: (a, b) => {
                 if (a.title > b.title) { return 1 }
                 if (a.title < b.title) { return -1 }
                 return 0;
@@ -101,12 +101,11 @@ class LZSong extends BusinessObject {
 
     constructor() {
         super();
-        const me = this;
         if (!LZSong.instance) {
             this.config = Object.assign({}, this.config, LZSong.CONFIG);
             if ((this.cadence) && (this.cadence > 0)) {
-                setInterval(function () {
-                    me.update();
+                setInterval(() => {
+                    this.update();
                 }, this.cadence);
             }
             LZSong.instance = this;

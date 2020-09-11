@@ -133,7 +133,7 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-        const me = this;
+
 
         SelectMenu.closeOpen(); // close open menus
 
@@ -156,12 +156,12 @@ class SelectMenu extends InputElement {
         //window.addEventListener('scroll', this.setPosition, true);
         let x = window.scrollX,
             y = window.scrollY;
-        window.onscroll = function(){ window.scrollTo(x, y); };
+        window.onscroll = () => { window.scrollTo(x, y); };
 
         this.setPosition();
 
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
+        setTimeout(() => { // Set this after, or else we'll get bouncing.
+            this.setCloseListener();
         }, 100);
     }
 
@@ -196,7 +196,7 @@ class SelectMenu extends InputElement {
      */
     close() {
         //window.removeEventListener('scroll', this.setPosition, true);
-        window.onscroll=function(){};
+        window.onscroll=() => {};
 
         this.listbox.style.top = null;
         this.listbox.style.bottom = null;
@@ -319,7 +319,7 @@ class SelectMenu extends InputElement {
      * Builds the trigger box for the select.
      */
     buildTriggerBox() {
-        const me = this;
+
         this.triggerbox = document.createElement('input');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('type', 'text');
@@ -328,18 +328,18 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('aria-activedescendant', '');
         this.triggerbox.setAttribute('placeholder', this.placeholder);
 
-        this.triggerbox.addEventListener('focusin', function(e) {
-            if (me.disabled) {
+        this.triggerbox.addEventListener('focusin', (e) => {
+            if (this.disabled) {
                 e.stopPropagation();
                 return;
             }
-            me.triggerbox.select(); // Select all the text
-            me.open();
+            this.triggerbox.select(); // Select all the text
+            this.open();
         });
 
-        this.triggerbox.addEventListener('keyup', function(e) {
+        this.triggerbox.addEventListener('keyup', (e) => {
             if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
-                me.close();
+                this.close();
             } else {
                 switch (e.key) {
                     case 'Enter':
@@ -358,20 +358,20 @@ class SelectMenu extends InputElement {
                     case 'Tab':  // Tab
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
-                        me.close();
+                        this.close();
                         break;
                     case 'ArrowDown': // Down
                         e.preventDefault();
-                        me.open();
-                        me.jumptoSelected(true);
+                        this.open();
+                        this.jumptoSelected(true);
                         break;
                     case 'Backspace':  // Backspace
                     case 'Delete':  // Delete
-                        me.updateSearch();
+                        this.updateSearch();
                         break;
                     case ' ': // space
                     default:
-                        me.updateSearch();
+                        this.updateSearch();
                         break;
                 }
             }
@@ -414,7 +414,7 @@ class SelectMenu extends InputElement {
     }
 
     buildOption(def, order) {
-        const me = this;
+
 
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let next = order + 1,
@@ -443,9 +443,9 @@ class SelectMenu extends InputElement {
 
         li.appendChild(opt);
 
-        li.addEventListener('keydown', function(e) {
+        li.addEventListener('keydown', (e) => {
             if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
-                me.close();
+                this.close();
             } else {
                 switch (e.key) {
                     case 'Shift':
@@ -464,33 +464,33 @@ class SelectMenu extends InputElement {
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
                         e.preventDefault();
-                        me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
+                        this.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
                         break;
                     case 'ArrowDown': // Down
                         e.preventDefault();
-                        me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
+                        this.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
                         break;
                     case 'Enter':
                         li.click(); // click the one inside
                         break;
                     case 'Backspace':  // Backspace
                     case 'Delete':  // Delete
-                        me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
-                        me.updateSearch();
+                        this.triggerbox.value = this.triggerbox.value.substring(0, this.value.length - 1);
+                        this.updateSearch();
                         break;
                     case ' ': // space
                     default:
                         e.preventDefault();
-                        me.triggerbox.value = me.triggerbox.value + e.key;
-                        me.updateSearch();
+                        this.triggerbox.value = this.triggerbox.value + e.key;
+                        this.updateSearch();
                         break;
                 }
             }
 
         });
 
-        li.addEventListener('click', function() {
-            let listentries = me.optionlist.querySelectorAll('li');
+        li.addEventListener('click', () => {
+            let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
                 let opt = le.querySelector(`input[name=${me.name}]`);
@@ -500,29 +500,29 @@ class SelectMenu extends InputElement {
             li.querySelector(`input[name=${me.name}]`).checked = true;
 
             if (def.unselectoption) {
-                me.triggerbox.value = '';
-            } else if (me.prefix) {
-                me.triggerbox.value = `${me.prefix} ${def.label}`;
+                this.triggerbox.value = '';
+            } else if (this.prefix) {
+                this.triggerbox.value = `${me.prefix} ${def.label}`;
             } else {
-                me.triggerbox.value = def.label;
+                this.triggerbox.value = def.label;
             }
 
-            me.selectedoption = def;
+            this.selectedoption = def;
 
             if (def.unselectoption) {
-                me.passivebox.innerHTML = me.unsettext;
+                this.passivebox.innerHTML = this.unsettext;
             } else {
-                me.passivebox.innerHTML = def.label;
+                this.passivebox.innerHTML = def.label;
             }
 
-            me.close();
+            this.close();
 
-            me.validate();
+            this.validate();
 
-            if (me.form) { me.form.validate(); }
+            if (this.form) { this.form.validate(); }
 
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(me);
             }
         });
 
@@ -572,17 +572,17 @@ class SelectMenu extends InputElement {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        const me = this;
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
-        window.addEventListener('click', function(e) {
-            if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
-                me.setCloseListener();
+        window.addEventListener('click', (e) => {
+            if ((this.wrapper.contains(e.target)) || (this.listbox.contains(e.target))) {
+                this.setCloseListener();
             } else {
-                me.close();
+                this.close();
             }
         }, { once: true });
     }

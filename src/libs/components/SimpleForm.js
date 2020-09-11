@@ -119,7 +119,7 @@ class SimpleForm {
      * Submits the form.  Runs the validator first.
      */
     submit() {
-        const me = this;
+
 
         if (this.passive) { return; }
 
@@ -129,20 +129,20 @@ class SimpleForm {
 
                 if (typeof this.handler === 'function') {
                     this.handler(me, function(results) {
-                        if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
-                            me.handlercallback(me, results);
-                            me.shade.deactivate();
+                        if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
+                            this.handlercallback(me, results);
+                            this.shade.deactivate();
                         } else {
-                            me.handleResults(results);
+                            this.handleResults(results);
                         }
                     });
                 } else { // its an API url
                     this.doAjax(function(results) {
-                        if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
-                            me.handlercallback(me, results);
-                            me.shade.deactivate();
+                        if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
+                            this.handlercallback(me, results);
+                            this.shade.deactivate();
                         } else {
-                            me.handleResults(results);
+                            this.handleResults(results);
                         }
                     });
                 }
@@ -320,7 +320,7 @@ class SimpleForm {
      * Build the form object itself
      */
     buildForm() {
-        const me = this;
+
         this.form = document.createElement('form');
         this.form.setAttribute('id', this.id);
         this.form.setAttribute('novalidate', true); // turn off browser validation 'cause we do it by hand
@@ -334,9 +334,9 @@ class SimpleForm {
             this.form.classList.add(c);
         }
 
-        this.form.addEventListener('submit', function(e) {
+        this.form.addEventListener('submit', (e) => {
             e.preventDefault();
-            me.submit();
+            this.submit();
         });
 
         if ((this.handler) && (typeof this.handler !== 'function') && (this.target)) {

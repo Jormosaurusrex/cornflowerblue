@@ -154,7 +154,7 @@ class CFBUtils {
      * @return {string}
      */
     static getConfig(obj) {
-        let keys = Object.keys(obj.config).sort(function(a, b){
+        let keys = Object.keys(obj.config).sort((a, b) =>{
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
@@ -163,7 +163,7 @@ class CFBUtils {
         let vlines = [];
         for (let k of keys) {
             if (typeof obj[k] === 'function') {
-                vlines.push(`\t ${k} : function(...) { ... }`);
+                vlines.push(`\t ${k} : (...) => { ... }`);
             } else if (Array.isArray(obj[k])) {
                 vlines.push(`\t ${k} : [${obj[k]}]`);
             } else if (typeof obj[k] === 'string') {
@@ -184,10 +184,10 @@ class CFBUtils {
      * @return {string}
      */
     static prettyPrintConfig(obj) {
-        let keys = Object.keys(obj.config).sort(function(a, b){
+        let keys = Object.keys(obj.config).sort((a, b) =>{
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
-            if(a1 === b1) return 0;
+            if (a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
         });
         let vlines = [];
@@ -196,7 +196,7 @@ class CFBUtils {
             if ((k === 'id') || (k === 'name')) {
                 line = `    <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`;
             } else if (typeof obj[k] === 'function') {
-                line = `    <span class="key">${k}</span> : function(...) { ... }`;
+                line = `    <span class="key">${k}</span> : (...) => { ... }`;
             } else if (Array.isArray(obj[k])) {
                 line = `    <span class="key">${k}</span> : [`;
                 if ((obj[k] !== null) && (obj[k].length > 0)) {
@@ -240,13 +240,13 @@ class CFBUtils {
         if (a === b) return true;
         if (a == null || b == null) return false;
         if (a.length !== b.length) return false;
-        a.sort(function(a, b){
+        a.sort((a, b) => {
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
         });
-        b.sort(function(a, b){
+        b.sort((a, b) => {
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;

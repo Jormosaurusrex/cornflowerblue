@@ -52,7 +52,7 @@ class DatePicker {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        this.container.addEventListener('click', function(e) {
+        this.container.addEventListener('click', (e) => {
             e.stopPropagation();
         });
 
@@ -69,7 +69,7 @@ class DatePicker {
      * @param startDate the date to center the month around. If null, uses today.
      */
     renderMonth(startDate) {
-        const me = this;
+
 
         // XXX there has to be a better way to do this.
 
@@ -105,9 +105,9 @@ class DatePicker {
             mute: true,
             size: 'small',
             icon: 'triangle-left',
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.renderMonth(previousMonth);
+                this.renderMonth(previousMonth);
             }
         });
 
@@ -116,9 +116,9 @@ class DatePicker {
             mute: true,
             size: 'small',
             icon: 'triangle-right',
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.renderMonth(nextMonth);
+                this.renderMonth(nextMonth);
             }
         });
 
@@ -189,11 +189,11 @@ class DatePicker {
                     dayOfNextMonth++;
                 }
 
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    me.select(link);
+                    this.select(link);
                 });
-                link.addEventListener('keydown', function(e) {
+                link.addEventListener('keydown', (e) => {
 
                     let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
                     let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
@@ -217,7 +217,7 @@ class DatePicker {
                             break;
                         case 'Enter':
                         case ' ':
-                            me.select(link);
+                            this.select(link);
                             e.stopPropagation();
                             break;
                         default:

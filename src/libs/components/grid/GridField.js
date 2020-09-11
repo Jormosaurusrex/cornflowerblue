@@ -86,24 +86,23 @@ class GridField {
      * Set the renderer for the field, if one isn't provided.
      */
     setRenderer() {
-        const me = this;
         switch (this.type) {
             case 'number':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return document.createTextNode(d); }
+                    this.renderer = (d) => { return document.createTextNode(d); }
                 }
                 break;
             case 'date':
             case 'time':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         return document.createTextNode(d.toString());
                     }
                 }
                 break;
             case 'boolean':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         if (typeof d === 'number') {
                             if (d > 0) { return document.createTextNode('True'); }
                             return document.createTextNode('False');
@@ -114,7 +113,7 @@ class GridField {
                 break;
             case 'url':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         let a = document.createElement('a');
                         a.setAttribute('href', d);
                         a.innerHTML = d;
@@ -125,24 +124,24 @@ class GridField {
             case 'imageurl':
                 if (!this.renderer) {
                     if (this.lightbox) {
-                        this.renderer = function(d) {
+                        this.renderer = (d) => {
                             let img = document.createElement('img');
                             img.setAttribute('src', d);
                             let anchor = document.createElement('a');
                             anchor.appendChild(img);
-                            anchor.addEventListener('click', function() {
+                            anchor.addEventListener('click', () => {
                                 let i = document.createElement('img');
                                 i.setAttribute('src', d);
                                 new DialogWindow({
                                     lightbox: true,
-                                    title: me.label,
+                                    title: this.label,
                                     content: i
                                 }).open();
                             });
                             return anchor;
                         }
                     } else {
-                        this.renderer = function(d) {
+                        this.renderer = (d) => {
                             let img = document.createElement('img');
                             img.setAttribute('src', d);
                             let a = document.createElement('a');
@@ -155,7 +154,7 @@ class GridField {
                 break;
             case 'email':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         let a = document.createElement('a');
                         a.setAttribute('href', `mailto:${d}`);
                         a.innerHTML = d;
@@ -165,14 +164,14 @@ class GridField {
                 break;
             case 'enumeration':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return document.createTextNode(me.getValue(d));
+                    this.renderer = (d) => {
+                        return document.createTextNode(this.getValue(d));
                     }
                 }
                 break;
             case 'paragraph':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         if (!d) { d = ""; }
                         return document.createTextNode(d);
                     }
@@ -180,9 +179,9 @@ class GridField {
                 break;
             case 'stringarray':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         if (Array.isArray(d)) {
-                            return document.createTextNode(d.join(me.separator));
+                            return document.createTextNode(d.join(this.separator));
                         }
                         return d;
                     }
@@ -191,7 +190,7 @@ class GridField {
             case 'string':
             default:
                 if (!this.renderer) {
-                    this.renderer = function(d) { return document.createTextNode(d); }
+                    this.renderer = (d) => { return document.createTextNode(d); }
                 }
                 break;
         }

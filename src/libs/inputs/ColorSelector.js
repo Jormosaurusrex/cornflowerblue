@@ -8,10 +8,12 @@ class ColorSelector extends RadioGroup {
                 { label: 'Yellow', value: 'var(--yellow)' },
                 { label: 'Green', value: 'var(--green)' },
                 { label: 'Blue', value: 'var(--blue)' },
+                { label: 'Dark Blue', value: 'var(--darkblue)' },
                 { label: 'Purple', value: 'var(--purple)' },
                 { label: 'Black', value: 'var(--black)' },
+                { label: 'Tan', value: 'var(--tan)' },
                 { label: 'White', value: 'var(--white)' }
-            ],
+            ]
         };
     }
 
@@ -23,9 +25,7 @@ class ColorSelector extends RadioGroup {
      */
     constructor(config) {
         if (!config) { config = {}; }
-        console.log(`a: ${config.value}`);
         config = Object.assign({}, ColorSelector.DEFAULT_CONFIG, config);
-        console.log(`b: ${config.value}`);
 
         if (!config.id) { // need to generate an id for label stuff
             config.id = `colorselector-${CFBUtils.getUniqueKey(5)}`;
@@ -33,7 +33,6 @@ class ColorSelector extends RadioGroup {
         if (!config.name) { config.name = config.id; }
 
         super(config);
-        console.log(`c: ${config.value}`);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -70,7 +69,9 @@ class ColorSelector extends RadioGroup {
 
     buildOption(def) {
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
-        let op = document.createElement('input');
+        let li = document.createElement('li'),
+            op = document.createElement('input');
+
         op.setAttribute('id', lId);
         op.setAttribute('type', 'radio');
         op.setAttribute('name', this.name);
@@ -84,6 +85,10 @@ class ColorSelector extends RadioGroup {
         op.addEventListener('change', () => {
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
+                for (let l of this.optionlist.querySelectorAll('li')) {
+                    l.removeAttribute('aria-selected');
+                }
+                li.setAttribute('aria-selected', 'true');
             } else {
                 op.removeAttribute('aria-checked');
             }
@@ -103,24 +108,32 @@ class ColorSelector extends RadioGroup {
                 this.onchange(this);
             }
         });
-        op.style.backgroundColor = def.value;
+
+        let swatch = document.createElement('span');
+        swatch.classList.add('swatch');
+        swatch.style.backgroundColor = def.value;
 
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
-        opLabel.innerHTML = def.label;
+        opLabel.appendChild(swatch);
+        new ToolTip({
+            text: def.label
+        }).attach(opLabel);
 
-        console.log(`${this.config.value} === ${def.value}`);
+
+        let selected = false;
         if ((this.config.value) && (def.value === this.config.value)) {
-            this.origval = def.value;
-            op.checked = true;
-            op.setAttribute('aria-checked', 'true');
+            selected = true;
         } else if (def.checked) {
+            selected = true;
+        }
+        if (selected) {
+            li.setAttribute('aria-selected', "true");
             this.origval = def.value;
             op.checked = true;
             op.setAttribute('aria-checked', 'true');
         }
 
-        let li = document.createElement('li');
         li.classList.add('radio');
         li.appendChild(op);
         li.appendChild(opLabel);

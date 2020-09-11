@@ -81,7 +81,7 @@ class CornflowerBlueDemo {
                     required: true
                 })
             ],
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: true,
                     errors: ['Your account was created successfully!']
@@ -132,7 +132,7 @@ class CornflowerBlueDemo {
                     labelside: 'right'
                 })
             ],
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: false,
                     errors: ['Email and password do not match.']
@@ -149,7 +149,7 @@ class CornflowerBlueDemo {
                 new SimpleButton({
                     text: "Create Account",
                     mute: true,
-                    action: function() {
+                    action: () => {
                         new Growler({
                             position: 'top-left',
                             icon: 'warn-triangle',
@@ -161,7 +161,7 @@ class CornflowerBlueDemo {
                 new DestructiveButton({
                     text: "Cancel",
                     mute: true,
-                    action: function(e, btn) {
+                    action: (e, btn) => {
                         if ((btn.form) && (btn.form.dialog)) {
                             btn.form.dialog.close();
                         } else {
@@ -182,14 +182,14 @@ class CornflowerBlueDemo {
      * Builds the demo page.
      */
     constructor() {
-        const me = this;
+        
         this.body = document.body;
 
         this.main = document.getElementById('articlebox');
         this.build();
 
-        window.setTimeout(function() {
-            me.handleURLState();
+        window.setTimeout(() => {
+            this.handleURLState();
         }, 100);
     }
 
@@ -265,7 +265,7 @@ class CornflowerBlueDemo {
     }
 
     build() {
-        const me = this;
+        
 
         this.skipbutton = new SkipButton(); // defaults are fine
         document.querySelector('header').prepend(this.skipbutton.button);
@@ -285,8 +285,8 @@ class CornflowerBlueDemo {
             navigation: true,
             animation: null,
             tabs: maintabs,
-            action: function(tab) {
-                me.switchTab(tab);
+            action: (tab) => {
+                this.switchTab(tab);
             }
         });
         this.container.insertBefore(this.navigation.container, this.main);
@@ -305,8 +305,8 @@ class CornflowerBlueDemo {
             vertical: true,
             animation: null,
             tabs: elementtabs,
-            action: function(tab) {
-                me.switchSection(tab, 'elements');
+            action: (tab) => {
+                this.switchSection(tab, 'elements');
             }
         });
         document.getElementById('t-elements').insertBefore(this.elementsnav.container, document.getElementById('elements-sections'));
@@ -326,8 +326,8 @@ class CornflowerBlueDemo {
             vertical: true,
             animation: null,
             tabs: complextabs,
-            action: function(tab) {
-                me.switchSection(tab, 'complex');
+            action: (tab) => {
+                this.switchSection(tab, 'complex');
             }
         });
         document.getElementById('t-complex').insertBefore(this.complexnav.container, document.getElementById('complex-sections'));
@@ -411,13 +411,13 @@ class CornflowerBlueDemo {
     }
 
     handleInternalLinks() {
-        const me = this;
+        
         let links = document.querySelectorAll('a.internal');
         for (let l of links) {
             let target = l.getAttribute('data-tab-target');
-            l.addEventListener('click', function(e) {
+            l.addEventListener('click', (e) => {
                 e.preventDefault();
-                me.switchTab(target);
+                this.switchTab(target);
             });
         }
     }
@@ -556,7 +556,7 @@ class CornflowerBlueDemo {
             hidden: false,
             classes: ['nowrap'],
             description: "The programmatic name for the option.",
-            renderer: function(data) {
+            renderer: (data) => {
                 return data;
             }
         }));
@@ -589,7 +589,7 @@ class CornflowerBlueDemo {
             hidden: false,
             nodupe: true,
             description: "The default value, if any.",
-            renderer: function(data) {
+            renderer: (data) => {
                 let s = document.createElement('span');
                 s.innerHTML = data;
                 return s;
@@ -629,20 +629,20 @@ class CornflowerBlueDemo {
     }
 
     grindButtons() {
-        const me = this;
+        
 
         let baseconfigs = [
-            { text: "Default", type: "normal", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Hover", type: "normal", classes: ['hover'], action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Active", type: "normal", classes: ['active'], action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Focus", type: "normal", classes: ['focus'], action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Disabled", type: "normal", disabled: true, action: function(e, self) { me.dumpConfig(self); } }
+            { text: "Default", type: "normal", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Hover", type: "normal", classes: ['hover'], action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Active", type: "normal", classes: ['active'], action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Focus", type: "normal", classes: ['focus'], action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Disabled", type: "normal", disabled: true, action: (e, self) => { this.dumpConfig(self); } }
         ];
         let secondconfigs = [
-            { text: "Normal", type: "normal", icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Two Icons", type: "normal", icon: "globe", secondicon: "legend", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Constructive", type: "constructive", icon: "echx", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Destructive", type: "destructive", icon: "trashcan", action: function(e, self) { me.dumpConfig(self); } }
+            { text: "Normal", type: "normal", icon: "globe", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Two Icons", type: "normal", icon: "globe", secondicon: "legend", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Constructive", type: "constructive", icon: "echx", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Destructive", type: "destructive", icon: "trashcan", action: (e, self) => { this.dumpConfig(self); } }
         ];
 
         let types = [
@@ -758,15 +758,15 @@ class CornflowerBlueDemo {
 
         let shapes = ['square', 'circle'];
         let shapeconfigs = [
-            { text: "Normal", type: "normal", icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Constructive", type: "constructive", icon: "echx", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Destructive", type: "destructive", icon: "minimize", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Normal", type: "normal", ghost: true, icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Constructive", type: "constructive", ghost: true, icon: "echx", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Destructive", type: "destructive", ghost: true, icon: "minimize", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Normal", type: "normal", mute: true, icon: "globe", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Constructive", type: "constructive", mute: true, icon: "echx", action: function(e, self) { me.dumpConfig(self); } },
-            { text: "Destructive", type: "destructive", mute: true, icon: "minimize", action: function(e, self) { me.dumpConfig(self); } }
+            { text: "Normal", type: "normal", icon: "globe", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Constructive", type: "constructive", icon: "echx", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Destructive", type: "destructive", icon: "minimize", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Normal", type: "normal", ghost: true, icon: "globe", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Constructive", type: "constructive", ghost: true, icon: "echx", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Destructive", type: "destructive", ghost: true, icon: "minimize", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Normal", type: "normal", mute: true, icon: "globe", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Constructive", type: "constructive", mute: true, icon: "echx", action: (e, self) => { this.dumpConfig(self); } },
+            { text: "Destructive", type: "destructive", mute: true, icon: "minimize", action: (e, self) => { this.dumpConfig(self); } }
         ];
 
         for (let shape of shapes) {
@@ -814,7 +814,7 @@ class CornflowerBlueDemo {
             sizediv.appendChild(new SimpleButton({
                 text: `Size: ${size}`,
                 size: size,
-                action: function(e, self) { me.dumpConfig(self); }
+                action: (e, self) => { this.dumpConfig(self); }
             }).button);
         }
         document.getElementById('buttons-sizes').appendChild(sizediv);
@@ -1046,14 +1046,14 @@ class CornflowerBlueDemo {
 
         controls.appendChild(new SimpleButton({
             text: "Append Data",
-            action: function() {
+            action: () => {
                 dg.fetchData('demo/data/coda.json');
             }
         }).container);
 
         controls.appendChild(new SimpleButton({
             text: "Update Data",
-            action: function() {
+            action: () => {
                 dg.mergeData('demo/data/lz-update.json');
             }
         }).container);
@@ -1062,15 +1062,15 @@ class CornflowerBlueDemo {
     }
 
     grindDialogs() {
-        const me = this;
+        
 
         let dialogs = document.createElement('div');
         dialogs.classList.add('example');
         dialogs.classList.add('centered');
         dialogs.appendChild(new SimpleButton({
             text: "Login Form",
-            action: function() {
-                me.dialog = new DialogWindow({
+            action: () => {
+                this.dialog = new DialogWindow({
                     title: "Login",
                     form: new SimpleForm(CornflowerBlueDemo.DIALOG_LOGIN_FORM)
                 }).open();
@@ -1078,10 +1078,10 @@ class CornflowerBlueDemo {
         }).button);
         dialogs.appendChild(new SimpleButton({
             text: "Kubla Khan",
-            action: function() {
+            action: () => {
                 let khan = document.querySelector('#khan').cloneNode(true);
                 khan.style.padding = '1.5em';
-                me.dialog = new DialogWindow({
+                this.dialog = new DialogWindow({
                     title: "Kubla Khan",
                     content: khan
                 }).open();
@@ -1130,7 +1130,7 @@ class CornflowerBlueDemo {
                     required: true
                 })
             ],
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: true,
                     results: ['Your account has been updated successfully!']
@@ -1142,7 +1142,7 @@ class CornflowerBlueDemo {
                 new SimpleButton({
                     text: TextFactory.get('make_changes'),
                     icon: "pencil-circle",
-                    action: function(e, self) {
+                    action: (e, self) => {
                         e.preventDefault();
                         self.form.activate();
                     }
@@ -1159,7 +1159,7 @@ class CornflowerBlueDemo {
                     text: TextFactory.get('cancel_changes'),
                     icon: "echx-circle",
                     mute: true,
-                    action: function(e, self) {
+                    action: (e, self) => {
                         e.preventDefault();
                         self.form.pacify();
                     }
@@ -1171,43 +1171,43 @@ class CornflowerBlueDemo {
     }
 
     grindGrowlers() {
-        const me = this;
+        
 
         let positions = document.createElement('div');
         positions.classList.add('example');
         positions.classList.add('centered');
         positions.appendChild(new SimpleButton({
             text: "Top Left",
-            action: function() {
+            action: () => {
                 new Growler({
                     position: 'top-left',
                     icon: 'globe',
                     title: 'Top Left Growler',
                     text: 'A growler is here!',
-                    onopen: function(g) { me.dumpConfig(g);}
+                    onopen: (g) => { this.dumpConfig(g);}
                 });
 
             }
         }).button);
         positions.appendChild(new SimpleButton({
             text: "Top Center",
-            action: function() {
+            action: () => {
                 new Growler({
                     position: 'top-center',
                     icon: 'chat',
                     text: 'A top-center growler with an icon and no title.',
-                    onopen: function(g) { me.dumpConfig(g);}
+                    onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
         positions.appendChild(new SimpleButton({
             text: "Top Right",
-            action: function() {
+            action: () => {
                 new Growler({
                     position: 'top-right',
                     icon: 'star',
                     title: 'Growler with no text.',
-                    onopen: function(g) { me.dumpConfig(g);}
+                    onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
@@ -1218,37 +1218,37 @@ class CornflowerBlueDemo {
         positionslower.classList.add('centered');
         positionslower.appendChild(new SimpleButton({
             text: "Bottom Left",
-            action: function() {
+            action: () => {
                 new Growler({
                     position: 'bottom-left',
                     title: 'Bottom Left Growler',
                     text: 'This growler has duration:0, and will stay until dismissed.',
                     duration: 0,
-                    onopen: function(g) { me.dumpConfig(g);}
+                    onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
         positionslower.appendChild(new SimpleButton({
             text: "Bottom Center",
-            action: function() {
+            action: () => {
                 new Growler({
                     position: 'bottom-center',
                     icon: 'heart',
                     title: 'Bottom Center Growler',
                     text: 'This growler has duration:0, so will stay until dismissed.',
                     duration: 0,
-                    onopen: function(g) { me.dumpConfig(g);}
+                    onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
         positionslower.appendChild(new SimpleButton({
             text: "Bottom Right",
-            action: function() {
+            action: () => {
                 new Growler({
                     position: 'bottom-right',
                     title: 'Bottom Right Growler',
                     text: 'Another growler over here!',
-                    onopen: function(g) { me.dumpConfig(g);}
+                    onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
@@ -1260,37 +1260,37 @@ class CornflowerBlueDemo {
         special.classList.add('centered');
         special.appendChild(new SimpleButton({
             text: "Quick Growl",
-            action: function() {
+            action: () => {
                 Growler.growl('This is a growl message!', 'Growler.growl');
-                me.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
+                this.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Success",
-            action: function() {
+            action: () => {
                 Growler.success('This is a success message!');
-                me.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
+                this.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Error",
-            action: function() {
+            action: () => {
                 Growler.error('This is an error message!');
-                me.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
+                this.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Warn",
-            action: function() {
+            action: () => {
                 Growler.warn('This is a warning message!');
-                me.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
+                this.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Caution",
-            action: function() {
+            action: () => {
                 Growler.caution('This is a caution message!');
-                me.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
+                this.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
 
             }
         }).button);
@@ -1342,7 +1342,7 @@ class CornflowerBlueDemo {
 
         let toggleButton = new SimpleButton({
             text: ".activate()",
-            action: function(e, self) {
+            action: (e, self) => {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
                     self.text = ".activate()";
@@ -1682,7 +1682,7 @@ class CornflowerBlueDemo {
 
         let toggleButton = new SimpleButton({
             text: ".activate()",
-            action: function(e, self) {
+            action: (e, self) => {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
                     self.text = ".activate()";
@@ -1817,7 +1817,7 @@ class CornflowerBlueDemo {
         document.getElementById('selects-passive').appendChild(passiveTest.container);
         document.getElementById('selects-passive').appendChild(new SimpleButton({
             text: ".activate()",
-            action: function(e, self) {
+            action: (e, self) => {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
                     self.text = ".activate()";
@@ -1856,7 +1856,7 @@ class CornflowerBlueDemo {
         document.getElementById('textareas-passive').appendChild(passiveTest.container);
         document.getElementById('textareas-passive').appendChild(new SimpleButton({
             text: ".activate()",
-            action: function(e, self) {
+            action: (e, self) => {
                 passiveTest.toggleActivation();
                 if (passiveTest.passive) {
                     self.text = ".activate()";
@@ -1978,10 +1978,10 @@ class CornflowerBlueDemo {
             text: "User",
             icon: 'user-circle',
             items: [
-                { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                { label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: () => { Growler.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: () => { Growler.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: () => { Growler.growl("Clicked 'Log Out'") } }
             ]
         }).container);
         buttonmenu.appendChild(new ButtonMenu({
@@ -1989,10 +1989,10 @@ class CornflowerBlueDemo {
             icon: 'user-circle',
             mute: true,
             items: [
-                { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                { label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: () => { Growler.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: () => { Growler.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: () => { Growler.growl("Clicked 'Log Out'") } }
             ]
         }).container);
         buttonmenu.appendChild(new ButtonMenu({
@@ -2000,10 +2000,10 @@ class CornflowerBlueDemo {
             icon: 'user-circle',
             disabled: true,
             items: [
-                { label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'User'") } },
-                { label: "Preferences", icon: 'gear', action: function() { Growler.growl("Clicked 'Preferences'") } },
-                { label: "Schedule", icon: 'calendar', action: function() { Growler.growl("Clicked 'Schedule'") } },
-                { label: "Log Out", icon: 'lock-open', action: function() { Growler.growl("Clicked 'Log Out'") } }
+                { label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: () => { Growler.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: () => { Growler.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: () => { Growler.growl("Clicked 'Log Out'") } }
             ]
         }).container);
         document.getElementById('tabsmenus-buttonmenu').appendChild(buttonmenu);
@@ -2012,10 +2012,10 @@ class CornflowerBlueDemo {
         tabbar.classList.add('example');
         tabbar.appendChild(new TabBar({
             tabs: [
-                { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: function() { Growler.growl("Clicked 'Home'") } },
-                { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: function() { Growler.growl("Clicked 'Feed'") } },
-                { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: function() { Growler.growl("Clicked 'Messages'") } },
-                { id: 'dt-1-profile', label: "Profile", icon: 'user', action: function() { Growler.growl("Clicked 'Profile'") } }
+                { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: () => { Growler.growl("Clicked 'Home'") } },
+                { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: () => { Growler.growl("Clicked 'Feed'") } },
+                { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: () => { Growler.growl("Clicked 'Messages'") } },
+                { id: 'dt-1-profile', label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'Profile'") } }
             ]
         }).container);
         document.getElementById('tabsmenus-tabbar').appendChild(tabbar);

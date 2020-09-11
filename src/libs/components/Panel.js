@@ -108,7 +108,7 @@ class Panel {
      * Build the header.
      */
     buildHeader() {
-        const me = this;
+
         this.header = document.createElement('h3');
         this.header.classList.add('panelheader');
         if (this.collapsible) {
@@ -119,10 +119,10 @@ class Panel {
                 naked: true,
                 iconclasses: ['headerbutton'],
                 classes: ['headerbutton'],
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    me.toggleClose();
+                    this.toggleClose();
                 }
             });
             this.header.appendChild(this.togglebutton.button);

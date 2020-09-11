@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-08
+/*! Cornflower Blue - v0.1.1 - 2020-09-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -157,7 +157,7 @@ class CFBUtils {
      * @return {string}
      */
     static getConfig(obj) {
-        let keys = Object.keys(obj.config).sort(function(a, b){
+        let keys = Object.keys(obj.config).sort((a, b) =>{
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
@@ -166,7 +166,7 @@ class CFBUtils {
         let vlines = [];
         for (let k of keys) {
             if (typeof obj[k] === 'function') {
-                vlines.push(`\t ${k} : function(...) { ... }`);
+                vlines.push(`\t ${k} : (...) => { ... }`);
             } else if (Array.isArray(obj[k])) {
                 vlines.push(`\t ${k} : [${obj[k]}]`);
             } else if (typeof obj[k] === 'string') {
@@ -187,10 +187,10 @@ class CFBUtils {
      * @return {string}
      */
     static prettyPrintConfig(obj) {
-        let keys = Object.keys(obj.config).sort(function(a, b){
+        let keys = Object.keys(obj.config).sort((a, b) =>{
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
-            if(a1 === b1) return 0;
+            if (a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
         });
         let vlines = [];
@@ -199,7 +199,7 @@ class CFBUtils {
             if ((k === 'id') || (k === 'name')) {
                 line = `    <span class="key">${k}</span> : <span class="value">&lt;string&gt;</span>`;
             } else if (typeof obj[k] === 'function') {
-                line = `    <span class="key">${k}</span> : function(...) { ... }`;
+                line = `    <span class="key">${k}</span> : (...) => { ... }`;
             } else if (Array.isArray(obj[k])) {
                 line = `    <span class="key">${k}</span> : [`;
                 if ((obj[k] !== null) && (obj[k].length > 0)) {
@@ -243,13 +243,13 @@ class CFBUtils {
         if (a === b) return true;
         if (a == null || b == null) return false;
         if (a.length !== b.length) return false;
-        a.sort(function(a, b){
+        a.sort((a, b) => {
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
             return a1 > b1 ? 1 : -1;
         });
-        b.sort(function(a, b){
+        b.sort((a, b) => {
             let a1 = a.toLowerCase(),
                 b1 = b.toLowerCase();
             if(a1 === b1) return 0;
@@ -533,7 +533,7 @@ class BusinessObject {
                                   // Set to -1 to disable heartbeat
             dataprocessor: null,
             sourcemethod: 'GET', // the method to get the source from.
-            sortfunction: function(a, b) {
+            sortfunction: (a, b) => {
                 if (a.name > b.name) { return 1 }
                 if (a.name < b.name) { return -1 }
                 return 0;
@@ -552,7 +552,7 @@ class BusinessObject {
         if (!BusinessObject.instance) {
             BusinessObject.instance = this;
             if ((this.cadence) && (this.cadence > 0)) {
-                setInterval(function() {
+                setInterval(() => {
                     me.update();
                 }, this.cadence);
         }
@@ -572,7 +572,7 @@ class BusinessObject {
         for (let o of Object.values(this.cache)) {
             options.push({ value: o[this.identifier], label: o.name });
         }
-        options.sort(function(a, b) {
+        options.sort((a, b) => {
             if (a.label > b.label) { return 1 }
             if (a.label < b.label) { return -1 }
             return 0;
@@ -585,13 +585,12 @@ class BusinessObject {
      * @return an array of the objects, sorted
      */
     get list() {
-        const me = this;
         let list = [];
         for (let o of Object.values(this.cache)) {
             list.push(o);
         }
-        list.sort(function(a, b) {
-            return me.sortfunction(a, b);
+        list.sort((a, b) => {
+            return this.sortfunction(a, b);
         });
         return list;
     }
@@ -1207,7 +1206,6 @@ class StateProvince extends BusinessObject {
      * @return {Array} an array of state object definitions
      */
     set(filter) {
-        const me = this;
         let set = [];
         switch (filter) {
             case 'US':
@@ -1230,8 +1228,8 @@ class StateProvince extends BusinessObject {
                 break;
         }
 
-        set.sort(function(a, b) {
-            return me.sortfunction(a, b);
+        set.sort((a, b) => {
+            return this.sortfunction(a, b);
         });
         return set;
     }
@@ -1316,7 +1314,7 @@ class TimeZoneDefinition extends BusinessObject {
                     type: "string"
                 })
             ],
-            sortfunction: function(a, b) {
+            sortfunction: (a, b) => {
                 if (a.tz > b.tz) { return 1 }
                 if (a.tz < b.tz) { return -1 }
                 return 0;
@@ -1776,7 +1774,7 @@ class TimeZoneDefinition extends BusinessObject {
         for (let o of Object.values(this.cache)) {
             options.push({ value: o[this.identifier], label: `${o.name} (${o.offset})` });
         }
-        options.sort(function(a, b) {
+        options.sort((a, b) => {
             if (a.label > b.label) { return 1 }
             if (a.label < b.label) { return -1 }
             return 0;
@@ -2330,7 +2328,6 @@ class SimpleButton {
      * @returns DOM representation of the SimpleButton
      */
     buildButton() {
-        const me = this;
 
         if (this.text) {
             this.textobj = document.createElement('span');
@@ -2392,24 +2389,24 @@ class SimpleButton {
         CFBUtils.applyAttributes(this.attributes, this.button);
         CFBUtils.applyDataAttributes(this.dataattributes, this.button);
 
-        this.button.addEventListener('focusin', function(e) {
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
+        this.button.addEventListener('focusin', (e) => {
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, this);
             }
         });
-        this.button.addEventListener('focusout', function(e) {
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
+        this.button.addEventListener('focusout', (e) => {
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, this);
             }
         });
-        this.button.addEventListener('mouseover', function(e) {
-            if ((me.hoverin) && (typeof me.hoverin === 'function')) {
-                me.hoverin(e, me);
+        this.button.addEventListener('mouseover', (e) => {
+            if ((this.hoverin) && (typeof this.hoverin === 'function')) {
+                this.hoverin(e, this);
             }
         });
-        this.button.addEventListener('mouseout', function(e) {
-            if ((me.hoverout) && (typeof me.hoverout === 'function')) {
-                me.hoverout(e, me);
+        this.button.addEventListener('mouseout', (e) => {
+            if ((this.hoverout) && (typeof this.hoverout === 'function')) {
+                this.hoverout(e, this);
             }
         });
 
@@ -2452,9 +2449,9 @@ class SimpleButton {
 
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
-            this.button.addEventListener('click', function (e) {
-                if (!me.disabled) {
-                    me.action(e, me);
+            this.button.addEventListener('click', (e) => {
+                if (!this.disabled) {
+                    this.action(e, this);
                 }
             });
         }
@@ -2651,7 +2648,7 @@ class ButtonMenu extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) {
+            action: (e, self) => {
                 let focused = (document.activeElement === self.button);
                 if ((focused) && (!self.isopen)) {
                     self.open();
@@ -2729,8 +2726,6 @@ class ButtonMenu extends SimpleButton {
      * Opens the menu
      */
     open() {
-        const me = this;
-
         if (this.isopen) { return; }
 
         ButtonMenu.closeOpen(); // close open menus
@@ -2755,22 +2750,22 @@ class ButtonMenu extends SimpleButton {
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        window.setTimeout(function() { // Do the focus thing late
+        window.setTimeout(() => { // Do the focus thing late
             if ((focusable) && (focusable.length > 0)) {
                 focusable[0].focus();
             }
         }, 200);
 
         if (this.autoclose) {
-            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
-                me.setCloseListener();
+            window.setTimeout(() => { // Set this after, or else we'll get bouncing.
+                this.setCloseListener();
             }, 200);
         }
         window.addEventListener('scroll', this.setPosition, true);
 
         if (this.autoclose) {
-            window.setTimeout(function() { // Set this after, or else we'll get bouncing.
-                me.setPosition();
+            window.setTimeout(() => { // Set this after, or else we'll get bouncing.
+                this.setPosition();
             }, 50);
         }
 
@@ -2822,8 +2817,6 @@ class ButtonMenu extends SimpleButton {
             default:
                 self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
-
-                //self.menu.style.right = `${offsetRight - (self.button.clientWidth)}px`;
                 break;
         }
 
@@ -2851,23 +2844,21 @@ class ButtonMenu extends SimpleButton {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        const me = this;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
-        window.addEventListener('click', function(e) {
-            let tag = me.menu.tagName.toLowerCase();
-            if (((me.menu.contains(e.target))) && (me.stayopen)) {
-                me.setCloseListener();
-            } else if ((me.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
-            } else if (me.menu.contains(e.target)) {
-                me.close();
-            } else if (me.button.contains(e.target)) {
-                me.toggle();
+        window.addEventListener('click', (e) => {
+            let tag = this.menu.tagName.toLowerCase();
+            if (((this.menu.contains(e.target))) && (this.stayopen)) {
+                this.setCloseListener();
+            } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+            } else if (this.menu.contains(e.target)) {
+                this.close();
+            } else if (this.button.contains(e.target)) {
+                this.toggle();
             } else {
-                me.close();
+                this.close();
             }
         }, { once: true, });
     }
@@ -2879,7 +2870,6 @@ class ButtonMenu extends SimpleButton {
      * @returns DOM representation
      */
     buildMenu() {
-        const me = this;
         this.menu = document.createElement('ul');
         this.menu.classList.add('button-menu');
         this.menu.setAttribute('aria-hidden', 'true');
@@ -2902,23 +2892,23 @@ class ButtonMenu extends SimpleButton {
             menuitem.setAttribute('tabindex', '-1');
             menuitem.setAttribute('data-order', order);
 
-            menuitem.addEventListener('keyup', function(e) {
+            menuitem.addEventListener('keyup', (e) => {
                 switch (e.key) {
                     case 'Tab':
                     case 'Escape':
-                        me.close();
+                        this.close();
                         break;
                     case 'ArrowUp':
                         e.preventDefault();
-                        me.menu.querySelector(`[data-order='${previous}']`).focus();
+                        this.menu.querySelector(`[data-order='${previous}']`).focus();
                         break;
                     case 'ArrowDown':
                         e.preventDefault();
-                        me.menu.querySelector(`[data-order='${next}']`).focus();
+                        this.menu.querySelector(`[data-order='${next}']`).focus();
                         break;
                     case 'Enter': // Enter
                     case ' ': // Space
-                        me.querySelector('a').click(); // click the one inside
+                        this.querySelector('a').click(); // click the one inside
                         break;
 
                 }
@@ -2933,12 +2923,12 @@ class ButtonMenu extends SimpleButton {
             s.innerHTML = item.label;
             anchor.appendChild(s);
 
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', (e) => {
                 e.preventDefault();
                 if ((item.action) && (typeof item.action === 'function')) {
-                    item.action(e, me);
+                    item.action(e, this);
                 }
-                me.close();
+                this.close();
             });
 
             menuitem.appendChild(anchor);
@@ -2962,14 +2952,13 @@ class ButtonMenu extends SimpleButton {
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
-        const me = this;
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         this.menu.classList.add('button-menu');
         this.button.appendChild(this.menu);
-        this.menu.addEventListener('keyup', function(e) {
+        this.menu.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
-                me.close();
+                this.close();
             }
         });
     }
@@ -3046,15 +3035,15 @@ class HamburgerButton extends SimpleButton {
             shape: 'square',
             naked: true,
             icon: HamburgerButton.MAGIC_HAMBURGER,
-            toggleaction: function(self) { },
-            action: function(e, self) { self.toggle(); }
+            toggleaction: () => { },
+            action: (e, self) => { self.toggle(); }
         };
     }
     static get DEFAULT_CONFIG_DOCUMENTATION() {
         return {
             toggletarget: { type: 'option', datatype: 'object', description: "The menu object to open or close." },
             text: { type: 'option', datatype: 'string', description: "The text for the button. This is used as an aria-label only." },
-            toggleaction: { type: 'option', datatype: 'function', description: "A function to execute when the button is toggled." },
+            toggleaction: { type: 'option', datatype: 'function', description: "A function to execute when the button is toggled. Passed 'self" },
         };
     }
 
@@ -3130,7 +3119,7 @@ class HelpButton extends SimpleButton {
 
     static get DEFAULT_CONFIG() {
         return {
-            action: function(e, self) { self.tooltip.open(); },
+            action: (e, self) => { self.tooltip.open(); },
             icon: 'help-circle',
             tipicon: 'help-circle',
             tipgravity: 'n',
@@ -3166,13 +3155,13 @@ class SkipButton extends SimpleButton {
             classes: ['visually-hidden', 'skipbutton'],
             id: 'content-jump',
             contentstart: "#content-start",
-            focusin: function(e, self) {
+            focusin: (e, self) => {
                 self.button.classList.remove('visually-hidden');
             },
-            focusout: function(e, self) {
+            focusout: (e, self) => {
                 self.button.classList.add('visually-hidden');
             },
-            action: function(e, self) {
+            action: (e, self) => {
                 let url = location.href;
                 location.href = self.contentstart;
                 history.replaceState(null,null,url);
@@ -3340,7 +3329,7 @@ class Panel {
      * Build the header.
      */
     buildHeader() {
-        const me = this;
+
         this.header = document.createElement('h3');
         this.header.classList.add('panelheader');
         if (this.collapsible) {
@@ -3351,10 +3340,10 @@ class Panel {
                 naked: true,
                 iconclasses: ['headerbutton'],
                 classes: ['headerbutton'],
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    me.toggleClose();
+                    this.toggleClose();
                 }
             });
             this.header.appendChild(this.togglebutton.button);
@@ -3695,7 +3684,7 @@ class SimpleProgressMeter {
      * Builds the container
      */
     buildContainer() {
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.classList.add('progressbar-container');
@@ -3736,10 +3725,10 @@ class SimpleProgressMeter {
 
         // Don't allow the the fill animation to fire until it's in the page
         setTimeout(function() {
-            if (me.direction === 'vertical') {
-                me.progress.style.height = `${me.fill}%`;
+            if (this.direction === 'vertical') {
+                this.progress.style.height = `${me.fill}%`;
             } else {
-                me.progress.style.width = `${me.fill}%`;
+                this.progress.style.width = `${me.fill}%`;
             }
         }, 500);
     }
@@ -3795,7 +3784,7 @@ class SimpleProgressMeter {
      * Builds the label
      */
     buildLabel() {
-        const me = this;
+
         if (!this.label) { return null; }
 
         this.labelobj = document.createElement('label');
@@ -3806,10 +3795,10 @@ class SimpleProgressMeter {
             this.helpicon = new HelpButton({ help: this.help });
             this.labelobj.appendChild(this.helpicon.button);
             this.labelobj.addEventListener('onmouseover', function() {
-                me.helpicon.open();
+                this.helpicon.open();
             });
             this.labelobj.addEventListener('onmouseout', function() {
-                me.helpicon.close();
+                this.helpicon.close();
             });
         }
     }
@@ -4320,11 +4309,9 @@ class ColumnConfigurator {
      */
     buildContainer() {
         /*
-         * This this is gigantic and ugly.  Don't @ me.
+         * This this is gigantic and ugly.  Don't @me.
          * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
          */
-        const me = this;
-
         this.container = document.createElement('div');
         this.container.classList.add('column-configurator');
         for (let c of this.classes) {
@@ -4348,8 +4335,8 @@ class ColumnConfigurator {
                 label: f.label,
                 checked: !f.hidden,
                 classes: ['column'],
-                onchange: function() {
-                    me.grid.toggleColumn(f);
+                onchange: () => {
+                    this.grid.toggleColumn(f);
                 }
             });
 
@@ -4437,7 +4424,7 @@ class DataGrid extends Panel {
                                          // 'readable' : Uses the header labels (human readable)
                                          // 'data' : Uses the data labels
                                          // 'no' or null: don't include a header row
-            exportfilename: function(self) { // the filename to name the exported data.
+            exportfilename: (self) => { // the filename to name the exported data.
                 if (self.title) {
                     return `${self.title}-export.csv`;
                 }
@@ -4453,7 +4440,7 @@ class DataGrid extends Panel {
             filterbuttonicon: 'filter',
             mute: false, // if true, inputs are set to mute.
             selectable: true, //  Data rows can be selected.
-            selectaction: function(self) {  // What to do when a single row is selected.
+            selectaction: (self) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
@@ -4484,17 +4471,17 @@ class DataGrid extends Panel {
             //                    // duplicate - loads a copy of the item into an edit window.
             //                    //             New item does not have an identifier field.  Sent to createhook.
             //                    // function - passes the row to an external action, defined in the 'action' parameter
-            // action: function(e, self) {}  // Only used if type = 'function';  self in this case is the ButtonMenu
+            // action: (e, self) => {}  // Only used if type = 'function';  self in this case is the ButtonMenu
             //                               // object, which has the rowdata itself set as it's .data()
             //},
             rowactionsicon: 'menu', // Icon to use for row-actions button
-            updatehook: function(rowdata, self) { // Function fired when a data row is edited and then saved
+            updatehook: (rowdata, self) => { // Function fired when a data row is edited and then saved
             },
-            deletehook: function(rowdata, self) { // function fired when a data row is deleted
+            deletehook: (rowdata, self) => { // function fired when a data row is deleted
             },
-            duplicatehook: function(rowdata, self) { // function fired when a new data row is created
+            duplicatehook: (rowdata, self) => { // function fired when a new data row is created
             },
-            createhook: function(rowdata, self) { // function fired when a new data row is created
+            createhook: (rowdata, self) => { // function fired when a new data row is created
             },
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
@@ -4511,8 +4498,6 @@ class DataGrid extends Panel {
     constructor(config) {
         config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
         super(config);
-
-        const me = this;
 
         if (this.id) {
             this.savekey = `grid-test-${this.id}`;
@@ -4539,8 +4524,8 @@ class DataGrid extends Panel {
         this.loadstate();
 
         this.shade.activate();
-        setTimeout(function() {
-           me.fillData();
+        setTimeout(() =>{
+           this.fillData();
         }, 100);
     }
 
@@ -4548,26 +4533,25 @@ class DataGrid extends Panel {
      * Loads the initial data into the grid.
      */
     fillData() {
-        const me = this;
         if (this.warehouse) {
-            this.warehouse.load(function(data) {
-                me.update(data);
-                me.postLoad();
-                me.shade.deactivate();
+            this.warehouse.load((data) => {
+                this.update(data);
+                this.postLoad();
+                this.shade.deactivate();
             });
         } else if (this.data) {
             for (let rdata of this.data) {
                 this.gridbody.appendChild(this.buildRow(rdata));
             }
-            setTimeout(function() {
-                me.postLoad();
-                me.shade.deactivate();
+            setTimeout(() => {
+                this.postLoad();
+                this.shade.deactivate();
             }, 100);
         } else if (this.source) {
-            this.fetchData(this.source, function(data){
-                me.update(data);
-                me.postLoad();
-                me.shade.deactivate();
+            this.fetchData(this.source, (data) => {
+                this.update(data);
+                this.postLoad();
+                this.shade.deactivate();
             });
         }
     }
@@ -4826,7 +4810,7 @@ class DataGrid extends Panel {
 
         let elements = Array.from(this.gridbody.childNodes);
 
-        elements.sort(function(a, b) {
+        elements.sort((a, b) => {
             let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
             let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
 
@@ -4875,8 +4859,6 @@ class DataGrid extends Panel {
      * @param type the type of dialog configurator
      */
     configurator(type) {
-        const me = this;
-
         let dialogconfig = {
                 actions: []
             };
@@ -4892,7 +4874,7 @@ class DataGrid extends Panel {
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('save_columns'),
                     icon: 'disc-check',
-                    action: function() {
+                    action: () => {
                         dialog.close();
                     }
                 }));
@@ -4910,11 +4892,11 @@ class DataGrid extends Panel {
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
                     icon: 'disc-check',
-                    action: function() {
+                    action: () => {
                         fc.grindFilters();
-                        me.activefilters = fc.filters;
-                        me.applyFilters();
-                        me.persist();
+                        this.activefilters = fc.filters;
+                        this.applyFilters();
+                        this.persist();
                         dialog.close();
                     }
                 }));
@@ -4984,12 +4966,11 @@ class DataGrid extends Panel {
      * @return a SimpleForm configuration
      */
     buildForm(rowdata, mode) {
-        const me = this;
         let form = {
             passive: false,
             elements: [],
             actions: [],
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: false,
                     errors: ['Handler is not defined.']
@@ -5014,8 +4995,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.updatehook) && (typeof this.updatehook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.updatehook(self);
+                    form.handler = (self) => {
+                        this.updatehook(self);
                     };
                 }
                 form.actions = [
@@ -5035,8 +5016,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.createhook) && (typeof this.createhook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.createhook(self);
+                    form.handler = (self) => {
+                        this.createhook(self);
                     };
                 }
                 form.actions = [
@@ -5056,8 +5037,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.createhook) && (typeof this.createhook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.createhook(self);
+                    form.handler = (self) => {
+                        this.createhook(self);
                     };
                 }
                 form.actions = [
@@ -5077,8 +5058,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.deletehook) && (typeof this.deletehook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.deletehook(rowdata, self);
+                    form.handler = (self) => {
+                        this.deletehook(rowdata, self);
                     };
                 }
                 form.passive = false;
@@ -5210,9 +5191,8 @@ class DataGrid extends Panel {
      * @param url the url to get data from. Defaults to the source url.
      */
     mergeData(url=this.source) {
-        const me = this;
-        this.fetchData(url, function(data) {
-            me.update(data);
+        this.fetchData(url, (data) => {
+            this.update(data);
         });
     }
 
@@ -5280,7 +5260,7 @@ class DataGrid extends Panel {
             rowDOM.replaceChild(c, oldCell);
         }
         rowDOM.classList.add('updated');
-        window.setTimeout(function() {
+        window.setTimeout(() => {
             rowDOM.classList.remove('updated');
         }, 10000);
     }
@@ -5474,7 +5454,6 @@ class DataGrid extends Panel {
      */
     applyFilters() {
         if (!this.filterable) return;
-        const me = this;
         let rows = Array.from(this.gridbody.childNodes);
 
         this.filtertags.innerHTML = '';
@@ -5485,8 +5464,8 @@ class DataGrid extends Panel {
                 f.tagbutton = new TagButton({
                     text: this.getField(f.field).label,
                     tooltip: `${this.getField(f.field).label} ${GridField.getComparatorLabel(f.comparator)} ${f.value}`,
-                    action: function() {
-                        me.removeFilter(f);
+                    action: () => {
+                        this.removeFilter(f);
                     }
                 });
                 this.filtertags.appendChild(f.tagbutton.button);
@@ -5766,7 +5745,6 @@ class DataGrid extends Panel {
      * @returns the grid container
      */
     buildContainer() {
-        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
         this.container.classList.add('panel');
@@ -5792,16 +5770,16 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.grid);
         this.container.appendChild(this.gridwrapper);
 
-        this.gridwrapper.onscroll = function(e) {
-            if (me.gridwrapper.scrollLeft > 0) {
-                me.grid.classList.add('schoriz');
+        this.gridwrapper.onscroll = () => {
+            if (this.gridwrapper.scrollLeft > 0) {
+                this.grid.classList.add('schoriz');
             } else {
-                me.grid.classList.remove('schoriz');
+                this.grid.classList.remove('schoriz');
             }
-            if (me.gridwrapper.scrollTop > 0) {
-                me.grid.classList.add('scvert');
+            if (this.gridwrapper.scrollTop > 0) {
+                this.grid.classList.add('scvert');
             } else {
-                me.grid.classList.remove('scvert');
+                this.grid.classList.remove('scvert');
             }
         };
 
@@ -5882,8 +5860,6 @@ class DataGrid extends Panel {
      * Build the grid info bit
      */
     buildGridInfo() {
-        const me = this;
-
         this.gridinfo = document.createElement('div');
         this.gridinfo.classList.add('grid-info');
 
@@ -5919,8 +5895,8 @@ class DataGrid extends Panel {
                 placeholder: TextFactory.get('search_this_data'),
                 mute: this.mute,
                 searchtext: TextFactory.get('search'),
-                action: function(value) {
-                    me.search(value);
+                action: (value) => {
+                    this.search(value);
                 }
             });
             this.gridinfo.appendChild(this.searchcontrol.container);
@@ -5933,8 +5909,8 @@ class DataGrid extends Panel {
                 icon: this.filterbuttonicon,
                 tooltip: TextFactory.get('datagrid-tooltip-filters'),
                 classes: ['filter'],
-                action: function() {
-                    me.configurator('filter');
+                action: () => {
+                    this.configurator('filter');
                 }
             });
             this.gridinfo.appendChild(this.filterbutton.button);
@@ -5947,8 +5923,8 @@ class DataGrid extends Panel {
                 label: TextFactory.get('bulk_select'),
                 tooltip: TextFactory.get('datagrid-tooltip-bulk_select'),
                 icon: this.multiselecticon,
-                action: function() {
-                    me.selectmodetoggle();
+                action: () => {
+                    this.selectmodetoggle();
                 }
             });
         }
@@ -5956,8 +5932,8 @@ class DataGrid extends Panel {
             label: TextFactory.get('columns'),
             icon: this.columnconfigurationicon,
             tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
-            action: function() {
-                me.configurator('column');
+            action: () => {
+                this.configurator('column');
             }
         });
         if (this.exportable) {
@@ -5965,16 +5941,16 @@ class DataGrid extends Panel {
                 label: TextFactory.get('export'),
                 tooltip: TextFactory.get('datagrid-tooltip-export'),
                 icon: this.exporticon,
-                action: function() {
-                    me.export();
+                action: () => {
+                    this.export();
                 }
             });
             items.push({
                 label: TextFactory.get('export-current_view'),
                 tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
                 icon: this.exporticon,
-                action: function() {
-                    me.export(true);
+                action: () => {
+                    this.export(true);
                 }
             });
         }
@@ -6008,12 +5984,11 @@ class DataGrid extends Panel {
      * Build the table header
      */
     buildTableHead() {
-        const me = this;
 
         if (this.multiselect) {
             this.masterselector = new BooleanToggle({
-                onchange: function(self) {
-                    me.toggleallselect(self.checked);
+                onchange: (self)  =>{
+                    this.toggleallselect(self.checked);
                 }
             });
             let cell = document.createElement('th');
@@ -6045,8 +6020,6 @@ class DataGrid extends Panel {
      * @return {HTMLTableHeaderCellElement}
      */
     buildHeaderCell(field) {
-        const me = this;
-
         let div = document.createElement('div');
         div.classList.add('th');
         div.innerHTML = field.label;
@@ -6074,16 +6047,16 @@ class DataGrid extends Panel {
         if (this.sortable) {
             // XXX Add "sort this" aria label
             cell.setAttribute('tabindex', '0');
-            cell.addEventListener('click', function(e) {
+            cell.addEventListener('click', (e) => {
                 e.preventDefault();
-                me.togglesort(field.name);
+                this.togglesort(field.name);
             });
-            cell.addEventListener('keyup', function(e) {
+            cell.addEventListener('keyup', (e) => {
                 e.preventDefault();
                 switch (e.key) {
                     case 'Enter':
                     case ' ':
-                        me.togglesort(field.name);
+                        this.togglesort(field.name);
                         break;
                     default:
                         break;
@@ -6118,7 +6091,6 @@ class DataGrid extends Panel {
      * @return {HTMLTableRowElement}
      */
     buildRow(rdata) {
-        const me = this;
         let row = document.createElement('tr');
 
         if (this.identifier) {
@@ -6136,7 +6108,7 @@ class DataGrid extends Panel {
             }
             rdata.rowid = row.getAttribute('data-rowid'); // pop this into the row data.
 
-            row.addEventListener('click', function(e) {
+            row.addEventListener('click', (e) => {
 
                 if (e.target.classList.contains('mechanical')) { return; }
 
@@ -6145,12 +6117,12 @@ class DataGrid extends Panel {
                     e.stopPropagation();
                     document.getSelection().removeAllRanges(); // remove cursor selection
                 }
-                if (me.selectable) {
-                    me.select(row, e);
+                if (this.selectable) {
+                    this.select(row, e);
                 }
             });
 
-            row.addEventListener('keydown', function(e) {
+            row.addEventListener('keydown', (e) => {
                 switch(e.key) {
                     case 'ArrowLeft':
                     case 'ArrowUp':
@@ -6177,7 +6149,7 @@ class DataGrid extends Panel {
         if (this.multiselect) {
             let selector = new BooleanToggle({
                 classes: ['selector'],
-                onchange: function(self) {
+                onchange: () => {
                     if (row.getAttribute('aria-selected') === 'true') {
                         row.removeAttribute('aria-selected');
                     } else {
@@ -6192,11 +6164,11 @@ class DataGrid extends Panel {
             row.appendChild(cell);
         }
 
-        row.addEventListener('dblclick', function(e, self) {
-            if ((me.doubleclick) && (typeof me.doubleclick === 'function')) {
-                me.doubleclick(e, self);
+        row.addEventListener('dblclick', (e, self) => {
+            if ((this.doubleclick) && (typeof this.doubleclick === 'function')) {
+                this.doubleclick(e, self);
             } else {
-                me.datawindow('view', rdata);
+                this.datawindow('view', rdata);
             }
         });
 
@@ -6226,18 +6198,18 @@ class DataGrid extends Panel {
 
                 switch(ra.type) {
                     case 'edit':
-                        myaction.action = function(event, buttonmenu) {
-                            me.datawindow('edit', rdata);
+                        myaction.action = () => {
+                            this.datawindow('edit', rdata);
                         };
                         break;
                     case 'delete':
-                        myaction.action = function(event, buttonmenu) {
-                            me.datawindow('delete', rdata);
+                        myaction.action = () => {
+                            this.datawindow('delete', rdata);
                         };
                         break;
                     case 'duplicate':
-                        myaction.action = function(event, buttonmenu) {
-                            me.datawindow('duplicate', rdata);
+                        myaction.action = () => {
+                            this.datawindow('duplicate', rdata);
                         };
                         break;
                     case 'function':
@@ -6719,10 +6691,9 @@ class FilterConfigurator {
      */
     buildContainer() {
         /*
-         * This this is gigantic and ugly.  Don't @ me.
+         * This this is gigantic and ugly.  Don't @me.
          * It should really be it's own mini-app/class.  Maybe I'll do it that way one day.
          */
-        const me = this;
 
         this.container = document.createElement('div');
         this.container.classList.add('filter-configurator');
@@ -6740,10 +6711,10 @@ class FilterConfigurator {
         this.actions.appendChild(new SimpleButton({
             icon: 'cfb-plus',
             text: TextFactory.get('filter-configurator-add_filter'),
-            action: function() {
-                let unsets = me.elements.querySelectorAll('[data-field="unset"]');
+            action: () => {
+                let unsets = this.elements.querySelectorAll('[data-field="unset"]');
                 if (unsets.length < 1) {
-                    me.addFilter();
+                    this.addFilter();
                 }
             }
         }).button);
@@ -6768,8 +6739,6 @@ class FilterConfigurator {
      * @param filter
      */
     addFilter(filter) {
-
-        const me = this;
 
         let li = document.createElement('li');
         let filterid = `f-tmp-${CFBUtils.getUniqueKey(5)}`;
@@ -6799,9 +6768,9 @@ class FilterConfigurator {
             icon: 'minus',
             shape: 'square',
             classes: ['filterkiller'],
-            action: function() {
+            action: () => {
                 if ((li.getAttribute('data-field')) && (li.getAttribute('data-field') !== 'unset')) {
-                    delete me.workingfilters[li.getAttribute('data-filterid')];
+                    delete this.workingfilters[li.getAttribute('data-filterid')];
                 }
                 li.parentNode.removeChild(li);
             }
@@ -6817,8 +6786,6 @@ class FilterConfigurator {
      * @return {SelectMenu}
      */
     makePrimeSelector(filterid, fieldname) {
-        const me = this;
-
         let options = [];
 
         for (let f of this.fields) {
@@ -6835,12 +6802,12 @@ class FilterConfigurator {
             mute: this.mute,
             placeholder: TextFactory.get('comparator-select_field'),
             classes: ['primeselector'],
-            onchange: function(self) {
+            onchange: (self) => {
                 let li = self.container.parentElement,
                     validmarker = li.querySelector('div.validmarker'),
                     comparatorfield = li.querySelector('div.select-container.comparator'),
                     valuefield = li.querySelector('div.input-container.valueinput'),
-                    field = me.getField(primeSelector.value);
+                    field = this.getField(primeSelector.value);
 
                 li.setAttribute('data-valid', 'false');
                 if (comparatorfield) {
@@ -6851,9 +6818,9 @@ class FilterConfigurator {
                 }
                 if (field) {
                     li.setAttribute('data-field', field.name);
-                    li.insertBefore(me.makeComparatorSelector(filterid, field).container, validmarker);
-                    li.insertBefore(me.makeValueSelector(filterid, field).container, validmarker);
-                    me.checkValidity(li);
+                    li.insertBefore(this.makeComparatorSelector(filterid, field).container, validmarker);
+                    li.insertBefore(this.makeValueSelector(filterid, field).container, validmarker);
+                    this.checkValidity(li);
                 }
             }
         });
@@ -6868,7 +6835,6 @@ class FilterConfigurator {
      * @return {SelectMenu}
      */
     makeComparatorSelector(filterid, field, value) {
-        const me = this;
 
         let ourValue = 'contains';
         let comparators = field.getComparators();
@@ -6896,9 +6862,9 @@ class FilterConfigurator {
             minimal: true,
             mute: this.mute,
             classes: ['comparator'],
-            onchange: function(self) {
+            onchange: (self) => {
                 let li = self.container.parentElement;
-                me.checkValidity(li);
+                this.checkValidity(li);
             }
         });
         comparatorSelector.container.setAttribute('data-field', field.name);
@@ -6914,17 +6880,15 @@ class FilterConfigurator {
      * @return {URLInput|TextInput}
      */
     makeValueSelector(filterid, field, value) {
-        const me = this;
-
         let config = {
             value: value,
             name: `valuefield-${filterid}`,
             minimal: true,
             mute: this.mute,
             classes: ['valueinput'],
-            onchange: function(self) {
+            onchange: (self) => {
                 let li = self.container.parentElement;
-                me.checkValidity(li);
+                this.checkValidity(li);
             }
         };
 
@@ -7070,24 +7034,23 @@ class GridField {
      * Set the renderer for the field, if one isn't provided.
      */
     setRenderer() {
-        const me = this;
         switch (this.type) {
             case 'number':
                 if (!this.renderer) {
-                    this.renderer = function(d) { return document.createTextNode(d); }
+                    this.renderer = (d) => { return document.createTextNode(d); }
                 }
                 break;
             case 'date':
             case 'time':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         return document.createTextNode(d.toString());
                     }
                 }
                 break;
             case 'boolean':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         if (typeof d === 'number') {
                             if (d > 0) { return document.createTextNode('True'); }
                             return document.createTextNode('False');
@@ -7098,7 +7061,7 @@ class GridField {
                 break;
             case 'url':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         let a = document.createElement('a');
                         a.setAttribute('href', d);
                         a.innerHTML = d;
@@ -7109,24 +7072,24 @@ class GridField {
             case 'imageurl':
                 if (!this.renderer) {
                     if (this.lightbox) {
-                        this.renderer = function(d) {
+                        this.renderer = (d) => {
                             let img = document.createElement('img');
                             img.setAttribute('src', d);
                             let anchor = document.createElement('a');
                             anchor.appendChild(img);
-                            anchor.addEventListener('click', function() {
+                            anchor.addEventListener('click', () => {
                                 let i = document.createElement('img');
                                 i.setAttribute('src', d);
                                 new DialogWindow({
                                     lightbox: true,
-                                    title: me.label,
+                                    title: this.label,
                                     content: i
                                 }).open();
                             });
                             return anchor;
                         }
                     } else {
-                        this.renderer = function(d) {
+                        this.renderer = (d) => {
                             let img = document.createElement('img');
                             img.setAttribute('src', d);
                             let a = document.createElement('a');
@@ -7139,7 +7102,7 @@ class GridField {
                 break;
             case 'email':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         let a = document.createElement('a');
                         a.setAttribute('href', `mailto:${d}`);
                         a.innerHTML = d;
@@ -7149,14 +7112,14 @@ class GridField {
                 break;
             case 'enumeration':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
-                        return document.createTextNode(me.getValue(d));
+                    this.renderer = (d) => {
+                        return document.createTextNode(this.getValue(d));
                     }
                 }
                 break;
             case 'paragraph':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         if (!d) { d = ""; }
                         return document.createTextNode(d);
                     }
@@ -7164,9 +7127,9 @@ class GridField {
                 break;
             case 'stringarray':
                 if (!this.renderer) {
-                    this.renderer = function(d) {
+                    this.renderer = (d) => {
                         if (Array.isArray(d)) {
-                            return document.createTextNode(d.join(me.separator));
+                            return document.createTextNode(d.join(this.separator));
                         }
                         return d;
                     }
@@ -7175,7 +7138,7 @@ class GridField {
             case 'string':
             default:
                 if (!this.renderer) {
-                    this.renderer = function(d) { return document.createTextNode(d); }
+                    this.renderer = (d) => { return document.createTextNode(d); }
                 }
                 break;
         }
@@ -7456,7 +7419,7 @@ class DatePicker {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        this.container.addEventListener('click', function(e) {
+        this.container.addEventListener('click', (e) => {
             e.stopPropagation();
         });
 
@@ -7473,7 +7436,7 @@ class DatePicker {
      * @param startDate the date to center the month around. If null, uses today.
      */
     renderMonth(startDate) {
-        const me = this;
+
 
         // XXX there has to be a better way to do this.
 
@@ -7509,9 +7472,9 @@ class DatePicker {
             mute: true,
             size: 'small',
             icon: 'triangle-left',
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.renderMonth(previousMonth);
+                this.renderMonth(previousMonth);
             }
         });
 
@@ -7520,9 +7483,9 @@ class DatePicker {
             mute: true,
             size: 'small',
             icon: 'triangle-right',
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.renderMonth(nextMonth);
+                this.renderMonth(nextMonth);
             }
         });
 
@@ -7593,11 +7556,11 @@ class DatePicker {
                     dayOfNextMonth++;
                 }
 
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    me.select(link);
+                    this.select(link);
                 });
-                link.addEventListener('keydown', function(e) {
+                link.addEventListener('keydown', (e) => {
 
                     let pcell = parseInt(link.getAttribute('data-cellno')) - 1;
                     let ncell = parseInt(link.getAttribute('data-cellno')) + 1;
@@ -7621,7 +7584,7 @@ class DatePicker {
                             break;
                         case 'Enter':
                         case ' ':
-                            me.select(link);
+                            this.select(link);
                             e.stopPropagation();
                             break;
                         default:
@@ -7785,7 +7748,7 @@ class DialogWindow {
      * Opens the dialog window
      */
     open() {
-        const me = this;
+
 
         CFBUtils.closeOpen();
 
@@ -7796,13 +7759,13 @@ class DialogWindow {
         for (let c of this.classes) {
             this.mask.classList.add(c);
         }
-        this.mask.addEventListener('click', function(e) {
+        this.mask.addEventListener('click', (e) => {
             e.preventDefault();
-            if (me.clickoutsidetoclose) {
-                me.close();
+            if (this.clickoutsidetoclose) {
+                this.close();
             }
         });
-        this.container.appendChild(me.window);
+        this.container.appendChild(this.window);
 
         if ((this.trailer) && (typeof this.trailer === 'string')) {
             let trail = document.createElement('div');
@@ -7817,21 +7780,21 @@ class DialogWindow {
         document.body.appendChild(this.container);
         document.body.classList.add('modalopen');
 
-        this.escapelistener = function(e) {
+        this.escapelistener = (e) => {
             if (e.key === 'Escape') {
-                me.close();
+                this.close();
             }
         };
 
         setTimeout(function() {
             if (!me.nofocus) {
-                let focusable = me.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                let focusable = this.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                 if (focusable[0]) {
                     focusable[0].focus();
                 }
             }
-            if (me.escapecloses) {
-                document.addEventListener('keyup', me.escapelistener);
+            if (this.escapecloses) {
+                document.addEventListener('keyup', this.escapelistener);
             }
         }, 100);
     }
@@ -7868,7 +7831,7 @@ class DialogWindow {
      * Constructs the DialogWindow's DOM elements
      */
     build() {
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.classList.add('window-container');
@@ -7898,9 +7861,9 @@ class DialogWindow {
         }
         if (this.showclose) {
             this.closebutton = new CloseButton({
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
-                    me.close();
+                    this.close();
                 }
             });
             if ((this.title) || (this.header)) {
@@ -7924,7 +7887,7 @@ class DialogWindow {
                                     text: this.closetext,
                                     ghost: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }));
                                 break;
@@ -7933,7 +7896,7 @@ class DialogWindow {
                                     text: this.canceltext,
                                     mute: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }));
                                 break;
@@ -7971,7 +7934,7 @@ class DialogWindow {
                                     text: this.closetext,
                                     ghost: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }).container);
                                 break;
@@ -7980,7 +7943,7 @@ class DialogWindow {
                                     text: this.canceltext,
                                     mute: true,
                                     action: function() {
-                                        me.close();
+                                        this.close();
                                     }
                                 }).container);
                                 break;
@@ -8243,15 +8206,15 @@ class Growler extends FloatingPanel {
      * Close the growler
      */
     close() {
-        const me = this;
+
         if (this.timer) { clearTimeout(this.timer); }
         this.container.setAttribute('aria-hidden', 'true');
 
         setTimeout(function() {
-            if ((me.onclose) && (typeof me.onclose === 'function')) {
-                me.onclose(me);
+            if ((this.onclose) && (typeof this.onclose === 'function')) {
+                this.onclose(me);
             }
-            me.container.parentNode.removeChild(me.container);
+            this.container.parentNode.removeChild(this.container);
         }, 100);
 
     }
@@ -8271,12 +8234,12 @@ class Growler extends FloatingPanel {
      * Show the growler
      */
     show() {
-        const me = this;
+
         this.container.removeAttribute('aria-hidden');
 
         if (this.duration > 0) {
             this.timer = setTimeout(function() {
-                me.close();
+                this.close();
             }, this.duration);
         }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
@@ -8285,7 +8248,7 @@ class Growler extends FloatingPanel {
     }
 
     buildContainer() {
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.setAttribute('aria-hidden', 'true');
@@ -8296,9 +8259,9 @@ class Growler extends FloatingPanel {
         }
 
         this.closebutton = new CloseButton({
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.quickClose();
+                this.quickClose();
             }
         });
 
@@ -8508,7 +8471,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
     buildContainer() {
 
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.classList.add(this.sizeclass);
@@ -8542,7 +8505,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
         // Don't allow the the width animation to fire until it's in the page
         let animtimer = window.setTimeout(function() {
-            me.setProgress(me.value);
+            this.setProgress(this.value);
         }, 500);
     }
 
@@ -8664,7 +8627,7 @@ class SearchControl {
      * Build the full searchcontrol container
      */
     buildContainer() {
-        const me = this;
+
         this.container = document.createElement('div');
         this.container.classList.add('searchcontrol');
         for (let c of this.classes) {
@@ -8680,11 +8643,11 @@ class SearchControl {
             mute: true,
             focusin: this.focusin,
             focusout: this.focusout,
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                if (me.isopen) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+                if (this.isopen) {
+                    if ((this.action) && (typeof this.action === 'function')) {
+                        this.action(this.value, me);
                     }
                 }
             }
@@ -8693,7 +8656,7 @@ class SearchControl {
         // Open the search input if the user clicks on the button when it's not open
         this.container.addEventListener('click', function() {
             if (!me.isopen) {
-                me.searchinput.focus();
+                this.searchinput.focus();
             }
         });
 
@@ -8709,7 +8672,7 @@ class SearchControl {
      * Build the search input
      */
     buildSearchInput() {
-        const me = this;
+
         this.searchinput = document.createElement('input');
 
         this.searchinput.setAttribute('type', 'text');
@@ -8726,24 +8689,24 @@ class SearchControl {
             this.searchinput.classList.add(c);
         }
 
-        this.searchinput.addEventListener('keyup', function(e) {
+        this.searchinput.addEventListener('keyup', (e) => {
             switch (e.key) {
                 case 'Tab':
-                    if (me.autoexecute) {
-                        if ((me.action) && (typeof me.action === 'function')) {
-                            me.action(me.value, me);
+                    if (this.autoexecute) {
+                        if ((this.action) && (typeof this.action === 'function')) {
+                            this.action(this.value, me);
                         }
                     }
                     break;
                 case 'Enter':
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+                    if ((this.action) && (typeof this.action === 'function')) {
+                        this.action(this.value, me);
                     }
                     break;
                 default:
-                    if (me.autoexecute) {
-                        if ((me.action) && (typeof me.action === 'function')) {
-                            me.action(me.value, me);
+                    if (this.autoexecute) {
+                        if ((this.action) && (typeof this.action === 'function')) {
+                            this.action(this.value, me);
                         }
                     }
                     break;
@@ -8751,25 +8714,25 @@ class SearchControl {
             }
         });
 
-        this.searchinput.addEventListener('focusout', function(e) {
-            if (((me.value) && (me.value.length > 0)) || (me.stayopen)) {
-                me.container.classList.add('open');
-                if (me.autoexecute) {
-                    if ((me.action) && (typeof me.action === 'function')) {
-                        me.action(me.value, me);
+        this.searchinput.addEventListener('focusout', (e) => {
+            if (((this.value) && (this.value.length > 0)) || (this.stayopen)) {
+                this.container.classList.add('open');
+                if (this.autoexecute) {
+                    if ((this.action) && (typeof this.action === 'function')) {
+                        this.action(this.value, me);
                     }
                 }
             } else {
-                me.container.classList.remove('open');
+                this.container.classList.remove('open');
             }
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, me);
             }
         });
 
-        this.searchinput.addEventListener('focusin', function(e) {
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
+        this.searchinput.addEventListener('focusin', (e) => {
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, me);
             }
         });
 
@@ -8972,7 +8935,7 @@ class SimpleForm {
      * Submits the form.  Runs the validator first.
      */
     submit() {
-        const me = this;
+
 
         if (this.passive) { return; }
 
@@ -8982,20 +8945,20 @@ class SimpleForm {
 
                 if (typeof this.handler === 'function') {
                     this.handler(me, function(results) {
-                        if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
-                            me.handlercallback(me, results);
-                            me.shade.deactivate();
+                        if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
+                            this.handlercallback(me, results);
+                            this.shade.deactivate();
                         } else {
-                            me.handleResults(results);
+                            this.handleResults(results);
                         }
                     });
                 } else { // its an API url
                     this.doAjax(function(results) {
-                        if ((me.handlercallback) && (typeof me.handlercallback === 'function')) {
-                            me.handlercallback(me, results);
-                            me.shade.deactivate();
+                        if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
+                            this.handlercallback(me, results);
+                            this.shade.deactivate();
                         } else {
-                            me.handleResults(results);
+                            this.handleResults(results);
                         }
                     });
                 }
@@ -9173,7 +9136,7 @@ class SimpleForm {
      * Build the form object itself
      */
     buildForm() {
-        const me = this;
+
         this.form = document.createElement('form');
         this.form.setAttribute('id', this.id);
         this.form.setAttribute('novalidate', true); // turn off browser validation 'cause we do it by hand
@@ -9187,9 +9150,9 @@ class SimpleForm {
             this.form.classList.add(c);
         }
 
-        this.form.addEventListener('submit', function(e) {
+        this.form.addEventListener('submit', (e) => {
             e.preventDefault();
-            me.submit();
+            this.submit();
         });
 
         if ((this.handler) && (typeof this.handler !== 'function') && (this.target)) {
@@ -9627,7 +9590,7 @@ class TabBar {
      * Builds the DOM.
      */
     buildContainer() {
-        const me = this;
+
 
         if (this.navigation) {
             this.container = document.createElement('nav');
@@ -9694,7 +9657,7 @@ class TabBar {
      * @return the next in the order
      */
     buildTab(tabdef, order, parent) {
-        const me = this;
+
         let parentname = 'root',
             next = order + 1,
             previous = order - 1;
@@ -9781,7 +9744,7 @@ class TabBar {
                 localorder = this.buildTab(subdef, localorder, li);
             }
 
-            link.addEventListener('keydown', function (e) {
+            link.addEventListener('keydown', (e) => {
                 let setname = li.getAttribute('data-parent');
                 let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
                 let nexttab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${next}'] a[data-tabno='${next}']`);
@@ -9820,7 +9783,7 @@ class TabBar {
         } else if (tabdef.url) {
             link.setAttribute('href', tabdef.url);
         } else { // Non-Master Tabs
-            link.addEventListener('keydown', function (e) {
+            link.addEventListener('keydown', (e) => {
 
                 let setname = li.getAttribute('data-parent');
                 let prevtab = li.parentNode.querySelector(`li[data-parent='${setname}'][data-tabno='${previous}'] a[data-tabno='${previous}']`);
@@ -9866,13 +9829,13 @@ class TabBar {
                         break;
                 }
             });
-            link.addEventListener('click', function (e) {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                me.select(tabdef.id);
+                this.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
                     tabdef.action(tabdef.id, me);
-                } else if (me.action) {
-                    me.action(tabdef.id, me);
+                } else if (this.action) {
+                    this.action(tabdef.id, me);
                 }
                 link.blur();
             });
@@ -9880,7 +9843,7 @@ class TabBar {
 
         if (tabdef.selected) {
             window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
-                me.select(tabdef.id);
+                this.select(tabdef.id);
             }, 100);
         }
 
@@ -9914,12 +9877,12 @@ class TabBar {
      * Opens the menu
      */
     open() {
-        const me = this;
+
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
         setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
+            this.setCloseListener();
         }, 200);
     }
 
@@ -9935,17 +9898,17 @@ class TabBar {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        const me = this;
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
-        window.addEventListener('click', function(e) {
-            if (e.target === me.list) {
-                me.setCloseListener();
+        window.addEventListener('click', (e) => {
+            if (e.target === this.list) {
+                this.setCloseListener();
             } else {
-                me.close();
+                this.close();
             }
         }, { once: true, });
     }
@@ -10075,7 +10038,7 @@ class ToolTip {
      * @param parent
      */
     attach(parent) {
-        const me = this;
+
         if ((parent) && (parent.container)) {
            parent = parent.container;
         }
@@ -10083,18 +10046,18 @@ class ToolTip {
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
         this.parent.addEventListener('mouseover', function() {
-            me.open();
+            this.open();
         });
         this.parent.addEventListener('mouseout', function() {
             clearTimeout(ToolTip.timer);
-            me.close();
+            this.close();
         });
         this.parent.addEventListener('focusin', function() {
-            me.open();
+            this.open();
         });
         this.parent.addEventListener('focusout', function() {
             clearTimeout(ToolTip.timer);
-            me.close();
+            this.close();
         });
     }
 
@@ -10105,10 +10068,10 @@ class ToolTip {
      * This actually only starts a timer.  The actual opening happens in openGuts()
      */
     open() {
-        const me = this;
+
         ToolTip.closeOpen();
         ToolTip.timer = setTimeout(function() {
-            me.openGuts();
+            this.openGuts();
         }, this.waittime);
     }
 
@@ -10332,7 +10295,7 @@ class InputElement {
             focusin: null,
             focusout: null,
             validator: null,
-            renderer: function(data) { return document.createTextNode(data); }
+            renderer: (data) => { return document.createTextNode(data); }
 
         };
     }
@@ -10753,7 +10716,7 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildInput() {
-        const me = this;
+
 
         if (this.type === 'textarea') {
             this.input = document.createElement('textarea');
@@ -10785,102 +10748,102 @@ class InputElement {
                 this.input.classList.add(c);
             }
         }
-        this.input.addEventListener('change', function(e) {
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+        this.input.addEventListener('change', (e) => {
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(me);
             }
         });
 
-        this.input.addEventListener('keydown', function(e) {
+        this.input.addEventListener('keydown', (e) => {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
-            me.input.removeAttribute('aria-invalid');
-            if (me.hascontainer) {
-                me.updateCounter();
+            this.input.removeAttribute('aria-invalid');
+            if (this.hascontainer) {
+                this.updateCounter();
             }
-            me.touched = true; // set self as touched.
-            if ((me.onkeydown) && (typeof me.onkeydown === 'function')) {
-                me.onkeydown(e, me);
+            this.touched = true; // set self as touched.
+            if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
+                this.onkeydown(e, me);
             }
         });
-        this.input.addEventListener('keyup', function(e) {
-            if (me.hascontainer) {
-                if (me.helptimer) {
-                    clearTimeout(me.helptimer);
-                    if (me.helpbutton) {
-                        me.helpbutton.closeTooltip();
+        this.input.addEventListener('keyup', (e) => {
+            if (this.hascontainer) {
+                if (this.helptimer) {
+                    clearTimeout(this.helptimer);
+                    if (this.helpbutton) {
+                        this.helpbutton.closeTooltip();
                     }
                 }
 
-                if ((me.value) && (me.value.length > 0)) {
-                    me.container.classList.add('filled');
+                if ((this.value) && (this.value.length > 0)) {
+                    this.container.classList.add('filled');
                 } else {
-                    me.container.classList.remove('filled');
+                    this.container.classList.remove('filled');
                 }
-                if ((me.form) && (me.required) // If this is the only thing required, tell the form.
-                    && ((me.input.value.length === 0) || (me.input.value.length === 1))) { // Only these two lengths matter
-                    if (me.form) { me.form.validate(); }
+                if ((this.form) && (this.required) // If this is the only thing required, tell the form.
+                    && ((this.input.value.length === 0) || (this.input.value.length === 1))) { // Only these two lengths matter
+                    if (this.form) { this.form.validate(); }
                 }
             }
 
             if ((e.key === 'Enter') // Return key
-                && (me.onreturn) && (typeof me.onreturn === 'function')) {
+                && (this.onreturn) && (typeof this.onreturn === 'function')) {
                 e.preventDefault();
                 e.stopPropagation();
-                me.onreturn(e, me);
-            } else if ((me.onkeyup) && (typeof me.onkeyup === 'function')) {
-                me.onkeyup(e, me);
+                this.onreturn(e, me);
+            } else if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
+                this.onkeyup(e, me);
             }
         });
-        this.input.addEventListener('focusin', function(e) {
-            if ((me.mute) && (me.placeholder) && (me.placeholder !== me.label)) {
-                me.input.setAttribute('placeholder', me.placeholder);
+        this.input.addEventListener('focusin', (e) => {
+            if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
+                this.input.setAttribute('placeholder', this.placeholder);
             }
-            if (me.hascontainer) {
-                me.container.classList.add('active');
-                if ((me.help) && (me.helpbutton)) {
-                    me.helptimer = setTimeout(function() {
-                        me.helpbutton.openTooltip();
-                    }, me.helpwaittime);
+            if (this.hascontainer) {
+                this.container.classList.add('active');
+                if ((this.help) && (this.helpbutton)) {
+                    this.helptimer = setTimeout(() => {
+                        this.helpbutton.openTooltip();
+                    }, this.helpwaittime);
                 }
             }
-            if ((me.focusin) && (typeof me.focusin === 'function')) {
-                me.focusin(e, me);
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, me);
             }
         });
-        this.input.addEventListener('focusout', function(e) {
+        this.input.addEventListener('focusout', (e) => {
 
-            if (me.hascontainer) {
-                if (me.passivebox) {
-                    me.passivebox.innerHTML = '';
-                    me.passivebox.appendChild(me.passivetext);
+            if (this.hascontainer) {
+                if (this.passivebox) {
+                    this.passivebox.innerHTML = '';
+                    this.passivebox.appendChild(this.passivetext);
                 }
 
-                if (me.helptimer) {
-                    clearTimeout(me.helptimer);
-                    if (me.helpbutton) {
-                        me.helpbutton.closeTooltip();
+                if (this.helptimer) {
+                    clearTimeout(this.helptimer);
+                    if (this.helpbutton) {
+                        this.helpbutton.closeTooltip();
                     }
                 }
-                if ((me.mute) && (me.label)) {
-                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + me.requiredtext + ')' : ''}`);
-                    me.input.setAttribute('placeholder', '');
+                if ((this.mute) && (this.label)) {
+                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + this.requiredtext + ')' : ''}`);
+                    this.input.setAttribute('placeholder', '');
                 }
-                me.container.classList.remove('active');
-                me.validate();
+                this.container.classList.remove('active');
+                this.validate();
 
-                if (me.form) { me.form.validate(); }
+                if (this.form) { this.form.validate(); }
 
             }
 
-            if ((me.focusout) && (typeof me.focusout === 'function')) {
-                me.focusout(e, me);
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, me);
             }
         });
         this.input.value = this.config.value;
 
         if (this.required) {
             this.input.setAttribute('required', 'true');
-            if ((me.hascontainer) && (this.label)) {
+            if ((this.hascontainer) && (this.label)) {
                 this.labelobj.setAttribute('data-required-text', `${this.requiredtext}`);
             }
         }
@@ -10903,7 +10866,7 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildLabel() {
-        const me = this;
+
 
         if (!this.label) { return null; }
 
@@ -11338,7 +11301,7 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-        const me = this;
+
 
         SelectMenu.closeOpen(); // close open menus
 
@@ -11361,12 +11324,12 @@ class SelectMenu extends InputElement {
         //window.addEventListener('scroll', this.setPosition, true);
         let x = window.scrollX,
             y = window.scrollY;
-        window.onscroll = function(){ window.scrollTo(x, y); };
+        window.onscroll = () => { window.scrollTo(x, y); };
 
         this.setPosition();
 
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
-            me.setCloseListener();
+        setTimeout(() => { // Set this after, or else we'll get bouncing.
+            this.setCloseListener();
         }, 100);
     }
 
@@ -11401,7 +11364,7 @@ class SelectMenu extends InputElement {
      */
     close() {
         //window.removeEventListener('scroll', this.setPosition, true);
-        window.onscroll=function(){};
+        window.onscroll=() => {};
 
         this.listbox.style.top = null;
         this.listbox.style.bottom = null;
@@ -11524,7 +11487,7 @@ class SelectMenu extends InputElement {
      * Builds the trigger box for the select.
      */
     buildTriggerBox() {
-        const me = this;
+
         this.triggerbox = document.createElement('input');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('type', 'text');
@@ -11533,18 +11496,18 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('aria-activedescendant', '');
         this.triggerbox.setAttribute('placeholder', this.placeholder);
 
-        this.triggerbox.addEventListener('focusin', function(e) {
-            if (me.disabled) {
+        this.triggerbox.addEventListener('focusin', (e) => {
+            if (this.disabled) {
                 e.stopPropagation();
                 return;
             }
-            me.triggerbox.select(); // Select all the text
-            me.open();
+            this.triggerbox.select(); // Select all the text
+            this.open();
         });
 
-        this.triggerbox.addEventListener('keyup', function(e) {
+        this.triggerbox.addEventListener('keyup', (e) => {
             if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
-                me.close();
+                this.close();
             } else {
                 switch (e.key) {
                     case 'Enter':
@@ -11563,20 +11526,20 @@ class SelectMenu extends InputElement {
                     case 'Tab':  // Tab
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
-                        me.close();
+                        this.close();
                         break;
                     case 'ArrowDown': // Down
                         e.preventDefault();
-                        me.open();
-                        me.jumptoSelected(true);
+                        this.open();
+                        this.jumptoSelected(true);
                         break;
                     case 'Backspace':  // Backspace
                     case 'Delete':  // Delete
-                        me.updateSearch();
+                        this.updateSearch();
                         break;
                     case ' ': // space
                     default:
-                        me.updateSearch();
+                        this.updateSearch();
                         break;
                 }
             }
@@ -11619,7 +11582,7 @@ class SelectMenu extends InputElement {
     }
 
     buildOption(def, order) {
-        const me = this;
+
 
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let next = order + 1,
@@ -11648,9 +11611,9 @@ class SelectMenu extends InputElement {
 
         li.appendChild(opt);
 
-        li.addEventListener('keydown', function(e) {
+        li.addEventListener('keydown', (e) => {
             if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
-                me.close();
+                this.close();
             } else {
                 switch (e.key) {
                     case 'Shift':
@@ -11669,33 +11632,33 @@ class SelectMenu extends InputElement {
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
                         e.preventDefault();
-                        me.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
+                        this.optionlist.querySelector(`[data-menuorder='${previous}']`).focus();
                         break;
                     case 'ArrowDown': // Down
                         e.preventDefault();
-                        me.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
+                        this.optionlist.querySelector(`[data-menuorder='${next}']`).focus();
                         break;
                     case 'Enter':
                         li.click(); // click the one inside
                         break;
                     case 'Backspace':  // Backspace
                     case 'Delete':  // Delete
-                        me.triggerbox.value = me.triggerbox.value.substring(0, me.value.length - 1);
-                        me.updateSearch();
+                        this.triggerbox.value = this.triggerbox.value.substring(0, this.value.length - 1);
+                        this.updateSearch();
                         break;
                     case ' ': // space
                     default:
                         e.preventDefault();
-                        me.triggerbox.value = me.triggerbox.value + e.key;
-                        me.updateSearch();
+                        this.triggerbox.value = this.triggerbox.value + e.key;
+                        this.updateSearch();
                         break;
                 }
             }
 
         });
 
-        li.addEventListener('click', function() {
-            let listentries = me.optionlist.querySelectorAll('li');
+        li.addEventListener('click', () => {
+            let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
                 let opt = le.querySelector(`input[name=${me.name}]`);
@@ -11705,29 +11668,29 @@ class SelectMenu extends InputElement {
             li.querySelector(`input[name=${me.name}]`).checked = true;
 
             if (def.unselectoption) {
-                me.triggerbox.value = '';
-            } else if (me.prefix) {
-                me.triggerbox.value = `${me.prefix} ${def.label}`;
+                this.triggerbox.value = '';
+            } else if (this.prefix) {
+                this.triggerbox.value = `${me.prefix} ${def.label}`;
             } else {
-                me.triggerbox.value = def.label;
+                this.triggerbox.value = def.label;
             }
 
-            me.selectedoption = def;
+            this.selectedoption = def;
 
             if (def.unselectoption) {
-                me.passivebox.innerHTML = me.unsettext;
+                this.passivebox.innerHTML = this.unsettext;
             } else {
-                me.passivebox.innerHTML = def.label;
+                this.passivebox.innerHTML = def.label;
             }
 
-            me.close();
+            this.close();
 
-            me.validate();
+            this.validate();
 
-            if (me.form) { me.form.validate(); }
+            if (this.form) { this.form.validate(); }
 
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(me);
             }
         });
 
@@ -11777,17 +11740,17 @@ class SelectMenu extends InputElement {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        const me = this;
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { me.close(); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
-        window.addEventListener('click', function(e) {
-            if ((me.wrapper.contains(e.target)) || (me.listbox.contains(e.target))) {
-                me.setCloseListener();
+        window.addEventListener('click', (e) => {
+            if ((this.wrapper.contains(e.target)) || (this.listbox.contains(e.target))) {
+                this.setCloseListener();
             } else {
-                me.close();
+                this.close();
             }
         }, { once: true });
     }
@@ -11846,7 +11809,7 @@ class BooleanToggle {
             onchange: null, // The change handler. Passed (self).
             validator: null, // A function to run to test validity. Passed the self; returns true or false.,
             value: null, // the value of the checkbox
-            renderer: function(data) { // A function that can be used to format the in the field in passive mode.
+            renderer: (data) => { // A function that can be used to format the in the field in passive mode.
                 return `${data}`;
             }
         };
@@ -11942,7 +11905,7 @@ class BooleanToggle {
      * Builds the DOM.
      */
     build() {
-        const me = this;
+
         this.toggle = document.createElement('input');
         this.toggle.setAttribute('type', "checkbox");
         this.toggle.setAttribute('id', this.id);
@@ -11959,21 +11922,21 @@ class BooleanToggle {
         CFBUtils.applyDataAttributes(this.attributes, this.toggle);
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
-        this.toggle.addEventListener('change', function() {
+        this.toggle.addEventListener('change', () => {
             console.log('change');
-            if (me.toggle.checked) {
-                me.toggle.setAttribute('aria-checked','true');
-                me.toggle.checked = true;
+            if (this.toggle.checked) {
+                this.toggle.setAttribute('aria-checked','true');
+                this.toggle.checked = true;
             } else {
-                me.toggle.removeAttribute('aria-checked');
-                me.toggle.checked = false;
+                this.toggle.removeAttribute('aria-checked');
+                this.toggle.checked = false;
             }
-            me.checked = me.toggle.checked;
+            this.checked = this.toggle.checked;
 
-            if (me.form) { me.form.validate(); }
+            if (this.form) { this.form.validate(); }
 
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(me);
             }
         });
 
@@ -12202,14 +12165,14 @@ class DateInput extends TextInput {
      * Build the calendar button and attach the DatePicker
      */
     buildCalendarButton() {
-        const me = this;
+
         this.datepicker = new DatePicker({
             classes: ['menu'],
-            onselect: function(value) {
-                me.value = value;
-                me.triggerbutton.close();
-                me.input.focus();
-                me.validate();
+            onselect: (value) => {
+                this.value = value;
+                this.triggerbutton.close();
+                this.input.focus();
+                this.validate();
             }
         });
         this.triggerbutton = new ButtonMenu({
@@ -12219,13 +12182,13 @@ class DateInput extends TextInput {
             icon: this.dateicon,
             arialabel: this.triggerarialabel,
             menu: this.datepicker.container,
-            action: function(e, self) {
+            action: (e, self) => {
                 if (self.isopen) {
                     self.close();
-                    me.input.focus();
+                    this.input.focus();
                 } else {
                     self.open();
-                    me.datepicker.renderMonth(me.value);
+                    this.datepicker.renderMonth(this.value);
                 }
                 e.stopPropagation();
             },
@@ -12236,7 +12199,7 @@ class DateInput extends TextInput {
         this.calbutton.classList.add('inputcontrol');
         this.calbutton.appendChild(this.triggerbutton.button);
 
-        this.calbutton.addEventListener('mousedown', function(e) {
+        this.calbutton.addEventListener('mousedown', (e) => {
             e.preventDefault(); // Prevents focus shifting.
         });
 
@@ -12409,7 +12372,7 @@ class FileInput extends InputElement {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
-        const me = this;
+
         this.container = document.createElement('div');
         this.container.classList.add('input-container');
         this.container.classList.add('file-container');
@@ -12436,26 +12399,26 @@ class FileInput extends InputElement {
      * Builds the trigger box for the select.
      */
     buildTriggerBox() {
-        const me = this;
+
         this.triggerbox = document.createElement('div');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('tabindex', '-1');
         this.triggerbox.innerHTML = this.placeholder;
-        this.triggerbox.addEventListener('click', function(e) {
-            if (me.disabled) {
+        this.triggerbox.addEventListener('click', (e) => {
+            if (this.disabled) {
                 e.stopPropagation();
                 return;
             }
-            me.labelobj.click();
+            this.labelobj.click();
         });
-        this.triggerbox.addEventListener('keydown', function(e) {
+        this.triggerbox.addEventListener('keydown', (e) => {
             switch (e.key) {
                 case 'Tab':
-                    me.triggerbox.blur();
+                    this.triggerbox.blur();
                     break;
                 case 'Enter':
                 case ' ':
-                    me.labelobj.click();
+                    this.labelobj.click();
                     break;
                 default:
                     break;
@@ -12471,7 +12434,7 @@ class FileInput extends InputElement {
      * Build file input
      */
     buildFileInput() {
-        const me = this;
+
 
         this.fileinput = document.createElement('input');
         this.fileinput.setAttribute('type', this.type);
@@ -12480,8 +12443,8 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('accept', this.accept);
         this.fileinput.setAttribute('multiple', this.multiple);
         this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
-        this.fileinput.addEventListener('focusin', function() {
-                me.triggerbox.focus();
+        this.fileinput.addEventListener('focusin', () => {
+                this.triggerbox.focus();
         });
         this.fileinput.addEventListener('change', (event) => {
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
@@ -12498,8 +12461,8 @@ class FileInput extends InputElement {
                     this.triggerbox.innerHTML = this.placeholder;
                 }
             }
-            if ((me.onchange) && (typeof me.onchange === 'function')) {
-                me.onchange(event, me);
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(event, me);
             }
         });
 
@@ -12614,7 +12577,7 @@ class NumberInput extends TextInput {
         if (config.onkeydown) {
             config.origkeydown = config.onkeydown;
         }
-        config.onkeydown = function(e, self) {
+        config.onkeydown = (e, self) => {
             switch (e.key) {
                 case '0':
                 case '1':
@@ -12752,17 +12715,17 @@ class NumberInput extends TextInput {
      * Build the steppers
      */
     buildSteppers() {
-        const me = this;
+
         if (this.steppers) {
             this.upbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-up',
                 arialabel: this.upbuttonarialabel,
                 notab: true,
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    me.increment(me.step);
+                    this.increment(this.step);
                 }
             });
             this.downbtn = new SimpleButton({
@@ -12770,10 +12733,10 @@ class NumberInput extends TextInput {
                 icon: 'triangle-down',
                 arialabel: this.downbuttonarialabel,
                 notab: true,
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    me.decrement(me.step);
+                    this.decrement(this.step);
                 }
             });
             this.stepbuttons = document.createElement('div');
@@ -12781,7 +12744,7 @@ class NumberInput extends TextInput {
             this.stepbuttons.classList.add('inputcontrol');
             this.stepbuttons.appendChild(this.upbtn.button);
             this.stepbuttons.appendChild(this.downbtn.button);
-            this.stepbuttons.addEventListener('mousedown', function(e) {
+            this.stepbuttons.addEventListener('mousedown', (e) => {
                 e.preventDefault(); // Prevents focus shifting.
             });
         }
@@ -12871,7 +12834,7 @@ class PasswordInput extends TextInput {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildVisibilityControl() {
-        const me = this;
+
 
         let icon = this.hideicon,
             arialabel = TextFactory.get('hide_password');
@@ -12887,8 +12850,8 @@ class PasswordInput extends TextInput {
             icon: icon,
             arialabel: arialabel,
             tooltip: TextFactory.get('passwordinput-change_visibility'),
-            action: function(e, self) {
-                me.toggleVisibility();
+            action: (e, self) => {
+                this.toggleVisibility();
                 e.stopPropagation();
             },
         });
@@ -12898,7 +12861,7 @@ class PasswordInput extends TextInput {
         this.visibilitycontrol.classList.add('inputcontrol');
         this.visibilitycontrol.appendChild(this.eyebutton.button);
 
-        this.visibilitycontrol.addEventListener('mousedown', function(e) {
+        this.visibilitycontrol.addEventListener('mousedown', (e) => {
             e.preventDefault(); // Prevents focus shifting.
         });
 
@@ -13148,10 +13111,12 @@ class ColorSelector extends RadioGroup {
                 { label: 'Yellow', value: 'var(--yellow)' },
                 { label: 'Green', value: 'var(--green)' },
                 { label: 'Blue', value: 'var(--blue)' },
+                { label: 'Dark Blue', value: 'var(--darkblue)' },
                 { label: 'Purple', value: 'var(--purple)' },
                 { label: 'Black', value: 'var(--black)' },
+                { label: 'Tan', value: 'var(--tan)' },
                 { label: 'White', value: 'var(--white)' }
-            ],
+            ]
         };
     }
 
@@ -13163,9 +13128,7 @@ class ColorSelector extends RadioGroup {
      */
     constructor(config) {
         if (!config) { config = {}; }
-        console.log(`a: ${config.value}`);
         config = Object.assign({}, ColorSelector.DEFAULT_CONFIG, config);
-        console.log(`b: ${config.value}`);
 
         if (!config.id) { // need to generate an id for label stuff
             config.id = `colorselector-${CFBUtils.getUniqueKey(5)}`;
@@ -13173,7 +13136,6 @@ class ColorSelector extends RadioGroup {
         if (!config.name) { config.name = config.id; }
 
         super(config);
-        console.log(`c: ${config.value}`);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -13210,7 +13172,9 @@ class ColorSelector extends RadioGroup {
 
     buildOption(def) {
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
-        let op = document.createElement('input');
+        let li = document.createElement('li'),
+            op = document.createElement('input');
+
         op.setAttribute('id', lId);
         op.setAttribute('type', 'radio');
         op.setAttribute('name', this.name);
@@ -13224,6 +13188,10 @@ class ColorSelector extends RadioGroup {
         op.addEventListener('change', () => {
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
+                for (let l of this.optionlist.querySelectorAll('li')) {
+                    l.removeAttribute('aria-selected');
+                }
+                li.setAttribute('aria-selected', 'true');
             } else {
                 op.removeAttribute('aria-checked');
             }
@@ -13243,24 +13211,32 @@ class ColorSelector extends RadioGroup {
                 this.onchange(this);
             }
         });
-        op.style.backgroundColor = def.value;
+
+        let swatch = document.createElement('span');
+        swatch.classList.add('swatch');
+        swatch.style.backgroundColor = def.value;
 
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
-        opLabel.innerHTML = def.label;
+        opLabel.appendChild(swatch);
+        new ToolTip({
+            text: def.label
+        }).attach(opLabel);
 
-        console.log(`${this.config.value} === ${def.value}`);
+
+        let selected = false;
         if ((this.config.value) && (def.value === this.config.value)) {
-            this.origval = def.value;
-            op.checked = true;
-            op.setAttribute('aria-checked', 'true');
+            selected = true;
         } else if (def.checked) {
+            selected = true;
+        }
+        if (selected) {
+            li.setAttribute('aria-selected', "true");
             this.origval = def.value;
             op.checked = true;
             op.setAttribute('aria-checked', 'true');
         }
 
-        let li = document.createElement('li');
         li.classList.add('radio');
         li.appendChild(op);
         li.appendChild(opLabel);

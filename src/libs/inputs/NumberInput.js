@@ -68,7 +68,7 @@ class NumberInput extends TextInput {
         if (config.onkeydown) {
             config.origkeydown = config.onkeydown;
         }
-        config.onkeydown = function(e, self) {
+        config.onkeydown = (e, self) => {
             switch (e.key) {
                 case '0':
                 case '1':
@@ -206,17 +206,17 @@ class NumberInput extends TextInput {
      * Build the steppers
      */
     buildSteppers() {
-        const me = this;
+
         if (this.steppers) {
             this.upbtn = new SimpleButton({
                 classes: ['naked'],
                 icon: 'triangle-up',
                 arialabel: this.upbuttonarialabel,
                 notab: true,
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    me.increment(me.step);
+                    this.increment(this.step);
                 }
             });
             this.downbtn = new SimpleButton({
@@ -224,10 +224,10 @@ class NumberInput extends TextInput {
                 icon: 'triangle-down',
                 arialabel: this.downbuttonarialabel,
                 notab: true,
-                action: function(e) {
+                action: (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    me.decrement(me.step);
+                    this.decrement(this.step);
                 }
             });
             this.stepbuttons = document.createElement('div');
@@ -235,7 +235,7 @@ class NumberInput extends TextInput {
             this.stepbuttons.classList.add('inputcontrol');
             this.stepbuttons.appendChild(this.upbtn.button);
             this.stepbuttons.appendChild(this.downbtn.button);
-            this.stepbuttons.addEventListener('mousedown', function(e) {
+            this.stepbuttons.addEventListener('mousedown', (e) => {
                 e.preventDefault(); // Prevents focus shifting.
             });
         }

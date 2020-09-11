@@ -32,7 +32,7 @@ class DataGrid extends Panel {
                                          // 'readable' : Uses the header labels (human readable)
                                          // 'data' : Uses the data labels
                                          // 'no' or null: don't include a header row
-            exportfilename: function(self) { // the filename to name the exported data.
+            exportfilename: (self) => { // the filename to name the exported data.
                 if (self.title) {
                     return `${self.title}-export.csv`;
                 }
@@ -48,7 +48,7 @@ class DataGrid extends Panel {
             filterbuttonicon: 'filter',
             mute: false, // if true, inputs are set to mute.
             selectable: true, //  Data rows can be selected.
-            selectaction: function(self) {  // What to do when a single row is selected.
+            selectaction: (self) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
@@ -79,17 +79,17 @@ class DataGrid extends Panel {
             //                    // duplicate - loads a copy of the item into an edit window.
             //                    //             New item does not have an identifier field.  Sent to createhook.
             //                    // function - passes the row to an external action, defined in the 'action' parameter
-            // action: function(e, self) {}  // Only used if type = 'function';  self in this case is the ButtonMenu
+            // action: (e, self) => {}  // Only used if type = 'function';  self in this case is the ButtonMenu
             //                               // object, which has the rowdata itself set as it's .data()
             //},
             rowactionsicon: 'menu', // Icon to use for row-actions button
-            updatehook: function(rowdata, self) { // Function fired when a data row is edited and then saved
+            updatehook: (rowdata, self) => { // Function fired when a data row is edited and then saved
             },
-            deletehook: function(rowdata, self) { // function fired when a data row is deleted
+            deletehook: (rowdata, self) => { // function fired when a data row is deleted
             },
-            duplicatehook: function(rowdata, self) { // function fired when a new data row is created
+            duplicatehook: (rowdata, self) => { // function fired when a new data row is created
             },
-            createhook: function(rowdata, self) { // function fired when a new data row is created
+            createhook: (rowdata, self) => { // function fired when a new data row is created
             },
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
@@ -106,8 +106,6 @@ class DataGrid extends Panel {
     constructor(config) {
         config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
         super(config);
-
-        const me = this;
 
         if (this.id) {
             this.savekey = `grid-test-${this.id}`;
@@ -134,8 +132,8 @@ class DataGrid extends Panel {
         this.loadstate();
 
         this.shade.activate();
-        setTimeout(function() {
-           me.fillData();
+        setTimeout(() =>{
+           this.fillData();
         }, 100);
     }
 
@@ -143,26 +141,25 @@ class DataGrid extends Panel {
      * Loads the initial data into the grid.
      */
     fillData() {
-        const me = this;
         if (this.warehouse) {
-            this.warehouse.load(function(data) {
-                me.update(data);
-                me.postLoad();
-                me.shade.deactivate();
+            this.warehouse.load((data) => {
+                this.update(data);
+                this.postLoad();
+                this.shade.deactivate();
             });
         } else if (this.data) {
             for (let rdata of this.data) {
                 this.gridbody.appendChild(this.buildRow(rdata));
             }
-            setTimeout(function() {
-                me.postLoad();
-                me.shade.deactivate();
+            setTimeout(() => {
+                this.postLoad();
+                this.shade.deactivate();
             }, 100);
         } else if (this.source) {
-            this.fetchData(this.source, function(data){
-                me.update(data);
-                me.postLoad();
-                me.shade.deactivate();
+            this.fetchData(this.source, (data) => {
+                this.update(data);
+                this.postLoad();
+                this.shade.deactivate();
             });
         }
     }
@@ -421,7 +418,7 @@ class DataGrid extends Panel {
 
         let elements = Array.from(this.gridbody.childNodes);
 
-        elements.sort(function(a, b) {
+        elements.sort((a, b) => {
             let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
             let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
 
@@ -470,8 +467,6 @@ class DataGrid extends Panel {
      * @param type the type of dialog configurator
      */
     configurator(type) {
-        const me = this;
-
         let dialogconfig = {
                 actions: []
             };
@@ -487,7 +482,7 @@ class DataGrid extends Panel {
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('save_columns'),
                     icon: 'disc-check',
-                    action: function() {
+                    action: () => {
                         dialog.close();
                     }
                 }));
@@ -505,11 +500,11 @@ class DataGrid extends Panel {
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
                     text: TextFactory.get('apply_filters'),
                     icon: 'disc-check',
-                    action: function() {
+                    action: () => {
                         fc.grindFilters();
-                        me.activefilters = fc.filters;
-                        me.applyFilters();
-                        me.persist();
+                        this.activefilters = fc.filters;
+                        this.applyFilters();
+                        this.persist();
                         dialog.close();
                     }
                 }));
@@ -579,12 +574,11 @@ class DataGrid extends Panel {
      * @return a SimpleForm configuration
      */
     buildForm(rowdata, mode) {
-        const me = this;
         let form = {
             passive: false,
             elements: [],
             actions: [],
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: false,
                     errors: ['Handler is not defined.']
@@ -609,8 +603,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.updatehook) && (typeof this.updatehook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.updatehook(self);
+                    form.handler = (self) => {
+                        this.updatehook(self);
                     };
                 }
                 form.actions = [
@@ -630,8 +624,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.createhook) && (typeof this.createhook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.createhook(self);
+                    form.handler = (self) => {
+                        this.createhook(self);
                     };
                 }
                 form.actions = [
@@ -651,8 +645,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.createhook) && (typeof this.createhook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.createhook(self);
+                    form.handler = (self) => {
+                        this.createhook(self);
                     };
                 }
                 form.actions = [
@@ -672,8 +666,8 @@ class DataGrid extends Panel {
                     }
                 }
                 if ((this.deletehook) && (typeof this.deletehook === 'function')) {
-                    form.handler = function(self, callback) {
-                        me.deletehook(rowdata, self);
+                    form.handler = (self) => {
+                        this.deletehook(rowdata, self);
                     };
                 }
                 form.passive = false;
@@ -805,9 +799,8 @@ class DataGrid extends Panel {
      * @param url the url to get data from. Defaults to the source url.
      */
     mergeData(url=this.source) {
-        const me = this;
-        this.fetchData(url, function(data) {
-            me.update(data);
+        this.fetchData(url, (data) => {
+            this.update(data);
         });
     }
 
@@ -875,7 +868,7 @@ class DataGrid extends Panel {
             rowDOM.replaceChild(c, oldCell);
         }
         rowDOM.classList.add('updated');
-        window.setTimeout(function() {
+        window.setTimeout(() => {
             rowDOM.classList.remove('updated');
         }, 10000);
     }
@@ -1069,7 +1062,6 @@ class DataGrid extends Panel {
      */
     applyFilters() {
         if (!this.filterable) return;
-        const me = this;
         let rows = Array.from(this.gridbody.childNodes);
 
         this.filtertags.innerHTML = '';
@@ -1080,8 +1072,8 @@ class DataGrid extends Panel {
                 f.tagbutton = new TagButton({
                     text: this.getField(f.field).label,
                     tooltip: `${this.getField(f.field).label} ${GridField.getComparatorLabel(f.comparator)} ${f.value}`,
-                    action: function() {
-                        me.removeFilter(f);
+                    action: () => {
+                        this.removeFilter(f);
                     }
                 });
                 this.filtertags.appendChild(f.tagbutton.button);
@@ -1361,7 +1353,6 @@ class DataGrid extends Panel {
      * @returns the grid container
      */
     buildContainer() {
-        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('datagrid-container');
         this.container.classList.add('panel');
@@ -1387,16 +1378,16 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.grid);
         this.container.appendChild(this.gridwrapper);
 
-        this.gridwrapper.onscroll = function(e) {
-            if (me.gridwrapper.scrollLeft > 0) {
-                me.grid.classList.add('schoriz');
+        this.gridwrapper.onscroll = () => {
+            if (this.gridwrapper.scrollLeft > 0) {
+                this.grid.classList.add('schoriz');
             } else {
-                me.grid.classList.remove('schoriz');
+                this.grid.classList.remove('schoriz');
             }
-            if (me.gridwrapper.scrollTop > 0) {
-                me.grid.classList.add('scvert');
+            if (this.gridwrapper.scrollTop > 0) {
+                this.grid.classList.add('scvert');
             } else {
-                me.grid.classList.remove('scvert');
+                this.grid.classList.remove('scvert');
             }
         };
 
@@ -1477,8 +1468,6 @@ class DataGrid extends Panel {
      * Build the grid info bit
      */
     buildGridInfo() {
-        const me = this;
-
         this.gridinfo = document.createElement('div');
         this.gridinfo.classList.add('grid-info');
 
@@ -1514,8 +1503,8 @@ class DataGrid extends Panel {
                 placeholder: TextFactory.get('search_this_data'),
                 mute: this.mute,
                 searchtext: TextFactory.get('search'),
-                action: function(value) {
-                    me.search(value);
+                action: (value) => {
+                    this.search(value);
                 }
             });
             this.gridinfo.appendChild(this.searchcontrol.container);
@@ -1528,8 +1517,8 @@ class DataGrid extends Panel {
                 icon: this.filterbuttonicon,
                 tooltip: TextFactory.get('datagrid-tooltip-filters'),
                 classes: ['filter'],
-                action: function() {
-                    me.configurator('filter');
+                action: () => {
+                    this.configurator('filter');
                 }
             });
             this.gridinfo.appendChild(this.filterbutton.button);
@@ -1542,8 +1531,8 @@ class DataGrid extends Panel {
                 label: TextFactory.get('bulk_select'),
                 tooltip: TextFactory.get('datagrid-tooltip-bulk_select'),
                 icon: this.multiselecticon,
-                action: function() {
-                    me.selectmodetoggle();
+                action: () => {
+                    this.selectmodetoggle();
                 }
             });
         }
@@ -1551,8 +1540,8 @@ class DataGrid extends Panel {
             label: TextFactory.get('columns'),
             icon: this.columnconfigurationicon,
             tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
-            action: function() {
-                me.configurator('column');
+            action: () => {
+                this.configurator('column');
             }
         });
         if (this.exportable) {
@@ -1560,16 +1549,16 @@ class DataGrid extends Panel {
                 label: TextFactory.get('export'),
                 tooltip: TextFactory.get('datagrid-tooltip-export'),
                 icon: this.exporticon,
-                action: function() {
-                    me.export();
+                action: () => {
+                    this.export();
                 }
             });
             items.push({
                 label: TextFactory.get('export-current_view'),
                 tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
                 icon: this.exporticon,
-                action: function() {
-                    me.export(true);
+                action: () => {
+                    this.export(true);
                 }
             });
         }
@@ -1603,12 +1592,11 @@ class DataGrid extends Panel {
      * Build the table header
      */
     buildTableHead() {
-        const me = this;
 
         if (this.multiselect) {
             this.masterselector = new BooleanToggle({
-                onchange: function(self) {
-                    me.toggleallselect(self.checked);
+                onchange: (self)  =>{
+                    this.toggleallselect(self.checked);
                 }
             });
             let cell = document.createElement('th');
@@ -1640,8 +1628,6 @@ class DataGrid extends Panel {
      * @return {HTMLTableHeaderCellElement}
      */
     buildHeaderCell(field) {
-        const me = this;
-
         let div = document.createElement('div');
         div.classList.add('th');
         div.innerHTML = field.label;
@@ -1669,16 +1655,16 @@ class DataGrid extends Panel {
         if (this.sortable) {
             // XXX Add "sort this" aria label
             cell.setAttribute('tabindex', '0');
-            cell.addEventListener('click', function(e) {
+            cell.addEventListener('click', (e) => {
                 e.preventDefault();
-                me.togglesort(field.name);
+                this.togglesort(field.name);
             });
-            cell.addEventListener('keyup', function(e) {
+            cell.addEventListener('keyup', (e) => {
                 e.preventDefault();
                 switch (e.key) {
                     case 'Enter':
                     case ' ':
-                        me.togglesort(field.name);
+                        this.togglesort(field.name);
                         break;
                     default:
                         break;
@@ -1713,7 +1699,6 @@ class DataGrid extends Panel {
      * @return {HTMLTableRowElement}
      */
     buildRow(rdata) {
-        const me = this;
         let row = document.createElement('tr');
 
         if (this.identifier) {
@@ -1731,7 +1716,7 @@ class DataGrid extends Panel {
             }
             rdata.rowid = row.getAttribute('data-rowid'); // pop this into the row data.
 
-            row.addEventListener('click', function(e) {
+            row.addEventListener('click', (e) => {
 
                 if (e.target.classList.contains('mechanical')) { return; }
 
@@ -1740,12 +1725,12 @@ class DataGrid extends Panel {
                     e.stopPropagation();
                     document.getSelection().removeAllRanges(); // remove cursor selection
                 }
-                if (me.selectable) {
-                    me.select(row, e);
+                if (this.selectable) {
+                    this.select(row, e);
                 }
             });
 
-            row.addEventListener('keydown', function(e) {
+            row.addEventListener('keydown', (e) => {
                 switch(e.key) {
                     case 'ArrowLeft':
                     case 'ArrowUp':
@@ -1772,7 +1757,7 @@ class DataGrid extends Panel {
         if (this.multiselect) {
             let selector = new BooleanToggle({
                 classes: ['selector'],
-                onchange: function(self) {
+                onchange: () => {
                     if (row.getAttribute('aria-selected') === 'true') {
                         row.removeAttribute('aria-selected');
                     } else {
@@ -1787,11 +1772,11 @@ class DataGrid extends Panel {
             row.appendChild(cell);
         }
 
-        row.addEventListener('dblclick', function(e, self) {
-            if ((me.doubleclick) && (typeof me.doubleclick === 'function')) {
-                me.doubleclick(e, self);
+        row.addEventListener('dblclick', (e, self) => {
+            if ((this.doubleclick) && (typeof this.doubleclick === 'function')) {
+                this.doubleclick(e, self);
             } else {
-                me.datawindow('view', rdata);
+                this.datawindow('view', rdata);
             }
         });
 
@@ -1821,18 +1806,18 @@ class DataGrid extends Panel {
 
                 switch(ra.type) {
                     case 'edit':
-                        myaction.action = function(event, buttonmenu) {
-                            me.datawindow('edit', rdata);
+                        myaction.action = () => {
+                            this.datawindow('edit', rdata);
                         };
                         break;
                     case 'delete':
-                        myaction.action = function(event, buttonmenu) {
-                            me.datawindow('delete', rdata);
+                        myaction.action = () => {
+                            this.datawindow('delete', rdata);
                         };
                         break;
                     case 'duplicate':
-                        myaction.action = function(event, buttonmenu) {
-                            me.datawindow('duplicate', rdata);
+                        myaction.action = () => {
+                            this.datawindow('duplicate', rdata);
                         };
                         break;
                     case 'function':

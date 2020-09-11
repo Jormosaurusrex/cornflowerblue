@@ -141,7 +141,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
     buildContainer() {
 
-        const me = this;
+
 
         this.container = document.createElement('div');
         this.container.classList.add(this.sizeclass);
@@ -175,7 +175,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
 
         // Don't allow the the width animation to fire until it's in the page
         let animtimer = window.setTimeout(function() {
-            me.setProgress(me.value);
+            this.setProgress(this.value);
         }, 500);
     }
 

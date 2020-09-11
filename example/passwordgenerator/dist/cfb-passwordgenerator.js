@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-08
+/*! Cornflower Blue - v0.1.1 - 2020-09-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class PasswordChangeForm {
@@ -37,7 +37,7 @@ class PasswordChangeForm {
 
     /* VALIDATION METHODS_______________________________________________________________ */
 
-    runChecks(self) {
+    runChecks() {
         let valid = true;
         if ((this.pwone.value) !== (this.pwtwo.value)) {
             this.pwone.errors.push(TextArea.get('passwordchanger-error-passwords_must_match'));
@@ -66,7 +66,6 @@ class PasswordChangeForm {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildForm() {
-        const me = this;
 
         this.pwcurr = new PasswordInput({
             id: `${this.id}-pwcurr`,
@@ -113,10 +112,10 @@ class PasswordChangeForm {
                 this.pwgen
 
             ],
-            validator: function(self) {
-                return me.runChecks(self);
+            validator: (self) => {
+                return this.runChecks(self);
             },
-            handler: function(self, callback) {
+            handler: (self, callback) => {
                 let results = {
                     success: true,
                     results: [TextFactory.get('passwordchanger-results-changed_successfully')]
@@ -361,7 +360,6 @@ class PasswordGenerator {
      * Build the container for the generator
      */
     buildContainer() {
-        const me = this;
         this.container = document.createElement('div');
         this.container.classList.add('pwgenerator');
 
@@ -391,9 +389,9 @@ class PasswordGenerator {
         this.button = new SimpleButton({
             text: this.buttontext,
             naked: true,
-            action: function(e) {
+            action: (e) => {
                 e.preventDefault();
-                me.generatePassword();
+                this.generatePassword();
             }
         });
 
@@ -408,23 +406,6 @@ class PasswordGenerator {
             menu: this.datasetblock
         });
 
-        /*
-        this.configbutton = new SimpleButton({
-            icon: 'gear',
-            naked: true,
-            arialabel: TextFactory.get('configure_generator'),
-            classes: ['config'],
-            action: function(e) {
-                e.preventDefault();
-                if (me.datasetblock.getAttribute('aria-hidden')) {
-                    me.datasetblock.removeAttribute('aria-hidden');
-                } else {
-                    me.datasetblock.setAttribute('aria-hidden', 'true');
-                }
-            }
-
-        });
-        */
         let controls = document.createElement('div');
         controls.classList.add('controls');
         controls.appendChild(this.button.button);

@@ -135,7 +135,6 @@ class StateProvince extends BusinessObject {
      * @return {Array} an array of state object definitions
      */
     set(filter) {
-        const me = this;
         let set = [];
         switch (filter) {
             case 'US':
@@ -158,8 +157,8 @@ class StateProvince extends BusinessObject {
                 break;
         }
 
-        set.sort(function(a, b) {
-            return me.sortfunction(a, b);
+        set.sort((a, b) => {
+            return this.sortfunction(a, b);
         });
         return set;
     }

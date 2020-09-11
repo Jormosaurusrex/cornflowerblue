@@ -6,13 +6,13 @@ class SkipButton extends SimpleButton {
             classes: ['visually-hidden', 'skipbutton'],
             id: 'content-jump',
             contentstart: "#content-start",
-            focusin: function(e, self) {
+            focusin: (e, self) => {
                 self.button.classList.remove('visually-hidden');
             },
-            focusout: function(e, self) {
+            focusout: (e, self) => {
                 self.button.classList.add('visually-hidden');
             },
-            action: function(e, self) {
+            action: (e, self) => {
                 let url = location.href;
                 location.href = self.contentstart;
                 history.replaceState(null,null,url);

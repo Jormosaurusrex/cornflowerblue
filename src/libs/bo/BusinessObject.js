@@ -9,7 +9,7 @@ class BusinessObject {
                                   // Set to -1 to disable heartbeat
             dataprocessor: null,
             sourcemethod: 'GET', // the method to get the source from.
-            sortfunction: function(a, b) {
+            sortfunction: (a, b) => {
                 if (a.name > b.name) { return 1 }
                 if (a.name < b.name) { return -1 }
                 return 0;
@@ -28,7 +28,7 @@ class BusinessObject {
         if (!BusinessObject.instance) {
             BusinessObject.instance = this;
             if ((this.cadence) && (this.cadence > 0)) {
-                setInterval(function() {
+                setInterval(() => {
                     me.update();
                 }, this.cadence);
         }
@@ -48,7 +48,7 @@ class BusinessObject {
         for (let o of Object.values(this.cache)) {
             options.push({ value: o[this.identifier], label: o.name });
         }
-        options.sort(function(a, b) {
+        options.sort((a, b) => {
             if (a.label > b.label) { return 1 }
             if (a.label < b.label) { return -1 }
             return 0;
@@ -61,13 +61,12 @@ class BusinessObject {
      * @return an array of the objects, sorted
      */
     get list() {
-        const me = this;
         let list = [];
         for (let o of Object.values(this.cache)) {
             list.push(o);
         }
-        list.sort(function(a, b) {
-            return me.sortfunction(a, b);
+        list.sort((a, b) => {
+            return this.sortfunction(a, b);
         });
         return list;
     }

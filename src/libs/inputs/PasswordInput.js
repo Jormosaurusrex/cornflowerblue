@@ -42,7 +42,7 @@ class PasswordInput extends TextInput {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildVisibilityControl() {
-        const me = this;
+
 
         let icon = this.hideicon,
             arialabel = TextFactory.get('hide_password');
@@ -58,8 +58,8 @@ class PasswordInput extends TextInput {
             icon: icon,
             arialabel: arialabel,
             tooltip: TextFactory.get('passwordinput-change_visibility'),
-            action: function(e, self) {
-                me.toggleVisibility();
+            action: (e, self) => {
+                this.toggleVisibility();
                 e.stopPropagation();
             },
         });
@@ -69,7 +69,7 @@ class PasswordInput extends TextInput {
         this.visibilitycontrol.classList.add('inputcontrol');
         this.visibilitycontrol.appendChild(this.eyebutton.button);
 
-        this.visibilitycontrol.addEventListener('mousedown', function(e) {
+        this.visibilitycontrol.addEventListener('mousedown', (e) => {
             e.preventDefault(); // Prevents focus shifting.
         });
 
