@@ -63,8 +63,6 @@ class DialogWindow {
      * Opens the dialog window
      */
     open() {
-
-
         CFBUtils.closeOpen();
 
         this.prevfocus = document.querySelector(':focus');
@@ -101,8 +99,8 @@ class DialogWindow {
             }
         };
 
-        setTimeout(function() {
-            if (!me.nofocus) {
+        setTimeout(() => {
+            if (!this.nofocus) {
                 let focusable = this.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                 if (focusable[0]) {
                     focusable[0].focus();
@@ -201,7 +199,7 @@ class DialogWindow {
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
                                     ghost: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }));
@@ -210,7 +208,7 @@ class DialogWindow {
                                 this.form.actions.push(new DestructiveButton({
                                     text: this.canceltext,
                                     mute: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }));
@@ -248,7 +246,7 @@ class DialogWindow {
                                 this.actionbox.appendChild(new SimpleButton({
                                     text: this.closetext,
                                     ghost: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }).container);
@@ -257,7 +255,7 @@ class DialogWindow {
                                 this.actionbox.appendChild(new DestructiveButton({
                                     text: this.canceltext,
                                     mute: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }).container);

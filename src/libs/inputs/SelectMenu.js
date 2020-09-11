@@ -493,16 +493,16 @@ class SelectMenu extends InputElement {
             let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
-                let opt = le.querySelector(`input[name=${me.name}]`);
+                let opt = le.querySelector(`input[name=${this.name}]`);
                 if (opt) { opt.removeAttribute('checked') ; }
             }
             li.setAttribute('aria-selected', 'true');
-            li.querySelector(`input[name=${me.name}]`).checked = true;
+            li.querySelector(`input[name=${this.name}]`).checked = true;
 
             if (def.unselectoption) {
                 this.triggerbox.value = '';
             } else if (this.prefix) {
-                this.triggerbox.value = `${me.prefix} ${def.label}`;
+                this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
                 this.triggerbox.value = def.label;
             }

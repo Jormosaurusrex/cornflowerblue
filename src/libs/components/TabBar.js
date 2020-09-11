@@ -22,7 +22,7 @@ class TabBar {
             //    tooltip: null, // an optional tooltip
             //    url: null, // just go to this url,
             //    selected: false, // if true, start selected
-            //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
+            //    action: (tab id, self) => { } // what to do when the tab is clicked. if empty, uses default action.
             //    subtabs: null  // an array of tab definitions to indicate subtabs
             // }
             action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
@@ -103,7 +103,7 @@ class TabBar {
 
             this.menubutton = new HamburgerButton({
                 text: this.menulabel,
-                toggletarget: me
+                toggletarget: this
             });
             this.responsivebox.appendChild(this.menubutton.button);
 
@@ -333,7 +333,7 @@ class TabBar {
         }
 
         if (tabdef.selected) {
-            window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
+            window.setTimeout(()  => { // Have to wait until we're sure we're in the DOM
                 this.select(tabdef.id);
             }, 100);
         }
@@ -372,7 +372,7 @@ class TabBar {
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
+        setTimeout(()  => { // Set this after, or else we'll get bouncing.
             this.setCloseListener();
         }, 200);
     }

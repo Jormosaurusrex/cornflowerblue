@@ -129,7 +129,6 @@ class BooleanToggle {
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         this.toggle.addEventListener('change', () => {
-            console.log('change');
             if (this.toggle.checked) {
                 this.toggle.setAttribute('aria-checked','true');
                 this.toggle.checked = true;

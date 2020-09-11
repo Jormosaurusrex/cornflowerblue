@@ -13,7 +13,7 @@ class SearchControl {
             mute: false, // if true, controls are mute
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
-            action: function(value, self) { // The search action. Passed the value of the input and the self
+            action: (value, self) => { // The search action. Passed the value of the input and the self
                 console.log(`Executing search action: ${value}`);
             },
             value: '', // Value to use (pre-population).  Used during construction and then discarded.
@@ -72,8 +72,8 @@ class SearchControl {
         });
 
         // Open the search input if the user clicks on the button when it's not open
-        this.container.addEventListener('click', function() {
-            if (!me.isopen) {
+        this.container.addEventListener('click', () => {
+            if (!this.isopen) {
                 this.searchinput.focus();
             }
         });

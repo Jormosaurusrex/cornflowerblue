@@ -119,8 +119,6 @@ class SimpleForm {
      * Submits the form.  Runs the validator first.
      */
     submit() {
-
-
         if (this.passive) { return; }
 
         if (this.validate()) {
@@ -128,18 +126,18 @@ class SimpleForm {
                 this.shade.activate();
 
                 if (typeof this.handler === 'function') {
-                    this.handler(me, function(results) {
+                    this.handler(this, (results) => {
                         if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
-                            this.handlercallback(me, results);
+                            this.handlercallback(this, results);
                             this.shade.deactivate();
                         } else {
                             this.handleResults(results);
                         }
                     });
                 } else { // its an API url
-                    this.doAjax(function(results) {
+                    this.doAjax((results) => {
                         if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
-                            this.handlercallback(me, results);
+                            this.handlercallback(this, results);
                             this.shade.deactivate();
                         } else {
                             this.handleResults(results);
@@ -180,9 +178,6 @@ class SimpleForm {
      */
     doAjax(callback) {
         // Edge is terrible and doesn't support FormData;
-        //const body = new URLSearchParams(new FormData(this.form)).toString();
-        //console.log(new FormData(this.form).toString());
-        //let body = new FormData();
         let body,
             files;
 

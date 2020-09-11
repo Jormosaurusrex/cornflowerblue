@@ -174,7 +174,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         this.setProgress(0); // flatten
 
         // Don't allow the the width animation to fire until it's in the page
-        let animtimer = window.setTimeout(function() {
+        let animtimer = window.setTimeout(()  => {
             this.setProgress(this.value);
         }, 500);
     }

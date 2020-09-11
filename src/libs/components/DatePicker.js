@@ -85,8 +85,6 @@ class DatePicker {
         }
 
         let startDay = new Date(startDate.getFullYear(), startDate.getMonth()).getDay();
-        //let daysInMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0).getDate();
-        //console.log(`startDay: ${startDay}, daysInThisMonth: ${daysInMonth}`);
 
         // Many additional dates or things
         let daysInMonth = (32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate()),

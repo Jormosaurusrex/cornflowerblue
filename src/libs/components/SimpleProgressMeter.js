@@ -115,11 +115,11 @@ class SimpleProgressMeter {
         }
 
         // Don't allow the the fill animation to fire until it's in the page
-        setTimeout(function() {
+        setTimeout(() => {
             if (this.direction === 'vertical') {
-                this.progress.style.height = `${me.fill}%`;
+                this.progress.style.height = `${this.fill}%`;
             } else {
-                this.progress.style.width = `${me.fill}%`;
+                this.progress.style.width = `${this.fill}%`;
             }
         }, 500);
     }
@@ -185,10 +185,10 @@ class SimpleProgressMeter {
         if (this.help) {
             this.helpicon = new HelpButton({ help: this.help });
             this.labelobj.appendChild(this.helpicon.button);
-            this.labelobj.addEventListener('onmouseover', function() {
+            this.labelobj.addEventListener('onmouseover', () => {
                 this.helpicon.open();
             });
-            this.labelobj.addEventListener('onmouseout', function() {
+            this.labelobj.addEventListener('onmouseout', () => {
                 this.helpicon.close();
             });
         }

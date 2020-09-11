@@ -128,7 +128,7 @@ class Growler extends FloatingPanel {
         if (this.timer) { clearTimeout(this.timer); }
         this.container.setAttribute('aria-hidden', 'true');
 
-        setTimeout(function() {
+        setTimeout(()  => {
             if ((this.onclose) && (typeof this.onclose === 'function')) {
                 this.onclose(me);
             }
@@ -156,7 +156,7 @@ class Growler extends FloatingPanel {
         this.container.removeAttribute('aria-hidden');
 
         if (this.duration > 0) {
-            this.timer = setTimeout(function() {
+            this.timer = setTimeout(()  => {
                 this.close();
             }, this.duration);
         }

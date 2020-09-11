@@ -3724,11 +3724,11 @@ class SimpleProgressMeter {
         }
 
         // Don't allow the the fill animation to fire until it's in the page
-        setTimeout(function() {
+        setTimeout(() => {
             if (this.direction === 'vertical') {
-                this.progress.style.height = `${me.fill}%`;
+                this.progress.style.height = `${this.fill}%`;
             } else {
-                this.progress.style.width = `${me.fill}%`;
+                this.progress.style.width = `${this.fill}%`;
             }
         }, 500);
     }
@@ -3794,10 +3794,10 @@ class SimpleProgressMeter {
         if (this.help) {
             this.helpicon = new HelpButton({ help: this.help });
             this.labelobj.appendChild(this.helpicon.button);
-            this.labelobj.addEventListener('onmouseover', function() {
+            this.labelobj.addEventListener('onmouseover', () => {
                 this.helpicon.open();
             });
-            this.labelobj.addEventListener('onmouseout', function() {
+            this.labelobj.addEventListener('onmouseout', () => {
                 this.helpicon.close();
             });
         }
@@ -4737,7 +4737,6 @@ class DataGrid extends Panel {
      * @param value
      */
     search(value) {
-        console.log(`search: [${value}]`)
         this.messagebox.classList.add('hidden');
         this.gridwrapper.classList.remove('hidden');
 
@@ -6183,7 +6182,7 @@ class DataGrid extends Panel {
                         //    tooltip: null, // Tooltip text
                         //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
-                        //    action: function() { } // what to do when the tab is clicked.
+                        //    action: () => { } // what to do when the tab is clicked.
                         // }
              */
             let rowactions = [];
@@ -7452,8 +7451,6 @@ class DatePicker {
         }
 
         let startDay = new Date(startDate.getFullYear(), startDate.getMonth()).getDay();
-        //let daysInMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0).getDate();
-        //console.log(`startDay: ${startDay}, daysInThisMonth: ${daysInMonth}`);
 
         // Many additional dates or things
         let daysInMonth = (32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate()),
@@ -7748,8 +7745,6 @@ class DialogWindow {
      * Opens the dialog window
      */
     open() {
-
-
         CFBUtils.closeOpen();
 
         this.prevfocus = document.querySelector(':focus');
@@ -7786,8 +7781,8 @@ class DialogWindow {
             }
         };
 
-        setTimeout(function() {
-            if (!me.nofocus) {
+        setTimeout(() => {
+            if (!this.nofocus) {
                 let focusable = this.contentbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                 if (focusable[0]) {
                     focusable[0].focus();
@@ -7886,7 +7881,7 @@ class DialogWindow {
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
                                     ghost: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }));
@@ -7895,7 +7890,7 @@ class DialogWindow {
                                 this.form.actions.push(new DestructiveButton({
                                     text: this.canceltext,
                                     mute: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }));
@@ -7933,7 +7928,7 @@ class DialogWindow {
                                 this.actionbox.appendChild(new SimpleButton({
                                     text: this.closetext,
                                     ghost: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }).container);
@@ -7942,7 +7937,7 @@ class DialogWindow {
                                 this.actionbox.appendChild(new DestructiveButton({
                                     text: this.canceltext,
                                     mute: true,
-                                    action: function() {
+                                    action: () => {
                                         this.close();
                                     }
                                 }).container);
@@ -8210,7 +8205,7 @@ class Growler extends FloatingPanel {
         if (this.timer) { clearTimeout(this.timer); }
         this.container.setAttribute('aria-hidden', 'true');
 
-        setTimeout(function() {
+        setTimeout(()  => {
             if ((this.onclose) && (typeof this.onclose === 'function')) {
                 this.onclose(me);
             }
@@ -8238,7 +8233,7 @@ class Growler extends FloatingPanel {
         this.container.removeAttribute('aria-hidden');
 
         if (this.duration > 0) {
-            this.timer = setTimeout(function() {
+            this.timer = setTimeout(()  => {
                 this.close();
             }, this.duration);
         }
@@ -8504,7 +8499,7 @@ class RadialProgressMeter extends SimpleProgressMeter {
         this.setProgress(0); // flatten
 
         // Don't allow the the width animation to fire until it's in the page
-        let animtimer = window.setTimeout(function() {
+        let animtimer = window.setTimeout(()  => {
             this.setProgress(this.value);
         }, 500);
     }
@@ -8595,7 +8590,7 @@ class SearchControl {
             mute: false, // if true, controls are mute
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
-            action: function(value, self) { // The search action. Passed the value of the input and the self
+            action: (value, self) => { // The search action. Passed the value of the input and the self
                 console.log(`Executing search action: ${value}`);
             },
             value: '', // Value to use (pre-population).  Used during construction and then discarded.
@@ -8654,8 +8649,8 @@ class SearchControl {
         });
 
         // Open the search input if the user clicks on the button when it's not open
-        this.container.addEventListener('click', function() {
-            if (!me.isopen) {
+        this.container.addEventListener('click', () => {
+            if (!this.isopen) {
                 this.searchinput.focus();
             }
         });
@@ -8935,8 +8930,6 @@ class SimpleForm {
      * Submits the form.  Runs the validator first.
      */
     submit() {
-
-
         if (this.passive) { return; }
 
         if (this.validate()) {
@@ -8944,18 +8937,18 @@ class SimpleForm {
                 this.shade.activate();
 
                 if (typeof this.handler === 'function') {
-                    this.handler(me, function(results) {
+                    this.handler(this, (results) => {
                         if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
-                            this.handlercallback(me, results);
+                            this.handlercallback(this, results);
                             this.shade.deactivate();
                         } else {
                             this.handleResults(results);
                         }
                     });
                 } else { // its an API url
-                    this.doAjax(function(results) {
+                    this.doAjax((results) => {
                         if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {
-                            this.handlercallback(me, results);
+                            this.handlercallback(this, results);
                             this.shade.deactivate();
                         } else {
                             this.handleResults(results);
@@ -8996,9 +8989,6 @@ class SimpleForm {
      */
     doAjax(callback) {
         // Edge is terrible and doesn't support FormData;
-        //const body = new URLSearchParams(new FormData(this.form)).toString();
-        //console.log(new FormData(this.form).toString());
-        //let body = new FormData();
         let body,
             files;
 
@@ -9531,7 +9521,7 @@ class TabBar {
             //    tooltip: null, // an optional tooltip
             //    url: null, // just go to this url,
             //    selected: false, // if true, start selected
-            //    action: function(tab id, self) { } // what to do when the tab is clicked. if empty, uses default action.
+            //    action: (tab id, self) => { } // what to do when the tab is clicked. if empty, uses default action.
             //    subtabs: null  // an array of tab definitions to indicate subtabs
             // }
             action: null, // a function, passed (tab id, self), where tab is the tab id, and self is this TabPanel.
@@ -9612,7 +9602,7 @@ class TabBar {
 
             this.menubutton = new HamburgerButton({
                 text: this.menulabel,
-                toggletarget: me
+                toggletarget: this
             });
             this.responsivebox.appendChild(this.menubutton.button);
 
@@ -9842,7 +9832,7 @@ class TabBar {
         }
 
         if (tabdef.selected) {
-            window.setTimeout(function() { // Have to wait until we're sure we're in the DOM
+            window.setTimeout(()  => { // Have to wait until we're sure we're in the DOM
                 this.select(tabdef.id);
             }, 100);
         }
@@ -9881,7 +9871,7 @@ class TabBar {
         if (this.isopen) { return; }
         this.container.setAttribute('aria-expanded', 'true');
         if (this.menubutton) { this.menubutton.open(); }
-        setTimeout(function() { // Set this after, or else we'll get bouncing.
+        setTimeout(()  => { // Set this after, or else we'll get bouncing.
             this.setCloseListener();
         }, 200);
     }
@@ -10070,7 +10060,7 @@ class ToolTip {
     open() {
 
         ToolTip.closeOpen();
-        ToolTip.timer = setTimeout(function() {
+        ToolTip.timer = setTimeout(()  => {
             this.openGuts();
         }, this.waittime);
     }
@@ -10645,7 +10635,6 @@ class InputElement {
         }
 
         if (this.preamble) {
-            console.log('preamble');
             let p = document.createElement('p');
             p.classList.add('preamble');
             p.innerHTML = this.preamble;
@@ -10825,7 +10814,6 @@ class InputElement {
                     }
                 }
                 if ((this.mute) && (this.label)) {
-                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + this.requiredtext + ')' : ''}`);
                     this.input.setAttribute('placeholder', '');
                 }
                 this.container.classList.remove('active');
@@ -11661,16 +11649,16 @@ class SelectMenu extends InputElement {
             let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
-                let opt = le.querySelector(`input[name=${me.name}]`);
+                let opt = le.querySelector(`input[name=${this.name}]`);
                 if (opt) { opt.removeAttribute('checked') ; }
             }
             li.setAttribute('aria-selected', 'true');
-            li.querySelector(`input[name=${me.name}]`).checked = true;
+            li.querySelector(`input[name=${this.name}]`).checked = true;
 
             if (def.unselectoption) {
                 this.triggerbox.value = '';
             } else if (this.prefix) {
-                this.triggerbox.value = `${me.prefix} ${def.label}`;
+                this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
                 this.triggerbox.value = def.label;
             }
@@ -11923,7 +11911,6 @@ class BooleanToggle {
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
         this.toggle.addEventListener('change', () => {
-            console.log('change');
             if (this.toggle.checked) {
                 this.toggle.setAttribute('aria-checked','true');
                 this.toggle.checked = true;

@@ -345,7 +345,6 @@ class DataGrid extends Panel {
      * @param value
      */
     search(value) {
-        console.log(`search: [${value}]`)
         this.messagebox.classList.add('hidden');
         this.gridwrapper.classList.remove('hidden');
 
@@ -1791,7 +1790,7 @@ class DataGrid extends Panel {
                         //    tooltip: null, // Tooltip text
                         //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
-                        //    action: function() { } // what to do when the tab is clicked.
+                        //    action: () => { } // what to do when the tab is clicked.
                         // }
              */
             let rowactions = [];

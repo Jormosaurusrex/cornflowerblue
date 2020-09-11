@@ -389,7 +389,6 @@ class InputElement {
         }
 
         if (this.preamble) {
-            console.log('preamble');
             let p = document.createElement('p');
             p.classList.add('preamble');
             p.innerHTML = this.preamble;
@@ -569,7 +568,6 @@ class InputElement {
                     }
                 }
                 if ((this.mute) && (this.label)) {
-                    //me.input.setAttribute('placeholder', `${me.label} ${me.required ? '(' + this.requiredtext + ')' : ''}`);
                     this.input.setAttribute('placeholder', '');
                 }
                 this.container.classList.remove('active');

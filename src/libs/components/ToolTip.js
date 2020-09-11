@@ -82,7 +82,7 @@ class ToolTip {
     open() {
 
         ToolTip.closeOpen();
-        ToolTip.timer = setTimeout(function() {
+        ToolTip.timer = setTimeout(()  => {
             this.openGuts();
         }, this.waittime);
     }
