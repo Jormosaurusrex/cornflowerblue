@@ -8,6 +8,8 @@
   --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
   --colors-text-default: var(--grey-dark);
+  --colors-text-emphasize: var(--grey-darker);
+  --colors-text-deemphasize: var(--grey-medium);
   --colors-text-hot: var(--ultralight);
   --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);
   --text-shadow-inverse: 0 .03em .03em rgba(255,255,255, .3), 0 -.03em .03em rgba(0,0,0, .3);
@@ -120,7 +122,7 @@
   --sublight: rgb(var(--sublight-rgb));
   --light-rgb: 221, 221, 221;
   --light: rgb(var(--light-rgb));
-  --grey-rgb: 204, 204, 240;
+  --grey-rgb: 204, 204, 204;
   --grey: rgb(var(--grey-rgb));
   --grey-medium-rgb: 153, 153, 153;
   --grey-medium: rgb(var(--grey-medium-rgb));

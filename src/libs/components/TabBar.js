@@ -324,9 +324,9 @@ class TabBar {
                 e.preventDefault();
                 this.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                    tabdef.action(tabdef.id, me);
+                    tabdef.action(tabdef.id, this);
                 } else if (this.action) {
-                    this.action(tabdef.id, me);
+                    this.action(tabdef.id, this);
                 }
                 link.blur();
             });

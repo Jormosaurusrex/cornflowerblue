@@ -12,6 +12,8 @@
   --default-font-size: 13pt;
 
   --colors-text-default: var(--grey-dark);
+  --colors-text-emphasize: var(--grey-darker);
+  --colors-text-deemphasize: var(--grey-medium);
   --colors-text-hot: var(--ultralight);
 
   --text-shadow: 0 -.03em .03em rgba(0,0,0, .3), 0 .03em .03em rgba(255,255,255, .3);

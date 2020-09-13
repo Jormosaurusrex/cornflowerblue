@@ -8642,7 +8642,7 @@ class SearchControl {
                 e.preventDefault();
                 if (this.isopen) {
                     if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, me);
+                        this.action(this.value, this);
                     }
                 }
             }
@@ -8689,19 +8689,19 @@ class SearchControl {
                 case 'Tab':
                     if (this.autoexecute) {
                         if ((this.action) && (typeof this.action === 'function')) {
-                            this.action(this.value, me);
+                            this.action(this.value, this);
                         }
                     }
                     break;
                 case 'Enter':
                     if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, me);
+                        this.action(this.value, this);
                     }
                     break;
                 default:
                     if (this.autoexecute) {
                         if ((this.action) && (typeof this.action === 'function')) {
-                            this.action(this.value, me);
+                            this.action(this.value, this);
                         }
                     }
                     break;
@@ -8714,20 +8714,20 @@ class SearchControl {
                 this.container.classList.add('open');
                 if (this.autoexecute) {
                     if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, me);
+                        this.action(this.value, this);
                     }
                 }
             } else {
                 this.container.classList.remove('open');
             }
             if ((this.focusout) && (typeof this.focusout === 'function')) {
-                this.focusout(e, me);
+                this.focusout(e, this);
             }
         });
 
         this.searchinput.addEventListener('focusin', (e) => {
             if ((this.focusin) && (typeof this.focusin === 'function')) {
-                this.focusin(e, me);
+                this.focusin(e, this);
             }
         });
 
@@ -9823,9 +9823,9 @@ class TabBar {
                 e.preventDefault();
                 this.select(tabdef.id);
                 if ((tabdef.action) && (typeof tabdef.action === 'function')) {
-                    tabdef.action(tabdef.id, me);
+                    tabdef.action(tabdef.id, this);
                 } else if (this.action) {
-                    this.action(tabdef.id, me);
+                    this.action(tabdef.id, this);
                 }
                 link.blur();
             });
@@ -10751,7 +10751,7 @@ class InputElement {
             }
             this.touched = true; // set self as touched.
             if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
-                this.onkeydown(e, me);
+                this.onkeydown(e, this);
             }
         });
         this.input.addEventListener('keyup', (e) => {
@@ -10778,9 +10778,9 @@ class InputElement {
                 && (this.onreturn) && (typeof this.onreturn === 'function')) {
                 e.preventDefault();
                 e.stopPropagation();
-                this.onreturn(e, me);
+                this.onreturn(e, this);
             } else if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
-                this.onkeyup(e, me);
+                this.onkeyup(e, this);
             }
         });
         this.input.addEventListener('focusin', (e) => {
@@ -10796,7 +10796,7 @@ class InputElement {
                 }
             }
             if ((this.focusin) && (typeof this.focusin === 'function')) {
-                this.focusin(e, me);
+                this.focusin(e, this);
             }
         });
         this.input.addEventListener('focusout', (e) => {
@@ -10824,7 +10824,7 @@ class InputElement {
             }
 
             if ((this.focusout) && (typeof this.focusout === 'function')) {
-                this.focusout(e, me);
+                this.focusout(e, this);
             }
         });
         this.input.value = this.config.value;
@@ -12449,7 +12449,7 @@ class FileInput extends InputElement {
                 }
             }
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(event, me);
+                this.onchange(event, this);
             }
         });
 

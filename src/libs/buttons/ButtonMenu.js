@@ -6,6 +6,8 @@ class ButtonMenu extends SimpleButton {
                 let focused = (document.activeElement === self.button);
                 if ((focused) && (!self.isopen)) {
                     self.open();
+                } else {
+                    self.close();
                 }
                 e.stopPropagation();
             },
@@ -84,9 +86,16 @@ class ButtonMenu extends SimpleButton {
 
         ButtonMenu.closeOpen(); // close open menus
 
-        document.body.appendChild(this.menu);
+        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
+            ButtonMenu.activeMenu = this;
+        } else {
+            ButtonMenu.activeMenu = this;
+        }
+
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
+        ButtonMenu.activeMenu.menu.style.opacity = 0;
+        document.body.appendChild(this.menu);
 
         if ((this.items) && (this.items.length > 0)) {
             let items = Array.from(this.menu.querySelector('li'));
@@ -97,11 +106,8 @@ class ButtonMenu extends SimpleButton {
 
         this.menu.classList.add(this.gravity);
 
-        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
-            ButtonMenu.activeMenu = this;
-        } else {
-            ButtonMenu.activeMenu = this;
-        }
+
+
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
         window.setTimeout(() => { // Do the focus thing late
@@ -115,14 +121,15 @@ class ButtonMenu extends SimpleButton {
                 this.setCloseListener();
             }, 200);
         }
+
         window.addEventListener('scroll', this.setPosition, true);
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
+                ButtonMenu.activeMenu.menu.style.opacity = 1;
             }, 50);
         }
-
     }
 
     /**

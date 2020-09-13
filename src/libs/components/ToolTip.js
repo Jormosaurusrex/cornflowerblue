@@ -57,17 +57,17 @@ class ToolTip {
         this.parent = parent;
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
-        this.parent.addEventListener('mouseover', function() {
+        this.parent.addEventListener('mouseover', () => {
             this.open();
         });
-        this.parent.addEventListener('mouseout', function() {
+        this.parent.addEventListener('mouseout', () => {
             clearTimeout(ToolTip.timer);
             this.close();
         });
-        this.parent.addEventListener('focusin', function() {
+        this.parent.addEventListener('focusin', () => {
             this.open();
         });
-        this.parent.addEventListener('focusout', function() {
+        this.parent.addEventListener('focusout', () => {
             clearTimeout(ToolTip.timer);
             this.close();
         });

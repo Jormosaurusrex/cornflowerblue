@@ -505,7 +505,7 @@ class InputElement {
             }
             this.touched = true; // set self as touched.
             if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
-                this.onkeydown(e, me);
+                this.onkeydown(e, this);
             }
         });
         this.input.addEventListener('keyup', (e) => {
@@ -532,9 +532,9 @@ class InputElement {
                 && (this.onreturn) && (typeof this.onreturn === 'function')) {
                 e.preventDefault();
                 e.stopPropagation();
-                this.onreturn(e, me);
+                this.onreturn(e, this);
             } else if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
-                this.onkeyup(e, me);
+                this.onkeyup(e, this);
             }
         });
         this.input.addEventListener('focusin', (e) => {
@@ -550,7 +550,7 @@ class InputElement {
                 }
             }
             if ((this.focusin) && (typeof this.focusin === 'function')) {
-                this.focusin(e, me);
+                this.focusin(e, this);
             }
         });
         this.input.addEventListener('focusout', (e) => {
@@ -578,7 +578,7 @@ class InputElement {
             }
 
             if ((this.focusout) && (typeof this.focusout === 'function')) {
-                this.focusout(e, me);
+                this.focusout(e, this);
             }
         });
         this.input.value = this.config.value;

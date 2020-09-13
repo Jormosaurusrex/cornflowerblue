@@ -16,6 +16,8 @@ class SimpleButton {
             form: null,
             hidden: false,
             tooltip: null,
+            iconprefix: 'cfb',
+            iconprefixsecond: 'cfb',
             tipicon: null,
             tipgravity: 'n',
             classes: [],
@@ -153,8 +155,8 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    setIcon(newicon) {
-        let i = IconFactory.icon(newicon);
+    setIcon(newicon, iconprefix) {
+        let i = IconFactory.icon(newicon, "", iconprefix);
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
                 if (i) { i.classList.add(ic); }
@@ -192,10 +194,10 @@ class SimpleButton {
         }
 
         if (this.icon) {
-            this.iconactual = IconFactory.icon(this.icon);
+            this.iconactual = IconFactory.icon(this.icon, "", this.iconprefix);
         }
         if (this.secondicon) {
-            this.secondiconactual = IconFactory.icon(this.secondicon);
+            this.secondiconactual = IconFactory.icon(this.secondicon, "", this.iconprefixsecond);
             this.secondiconactual.classList.add('secondicon');
         }
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
@@ -430,6 +432,12 @@ class SimpleButton {
 
     get iconclasses() { return this.config.iconclasses; }
     set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
+
+    get iconprefix() { return this.config.iconprefix; }
+    set iconprefix(iconprefix) { this.config.iconprefix = iconprefix; }
+
+    get iconprefixsecond() { return this.config.iconprefixsecond; }
+    set iconprefixsecond(iconprefixsecond) { this.config.iconprefixsecond = iconprefixsecond; }
 
     get iconside() { return this.config.iconside; }
     set iconside(iconside) { this.config.iconside = iconside; }

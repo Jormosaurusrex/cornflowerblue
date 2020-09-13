@@ -154,7 +154,7 @@ class FileInput extends InputElement {
                 }
             }
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(event, me);
+                this.onchange(event, this);
             }
         });
 

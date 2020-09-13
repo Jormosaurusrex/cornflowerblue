@@ -65,7 +65,7 @@ class SearchControl {
                 e.preventDefault();
                 if (this.isopen) {
                     if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, me);
+                        this.action(this.value, this);
                     }
                 }
             }
@@ -112,19 +112,19 @@ class SearchControl {
                 case 'Tab':
                     if (this.autoexecute) {
                         if ((this.action) && (typeof this.action === 'function')) {
-                            this.action(this.value, me);
+                            this.action(this.value, this);
                         }
                     }
                     break;
                 case 'Enter':
                     if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, me);
+                        this.action(this.value, this);
                     }
                     break;
                 default:
                     if (this.autoexecute) {
                         if ((this.action) && (typeof this.action === 'function')) {
-                            this.action(this.value, me);
+                            this.action(this.value, this);
                         }
                     }
                     break;
@@ -137,20 +137,20 @@ class SearchControl {
                 this.container.classList.add('open');
                 if (this.autoexecute) {
                     if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, me);
+                        this.action(this.value, this);
                     }
                 }
             } else {
                 this.container.classList.remove('open');
             }
             if ((this.focusout) && (typeof this.focusout === 'function')) {
-                this.focusout(e, me);
+                this.focusout(e, this);
             }
         });
 
         this.searchinput.addEventListener('focusin', (e) => {
             if ((this.focusin) && (typeof this.focusin === 'function')) {
-                this.focusin(e, me);
+                this.focusin(e, this);
             }
         });
 

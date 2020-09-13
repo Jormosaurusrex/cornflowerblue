@@ -113,14 +113,15 @@ class IconFactory {
      * @param iconprefix an option icon prefix, for use with other icon libraries
      * @return {*}
      */
-    static icon(icon, arialabel, iconprefix='cfb') {
+    static icon(icon, arialabel= "", iconprefix='cfb') {
         if (icon instanceof Object) { // this is probably a pre-defined icon
             return icon;
         }
         let i = document.createElement('span');
         i.classList.add('icon');
         i.classList.add(`${iconprefix}-${icon}`);
-        if (arialabel) {
+
+        if ((arialabel) && (arialabel !== '')) {
             i.setAttribute('aria-label', arialabel);
         } else {
             i.setAttribute('aria-hidden', "true");
