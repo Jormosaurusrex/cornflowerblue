@@ -11,6 +11,8 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
+            onopen: null, // Function to execute on open. passed "self" as argument
+            onclose: null, // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
             gravity: 's', // Gravity direction for the menu
             tooltipgravity: 'e', // Gravity direction for the tooltips
@@ -106,8 +108,9 @@ class ButtonMenu extends SimpleButton {
 
         this.menu.classList.add(this.gravity);
 
-
-
+        if ((this.onopen) && (typeof this.onclose === 'function')) {
+            this.onopen(this);
+        }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
         window.setTimeout(() => { // Do the focus thing late
@@ -198,6 +201,11 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '-1');
             }
         }
+
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
+
         ButtonMenu.activeMenu = null;
     }
 
@@ -316,6 +324,9 @@ class ButtonMenu extends SimpleButton {
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         this.menu.classList.add('button-menu');
+        for (let c of this.classes) {
+            this.menu.classList.add(c);
+        }
         this.button.appendChild(this.menu);
         this.menu.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
@@ -340,6 +351,12 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get onclose() { return this.config.onclose; }
+    set onclose(onclose) { this.config.onclose = onclose; }
+
+    get onopen() { return this.config.onopen; }
+    set onopen(onopen) { this.config.onopen = onopen; }
 
     get stayopen() { return this.config.stayopen; }
     set stayopen(stayopen) { this.config.stayopen = stayopen; }

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-11
+/*! Cornflower Blue - v0.1.1 - 2020-09-14
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1900,14 +1900,15 @@ class IconFactory {
      * @param iconprefix an option icon prefix, for use with other icon libraries
      * @return {*}
      */
-    static icon(icon, arialabel, iconprefix='cfb') {
+    static icon(icon, arialabel= "", iconprefix='cfb') {
         if (icon instanceof Object) { // this is probably a pre-defined icon
             return icon;
         }
         let i = document.createElement('span');
         i.classList.add('icon');
         i.classList.add(`${iconprefix}-${icon}`);
-        if (arialabel) {
+
+        if ((arialabel) && (arialabel !== '')) {
             i.setAttribute('aria-label', arialabel);
         } else {
             i.setAttribute('aria-hidden', "true");
@@ -2170,6 +2171,8 @@ class SimpleButton {
             form: null,
             hidden: false,
             tooltip: null,
+            iconprefix: 'cfb',
+            iconprefixsecond: 'cfb',
             tipicon: null,
             tipgravity: 'n',
             classes: [],
@@ -2307,8 +2310,8 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    setIcon(newicon) {
-        let i = IconFactory.icon(newicon);
+    setIcon(newicon, iconprefix) {
+        let i = IconFactory.icon(newicon, "", iconprefix);
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
                 if (i) { i.classList.add(ic); }
@@ -2346,10 +2349,10 @@ class SimpleButton {
         }
 
         if (this.icon) {
-            this.iconactual = IconFactory.icon(this.icon);
+            this.iconactual = IconFactory.icon(this.icon, "", this.iconprefix);
         }
         if (this.secondicon) {
-            this.secondiconactual = IconFactory.icon(this.secondicon);
+            this.secondiconactual = IconFactory.icon(this.secondicon, "", this.iconprefixsecond);
             this.secondiconactual.classList.add('secondicon');
         }
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
@@ -2585,6 +2588,12 @@ class SimpleButton {
     get iconclasses() { return this.config.iconclasses; }
     set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
 
+    get iconprefix() { return this.config.iconprefix; }
+    set iconprefix(iconprefix) { this.config.iconprefix = iconprefix; }
+
+    get iconprefixsecond() { return this.config.iconprefixsecond; }
+    set iconprefixsecond(iconprefixsecond) { this.config.iconprefixsecond = iconprefixsecond; }
+
     get iconside() { return this.config.iconside; }
     set iconside(iconside) { this.config.iconside = iconside; }
 
@@ -2652,9 +2661,13 @@ class ButtonMenu extends SimpleButton {
                 let focused = (document.activeElement === self.button);
                 if ((focused) && (!self.isopen)) {
                     self.open();
+                } else {
+                    self.close();
                 }
                 e.stopPropagation();
             },
+            onopen: null, // Function to execute on open. passed "self" as argument
+            onclose: null, // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
             gravity: 's', // Gravity direction for the menu
             tooltipgravity: 'e', // Gravity direction for the tooltips
@@ -2730,9 +2743,16 @@ class ButtonMenu extends SimpleButton {
 
         ButtonMenu.closeOpen(); // close open menus
 
-        document.body.appendChild(this.menu);
+        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
+            ButtonMenu.activeMenu = this;
+        } else {
+            ButtonMenu.activeMenu = this;
+        }
+
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
+        ButtonMenu.activeMenu.menu.style.opacity = 0;
+        document.body.appendChild(this.menu);
 
         if ((this.items) && (this.items.length > 0)) {
             let items = Array.from(this.menu.querySelector('li'));
@@ -2743,10 +2763,8 @@ class ButtonMenu extends SimpleButton {
 
         this.menu.classList.add(this.gravity);
 
-        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
-            ButtonMenu.activeMenu = this;
-        } else {
-            ButtonMenu.activeMenu = this;
+        if ((this.onopen) && (typeof this.onclose === 'function')) {
+            this.onopen(this);
         }
 
         let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
@@ -2761,14 +2779,15 @@ class ButtonMenu extends SimpleButton {
                 this.setCloseListener();
             }, 200);
         }
+
         window.addEventListener('scroll', this.setPosition, true);
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
+                ButtonMenu.activeMenu.menu.style.opacity = 1;
             }, 50);
         }
-
     }
 
     /**
@@ -2837,6 +2856,11 @@ class ButtonMenu extends SimpleButton {
                 li.setAttribute('tabindex', '-1');
             }
         }
+
+        if ((this.onclose) && (typeof this.onclose === 'function')) {
+            this.onclose(this);
+        }
+
         ButtonMenu.activeMenu = null;
     }
 
@@ -2955,6 +2979,9 @@ class ButtonMenu extends SimpleButton {
         this.menu.setAttribute('aria-hidden', 'true');
         this.menu.setAttribute('tabindex', '0');
         this.menu.classList.add('button-menu');
+        for (let c of this.classes) {
+            this.menu.classList.add(c);
+        }
         this.button.appendChild(this.menu);
         this.menu.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
@@ -2979,6 +3006,12 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get onclose() { return this.config.onclose; }
+    set onclose(onclose) { this.config.onclose = onclose; }
+
+    get onopen() { return this.config.onopen; }
+    set onopen(onopen) { this.config.onopen = onopen; }
 
     get stayopen() { return this.config.stayopen; }
     set stayopen(stayopen) { this.config.stayopen = stayopen; }
@@ -10035,17 +10068,17 @@ class ToolTip {
         this.parent = parent;
         this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
-        this.parent.addEventListener('mouseover', function() {
+        this.parent.addEventListener('mouseover', () => {
             this.open();
         });
-        this.parent.addEventListener('mouseout', function() {
+        this.parent.addEventListener('mouseout', () => {
             clearTimeout(ToolTip.timer);
             this.close();
         });
-        this.parent.addEventListener('focusin', function() {
+        this.parent.addEventListener('focusin', () => {
             this.open();
         });
-        this.parent.addEventListener('focusout', function() {
+        this.parent.addEventListener('focusout', () => {
             clearTimeout(ToolTip.timer);
             this.close();
         });

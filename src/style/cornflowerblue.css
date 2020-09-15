@@ -133,8 +133,12 @@
   --grey-meddark: rgb(var(--grey-meddark-rgb));
   --grey-darker-rgb: 68, 68, 68;
   --grey-darker: rgb(var(--grey-darker-rgb));
+  --grey-onyx-rgb: 51, 51, 51;
+  --grey-onyx: rgb(var(--grey-onyx-rgb));
   --grey-darkest-rgb: 34, 34, 34;
   --grey-darkest: rgb(var(--grey-darkest-rgb));
+  --grey-midnight-rgb: 17, 17, 17;
+  --grey-midnight: rgb(var(--grey-midnight-rgb));
   --black-rgb: 0, 0, 0;
   --black: rgb(var(--black-rgb));
 }
@@ -2542,7 +2546,7 @@ div.colorselector-container ul.colorselector li.radio label {
   align-content: center;
 }
 div.colorselector-container ul.colorselector li.radio label span.swatch {
-  border: 0.1rem dotted var(--grey-darkest);
+  border: 0.1rem solid var(--colors-highlight);
   width: 1.5rem;
   height: 1.5rem;
   display: inline-block;

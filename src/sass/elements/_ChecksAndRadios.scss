@@ -105,7 +105,7 @@ div.colorselector-container {
         align-items: center;
         align-content: center;
         span.swatch {
-          border: .1rem dotted var(--grey-darkest);
+          border: .1rem solid var(--colors-highlight);
           width: 1.5rem;
           height: 1.5rem;
           display: inline-block;
