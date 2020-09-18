@@ -8,6 +8,7 @@ class DialogWindow {
             // Possible keywords:  closebutton, cancelbutton
             content: null,
             onclose: null,
+            screen: document.body,
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // DOM object, will be used if passed before title.
             lightbox: false,    // For image types, if true, open the image in a lightbox
@@ -30,6 +31,7 @@ class DialogWindow {
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             form: { type: 'option', datatype: 'simpleform', description: "If present, displays and renders the form as its content. If not, uses the value of <code>content</code>."},
             actions: { type: 'option', datatype: 'array', description: "An array of actions. Can be SimpleButtons or keyword strings. Only used if form is null (actions exist on SimpleForm objects as well).  Possible keywords:  closebutton, cancelbutton" },
+            screen: { type: "option", datatype: 'domobject', description: "The DOM element to load the dialog into.  Defaults to the body." },
             content: { type: 'option', datatype: 'domobject', description: "This is the content of the dialog.  Ignored if provided a <code>form</code>."},
             header: { type: 'option', datatype: 'domobject', description: "DOM object, will be used if passed before title."},
             title: { type: 'option', datatype: 'string', description: "Adds a title to the dialog if present. header must be null." },
@@ -89,9 +91,9 @@ class DialogWindow {
             this.container.appendChild(this.trailer);
         }
 
-        document.body.appendChild(this.mask);
-        document.body.appendChild(this.container);
-        document.body.classList.add('modalopen');
+        this.screen.appendChild(this.mask);
+        this.screen.appendChild(this.container);
+        this.screen.classList.add('modalopen');
 
         this.escapelistener = (e) => {
             if (e.key === 'Escape') {
@@ -121,8 +123,8 @@ class DialogWindow {
         if (this.prevfocus) {
             this.prevfocus.focus();
         }
-        document.body.classList.remove('modalopen');
-        document.removeEventListener('keyup', this.escapelistener);
+        this.screen.classList.remove('modalopen');
+        this.screen.removeEventListener('keyup', this.escapelistener);
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -341,6 +343,9 @@ class DialogWindow {
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
+
+    get screen() { return this.config.screen; }
+    set screen(screen) { this.config.screen = screen; }
 
     get showclose() { return this.config.showclose; }
     set showclose(showclose) { this.config.showclose = showclose; }

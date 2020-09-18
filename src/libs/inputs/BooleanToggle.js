@@ -7,6 +7,7 @@ class BooleanToggle {
             name: null,
             form: null,
             label: null,
+            passive: false,
             checked: false, // Initial state.
             classes: [], // Extra css classes to apply
             disabled: false, // If true, make the checkbox disabled.
@@ -33,6 +34,7 @@ class BooleanToggle {
             title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             disabled: { type: 'option', datatype: 'boolean', description: "If true, disable the field." },
+            passive: { type: 'option', datatype: 'boolean', description: "Start life in passive mode." },
             onchange: { type: 'option', datatype: 'function', description: "The change handler. Passed (self)." },
             validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
             renderer: { type: 'option', datatype: 'function', description: "A function that can be used to format the in the field in passive mode." },
@@ -80,6 +82,38 @@ class BooleanToggle {
         return valid;
     }
 
+    /**
+     * Switch to 'passive' mode.
+     */
+    pacify() {
+        this.container.classList.add('passive');
+        this.passive = true;
+    }
+
+    /**
+     * Switch from 'passive' mode to 'active' mode.
+     */
+    activate() {
+        this.container.classList.remove('passive');
+        this.passive = false;
+    }
+
+    /**
+     * Toggle the passive/active modes
+     */
+    toggleActivation() {
+        if (this.container.classList.contains('passive')) {
+            this.activate();
+            return;
+        }
+        this.pacify();
+    }
+
+    get passivetext() {
+        if (this.value) { return document.createTextNode('Yes'); }
+        return document.createTextNode('No');
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
@@ -100,11 +134,22 @@ class BooleanToggle {
         if (this.labelside === 'left') {
             this.container.classList.add('leftside');
             this.container.appendChild(this.labelobj);
+            this.container.appendChild(this.passivebox);
             this.container.appendChild(this.toggle);
         } else {
             this.container.appendChild(this.toggle);
             this.container.appendChild(this.labelobj);
+            this.container.appendChild(this.passivebox);
         }
+    }
+
+    /**
+     * Build the passive text box.
+     */
+    buildInactiveBox() {
+        this.passivebox = document.createElement('div');
+        this.passivebox.classList.add('passivebox');
+        this.passivebox.appendChild(this.passivetext);
     }
 
     /**
@@ -260,6 +305,15 @@ class BooleanToggle {
 
     get origval() { return this.config.origval; }
     set origval(origval) { this.config.origval = origval; }
+
+    get passive() { return this.config.passive; }
+    set passive(passive) { this.config.passive = passive; }
+
+    get passivebox() {
+        if (!this._passivebox) { this.buildInactiveBox(); }
+        return this._passivebox;
+    }
+    set passivebox(passivebox) { this._passivebox = passivebox; }
 
     get renderer() { return this.config.renderer; }
     set renderer(renderer) {

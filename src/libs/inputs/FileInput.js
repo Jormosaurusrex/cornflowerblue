@@ -55,7 +55,7 @@ class FileInput extends InputElement {
     }
 
     enable() {
-        this.triggerbox.removeAttr('disabled');
+        this.triggerbox.removeAttribute('disabled');
         this.triggerbox.classList.remove('disabled');
         this.container.classList.remove('disabled');
         this.disabled = false;
@@ -152,6 +152,10 @@ class FileInput extends InputElement {
                     this.triggerbox.classList.remove('files');
                     this.triggerbox.innerHTML = this.placeholder;
                 }
+            }
+            this.validate();
+            if (this.form) {
+                this.form.validate();
             }
             if ((this.onchange) && (typeof this.onchange === 'function')) {
                 this.onchange(event, this);

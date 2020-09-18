@@ -2470,8 +2470,26 @@ div.checkbox-container input[type=checkbox],
 div.checkbox-container input[type=radio] {
   margin: 0;
 }
+div.checkbox-container > div.passivebox {
+  display: none;
+}
 div.checkbox-container.leftside label {
   margin: 0 0.5rem 0 0.5rem;
+}
+div.checkbox-container.passive {
+  justify-content: flex-start;
+}
+div.checkbox-container.passive > input {
+  display: none;
+}
+div.checkbox-container.passive > label {
+  flex-grow: 0;
+  margin: 0 1rem 0 0;
+}
+div.checkbox-container.passive > div.passivebox {
+  flex-grow: 0;
+  width: auto;
+  display: inline-block;
 }
 
 div.radiogroup-container ul.radiogroup {

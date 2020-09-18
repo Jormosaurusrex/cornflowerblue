@@ -79,7 +79,11 @@ class SelectMenu extends InputElement {
     set value(value) {
         this.config.value = value;
         this.triggerbox.value = value;
-        this.passivebox.value = value;
+        this.setPassiveboxValue(value);
+    }
+
+    setPassiveboxValue(value) {
+        this.passivebox.innerHTML = value;
     }
 
     get passivetext() {
@@ -509,10 +513,11 @@ class SelectMenu extends InputElement {
 
             this.selectedoption = def;
 
+
             if (def.unselectoption) {
-                this.passivebox.innerHTML = this.unsettext;
+                this.setPassiveboxValue(this.unsettext);
             } else {
-                this.passivebox.innerHTML = def.label;
+                this.setPassiveboxValue(def.label);
             }
 
             this.close();

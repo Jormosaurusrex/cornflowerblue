@@ -124,7 +124,6 @@ class SimpleForm {
         if (this.validate()) {
             if (this.handler) {
                 this.shade.activate();
-
                 if (typeof this.handler === 'function') {
                     this.handler(this, (results) => {
                         if ((this.handlercallback) && (typeof this.handlercallback === 'function')) {

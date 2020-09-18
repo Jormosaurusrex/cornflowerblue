@@ -2,23 +2,22 @@ class Panel {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null, // The id
-            dataattributes: null, // A dictionary, key: value, which will end up with data-$key = value on elements
-            attributes: null, // A dictionary, key: value, which will end up with $key = value on elements
-            contentid : null, // The contentid
-            headerid : null, // The headerid
-            title: null, // The title
-            content : null, // The content payload
-            style: 'plain', // Various styles that can be applied to the panel.
-                            // - 'plain': simple, spartan, solid.
-                            // - 'invisible: panel behaves as normal but the background is transparent
-            hidden: false, // set to true to hide
-            collapsible: true, // can the panel collapse
+            id : null,
+            dataattributes: null,
+            attributes: null,
+            contentid : null,
+            headerid : null,
+            title: null,
+            content : null,
+            style: 'plain',
+            hidden: false,
+            collapsible: true,
+            stateful: true,
             closeicon: 'chevron-up',
-            minimized: false, // Start minimized
-            classes: [], //Extra css classes to apply,
-            onclose: null, // A function to run to when the panel closes. Passed the self.
-            onopen: null // A function to run to when the panel opens. Passed the self.
+            minimized: false,
+            classes: [],
+            onclose: null,
+            onopen: null
         };
     }
 
@@ -31,6 +30,7 @@ class Panel {
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
             minimized: { type: 'option', datatype: 'boolean', description: "Start collapsed/minimized." },
+            stateful: { type: 'option', datatype: 'boolean', description: "Remember open or closed state. Saves to local storage. Must also have an 'id' set." },
             collapsible: { type: 'option', datatype: 'boolean', description: "Can the panel collapse? If false, minimized is ignored." },
             onclose: { type: 'option', datatype: 'function', description: "A function to run to when the panel closes. Passed the self." },
             onopen: { type: 'option', datatype: 'function', description: "A function to run to when the panel opens. Passed the self as argument." },
@@ -40,15 +40,21 @@ class Panel {
             title: { type: 'option', datatype: 'string', description: "The title to use for the panel." },
             content: { type: 'option', datatype: 'object', description: "The panel content payload." },
             style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain' or 'invisible'." }
-                             // Various styles that can be applied to the panel.
-                            // - 'plain': simple, spartan, solid.
-                            // - 'invisible: panel behaves as normal but the background is transparent
         };
     }
 
     constructor(config) {
         this.config = Object.assign({}, Panel.DEFAULT_CONFIG, config);
+        if (!this.id) { this.stateful = false; } // turn this off; we can't use random ids.
         if (!this.id) { this.id = `panel-${CFBUtils.getUniqueKey(5)}`; }
+
+        let state = localStorage.getItem(`cfb-panel-minimized-${this.id}`);
+        console.log(`${state} :: ${this.minimized}`);
+        if ((state) && (state === 'true')) {
+            this.minimized = true;
+        } else if ((state) && (state === 'false')) {
+            this.minimized = false;
+        }
         if (!this.contentid) { this.contentid = `panel-c-${CFBUtils.getUniqueKey(5)}`; }
         if (!this.headerid) { this.headerid = `panel-h-${CFBUtils.getUniqueKey(5)}`; }
     }
@@ -72,6 +78,7 @@ class Panel {
     open() {
         this.minimized = false;
         this.container.setAttribute('aria-expanded', 'true');
+        localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'false');
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
@@ -83,6 +90,7 @@ class Panel {
     close() {
         this.container.setAttribute('aria-expanded', 'false');
         this.minimized = true;
+        localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'true');
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -108,7 +116,6 @@ class Panel {
      * Build the header.
      */
     buildHeader() {
-
         this.header = document.createElement('h3');
         this.header.classList.add('panelheader');
         if (this.collapsible) {
@@ -161,6 +168,7 @@ class Panel {
         CFBUtils.applyDataAttributes(this.dataattributes, this.container);
 
         this.container.appendChild(this.contentbox);
+
 
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
@@ -259,6 +267,9 @@ class Panel {
 
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }
+
+    get stateful() { return this.config.stateful; }
+    set stateful(stateful) { this.config.stateful = stateful; }
 
     get style() { return this.config.style; }
     set style(style) { this.config.style = style; }

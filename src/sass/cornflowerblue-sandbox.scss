@@ -3,14 +3,15 @@
 
 @import "lib/Mixins";
 @import "lib/Animations";
+@import "lib/Font";
 
-@import "html/Core.scss";
-@import "html/Blocks.scss";
+@import "html/Core";
+@import "html/Blocks";
 @import "html/Form";
-@import "html/Headers.scss";
-@import "html/Links.scss";
-@import "html/Lists.scss";
-@import "html/Texts.scss";
+@import "html/Headers";
+@import "html/Links";
+@import "html/Lists";
+@import "html/Texts";
 
 @import "elements/Buttons";
 @import "elements/ChecksAndRadios";
@@ -27,10 +28,3 @@
 @import "components/ProgressMeter";
 @import "components/SearchControl";
 @import "components/TabBar";
-
-// The Datagrid, which is multiple files
-@import "components/grid/DataGrid";
-@import "components/grid/ColumnConfigurator";
-@import "components/grid/FilterConfigurator";
-
-
