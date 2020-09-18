@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-17
+/*! Cornflower Blue - v0.1.1 - 2020-09-18
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3303,7 +3303,6 @@ class Panel {
         if (!this.id) { this.id = `panel-${CFBUtils.getUniqueKey(5)}`; }
 
         let state = localStorage.getItem(`cfb-panel-minimized-${this.id}`);
-        console.log(`${state} :: ${this.minimized}`);
         if ((state) && (state === 'true')) {
             this.minimized = true;
         } else if ((state) && (state === 'false')) {
@@ -12021,7 +12020,7 @@ class BooleanToggle {
             if (this.form) { this.form.validate(); }
 
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(me);
+                this.onchange(this);
             }
         });
 

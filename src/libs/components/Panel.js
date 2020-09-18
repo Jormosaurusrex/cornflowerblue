@@ -49,7 +49,6 @@ class Panel {
         if (!this.id) { this.id = `panel-${CFBUtils.getUniqueKey(5)}`; }
 
         let state = localStorage.getItem(`cfb-panel-minimized-${this.id}`);
-        console.log(`${state} :: ${this.minimized}`);
         if ((state) && (state === 'true')) {
             this.minimized = true;
         } else if ((state) && (state === 'false')) {

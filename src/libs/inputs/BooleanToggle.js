@@ -186,7 +186,7 @@ class BooleanToggle {
             if (this.form) { this.form.validate(); }
 
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(me);
+                this.onchange(this);
             }
         });
 
