@@ -274,7 +274,7 @@ class InputElement {
     updateCounter() {
         if (!this.counter) { return; }
 
-        let ctext = "";
+        let ctext;
         if (this.counter === 'limit') {
             ctext = TextFactory.get('input-counter-limit', this.value.length, this.maxlength);
         } else if (this.counter === 'sky') {
@@ -313,7 +313,7 @@ class InputElement {
     disable() {
         this.input.setAttribute('disabled', 'true');
         this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
+        if (this.hascontainer) { this.container.classList.add('disabled'); }
     }
 
     /**
@@ -322,13 +322,14 @@ class InputElement {
     enable() {
         this.input.removeAttribute('disabled');
         this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
+        if (this.hascontainer) { this.container.classList.remove('disabled'); }
     }
 
     /**
      * Switch to 'passive' mode.
      */
     pacify() {
+        if (!this.hascontainer) { return; }
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -337,6 +338,7 @@ class InputElement {
      * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
+        if (!this.hascontainer) { return; }
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -345,6 +347,7 @@ class InputElement {
      * Toggle the passive/active modes
      */
     toggleActivation() {
+        if (!this.hascontainer) { return; }
         if (this.container.classList.contains('passive')) {
             this.activate();
             return;
@@ -491,9 +494,21 @@ class InputElement {
                 this.input.classList.add(c);
             }
         }
-        this.input.addEventListener('change', (e) => {
+        this.input.addEventListener('change', () => {
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(me);
+                this.onchange(this);
+            }
+        });
+
+        this.input.addEventListener('paste', (e) => {
+            this.input.removeAttribute('aria-invalid');
+            if (this.hascontainer) {
+                this.updateCounter();
+            }
+            this.touched = true; // set self as touched.
+            if ((this.form) && (this.required) // If this is the only thing required, tell the form.
+                && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
+                if (this.form) { this.form.validate(); }
             }
         });
 
@@ -516,18 +531,16 @@ class InputElement {
                         this.helpbutton.closeTooltip();
                     }
                 }
-
                 if ((this.value) && (this.value.length > 0)) {
                     this.container.classList.add('filled');
                 } else {
                     this.container.classList.remove('filled');
                 }
                 if ((this.form) && (this.required) // If this is the only thing required, tell the form.
-                    && ((this.input.value.length === 0) || (this.input.value.length === 1))) { // Only these two lengths matter
+                    && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
                     if (this.form) { this.form.validate(); }
                 }
             }
-
             if ((e.key === 'Enter') // Return key
                 && (this.onreturn) && (typeof this.onreturn === 'function')) {
                 e.preventDefault();
@@ -538,6 +551,7 @@ class InputElement {
             }
         });
         this.input.addEventListener('focusin', (e) => {
+
             if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
                 this.input.setAttribute('placeholder', this.placeholder);
             }
@@ -608,7 +622,6 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildLabel() {
-
 
         if (!this.label) { return null; }
 
@@ -891,8 +904,10 @@ class InputElement {
     set value(value) {
         this.config.value = value;
         this.input.value = value;
-        this.passivebox.value = value;
-        this.validate();
+        if (this.hascontainer) {
+            this.passivebox.value = value;
+            this.validate();
+        }
     }
 
     get warnings() { return this._warnings; }

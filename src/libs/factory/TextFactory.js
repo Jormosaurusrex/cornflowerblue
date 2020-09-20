@@ -103,7 +103,7 @@ class TextFactory {
             "numberinput-placeholder-smaller_than_y": 'Enter a number smaller than $1',
             "numbers": 'Numbers',
             "open_menu": 'Open menu',
-            "passwordchanger-currentpw-help": 'This is your current password. We need to confirm that you are who you are.',
+            "passwordchanger-currentpw-help": 'This is your current password.',
             "passwordchanger-currentpw-placeholder": 'Your current password',
             "passwordchanger-error-cannot_be_used_as_pw": 'This cannot be used as a password.',
             "passwordchanger-error-passwords_must_match": 'Passwords must match.',

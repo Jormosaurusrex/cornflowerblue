@@ -28,6 +28,7 @@ class GridField {
             separator: ', ',   // Used when rendering array values
             placeholder: null, // The placeholder to use in the field
             preamble: null,
+            maxlength: null,
             lightbox: true,    // For image types, if true, open the image in a lightbox
             minnumber: null,   // The minnumber to use in the field
             maxnumber: null,   // The maxnumber to use in the field
@@ -35,7 +36,7 @@ class GridField {
             resize: false,     // Whether or not to allow resizing of the column (default: false)
             mute: false,       // If true, apply to elements.
             required: false,   // If true, elements drawn from this will be required.
-
+            counter: null,
             description: null, // A string that describes the data in the column
             classes: [],       // Additional classes to apply to cells of this field
             filterable: false, // Is the field filterable?
@@ -231,6 +232,8 @@ class GridField {
                 help: this.description,
                 placeholder: this.placeholder,
                 mute: this.mute,
+                counter: this.counter,
+                maxlength: this.maxlength,
                 required: this.required,
                 preamble: this.preamble,
                 maxnumber: this.maxnumber,
@@ -349,6 +352,9 @@ class GridField {
     get classes() { return this.config.classes ; }
     set classes(classes) { this.config.classes = classes; }
 
+    get counter() { return this.config.counter; }
+    set counter(counter) { this.config.counter = counter; }
+
     get description() { return this.config.description ; }
     set description(description) { this.config.description = description; }
 
@@ -366,6 +372,9 @@ class GridField {
 
     get lightbox() { return this.config.lightbox ; }
     set lightbox(lightbox) { this.config.lightbox = lightbox; }
+
+    get maxlength() { return this.config.maxlength ; }
+    set maxlength(maxlength) { this.config.maxlength = maxlength; }
 
     get maxnumber() { return this.config.maxnumber ; }
     set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }

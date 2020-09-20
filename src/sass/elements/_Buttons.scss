@@ -516,9 +516,10 @@ a.button {
   }
   >span.badge {
     position: absolute;
-    left: .1rem;
-    bottom: .1rem;
+    left: .5rem;
+    bottom: .5rem;
     background-color: var(--red);
+    border: .1rem solid var(--colors-highlight);
     color: var(--colors-highlight);
     border-radius: 50%;
     width: 1.5rem;
