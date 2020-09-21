@@ -733,6 +733,7 @@ form.button-menu.noactions div.header {
 }
 
 div.selectmenu-menu {
+  --image-width: 2rem;
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   animation: cfb-fadein 0.5s;
@@ -771,6 +772,19 @@ div.selectmenu-menu ul.selectmenu li {
 }
 div.selectmenu-menu ul.selectmenu li > input[type=radio] {
   display: none;
+}
+div.selectmenu-menu ul.selectmenu li div.imagesel {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+div.selectmenu-menu ul.selectmenu li div.imagesel img {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  width: var(--image-width);
+  min-width: var(--image-width);
+  max-width: var(--image-width);
 }
 div.selectmenu-menu ul.selectmenu li:nth-child(even) {
   background-color: rgba(var(--canvas-color-secondary-rgb), 0.8);

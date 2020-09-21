@@ -263,8 +263,6 @@ class GridField {
                 e = new SelectMenu(config);
                 break;
             case 'boolean':
-                delete config.value;
-                config.checked = value;
                 e = new BooleanToggle(config);
                 break;
             case 'timezone':
@@ -274,7 +272,7 @@ class GridField {
                 e = new URIInput(config);
                 break;
             case 'imageurl':
-                e = new URIInput(config);
+                e = new ImageSelector(config);
                 break;
             case 'email':
                 e = new EmailInput(config);

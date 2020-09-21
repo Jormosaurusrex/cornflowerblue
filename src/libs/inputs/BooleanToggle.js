@@ -48,7 +48,7 @@ class BooleanToggle {
     constructor(config) {
         if (!config) { config = {}; }
         this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
-        
+
         if ((!this.arialabel) && (this.label)) { // munch aria label.
             this.arialabel = this.label;
         }
@@ -193,8 +193,9 @@ class BooleanToggle {
         if (this.disabled) { this.disable(); }
         if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
 
-        if (this.checked) {
+        if ((this.checked) || (this.config.value)) {
             this.toggle.checked = true;
+            this.checked = true;
             this.toggle.setAttribute('aria-checked', 'true');
         }
     }
@@ -335,9 +336,9 @@ class BooleanToggle {
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 
-    get value() { return this.config.value; }
+    get value() { return this.checked; }
     set value(value) {
-        this.input.attr('value', value);
+        this.toggle.setAttribute('value', value);
         this.config.value = value;
     }
 

@@ -77,6 +77,7 @@ module.exports = function(grunt) {
                     'src/libs/inputs/TextArea.js',
                     'src/libs/inputs/URIInput.js',
 
+                    'src/libs/inputs/menu/ImageSelector.js',
                     'src/libs/inputs/menu/CountryMenu.js',
                     'src/libs/inputs/menu/StateMenu.js',
                     'src/libs/inputs/menu/TimezoneMenu.js'

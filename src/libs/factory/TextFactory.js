@@ -133,6 +133,7 @@ class TextFactory {
             "skip_to_content": 'Skip to content',
             "statemenu_select": 'Select state or province',
             "success": 'Success',
+            "select_image": 'Select Image',
             "timezone_select": 'Select timezone',
             "toggle_menu": 'Toggle menu',
             "uppercase": 'Uppercase',

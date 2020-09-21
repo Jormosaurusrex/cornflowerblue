@@ -536,7 +536,7 @@ class InputElement {
                 } else {
                     this.container.classList.remove('filled');
                 }
-                if ((this.form) && (this.required) // If this is the only thing required, tell the form.
+                if ((this.form) // If this is the only thing required, tell the form.
                     && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
                     if (this.form) { this.form.validate(); }
                 }

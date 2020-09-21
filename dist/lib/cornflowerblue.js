@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-18
+/*! Cornflower Blue - v0.1.1 - 2020-09-21
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2052,7 +2052,7 @@ class TextFactory {
             "numberinput-placeholder-smaller_than_y": 'Enter a number smaller than $1',
             "numbers": 'Numbers',
             "open_menu": 'Open menu',
-            "passwordchanger-currentpw-help": 'This is your current password. We need to confirm that you are who you are.',
+            "passwordchanger-currentpw-help": 'This is your current password.',
             "passwordchanger-currentpw-placeholder": 'Your current password',
             "passwordchanger-error-cannot_be_used_as_pw": 'This cannot be used as a password.',
             "passwordchanger-error-passwords_must_match": 'Passwords must match.',
@@ -2082,6 +2082,7 @@ class TextFactory {
             "skip_to_content": 'Skip to content',
             "statemenu_select": 'Select state or province',
             "success": 'Success',
+            "select_image": 'Select Image',
             "timezone_select": 'Select timezone',
             "toggle_menu": 'Toggle menu',
             "uppercase": 'Uppercase',
@@ -7018,6 +7019,7 @@ class GridField {
             separator: ', ',   // Used when rendering array values
             placeholder: null, // The placeholder to use in the field
             preamble: null,
+            maxlength: null,
             lightbox: true,    // For image types, if true, open the image in a lightbox
             minnumber: null,   // The minnumber to use in the field
             maxnumber: null,   // The maxnumber to use in the field
@@ -7025,7 +7027,7 @@ class GridField {
             resize: false,     // Whether or not to allow resizing of the column (default: false)
             mute: false,       // If true, apply to elements.
             required: false,   // If true, elements drawn from this will be required.
-
+            counter: null,
             description: null, // A string that describes the data in the column
             classes: [],       // Additional classes to apply to cells of this field
             filterable: false, // Is the field filterable?
@@ -7221,6 +7223,8 @@ class GridField {
                 help: this.description,
                 placeholder: this.placeholder,
                 mute: this.mute,
+                counter: this.counter,
+                maxlength: this.maxlength,
                 required: this.required,
                 preamble: this.preamble,
                 maxnumber: this.maxnumber,
@@ -7247,11 +7251,10 @@ class GridField {
                 for (let o of this.values) {
                     config.options.push({ label: o.label, value: o.value, checked: o.default });
                 }
+                console.log(config);
                 e = new SelectMenu(config);
                 break;
             case 'boolean':
-                delete config.value;
-                config.checked = value;
                 e = new BooleanToggle(config);
                 break;
             case 'timezone':
@@ -7339,6 +7342,9 @@ class GridField {
     get classes() { return this.config.classes ; }
     set classes(classes) { this.config.classes = classes; }
 
+    get counter() { return this.config.counter; }
+    set counter(counter) { this.config.counter = counter; }
+
     get description() { return this.config.description ; }
     set description(description) { this.config.description = description; }
 
@@ -7356,6 +7362,9 @@ class GridField {
 
     get lightbox() { return this.config.lightbox ; }
     set lightbox(lightbox) { this.config.lightbox = lightbox; }
+
+    get maxlength() { return this.config.maxlength ; }
+    set maxlength(maxlength) { this.config.maxlength = maxlength; }
 
     get maxnumber() { return this.config.maxnumber ; }
     set maxnumber(maxnumber) { this.config.maxnumber = maxnumber; }
@@ -10567,7 +10576,7 @@ class InputElement {
     updateCounter() {
         if (!this.counter) { return; }
 
-        let ctext = "";
+        let ctext;
         if (this.counter === 'limit') {
             ctext = TextFactory.get('input-counter-limit', this.value.length, this.maxlength);
         } else if (this.counter === 'sky') {
@@ -10606,7 +10615,7 @@ class InputElement {
     disable() {
         this.input.setAttribute('disabled', 'true');
         this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
+        if (this.hascontainer) { this.container.classList.add('disabled'); }
     }
 
     /**
@@ -10615,13 +10624,14 @@ class InputElement {
     enable() {
         this.input.removeAttribute('disabled');
         this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
+        if (this.hascontainer) { this.container.classList.remove('disabled'); }
     }
 
     /**
      * Switch to 'passive' mode.
      */
     pacify() {
+        if (!this.hascontainer) { return; }
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -10630,6 +10640,7 @@ class InputElement {
      * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
+        if (!this.hascontainer) { return; }
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -10638,6 +10649,7 @@ class InputElement {
      * Toggle the passive/active modes
      */
     toggleActivation() {
+        if (!this.hascontainer) { return; }
         if (this.container.classList.contains('passive')) {
             this.activate();
             return;
@@ -10784,9 +10796,21 @@ class InputElement {
                 this.input.classList.add(c);
             }
         }
-        this.input.addEventListener('change', (e) => {
+        this.input.addEventListener('change', () => {
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(me);
+                this.onchange(this);
+            }
+        });
+
+        this.input.addEventListener('paste', (e) => {
+            this.input.removeAttribute('aria-invalid');
+            if (this.hascontainer) {
+                this.updateCounter();
+            }
+            this.touched = true; // set self as touched.
+            if ((this.form) && (this.required) // If this is the only thing required, tell the form.
+                && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
+                if (this.form) { this.form.validate(); }
             }
         });
 
@@ -10809,18 +10833,16 @@ class InputElement {
                         this.helpbutton.closeTooltip();
                     }
                 }
-
                 if ((this.value) && (this.value.length > 0)) {
                     this.container.classList.add('filled');
                 } else {
                     this.container.classList.remove('filled');
                 }
-                if ((this.form) && (this.required) // If this is the only thing required, tell the form.
-                    && ((this.input.value.length === 0) || (this.input.value.length === 1))) { // Only these two lengths matter
+                if ((this.form) // If this is the only thing required, tell the form.
+                    && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
                     if (this.form) { this.form.validate(); }
                 }
             }
-
             if ((e.key === 'Enter') // Return key
                 && (this.onreturn) && (typeof this.onreturn === 'function')) {
                 e.preventDefault();
@@ -10831,6 +10853,7 @@ class InputElement {
             }
         });
         this.input.addEventListener('focusin', (e) => {
+
             if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
                 this.input.setAttribute('placeholder', this.placeholder);
             }
@@ -10901,7 +10924,6 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildLabel() {
-
 
         if (!this.label) { return null; }
 
@@ -11184,8 +11206,10 @@ class InputElement {
     set value(value) {
         this.config.value = value;
         this.input.value = value;
-        this.passivebox.value = value;
-        this.validate();
+        if (this.hascontainer) {
+            this.passivebox.value = value;
+            this.validate();
+        }
     }
 
     get warnings() { return this._warnings; }
@@ -11882,7 +11906,7 @@ class BooleanToggle {
     constructor(config) {
         if (!config) { config = {}; }
         this.config = Object.assign({}, BooleanToggle.DEFAULT_CONFIG, config);
-        
+
         if ((!this.arialabel) && (this.label)) { // munch aria label.
             this.arialabel = this.label;
         }
@@ -12027,8 +12051,9 @@ class BooleanToggle {
         if (this.disabled) { this.disable(); }
         if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
 
-        if (this.checked) {
+        if ((this.checked) || (this.config.value)) {
             this.toggle.checked = true;
+            this.checked = true;
             this.toggle.setAttribute('aria-checked', 'true');
         }
     }
@@ -12169,9 +12194,9 @@ class BooleanToggle {
     get validator() { return this.config.validator; }
     set validator(validator) { this.config.validator = validator; }
 
-    get value() { return this.config.value; }
+    get value() { return this.checked; }
     set value(value) {
-        this.input.attr('value', value);
+        this.toggle.setAttribute('value', value);
         this.config.value = value;
     }
 
@@ -13468,6 +13493,52 @@ class URIInput extends TextInput {
 
 }
 window.URLInput = URIInput;
+class ImageSelector extends SelectMenu {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            unselectedtext: TextFactory.get('select_image')
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        if (!config.classes) { config.classes = []; }
+        config.classes.push('imageselector-container');
+        config = Object.assign({}, ImageSelector.DEFAULT_CONFIG, config);
+        config.options = new ImageLibrary().options;
+        super(config);
+    }
+
+    get passivetext() {
+        let i = document.createElement('img');
+        i.setAttribute('src', this.config.value);
+        return i;
+    }
+
+    set value(value) {
+        this.config.value = value;
+        this.triggerbox.value = value;
+        this.setPassiveboxValue(value);
+    }
+
+    setPassiveboxValue(value) {
+        this.passivebox.setAttribute('src', value);
+    }
+
+    drawPayload(def) {
+        let div = document.createElement('div');
+        div.classList.add('imagesel');
+        if (def.url) {
+            let img = document.createElement('img');
+            img.setAttribute('src', def.url);
+            div.appendChild(img);
+        }
+        div.appendChild(super.drawPayload(def));
+        return div;
+    }
+}
+window.ImageSelector = ImageSelector;
 class CountryMenu extends SelectMenu {
 
     static get DEFAULT_CONFIG() {

@@ -1,5 +1,6 @@
 // Select menu drop-downs
 div.selectmenu-menu {
+  --image-width: 2rem;
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   animation: cfb-fadein .5s;
@@ -35,6 +36,19 @@ div.selectmenu-menu {
       padding: var(--input-default-padding);
       > input[type='radio'] {
         display: none;
+      }
+      div.imagesel {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
+        img {
+          margin: .5rem .5rem .5rem 0;
+          width: var(--image-width);
+          min-width: var(--image-width);
+          max-width: var(--image-width);
+        }
       }
       &:nth-child(even) {
         background-color: rgba(var(--canvas-color-secondary-rgb), .8);

@@ -49,6 +49,13 @@ div.select-container {
     }
 
   }
+  &.imageselector-container {
+    >div.passivebox {
+      >img {
+        width: 100%;
+      }
+    }
+  }
   &.disabled {
     label {
       text-shadow: none;
