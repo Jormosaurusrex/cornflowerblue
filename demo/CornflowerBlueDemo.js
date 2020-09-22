@@ -567,18 +567,18 @@ class CornflowerBlueDemo {
             hidden: false,
             nodupe: true,
             classes: ['nowrap'],
-            values: [
-                { key: "boolean", value: "Boolean" },
-                { key: "string", value: "String" },
-                { key: "stringarray", value: "String Array" },
-                { key: "dictionary", value: "Dictionary" },
-                { key: "function", value: "Function" },
-                { key: "number", value: "Number" },
-                { key: "object", value: "Object" },
-                { key: "domobject", value: "DOM Object" },
-                { key: "enumeration", value: "Enumeration" },
-                { key: "array", value: "Array" },
-                { key: "simpleform", value: "SimpleForm" }
+            options: [
+                { value: "boolean", label: "Boolean" },
+                { value: "string", label: "String" },
+                { value: "stringarray", label: "String Array" },
+                { value: "dictionary", label: "Dictionary" },
+                { value: "function", label: "Function" },
+                { value: "number", label: "Number" },
+                { value: "object", label: "Object" },
+                { value: "domobject", label: "DOM Object" },
+                { value: "enumeration", label: "Enumeration" },
+                { value: "array", label: "Array" },
+                { value: "simpleform", label: "SimpleForm" }
             ],
             description: "The datatype of this option",
         }));
@@ -1005,38 +1005,6 @@ class CornflowerBlueDemo {
             ],
             source: 'demo/data/lz.json'
         });
-
-        /*
-        let dgsimple = new DataGrid({
-            id: 'cfb-demo-grid-lz',
-            title: 'Songs by Led Zeppelin',
-            elementname: 'Song',
-            fields: new LZSong().fields,
-            //minimized: true,
-            //data: this.getLZDiscograpy(),
-            rowactions: [
-                {
-                    label: 'Edit',
-                    icon: 'pencil',
-                    tooltip: 'Edit this item.',
-                    type: 'edit'
-                },
-                {
-                    label: 'Duplicate',
-                    icon: 'duplicate',
-                    tooltip: 'Duplicate this item.',
-                    type: 'duplicate'
-                },
-                {
-                    label: 'Delete',
-                    icon: 'trashcan',
-                    tooltip: 'Delete this item.',
-                    type: 'delete'
-                }
-            ],
-            source: 'demo/data/lz.json'
-        });
-         */
 
         document.getElementById('datagrid-basic').appendChild(dg.container);
 

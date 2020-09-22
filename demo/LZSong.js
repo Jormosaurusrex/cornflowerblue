@@ -66,7 +66,7 @@ class LZSong extends BusinessObject {
                     nodupe: true,
                     filterable: true,
                     type: "stringarray",
-                    separator: " &middot; ",
+                    separator: " · ",
                     description: "A list of the song's writers.",
                     classes: ['smaller']
                 }),
@@ -76,9 +76,9 @@ class LZSong extends BusinessObject {
                     filterable: true,
                     description: "The record label the album was released by.",
                     type: "enumeration",
-                    values: [
-                        { key: 'Atlantic', value: 'Atlantic', default: true },
-                        { key: 'Swan Song', value: 'Swan Song', default: true }
+                    options: [
+                        { value: 'Atlantic', label: 'Atlantic', default: true },
+                        { value: 'Swan Song', label: 'Swan Song' }
                     ]
                 }),
                 new GridField({

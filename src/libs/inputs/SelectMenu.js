@@ -404,7 +404,6 @@ class SelectMenu extends InputElement {
             }
             this.options.unshift(unsel);
         }
-
         for (let opt of this.options) {
             if ((this.origval) && (this.origval === opt.value)) {
                 opt.checked = true;

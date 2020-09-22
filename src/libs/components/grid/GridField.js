@@ -20,11 +20,9 @@ class GridField {
                                //   - stringarray
                                //   - paragraph
                                //   - enumeration
-            values: null,      // An array of option values for an enumeration data type. Ignored if not
+            options: null,     // An array of option values for an enumeration data type. Ignored if not
                                // an enumeration
-                               // [
-                               //   { label: "Label to show", value: "v", default: false }
-                               //  ]
+                               // { label: "Label to show", value: "v", checked: true }
             separator: ', ',   // Used when rendering array values
             placeholder: null, // The placeholder to use in the field
             preamble: null,
@@ -184,7 +182,7 @@ class GridField {
                         if (Array.isArray(d)) {
                             return document.createTextNode(d.join(this.separator));
                         }
-                        return d;
+                        return document.createTextNode(d);
                     }
                 }
                 break;
@@ -205,10 +203,10 @@ class GridField {
      */
     getValue(key) {
         let value;
-        if ((this.values) && (this.values.length > 0)) {
-            for (let def of this.values) {
-                if (def['key'] === key) {
-                    value = def['value'];
+        if ((this.options) && (this.options.length > 0)) {
+            for (let def of this.options) {
+                if (def['value'] === key) {
+                    value = def['label'];
                     break;
                 }
             }
@@ -233,6 +231,7 @@ class GridField {
                 placeholder: this.placeholder,
                 mute: this.mute,
                 counter: this.counter,
+                options: this.options,
                 maxlength: this.maxlength,
                 required: this.required,
                 preamble: this.preamble,
@@ -256,10 +255,6 @@ class GridField {
                 e = new DateInput(config);
                 break;
             case 'enumeration':
-                config.options = [];
-                for (let o of this.values) {
-                    config.options.push({ label: o.label, value: o.value, checked: o.default });
-                }
                 e = new SelectMenu(config);
                 break;
             case 'boolean':
@@ -272,6 +267,9 @@ class GridField {
                 e = new URIInput(config);
                 break;
             case 'imageurl':
+                e = new URIInput(config);
+                break;
+            case 'image':
                 e = new ImageSelector(config);
                 break;
             case 'email':
@@ -371,6 +369,9 @@ class GridField {
     get lightbox() { return this.config.lightbox ; }
     set lightbox(lightbox) { this.config.lightbox = lightbox; }
 
+    get options() { return this.config.options ; }
+    set options(options) { this.config.options = options; }
+
     get maxlength() { return this.config.maxlength ; }
     set maxlength(maxlength) { this.config.maxlength = maxlength; }
 
@@ -417,9 +418,6 @@ class GridField {
 
     get type() { return this.config.type ; }
     set type(type) { this.config.type = type; }
-
-    get values() { return this.config.values ; }
-    set values(values) { this.config.values = values; }
 
 }
 window.GridField = GridField;
