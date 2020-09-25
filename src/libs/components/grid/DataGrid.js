@@ -759,7 +759,9 @@ class DataGrid extends Panel {
      * @param callback (optional) do this instead of Appending data. Takes data as an argument
      */
     fetchData(url=this.source, callback) {
-        this.activitynotifier.removeAttribute('aria-hidden');
+        if (this.activitynotifier) {
+            this.activitynotifier.removeAttribute('aria-hidden');
+        }
         fetch(url, {
             method: this.sourcemethod,
             /*
@@ -785,7 +787,9 @@ class DataGrid extends Panel {
                 } else {
                     this.update(data);
                 }
-                this.activitynotifier.setAttribute('aria-hidden', 'true');
+                if (this.activitynotifier) {
+                    this.activitynotifier.setAttribute('aria-hidden', 'true');
+                }
             })
             .catch(err => {
                 console.error(`Error while fetching data from ${url}`);

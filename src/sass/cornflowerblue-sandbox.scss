@@ -28,3 +28,9 @@
 @import "components/ProgressMeter";
 @import "components/SearchControl";
 @import "components/TabBar";
+
+// The Datagrid, which is multiple files
+@import "components/grid/DataGrid";
+@import "components/grid/ColumnConfigurator";
+@import "components/grid/FilterConfigurator";
+

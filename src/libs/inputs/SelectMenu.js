@@ -402,8 +402,13 @@ class SelectMenu extends InputElement {
                 unsel.checked = true;
                 this.selectedoption = unsel;
             }
-            this.options.unshift(unsel);
+            if (this.options) {
+                this.options.unshift(unsel);
+            } else {
+                console.log("NO OPTIONS");
+            }
         }
+
         for (let opt of this.options) {
             if ((this.origval) && (this.origval === opt.value)) {
                 opt.checked = true;

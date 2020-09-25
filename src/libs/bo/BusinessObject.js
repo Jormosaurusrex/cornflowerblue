@@ -9,6 +9,7 @@ class BusinessObject {
                                   // Set to -1 to disable heartbeat
             dataprocessor: null,
             sourcemethod: 'GET', // the method to get the source from.
+            sourceargs: null, // arguments to send.
             sortfunction: (a, b) => {
                 if (a.name > b.name) { return 1 }
                 if (a.name < b.name) { return -1 }
@@ -251,3 +252,4 @@ class BusinessObject {
     set updating(updating) { this._updating = updating; }
 
 }
+window.BusinessObject = BusinessObject;

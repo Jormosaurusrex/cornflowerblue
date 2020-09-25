@@ -20,7 +20,7 @@ class GridField {
                                //   - stringarray
                                //   - paragraph
                                //   - enumeration
-            options: null,     // An array of option values for an enumeration data type. Ignored if not
+            options: [],     // An array of option values for an enumeration data type. Ignored if not
                                // an enumeration
                                // { label: "Label to show", value: "v", checked: true }
             separator: ', ',   // Used when rendering array values

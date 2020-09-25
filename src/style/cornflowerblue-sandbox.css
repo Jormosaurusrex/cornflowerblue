@@ -5391,4 +5391,654 @@ div.tablist-container.responsive[aria-expanded=true] ul.tabbar > li ul.submenu:b
   }
 }
 
+div.datagrid-container {
+  --vert-padding: 1rem;
+  --side-padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  overflow: visible;
+  padding: 0;
+  background-color: var(--canvas-color-primary);
+}
+div.datagrid-container h3 {
+  --panel-text-color: var(--colors-standard);
+  background-color: var(--canvas-color-secondary);
+}
+div.datagrid-container div.grid-info,
+div.datagrid-container div.grid-filterinfo {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: flex-end;
+  opacity: 1;
+  transition: height, max-height, min-height, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+div.datagrid-container div.grid-info {
+  z-index: 900;
+  flex-grow: 1;
+  height: 3rem;
+  min-height: 3rem;
+  align-content: flex-end;
+}
+div.datagrid-container div.grid-info div.countbox {
+  margin-right: auto;
+  white-space: nowrap;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+div.datagrid-container div.grid-info div.countbox label {
+  display: inline-block;
+  margin: 0 0.5rem 0 0;
+}
+div.datagrid-container div.grid-info div.countbox div.activity {
+  margin-left: 0.5rem;
+  color: var(--focus-color-half);
+}
+div.datagrid-container div.grid-info div.countbox div.activity > span.icon {
+  display: inline-block;
+  animation: cfb-localspin 2s infinite linear;
+}
+div.datagrid-container div.grid-info div.countbox div.activity[aria-hidden=true] {
+  display: none;
+}
+div.datagrid-container div.grid-info button:last-child {
+  margin-right: 0;
+}
+@media (max-width: 599px) {
+  div.datagrid-container div.grid-info {
+    flex-wrap: wrap;
+    height: unset;
+    min-height: unset;
+    padding: 0.5rem 0;
+  }
+  div.datagrid-container div.grid-info div.searchcontrol {
+    order: -1;
+    margin-bottom: 0.5rem;
+    margin-left: 0;
+    align-self: center;
+  }
+  div.datagrid-container div.grid-info div.searchcontrol input {
+    width: auto;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    padding: var(--input-default-padding);
+    background-color: var(--canvas-color-secondary);
+  }
+  div.datagrid-container div.grid-info div.searchcontrol button {
+    --button-border-color: var(--colors-affordance);
+    box-shadow: inset -0.1em -0.1em 0 0 var(--colors-affordance), inset 0.1em -0.1em 0 0 var(--colors-affordance), inset -0.1em 0.1em 0 0 var(--colors-affordance), inset 0.1em 0.1em 0 0 var(--colors-affordance);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  div.datagrid-container div.grid-info button {
+    margin: 0;
+    padding: 0.6rem;
+  }
+  div.datagrid-container div.grid-info button.filter span.icon {
+    margin: 0;
+  }
+  div.datagrid-container div.grid-info button.filter span.text {
+    display: none;
+  }
+}
+div.datagrid-container div.grid-filterinfo {
+  display: none;
+  background-color: var(--canvas-color-secondary);
+}
+div.datagrid-container div.grid-filterinfo label {
+  margin: 0 0.5rem 0 0;
+}
+div.datagrid-container div.grid-filterinfo div.grid-filtertags {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+div.datagrid-container div.grid-filterinfo div.grid-filtertags button.tagbutton {
+  margin: 0.5rem;
+}
+div.datagrid-container div.grid-filterinfo[aria-expanded=true] {
+  display: flex;
+}
+div.datagrid-container div.grid-wrapper {
+  overflow: auto;
+  position: relative;
+  width: 100%;
+  max-height: 30rem;
+  height: auto;
+  flex-grow: 2;
+  transition: height, max-height, min-height;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+div.datagrid-container div.grid-wrapper table.grid {
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+}
+div.datagrid-container div.grid-wrapper.shaded {
+  overflow: hidden;
+}
+div.datagrid-container div.grid-wrapper.shaded table.grid {
+  filter: blur(3px);
+}
+div.datagrid-container table.grid {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border-spacing: 0;
+  position: relative;
+  z-index: 800;
+}
+div.datagrid-container table.grid > thead tr th {
+  cursor: pointer;
+  padding: 0;
+  color: var(--colors-standard);
+  background-color: var(--canvas-color-tertiary);
+  text-align: left;
+  font-weight: normal;
+  position: sticky;
+  vertical-align: top;
+  top: 0;
+  z-index: 105;
+}
+div.datagrid-container table.grid > thead tr th div.th {
+  padding: 0.75em 1.5em 0.75em 1em;
+  position: relative;
+  white-space: nowrap;
+}
+div.datagrid-container table.grid > thead tr th div.th:before {
+  position: absolute;
+  right: 0.5em;
+  margin: 0;
+  flex-direction: column;
+  font-size: 0.7em;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  color: var(--colors-standard);
+  opacity: 0;
+}
+div.datagrid-container table.grid > thead tr th:focus, div.datagrid-container table.grid > thead tr th:active, div.datagrid-container table.grid > thead tr th.focus, div.datagrid-container table.grid > thead tr th.active {
+  color: var(--colors-affordance);
+  text-shadow: var(--text-shadow);
+  background-color: var(--canvas-color-secondary);
+  outline: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid > thead tr th:hover {
+    outline: none;
+    text-decoration: underline;
+  }
+  div.datagrid-container table.grid > thead tr th:hover:not(.mechanical) {
+    color: var(--colors-text-hot);
+    text-shadow: var(--text-shadow);
+    background-color: var(--colors-affordance);
+  }
+  div.datagrid-container table.grid > thead tr th:hover:not(.mechanical) div.th:before {
+    color: var(--colors-text-hot);
+  }
+}
+div.datagrid-container table.grid > thead tr th:active, div.datagrid-container table.grid > thead tr th.active {
+  text-decoration: none;
+  box-shadow: none;
+}
+div.datagrid-container table.grid > thead tr th:focus, div.datagrid-container table.grid > thead tr th.focus {
+  outline: var(--colors-text-hot) dashed 0.1em;
+  outline-offset: -0.3em;
+  text-decoration: underline double;
+}
+div.datagrid-container table.grid > thead tr th.mechanical {
+  z-index: 106;
+}
+div.datagrid-container table.grid > thead tr th[data-sort=asc] div.th, div.datagrid-container table.grid > thead tr th[data-sort=desc] div.th {
+  box-shadow: inset 0 -0.2em 0 0 var(--colors-focus);
+}
+div.datagrid-container table.grid > thead tr th[data-sort=asc] div.th:before, div.datagrid-container table.grid > thead tr th[data-sort=desc] div.th:before {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid > thead tr th[data-sort=asc]:hover div.th, div.datagrid-container table.grid > thead tr th[data-sort=desc]:hover div.th {
+    box-shadow: none;
+  }
+}
+div.datagrid-container table.grid > thead tr th[data-sort=desc] div.th:before {
+  transform: rotate(180deg);
+}
+div.datagrid-container table.grid > tbody {
+  background-color: var(--canvas-color-primary);
+}
+div.datagrid-container table.grid > tbody tr {
+  color: var(--colors-standard);
+  box-shadow: inset 0 -0.05em 0 0 var(--canvas-color-tertiary), inset 0 0.05em 0 0 var(--canvas-color-tertiary);
+}
+div.datagrid-container table.grid > tbody tr td {
+  padding: var(--vert-padding) var(--side-padding);
+  white-space: nowrap;
+}
+div.datagrid-container table.grid > tbody tr td button {
+  background-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid > tbody tr td button:hover {
+    background-image: none;
+    box-shadow: none;
+  }
+}
+div.datagrid-container table.grid > tbody tr td button.menu[aria-expanded=true] {
+  --button-border-color: var(--colors-affordance);
+  --button-default-color: var(--colors-affordance);
+  --button-default-text-color: var(--colors-affordance);
+  opacity: 1;
+  background-image: none;
+  box-shadow: inset -0.1em -0.1em 0 0 var(--button-border-color), inset 0.1em -0.1em 0 0 var(--button-border-color), inset -0.1em 0.1em 0 0 var(--button-border-color), inset 0.1em 0.1em 0 0 var(--button-border-color);
+}
+div.datagrid-container table.grid > tbody tr td.code {
+  font-family: var(--fontstack-monospace);
+  color: var(--colors-highlight);
+  text-shadow: var(--text-shadow);
+  white-space: nowrap;
+}
+div.datagrid-container table.grid > tbody tr td.italic {
+  font-style: oblique;
+}
+div.datagrid-container table.grid > tbody tr td.smaller {
+  font-size: 0.8em;
+}
+div.datagrid-container table.grid > tbody tr td.mechanical {
+  background-color: var(--canvas-color-secondary);
+  z-index: 102;
+  opacity: 1;
+  box-shadow: inset 0 -0.05em 0 0 var(--canvas-color-tertiary), inset 0 0.05em 0 0 var(--canvas-color-tertiary);
+}
+div.datagrid-container table.grid > tbody tr:nth-child(even) {
+  background-color: rgba(var(--canvas-color-secondary-rgb), 0.8);
+}
+div.datagrid-container table.grid > tbody tr.hidden, div.datagrid-container table.grid > tbody tr.filtered, div.datagrid-container table.grid > tbody tr[data-search-hidden=true] {
+  display: none;
+}
+div.datagrid-container table.grid > tbody tr[data-matched-filters][data-search-hidden=true] {
+  display: none;
+}
+div.datagrid-container table.grid > tbody tr:focus-within button {
+  box-shadow: none;
+  background-color: transparent;
+}
+div.datagrid-container table.grid > tbody tr.updated {
+  animation: cfb-row-update 8s;
+}
+div.datagrid-container table.grid th.hidden,
+div.datagrid-container table.grid td.hidden {
+  display: none;
+}
+div.datagrid-container table.grid th.duplicate,
+div.datagrid-container table.grid td.duplicate {
+  opacity: 0.2;
+}
+div.datagrid-container table.grid th.resize,
+div.datagrid-container table.grid td.resize {
+  resize: horizontal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div.datagrid-container table.grid th.nowrap,
+div.datagrid-container table.grid td.nowrap {
+  white-space: nowrap;
+}
+div.datagrid-container table.grid th.right, div.datagrid-container table.grid th.number, div.datagrid-container table.grid th.time,
+div.datagrid-container table.grid td.right,
+div.datagrid-container table.grid td.number,
+div.datagrid-container table.grid td.time {
+  text-align: right;
+}
+div.datagrid-container table.grid th.right > div, div.datagrid-container table.grid th.number > div, div.datagrid-container table.grid th.time > div,
+div.datagrid-container table.grid td.right > div,
+div.datagrid-container table.grid td.number > div,
+div.datagrid-container table.grid td.time > div {
+  padding: 0.75rem 1rem 0.75rem 1.5rem;
+}
+div.datagrid-container table.grid th.right > div:before, div.datagrid-container table.grid th.number > div:before, div.datagrid-container table.grid th.time > div:before,
+div.datagrid-container table.grid td.right > div:before,
+div.datagrid-container table.grid td.number > div:before,
+div.datagrid-container table.grid td.time > div:before {
+  right: unset;
+  left: 0.5rem;
+}
+div.datagrid-container table.grid th.imageurl,
+div.datagrid-container table.grid td.imageurl {
+  text-align: center;
+  padding: 0;
+  vertical-align: middle;
+}
+div.datagrid-container table.grid th.imageurl a,
+div.datagrid-container table.grid td.imageurl a {
+  height: 2em;
+  min-height: 2em;
+}
+div.datagrid-container table.grid th.imageurl a img,
+div.datagrid-container table.grid td.imageurl a img {
+  height: 2em;
+}
+div.datagrid-container table.grid th.center,
+div.datagrid-container table.grid td.center {
+  text-align: center;
+}
+div.datagrid-container table.grid th.mechanical,
+div.datagrid-container table.grid td.mechanical {
+  transition: width 0.2s;
+  resize: none;
+  position: sticky;
+  text-align: center;
+  left: 0;
+  padding: 0;
+}
+div.datagrid-container table.grid th.mechanical.selector,
+div.datagrid-container table.grid td.mechanical.selector {
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  width: 0;
+  max-width: 0;
+  padding: 0;
+  --checkbox-size: 1.5em;
+  --checkbox-font-size: 1.5em;
+}
+div.datagrid-container table.grid th.mechanical.selector input,
+div.datagrid-container table.grid td.mechanical.selector input {
+  display: none;
+}
+div.datagrid-container table.grid th.mechanical.actions button,
+div.datagrid-container table.grid td.mechanical.actions button {
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+  opacity: 0.5;
+  margin: 0;
+}
+div.datagrid-container table.grid th.mechanical.actions button:focus,
+div.datagrid-container table.grid td.mechanical.actions button:focus {
+  opacity: 1;
+  box-shadow: none;
+  background-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid th.mechanical.actions button:hover,
+div.datagrid-container table.grid td.mechanical.actions button:hover {
+    opacity: 1;
+  }
+}
+div.datagrid-container table.grid.multiselecting th.selector,
+div.datagrid-container table.grid.multiselecting td.selector {
+  padding: 0 1rem 0 1rem;
+  width: auto;
+  max-width: unset;
+  display: table-cell;
+}
+div.datagrid-container table.grid.multiselecting th.selector input,
+div.datagrid-container table.grid.multiselecting td.selector input {
+  display: inline-block;
+}
+div.datagrid-container table.grid.multiselecting th.actions,
+div.datagrid-container table.grid.multiselecting td.actions {
+  width: 0;
+  max-width: 0;
+  padding: 0;
+}
+div.datagrid-container table.grid.multiselecting th.actions button,
+div.datagrid-container table.grid.multiselecting td.actions button {
+  display: none;
+}
+div.datagrid-container table.grid.selectable tbody tr {
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid.selectable tbody tr:hover {
+    background-color: rgba(var(--colors-affordance-rgb), 0.5);
+    color: var(--colors-text-hot);
+    text-shadow: var(--text-shadow);
+  }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td {
+    opacity: 1;
+    box-shadow: none;
+  }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical {
+    background-color: var(--colors-affordance);
+  }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical input[type=checkbox] {
+    --checkbox-checked-checkmark-hover-text-color: var(--colors-text-hot);
+    --checkbox-checked-checkmark-text-color: var(--colors-text-hot);
+    --checkbox-checkmark-text-color: var(--colors-text-hot);
+    border-color: var(--colors-text-hot);
+  }
+  div.datagrid-container table.grid.selectable tbody tr:hover > td.mechanical button {
+    color: var(--colors-text-hot);
+  }
+}
+div.datagrid-container table.grid.selectable tbody tr:focus, div.datagrid-container table.grid.selectable tbody tr:focus-within {
+  background-color: rgba(var(--colors-affordance-rgb), 0.5);
+  color: var(--colors-text-hot);
+  text-shadow: var(--text-shadow);
+  outline: var(--colors-text-hot) dashed 0.1rem;
+  outline-offset: -0.3em;
+}
+div.datagrid-container table.grid.selectable tbody tr:focus > td, div.datagrid-container table.grid.selectable tbody tr:focus-within > td {
+  opacity: 1;
+}
+div.datagrid-container table.grid.selectable tbody tr:focus > td.mechanical, div.datagrid-container table.grid.selectable tbody tr:focus-within > td.mechanical {
+  background-color: var(--colors-affordance);
+  outline: var(--colors-text-hot) dashed 0.1rem;
+  outline-offset: -0.3em;
+}
+div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] {
+  background-color: var(--colors-focus);
+  color: var(--colors-text-hot);
+}
+div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] > td {
+  opacity: 1;
+}
+div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] > td.mechanical {
+  background-color: var(--colors-focus);
+}
+div.datagrid-container table.grid.selectable tbody tr[aria-selected=true] > td.mechanical button {
+  color: var(--colors-text-hot);
+  opacity: 1;
+}
+div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:focus {
+  background-color: var(--colors-focus);
+  outline: var(--colors-text-hot) dashed 0.1rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:hover {
+    background-color: var(--colors-affordance);
+    color: var(--colors-text-hot);
+    text-shadow: var(--text-shadow);
+  }
+  div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:hover > td {
+    opacity: 1;
+    box-shadow: none;
+  }
+  div.datagrid-container table.grid.selectable tbody tr[aria-selected=true]:hover > td.mechanical {
+    background-color: var(--colors-affordance);
+  }
+}
+div.datagrid-container table.grid.schoriz td.mechanical,
+div.datagrid-container table.grid.schoriz th.mechanical {
+  box-shadow: 0.1rem 0 0.1rem -0.05rem rgba(0, 0, 0, 0.5);
+}
+div.datagrid-container table.grid.scvert thead tr.header th {
+  box-shadow: inset 0 -0.1rem 0 0 rgba(0, 0, 0, 0.5);
+}
+div.datagrid-container table.grid.scvert.schoriz th.mechanical {
+  box-shadow: 0.1rem 0 0.1rem -0.05rem rgba(0, 0, 0, 0.5), inset 0 -0.1rem 0 0 rgba(0, 0, 0, 0.5);
+}
+div.datagrid-container div.messages.hidden {
+  display: none;
+}
+div.datagrid-container div.messages div.messagebox2 div.box.warnings {
+  --color-base: var(--datagrid-messagebox-color-base);
+  --stripe-base: var(--datagrid-messagebox-stripes-base);
+}
+div.datagrid-container div.messages div.messagebox2 div.box.warnings h4 {
+  display: none;
+  background-color: transparent;
+  color: var(--color-base);
+}
+div.datagrid-container div.messages div.messagebox2 div.box.warnings div.lbox {
+  border-color: transparent;
+}
+div.datagrid-container[aria-expanded=false] div.grid-info,
+div.datagrid-container[aria-expanded=false] div.grid-actions,
+div.datagrid-container[aria-expanded=false] div.grid-filterinfo {
+  max-height: 0;
+  min-height: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+div.datagrid-container[aria-expanded=false] div.grid-wrapper {
+  max-height: 0;
+  min-height: 0;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+div.datagrid-container[aria-expanded=false] div.grid-wrapper table.grid {
+  opacity: 0;
+}
+
+@keyframes cfb-row-update {
+  0% {
+    background-color: var(--canvas-color-primary);
+  }
+  10% {
+    background-color: var(--canvas-color-highlight);
+  }
+  80% {
+    background-color: var(--canvas-color-highlight);
+  }
+  100% {
+    background-color: var(--canvas-color-primary);
+  }
+}
+div.column-configurator {
+  padding: 2rem;
+}
+div.column-configurator ul.column-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0;
+}
+div.column-configurator ul.column-list > li {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+}
+div.column-configurator ul.column-list > li div.checkbox {
+  margin: 0;
+}
+div.column-configurator ul.column-list > li div.description {
+  padding: 0.5rem 1rem 0.5rem 3rem;
+  font-size: 0.8em;
+}
+
+div.filter-configurator {
+  padding: 2rem;
+}
+div.filter-configurator ul.filter-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0;
+}
+div.filter-configurator ul.filter-list > li {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+div.filter-configurator ul.filter-list > li div.primeselector {
+  margin-left: 0;
+  cursor: pointer;
+}
+div.filter-configurator ul.filter-list > li div.comparator {
+  cursor: pointer;
+}
+div.filter-configurator ul.filter-list > li div.validmarker {
+  opacity: 0;
+  background-color: transparent;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1em;
+  font-size: 20pt;
+  text-shadow: var(--text-shadow);
+  color: var(--colors-success);
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+div.filter-configurator ul.filter-list > li div.validmarker > span.icon:before {
+  margin: 0;
+}
+div.filter-configurator ul.filter-list > li button.filterkiller {
+  margin-right: 0;
+}
+div.filter-configurator ul.filter-list > li[data-valid=true] div.validmarker {
+  opacity: 1;
+}
+@media (max-width: 599px) {
+  div.filter-configurator ul.filter-list > li {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+  div.filter-configurator ul.filter-list > li div.primeselector,
+div.filter-configurator ul.filter-list > li div.comparator,
+div.filter-configurator ul.filter-list > li div.valueinput {
+    margin-left: 0;
+    min-width: 75%;
+  }
+  div.filter-configurator ul.filter-list > li div.comparator {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  div.filter-configurator ul.filter-list > li div.valueinput {
+    margin-right: 0;
+  }
+  div.filter-configurator ul.filter-list > li div.validmarker {
+    width: 0;
+  }
+  div.filter-configurator ul.filter-list > li button.filterkiller {
+    margin: 0;
+  }
+  div.filter-configurator ul.filter-list > li[data-valid=true] div.validmarker {
+    opacity: 1;
+    width: auto;
+  }
+}
+div.filter-configurator div.filter-actions {
+  display: flex;
+  flex-direction: row;
+}
+div.filter-configurator div.filter-actions button:first-child {
+  margin-left: 0;
+}
+
 /*# sourceMappingURL=cornflowerblue-sandbox.css.map */

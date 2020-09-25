@@ -11,7 +11,6 @@ class ImageSelector extends SelectMenu {
         if (!config.classes) { config.classes = []; }
         config.classes.push('imageselector-container');
         config = Object.assign({}, ImageSelector.DEFAULT_CONFIG, config);
-        config.options = new ImageLibrary().options;
         super(config);
     }
 
