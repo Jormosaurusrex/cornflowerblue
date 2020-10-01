@@ -500,7 +500,7 @@ class InputElement {
             }
         });
 
-        this.input.addEventListener('paste', (e) => {
+        this.input.addEventListener('paste', () => {
             this.input.removeAttribute('aria-invalid');
             if (this.hascontainer) {
                 this.updateCounter();

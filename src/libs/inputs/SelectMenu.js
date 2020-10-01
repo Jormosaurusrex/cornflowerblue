@@ -31,6 +31,7 @@ class SelectMenu extends InputElement {
      * Close open menus
      */
     static closeOpen() {
+        console.log("closeOpen");
         if (SelectMenu.activeMenu) {
             SelectMenu.activeMenu.close();
         }
@@ -137,10 +138,7 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-
-
         SelectMenu.closeOpen(); // close open menus
-
         document.body.appendChild(this.listbox);
 
         this.listbox.removeAttribute('aria-hidden');
@@ -157,7 +155,6 @@ class SelectMenu extends InputElement {
             SelectMenu.activeMenu = this;
         }
 
-        //window.addEventListener('scroll', this.setPosition, true);
         let x = window.scrollX,
             y = window.scrollY;
         window.onscroll = () => { window.scrollTo(x, y); };
@@ -200,8 +197,8 @@ class SelectMenu extends InputElement {
      */
     close() {
         //window.removeEventListener('scroll', this.setPosition, true);
+        console.log("close");
         window.onscroll=() => {};
-
         this.listbox.style.top = null;
         this.listbox.style.bottom = null;
         this.listbox.style.left = null;
@@ -333,6 +330,7 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('placeholder', this.placeholder);
 
         this.triggerbox.addEventListener('focusin', (e) => {
+            console.log('focusin');
             if (this.disabled) {
                 e.stopPropagation();
                 return;
@@ -357,11 +355,12 @@ class SelectMenu extends InputElement {
                     case 'Home':
                     case 'Meta':
                     case 'PageUp':
+                    case 'Tab':  // Tab
                         // Nothing.
                         break;
-                    case 'Tab':  // Tab
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
+                        console.log("keyup");
                         this.close();
                         break;
                     case 'ArrowDown': // Down
@@ -582,12 +581,13 @@ class SelectMenu extends InputElement {
      */
     setCloseListener() {
 
-
         document.addEventListener('keydown', (e) => {
+            console.log("murrr");
             if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
         window.addEventListener('click', (e) => {
+            console.log("hrrrr");
             if ((this.wrapper.contains(e.target)) || (this.listbox.contains(e.target))) {
                 this.setCloseListener();
             } else {

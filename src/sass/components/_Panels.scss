@@ -122,4 +122,12 @@ div.panel {
     margin-left: auto;
     margin-right: auto;
   }
+  &.free {
+    position: relative;
+    margin: unset;
+    top: unset;
+    left: unset;
+    right: unset;
+    bottom: unset;
+  }
 }

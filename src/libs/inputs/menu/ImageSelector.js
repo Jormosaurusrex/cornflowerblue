@@ -25,6 +25,7 @@ class ImageSelector extends SelectMenu {
         this.triggerbox.value = value;
         this.setPassiveboxValue(value);
     }
+    get value() { return this.config.value; }
 
     setPassiveboxValue(value) {
         this.passivebox.setAttribute('src', value);

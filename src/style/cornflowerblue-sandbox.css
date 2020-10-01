@@ -3961,118 +3961,6 @@ div.select-container.disabled div[role=listbox] {
 div.select-container.disabled input.trigger:before {
   opacity: 0.5;
 }
-div.datepicker {
-  --datepicker-cell-dimensions: 2.5em;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  opacity: 1;
-  background-color: var(--canvas-color-tertiary);
-  z-index: 4000;
-  margin: 1em;
-}
-div.datepicker div.monthbox {
-  padding: 0.5em;
-}
-div.datepicker div.monthbox div.month {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-}
-div.datepicker div.monthbox div.month div.datepicker-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  padding: 0.5em;
-}
-div.datepicker div.monthbox div.month div.datepicker-header div.name {
-  text-transform: uppercase;
-  color: var(--colors-highlight);
-  margin-right: auto;
-}
-div.datepicker div.monthbox div.month div.datepicker-header button {
-  margin: 0;
-}
-div.datepicker div.monthbox div.month table.month th,
-div.datepicker div.monthbox div.month table.month td {
-  width: var(--datepicker-cell-dimensions);
-  min-width: var(--datepicker-cell-dimensions);
-  max-width: var(--datepicker-cell-dimensions);
-  height: var(--datepicker-cell-dimensions);
-  min-height: var(--datepicker-cell-dimensions);
-  max-height: var(--datepicker-cell-dimensions);
-  text-align: center;
-  padding: 0;
-  font-size: 0.8em;
-}
-div.datepicker div.monthbox div.month table.month td a {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background-color: var(--canvas-color-tertiary);
-}
-div.datepicker div.monthbox div.month table.month td a.cmonth {
-  background-color: var(--canvas-color-callout-lightweight);
-}
-div.datepicker div.monthbox div.month table.month td a.today {
-  --link-color: var(--colors-text-hot);
-  background-color: var(--colors-highlight);
-  font-weight: bold;
-}
-div.datepicker div.monthbox div.month table.month td a[aria-selected=true] {
-  border: 0.2em solid var(--colors-focus);
-  --link-color: var(--colors-focus);
-  opacity: 1;
-  font-weight: bold;
-}
-div.datepicker div.monthbox div.month table.month td a.future {
-  font-weight: bold;
-}
-@media (hover: hover) and (pointer: fine) {
-  div.datepicker div.monthbox div.month table.month td a:hover {
-    color: var(--colors-text-hot);
-    background-color: var(--colors-affordance);
-    filter: none;
-  }
-  div.datepicker div.monthbox div.month table.month td a:hover.past {
-    opacity: 1;
-  }
-}
-div.datepicker div.monthbox div.month table.month td a:active, div.datepicker div.monthbox div.month table.month td a:focus {
-  opacity: 1;
-  color: var(--colors-text-hot);
-  background-color: var(--colors-affordance);
-  outline: var(--colors-text-hot) dashed 0.1em;
-  outline-offset: -0.3em;
-}
-div.datepicker div.monthbox div.month table.month td a:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  text-shadow: none;
-  box-shadow: none;
-  pointer-events: none;
-}
-div.datepicker.button-menu {
-  padding: 0;
-  position: absolute;
-  margin: 0 0 0 0.3em;
-  overflow: visible;
-  z-index: 20000;
-  border-radius: var(--border-radius);
-  border: 0.1em solid var(--canvas-color-primary);
-  background-color: var(--canvas-color-primary);
-}
-div.datepicker.button-menu div.monthbox {
-  padding: 0;
-}
-
 body.modalopen {
   overflow-y: hidden;
 }
@@ -4780,6 +4668,14 @@ div.panel.bottom-center {
   left: 1em;
   margin-left: auto;
   margin-right: auto;
+}
+div.panel.free {
+  position: relative;
+  margin: unset;
+  top: unset;
+  left: unset;
+  right: unset;
+  bottom: unset;
 }
 
 div.progressbar-container {

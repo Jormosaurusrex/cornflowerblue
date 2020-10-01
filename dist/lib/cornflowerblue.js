@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-09-23
+/*! Cornflower Blue - v0.1.1 - 2020-09-28
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -10804,7 +10804,7 @@ class InputElement {
             }
         });
 
-        this.input.addEventListener('paste', (e) => {
+        this.input.addEventListener('paste', () => {
             this.input.removeAttribute('aria-invalid');
             if (this.hascontainer) {
                 this.updateCounter();
@@ -13512,7 +13512,6 @@ class ImageSelector extends SelectMenu {
         if (!config.classes) { config.classes = []; }
         config.classes.push('imageselector-container');
         config = Object.assign({}, ImageSelector.DEFAULT_CONFIG, config);
-        config.options = new ImageLibrary().options;
         super(config);
     }
 
@@ -13527,6 +13526,7 @@ class ImageSelector extends SelectMenu {
         this.triggerbox.value = value;
         this.setPassiveboxValue(value);
     }
+    get value() { return this.config.value; }
 
     setPassiveboxValue(value) {
         this.passivebox.setAttribute('src', value);

@@ -1757,7 +1757,9 @@ class CornflowerBlueDemo {
         }).container);
 
         document.getElementById('selects-state').appendChild(new StateMenu({
-            value: 'WV'
+            label: 'State',
+            value: 'WV',
+            mute: true
         }).container);
         document.getElementById('selects-country').appendChild(new CountryMenu({
             value: 'FM'
