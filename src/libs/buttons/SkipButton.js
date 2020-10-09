@@ -33,10 +33,6 @@ class SkipButton extends SimpleButton {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    /**
-     * Get the content start identifier
-     * @return {string}
-     */
     get contentstart() { return this.config.contentstart; }
     set contentstart(contentstart) { this.config.contentstart = contentstart; }
 

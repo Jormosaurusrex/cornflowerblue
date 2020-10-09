@@ -360,7 +360,6 @@ class SelectMenu extends InputElement {
                         break;
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
-                        console.log("keyup");
                         this.close();
                         break;
                     case 'ArrowDown': // Down

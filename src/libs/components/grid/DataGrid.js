@@ -1948,14 +1948,6 @@ class DataGrid extends Panel {
     get currentsort() { return this._currentsort; }
     set currentsort(currentsort) { this._currentsort = currentsort; }
 
-    get deletehook() { return this.config.deletehook; }
-    set deletehook(deletehook) {
-        if (typeof deletehook !== 'function') {
-            console.error("Value provided to deletehook is not a function!");
-        }
-        this.config.deletehook = deletehook;
-    }
-
     get deleteiteminstructions() { return this.config.deleteiteminstructions; }
     set deleteiteminstructions(deleteiteminstructions) { this.config.deleteiteminstructions = deleteiteminstructions; }
 

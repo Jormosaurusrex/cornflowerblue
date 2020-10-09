@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-01
+/*! Cornflower Blue - v0.1.1 - 2020-10-06
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3217,10 +3217,6 @@ class SkipButton extends SimpleButton {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    /**
-     * Get the content start identifier
-     * @return {string}
-     */
     get contentstart() { return this.config.contentstart; }
     set contentstart(contentstart) { this.config.contentstart = contentstart; }
 
@@ -6384,14 +6380,6 @@ class DataGrid extends Panel {
 
     get currentsort() { return this._currentsort; }
     set currentsort(currentsort) { this._currentsort = currentsort; }
-
-    get deletehook() { return this.config.deletehook; }
-    set deletehook(deletehook) {
-        if (typeof deletehook !== 'function') {
-            console.error("Value provided to deletehook is not a function!");
-        }
-        this.config.deletehook = deletehook;
-    }
 
     get deleteiteminstructions() { return this.config.deleteiteminstructions; }
     set deleteiteminstructions(deleteiteminstructions) { this.config.deleteiteminstructions = deleteiteminstructions; }
@@ -11589,7 +11577,6 @@ class SelectMenu extends InputElement {
                         break;
                     case 'Escape': // Escape
                     case 'ArrowUp': // Up
-                        console.log("keyup");
                         this.close();
                         break;
                     case 'ArrowDown': // Down

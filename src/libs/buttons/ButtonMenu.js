@@ -11,6 +11,7 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
+            closeopen: true, // if true, force all other open menus closed when this one opens.
             onopen: null, // Function to execute on open. passed "self" as argument
             onclose: null, // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
@@ -84,9 +85,13 @@ class ButtonMenu extends SimpleButton {
      * Opens the menu
      */
     open() {
+        console.log(this.config);
         if (this.isopen) { return; }
 
-        ButtonMenu.closeOpen(); // close open menus
+        if (this.closeopen) {
+            console.log(`this.closeopen: ${this.closeopen}`);
+            ButtonMenu.closeOpen(); // close open menus
+        }
 
         if (typeof ButtonMenu.activeMenu === 'undefined' ) {
             ButtonMenu.activeMenu = this;
@@ -339,6 +344,9 @@ class ButtonMenu extends SimpleButton {
 
     get autoclose() { return this.config.autoclose; }
     set autoclose(autoclose) { this.config.autoclose = autoclose; }
+
+    get closeopen() { return this.config.closeopen; }
+    set closeopen(closeopen) { this.config.closeopen = closeopen; }
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
