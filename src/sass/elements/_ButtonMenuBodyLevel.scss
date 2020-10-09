@@ -29,6 +29,12 @@ form.button-menu {
     border-style: solid;
     border-color: var(--canvas-color-secondary) transparent;
   }
+  &.s,
+  &.south {
+    &:before {
+      right: calc(100% / 2);
+    }
+  }
   &.southeast,
   &.se {
     &:before {

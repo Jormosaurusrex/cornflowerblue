@@ -11,9 +11,10 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
+            menuid: null,    //
             closeopen: true, // if true, force all other open menus closed when this one opens.
-            onopen: null, // Function to execute on open. passed "self" as argument
-            onclose: null, // Function to execute on open. passed "self" as argument
+            onopen: null,    // Function to execute on open. passed "self" as argument
+            onclose: null,   // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
             gravity: 's', // Gravity direction for the menu
             tooltipgravity: 'e', // Gravity direction for the tooltips
@@ -37,9 +38,15 @@ class ButtonMenu extends SimpleButton {
     /**
      * Close any open ButtonMenus
      */
-    static closeOpen() {
-        if (ButtonMenu.activeMenu) {
-            ButtonMenu.activeMenu.close();
+    static closeOpen(menuid) {
+        if (menuid) {
+            if ((ButtonMenu.activeMenuTypes) && (ButtonMenu.activeMenuTypes[menuid])) {
+                ButtonMenu.activeMenuTypes[menuid].close();
+            }
+        } else {
+            if (ButtonMenu.activeMenu) {
+                ButtonMenu.activeMenu.close();
+            }
         }
     }
 
@@ -85,23 +92,28 @@ class ButtonMenu extends SimpleButton {
      * Opens the menu
      */
     open() {
-        console.log(this.config);
         if (this.isopen) { return; }
 
         if (this.closeopen) {
-            console.log(`this.closeopen: ${this.closeopen}`);
-            ButtonMenu.closeOpen(); // close open menus
+            ButtonMenu.closeOpen(this.menuid); // close open menus
         }
 
-        if (typeof ButtonMenu.activeMenu === 'undefined' ) {
-            ButtonMenu.activeMenu = this;
+        if (this.menuid) {
+            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
+                ButtonMenu.activeMenuTypes = {};
+            }
+            ButtonMenu.activeMenuTypes[this.menuid] = this;
         } else {
-            ButtonMenu.activeMenu = this;
+            if (typeof ButtonMenu.activeMenu === 'undefined' ) {
+                ButtonMenu.activeMenu = this;
+            } else {
+                ButtonMenu.activeMenu = this;
+            }
         }
 
         this.button.setAttribute('aria-expanded', 'true');
         this.menu.removeAttribute('aria-hidden');
-        ButtonMenu.activeMenu.menu.style.opacity = 0;
+        this.menu.style.opacity = 0;
         document.body.appendChild(this.menu);
 
         if ((this.items) && (this.items.length > 0)) {
@@ -135,7 +147,7 @@ class ButtonMenu extends SimpleButton {
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
-                ButtonMenu.activeMenu.menu.style.opacity = 1;
+                this.menu.style.opacity = 1;
             }, 50);
         }
     }
@@ -144,48 +156,48 @@ class ButtonMenu extends SimpleButton {
      * Position the menu
      */
     setPosition() {
-        if (!ButtonMenu.activeMenu) { return; }
-        let self = ButtonMenu.activeMenu;
-
         let bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.button.getBoundingClientRect(),
+            elemRect = this.button.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top,
             offsetRight = bodyRect.right - elemRect.right,
             offsetBottom = elemRect.bottom - bodyRect.bottom;
 
-        switch(self.gravity) {
+        switch(this.gravity) {
             case 'w':
             case 'west':
-                self.menu.style.top = `${offsetTop - (self.button.clientHeight / 2)}px`;
-                self.menu.style.left = `${offsetLeft - self.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'e':
             case 'east':
-                self.menu.style.top = `${offsetTop - (self.button.clientHeight / 2)}px`;
-                self.menu.style.left = `${offsetLeft + self.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
+                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
                 break;
             case 'n':
             case 'north':
-                self.menu.style.top = `${(offsetTop - self.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
                 break;
             case 'nw':
             case 'northwest':
-                self.menu.style.top = `${(offsetTop - self.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft - (self.button.clientWidth / 2)}px`;
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 'se':
             case 'southeast':
-                self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft - (self.button.clientWidth / 2)}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 's':
             case 'south':
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft - (this.menu.offsetWidth / 2) + this.button.offsetWidth }px`;
+                break;
             case 'southwest':
             default:
-                self.menu.style.top = `${(offsetTop + self.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.menu.style.left = `${offsetLeft - self.menu.offsetWidth + self.button.offsetWidth}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
                 break;
         }
 
@@ -359,6 +371,9 @@ class ButtonMenu extends SimpleButton {
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
+
+    get menuid() { return this.config.menuid; }
+    set menuid(menuid) { this.config.menuid = menuid; }
 
     get onclose() { return this.config.onclose; }
     set onclose(onclose) { this.config.onclose = onclose; }

@@ -2326,6 +2326,13 @@ form.button-menu:before {
   border-style: solid;
   border-color: var(--canvas-color-secondary) transparent;
 }
+ul.button-menu.s:before, ul.button-menu.south:before,
+div.button-menu.s:before,
+div.button-menu.south:before,
+form.button-menu.s:before,
+form.button-menu.south:before {
+  right: calc(100% / 2);
+}
 ul.button-menu.southeast:before, ul.button-menu.se:before,
 div.button-menu.southeast:before,
 div.button-menu.se:before,
