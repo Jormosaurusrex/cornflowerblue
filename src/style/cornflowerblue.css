@@ -2331,7 +2331,7 @@ div.button-menu.s:before,
 div.button-menu.south:before,
 form.button-menu.s:before,
 form.button-menu.south:before {
-  right: calc(100% / 2);
+  right: calc((100% / 2) + .35rem);
 }
 ul.button-menu.southeast:before, ul.button-menu.se:before,
 div.button-menu.southeast:before,

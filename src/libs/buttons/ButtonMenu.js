@@ -11,7 +11,7 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
-            menuid: null,    //
+            menuid: null,    // If present, will only auto-close other menus of this type.
             closeopen: true, // if true, force all other open menus closed when this one opens.
             onopen: null,    // Function to execute on open. passed "self" as argument
             onclose: null,   // Function to execute on open. passed "self" as argument
@@ -223,7 +223,14 @@ class ButtonMenu extends SimpleButton {
             this.onclose(this);
         }
 
-        ButtonMenu.activeMenu = null;
+        if (this.menuid) {
+            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
+                ButtonMenu.activeMenuTypes = {};
+            }
+            ButtonMenu.activeMenuTypes[this.menuid] = null;
+        } else {
+            ButtonMenu.activeMenu = null;
+        }
     }
 
     /**
