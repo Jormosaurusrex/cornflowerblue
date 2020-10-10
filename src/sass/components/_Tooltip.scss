@@ -55,6 +55,14 @@ div.tooltip {
     &:before {
       bottom: unset;
       top: -.5em;
+      left: calc((100% / 2) - .5rem);
+      border-width: 0 .5em .5em .5em;
+    }
+  }
+  &.southwest {
+    &:before {
+      bottom: unset;
+      top: -.5em;
       border-width: 0 .5em .5em .5em;
     }
   }

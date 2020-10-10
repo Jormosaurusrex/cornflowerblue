@@ -137,9 +137,9 @@ class ToolTip {
         switch(this.gravity) {
             case 's':
             case 'south':
-                //self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                //self.container.style.left = `${offsetLeft - (self.container.offsetWidth / 2) }px`;
-                //break;
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - (self.container.offsetWidth / 2) + (this.parent.offsetWidth / 2 )}px`;
+                break;
             case 'sw':
             case 'southwest':
                 self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;

@@ -995,6 +995,12 @@ div.tooltip.unfixed div.tiptext {
 div.tooltip.south:before {
   bottom: unset;
   top: -0.5em;
+  left: calc((100% / 2) - .5rem);
+  border-width: 0 0.5em 0.5em 0.5em;
+}
+div.tooltip.southwest:before {
+  bottom: unset;
+  top: -0.5em;
   border-width: 0 0.5em 0.5em 0.5em;
 }
 div.tooltip.west:before {
