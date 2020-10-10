@@ -142,7 +142,21 @@ class ButtonMenu extends SimpleButton {
             }, 200);
         }
 
-        window.addEventListener('scroll', this.setPosition, true);
+
+        /*
+            This is gross but:
+                1) anonymous functions can't be removed, so we have a problem with "this"
+                2) we can't pass this.setPosition as the function because "this" becomes "window"
+                3) we can't remove a listener set this way in a different method (e.g., close())
+         */
+        const me = this;
+        window.addEventListener('scroll', function _listener() {
+            console.log('scroll');
+            if (!me.isopen) {
+                window.removeEventListener('scroll', _listener, true);
+            }
+            me.setPosition();
+        }, true );
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
@@ -207,7 +221,6 @@ class ButtonMenu extends SimpleButton {
      * Closes the button
      */
     close() {
-        window.removeEventListener('scroll', this.setPosition, true);
         this.button.appendChild(this.menu);
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');

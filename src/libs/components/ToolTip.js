@@ -105,7 +105,20 @@ class ToolTip {
 
         this.setPosition();
 
-        window.addEventListener('scroll', this.setPosition, true);
+        /*
+            This is gross but:
+                1) anonymous functions can't be removed, so we have a problem with "this"
+                2) we can't pass this.setPosition as the function because "this" becomes "window"
+                3) we can't remove a listener set this way in a different method (e.g., close())
+         */
+        const me = this;
+        window.addEventListener('scroll', function _listener() {
+            if (!me.isopen) {
+                window.removeEventListener('scroll', _listener, true);
+            }
+            me.setPosition();
+        }, true);
+
 
     }
 
@@ -124,6 +137,11 @@ class ToolTip {
         switch(this.gravity) {
             case 's':
             case 'south':
+                //self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                //self.container.style.left = `${offsetLeft - (self.container.offsetWidth / 2) }px`;
+                //break;
+            case 'sw':
+            case 'southwest':
                 self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
@@ -152,7 +170,6 @@ class ToolTip {
      */
     close() {
         this.parent.appendChild(this.container);
-        window.removeEventListener('scroll', this.setPosition, true);
         this.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
     }

@@ -581,12 +581,10 @@ class SelectMenu extends InputElement {
     setCloseListener() {
 
         document.addEventListener('keydown', (e) => {
-            console.log("murrr");
             if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
         window.addEventListener('click', (e) => {
-            console.log("hrrrr");
             if ((this.wrapper.contains(e.target)) || (this.listbox.contains(e.target))) {
                 this.setCloseListener();
             } else {
