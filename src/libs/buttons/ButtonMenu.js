@@ -151,7 +151,6 @@ class ButtonMenu extends SimpleButton {
          */
         const me = this;
         window.addEventListener('scroll', function _listener() {
-            console.log('scroll');
             if (!me.isopen) {
                 window.removeEventListener('scroll', _listener, true);
             }

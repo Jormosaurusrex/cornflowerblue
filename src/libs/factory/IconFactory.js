@@ -102,7 +102,24 @@ class IconFactory {
             'table',
             'duplicate',
             'dots-horizontal',
-            'dots-vertical'
+            'dots-vertical',
+            'envelope-flat',
+            'envelope-angle',
+            'bell',
+            'backgroundcolor',
+            'fontcolor',
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'indent',
+            'outdent',
+            'justify',
+            'center',
+            'left',
+            'right',
+            'ol',
+            'ul'
         ];
     }
 

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-08
+/*! Cornflower Blue - v0.1.1 - 2020-10-14
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1890,7 +1890,24 @@ class IconFactory {
             'table',
             'duplicate',
             'dots-horizontal',
-            'dots-vertical'
+            'dots-vertical',
+            'envelope-flat',
+            'envelope-angle',
+            'bell',
+            'backgroundcolor',
+            'fontcolor',
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'indent',
+            'outdent',
+            'justify',
+            'center',
+            'left',
+            'right',
+            'ol',
+            'ul'
         ];
     }
 
@@ -2668,7 +2685,7 @@ class ButtonMenu extends SimpleButton {
                 }
                 e.stopPropagation();
             },
-            menuid: null,    //
+            menuid: null,    // If present, will only auto-close other menus of this type.
             closeopen: true, // if true, force all other open menus closed when this one opens.
             onopen: null,    // Function to execute on open. passed "self" as argument
             onclose: null,   // Function to execute on open. passed "self" as argument
@@ -2799,7 +2816,20 @@ class ButtonMenu extends SimpleButton {
             }, 200);
         }
 
-        window.addEventListener('scroll', this.setPosition, true);
+
+        /*
+            This is gross but:
+                1) anonymous functions can't be removed, so we have a problem with "this"
+                2) we can't pass this.setPosition as the function because "this" becomes "window"
+                3) we can't remove a listener set this way in a different method (e.g., close())
+         */
+        const me = this;
+        window.addEventListener('scroll', function _listener() {
+            if (!me.isopen) {
+                window.removeEventListener('scroll', _listener, true);
+            }
+            me.setPosition();
+        }, true );
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
@@ -2864,7 +2894,6 @@ class ButtonMenu extends SimpleButton {
      * Closes the button
      */
     close() {
-        window.removeEventListener('scroll', this.setPosition, true);
         this.button.appendChild(this.menu);
         this.button.removeAttribute('aria-expanded');
         this.menu.setAttribute('aria-hidden', 'true');
@@ -2880,7 +2909,14 @@ class ButtonMenu extends SimpleButton {
             this.onclose(this);
         }
 
-        ButtonMenu.activeMenu = null;
+        if (this.menuid) {
+            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
+                ButtonMenu.activeMenuTypes = {};
+            }
+            ButtonMenu.activeMenuTypes[this.menuid] = null;
+        } else {
+            ButtonMenu.activeMenu = null;
+        }
     }
 
     /**
@@ -10152,7 +10188,20 @@ class ToolTip {
 
         this.setPosition();
 
-        window.addEventListener('scroll', this.setPosition, true);
+        /*
+            This is gross but:
+                1) anonymous functions can't be removed, so we have a problem with "this"
+                2) we can't pass this.setPosition as the function because "this" becomes "window"
+                3) we can't remove a listener set this way in a different method (e.g., close())
+         */
+        const me = this;
+        window.addEventListener('scroll', function _listener() {
+            if (!me.isopen) {
+                window.removeEventListener('scroll', _listener, true);
+            }
+            me.setPosition();
+        }, true);
+
 
     }
 
@@ -10171,6 +10220,11 @@ class ToolTip {
         switch(this.gravity) {
             case 's':
             case 'south':
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - (self.container.offsetWidth / 2) + (this.parent.offsetWidth / 2 )}px`;
+                break;
+            case 'sw':
+            case 'southwest':
                 self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
                 break;
@@ -10199,7 +10253,6 @@ class ToolTip {
      */
     close() {
         this.parent.appendChild(this.container);
-        window.removeEventListener('scroll', this.setPosition, true);
         this.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
     }
@@ -10800,8 +10853,9 @@ class InputElement {
 
 
         if (this.title) { this.input.setAttribute('title', this.title); }
+        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }
         if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
-        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
+        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
         if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 
         if (this.classes) {
@@ -11821,12 +11875,10 @@ class SelectMenu extends InputElement {
     setCloseListener() {
 
         document.addEventListener('keydown', (e) => {
-            console.log("murrr");
             if (e.key === 'Escape') { this.close(); }
         }, { once: true });
 
         window.addEventListener('click', (e) => {
-            console.log("hrrrr");
             if ((this.wrapper.contains(e.target)) || (this.listbox.contains(e.target))) {
                 this.setCloseListener();
             } else {

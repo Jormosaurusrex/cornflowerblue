@@ -103,3 +103,16 @@
 .cfb-envelope-flat:before { content: '\e871'; } /* '' */
 .cfb-envelope-angle:before { content: '\e872'; } /* '' */
 .cfb-bell:before { content: '\e873'; } /* '' */
+.cfb-backgroundcolor:before { content: '\e876'; } /* '' */
+.cfb-bold:before { content: '\e877'; } /* '' */
+.cfb-center:before { content: '\e878'; } /* '' */
+.cfb-fontcolor:before { content: '\e879'; } /* '' */
+.cfb-indent:before { content: '\e87a'; } /* '' */
+.cfb-italic:before { content: '\e87b'; } /* '' */
+.cfb-justify:before { content: '\e87c'; } /* '' */
+.cfb-left:before { content: '\e87d'; } /* '' */
+.cfb-ol:before { content: '\e87e'; } /* '' */
+.cfb-outdent:before { content: '\e87f'; } /* '' */
+.cfb-strike:before { content: '\e881'; } /* '' */
+.cfb-ul:before { content: '\e882'; } /* '' */
+.cfb-underline:before { content: '\e883'; } /* '' */

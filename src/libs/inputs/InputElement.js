@@ -485,8 +485,9 @@ class InputElement {
 
 
         if (this.title) { this.input.setAttribute('title', this.title); }
+        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }
         if (this.autocomplete) { this.input.setAttribute('autocomplete', this.autocomplete); }
-        if (this.arialabel) { this.input.setAttribute('aria-label', this.arialabel); }        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
+        if (this.pattern) { this.input.setAttribute('pattern', this.pattern); }
         if (this.maxlength) { this.input.setAttribute('maxlength', this.maxlength); }
 
         if (this.classes) {
