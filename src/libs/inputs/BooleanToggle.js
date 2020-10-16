@@ -7,6 +7,7 @@ class BooleanToggle {
             name: null,
             form: null,
             label: null,
+            hidewhenpassive: false,
             passive: false,
             checked: false, // Initial state.
             classes: [], // Extra css classes to apply
@@ -30,6 +31,7 @@ class BooleanToggle {
             form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
             name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
+            hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
             label: { type: 'option', datatype: 'string', description: "Input label. If null, no label will be shown." },
             title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
@@ -64,6 +66,14 @@ class BooleanToggle {
      */
     get naked() { return this.toggle; }
 
+    /**
+     * Let us know if there's a container on this.
+     * @return {boolean}
+     */
+    get hascontainer() {
+        return !!this._container;
+    }
+
     get touched() {
         return this.checked !== this.origval;
     }
@@ -86,6 +96,8 @@ class BooleanToggle {
      * Switch to 'passive' mode.
      */
     pacify() {
+        if (!this.hascontainer) { return; }
+        if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -94,6 +106,8 @@ class BooleanToggle {
      * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
+        if (!this.hascontainer) { return; }
+        this.container.removeAttribute('aria-hidden');
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -102,6 +116,7 @@ class BooleanToggle {
      * Toggle the passive/active modes
      */
     toggleActivation() {
+        if (!this.hascontainer) { return; }
         if (this.container.classList.contains('passive')) {
             this.activate();
             return;
@@ -223,7 +238,7 @@ class BooleanToggle {
     disable() {
         this.toggle.setAttribute('disabled', 'disabled');
         this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
+        if (this.hascontainer) { this.container.classList.add('disabled'); }
     }
 
     /**
@@ -232,7 +247,7 @@ class BooleanToggle {
     enable() {
         this.toggle.removeAttr('disabled');
         this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
+        if (this.hascontainer) { this.container.classList.remove('disabled'); }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -274,6 +289,9 @@ class BooleanToggle {
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
+
+    get hidewhenpassive() { return this.config.hidewhenpassive; }
+    set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

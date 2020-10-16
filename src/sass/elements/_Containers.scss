@@ -465,6 +465,9 @@ p.textarea-container {
       }
     }
   }
+  &[aria-hidden="true"] {
+    display: none;
+  }
 }
 div.textarea-container {
   div.wrap {

@@ -12,6 +12,7 @@ class InputElement {
             type: 'text',
             label: null,
             placeholder: null,
+            hidewhenpassive: false,
             preamble: null,
             title: null,
             pattern: null,
@@ -66,6 +67,7 @@ class InputElement {
             help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
             helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
             required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
+            hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
             requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
             requirederror: { type: 'option', datatype: 'string', description: "The error message to display if required item isn't filled." },
             hidden: { type: 'option', datatype: 'boolean', description: "Whether or not to bea hidden element." },
@@ -330,6 +332,7 @@ class InputElement {
      */
     pacify() {
         if (!this.hascontainer) { return; }
+        if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -339,6 +342,8 @@ class InputElement {
      */
     activate() {
         if (!this.hascontainer) { return; }
+        this.container.removeAttribute('aria-hidden');
+
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -765,6 +770,9 @@ class InputElement {
 
     get helpwaittime() { return this.config.helpwaittime; }
     set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
+
+    get hidewhenpassive() { return this.config.hidewhenpassive; }
+    set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

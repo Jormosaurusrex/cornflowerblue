@@ -4027,6 +4027,13 @@ p.textarea-container.passive div.passivebox a img {
   height: 3em;
   max-height: 3em;
 }
+div.input-container[aria-hidden=true],
+p.input-container[aria-hidden=true],
+div.file-container[aria-hidden=true],
+div.textarea-container[aria-hidden=true],
+p.textarea-container[aria-hidden=true] {
+  display: none;
+}
 
 div.textarea-container div.wrap:after {
   justify-content: flex-start;
