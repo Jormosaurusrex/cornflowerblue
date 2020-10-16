@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #222;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <g id="Artboard_1" data-name="Artboard 1">
+    <g id="Next">
+      <path id="_" data-name="&lt;/&gt;" class="cls-1" d="M331.342,313.964v-21.5l90.071-43.626-90.071-43.755v-21.5l114.471,57.236v15.911ZM197.411,363.186l78.828-222.875h20.876L218.053,363.186H197.411Zm-144-122.369,114.471-57.236v21.5L77.807,248.837l90.071,43.626v21.5L53.407,256.728V240.817Z"/>
+    </g>
+  </g>
+</svg>
