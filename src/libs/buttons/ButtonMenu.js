@@ -3,14 +3,16 @@ class ButtonMenu extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             action: (e, self) => {
+                e.preventDefault();
+                e.stopPropagation();
                 let focused = (document.activeElement === self.button);
                 if ((focused) && (!self.isopen)) {
                     self.open();
                 } else {
                     self.close();
                 }
-                e.stopPropagation();
             },
+            focusinside: true,  //
             menuid: null,    // If present, will only auto-close other menus of this type.
             closeopen: true, // if true, force all other open menus closed when this one opens.
             onopen: null,    // Function to execute on open. passed "self" as argument
@@ -30,7 +32,7 @@ class ButtonMenu extends SimpleButton {
                         //    tooltip: null, // Tooltip text
                         //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
-                        //    action: function() { } // what to do when the tab is clicked.
+                        //    action: () => { } // what to do when the tab is clicked.
                         // }
         };
     }
@@ -129,12 +131,14 @@ class ButtonMenu extends SimpleButton {
             this.onopen(this);
         }
 
-        let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        window.setTimeout(() => { // Do the focus thing late
-            if ((focusable) && (focusable.length > 0)) {
-                focusable[0].focus();
-            }
-        }, 200);
+        if (this.focusinside) {
+            let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
+            window.setTimeout(() => { // Do the focus thing late
+                if ((focusable) && (focusable.length > 0)) {
+                    focusable[0].focus();
+                }
+            }, 200);
+        }
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
@@ -324,6 +328,12 @@ class ButtonMenu extends SimpleButton {
                 anchor.appendChild(IconFactory.icon(item.icon));
             }
 
+            if ((item.classes) && (item.classes.length > 0)) {
+                for (let c of item.classes) {
+                    menuitem.classList.add(c)
+                }
+            }
+
             let s = document.createElement('span');
             s.innerHTML = item.label;
             anchor.appendChild(s);
@@ -381,6 +391,9 @@ class ButtonMenu extends SimpleButton {
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get focusinside() { return this.config.focusinside; }
+    set focusinside(focusinside) { this.config.focusinside = focusinside; }
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }

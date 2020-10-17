@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-15
+/*! Cornflower Blue - v0.1.1 - 2020-10-16
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2677,14 +2677,16 @@ class ButtonMenu extends SimpleButton {
     static get DEFAULT_CONFIG() {
         return {
             action: (e, self) => {
+                e.preventDefault();
+                e.stopPropagation();
                 let focused = (document.activeElement === self.button);
                 if ((focused) && (!self.isopen)) {
                     self.open();
                 } else {
                     self.close();
                 }
-                e.stopPropagation();
             },
+            focusinside: true,  //
             menuid: null,    // If present, will only auto-close other menus of this type.
             closeopen: true, // if true, force all other open menus closed when this one opens.
             onopen: null,    // Function to execute on open. passed "self" as argument
@@ -2704,7 +2706,7 @@ class ButtonMenu extends SimpleButton {
                         //    tooltip: null, // Tooltip text
                         //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
-                        //    action: function() { } // what to do when the tab is clicked.
+                        //    action: () => { } // what to do when the tab is clicked.
                         // }
         };
     }
@@ -2803,12 +2805,14 @@ class ButtonMenu extends SimpleButton {
             this.onopen(this);
         }
 
-        let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
-        window.setTimeout(() => { // Do the focus thing late
-            if ((focusable) && (focusable.length > 0)) {
-                focusable[0].focus();
-            }
-        }, 200);
+        if (this.focusinside) {
+            let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
+            window.setTimeout(() => { // Do the focus thing late
+                if ((focusable) && (focusable.length > 0)) {
+                    focusable[0].focus();
+                }
+            }, 200);
+        }
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
@@ -3055,6 +3059,9 @@ class ButtonMenu extends SimpleButton {
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get focusinside() { return this.config.focusinside; }
+    set focusinside(focusinside) { this.config.focusinside = focusinside; }
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
@@ -10380,6 +10387,7 @@ class InputElement {
             type: 'text',
             label: null,
             placeholder: null,
+            hidewhenpassive: false,
             preamble: null,
             title: null,
             pattern: null,
@@ -10434,6 +10442,7 @@ class InputElement {
             help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
             helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
             required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
+            hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
             requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
             requirederror: { type: 'option', datatype: 'string', description: "The error message to display if required item isn't filled." },
             hidden: { type: 'option', datatype: 'boolean', description: "Whether or not to bea hidden element." },
@@ -10698,6 +10707,7 @@ class InputElement {
      */
     pacify() {
         if (!this.hascontainer) { return; }
+        if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -10707,6 +10717,8 @@ class InputElement {
      */
     activate() {
         if (!this.hascontainer) { return; }
+        this.container.removeAttribute('aria-hidden');
+
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -11133,6 +11145,9 @@ class InputElement {
 
     get helpwaittime() { return this.config.helpwaittime; }
     set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
+
+    get hidewhenpassive() { return this.config.hidewhenpassive; }
+    set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
@@ -11933,6 +11948,7 @@ class BooleanToggle {
             name: null,
             form: null,
             label: null,
+            hidewhenpassive: false,
             passive: false,
             checked: false, // Initial state.
             classes: [], // Extra css classes to apply
@@ -11956,6 +11972,7 @@ class BooleanToggle {
             form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
             name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
+            hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
             label: { type: 'option', datatype: 'string', description: "Input label. If null, no label will be shown." },
             title: { type: 'option', datatype: 'string', description: "The title attribute for the element. Not recommended to be used." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
@@ -11990,6 +12007,14 @@ class BooleanToggle {
      */
     get naked() { return this.toggle; }
 
+    /**
+     * Let us know if there's a container on this.
+     * @return {boolean}
+     */
+    get hascontainer() {
+        return !!this._container;
+    }
+
     get touched() {
         return this.checked !== this.origval;
     }
@@ -12012,6 +12037,8 @@ class BooleanToggle {
      * Switch to 'passive' mode.
      */
     pacify() {
+        if (!this.hascontainer) { return; }
+        if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -12020,6 +12047,8 @@ class BooleanToggle {
      * Switch from 'passive' mode to 'active' mode.
      */
     activate() {
+        if (!this.hascontainer) { return; }
+        this.container.removeAttribute('aria-hidden');
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -12028,6 +12057,7 @@ class BooleanToggle {
      * Toggle the passive/active modes
      */
     toggleActivation() {
+        if (!this.hascontainer) { return; }
         if (this.container.classList.contains('passive')) {
             this.activate();
             return;
@@ -12149,7 +12179,7 @@ class BooleanToggle {
     disable() {
         this.toggle.setAttribute('disabled', 'disabled');
         this.disabled = true;
-        if (this.container) { this.container.classList.add('disabled'); }
+        if (this.hascontainer) { this.container.classList.add('disabled'); }
     }
 
     /**
@@ -12158,7 +12188,7 @@ class BooleanToggle {
     enable() {
         this.toggle.removeAttr('disabled');
         this.disabled = false;
-        if (this.container) { this.container.classList.remove('disabled'); }
+        if (this.hascontainer) { this.container.classList.remove('disabled'); }
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -12200,6 +12230,9 @@ class BooleanToggle {
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
+
+    get hidewhenpassive() { return this.config.hidewhenpassive; }
+    set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
@@ -13309,8 +13342,6 @@ class ColorSelector extends RadioGroup {
             ]
         };
     }
-
-
 
     /**
      * Define the ColorSelecotr

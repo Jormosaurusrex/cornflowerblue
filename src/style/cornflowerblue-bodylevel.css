@@ -787,7 +787,7 @@ ul.button-menu li:active, ul.button-menu li:focus {
 }
 ul.button-menu li a {
   --colors-affordance: var(--link-color);
-  padding: 0.6em 1em 0.6em 1em;
+  padding: 0.6rem 1rem 0.6rem 1rem;
   white-space: nowrap;
   background-color: transparent;
   font-size: 1em;

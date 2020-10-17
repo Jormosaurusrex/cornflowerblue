@@ -17,8 +17,6 @@ class ColorSelector extends RadioGroup {
         };
     }
 
-
-
     /**
      * Define the ColorSelecotr
      * @param config a dictionary object
