@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-16
+/*! Cornflower Blue - v0.1.1 - 2020-10-19
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2934,8 +2934,9 @@ class ButtonMenu extends SimpleButton {
         window.addEventListener('click', (e) => {
             let tag = this.menu.tagName.toLowerCase();
             if (((this.menu.contains(e.target))) && (this.stayopen)) {
-                this.setCloseListener();
+                window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+
             } else if (this.menu.contains(e.target)) {
                 this.close();
             } else if (this.button.contains(e.target)) {
@@ -3000,6 +3001,12 @@ class ButtonMenu extends SimpleButton {
             let anchor = document.createElement('a');
             if (item.icon) {
                 anchor.appendChild(IconFactory.icon(item.icon));
+            }
+
+            if ((item.classes) && (item.classes.length > 0)) {
+                for (let c of item.classes) {
+                    menuitem.classList.add(c)
+                }
             }
 
             let s = document.createElement('span');
@@ -12186,7 +12193,7 @@ class BooleanToggle {
      * Disable the toggle
      */
     enable() {
-        this.toggle.removeAttr('disabled');
+        this.toggle.removeAttribute('disabled');
         this.disabled = false;
         if (this.hascontainer) { this.container.classList.remove('disabled'); }
     }
@@ -12208,7 +12215,10 @@ class BooleanToggle {
     set attributes(attributes) { this.config.attributes = attributes; }
 
     get checked() { return this.config.checked; }
-    set checked(checked) { this.config.checked = checked; }
+    set checked(checked) {
+        if (this._toggle) { this.toggle.checked = checked; }
+        this.config.checked = checked;
+    }
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }

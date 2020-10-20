@@ -260,8 +260,9 @@ class ButtonMenu extends SimpleButton {
         window.addEventListener('click', (e) => {
             let tag = this.menu.tagName.toLowerCase();
             if (((this.menu.contains(e.target))) && (this.stayopen)) {
-                this.setCloseListener();
+                window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+
             } else if (this.menu.contains(e.target)) {
                 this.close();
             } else if (this.button.contains(e.target)) {

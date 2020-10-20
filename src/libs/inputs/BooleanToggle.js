@@ -245,7 +245,7 @@ class BooleanToggle {
      * Disable the toggle
      */
     enable() {
-        this.toggle.removeAttr('disabled');
+        this.toggle.removeAttribute('disabled');
         this.disabled = false;
         if (this.hascontainer) { this.container.classList.remove('disabled'); }
     }
@@ -267,7 +267,10 @@ class BooleanToggle {
     set attributes(attributes) { this.config.attributes = attributes; }
 
     get checked() { return this.config.checked; }
-    set checked(checked) { this.config.checked = checked; }
+    set checked(checked) {
+        if (this._toggle) { this.toggle.checked = checked; }
+        this.config.checked = checked;
+    }
 
     get classes() { return this.config.classes; }
     set classes(classes) { this.config.classes = classes; }
