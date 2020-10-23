@@ -58,7 +58,7 @@ div.datepicker {
               background-color: var(--canvas-color-callout-lightweight);
             }
             &.today {
-              --link-color: var(--colors-text-hot);
+              color: var(--colors-text-hot);
               background-color: var(--colors-highlight);
               font-weight: bold;
             }

@@ -262,7 +262,7 @@ class ButtonMenu extends SimpleButton {
             if (((this.menu.contains(e.target))) && (this.stayopen)) {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
-
+                // Do nothing.
             } else if (this.menu.contains(e.target)) {
                 this.close();
             } else if (this.button.contains(e.target)) {

@@ -262,7 +262,7 @@ class SimpleForm {
                 touched = true;
                 let localValid = element.validate();
                 if (!localValid) { valid = false; }
-            } else if ((element.required) && (element.value === '')) {
+            } else if ((element.required) && ((element.value === null) || (element.value === ''))) {
                 valid = false; // empty required fields
             }
         }

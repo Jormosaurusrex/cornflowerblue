@@ -4377,7 +4377,7 @@ div.datepicker div.monthbox div.month table.month td a.cmonth {
   background-color: var(--canvas-color-callout-lightweight);
 }
 div.datepicker div.monthbox div.month table.month td a.today {
-  --link-color: var(--colors-text-hot);
+  color: var(--colors-text-hot);
   background-color: var(--colors-highlight);
   font-weight: bold;
 }

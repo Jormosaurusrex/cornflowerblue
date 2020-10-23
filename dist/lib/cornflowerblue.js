@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-19
+/*! Cornflower Blue - v0.1.1 - 2020-10-23
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2936,7 +2936,7 @@ class ButtonMenu extends SimpleButton {
             if (((this.menu.contains(e.target))) && (this.stayopen)) {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
-
+                // Do nothing.
             } else if (this.menu.contains(e.target)) {
                 this.close();
             } else if (this.button.contains(e.target)) {

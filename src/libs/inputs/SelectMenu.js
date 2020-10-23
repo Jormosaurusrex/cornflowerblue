@@ -31,7 +31,6 @@ class SelectMenu extends InputElement {
      * Close open menus
      */
     static closeOpen() {
-        console.log("closeOpen");
         if (SelectMenu.activeMenu) {
             SelectMenu.activeMenu.close();
         }
@@ -197,7 +196,6 @@ class SelectMenu extends InputElement {
      */
     close() {
         //window.removeEventListener('scroll', this.setPosition, true);
-        console.log("close");
         window.onscroll=() => {};
         this.listbox.style.top = null;
         this.listbox.style.bottom = null;
@@ -330,7 +328,6 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('placeholder', this.placeholder);
 
         this.triggerbox.addEventListener('focusin', (e) => {
-            console.log('focusin');
             if (this.disabled) {
                 e.stopPropagation();
                 return;

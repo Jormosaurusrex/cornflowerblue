@@ -22,6 +22,13 @@ class CornflowerBlueDemo {
                     placeholder: TextFactory.get('passwordinput-placeholder-enter_password'),
                     required: true
                 }),
+                new StateMenu({
+                    label: 'state',
+                    mute: true,
+                    forceconstraints: false,
+                    placeholder: TextFactory.get('passwordinput-placeholder-enter_password'),
+                    required: true
+                }),
                 new BooleanToggle({
                     label: TextFactory.get('remember_me'),
                     style: "toggle",
@@ -111,12 +118,6 @@ class CornflowerBlueDemo {
             elements: [
                 new EmailInput({
                     label: "Email",
-                    autocomplete: 'off',
-                    required: true
-                }),
-                new DateInput({
-                    label: "State",
-                    help: "this is a test tooltip",
                     autocomplete: 'off',
                     required: true
                 }),
