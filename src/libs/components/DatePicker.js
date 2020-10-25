@@ -70,13 +70,14 @@ class DatePicker {
      */
     renderMonth(startDate) {
 
-
         // XXX there has to be a better way to do this.
 
         let now = new Date();
         let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
 
-        if (!startDate) {
+
+
+        if ((!startDate) || (!DateInput.isValid(startDate))) {
             startDate = today;
         } else if (typeof startDate === 'string') {
             startDate = new Date(`${startDate} ${this.basetime}`);
