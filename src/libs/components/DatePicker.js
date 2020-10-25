@@ -75,8 +75,6 @@ class DatePicker {
         let now = new Date();
         let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
 
-
-
         if ((!startDate) || (!DateInput.isValid(startDate))) {
             startDate = today;
         } else if (typeof startDate === 'string') {
@@ -182,9 +180,9 @@ class DatePicker {
                     dayOfPreviousMonth++;
                 } else {
                     // after this month, so next month
-                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} ${this.basetime}`);
+                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +1)}-${dayOfNextMonth} ${this.basetime}`);
                     link.innerHTML = dayOfNextMonth;
-                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
+                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +1)}-${dayOfNextMonth}`);
                     dayOfNextMonth++;
                 }
 
