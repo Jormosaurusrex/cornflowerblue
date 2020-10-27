@@ -261,6 +261,7 @@ class GridField {
                 e = new BooleanToggle(config);
                 break;
             case 'timezone':
+                delete config.options;
                 e = new TimezoneMenu(config);
                 break;
             case 'url':

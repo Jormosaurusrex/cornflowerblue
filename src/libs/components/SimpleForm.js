@@ -72,6 +72,14 @@ class SimpleForm {
         this.contentbox.scrollTo(0, 0);
     }
 
+
+    reset() {
+        for (let e of this.elements) {
+            e.reset();
+        }
+    }
+
+
     /**
      * Switch to 'passive' mode.
      */

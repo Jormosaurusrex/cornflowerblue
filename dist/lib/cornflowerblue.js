@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-25
+/*! Cornflower Blue - v0.1.1 - 2020-10-27
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -7318,6 +7318,7 @@ class GridField {
                 e = new BooleanToggle(config);
                 break;
             case 'timezone':
+                delete config.options;
                 e = new TimezoneMenu(config);
                 break;
             case 'url':
@@ -7556,8 +7557,6 @@ class DatePicker {
         let now = new Date();
         let today = new Date(`${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()} ${this.basetime}`);
 
-
-
         if ((!startDate) || (!DateInput.isValid(startDate))) {
             startDate = today;
         } else if (typeof startDate === 'string') {
@@ -7663,9 +7662,9 @@ class DatePicker {
                     dayOfPreviousMonth++;
                 } else {
                     // after this month, so next month
-                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth} ${this.basetime}`);
+                    thisDay = new Date(`${nextMonth.getFullYear()}-${(nextMonth.getMonth() +1)}-${dayOfNextMonth} ${this.basetime}`);
                     link.innerHTML = dayOfNextMonth;
-                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +2)}-${dayOfNextMonth}`);
+                    link.setAttribute('data-day', `${nextMonth.getFullYear()}-${(nextMonth.getMonth() +1)}-${dayOfNextMonth}`);
                     dayOfNextMonth++;
                 }
 
@@ -7998,7 +7997,7 @@ class DialogWindow {
                             case 'closebutton':
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
-                                    ghost: true,
+                                    mute: true,
                                     action: () => {
                                         this.close();
                                     }
@@ -8045,7 +8044,7 @@ class DialogWindow {
                             case 'closebutton':
                                 this.actionbox.appendChild(new SimpleButton({
                                     text: this.closetext,
-                                    ghost: true,
+                                    mute: true,
                                     action: () => {
                                         this.close();
                                     }
@@ -9003,6 +9002,14 @@ class SimpleForm {
     toTop() {
         this.contentbox.scrollTo(0, 0);
     }
+
+
+    reset() {
+        for (let e of this.elements) {
+            e.reset();
+        }
+    }
+
 
     /**
      * Switch to 'passive' mode.
@@ -10540,6 +10547,14 @@ class InputElement {
 
     /* CORE METHODS_____________________________________________________________________ */
 
+    reset() {
+        this.value = this.origval;
+        if (this.passivebox) {
+            this.passivebox.innerHTML = '';
+            this.passivebox.appendChild(this.passivetext);
+        }
+    }
+
     /**
      * Has the field been changed or not?
      * @return {boolean} true or false, depending.
@@ -10715,6 +10730,10 @@ class InputElement {
      */
     pacify() {
         if (!this.hascontainer) { return; }
+        if (this.passivebox) {
+            this.passivebox.innerHTML = '';
+            this.passivebox.appendChild(this.passivetext);
+        }
         if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
         this.container.classList.add('passive');
         this.passive = true;
@@ -10940,7 +10959,6 @@ class InputElement {
             }
         });
         this.input.addEventListener('focusin', (e) => {
-
             if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
                 this.input.setAttribute('placeholder', this.placeholder);
             }
@@ -11397,6 +11415,10 @@ class SelectMenu extends InputElement {
         this.config.value = value;
         this.triggerbox.value = value;
         this.setPassiveboxValue(value);
+    }
+
+    reset() {
+        this.value = this.origval;
     }
 
     setPassiveboxValue(value) {
@@ -13744,6 +13766,9 @@ class TimezoneMenu extends SelectMenu {
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
+        console.log(`ARRRRHHH ${config.name} :: ${config.options.length}`);
+        console.log(config);
+
         super(config);
     }
 }

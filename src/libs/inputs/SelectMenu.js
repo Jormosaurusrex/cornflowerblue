@@ -82,6 +82,10 @@ class SelectMenu extends InputElement {
         this.setPassiveboxValue(value);
     }
 
+    reset() {
+        this.value = this.origval;
+    }
+
     setPassiveboxValue(value) {
         this.passivebox.innerHTML = value;
     }

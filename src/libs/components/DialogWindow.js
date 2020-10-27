@@ -200,7 +200,7 @@ class DialogWindow {
                             case 'closebutton':
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
-                                    ghost: true,
+                                    mute: true,
                                     action: () => {
                                         this.close();
                                     }
@@ -247,7 +247,7 @@ class DialogWindow {
                             case 'closebutton':
                                 this.actionbox.appendChild(new SimpleButton({
                                     text: this.closetext,
-                                    ghost: true,
+                                    mute: true,
                                     action: () => {
                                         this.close();
                                     }

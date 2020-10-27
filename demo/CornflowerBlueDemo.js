@@ -1081,6 +1081,7 @@ class CornflowerBlueDemo {
             elements: [
                 new TextInput({
                     label: "Name",
+                    name: 'name',
                     autocomplete: 'off',
                     mute: true,
                     placeholder: "Miyamoto Musashi",
@@ -1088,12 +1089,14 @@ class CornflowerBlueDemo {
                 }),
                 new TextInput({
                     label: "Nickname",
+                    name: 'nickname',
                     autocomplete: 'off',
                     placeholder: "Musashi",
                     help: "What should we call you? This is your short name."
                 }),
                 new EmailInput({
                     label: "Email",
+                    name: 'email',
                     mute: true,
                     autocomplete: 'off',
                     required: true
@@ -1130,6 +1133,7 @@ class CornflowerBlueDemo {
                     mute: true,
                     action: (e, self) => {
                         e.preventDefault();
+                        self.form.reset();
                         self.form.pacify();
                     }
                 })

@@ -157,6 +157,14 @@ class InputElement {
 
     /* CORE METHODS_____________________________________________________________________ */
 
+    reset() {
+        this.value = this.origval;
+        if (this.passivebox) {
+            this.passivebox.innerHTML = '';
+            this.passivebox.appendChild(this.passivetext);
+        }
+    }
+
     /**
      * Has the field been changed or not?
      * @return {boolean} true or false, depending.
@@ -332,6 +340,10 @@ class InputElement {
      */
     pacify() {
         if (!this.hascontainer) { return; }
+        if (this.passivebox) {
+            this.passivebox.innerHTML = '';
+            this.passivebox.appendChild(this.passivetext);
+        }
         if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
         this.container.classList.add('passive');
         this.passive = true;
@@ -557,7 +569,6 @@ class InputElement {
             }
         });
         this.input.addEventListener('focusin', (e) => {
-
             if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
                 this.input.setAttribute('placeholder', this.placeholder);
             }

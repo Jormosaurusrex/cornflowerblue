@@ -39,6 +39,20 @@ div.checkbox-container {
       display: inline-block;
     }
   }
+
+}
+div.checkbox-container,
+div.radiogroup-container {
+  &.disabled {
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--input-status-color-rgb), 0.05) .5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
+    cursor: not-allowed;
+    text-shadow: none;
+    pointer-events: none;
+    label {
+      opacity: .5;
+      text-shadow: none;
+    }
+  }
 }
 div.radiogroup-container {
   ul.radiogroup {
@@ -359,7 +373,6 @@ input[type="radio"] {
       }
     }
     &:focus,
-    &:focus-within,
     &:active {
       background-color: var(--colors-affordance);
       &:after {

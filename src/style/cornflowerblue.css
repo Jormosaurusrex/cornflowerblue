@@ -2590,6 +2590,19 @@ div.checkbox-container.passive > div.passivebox {
   display: inline-block;
 }
 
+div.checkbox-container.disabled,
+div.radiogroup-container.disabled {
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
+  cursor: not-allowed;
+  text-shadow: none;
+  pointer-events: none;
+}
+div.checkbox-container.disabled label,
+div.radiogroup-container.disabled label {
+  opacity: 0.5;
+  text-shadow: none;
+}
+
 div.radiogroup-container ul.radiogroup {
   list-style-type: none;
 }
@@ -2918,21 +2931,17 @@ input[type=radio].switch:checked:after {
   left: auto;
   right: var(--checkbox-toggle-offset);
 }
-input[type=checkbox].toggle:focus, input[type=checkbox].toggle:focus-within, input[type=checkbox].toggle:active, input[type=checkbox].switch:focus, input[type=checkbox].switch:focus-within, input[type=checkbox].switch:active,
+input[type=checkbox].toggle:focus, input[type=checkbox].toggle:active, input[type=checkbox].switch:focus, input[type=checkbox].switch:active,
 input[type=radio].toggle:focus,
-input[type=radio].toggle:focus-within,
 input[type=radio].toggle:active,
 input[type=radio].switch:focus,
-input[type=radio].switch:focus-within,
 input[type=radio].switch:active {
   background-color: var(--colors-affordance);
 }
-input[type=checkbox].toggle:focus:after, input[type=checkbox].toggle:focus-within:after, input[type=checkbox].toggle:active:after, input[type=checkbox].switch:focus:after, input[type=checkbox].switch:focus-within:after, input[type=checkbox].switch:active:after,
+input[type=checkbox].toggle:focus:after, input[type=checkbox].toggle:active:after, input[type=checkbox].switch:focus:after, input[type=checkbox].switch:active:after,
 input[type=radio].toggle:focus:after,
-input[type=radio].toggle:focus-within:after,
 input[type=radio].toggle:active:after,
 input[type=radio].switch:focus:after,
-input[type=radio].switch:focus-within:after,
 input[type=radio].switch:active:after {
   border-color: var(--colors-text-hot);
   background-color: var(--colors-affordance);
