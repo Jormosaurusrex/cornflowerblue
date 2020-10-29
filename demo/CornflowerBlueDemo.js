@@ -1094,6 +1094,12 @@ class CornflowerBlueDemo {
                     placeholder: "Musashi",
                     help: "What should we call you? This is your short name."
                 }),
+                new StateMenu({
+                    label: "Nickname",
+                    name: 'nickname',
+                    autocomplete: 'off',
+                    value: "WV"
+                }),
                 new EmailInput({
                     label: "Email",
                     name: 'email',

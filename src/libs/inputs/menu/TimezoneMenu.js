@@ -16,9 +16,6 @@ class TimezoneMenu extends SelectMenu {
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
-        console.log(`ARRRRHHH ${config.name} :: ${config.options.length}`);
-        console.log(config);
-
         super(config);
     }
 }

@@ -82,12 +82,22 @@ class SelectMenu extends InputElement {
         this.setPassiveboxValue(value);
     }
 
+    getOptionLabel(value) {
+        let label = "";
+        for (let o of this.options) {
+            if (o.value === value) {
+                label = o.label;
+            }
+        }
+        return label;
+    }
+
     reset() {
         this.value = this.origval;
     }
 
     setPassiveboxValue(value) {
-        this.passivebox.innerHTML = value;
+        this.passivebox.innerHTML = this.getOptionLabel(value);
     }
 
     get passivetext() {
@@ -95,7 +105,7 @@ class SelectMenu extends InputElement {
         if (this.selectedoption) { p = this.selectedoption.label; }
         if (this.value) { p = this.value; }
         if (this.config.value) { p = this.config.value; }
-        return document.createTextNode(p);
+        return document.createTextNode(this.getOptionLabel(p));
     }
 
     drawPayload(def) {

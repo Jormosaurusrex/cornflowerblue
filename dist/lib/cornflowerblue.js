@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-27
+/*! Cornflower Blue - v0.1.1 - 2020-10-29
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -11417,12 +11417,22 @@ class SelectMenu extends InputElement {
         this.setPassiveboxValue(value);
     }
 
+    getOptionLabel(value) {
+        let label = "";
+        for (let o of this.options) {
+            if (o.value === value) {
+                label = o.label;
+            }
+        }
+        return label;
+    }
+
     reset() {
         this.value = this.origval;
     }
 
     setPassiveboxValue(value) {
-        this.passivebox.innerHTML = value;
+        this.passivebox.innerHTML = this.getOptionLabel(value);
     }
 
     get passivetext() {
@@ -11430,7 +11440,7 @@ class SelectMenu extends InputElement {
         if (this.selectedoption) { p = this.selectedoption.label; }
         if (this.value) { p = this.value; }
         if (this.config.value) { p = this.config.value; }
-        return document.createTextNode(p);
+        return document.createTextNode(this.getOptionLabel(p));
     }
 
     drawPayload(def) {
@@ -13766,9 +13776,6 @@ class TimezoneMenu extends SelectMenu {
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, TimezoneMenu.DEFAULT_CONFIG, config);
-        console.log(`ARRRRHHH ${config.name} :: ${config.options.length}`);
-        console.log(config);
-
         super(config);
     }
 }
