@@ -123,7 +123,7 @@ class SimpleButton {
      * Show the button
      */
     show() {
-        this.button.classList.remove('hidden');
+        this.button.removeAttribute('aria-hidden');
         this.hidden = false;
         return this;
     }
@@ -132,7 +132,7 @@ class SimpleButton {
      * Hide the button
      */
     hide() {
-        this.button.classList.add('hidden');
+        this.button.setAttribute('aria-hidden', true);
         this.hidden = true;
         return this;
     }

@@ -2109,9 +2109,12 @@ a.button.image {
   min-height: var(--image-height);
   background-size: cover;
 }
-button.hidden,
+button[aria-hidden=true], button.hidden,
+input[type=submit][aria-hidden=true],
 input[type=submit].hidden,
+input[type=reset][aria-hidden=true],
 input[type=reset].hidden,
+a.button[aria-hidden=true],
 a.button.hidden {
   display: none;
 }
@@ -3015,6 +3018,9 @@ p.textarea-container {
   margin: 0;
   padding: 0.5rem 0 0.5rem 0;
   position: relative;
+  height: auto;
+  opacity: 1;
+  transition: all 0.2s;
 }
 div.input-container p.preamble,
 p.input-container p.preamble,
@@ -3856,6 +3862,13 @@ p.textarea-container.valid div.wrap:after {
   opacity: 1;
   content: "0";
 }
+div.input-container.valid.passive div.wrap:after,
+p.input-container.valid.passive div.wrap:after,
+div.file-container.valid.passive div.wrap:after,
+div.textarea-container.valid.passive div.wrap:after,
+p.textarea-container.valid.passive div.wrap:after {
+  opacity: 0;
+}
 div.input-container.warning,
 p.input-container.warning,
 div.file-container.warning,
@@ -4042,6 +4055,9 @@ div.file-container[aria-hidden=true],
 div.textarea-container[aria-hidden=true],
 p.textarea-container[aria-hidden=true] {
   display: none;
+  padding: 0;
+  opacity: 0;
+  height: 0;
 }
 
 div.textarea-container div.wrap:after {

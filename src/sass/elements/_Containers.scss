@@ -6,6 +6,9 @@ p.textarea-container {
   margin: 0;
   padding: .5rem 0 .5rem 0;
   position: relative;
+  height: auto;
+  opacity: 1;
+  transition: all .2s;
   p.preamble {
     margin: 1rem 0 0 0;
   }
@@ -368,6 +371,13 @@ p.textarea-container {
         content: '\30';
       }
     }
+    &.passive {
+      div.wrap {
+        &:after {
+          opacity: 0;
+        }
+      }
+    }
   }
   &.warning {
     --input-status-color-rgb: var(--colors-warning-rgb);
@@ -467,6 +477,9 @@ p.textarea-container {
   }
   &[aria-hidden="true"] {
     display: none;
+    padding: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 div.textarea-container {
@@ -500,7 +513,6 @@ div.textarea-container {
   }
 }
 div.select-container {
-
   &.mute {
     >div.wrap {
       >input.trigger {

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-10-29
+/*! Cornflower Blue - v0.1.1 - 2020-11-01
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2297,7 +2297,7 @@ class SimpleButton {
      * Show the button
      */
     show() {
-        this.button.classList.remove('hidden');
+        this.button.removeAttribute('aria-hidden');
         this.hidden = false;
         return this;
     }
@@ -2306,7 +2306,7 @@ class SimpleButton {
      * Hide the button
      */
     hide() {
-        this.button.classList.add('hidden');
+        this.button.setAttribute('aria-hidden', true);
         this.hidden = true;
         return this;
     }
@@ -9268,6 +9268,7 @@ class SimpleForm {
         }
 
         this.form.addEventListener('submit', (e) => {
+            console.log('formsubmit');
             e.preventDefault();
             this.submit();
         });
@@ -10852,7 +10853,6 @@ class InputElement {
             this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
             this.input.setAttribute('aria-labelledby', `${this.id}-label`);
         }
-
         this.validate(true);
     }
 
@@ -10869,7 +10869,6 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildInput() {
-
 
         if (this.type === 'textarea') {
             this.input = document.createElement('textarea');
@@ -11002,6 +11001,7 @@ class InputElement {
                 this.focusout(e, this);
             }
         });
+
         this.input.value = this.config.value;
 
         if (this.required) {

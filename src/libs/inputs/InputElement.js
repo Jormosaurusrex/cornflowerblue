@@ -462,7 +462,6 @@ class InputElement {
             this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
             this.input.setAttribute('aria-labelledby', `${this.id}-label`);
         }
-
         this.validate(true);
     }
 
@@ -479,7 +478,6 @@ class InputElement {
      * Builds the input's DOM.
      */
     buildInput() {
-
 
         if (this.type === 'textarea') {
             this.input = document.createElement('textarea');
@@ -612,6 +610,7 @@ class InputElement {
                 this.focusout(e, this);
             }
         });
+
         this.input.value = this.config.value;
 
         if (this.required) {

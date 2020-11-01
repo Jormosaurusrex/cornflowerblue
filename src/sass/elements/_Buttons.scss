@@ -296,7 +296,6 @@ a.button {
       border: none;
     }
   }
-
   &.naked,
   &.link {
     margin: 0;
@@ -382,7 +381,7 @@ a.button {
     min-height: var(--image-height);
     background-size: cover;
   }
-
+  &[aria-hidden="true"],
   &.hidden {
     display: none;
   }
