@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-11-01
+/*! Cornflower Blue - v0.1.1 - 2020-11-04
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3463,6 +3463,12 @@ class Panel {
         }
     }
 
+    buildContentBox() {
+        this.contentbox = document.createElement('div');
+        this.contentbox.classList.add('content');
+        this.contentbox.setAttribute('role', 'region');
+    }
+
     /**
      * Build the HTML elements of the Panel
      */
@@ -3472,9 +3478,7 @@ class Panel {
         this.container.classList.add('panel');
         this.container.setAttribute('aria-expanded', 'true');
 
-        this.contentbox = document.createElement('div');
-        this.contentbox.classList.add('content');
-        this.contentbox.setAttribute('role', 'region');
+        this.container.appendChild(this.contentbox);
 
         for (let c of this.classes) {
             this.container.classList.add(c);
@@ -3552,8 +3556,12 @@ class Panel {
     get contentid() { return this.config.contentid; }
     set contentid(contentid) { this.config.contentid = contentid; }
 
-    get contentbox() { return this._contentbox; }
+    get contentbox() {
+        if (!this._contentbox) { this.buildContentBox(); }
+        return this._contentbox;
+    }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
 
     get header() {
         if (!this._header) { this.buildHeader(); }
@@ -4513,6 +4521,7 @@ class DataGrid extends Panel {
             sortable: true, //  Data columns can be sorted
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
+            screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
                              // and will instead pull all information from the warehouse
@@ -4821,22 +4830,27 @@ class DataGrid extends Panel {
                     continue; // Skip hidden
                 }
                 let val;
-                switch (f.type) {  // XXX Change to GridField
-                    case 'date':
-                        val = d[f.name].toString().replace(/"/g,"\\\"");
-                        break;
-                    case 'stringarray':
-                        val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
-                        break;
-                    case 'number':
-                    case 'time':
-                        val = d[f.name];
-                        break;
-                    case 'string':
-                    case 'paragraph':
-                    default:
-                        val = d[f.name].replace(/"/g,"\\\"");
-                        break;
+                if (!d[f.name]) {
+                    val = "";
+                } else {
+                    switch (f.type) {  // XXX Change to GridField
+                        case 'date':
+                            val = d[f.name].toString().replace(/"/g,"\\\"");
+                            break;
+                        case 'stringarray':
+                            val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
+                            break;
+                        case 'number':
+                        case 'time':
+                            val = d[f.name];
+                            break;
+                        case 'string':
+                        case 'paragraph':
+                        default:
+                            val = d[f.name].toString().replace(/"/g,"\\\"");
+                            break;
+                    }
+
                 }
                 cells.push(`\"${val}\"`);
             }
@@ -4924,8 +4938,8 @@ class DataGrid extends Panel {
         let elements = Array.from(this.gridbody.childNodes);
 
         elements.sort((a, b) => {
-            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
-            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
+            let textA = a.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
+            let textB = b.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
 
             if (sort === 'asc') {
                 if (textA < textB) return -1;
@@ -4973,7 +4987,8 @@ class DataGrid extends Panel {
      */
     configurator(type) {
         let dialogconfig = {
-                actions: []
+                actions: [],
+                screen: this.screen
             };
 
         switch(type) {
@@ -4981,7 +4996,7 @@ class DataGrid extends Panel {
                 dialogconfig.title = TextFactory.get('configure_columns');
 
                 let cc = new ColumnConfigurator({
-                    grid: me
+                    grid: this
                 });
                 dialogconfig.content = cc.container;
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
@@ -4994,7 +5009,6 @@ class DataGrid extends Panel {
                 break;
             case 'filter':
                 dialogconfig.title = TextFactory.get('manage_filters');
-
                 let fc = new FilterConfigurator({
                     fields: this.fields,
                     mute: this.mute,
@@ -5013,7 +5027,6 @@ class DataGrid extends Panel {
                         dialog.close();
                     }
                 }));
-
                 break;
             default:
                 break;
@@ -5034,8 +5047,9 @@ class DataGrid extends Panel {
 
         let dialog,
             dialogconfig = {
-            actions: []
-        };
+                actions: [],
+                screen: this.screen
+            };
 
         switch(mode) {
             case 'edit':
@@ -6630,6 +6644,9 @@ class DataGrid extends Panel {
 
     get savestate() { return this.config.savestate; }
     set savestate(savestate) { this.config.savestate = savestate; }
+
+    get screen() { return this.config.screen; }
+    set screen(screen) { this.config.screen = screen; }
 
     get searchable() { return this.config.searchable; }
     set searchable(searchable) { this.config.searchable = searchable; }
@@ -11413,7 +11430,7 @@ class SelectMenu extends InputElement {
 
     set value(value) {
         this.config.value = value;
-        this.triggerbox.value = value;
+        this.triggerbox.value = this.getOptionLabel(value);
         this.setPassiveboxValue(value);
     }
 
@@ -11875,7 +11892,7 @@ class SelectMenu extends InputElement {
             if (this.form) { this.form.validate(); }
 
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(me);
+                this.onchange(this);
             }
         });
 

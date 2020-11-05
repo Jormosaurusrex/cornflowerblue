@@ -138,6 +138,12 @@ class Panel {
         }
     }
 
+    buildContentBox() {
+        this.contentbox = document.createElement('div');
+        this.contentbox.classList.add('content');
+        this.contentbox.setAttribute('role', 'region');
+    }
+
     /**
      * Build the HTML elements of the Panel
      */
@@ -147,9 +153,7 @@ class Panel {
         this.container.classList.add('panel');
         this.container.setAttribute('aria-expanded', 'true');
 
-        this.contentbox = document.createElement('div');
-        this.contentbox.classList.add('content');
-        this.contentbox.setAttribute('role', 'region');
+        this.container.appendChild(this.contentbox);
 
         for (let c of this.classes) {
             this.container.classList.add(c);
@@ -227,8 +231,12 @@ class Panel {
     get contentid() { return this.config.contentid; }
     set contentid(contentid) { this.config.contentid = contentid; }
 
-    get contentbox() { return this._contentbox; }
+    get contentbox() {
+        if (!this._contentbox) { this.buildContentBox(); }
+        return this._contentbox;
+    }
     set contentbox(contentbox) { this._contentbox = contentbox; }
+
 
     get header() {
         if (!this._header) { this.buildHeader(); }

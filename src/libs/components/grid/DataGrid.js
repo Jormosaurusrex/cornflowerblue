@@ -7,6 +7,7 @@ class DataGrid extends Panel {
             sortable: true, //  Data columns can be sorted
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
+            screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
                              // and will instead pull all information from the warehouse
@@ -315,22 +316,27 @@ class DataGrid extends Panel {
                     continue; // Skip hidden
                 }
                 let val;
-                switch (f.type) {  // XXX Change to GridField
-                    case 'date':
-                        val = d[f.name].toString().replace(/"/g,"\\\"");
-                        break;
-                    case 'stringarray':
-                        val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
-                        break;
-                    case 'number':
-                    case 'time':
-                        val = d[f.name];
-                        break;
-                    case 'string':
-                    case 'paragraph':
-                    default:
-                        val = d[f.name].replace(/"/g,"\\\"");
-                        break;
+                if (!d[f.name]) {
+                    val = "";
+                } else {
+                    switch (f.type) {  // XXX Change to GridField
+                        case 'date':
+                            val = d[f.name].toString().replace(/"/g,"\\\"");
+                            break;
+                        case 'stringarray':
+                            val = d[f.name].join(this.exportarrayseparator).replace(/"/g,"\\\"");
+                            break;
+                        case 'number':
+                        case 'time':
+                            val = d[f.name];
+                            break;
+                        case 'string':
+                        case 'paragraph':
+                        default:
+                            val = d[f.name].toString().replace(/"/g,"\\\"");
+                            break;
+                    }
+
                 }
                 cells.push(`\"${val}\"`);
             }
@@ -418,8 +424,8 @@ class DataGrid extends Panel {
         let elements = Array.from(this.gridbody.childNodes);
 
         elements.sort((a, b) => {
-            let textA = a.querySelector(`[data-name='${field}']`).innerHTML;
-            let textB = b.querySelector(`[data-name='${field}']`).innerHTML;
+            let textA = a.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
+            let textB = b.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
 
             if (sort === 'asc') {
                 if (textA < textB) return -1;
@@ -467,7 +473,8 @@ class DataGrid extends Panel {
      */
     configurator(type) {
         let dialogconfig = {
-                actions: []
+                actions: [],
+                screen: this.screen
             };
 
         switch(type) {
@@ -475,7 +482,7 @@ class DataGrid extends Panel {
                 dialogconfig.title = TextFactory.get('configure_columns');
 
                 let cc = new ColumnConfigurator({
-                    grid: me
+                    grid: this
                 });
                 dialogconfig.content = cc.container;
                 dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
@@ -488,7 +495,6 @@ class DataGrid extends Panel {
                 break;
             case 'filter':
                 dialogconfig.title = TextFactory.get('manage_filters');
-
                 let fc = new FilterConfigurator({
                     fields: this.fields,
                     mute: this.mute,
@@ -507,7 +513,6 @@ class DataGrid extends Panel {
                         dialog.close();
                     }
                 }));
-
                 break;
             default:
                 break;
@@ -528,8 +533,9 @@ class DataGrid extends Panel {
 
         let dialog,
             dialogconfig = {
-            actions: []
-        };
+                actions: [],
+                screen: this.screen
+            };
 
         switch(mode) {
             case 'edit':
@@ -2124,6 +2130,9 @@ class DataGrid extends Panel {
 
     get savestate() { return this.config.savestate; }
     set savestate(savestate) { this.config.savestate = savestate; }
+
+    get screen() { return this.config.screen; }
+    set screen(screen) { this.config.screen = screen; }
 
     get searchable() { return this.config.searchable; }
     set searchable(searchable) { this.config.searchable = searchable; }

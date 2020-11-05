@@ -104,6 +104,10 @@
 .cfb-blockquote:before { content: '\e808'; } /* '' */
 .cfb-superscript:before { content: '\e809'; } /* '' */
 .cfb-subscript:before { content: '\e80a'; } /* '' */
+.cfb-indent:before { content: '\e869'; } /* '' */
+.cfb-italic:before { content: '\e86a'; } /* '' */
+.cfb-justify:before { content: '\e86b'; } /* '' */
+.cfb-left:before { content: '\e86c'; } /* '' */
 .cfb-envelope-flat:before { content: '\e871'; } /* '' */
 .cfb-envelope-angle:before { content: '\e872'; } /* '' */
 .cfb-bell:before { content: '\e873'; } /* '' */
@@ -111,10 +115,10 @@
 .cfb-bold:before { content: '\e877'; } /* '' */
 .cfb-center:before { content: '\e878'; } /* '' */
 .cfb-fontcolor:before { content: '\e879'; } /* '' */
-.cfb-indent:before { content: '\e87a'; } /* '' */
-.cfb-italic:before { content: '\e87b'; } /* '' */
-.cfb-justify:before { content: '\e87c'; } /* '' */
-.cfb-left:before { content: '\e87d'; } /* '' */
+.cfb-notched-triangle-left:before { content: '\e87a'; } /* '' */
+.cfb-notched-triangle-up:before { content: '\e87b'; } /* '' */
+.cfb-notched-triangle-down:before { content: '\e87c'; } /* '' */
+.cfb-notched-triangle-right:before { content: '\e87d'; } /* '' */
 .cfb-ol:before { content: '\e87e'; } /* '' */
 .cfb-outdent:before { content: '\e87f'; } /* '' */
 .cfb-right:before { content: '\e880'; } /* '' */

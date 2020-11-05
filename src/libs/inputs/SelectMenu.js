@@ -78,7 +78,7 @@ class SelectMenu extends InputElement {
 
     set value(value) {
         this.config.value = value;
-        this.triggerbox.value = value;
+        this.triggerbox.value = this.getOptionLabel(value);
         this.setPassiveboxValue(value);
     }
 
@@ -540,7 +540,7 @@ class SelectMenu extends InputElement {
             if (this.form) { this.form.validate(); }
 
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(me);
+                this.onchange(this);
             }
         });
 

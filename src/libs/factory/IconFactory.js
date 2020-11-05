@@ -119,7 +119,11 @@ class IconFactory {
             'left',
             'right',
             'ol',
-            'ul'
+            'ul',
+            'notched-triangle-left',
+            'notched-triangle-right',
+            'notched-triangle-up',
+            'notched-triangle-down'
         ];
     }
 
