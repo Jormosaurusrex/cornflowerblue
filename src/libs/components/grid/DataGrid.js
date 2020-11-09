@@ -130,18 +130,24 @@ class DataGrid extends Panel {
         }
 
         this.activefilters = [];
+        this.finalize();
+
+        setTimeout(() =>{
+            this.fillData();
+        }, 100);
+    }
+
+    finalize() {
         this.loadstate();
 
         this.shade.activate();
-        setTimeout(() =>{
-           this.fillData();
-        }, 100);
     }
 
     /**
      * Loads the initial data into the grid.
      */
     fillData() {
+        console.log("filldata");
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
@@ -852,6 +858,11 @@ class DataGrid extends Panel {
         this.gridPostProcess();
     }
 
+    replace(data) {
+        this.data = [];
+        this.update(data);
+    }
+
     /**
      * Update a single entry in the data
      * @param entry the entry to update.  MUST contain an identifier field.
@@ -1071,6 +1082,8 @@ class DataGrid extends Panel {
      */
     applyFilters() {
         if (!this.filterable) return;
+        if (!this.filtertags) return;
+
         let rows = Array.from(this.gridbody.childNodes);
 
         this.filtertags.innerHTML = '';
@@ -1466,6 +1479,7 @@ class DataGrid extends Panel {
             this.messagebox.appendChild(mb.container);
             this.messagebox.classList.remove('hidden');
             this.gridwrapper.classList.add('hidden');
+
         } else {
             this.messagebox.innerHTML = "";
             this.messagebox.classList.add('hidden');

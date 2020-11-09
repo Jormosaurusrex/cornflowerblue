@@ -337,7 +337,6 @@ class SimpleForm {
         }
 
         this.form.addEventListener('submit', (e) => {
-            console.log('formsubmit');
             e.preventDefault();
             this.submit();
         });

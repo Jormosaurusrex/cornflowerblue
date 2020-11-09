@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-11-04
+/*! Cornflower Blue - v0.1.1 - 2020-11-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1907,7 +1907,11 @@ class IconFactory {
             'left',
             'right',
             'ol',
-            'ul'
+            'ul',
+            'notched-triangle-left',
+            'notched-triangle-right',
+            'notched-triangle-up',
+            'notched-triangle-down'
         ];
     }
 
@@ -4644,18 +4648,24 @@ class DataGrid extends Panel {
         }
 
         this.activefilters = [];
+        this.finalize();
+
+        setTimeout(() =>{
+            this.fillData();
+        }, 100);
+    }
+
+    finalize() {
         this.loadstate();
 
         this.shade.activate();
-        setTimeout(() =>{
-           this.fillData();
-        }, 100);
     }
 
     /**
      * Loads the initial data into the grid.
      */
     fillData() {
+        console.log("filldata");
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
@@ -5350,6 +5360,7 @@ class DataGrid extends Panel {
      */
     update(data) {
         if (!this.data) { this.data = []; }
+        console.log(`IDENTIFIER: ${this.identifier}`);
         for (let entry of data) {
             if (this.identifier) {
                 let id = entry[this.identifier];
@@ -5585,6 +5596,8 @@ class DataGrid extends Panel {
      */
     applyFilters() {
         if (!this.filterable) return;
+        if (!this.filtertags) return;
+
         let rows = Array.from(this.gridbody.childNodes);
 
         this.filtertags.innerHTML = '';
@@ -5980,6 +5993,7 @@ class DataGrid extends Panel {
             this.messagebox.appendChild(mb.container);
             this.messagebox.classList.remove('hidden');
             this.gridwrapper.classList.add('hidden');
+
         } else {
             this.messagebox.innerHTML = "";
             this.messagebox.classList.add('hidden');
@@ -9285,7 +9299,6 @@ class SimpleForm {
         }
 
         this.form.addEventListener('submit', (e) => {
-            console.log('formsubmit');
             e.preventDefault();
             this.submit();
         });
