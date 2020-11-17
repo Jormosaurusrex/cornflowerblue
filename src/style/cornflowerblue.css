@@ -5924,6 +5924,7 @@ div.datagrid-container div.grid-info div.countbox {
   padding-right: 1rem;
   display: flex;
   flex-direction: row;
+  align-items: baseline;
   flex-wrap: nowrap;
 }
 div.datagrid-container div.grid-info div.countbox label {

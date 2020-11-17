@@ -4950,6 +4950,12 @@ class DataGrid extends Panel {
         elements.sort((a, b) => {
             let textA = a.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
             let textB = b.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
+            if (this.getField(field).type === 'date') {
+                let abox = a.querySelector(`[data-name='${field}']`);
+                let bbox = b.querySelector(`[data-name='${field}']`);
+                textA = abox.getAttribute('data-millis');
+                textB = bbox.getAttribute('data-millis');
+            }
 
             if (sort === 'asc') {
                 if (textA < textB) return -1;
@@ -6408,6 +6414,9 @@ class DataGrid extends Panel {
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
         cell.setAttribute('data-datatype', field.type);
+        if (field.type === 'date') {
+            cell.setAttribute('data-millis', new Date(d).getTime());
+        }
         cell.classList.add(field.name);
         cell.classList.add(field.type);
         if (typeof content === 'string') {
