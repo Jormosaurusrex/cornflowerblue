@@ -186,7 +186,7 @@ class BooleanToggle {
         }
 
         CFBUtils.applyDataAttributes(this.attributes, this.toggle);
-        CFBUtils.applyDataAttributes(this.dataattributes, this.input);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.toggle);
 
         this.toggle.addEventListener('change', () => {
             if (this.toggle.checked) {

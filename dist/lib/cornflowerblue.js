@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-11-08
+/*! Cornflower Blue - v0.1.1 - 2020-11-17
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2013,7 +2013,7 @@ class TextFactory {
             "datagrid-tooltip-export-current_view": "Export the data in the current view as a comma separated value file.",
             "datagrid-tooltip-configure_columns": "Configure the visibility of individual columns.",
             "datagrid-tooltip-bulk_select": "Show bulk selection controls.",
-            "datagrid-tooltip-filters": "Add, remove, or edit view filters.",
+            "datagrid-tooltip-filters": "Add, remove, or edit filters.",
             "datagrid-activitynotifier-text": "Working...",
             "datagrid-column-config-instructions": "Select which columns to show in the grid. This does not hide the columns during export.",
             "datagrid-filter-instructions": "Columns that are filterable are shown below. Set the value of the column to filter it.",
@@ -5360,7 +5360,6 @@ class DataGrid extends Panel {
      */
     update(data) {
         if (!this.data) { this.data = []; }
-        console.log(`IDENTIFIER: ${this.identifier}`);
         for (let entry of data) {
             if (this.identifier) {
                 let id = entry[this.identifier];
@@ -5375,6 +5374,11 @@ class DataGrid extends Panel {
             }
         }
         this.gridPostProcess();
+    }
+
+    replace(data) {
+        this.data = [];
+        this.update(data);
     }
 
     /**
@@ -7094,6 +7098,7 @@ class GridField {
             label: null,       // The human-readable name for the column
             readonly: false,   // if true, this value cannot be changed. Useful for identifiers.
             hidden: false,     // Is the column hidden or not.
+            hidewhenpassive: false,
             identifier: false, // If true, marks the field as the unique identifier for a data set.
                                // An identifier is required in a grid if you want to update entries.
             type: 'string',    // The datatype of the column
@@ -7321,6 +7326,7 @@ class GridField {
                 counter: this.counter,
                 options: this.options,
                 maxlength: this.maxlength,
+                hidewhenpassive: this.hidewhenpassive,
                 required: this.required,
                 preamble: this.preamble,
                 maxnumber: this.maxnumber,
@@ -7448,6 +7454,9 @@ class GridField {
 
     get hidden() { return this.config.hidden ; }
     set hidden(hidden) { this.config.hidden = hidden; }
+
+    get hidewhenpassive() { return this.config.hidewhenpassive; }
+    set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
 
     get identifier() { return this.config.identifier ; }
     set identifier(identifier) { this.config.identifier = identifier; }
@@ -7974,7 +7983,6 @@ class DialogWindow {
      * Constructs the DialogWindow's DOM elements
      */
     build() {
-
 
         this.container = document.createElement('div');
         this.container.classList.add('window-container');
@@ -9840,6 +9848,11 @@ class TabBar {
         link.setAttribute('id', tabdef.id);
         link.setAttribute('data-tabid', tabdef.id);
         link.setAttribute('tabindex', '-1'); // always set this here
+
+        if (tabdef.dataattributes) {
+            CFBUtils.applyDataAttributes(tabdef.dataattributes, link);
+        }
+
         if (!this.navigation) {
             link.setAttribute('role', 'menuitem');
         }
@@ -12194,7 +12207,7 @@ class BooleanToggle {
         }
 
         CFBUtils.applyDataAttributes(this.attributes, this.toggle);
-        CFBUtils.applyDataAttributes(this.dataattributes, this.input);
+        CFBUtils.applyDataAttributes(this.dataattributes, this.toggle);
 
         this.toggle.addEventListener('change', () => {
             if (this.toggle.checked) {

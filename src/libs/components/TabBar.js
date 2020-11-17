@@ -183,6 +183,11 @@ class TabBar {
         link.setAttribute('id', tabdef.id);
         link.setAttribute('data-tabid', tabdef.id);
         link.setAttribute('tabindex', '-1'); // always set this here
+
+        if (tabdef.dataattributes) {
+            CFBUtils.applyDataAttributes(tabdef.dataattributes, link);
+        }
+
         if (!this.navigation) {
             link.setAttribute('role', 'menuitem');
         }

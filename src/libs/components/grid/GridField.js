@@ -6,6 +6,7 @@ class GridField {
             label: null,       // The human-readable name for the column
             readonly: false,   // if true, this value cannot be changed. Useful for identifiers.
             hidden: false,     // Is the column hidden or not.
+            hidewhenpassive: false,
             identifier: false, // If true, marks the field as the unique identifier for a data set.
                                // An identifier is required in a grid if you want to update entries.
             type: 'string',    // The datatype of the column
@@ -233,6 +234,7 @@ class GridField {
                 counter: this.counter,
                 options: this.options,
                 maxlength: this.maxlength,
+                hidewhenpassive: this.hidewhenpassive,
                 required: this.required,
                 preamble: this.preamble,
                 maxnumber: this.maxnumber,
@@ -360,6 +362,9 @@ class GridField {
 
     get hidden() { return this.config.hidden ; }
     set hidden(hidden) { this.config.hidden = hidden; }
+
+    get hidewhenpassive() { return this.config.hidewhenpassive; }
+    set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
 
     get identifier() { return this.config.identifier ; }
     set identifier(identifier) { this.config.identifier = identifier; }

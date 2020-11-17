@@ -147,7 +147,6 @@ class DialogWindow {
      */
     build() {
 
-
         this.container = document.createElement('div');
         this.container.classList.add('window-container');
 
