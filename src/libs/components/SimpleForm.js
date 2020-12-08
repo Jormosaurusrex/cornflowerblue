@@ -308,8 +308,17 @@ class SimpleForm {
      * It then executes any supplied onvalid function, passing self.
      */
     runInvalid() {
-        for (let submittor of this.submittors) {
-            submittor.disable();
+        let visibleElements = false;
+
+        for (let e of this.elements) {
+            if (!e.hidden) {
+                visibleElements = true;
+            }
+        }
+        if (visibleElements) {
+            for (let submittor of this.submittors) {
+                submittor.disable();
+            }
         }
         if ((this.oninvalid) && (typeof this.oninvalid === 'function')) {
             this.oninvalid(this);

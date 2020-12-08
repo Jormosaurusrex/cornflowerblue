@@ -69,7 +69,12 @@ class DateInput extends TextInput {
             return;
         }
         this.datedisplay.classList.remove('hidden');
-        let d = new Date(`${this.value} ${this.basetime} GMT`);
+        // XXX THIS GETS COMPLICATED
+        // XXX IF NOT TIME THEN SET TO BASETIME
+        //console.log(`date: ${this.value} ${this.basetime}`);
+
+        //let d = new Date(`${this.value} ${this.basetime} GMT`);
+        let d = new Date(this.value);
         this.datedisplay.innerHTML = d.toUTCString();
     }
 

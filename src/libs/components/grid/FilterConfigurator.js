@@ -306,7 +306,6 @@ class FilterConfigurator {
         };
 
         let valueSelector = field.getElement(value, config);
-
         valueSelector.container.setAttribute('data-field', field.name);
         return valueSelector;
 

@@ -128,6 +128,11 @@ class DataGrid extends Panel {
                 if (f.identifier) { this.identifier = f.name; }
             }
         }
+        if (this.mute) {
+            for (let f of this.fields) {
+                f.mute = true;
+            }
+        }
 
         this.activefilters = [];
         this.finalize();
@@ -147,7 +152,6 @@ class DataGrid extends Panel {
      * Loads the initial data into the grid.
      */
     fillData() {
-        console.log("filldata");
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
@@ -605,6 +609,11 @@ class DataGrid extends Panel {
         };
 
         for (let f of this.fields) {
+            f.hidden = false; // make them all visible first;
+            if (mode === 'edit') {
+                if (f.readonly) { f.hidden = true; }
+            }
+
             let e = f.getElement(rowdata[f.name]);
             form.elements.push(e);
         }
@@ -676,6 +685,7 @@ class DataGrid extends Panel {
                 ];
                 break;
             case 'delete':
+                console.log('delete form');
                 if (this.deleteiteminstructions) {
                     form.instructions = {
                         icon: this.instructionsicon,
@@ -700,9 +710,10 @@ class DataGrid extends Panel {
                         text: [TextFactory.get('datagrid-dialog-item-delete', this.elementname)],
                         icon: "trashcan",
                         submits: true,
-                        disabled: true  // No action needed.
+                        disabled: false  // No action needed.
                     })
                 ];
+                console.log(form.actions);
                 break;
             case 'view':
                 form.passive = true;
@@ -1898,6 +1909,9 @@ class DataGrid extends Panel {
         cell.setAttribute('data-datatype', field.type);
         if (field.type === 'date') {
             cell.setAttribute('data-millis', new Date(d).getTime());
+            if (d === null) {
+                content = "";
+            }
         }
         cell.classList.add(field.name);
         cell.classList.add(field.type);

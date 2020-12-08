@@ -21,7 +21,7 @@ class GridField {
                                //   - stringarray
                                //   - paragraph
                                //   - enumeration
-            options: [],     // An array of option values for an enumeration data type. Ignored if not
+            options: [],       // An array of option values for an enumeration data type. Ignored if not
                                // an enumeration
                                // { label: "Label to show", value: "v", checked: true }
             separator: ', ',   // Used when rendering array values
@@ -96,7 +96,10 @@ class GridField {
             case 'time':
                 if (!this.renderer) {
                     this.renderer = (d) => {
-                        return document.createTextNode(d.toString());
+                        if (d) {
+                            return document.createTextNode(d.toString());
+                        }
+                        return document.createTextNode('');
                     }
                 }
                 break;
@@ -257,6 +260,7 @@ class GridField {
                 e = new DateInput(config);
                 break;
             case 'enumeration':
+                config.options = this.options;
                 e = new SelectMenu(config);
                 break;
             case 'boolean':

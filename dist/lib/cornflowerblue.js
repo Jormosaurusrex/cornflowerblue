@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2020-11-17
+/*! Cornflower Blue - v0.1.1 - 2020-12-02
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2020 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -80,6 +80,14 @@ class CFBUtils {
             .split(';')
             .shift();
     }
+
+    static uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
 
     /**
      * Parses all URL parameters into a dictionary.  Returns the dictionary.
@@ -2134,7 +2142,7 @@ class TextFactory {
             return t;
         }
         if (!TextFactory.library[arguments[0]]) {
-            console.error(`Text key not found: ${arguments[0]}`);
+            console.warn(`Text key not found: ${arguments[0]}`);
             return arguments[0];
         }
         return TextFactory.library[arguments[0]];
@@ -4646,6 +4654,11 @@ class DataGrid extends Panel {
                 if (f.identifier) { this.identifier = f.name; }
             }
         }
+        if (this.mute) {
+            for (let f of this.fields) {
+                f.mute = true;
+            }
+        }
 
         this.activefilters = [];
         this.finalize();
@@ -4665,7 +4678,6 @@ class DataGrid extends Panel {
      * Loads the initial data into the grid.
      */
     fillData() {
-        console.log("filldata");
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
@@ -5123,6 +5135,11 @@ class DataGrid extends Panel {
         };
 
         for (let f of this.fields) {
+            f.hidden = false; // make them all visible first;
+            if (mode === 'edit') {
+                if (f.readonly) { f.hidden = true; }
+            }
+
             let e = f.getElement(rowdata[f.name]);
             form.elements.push(e);
         }
@@ -5194,6 +5211,7 @@ class DataGrid extends Panel {
                 ];
                 break;
             case 'delete':
+                console.log('delete form');
                 if (this.deleteiteminstructions) {
                     form.instructions = {
                         icon: this.instructionsicon,
@@ -5218,9 +5236,10 @@ class DataGrid extends Panel {
                         text: [TextFactory.get('datagrid-dialog-item-delete', this.elementname)],
                         icon: "trashcan",
                         submits: true,
-                        disabled: true  // No action needed.
+                        disabled: false  // No action needed.
                     })
                 ];
+                console.log(form.actions);
                 break;
             case 'view':
                 form.passive = true;
@@ -6416,6 +6435,9 @@ class DataGrid extends Panel {
         cell.setAttribute('data-datatype', field.type);
         if (field.type === 'date') {
             cell.setAttribute('data-millis', new Date(d).getTime());
+            if (d === null) {
+                content = "";
+            }
         }
         cell.classList.add(field.name);
         cell.classList.add(field.type);
@@ -7046,7 +7068,6 @@ class FilterConfigurator {
         };
 
         let valueSelector = field.getElement(value, config);
-
         valueSelector.container.setAttribute('data-field', field.name);
         return valueSelector;
 
@@ -7122,7 +7143,7 @@ class GridField {
                                //   - stringarray
                                //   - paragraph
                                //   - enumeration
-            options: [],     // An array of option values for an enumeration data type. Ignored if not
+            options: [],       // An array of option values for an enumeration data type. Ignored if not
                                // an enumeration
                                // { label: "Label to show", value: "v", checked: true }
             separator: ', ',   // Used when rendering array values
@@ -7197,7 +7218,10 @@ class GridField {
             case 'time':
                 if (!this.renderer) {
                     this.renderer = (d) => {
-                        return document.createTextNode(d.toString());
+                        if (d) {
+                            return document.createTextNode(d.toString());
+                        }
+                        return document.createTextNode('');
                     }
                 }
                 break;
@@ -7358,6 +7382,7 @@ class GridField {
                 e = new DateInput(config);
                 break;
             case 'enumeration':
+                config.options = this.options;
                 e = new SelectMenu(config);
                 break;
             case 'boolean':
@@ -9287,8 +9312,17 @@ class SimpleForm {
      * It then executes any supplied onvalid function, passing self.
      */
     runInvalid() {
-        for (let submittor of this.submittors) {
-            submittor.disable();
+        let visibleElements = false;
+
+        for (let e of this.elements) {
+            if (!e.hidden) {
+                visibleElements = true;
+            }
+        }
+        if (visibleElements) {
+            for (let submittor of this.submittors) {
+                submittor.disable();
+            }
         }
         if ((this.oninvalid) && (typeof this.oninvalid === 'function')) {
             this.oninvalid(this);
@@ -12466,7 +12500,12 @@ class DateInput extends TextInput {
             return;
         }
         this.datedisplay.classList.remove('hidden');
-        let d = new Date(`${this.value} ${this.basetime} GMT`);
+        // XXX THIS GETS COMPLICATED
+        // XXX IF NOT TIME THEN SET TO BASETIME
+        //console.log(`date: ${this.value} ${this.basetime}`);
+
+        //let d = new Date(`${this.value} ${this.basetime} GMT`);
+        let d = new Date(this.value);
         this.datedisplay.innerHTML = d.toUTCString();
     }
 
