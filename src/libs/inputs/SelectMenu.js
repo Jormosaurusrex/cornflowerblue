@@ -94,6 +94,11 @@ class SelectMenu extends InputElement {
 
     reset() {
         this.value = this.origval;
+        if (((!this.value) || ((this.value) && (this.value.trim() !== ''))) && (this.hascontainer)) {
+            this.container.classList.add('filled');
+        } else if (this.hascontainer) {
+            this.container.classList.remove('filled');
+        }
     }
 
     setPassiveboxValue(value) {

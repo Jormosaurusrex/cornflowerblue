@@ -7,6 +7,7 @@ class DataGrid extends Panel {
             sortable: true, //  Data columns can be sorted
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
+            extraelements: null,
             screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -84,6 +85,10 @@ class DataGrid extends Panel {
             //                               // object, which has the rowdata itself set as it's .data()
             //},
             rowactionsicon: 'menu', // Icon to use for row-actions button
+            updatemethod: 'post',
+            deletemethod: 'post',
+            duplicatemethod: 'post',
+            createmethod: 'post',
             updatehook: (rowdata, self) => { // Function fired when a data row is edited and then saved
             },
             deletehook: (rowdata, self) => { // function fired when a data row is deleted
@@ -92,6 +97,11 @@ class DataGrid extends Panel {
             },
             createhook: (rowdata, self) => { // function fired when a new data row is created
             },
+            formsuccess: (form, results) => { // What to do when a form returns success
+            },
+            createcallback: null, // passed (form, results)
+            updatecalback: null, // passed (form, results)
+            deletecallback: null, // passed (form, results)
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -501,13 +511,6 @@ class DataGrid extends Panel {
                     grid: this
                 });
                 dialogconfig.content = cc.container;
-                dialogconfig.actions.push(new ConstructiveButton({ // need to pass this to sub-routines
-                    text: TextFactory.get('save_columns'),
-                    icon: 'disc-check',
-                    action: () => {
-                        dialog.close();
-                    }
-                }));
                 break;
             case 'filter':
                 dialogconfig.title = TextFactory.get('manage_filters');
@@ -526,17 +529,18 @@ class DataGrid extends Panel {
                         this.activefilters = fc.filters;
                         this.applyFilters();
                         this.persist();
-                        dialog.close();
+                        this.dialog.close();
                     }
                 }));
+
                 break;
             default:
                 break;
         }
 
         dialogconfig.actions.push('closebutton');
-        let dialog = new DialogWindow(dialogconfig);
-        dialog.open();
+        this.dialog = new DialogWindow(dialogconfig);
+        this.dialog.open();
     }
 
     /**
@@ -547,8 +551,7 @@ class DataGrid extends Panel {
      */
     datawindow(mode, rowdata) {
 
-        let dialog,
-            dialogconfig = {
+        let dialogconfig = {
                 actions: [],
                 screen: this.screen
             };
@@ -584,8 +587,8 @@ class DataGrid extends Panel {
                 dialogconfig.form = new SimpleForm(this.buildForm(rowdata, mode));
                 break;
         }
-        dialog = new DialogWindow(dialogconfig);
-        dialog.open();
+        this.dialog = new DialogWindow(dialogconfig);
+        this.dialog.open();
     }
 
     /**
@@ -608,6 +611,13 @@ class DataGrid extends Panel {
             }
         };
 
+
+        if ((this.formsuccess) && (typeof this.formsuccess === 'function')) {
+            form.onsuccess = (self, results) => {
+                this.formsuccess(self, results)
+            }
+        }
+
         for (let f of this.fields) {
             f.hidden = false; // make them all visible first;
             if (mode === 'edit') {
@@ -617,6 +627,16 @@ class DataGrid extends Panel {
             let e = f.getElement(rowdata[f.name]);
             form.elements.push(e);
         }
+
+        if (this.extraelements) {
+            for (let el of this.extraelements) {
+                form.elements.push(new HiddenField({
+                    name: el.name,
+                    value: el.value
+                }));
+            }
+        }
+
 
         if (!this.allowedits) { mode = 'view'; } // always true in this
 
@@ -628,11 +648,23 @@ class DataGrid extends Panel {
                         instructions: [TextFactory.get(this.edititeminstructions, this.elementname)]
                     }
                 }
+
+                form.method = this.updatemethod;
+
+                if ((this.updatecallback) && (typeof this.updatecallback === 'function')) {
+                    form.handlercallback = (self, results) => {
+                        this.updatecallback(self, results)
+                    }
+                }
+
                 if ((this.updatehook) && (typeof this.updatehook === 'function')) {
                     form.handler = (self) => {
                         this.updatehook(self);
                     };
+                } else if (this.updatehook) {
+                    form.handler = this.updatehook;
                 }
+
                 form.actions = [
                     new ConstructiveButton({
                         text: TextFactory.get('datagrid-dialog-item-save', this.elementname),
@@ -649,11 +681,23 @@ class DataGrid extends Panel {
                         instructions: [TextFactory.get(this.duplicateiteminstructions, this.elementname)]
                     }
                 }
+
+                form.method = this.duplicatemethod;
+
                 if ((this.createhook) && (typeof this.createhook === 'function')) {
                     form.handler = (self) => {
                         this.createhook(self);
                     };
                 }
+
+                if ((this.createcallback) && (typeof this.createcallback === 'function')) {
+                    form.handlercallback = (self, results) => {
+                        this.createcallback(self, results)
+                    }
+                } else if (this.createhook) {
+                    form.handler = this.createhook;
+                }
+
                 form.actions = [
                     new ConstructiveButton({
                         text: TextFactory.get('datagrid-dialog-item-duplicate', this.elementname),
@@ -670,11 +714,23 @@ class DataGrid extends Panel {
                         instructions: [TextFactory.get(this.createiteminstructions, this.elementname)]
                     }
                 }
+
+                form.method = this.createmethod;
+
                 if ((this.createhook) && (typeof this.createhook === 'function')) {
                     form.handler = (self) => {
                         this.createhook(self);
                     };
+                } else if (this.createhook) {
+                    form.handler = this.createhook;
                 }
+
+                if ((this.createcallback) && (typeof this.createcallback === 'function')) {
+                    form.handlercallback = (self, results) => {
+                        this.createcallback(self, results)
+                    }
+                }
+
                 form.actions = [
                     new ConstructiveButton({
                         text: TextFactory.get('datagrid-dialog-item-create', this.elementname),
@@ -685,18 +741,29 @@ class DataGrid extends Panel {
                 ];
                 break;
             case 'delete':
-                console.log('delete form');
                 if (this.deleteiteminstructions) {
                     form.instructions = {
                         icon: this.instructionsicon,
                         instructions: [TextFactory.get(this.deleteiteminstructions, this.elementname)]
                     }
                 }
+
+                form.method = this.deletemethod;
+
                 if ((this.deletehook) && (typeof this.deletehook === 'function')) {
                     form.handler = (self) => {
                         this.deletehook(rowdata, self);
                     };
+                } else if (this.deletehook) {
+                    form.handler = this.deletehook;
                 }
+
+                if ((this.deletecallback) && (typeof this.deletecallback === 'function')) {
+                    form.handlercallback = (self, results) => {
+                        this.deletecallback(self, results)
+                    }
+                }
+
                 form.passive = false;
                 form.elements = [
                     new HiddenField({
@@ -705,6 +772,15 @@ class DataGrid extends Panel {
                         value: rowdata[this.identifier],
                     })
                 ];
+                if (this.extraelements) {
+                    for (let el of this.extraelements) {
+                        form.elements.push(new HiddenField({
+                            name: el.name,
+                            value: el.value
+                        }));
+                    }
+                }
+
                 form.actions = [
                     new ConstructiveButton({
                         text: [TextFactory.get('datagrid-dialog-item-delete', this.elementname)],
@@ -713,7 +789,6 @@ class DataGrid extends Panel {
                         disabled: false  // No action needed.
                     })
                 ];
-                console.log(form.actions);
                 break;
             case 'view':
                 form.passive = true;
@@ -1797,11 +1872,11 @@ class DataGrid extends Panel {
         if (this.multiselect) {
             let selector = new BooleanToggle({
                 classes: ['selector'],
-                onchange: () => {
-                    if (row.getAttribute('aria-selected') === 'true') {
-                        row.removeAttribute('aria-selected');
-                    } else {
+                onchange: (toggle) => {
+                    if (toggle.checked) {
                         row.setAttribute('aria-selected', 'true');
+                    } else {
+                        row.removeAttribute('aria-selected');
                     }
                 }
             });
@@ -1843,7 +1918,6 @@ class DataGrid extends Panel {
                     icon: ra.icon,
                     tipicon: ra.tipicon
                 };
-
                 switch(ra.type) {
                     case 'edit':
                         myaction.action = () => {
@@ -1861,7 +1935,9 @@ class DataGrid extends Panel {
                         };
                         break;
                     case 'function':
-                        myaction.action = ra.action;
+                        myaction.action = () => {
+                            ra.action(rdata);
+                        }
                         break;
                     case 'view':
                     default:
@@ -1977,6 +2053,17 @@ class DataGrid extends Panel {
     get columnconfigurationicon() { return this.config.columnconfigurationicon; }
     set columnconfigurationicon(columnconfigurationicon) { this.config.columnconfigurationicon = columnconfigurationicon; }
 
+    get createmethod() { return this.config.createmethod; }
+    set createmethod(createmethod) { this.config.createmethod = createmethod; }
+
+    get createcallback() { return this.config.createcallback; }
+    set createcallback(createcallback) {
+        if (typeof createcallback !== 'function') {
+            console.error("Value provided to createcallback is not a function!");
+        }
+        this.config.createcallback = createcallback;
+    }
+
     get createhook() { return this.config.createhook; }
     set createhook(createhook) {
         if (typeof createhook !== 'function') {
@@ -1993,6 +2080,12 @@ class DataGrid extends Panel {
 
     get deleteiteminstructions() { return this.config.deleteiteminstructions; }
     set deleteiteminstructions(deleteiteminstructions) { this.config.deleteiteminstructions = deleteiteminstructions; }
+
+    get deletemethod() { return this.config.deletemethod; }
+    set deletemethod(deletemethod) { this.config.deletemethod = deletemethod; }
+
+    get duplicatemethod() { return this.config.duplicatemethod; }
+    set duplicatemethod(duplicatemethod) { this.config.duplicatemethod = duplicatemethod; }
 
     get duplicatehook() { return this.config.duplicatehook; }
     set duplicatehook(duplicatehook) {
@@ -2019,8 +2112,19 @@ class DataGrid extends Panel {
         this.config.deletehook = deletehook;
     }
 
+    get deletecallback() { return this.config.deletecallback; }
+    set deletecallback(deletecallback) {
+        if (typeof deletecallback !== 'function') {
+            console.error("Value provided to deletecallback is not a function!");
+        }
+        this.config.deletecallback = deletecallback;
+    }
+
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
+
+    get dialog() { return this._dialog; }
+    set dialog(dialog) { this._dialog = dialog; }
 
     get doubleclick() { return this.config.doubleclick; }
     set doubleclick(doubleclick) {
@@ -2035,6 +2139,9 @@ class DataGrid extends Panel {
 
     get elementname() { return this.config.elementname; }
     set elementname(elementname) { this.config.elementname = elementname; }
+
+    get extraelements() { return this.config.extraelements; }
+    set extraelements(extraelements) { this.config.extraelements = extraelements; }
 
     get exportable() { return this.config.exportable; }
     set exportable(exportable) { this.config.exportable = exportable; }
@@ -2080,6 +2187,14 @@ class DataGrid extends Panel {
         return this._footer;
     }
     set footer(footer) { this._footer = footer; }
+
+    get formsuccess() { return this.config.formsuccess; }
+    set formsuccess(formsuccess) {
+        if (typeof formsuccess !== 'function') {
+            console.error("Value provided to formsuccess is not a function!");
+        }
+        this.config.formsuccess = formsuccess;
+    }
 
     get grid() {
         if (!this._grid) { this.buildGrid(); }
@@ -2221,6 +2336,14 @@ class DataGrid extends Panel {
     }
     set thead(thead) { this._thead = thead; }
 
+    get updatecallback() { return this.config.updatecallback; }
+    set updatecallback(updatecallback) {
+        if (typeof updatecallback !== 'function') {
+            console.error("Value provided to updatecallback is not a function!");
+        }
+        this.config.updatecallback = updatecallback;
+    }
+
     get updatehook() { return this.config.updatehook; }
     set updatehook(updatehook) {
         if (typeof updatehook !== 'function') {
@@ -2228,6 +2351,9 @@ class DataGrid extends Panel {
         }
         this.config.updatehook = updatehook;
     }
+
+    get updatemethod() { return this.config.updatemethod; }
+    set updatemethod(updatemethod) { this.config.updatemethod = updatemethod; }
 
     get warehouse() { return this.config.warehouse; }
     set warehouse(warehouse) { this.config.warehouse = warehouse; }

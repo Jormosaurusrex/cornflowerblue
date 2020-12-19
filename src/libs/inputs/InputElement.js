@@ -155,11 +155,22 @@ class InputElement {
         return !!this._container;
     }
 
+    /**
+     * Let us know if there's a passivebox on this.
+     * @return {boolean}
+     */
+    get haspassivebox() {
+        return !!this._passivebox;
+    }
+
     /* CORE METHODS_____________________________________________________________________ */
 
+    /**
+     * Reset the component to its original state
+     */
     reset() {
         this.value = this.origval;
-        if (this.passivebox) {
+        if (this.haspassivebox) {
             this.passivebox.innerHTML = '';
             this.passivebox.appendChild(this.passivetext);
         }
@@ -340,7 +351,7 @@ class InputElement {
      */
     pacify() {
         if (!this.hascontainer) { return; }
-        if (this.passivebox) {
+        if (this.haspassivebox) {
             this.passivebox.innerHTML = '';
             this.passivebox.appendChild(this.passivetext);
         }
@@ -540,6 +551,7 @@ class InputElement {
             }
         });
         this.input.addEventListener('keyup', (e) => {
+            this.config.value = this.value;
             if (this.hascontainer) {
                 if (this.helptimer) {
                     clearTimeout(this.helptimer);
