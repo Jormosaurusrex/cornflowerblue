@@ -50,9 +50,12 @@ div.messagebox {
         flex-direction: column;
         flex-wrap: nowrap;
         margin: 0;
-        padding: 0 0 0 1.2rem;
+        padding: 0;
         color: var(--colors-standard-rgb);
         text-shadow: var(--text-shadow);
+      }
+      &.hasicon {
+        padding: 0 0 0 1.2rem;
       }
     }
     &.size-1 {

@@ -74,7 +74,7 @@ class SimpleForm {
 
 
     reset() {
-        for (let e of this.elements) {
+        for (let e of this.activeelements) {
             e.reset();
         }
     }
@@ -86,7 +86,7 @@ class SimpleForm {
     pacify() {
         this.form.classList.add('passive');
         this.passive = true;
-        for (let e of this.elements) {
+        for (let e of this.activeelements) {
             e.pacify();
         }
         if ((this.passiveinstructions) && (this.instructionbox)) {
@@ -101,7 +101,7 @@ class SimpleForm {
     activate() {
         this.form.classList.remove('passive');
         this.passive = false;
-        for (let e of this.elements) {
+        for (let e of this.activeelements) {
             e.activate();
         }
         if ((this.instructions) && (this.instructionbox)) {
@@ -167,7 +167,7 @@ class SimpleForm {
      */
     get dictionary() {
         let dictionary = {};
-        for (let i of this.elements) {
+        for (let i of this.activeelements) {
             dictionary[i.name] = i.value;
         }
         return dictionary;
@@ -190,13 +190,13 @@ class SimpleForm {
 
         if (this.contenttype === 'application/x-www-form-urlencoded') {
             let urlelements = [];
-            for (let i of this.elements) {
+            for (let i of this.activeelements) {
                 urlelements.push(`${i.name}=${i.value}`);
             }
             body = urlelements.join('&');
         } else {
             let dict = {};
-            for (let i of this.elements) {
+            for (let i of this.activeelements) {
                 dict[i.name]  = i.value;
             }
             body = JSON.stringify(dict);
@@ -265,7 +265,7 @@ class SimpleForm {
         }
         let valid = true;
         let touched = false;
-        for (let element of this.elements) {
+        for (let element of this.activeelements) {
             if (element.touched) {
                 touched = true;
                 let localValid = element.validate();
@@ -310,7 +310,7 @@ class SimpleForm {
     runInvalid() {
         let visibleElements = false;
 
-        for (let e of this.elements) {
+        for (let e of this.activeelements) {
             if (!e.hidden) {
                 visibleElements = true;
             }
@@ -419,32 +419,54 @@ class SimpleForm {
      * Draw individual form elements
      */
     buildElementBox() {
+        let animOrder = 0;
         this.elementbox = document.createElement('div');
         this.elementbox.classList.add('elements');
-        let animOrder = 0;
         for (let element of this.elements) {
             if (typeof element === 'string') { // This is a text block, turn to paragraph
                 let p = document.createElement('p');
                 p.innerHTML = element;
                 this.elementbox.appendChild(p);
+            } else if ((typeof element === 'object') && (element !== null) && (element.section)) { // This is a section
+                let fset = document.createElement('fieldset');
+                fset.classList.add('fset');
+                if (element.label) {
+                    fset.innerHTML = `<legend>${element.label}</legend>`;
+                }
+                if (element.instructions) {
+                    fset.appendChild(new InstructionBox({
+                        icon: element.instructions.icon,
+                        instructions: element.instructions.instructions
+                    }).container);
+                }
+                if (element.elements) {
+                    for (let ele of element.elements) {
+                        this.processActiveElement(ele, animOrder, fset);
+                    }
+                }
+                this.elementbox.appendChild(fset)
             } else {
-                element.form = this;
-                if (element.type === 'file') {
-                    this.form.setAttribute('enctype', 'multipart/form-data');
-                    this.enctype = 'multipart/form-data';
-                }
-                if ((!element.id) && (element.name)) {
-                    element.id = `${this.id}-${element.name}`;
-                } else if (!element.id) {
-                    element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
-                }
-                element.container.classList.add('popin');
-                element.container.style.setProperty('--anim-order', animOrder);
-                animOrder++;
-                this.addElement(element);
-                this.elementbox.appendChild(element.container);
+                this.processActiveElement(element, animOrder);
             }
         }
+    }
+
+    processActiveElement(element, animOrder = 0, container = this.elementbox) {
+        element.form = this;
+        if (element.type === 'file') {
+            this.form.setAttribute('enctype', 'multipart/form-data');
+            this.enctype = 'multipart/form-data';
+        }
+        if ((!element.id) && (element.name)) {
+            element.id = `${this.id}-${element.name}`;
+        } else if (!element.id) {
+            element.id = `${this.id}-e-${CFBUtils.getUniqueKey(5)}`;
+        }
+        element.container.classList.add('popin');
+        element.container.style.setProperty('--anim-order', animOrder);
+        animOrder++;
+        this.addElement(element);
+        container.appendChild(element.container);
     }
 
     /**
@@ -498,6 +520,7 @@ class SimpleForm {
 
     addElement(element) {
         this.elementmap[element.id] = element;
+        this.activeelements.push(element);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -521,6 +544,9 @@ class SimpleForm {
 
     get actions() { return this.config.actions; }
     set actions(actions) { this.config.actions = actions; }
+
+    get activeelements() { if (!this._activeelements) { this._activeelements = []; } return this._activeelements; }
+    set activeelements(activeelements) { this._activeelements = activeelements; }
 
     get autocomplete() { return this.config.autocomplete; }
     set autocomplete(autocomplete) { this.config.autocomplete = autocomplete; }

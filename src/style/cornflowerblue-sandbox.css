@@ -1148,6 +1148,14 @@ form div.elements div.input-container,
 form div.elements div.textarea-container {
   margin: 0 0 1rem 0;
 }
+form div.elements fieldset {
+  outline: none;
+  border: none;
+  margin-top: 1rem;
+}
+form div.elements fieldset legend {
+  margin-bottom: 0;
+}
 form div.actions,
 form div.passiveactions {
   flex-grow: 1;
@@ -1393,7 +1401,7 @@ legend {
   position: relative;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 400;
   color: var(--colors-highlight);
   text-shadow: var(--text-shadow);
@@ -3382,6 +3390,7 @@ p.textarea-container.mute div.topline label {
   padding-left: 1.5em;
   font-size: 1em;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 div.input-container.mute div.topline label button.help,
 p.input-container.mute div.topline label button.help,
@@ -4629,9 +4638,12 @@ div.messagebox.instructions div.payload ul {
   flex-direction: column;
   flex-wrap: nowrap;
   margin: 0;
-  padding: 0 0 0 1.2rem;
+  padding: 0;
   color: var(--colors-standard-rgb);
   text-shadow: var(--text-shadow);
+}
+div.messagebox.instructions div.payload.hasicon {
+  padding: 0 0 0 1.2rem;
 }
 div.messagebox.instructions.size-1 div.payload {
   align-items: center;

@@ -34,6 +34,14 @@ form {
     div.textarea-container {
       margin: 0 0 1rem 0;
     }
+    fieldset {
+      outline: none;
+      border: none;
+      margin-top: 1rem;
+      legend {
+        margin-bottom: 0;
+      }
+    }
   }
   div.actions,
   div.passiveactions {

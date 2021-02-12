@@ -37,6 +37,7 @@ class MessageBox {
         if (this.content) {
             if (this.icon) {
                 this.payload.appendChild(IconFactory.icon(this.icon));
+                this.payload.classList.add('hasicon');
             }
             this.content.classList.add('content');
             this.payload.appendChild(this.content);

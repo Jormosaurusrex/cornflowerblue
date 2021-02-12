@@ -286,6 +286,7 @@ class SimpleButton {
         } else if (this.naked) {
             this.button.classList.add('naked');
         }
+
         if (this.shape) { this.button.classList.add(this.shape); }
 
         if (this.image) {
@@ -294,7 +295,6 @@ class SimpleButton {
             if (!this.shape) { this.button.classList.add('square'); }
             this.button.style.backgroundImage = `url(${this.image})`;
         }
-
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', (e) => {
@@ -309,7 +309,10 @@ class SimpleButton {
         }
     }
 
-
+    /**
+     * Set the value of a badge on the button. If set to 0 or null, deletes badge.
+     * @param value
+     */
     set badge(value) {
         if ((value === null) || (value === 0)) {
             if (this.badgeobj) {
