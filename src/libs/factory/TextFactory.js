@@ -1,11 +1,25 @@
 class TextFactory {
 
+    static _LOCALE = null;
+    static DEFAULT_LOCALE = 'en';
+
+    static get LOCALE() { return TextFactory._LOCALE; }
+    static set LOCALE(locale) { TextFactory._LOCALE = locale; }
+
     /**
-     * This is the actual library of text.  It can be modified through other methods.
-     * @private
+     * Return the active library of text strings.
+     * @return {*}
      */
-    static get _libraryBase() {
-        return {
+    static get library() {
+        let dt = TextFactory.determineLocale();
+        if (TextFactory._library[dt]) {
+            return TextFactory._library[dt];
+        }
+        return TextFactory._library[TextFactory.DEFAULT_LOCALE];
+    }
+
+    static _library = {
+        en: {
             "login" : "Login",
             "password" : "Password",
             "email" : "Email",
@@ -14,7 +28,6 @@ class TextFactory {
             "loginform-error-passwords_dont_match" : "Email and password do not match.",
             "loginform-instructions-enter_username" : "Enter your username and password.",
             "create_account" : "Create account",
-
             "actions": 'Actions',
             "apply_filters": 'Apply Filters',
             "bulk_select": 'Bulk select',
@@ -146,8 +159,9 @@ class TextFactory {
             "offset" : "Offset",
             "code" : "Code",
             "alternate_names" : "Alternate names"
-        };
-    }
+        }
+    };
+
 
     /**
      * Get a text value by key
@@ -162,6 +176,7 @@ class TextFactory {
             }
             return t;
         }
+
         if (!TextFactory.library[arguments[0]]) {
             console.warn(`Text key not found: ${arguments[0]}`);
             return arguments[0];
@@ -169,14 +184,35 @@ class TextFactory {
         return TextFactory.library[arguments[0]];
     }
 
+    static determineLocale() {
+        if (TextFactory.LOCALE !== null) { return TextFactory.LOCALE; }
+        if ((document) && (document.documentElement) && (document.documentElement.lang)) { return document.documentElement.lang; }
+        return TextFactory.DEFAULT_LOCALE;
+    }
+
     /**
-     * Load additional text elements from a url.  This will replace any existing values if the keys
-     * are the same.
-     * @param url the URL to fetch.
+     * Loads a text dictionary.  This method will attempt to determine a LOCALE if none exists and will set that.
+     * @param urlset source(s) for the messages file.  Can be either a single url ("messages.json"), which will get merged into DEFAULT_LOCALE, or a dictionary of URLS, where it's { lang: 'url' }.
+     * @param callback An optional callback to execute when the load is done.
      */
-    static load(url) {
+    static load(urlset, callback) {
+        if (!urlset) {
+            console.error('TextFactory.load() called without a any URLs');
+            return;
+        }
+        let locale = TextFactory.determineLocale(),
+            url;
+
+        if (typeof urlset === 'object') {
+            if (urlset[locale]) { url = urlset[locale]; }
+        } else {
+            url = urlset;
+        }
         if (!url) {
-            console.error('TextFactory.load() called without a URL');
+            console.error('TextFactory.load() called without missing URL');
+            if ((callback) && (typeof callback === 'function')) {
+                callback();
+            }
             return;
         }
         fetch(url, {
@@ -184,24 +220,20 @@ class TextFactory {
         })
             .then(response => response.json()) // response -> json
             .then(data => { // do the thing.
-                TextFactory.library = Object.assign({}, TextFactory.library, data);
+                // Now we have a bunch of messages for a specific locale.
+                let dict = TextFactory.library[locale];
+                if (!dict) { dict = {}; }
+                dict = Object.assign({}, dict, data);
+                TextFactory._library[locale] = dict;
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
             })
             .catch(err => {
                 console.error(`Error while fetching data from ${url}`);
                 console.error(err);
             });
     }
-
-    /* ACCESSOR METHODS_________________________________________________________________ */
-
-    static get library() {
-        if (typeof TextFactory._library === 'undefined' ) {
-            TextFactory.library = TextFactory._libraryBase;
-        }
-        return TextFactory._library;
-    }
-    static set library(library) { TextFactory._library = library; }
-
 
 }
 window.TextFactory = TextFactory;
