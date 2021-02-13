@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-02-11
+/*! Cornflower Blue - v0.1.1 - 2021-02-12
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -13602,7 +13602,7 @@ class RadioGroup extends SelectMenu {
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
 
-        if (def.checked) {
+        if (((this.config.value !== null) && (this.config.value === def.value)) || (def.checked)) {
             this.origval = def.value;
             op.checked = true;
             op.setAttribute('aria-checked', 'true');
