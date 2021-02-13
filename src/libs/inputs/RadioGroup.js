@@ -130,7 +130,7 @@ class RadioGroup extends SelectMenu {
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
 
-        if (def.checked) {
+        if (((this.config.value !== null) && (this.config.value === def.value)) || (def.checked)) {
             this.origval = def.value;
             op.checked = true;
             op.setAttribute('aria-checked', 'true');
