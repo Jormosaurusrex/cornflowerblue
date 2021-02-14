@@ -93,9 +93,8 @@ module.exports = function(grunt) {
                 dest: 'example/passwordgenerator/dist/cfb-passwordgenerator.js'
             }
         },
-        uglify: {
+        terser: {
             options: {
-                banner: '<%= banner %>'
             },
             dist: {
                 src: '<%= concat.dist.dest %>',
@@ -172,12 +171,12 @@ module.exports = function(grunt) {
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify-es');
+    grunt.loadNpmTasks('grunt-terser');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'sass']);
+    grunt.registerTask('default', ['jshint', 'concat', 'terser', 'sass']);
 
 };

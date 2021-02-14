@@ -209,7 +209,7 @@ class TextFactory {
         }
         let locale = TextFactory.determineLocale(),
             url;
-        
+
         if (typeof urlset === 'object') {
             if (urlset[locale]) { url = urlset[locale]; }
         } else {
@@ -228,7 +228,6 @@ class TextFactory {
             .then(response => response.json()) // response -> json
             .then(data => { // do the thing.
                 // Now we have a bunch of messages for a specific locale.
-                console.log(data);
                 let dict = TextFactory.library[locale];
                 if (!dict) { dict = {}; }
                 dict = Object.assign({}, dict, data);
