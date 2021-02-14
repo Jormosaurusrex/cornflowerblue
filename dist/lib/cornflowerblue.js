@@ -2191,9 +2191,7 @@ class TextFactory {
         }
         let locale = TextFactory.determineLocale(),
             url;
-        console.log(locale);
-        console.log(urlset);
-
+        
         if (typeof urlset === 'object') {
             if (urlset[locale]) { url = urlset[locale]; }
         } else {
