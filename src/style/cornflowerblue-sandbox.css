@@ -4656,6 +4656,7 @@ div.messagebox.instructions {
 div.messagebox.instructions div.payload ul {
   flex-grow: 2;
   display: flex;
+  list-style-type: none;
   flex-direction: column;
   flex-wrap: nowrap;
   margin: 0;
@@ -4664,7 +4665,10 @@ div.messagebox.instructions div.payload ul {
   text-shadow: var(--text-shadow);
 }
 div.messagebox.instructions div.payload.hasicon {
-  padding: 0 0 0 1.2rem;
+  padding: 0;
+}
+div.messagebox.instructions div.payload.hasicon span.icon {
+  margin-top: 1rem;
 }
 div.messagebox.instructions.size-1 div.payload {
   align-items: center;
@@ -4674,6 +4678,9 @@ div.messagebox.instructions.size-1 div.payload > span.icon {
 }
 div.messagebox.instructions.size-1 div.payload ul {
   list-style-type: none;
+}
+div.messagebox.instructions.size-1 div.payload.hasicon span.icon {
+  margin-top: 0;
 }
 div.messagebox.instructions.size-2 div.payload {
   align-items: flex-start;

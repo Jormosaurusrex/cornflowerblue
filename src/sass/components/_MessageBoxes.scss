@@ -47,6 +47,7 @@ div.messagebox {
       ul {
         flex-grow: 2;
         display: flex;
+        list-style-type: none;
         flex-direction: column;
         flex-wrap: nowrap;
         margin: 0;
@@ -55,7 +56,10 @@ div.messagebox {
         text-shadow: var(--text-shadow);
       }
       &.hasicon {
-        padding: 0 0 0 1.2rem;
+        padding: 0;
+        span.icon {
+          margin-top: 1rem;
+        }
       }
     }
     &.size-1 {
@@ -66,6 +70,11 @@ div.messagebox {
         }
         ul {
           list-style-type: none;
+        }
+        &.hasicon {
+          span.icon {
+            margin-top: 0;
+          }
         }
       }
     }
