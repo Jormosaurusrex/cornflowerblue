@@ -10412,7 +10412,7 @@ class ToolTip {
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             icon: { type: 'option', datatype: 'string', description: "The icon to use in the tooltip." },
             iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
-            gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip whe." },
+            gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip into." },
             text: { type: 'option', datatype: 'string', description: "The text to use in the tooltip." },
             parent: { type: 'option', datatype: 'object', description: "The parent object this fires off." },
             waittime: { type: 'option', datatype: 'number', description: "How long to wait (in milliseconds) before activating." }
@@ -10552,7 +10552,7 @@ class ToolTip {
             case 'north':
             default:
                 self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                self.container.style.left = `${offsetLeft}px`;
                 break;
         }
 
@@ -10691,6 +10691,7 @@ class InputElement {
             label: null,
             placeholder: null,
             hidewhenpassive: false,
+            hidepassiveifempty: true,
             preamble: null,
             title: null,
             pattern: null,
@@ -10773,6 +10774,10 @@ class InputElement {
     constructor(config) {
         if (!config) { config = {}; }
         this.config = Object.assign({}, InputElement.DEFAULT_CONFIG, config);
+
+        if (config.hidepassiveifempty) {
+            config.classes.push('hidepassiveifempty');
+        }
 
         if (!this.arialabel) { // munch aria label.
             if (this.label) {
@@ -11473,6 +11478,9 @@ class InputElement {
 
     get hidewhenpassive() { return this.config.hidewhenpassive; }
     set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
+
+    get hidepassiveifempty() { return this.config.hidepassiveifempty; }
+    set hidepassiveifempty(hidepassiveifempty) { this.config.hidepassiveifempty = hidepassiveifempty; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }
@@ -13790,7 +13798,8 @@ class ColorSelector extends RadioGroup {
         opLabel.setAttribute('for', lId);
         opLabel.appendChild(swatch);
         new ToolTip({
-            text: def.label
+            text: def.label,
+            icon: null
         }).attach(opLabel);
 
 
@@ -13985,6 +13994,9 @@ class ImageSelector extends SelectMenu {
         div.appendChild(super.drawPayload(def));
         return div;
     }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
 }
 window.ImageSelector = ImageSelector;
 class CountryMenu extends SelectMenu {
