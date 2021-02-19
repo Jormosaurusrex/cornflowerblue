@@ -19,7 +19,7 @@ class ToolTip {
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
             icon: { type: 'option', datatype: 'string', description: "The icon to use in the tooltip." },
             iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
-            gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip whe." },
+            gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip into." },
             text: { type: 'option', datatype: 'string', description: "The text to use in the tooltip." },
             parent: { type: 'option', datatype: 'object', description: "The parent object this fires off." },
             waittime: { type: 'option', datatype: 'number', description: "How long to wait (in milliseconds) before activating." }
@@ -159,7 +159,7 @@ class ToolTip {
             case 'north':
             default:
                 self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
-                self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                self.container.style.left = `${offsetLeft}px`;
                 break;
         }
 

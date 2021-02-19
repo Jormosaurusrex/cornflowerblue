@@ -13,6 +13,7 @@ class InputElement {
             label: null,
             placeholder: null,
             hidewhenpassive: false,
+            hidepassiveifempty: true,
             preamble: null,
             title: null,
             pattern: null,
@@ -95,6 +96,10 @@ class InputElement {
     constructor(config) {
         if (!config) { config = {}; }
         this.config = Object.assign({}, InputElement.DEFAULT_CONFIG, config);
+
+        if (config.hidepassiveifempty) {
+            config.classes.push('hidepassiveifempty');
+        }
 
         if (!this.arialabel) { // munch aria label.
             if (this.label) {
@@ -795,6 +800,9 @@ class InputElement {
 
     get hidewhenpassive() { return this.config.hidewhenpassive; }
     set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }
+
+    get hidepassiveifempty() { return this.config.hidepassiveifempty; }
+    set hidepassiveifempty(hidepassiveifempty) { this.config.hidepassiveifempty = hidepassiveifempty; }
 
     get icon() { return this.config.icon; }
     set icon(icon) { this.config.icon = icon; }

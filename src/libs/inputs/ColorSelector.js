@@ -115,7 +115,8 @@ class ColorSelector extends RadioGroup {
         opLabel.setAttribute('for', lId);
         opLabel.appendChild(swatch);
         new ToolTip({
-            text: def.label
+            text: def.label,
+            icon: null
         }).attach(opLabel);
 
 

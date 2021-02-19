@@ -473,6 +473,11 @@ p.textarea-container {
         }
       }
     }
+    &.hidepassiveifempty {
+      &:not(.filled) {
+        display: none;
+      }
+    }
   }
   &[aria-hidden="true"] {
     display: none;

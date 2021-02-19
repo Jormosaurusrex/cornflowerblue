@@ -42,5 +42,8 @@ class ImageSelector extends SelectMenu {
         div.appendChild(super.drawPayload(def));
         return div;
     }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
 }
 window.ImageSelector = ImageSelector;

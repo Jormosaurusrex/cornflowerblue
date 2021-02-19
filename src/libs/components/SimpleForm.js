@@ -63,6 +63,26 @@ class SimpleForm {
         if (!this.id) { this.id = `form-${CFBUtils.getUniqueKey(5)}`; }
     }
 
+    /* PSEUDO-ACCESSORS_________________________________________________________________ */
+
+    /**
+     * Get the form value as a dictionary
+     * @return the values of the form as a key=value dictionary
+     */
+    get dictionary() {
+        let dictionary = {};
+        for (let i of this.activeelements) {
+            dictionary[i.name] = i.value;
+        }
+        return dictionary;
+    }
+
+    /**
+     * Get the form value as a dictionary
+     * @return the values of the form as a key=value dictionary
+     */
+    get json() { return this.dictionary; }
+
     /* CONTROL METHODS__________________________________________________________________ */
 
     /**
@@ -72,13 +92,14 @@ class SimpleForm {
         this.contentbox.scrollTo(0, 0);
     }
 
-
+    /**
+     * Reset entire form.
+     */
     reset() {
         for (let e of this.activeelements) {
             e.reset();
         }
     }
-
 
     /**
      * Switch to 'passive' mode.
@@ -160,24 +181,6 @@ class SimpleForm {
             }
         }
     }
-
-    /**
-     * Get the form value as a dictionary
-     * @return the values of the form as a key=value dictionary
-     */
-    get dictionary() {
-        let dictionary = {};
-        for (let i of this.activeelements) {
-            dictionary[i.name] = i.value;
-        }
-        return dictionary;
-    }
-
-    /**
-     * Get the form value as a dictionary
-     * @return the values of the form as a key=value dictionary
-     */
-    get json() { return this.dictionary; }
 
     /**
      * Execute an ajax call
