@@ -69,6 +69,7 @@ class InputElement {
             helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
             required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
             hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
+            hidewhenpassivewhenempty: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode, but only do this if there is no value." },
             requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
             requirederror: { type: 'option', datatype: 'string', description: "The error message to display if required item isn't filled." },
             hidden: { type: 'option', datatype: 'boolean', description: "Whether or not to bea hidden element." },

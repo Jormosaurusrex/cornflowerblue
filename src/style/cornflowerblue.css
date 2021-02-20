@@ -2226,23 +2226,39 @@ button.headerbutton,
 input[type=submit].headerbutton,
 input[type=reset].headerbutton,
 a.button.headerbutton {
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   box-shadow: none;
   background: none;
 }
-button.headerbutton span.icon,
-input[type=submit].headerbutton span.icon,
-input[type=reset].headerbutton span.icon,
-a.button.headerbutton span.icon {
+button.headerbutton > span.icon,
+input[type=submit].headerbutton > span.icon,
+input[type=reset].headerbutton > span.icon,
+a.button.headerbutton > span.icon {
+  flex-grow: 0;
+  margin-right: 0.5rem;
+}
+button.headerbutton > span.text,
+input[type=submit].headerbutton > span.text,
+input[type=reset].headerbutton > span.text,
+a.button.headerbutton > span.text {
+  flex-grow: 2;
+}
+button.headerbutton > span.secondicon,
+input[type=submit].headerbutton > span.secondicon,
+input[type=reset].headerbutton > span.secondicon,
+a.button.headerbutton > span.secondicon {
+  flex-grow: 0;
   opacity: 0.5;
   margin-right: 0;
+  margin-left: auto;
+  align-self: flex-end;
 }
 @media (hover: hover) and (pointer: fine) {
-  button.headerbutton:hover span.icon,
-input[type=submit].headerbutton:hover span.icon,
-input[type=reset].headerbutton:hover span.icon,
-a.button.headerbutton:hover span.icon {
+  button.headerbutton:hover span.secondicon,
+input[type=submit].headerbutton:hover span.secondicon,
+input[type=reset].headerbutton:hover span.secondicon,
+a.button.headerbutton:hover span.secondicon {
     opacity: 1;
   }
 }
@@ -5113,7 +5129,8 @@ div.resultsbox {
   align-content: flex-start;
 }
 
-div.panel {
+div.panel,
+section.panel {
   transition: all 0.2s ease-in-out;
   text-shadow: var(--panel-text-shadow);
   color: var(--panel-text-color);
@@ -5124,8 +5141,11 @@ div.panel {
   flex-direction: column;
   flex-wrap: nowrap;
   height: auto;
+  position: relative;
 }
-div.panel h3.panelheader {
+div.panel h3.panelheader,
+section.panel h3.panelheader {
+  z-index: 2;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -5138,51 +5158,63 @@ div.panel h3.panelheader {
   color: var(--panel-text-color);
   --button-default-color: var(--panel-text-color);
 }
-div.panel h3.panelheader button.headerbutton {
+div.panel h3.panelheader button.headerbutton,
+section.panel h3.panelheader button.headerbutton {
   padding: 0.5rem;
   outline-offset: -0.3rem;
 }
-div.panel h3.panelheader button.headerbutton:focus, div.panel h3.panelheader button.headerbutton:active {
+div.panel h3.panelheader button.headerbutton:focus, div.panel h3.panelheader button.headerbutton:active,
+section.panel h3.panelheader button.headerbutton:focus,
+section.panel h3.panelheader button.headerbutton:active {
   opacity: 1;
   background: none;
   box-shadow: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.panel h3.panelheader button.headerbutton:hover {
+  div.panel h3.panelheader button.headerbutton:hover,
+section.panel h3.panelheader button.headerbutton:hover {
     opacity: 1;
     background: none;
     box-shadow: none;
   }
 }
-div.panel h3.panelheader.nocollapse {
+div.panel h3.panelheader.nocollapse,
+section.panel h3.panelheader.nocollapse {
   padding: 1em;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.panel h3.panelheader:hover {
+  div.panel h3.panelheader:hover,
+section.panel h3.panelheader:hover {
     color: var(--panel-text-color);
   }
 }
-div.panel div.content {
+div.panel div.content,
+section.panel div.content {
+  z-index: 1;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
-  transition: all 0.2s;
+  transition: height 0.2s, opacity 0.1s, padding 0.2s;
   height: auto;
   padding: 0.5rem;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }
-div.panel[aria-hidden=true] {
+div.panel[aria-hidden=true],
+section.panel[aria-hidden=true] {
   display: none;
 }
-div.panel[aria-expanded=false] h3 {
+div.panel[aria-expanded=false] h3,
+section.panel[aria-expanded=false] h3 {
   border-radius: var(--border-radius);
 }
-div.panel[aria-expanded=false] h3 button.headerbutton span.icon {
+div.panel[aria-expanded=false] h3 button.headerbutton span.secondicon,
+section.panel[aria-expanded=false] h3 button.headerbutton span.secondicon {
   transform: rotate(-180deg);
 }
-div.panel[aria-expanded=false] div.content {
+div.panel[aria-expanded=false] div.content,
+section.panel[aria-expanded=false] div.content {
   height: 0;
   max-height: 0;
   visibility: hidden;
@@ -5191,47 +5223,56 @@ div.panel[aria-expanded=false] div.content {
   padding-bottom: 0;
   overflow: hidden;
 }
-div.panel.floating {
+div.panel.floating,
+section.panel.floating {
   position: absolute;
   z-index: 1000;
   border-radius: var(--panel-border-radius);
   box-shadow: var(--panel-box-shadow);
 }
-div.panel.invisible {
+div.panel.invisible,
+section.panel.invisible {
   background-color: transparent;
   box-shadow: none;
 }
-div.panel.top-left {
+div.panel.top-left,
+section.panel.top-left {
   top: 1em;
   left: 1em;
 }
-div.panel.top-right {
+div.panel.top-right,
+section.panel.top-right {
   top: 1em;
   right: 1em;
 }
-div.panel.bottom-left {
+div.panel.bottom-left,
+section.panel.bottom-left {
   bottom: 1em;
   left: 1em;
 }
-div.panel.bottom-right {
+div.panel.bottom-right,
+section.panel.bottom-right {
   bottom: 1em;
   right: 1em;
 }
-div.panel.top-center {
+div.panel.top-center,
+section.panel.top-center {
   top: 1em;
   right: 1em;
   left: 1em;
   margin-left: auto;
   margin-right: auto;
 }
-div.panel.bottom-center {
+div.panel.bottom-center,
+section.panel.bottom-center {
   bottom: 1em;
   right: 1em;
   left: 1em;
   margin-left: auto;
   margin-right: auto;
 }
-div.panel.free {
+div.panel.free,
+section.panel.free {
   position: relative;
   margin: unset;
   top: unset;

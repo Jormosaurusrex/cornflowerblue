@@ -421,17 +421,27 @@ a.button {
     }
   }
   &.headerbutton {
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
     box-shadow: none;
     background: none;
-    span.icon {
+    >span.icon {
+      flex-grow: 0;
+      margin-right: .5rem;
+    }
+    >span.text {
+      flex-grow: 2;
+    }
+    >span.secondicon {
+      flex-grow: 0;
       opacity: 0.5;
       margin-right: 0;
+      margin-left: auto;
+      align-self: flex-end;
     }
     @include for-hover-only {
       &:hover {
-        span.icon {
+        span.secondicon {
           opacity: 1;
         }
       }

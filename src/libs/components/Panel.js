@@ -3,11 +3,14 @@ class Panel {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
+            assection : false,
             dataattributes: null,
             attributes: null,
             contentid : null,
             headerid : null,
             title: null,
+            iconprefix: 'cfb',
+            icon: null,
             content : null,
             style: 'plain',
             hidden: false,
@@ -29,9 +32,12 @@ class Panel {
             attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements" },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            assection: { type: 'option', datatype: 'boolean', description: "If true, use the html element 'section' over 'div'" },
             minimized: { type: 'option', datatype: 'boolean', description: "Start collapsed/minimized." },
             stateful: { type: 'option', datatype: 'boolean', description: "Remember open or closed state. Saves to local storage. Must also have an 'id' set." },
             collapsible: { type: 'option', datatype: 'boolean', description: "Can the panel collapse? If false, minimized is ignored." },
+            icon: { type: 'option', datatype: 'string', description: "If present, will be attached to the text inside the button. This can be passed a DOM object." },
+            iconprefix: { type: 'option', datatype: 'string', description: "Changes the icon class prefix." },
             onclose: { type: 'option', datatype: 'function', description: "A function to run to when the panel closes. Passed the self." },
             onopen: { type: 'option', datatype: 'function', description: "A function to run to when the panel opens. Passed the self as argument." },
             closeicon: { type: 'option', datatype: 'string', description: "The icon to use in for the close/open button.." },
@@ -117,13 +123,19 @@ class Panel {
     buildHeader() {
         this.header = document.createElement('h3');
         this.header.classList.add('panelheader');
+        if (this.icon) {
+            this.header.classList.add('hasicon');
+        }
         if (this.collapsible) {
             this.togglebutton = new SimpleButton({
                 id: this.headerid,
                 secondicon: this.closeicon,
+                icon: this.icon,
+                iconprefix: this.iconprefix,
                 text: this.title,
                 naked: true,
                 iconclasses: ['headerbutton'],
+                secondiconclasses: ['panelclose'],
                 classes: ['headerbutton'],
                 action: (e) => {
                     e.preventDefault();
@@ -149,7 +161,11 @@ class Panel {
      */
     buildContainer() {
 
-        this.container = document.createElement('div');
+        if (this.assection) {
+            this.container = document.createElement('section');
+        } else {
+            this.container = document.createElement('div');
+        }
         this.container.classList.add('panel');
         this.container.setAttribute('aria-expanded', 'true');
 
@@ -201,6 +217,9 @@ class Panel {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get assection() { return this.config.assection; }
+    set assection(assection) { this.config.assection = assection; }
+
     get attributes() { return this.config.attributes; }
     set attributes(attributes) { this.config.attributes = attributes; }
 
@@ -249,6 +268,12 @@ class Panel {
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get iconprefix() { return this.config.iconprefix; }
+    set iconprefix(iconprefix) { this.config.iconprefix = iconprefix; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
