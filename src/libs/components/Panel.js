@@ -16,7 +16,10 @@ class Panel {
             hidden: false,
             collapsible: true,
             stateful: true,
-            closeicon: 'chevron-up',
+            closeicon: 'echx',
+            closeiconclosed: 'chevron-down-thin',
+            closeiconprefix: 'cfb',
+            closeiconclosedprefix: 'cfb',
             minimized: false,
             classes: [],
             onclose: null,
@@ -84,6 +87,9 @@ class Panel {
         this.minimized = false;
         this.container.setAttribute('aria-expanded', 'true');
         localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'false');
+        if ((this.closeicon) && (this.closeiconclosed)) {
+            this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
+        }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
@@ -96,6 +102,9 @@ class Panel {
         this.container.setAttribute('aria-expanded', 'false');
         this.minimized = true;
         localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'true');
+        if ((this.closeicon) && (this.closeiconclosed)) {
+            this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
+        }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -127,9 +136,16 @@ class Panel {
             this.header.classList.add('hasicon');
         }
         if (this.collapsible) {
+            let closeicon = this.closeicon,
+                closeiconprefix = this.closeiconprefix;
+            if (this.minimized) {
+                closeicon = this.closeiconclosed;
+                closeiconprefix = this.closeiconprefix;
+            }
             this.togglebutton = new SimpleButton({
                 id: this.headerid,
-                secondicon: this.closeicon,
+                secondicon: closeicon,
+                iconprefixsecond: closeiconprefix,
                 icon: this.icon,
                 iconprefix: this.iconprefix,
                 text: this.title,
@@ -143,6 +159,15 @@ class Panel {
                     this.toggleClose();
                 }
             });
+            if (this.closeicon) {
+                let cbutton = this.togglebutton.button.querySelector('span.secondicon');
+                if (cbutton) {
+                    new ToolTip({
+                        icon: null,
+                        text: TextFactory.get('close_pane')
+                    }).attach(cbutton)
+                }
+            }
             this.header.appendChild(this.togglebutton.button);
         } else {
             this.header.classList.add('nocollapse');
@@ -234,6 +259,15 @@ class Panel {
 
     get closeicon() { return this.config.closeicon; }
     set closeicon(closeicon) { this.config.closeicon = closeicon; }
+
+    get closeiconclosed() { return this.config.closeiconclosed; }
+    set closeiconclosed(closeiconclosed) { this.config.closeiconclosed = closeiconclosed; }
+
+    get closeiconprefix() { return this.config.closeiconprefix; }
+    set closeiconprefix(closeiconprefix) { this.config.closeiconprefix = closeiconprefix; }
+
+    get closeiconclosedprefix() { return this.config.closeiconclosedprefix; }
+    set closeiconclosedprefix(closeiconclosedprefix) { this.config.closeiconclosedprefix = closeiconclosedprefix; }
 
     get collapsible() { return this.config.collapsible; }
     set collapsible(collapsible) { this.config.collapsible = collapsible; }

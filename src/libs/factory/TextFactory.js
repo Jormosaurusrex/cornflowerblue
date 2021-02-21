@@ -26,6 +26,7 @@ class TextFactory {
             en: {
                 "login": "Login",
                 "password": "Password",
+                "close_pane" : "Close panel",
                 "email": "Email",
                 "passwordinput-placeholder-enter_password": "Enter your password.",
                 "remember_me": "Remember me",

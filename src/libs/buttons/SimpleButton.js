@@ -156,19 +156,30 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    setIcon(newicon, iconprefix) {
+    setIcon(newicon, iconprefix, secondicon = false) {
         let i = IconFactory.icon(newicon, "", iconprefix);
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
                 if (i) { i.classList.add(ic); }
             }
         }
-        if (this.icon) {
-            this.button.replaceChild(i, this.iconactual);
-            this.iconactual = i;
+        if (secondicon) {
+            i.classList.add('secondicon');
+            if (this.secondicon) {
+                this.button.replaceChild(i, this.secondiconactual);
+                this.secondiconactual = i;
+            } else {
+                this.secondiconactual = i;
+                this.button.appendChild(this.secondiconactual);
+            }
         } else {
-            this.iconactual = i;
-            this.button.prepend(this.iconactual);
+            if (this.icon) {
+                this.button.replaceChild(i, this.iconactual);
+                this.iconactual = i;
+            } else {
+                this.iconactual = i;
+                this.button.prepend(this.iconactual);
+            }
         }
     }
 

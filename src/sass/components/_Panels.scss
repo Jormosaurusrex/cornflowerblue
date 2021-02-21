@@ -68,11 +68,6 @@ section.panel {
   &[aria-expanded=false] {
     h3 {
       border-radius: var(--border-radius);
-      button.headerbutton {
-        span.secondicon {
-          transform: rotate(-180deg);
-        }
-      }
     }
     div.content {
       height: 0;
