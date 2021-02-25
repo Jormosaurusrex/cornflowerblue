@@ -70,6 +70,7 @@ p.textarea-container {
     position: relative;
     z-index: 9;
     div.trigger {
+      height: 2rem;
       transition: all .2s;
       box-sizing: border-box;
       outline: none;
@@ -118,6 +119,9 @@ p.textarea-container {
           background-color: rgba(var(--input-border-color-rgb), 0.05);
           box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
           &::placeholder {
+            opacity: 0;
+          }
+          span.placeholder {
             opacity: 0;
           }
         }
@@ -291,6 +295,11 @@ p.textarea-container {
       input,
       textarea {
         &::placeholder {
+          opacity: .5;
+        }
+      }
+      div.trigger {
+        span.placeholder {
           opacity: .5;
         }
       }
@@ -486,6 +495,21 @@ p.textarea-container {
     height: 0;
   }
 }
+div.checkbox-container {
+  label {
+    > span.mutehelp {
+      opacity: 1;
+      transition: opacity .2s;
+      font-size: .75em;
+      color: var(--colors-text-default);
+      margin-left: .5rem;
+      &:before {
+        margin-right: .5rem;
+        content: '-';
+      }
+    }
+  }
+}
 div.textarea-container {
   div.wrap {
     &:after {
@@ -559,6 +583,5 @@ div.select-container {
         }
       }
     }
-
   }
 }

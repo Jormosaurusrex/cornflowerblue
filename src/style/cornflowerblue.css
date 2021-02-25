@@ -3251,6 +3251,7 @@ p.input-container div.wrap div.trigger,
 div.file-container div.wrap div.trigger,
 div.textarea-container div.wrap div.trigger,
 p.textarea-container div.wrap div.trigger {
+  height: 2rem;
   transition: all 0.2s;
   box-sizing: border-box;
   outline: none;
@@ -3330,6 +3331,13 @@ p.input-container div.wrap div.trigger.mute:focus::placeholder,
 div.file-container div.wrap div.trigger.mute:focus::placeholder,
 div.textarea-container div.wrap div.trigger.mute:focus::placeholder,
 p.textarea-container div.wrap div.trigger.mute:focus::placeholder {
+  opacity: 0;
+}
+div.input-container div.wrap div.trigger.mute:focus span.placeholder,
+p.input-container div.wrap div.trigger.mute:focus span.placeholder,
+div.file-container div.wrap div.trigger.mute:focus span.placeholder,
+div.textarea-container div.wrap div.trigger.mute:focus span.placeholder,
+p.textarea-container div.wrap div.trigger.mute:focus span.placeholder {
   opacity: 0;
 }
 div.input-container div.wrap div.inputcontrol,
@@ -3645,6 +3653,13 @@ div.textarea-container.mute div.wrap input::placeholder,
 div.textarea-container.mute div.wrap textarea::placeholder,
 p.textarea-container.mute div.wrap input::placeholder,
 p.textarea-container.mute div.wrap textarea::placeholder {
+  opacity: 0.5;
+}
+div.input-container.mute div.wrap div.trigger span.placeholder,
+p.input-container.mute div.wrap div.trigger span.placeholder,
+div.file-container.mute div.wrap div.trigger span.placeholder,
+div.textarea-container.mute div.wrap div.trigger span.placeholder,
+p.textarea-container.mute div.wrap div.trigger span.placeholder {
   opacity: 0.5;
 }
 div.input-container.mute div.wrap:after,
@@ -4154,6 +4169,18 @@ p.textarea-container[aria-hidden=true] {
   padding: 0;
   opacity: 0;
   height: 0;
+}
+
+div.checkbox-container label > span.mutehelp {
+  opacity: 1;
+  transition: opacity 0.2s;
+  font-size: 0.75em;
+  color: var(--colors-text-default);
+  margin-left: 0.5rem;
+}
+div.checkbox-container label > span.mutehelp:before {
+  margin-right: 0.5rem;
+  content: "-";
 }
 
 div.textarea-container div.wrap:after {

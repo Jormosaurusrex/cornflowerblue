@@ -7,6 +7,8 @@ class BooleanToggle {
             name: null,
             form: null,
             label: null,
+            help: null,
+            mute: false,
             hidewhenpassive: false,
             passive: false,
             checked: false, // Initial state.
@@ -29,6 +31,7 @@ class BooleanToggle {
             dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
             attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements." },
             form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
+            help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
             name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
             hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
@@ -141,6 +144,7 @@ class BooleanToggle {
 
         if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }
+        if (this.mute) { this.container.classList.add('mute'); }
 
         for (let c of this.classes) {
             this.container.classList.add(c);
@@ -228,6 +232,21 @@ class BooleanToggle {
         if (this.form) {
             this.labelobj.setAttribute('form', this.form.id);
         }
+
+        if (this.help) {
+            if (this.mute) {
+                let s = document.createElement('span');
+                s.classList.add('mutehelp');
+                s.innerHTML = this.help;
+                this.labelobj.appendChild(s);
+            } else {
+                this.helpbutton = new HelpButton({
+                    id: `${this.id}-help`,
+                    tooltip: this.help
+                });
+                this.labelobj.appendChild(this.helpbutton.button);
+            }
+        }
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -290,6 +309,9 @@ class BooleanToggle {
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
 
+    get help() { return this.config.help; }
+    set help(help) { this.config.help = help; }
+
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
 
@@ -313,6 +335,9 @@ class BooleanToggle {
 
     get labelside() { return this.config.labelside; }
     set labelside(labelside) { this.config.labelside = labelside; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }

@@ -74,7 +74,13 @@ class FileInput extends InputElement {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        this.container.appendChild(this.labelobj);
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
+
         this.container.appendChild(this.fileinput);
 
         let wrap = document.createElement('div');
@@ -95,7 +101,7 @@ class FileInput extends InputElement {
         this.triggerbox = document.createElement('div');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('tabindex', '-1');
-        this.triggerbox.innerHTML = this.placeholder;
+        this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
         this.triggerbox.addEventListener('click', (e) => {
             if (this.disabled) {
                 e.stopPropagation();
@@ -126,8 +132,6 @@ class FileInput extends InputElement {
      * Build file input
      */
     buildFileInput() {
-
-
         this.fileinput = document.createElement('input');
         this.fileinput.setAttribute('type', this.type);
         this.fileinput.setAttribute('name', this.name);
@@ -136,10 +140,21 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('multiple', this.multiple);
         this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
         this.fileinput.addEventListener('focusin', () => {
-                this.triggerbox.focus();
+            this.triggerbox.focus();
+            this.container.classList.add('active');
+        });
+        this.fileinput.addEventListener('focusout', () => {
+            this.container.classList.remove('active');
         });
         this.fileinput.addEventListener('change', (event) => {
+           // this.container.classList.add('filled');
+
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
+                if (this.hascontainer) {
+                    console.log('has container');
+                    this.container.classList.add('filled');
+                    this.container.classList.add('valid');
+                }
                 let farray =  this.fileinput.files;
                 let fnames = [];
                 for (let i of farray) {
@@ -147,11 +162,16 @@ class FileInput extends InputElement {
                 }
                 if (fnames.length > 0) {
                     this.triggerbox.classList.add('files');
-                    this.triggerbox.innerHTML = fnames.join(', ');
+                    this.triggerbox.innerHTML = `<span class="placeholder">${fnames.join(', ')}</span>`;
                 } else {
                     this.triggerbox.classList.remove('files');
-                    this.triggerbox.innerHTML = this.placeholder;
+                    this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
                 }
+            } else {
+                this.container.classList.remove('filled');
+                this.container.classList.remove('valid');
+                this.triggerbox.classList.remove('files');
+                this.triggerbox.innerHTML = `<span class="placeholder"></span>`;
             }
             this.validate();
             if (this.form) {
