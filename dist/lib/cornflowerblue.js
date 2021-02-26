@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-02-18
+/*! Cornflower Blue - v0.1.1 - 2021-02-26
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2008,6 +2008,7 @@ class TextFactory {
             en: {
                 "login": "Login",
                 "password": "Password",
+                "close_pane" : "Close panel",
                 "email": "Email",
                 "passwordinput-placeholder-enter_password": "Enter your password.",
                 "remember_me": "Remember me",
@@ -2056,8 +2057,8 @@ class TextFactory {
                 "error": 'Error',
                 "export": 'Export',
                 "export-current_view": "Export current view",
-                "fileinput-placeholder-file": 'Select file',
-                "fileinput-placeholder-multiple": 'Select files (multiple accepted)',
+                "fileinput-placeholder-file": 'Click to select file',
+                "fileinput-placeholder-multiple": 'Click to select files (multiple accepted)',
                 "filter-configurator-add_filter": "Add filter",
                 "comparator-contains": "Contains",
                 "comparator-notcontains": "Does not contain",
@@ -2245,13 +2246,13 @@ class SimpleButton {
             hidden: false,
             tooltip: null,
             iconprefix: 'cfb',
+            icon: null,
+            iconclasses: [],
             iconprefixsecond: 'cfb',
             tipicon: null,
             tipgravity: 'n',
             classes: [],
             image: null,
-            icon: null,
-            iconclasses: [],
             iconside: 'left',
             secondicon : null,
             notab: false,
@@ -2290,7 +2291,8 @@ class SimpleButton {
             tipicon: { type: 'option', datatype: 'string', description: "An icon for the tooltip."},
             tipgravity: { type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
             icon: { type: 'option', datatype: 'string', description: "If present, will be attached to the text inside the button. This can be passed a DOM object." },
-            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply to icons." },
+            iconprefix: { type: 'option', datatype: 'string', description: "Changes the icon class prefix." },
+            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply to ALL icons in the header." },
             iconside: { type: 'option', datatype: 'string', description: "The side the icon displays on - left or right." },
             secondicon: { type: 'option', datatype: 'string', description: "if present, this icon will be placed on the opposite side of the defined 'iconside'.  If this is the only icon defined, it will still be placed.  This is ignored in shaped buttons." },
             notab: {type: 'boolean', datatype: 'string', description: "If true, don't be tabindexed."},
@@ -2383,19 +2385,30 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    setIcon(newicon, iconprefix) {
+    setIcon(newicon, iconprefix, secondicon = false) {
         let i = IconFactory.icon(newicon, "", iconprefix);
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {
                 if (i) { i.classList.add(ic); }
             }
         }
-        if (this.icon) {
-            this.button.replaceChild(i, this.iconactual);
-            this.iconactual = i;
+        if (secondicon) {
+            i.classList.add('secondicon');
+            if (this.secondicon) {
+                this.button.replaceChild(i, this.secondiconactual);
+                this.secondiconactual = i;
+            } else {
+                this.secondiconactual = i;
+                this.button.appendChild(this.secondiconactual);
+            }
         } else {
-            this.iconactual = i;
-            this.button.prepend(this.iconactual);
+            if (this.icon) {
+                this.button.replaceChild(i, this.iconactual);
+                this.iconactual = i;
+            } else {
+                this.iconactual = i;
+                this.button.prepend(this.iconactual);
+            }
         }
     }
 
@@ -3385,17 +3398,23 @@ class Panel {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
+            assection : false,
             dataattributes: null,
             attributes: null,
             contentid : null,
             headerid : null,
             title: null,
+            iconprefix: 'cfb',
+            icon: null,
             content : null,
             style: 'plain',
             hidden: false,
             collapsible: true,
             stateful: true,
-            closeicon: 'chevron-up',
+            closeicon: 'echx',
+            closeiconclosed: 'chevron-down-thin',
+            closeiconprefix: 'cfb',
+            closeiconclosedprefix: 'cfb',
             minimized: false,
             classes: [],
             onclose: null,
@@ -3411,9 +3430,12 @@ class Panel {
             attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements" },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
+            assection: { type: 'option', datatype: 'boolean', description: "If true, use the html element 'section' over 'div'" },
             minimized: { type: 'option', datatype: 'boolean', description: "Start collapsed/minimized." },
             stateful: { type: 'option', datatype: 'boolean', description: "Remember open or closed state. Saves to local storage. Must also have an 'id' set." },
             collapsible: { type: 'option', datatype: 'boolean', description: "Can the panel collapse? If false, minimized is ignored." },
+            icon: { type: 'option', datatype: 'string', description: "If present, will be attached to the text inside the button. This can be passed a DOM object." },
+            iconprefix: { type: 'option', datatype: 'string', description: "Changes the icon class prefix." },
             onclose: { type: 'option', datatype: 'function', description: "A function to run to when the panel closes. Passed the self." },
             onopen: { type: 'option', datatype: 'function', description: "A function to run to when the panel opens. Passed the self as argument." },
             closeicon: { type: 'option', datatype: 'string', description: "The icon to use in for the close/open button.." },
@@ -3460,6 +3482,9 @@ class Panel {
         this.minimized = false;
         this.container.setAttribute('aria-expanded', 'true');
         localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'false');
+        if ((this.closeicon) && (this.closeiconclosed)) {
+            this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
+        }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
@@ -3472,6 +3497,9 @@ class Panel {
         this.container.setAttribute('aria-expanded', 'false');
         this.minimized = true;
         localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'true');
+        if ((this.closeicon) && (this.closeiconclosed)) {
+            this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
+        }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -3499,13 +3527,26 @@ class Panel {
     buildHeader() {
         this.header = document.createElement('h3');
         this.header.classList.add('panelheader');
+        if (this.icon) {
+            this.header.classList.add('hasicon');
+        }
         if (this.collapsible) {
+            let closeicon = this.closeicon,
+                closeiconprefix = this.closeiconprefix;
+            if (this.minimized) {
+                closeicon = this.closeiconclosed;
+                closeiconprefix = this.closeiconprefix;
+            }
             this.togglebutton = new SimpleButton({
                 id: this.headerid,
-                secondicon: this.closeicon,
+                secondicon: closeicon,
+                iconprefixsecond: closeiconprefix,
+                icon: this.icon,
+                iconprefix: this.iconprefix,
                 text: this.title,
                 naked: true,
                 iconclasses: ['headerbutton'],
+                secondiconclasses: ['panelclose'],
                 classes: ['headerbutton'],
                 action: (e) => {
                     e.preventDefault();
@@ -3513,6 +3554,15 @@ class Panel {
                     this.toggleClose();
                 }
             });
+            if (this.closeicon) {
+                let cbutton = this.togglebutton.button.querySelector('span.secondicon');
+                if (cbutton) {
+                    new ToolTip({
+                        icon: null,
+                        text: TextFactory.get('close_pane')
+                    }).attach(cbutton)
+                }
+            }
             this.header.appendChild(this.togglebutton.button);
         } else {
             this.header.classList.add('nocollapse');
@@ -3531,7 +3581,11 @@ class Panel {
      */
     buildContainer() {
 
-        this.container = document.createElement('div');
+        if (this.assection) {
+            this.container = document.createElement('section');
+        } else {
+            this.container = document.createElement('div');
+        }
         this.container.classList.add('panel');
         this.container.setAttribute('aria-expanded', 'true');
 
@@ -3583,6 +3637,9 @@ class Panel {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
+    get assection() { return this.config.assection; }
+    set assection(assection) { this.config.assection = assection; }
+
     get attributes() { return this.config.attributes; }
     set attributes(attributes) { this.config.attributes = attributes; }
 
@@ -3597,6 +3654,15 @@ class Panel {
 
     get closeicon() { return this.config.closeicon; }
     set closeicon(closeicon) { this.config.closeicon = closeicon; }
+
+    get closeiconclosed() { return this.config.closeiconclosed; }
+    set closeiconclosed(closeiconclosed) { this.config.closeiconclosed = closeiconclosed; }
+
+    get closeiconprefix() { return this.config.closeiconprefix; }
+    set closeiconprefix(closeiconprefix) { this.config.closeiconprefix = closeiconprefix; }
+
+    get closeiconclosedprefix() { return this.config.closeiconclosedprefix; }
+    set closeiconclosedprefix(closeiconclosedprefix) { this.config.closeiconclosedprefix = closeiconclosedprefix; }
 
     get collapsible() { return this.config.collapsible; }
     set collapsible(collapsible) { this.config.collapsible = collapsible; }
@@ -3631,6 +3697,12 @@ class Panel {
 
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
+
+    get icon() { return this.config.icon; }
+    set icon(icon) { this.config.icon = icon; }
+
+    get iconprefix() { return this.config.iconprefix; }
+    set iconprefix(iconprefix) { this.config.iconprefix = iconprefix; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -10747,6 +10819,7 @@ class InputElement {
             helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
             required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
             hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
+            hidewhenpassivewhenempty: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode, but only do this if there is no value." },
             requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
             requirederror: { type: 'option', datatype: 'string', description: "The error message to display if required item isn't filled." },
             hidden: { type: 'option', datatype: 'boolean', description: "Whether or not to bea hidden element." },
@@ -12297,6 +12370,8 @@ class BooleanToggle {
             name: null,
             form: null,
             label: null,
+            help: null,
+            mute: false,
             hidewhenpassive: false,
             passive: false,
             checked: false, // Initial state.
@@ -12319,6 +12394,7 @@ class BooleanToggle {
             dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
             attributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with $key = value on elements." },
             form: { type: 'option', datatype: 'simpleform', description: "A SimpleForm object this element this is in." },
+            help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute." },
             name: { type: 'option', datatype: 'string', description: "The name attribute for the input element." },
             hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
@@ -12431,6 +12507,7 @@ class BooleanToggle {
 
         if (this.hidden) { this.container.style.display = 'none'; }
         if (this.disabled) { this.container.classList.add('disabled'); }
+        if (this.mute) { this.container.classList.add('mute'); }
 
         for (let c of this.classes) {
             this.container.classList.add(c);
@@ -12518,6 +12595,21 @@ class BooleanToggle {
         if (this.form) {
             this.labelobj.setAttribute('form', this.form.id);
         }
+
+        if (this.help) {
+            if (this.mute) {
+                let s = document.createElement('span');
+                s.classList.add('mutehelp');
+                s.innerHTML = this.help;
+                this.labelobj.appendChild(s);
+            } else {
+                this.helpbutton = new HelpButton({
+                    id: `${this.id}-help`,
+                    tooltip: this.help
+                });
+                this.labelobj.appendChild(this.helpbutton.button);
+            }
+        }
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -12580,6 +12672,9 @@ class BooleanToggle {
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
 
+    get help() { return this.config.help; }
+    set help(help) { this.config.help = help; }
+
     get hidden() { return this.config.hidden; }
     set hidden(hidden) { this.config.hidden = hidden; }
 
@@ -12603,6 +12698,9 @@ class BooleanToggle {
 
     get labelside() { return this.config.labelside; }
     set labelside(labelside) { this.config.labelside = labelside; }
+
+    get mute() { return this.config.mute; }
+    set mute(mute) { this.config.mute = mute; }
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
@@ -12927,6 +13025,7 @@ class FileInput extends InputElement {
     /* CONTROL METHODS__________________________________________________________________ */
 
     calculatePlaceholder() {
+        if (this.config.placeholder) { return this.config.placeholder; }
         if (this.multiple) { return TextFactory.get('fileinput-placeholder-multiple'); }
         return TextFactory.get('fileinput-placeholder-file');
     }
@@ -12958,7 +13057,13 @@ class FileInput extends InputElement {
         for (let c of this.classes) {
             this.container.classList.add(c);
         }
-        this.container.appendChild(this.labelobj);
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
+
         this.container.appendChild(this.fileinput);
 
         let wrap = document.createElement('div');
@@ -12979,7 +13084,10 @@ class FileInput extends InputElement {
         this.triggerbox = document.createElement('div');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('tabindex', '-1');
-        this.triggerbox.innerHTML = this.placeholder;
+        console.log('arrarr');
+        console.log(this.placeholder);
+        console.log(this.config.placeholder);
+        this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
         this.triggerbox.addEventListener('click', (e) => {
             if (this.disabled) {
                 e.stopPropagation();
@@ -13010,8 +13118,6 @@ class FileInput extends InputElement {
      * Build file input
      */
     buildFileInput() {
-
-
         this.fileinput = document.createElement('input');
         this.fileinput.setAttribute('type', this.type);
         this.fileinput.setAttribute('name', this.name);
@@ -13020,10 +13126,21 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('multiple', this.multiple);
         this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
         this.fileinput.addEventListener('focusin', () => {
-                this.triggerbox.focus();
+            this.triggerbox.focus();
+            this.container.classList.add('active');
+        });
+        this.triggerbox.addEventListener('blur', () => {
+            //this.container.classList.remove('active');
         });
         this.fileinput.addEventListener('change', (event) => {
+           // this.container.classList.add('filled');
+
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
+                if (this.hascontainer) {
+                    console.log('has container');
+                    this.container.classList.add('filled');
+                    this.container.classList.add('valid');
+                }
                 let farray =  this.fileinput.files;
                 let fnames = [];
                 for (let i of farray) {
@@ -13031,11 +13148,16 @@ class FileInput extends InputElement {
                 }
                 if (fnames.length > 0) {
                     this.triggerbox.classList.add('files');
-                    this.triggerbox.innerHTML = fnames.join(', ');
+                    this.triggerbox.innerHTML = `<span class="placeholder">${fnames.join(', ')}</span>`;
                 } else {
                     this.triggerbox.classList.remove('files');
-                    this.triggerbox.innerHTML = this.placeholder;
+                    this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
                 }
+            } else {
+                this.container.classList.remove('filled');
+                this.container.classList.remove('valid');
+                this.triggerbox.classList.remove('files');
+                this.triggerbox.innerHTML = `<span class="placeholder"></span>`;
             }
             this.validate();
             if (this.form) {

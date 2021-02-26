@@ -72,6 +72,7 @@ div.window-container {
       margin: 0;
       overflow: auto;
       z-index: 2005;
+      flex-grow: 2;
     }
     div.actions {
       position: relative;

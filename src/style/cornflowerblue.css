@@ -3104,6 +3104,7 @@ div.file-container,
 div.textarea-container,
 p.textarea-container {
   margin: 0;
+  margin: 0;
   padding: 0.5rem 0 0.5rem 0;
   position: relative;
   height: auto;
@@ -3251,7 +3252,7 @@ p.input-container div.wrap div.trigger,
 div.file-container div.wrap div.trigger,
 div.textarea-container div.wrap div.trigger,
 p.textarea-container div.wrap div.trigger {
-  height: 2rem;
+  height: 2.5rem;
   transition: all 0.2s;
   box-sizing: border-box;
   outline: none;
@@ -3259,7 +3260,8 @@ p.textarea-container div.wrap div.trigger {
   font-family: inherit;
   width: 100%;
   margin: 0;
-  font-size: 1em;
+  font-size: 1rem;
+  user-select: none;
   background-color: var(--canvas-color-secondary);
   box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
@@ -3269,6 +3271,13 @@ p.textarea-container div.wrap div.trigger {
   text-shadow: none;
   vertical-align: middle;
   cursor: pointer;
+}
+div.input-container div.wrap div.trigger span.placeholder,
+p.input-container div.wrap div.trigger span.placeholder,
+div.file-container div.wrap div.trigger span.placeholder,
+div.textarea-container div.wrap div.trigger span.placeholder,
+p.textarea-container div.wrap div.trigger span.placeholder {
+  opacity: 0;
 }
 div.input-container div.wrap div.trigger.files,
 p.input-container div.wrap div.trigger.files,
@@ -3338,7 +3347,7 @@ p.input-container div.wrap div.trigger.mute:focus span.placeholder,
 div.file-container div.wrap div.trigger.mute:focus span.placeholder,
 div.textarea-container div.wrap div.trigger.mute:focus span.placeholder,
 p.textarea-container div.wrap div.trigger.mute:focus span.placeholder {
-  opacity: 0;
+  opacity: 0.5;
 }
 div.input-container div.wrap div.inputcontrol,
 p.input-container div.wrap div.inputcontrol,
@@ -4655,6 +4664,7 @@ div.window-container div.dialog > div.content {
   margin: 0;
   overflow: auto;
   z-index: 2005;
+  flex-grow: 2;
 }
 div.window-container div.dialog div.actions {
   position: relative;

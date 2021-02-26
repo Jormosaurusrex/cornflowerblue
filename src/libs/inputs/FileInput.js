@@ -43,6 +43,7 @@ class FileInput extends InputElement {
     /* CONTROL METHODS__________________________________________________________________ */
 
     calculatePlaceholder() {
+        if (this.config.placeholder) { return this.config.placeholder; }
         if (this.multiple) { return TextFactory.get('fileinput-placeholder-multiple'); }
         return TextFactory.get('fileinput-placeholder-file');
     }
@@ -101,6 +102,9 @@ class FileInput extends InputElement {
         this.triggerbox = document.createElement('div');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('tabindex', '-1');
+        console.log('arrarr');
+        console.log(this.placeholder);
+        console.log(this.config.placeholder);
         this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
         this.triggerbox.addEventListener('click', (e) => {
             if (this.disabled) {
@@ -143,8 +147,8 @@ class FileInput extends InputElement {
             this.triggerbox.focus();
             this.container.classList.add('active');
         });
-        this.fileinput.addEventListener('focusout', () => {
-            this.container.classList.remove('active');
+        this.triggerbox.addEventListener('blur', () => {
+            //this.container.classList.remove('active');
         });
         this.fileinput.addEventListener('change', (event) => {
            // this.container.classList.add('filled');
