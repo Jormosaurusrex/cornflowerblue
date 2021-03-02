@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-02-26
+/*! Cornflower Blue - v0.1.1 - 2021-03-01
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -13084,9 +13084,6 @@ class FileInput extends InputElement {
         this.triggerbox = document.createElement('div');
         this.triggerbox.classList.add('trigger');
         this.triggerbox.setAttribute('tabindex', '-1');
-        console.log('arrarr');
-        console.log(this.placeholder);
-        console.log(this.config.placeholder);
         this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
         this.triggerbox.addEventListener('click', (e) => {
             if (this.disabled) {
@@ -13137,7 +13134,6 @@ class FileInput extends InputElement {
 
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
                 if (this.hascontainer) {
-                    console.log('has container');
                     this.container.classList.add('filled');
                     this.container.classList.add('valid');
                 }

@@ -590,3 +590,14 @@ div.select-container {
     }
   }
 }
+div.file-container {
+  &.mute {
+    >div.wrap {
+      >div.trigger {
+        >span.placeholder {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

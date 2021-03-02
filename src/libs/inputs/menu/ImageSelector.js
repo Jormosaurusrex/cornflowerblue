@@ -35,9 +35,10 @@ class ImageSelector extends SelectMenu {
         let div = document.createElement('div');
         div.classList.add('imagesel');
         if (def.url) {
-            let img = document.createElement('img');
-            img.setAttribute('src', def.url);
-            div.appendChild(img);
+            let image = document.createElement('div');
+            image.classList.add('thumbnail')
+            image.style.backgroundImage = `url('${def.url}')`;
+            div.appendChild(image);
         }
         div.appendChild(super.drawPayload(def));
         return div;

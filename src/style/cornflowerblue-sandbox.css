@@ -82,7 +82,11 @@
   --checkbox-font-size: 2em;
   --checkbox-toggle-size: 1.3em;
   --checkbox-toggle-offset: 0.2em;
-  --input-default-padding: .5em 1em .5em 1.5em;
+  --input-default-top-padding: .5rem;
+  --input-default-bottom-padding: .5rem;
+  --input-default-left-padding: 1.5rem;
+  --input-default-right-padding: 1rem;
+  --input-default-padding: var(--input-default-top-padding) var(--input-default-right-padding) var(--input-default-bottom-padding) var(--input-default-left-padding);
   --input-border-color-rgb: var(--colors-standard-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
   --growler-core-color-rgb: var(--colors-highlight-rgb);
@@ -4063,6 +4067,10 @@ div.select-container.mute[aria-expanded=true] div.topline div.topcontrol {
 }
 div.select-container.mute[aria-expanded=true] > div.wrap > input.trigger::placeholder {
   opacity: 0.3;
+}
+
+div.file-container.mute > div.wrap > div.trigger > span.placeholder {
+  opacity: 0;
 }
 
 [hidden] {

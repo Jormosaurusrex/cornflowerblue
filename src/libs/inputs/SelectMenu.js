@@ -314,6 +314,9 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('role', 'listbox');
         this.listbox.classList.add('selectmenu-menu');
+        for (let c of this.classes) {
+            this.listbox.classList.add(c);
+        }
         this.listbox.appendChild(this.optionlist);
 
         CFBUtils.applyDataAttributes(this.attributes, this.listbox);

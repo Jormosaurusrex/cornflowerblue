@@ -121,7 +121,11 @@
   --checkbox-toggle-offset: 0.2em;
 
   // Input
-  --input-default-padding: .5em 1em .5em 1.5em;
+  --input-default-top-padding: .5rem;
+  --input-default-bottom-padding: .5rem;
+  --input-default-left-padding: 1.5rem;
+  --input-default-right-padding: 1rem;
+  --input-default-padding: var(--input-default-top-padding) var(--input-default-right-padding) var(--input-default-bottom-padding) var(--input-default-left-padding);
 
   // This is more like a "chrome" color. Input borders but also specific controls like steppers.
   --input-border-color-rgb: var(--colors-standard-rgb);
