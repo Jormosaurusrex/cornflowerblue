@@ -62,6 +62,10 @@ class FileInput extends InputElement {
         this.disabled = false;
     }
 
+    reset() {
+        this.fileinput.value = "";
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {

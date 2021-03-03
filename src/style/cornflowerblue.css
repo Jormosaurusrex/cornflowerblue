@@ -4477,9 +4477,20 @@ div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel 
   background-position: center;
   border-radius: 0.1rem;
 }
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > span.text {
-  font-size: 1.2rem;
+div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > div.data {
   padding: var(--input-default-top-padding) var(--input-default-right-padding) var(--input-default-bottom-padding) var(--input-default-right-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > div.data > span.text {
+  font-size: 1.2rem;
+}
+div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > div.data > div.meta {
+  opacity: 1;
+  transition: opacity 0.2s;
+  font-size: 0.75em;
 }
 div.selectmenu-menu.vert ul.selectmenu {
   filter: var(--shadows-dropshadow-filter-vertical);

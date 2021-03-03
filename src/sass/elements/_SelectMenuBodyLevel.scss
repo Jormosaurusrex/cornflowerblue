@@ -84,9 +84,20 @@ div.selectmenu-menu {
             background-position: center;
             border-radius: .1rem;
           }
-          >span.text {
-            font-size: 1.2rem;
+          >div.data {
             padding: var(--input-default-top-padding) var(--input-default-right-padding) var(--input-default-bottom-padding) var(--input-default-right-padding);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-content: flex-start;
+            >span.text {
+              font-size: 1.2rem;
+            }
+            >div.meta {
+              opacity: 1;
+              transition: opacity .2s;
+              font-size: .75em;
+            }
           }
         }
       }

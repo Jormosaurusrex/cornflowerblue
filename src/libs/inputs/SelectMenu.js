@@ -358,6 +358,18 @@ class SelectMenu extends InputElement {
             this.open();
         });
 
+        this.triggerbox.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'Tab':  // Tab
+                    // Nothing.
+                    console.log('tab');
+                    this.close();
+                    break;
+                default:
+                    break;
+            }
+        });
+
         this.triggerbox.addEventListener('keyup', (e) => {
             if ((e.shiftKey) && (e.key === 'Tab')) {  // Shift + Tab
                 this.close();
@@ -439,7 +451,6 @@ class SelectMenu extends InputElement {
     }
 
     buildOption(def, order) {
-
 
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let next = order + 1,

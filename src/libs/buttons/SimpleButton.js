@@ -5,6 +5,7 @@ class SimpleButton {
             id: null,
             aslink: false,
             href: null,
+            payload: null,
             dataattributes: null,
             attributes: null,
             submits: false,
@@ -47,6 +48,7 @@ class SimpleButton {
             aslink: { type: 'option', datatype: 'boolean', description: "Output an <a> object instead of a <button>." },
             href: { type: 'option', datatype: 'url', description: "Use this as the link's href if aslink is true." },
             dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            payload: { type: 'option', datatype: 'DOM Object',  description: "A complete DOM element, to be used as the button's entire content. If present, this bypasses all other visual options." },
             attributes: { type: 'option', datatype: 'dictionary',  description: "A dictionary, key: value, which will end up with $key = value on elements" },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
@@ -205,31 +207,36 @@ class SimpleButton {
             this.button = document.createElement('button');
         }
 
-        if (this.icon) {
-            this.iconactual = IconFactory.icon(this.icon, "", this.iconprefix);
-        }
-        if (this.secondicon) {
-            this.secondiconactual = IconFactory.icon(this.secondicon, "", this.iconprefixsecond);
-            this.secondiconactual.classList.add('secondicon');
-        }
-        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-            for (let ic of this.iconclasses) {
-                if (this.iconactual) { this.iconactual.classList.add(ic); }
-                if (this.secondiconactual) { this.secondiconactual.classList.add(ic); }
+        if (this.payload) {
+            this.payload.classList.add('payload');
+            this.button.appendChild(this.payload);
+        } else {
+            if (this.icon) {
+                this.iconactual = IconFactory.icon(this.icon, "", this.iconprefix);
             }
-        }
+            if (this.secondicon) {
+                this.secondiconactual = IconFactory.icon(this.secondicon, "", this.iconprefixsecond);
+                this.secondiconactual.classList.add('secondicon');
+            }
+            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+                for (let ic of this.iconclasses) {
+                    if (this.iconactual) { this.iconactual.classList.add(ic); }
+                    if (this.secondiconactual) { this.secondiconactual.classList.add(ic); }
+                }
+            }
 
-        if ((this.iconside) && (this.iconside === 'right')) {
-            this.button.classList.add('righticon');
-        }
-        if (this.iconactual) {
-            this.button.appendChild(this.iconactual);
-        }
-        if (this.textobj) {
-            this.button.appendChild(this.textobj);
-        }
-        if (this.secondiconactual) {
-            this.button.appendChild(this.secondiconactual);
+            if ((this.iconside) && (this.iconside === 'right')) {
+                this.button.classList.add('righticon');
+            }
+            if (this.iconactual) {
+                this.button.appendChild(this.iconactual);
+            }
+            if (this.textobj) {
+                this.button.appendChild(this.textobj);
+            }
+            if (this.secondiconactual) {
+                this.button.appendChild(this.secondiconactual);
+            }
         }
 
         if (this.arialabel) {
@@ -474,6 +481,9 @@ class SimpleButton {
 
     get notab() { return this.config.notab; }
     set notab(notab) { this.config.notab = notab; }
+
+    get payload() { return this.config.payload; }
+    set payload(payload) { this.config.payload = payload; }
 
     get secondicon() { return this.config.secondicon; }
     set secondicon(secondicon) { this.config.secondicon = secondicon; }

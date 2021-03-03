@@ -40,7 +40,22 @@ class ImageSelector extends SelectMenu {
             image.style.backgroundImage = `url('${def.url}')`;
             div.appendChild(image);
         }
-        div.appendChild(super.drawPayload(def));
+        let data = document.createElement('div');
+        data.classList.add('data');
+        data.innerHTML = `<span class="text">${def.label}</span>`;
+        if ((def.filesize) || ((def.height) && (def.width))) {
+            let mdata = document.createElement('div');
+            mdata.classList.add('meta');
+            if ((def.filesize) && ((def.height) && (def.width))) {
+                mdata.innerHTML = `<span class="size">${def.filesize} bytes</span> &middot; <span class="dimensions">${def.height}px x ${def.width}px</span>`;
+            } else if (def.filesize) {
+                mdata.innerHTML = `<span class="size">${def.filesize} bytes</span>`;
+            } else if ((def.height) && (def.width)) {
+                mdata.innerHTML = `<span class="dimensions">${def.height}px x ${def.width}px</span>`;
+            }
+            data.appendChild(mdata);
+        }
+        div.appendChild(data);
         return div;
     }
 
