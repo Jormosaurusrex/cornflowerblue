@@ -50,7 +50,7 @@ class DataGrid extends Panel {
             filterbuttonicon: 'filter',
             mute: false, // if true, inputs are set to mute.
             selectable: true, //  Data rows can be selected.
-            selectaction: (self) => {  // What to do when a single row is selected.
+            selectaction: (self, row, rowdata) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
@@ -99,9 +99,9 @@ class DataGrid extends Panel {
             },
             formsuccess: (form, results) => { // What to do when a form returns success
             },
-            createcallback: null, // passed (form, results)
-            updatecalback: null, // passed (form, results)
-            deletecallback: null, // passed (form, results)
+            createcallback: null, // passed (form, results, identifier)
+            updatecalback: null, // passed (form, results, identifier)
+            deletecallback: null, // passed (form, results, identifier)
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -168,6 +168,12 @@ class DataGrid extends Panel {
                 this.postLoad();
                 this.shade.deactivate();
             });
+        } else if (this.source) {
+            this.fetchData(this.source, (data) => {
+                this.update(data);
+                this.postLoad();
+                this.shade.deactivate();
+            });
         } else if (this.data) {
             for (let rdata of this.data) {
                 this.gridbody.appendChild(this.buildRow(rdata));
@@ -176,12 +182,6 @@ class DataGrid extends Panel {
                 this.postLoad();
                 this.shade.deactivate();
             }, 100);
-        } else if (this.source) {
-            this.fetchData(this.source, (data) => {
-                this.update(data);
-                this.postLoad();
-                this.shade.deactivate();
-            });
         }
     }
 
@@ -611,7 +611,6 @@ class DataGrid extends Panel {
             }
         };
 
-
         if ((this.formsuccess) && (typeof this.formsuccess === 'function')) {
             form.onsuccess = (self, results) => {
                 this.formsuccess(self, results)
@@ -637,7 +636,6 @@ class DataGrid extends Panel {
             }
         }
 
-
         if (!this.allowedits) { mode = 'view'; } // always true in this
 
         switch(mode) {
@@ -652,8 +650,9 @@ class DataGrid extends Panel {
                 form.method = this.updatemethod;
 
                 if ((this.updatecallback) && (typeof this.updatecallback === 'function')) {
-                    form.handlercallback = (self, results) => {
-                        this.updatecallback(self, results)
+                    let ourId = rowdata[this.identifier]
+                    form.handlercallback = (self, results, ourId) => {
+                        this.updatecallback(self, results, ourId)
                     }
                 }
 
@@ -759,8 +758,9 @@ class DataGrid extends Panel {
                 }
 
                 if ((this.deletecallback) && (typeof this.deletecallback === 'function')) {
-                    form.handlercallback = (self, results) => {
-                        this.deletecallback(self, results)
+                    let ourId = rowdata[this.identifier]
+                    form.handlercallback = (self, results, ourId) => {
+                        this.deletecallback(self, results, ourId);
                     }
                 }
 
@@ -933,8 +933,11 @@ class DataGrid extends Panel {
      * @param data an array of entry informations
      */
     update(data) {
-        if (!this.data) { this.data = []; }
-        for (let entry of data) {
+        //if (!this.data) { this.data = []; }
+        this.data = [];
+        this.gridbody.innerHTML = '';
+        for (let entry of data) { // incoming data
+            //this.addEntry(entry); // We can only append
             if (this.identifier) {
                 let id = entry[this.identifier];
                 let old = this.getEntry(id);
@@ -1337,8 +1340,9 @@ class DataGrid extends Panel {
      * Select a row.  This method also handles shift+click selection.
      * @param row the row to select
      * @param event (optional) the click event
+     * @param rdata the data from the row
      */
-    select(row, event) {
+    select(row, event, rdata) {
 
         if (row.getAttribute('aria-selected') === 'true') {
             this.deselect(row);
@@ -1420,7 +1424,7 @@ class DataGrid extends Panel {
             row.querySelector('input.selector').checked = true;
 
             if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-                this.selectaction(this);
+                this.selectaction(this, row, rdata);
             }
         }
     }
@@ -1841,7 +1845,7 @@ class DataGrid extends Panel {
                     document.getSelection().removeAllRanges(); // remove cursor selection
                 }
                 if (this.selectable) {
-                    this.select(row, e);
+                    this.select(row, e, rdata);
                 }
             });
 

@@ -42,9 +42,9 @@ class SimpleForm {
             actions: [], // An array of action elements. This are typically buttons.
             passiveactions: [], // An array of action elements that appear only when the form is in passive mode. This are buttons or keywords.
             handlercallback: null, // If present, the response from the handler will be passed to this
-                                // instead of the internal callback. Passed self and results
-                                // The internal callback expects JSON with success: true|false, and arrays of strings
-                                // for results, errors, and warnings
+                                    // instead of the internal callback. Passed self and results
+                                    // The internal callback expects JSON with success: true|false, and arrays of strings
+                                    // for results, errors, and warnings
             onsuccess: null, // What to do if the handlercallback returns success (passed self and results)
             onfailure: null, // What to do if the handlercallback returns failure (passed self and results)
             onvalid: null, // What to do when the form becomes valid (passed self)

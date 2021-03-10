@@ -177,10 +177,12 @@ class TextFactory {
         if (!arguments) { return null; }
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
-            for (let arg = 1; arg <= arguments.length; arg++) {
-                t = t.replace(`$${arg}`, arguments[arg]);
+            if (t) {
+                for (let arg = 1; arg <= arguments.length; arg++) {
+                    t = t.replace(`$${arg}`, arguments[arg]);
+                }
+                return t;
             }
-            return t;
         }
 
         if (!TextFactory.library[arguments[0]]) {

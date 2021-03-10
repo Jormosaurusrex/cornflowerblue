@@ -99,6 +99,7 @@ class InputElement {
         this.config = Object.assign({}, InputElement.DEFAULT_CONFIG, config);
 
         if (config.hidepassiveifempty) {
+            if (!config.classes) { config.classes = []; }
             config.classes.push('hidepassiveifempty');
         }
 
@@ -362,6 +363,9 @@ class InputElement {
             this.passivebox.appendChild(this.passivetext);
         }
         if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
+        if ((this.hidepassiveifempty) && ((!this.value) || (this.value === ''))) {
+            this.container.setAttribute('aria-hidden', true);
+        }
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -372,7 +376,6 @@ class InputElement {
     activate() {
         if (!this.hascontainer) { return; }
         this.container.removeAttribute('aria-hidden');
-
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -485,7 +488,7 @@ class InputElement {
     /**
      * Build the passive text box.
      */
-    buildInactiveBox() {
+    buildPassiveBox() {
         this.passivebox = document.createElement('div');
         this.passivebox.classList.add('passivebox');
         this.passivebox.appendChild(this.passivetext);
@@ -885,7 +888,7 @@ class InputElement {
     set passive(passive) { this.config.passive = passive; }
 
     get passivebox() {
-        if (!this._passivebox) { this.buildInactiveBox(); }
+        if (!this._passivebox) { this.buildPassiveBox(); }
         return this._passivebox;
     }
     set passivebox(passivebox) { this._passivebox = passivebox; }

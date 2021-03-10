@@ -8,6 +8,11 @@ class DateInput extends TextInput {
             gravity: 'south',
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
+            format: () => {
+                let d = new Date(this.value);
+                if (!d) { return ""; }
+                return d.toUTCString();
+            },
             dateicon: 'calendar'
         };
     }
@@ -74,8 +79,7 @@ class DateInput extends TextInput {
         //console.log(`date: ${this.value} ${this.basetime}`);
 
         //let d = new Date(`${this.value} ${this.basetime} GMT`);
-        let d = new Date(this.value);
-        this.datedisplay.innerHTML = d.toUTCString();
+        this.datedisplay.innerHTML = this.format();
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -156,6 +160,9 @@ class DateInput extends TextInput {
 
     get datepicker() { return this._datepicker; }
     set datepicker(datepicker) { this._datepicker = datepicker; }
+
+    get format() { return this.config.format; }
+    set format(format) { this.config.format = format; }
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }

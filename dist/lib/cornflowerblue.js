@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-01
+/*! Cornflower Blue - v0.1.1 - 2021-03-09
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2159,10 +2159,12 @@ class TextFactory {
         if (!arguments) { return null; }
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
-            for (let arg = 1; arg <= arguments.length; arg++) {
-                t = t.replace(`$${arg}`, arguments[arg]);
+            if (t) {
+                for (let arg = 1; arg <= arguments.length; arg++) {
+                    t = t.replace(`$${arg}`, arguments[arg]);
+                }
+                return t;
             }
-            return t;
         }
 
         if (!TextFactory.library[arguments[0]]) {
@@ -2234,6 +2236,7 @@ class SimpleButton {
             id: null,
             aslink: false,
             href: null,
+            payload: null,
             dataattributes: null,
             attributes: null,
             submits: false,
@@ -2276,6 +2279,7 @@ class SimpleButton {
             aslink: { type: 'option', datatype: 'boolean', description: "Output an <a> object instead of a <button>." },
             href: { type: 'option', datatype: 'url', description: "Use this as the link's href if aslink is true." },
             dataattributes: { type: 'option', datatype: 'dictionary', description: "A dictionary, key: value, which will end up with data-$key = value on elements." },
+            payload: { type: 'option', datatype: 'DOM Object',  description: "A complete DOM element, to be used as the button's entire content. If present, this bypasses all other visual options." },
             attributes: { type: 'option', datatype: 'dictionary',  description: "A dictionary, key: value, which will end up with $key = value on elements" },
             arialabel: { type: 'option', datatype: 'string', description: "The aria-label attribute" },
             hidden: { type: 'option', datatype: 'boolean', description: "If true, start hidden or not." },
@@ -2434,31 +2438,36 @@ class SimpleButton {
             this.button = document.createElement('button');
         }
 
-        if (this.icon) {
-            this.iconactual = IconFactory.icon(this.icon, "", this.iconprefix);
-        }
-        if (this.secondicon) {
-            this.secondiconactual = IconFactory.icon(this.secondicon, "", this.iconprefixsecond);
-            this.secondiconactual.classList.add('secondicon');
-        }
-        if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-            for (let ic of this.iconclasses) {
-                if (this.iconactual) { this.iconactual.classList.add(ic); }
-                if (this.secondiconactual) { this.secondiconactual.classList.add(ic); }
+        if (this.payload) {
+            this.payload.classList.add('payload');
+            this.button.appendChild(this.payload);
+        } else {
+            if (this.icon) {
+                this.iconactual = IconFactory.icon(this.icon, "", this.iconprefix);
             }
-        }
+            if (this.secondicon) {
+                this.secondiconactual = IconFactory.icon(this.secondicon, "", this.iconprefixsecond);
+                this.secondiconactual.classList.add('secondicon');
+            }
+            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
+                for (let ic of this.iconclasses) {
+                    if (this.iconactual) { this.iconactual.classList.add(ic); }
+                    if (this.secondiconactual) { this.secondiconactual.classList.add(ic); }
+                }
+            }
 
-        if ((this.iconside) && (this.iconside === 'right')) {
-            this.button.classList.add('righticon');
-        }
-        if (this.iconactual) {
-            this.button.appendChild(this.iconactual);
-        }
-        if (this.textobj) {
-            this.button.appendChild(this.textobj);
-        }
-        if (this.secondiconactual) {
-            this.button.appendChild(this.secondiconactual);
+            if ((this.iconside) && (this.iconside === 'right')) {
+                this.button.classList.add('righticon');
+            }
+            if (this.iconactual) {
+                this.button.appendChild(this.iconactual);
+            }
+            if (this.textobj) {
+                this.button.appendChild(this.textobj);
+            }
+            if (this.secondiconactual) {
+                this.button.appendChild(this.secondiconactual);
+            }
         }
 
         if (this.arialabel) {
@@ -2703,6 +2712,9 @@ class SimpleButton {
 
     get notab() { return this.config.notab; }
     set notab(notab) { this.config.notab = notab; }
+
+    get payload() { return this.config.payload; }
+    set payload(payload) { this.config.payload = payload; }
 
     get secondicon() { return this.config.secondicon; }
     set secondicon(secondicon) { this.config.secondicon = secondicon; }
@@ -4694,7 +4706,7 @@ class DataGrid extends Panel {
             filterbuttonicon: 'filter',
             mute: false, // if true, inputs are set to mute.
             selectable: true, //  Data rows can be selected.
-            selectaction: (self) => {  // What to do when a single row is selected.
+            selectaction: (self, row, rowdata) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
@@ -4743,9 +4755,9 @@ class DataGrid extends Panel {
             },
             formsuccess: (form, results) => { // What to do when a form returns success
             },
-            createcallback: null, // passed (form, results)
-            updatecalback: null, // passed (form, results)
-            deletecallback: null, // passed (form, results)
+            createcallback: null, // passed (form, results, identifier)
+            updatecalback: null, // passed (form, results, identifier)
+            deletecallback: null, // passed (form, results, identifier)
             activitynotifiericon: 'gear-complex',
             activitynotifiertext: TextFactory.get('datagrid-activitynotifier-text'),
             texttotal: 'total',
@@ -4812,6 +4824,12 @@ class DataGrid extends Panel {
                 this.postLoad();
                 this.shade.deactivate();
             });
+        } else if (this.source) {
+            this.fetchData(this.source, (data) => {
+                this.update(data);
+                this.postLoad();
+                this.shade.deactivate();
+            });
         } else if (this.data) {
             for (let rdata of this.data) {
                 this.gridbody.appendChild(this.buildRow(rdata));
@@ -4820,12 +4838,6 @@ class DataGrid extends Panel {
                 this.postLoad();
                 this.shade.deactivate();
             }, 100);
-        } else if (this.source) {
-            this.fetchData(this.source, (data) => {
-                this.update(data);
-                this.postLoad();
-                this.shade.deactivate();
-            });
         }
     }
 
@@ -5255,7 +5267,6 @@ class DataGrid extends Panel {
             }
         };
 
-
         if ((this.formsuccess) && (typeof this.formsuccess === 'function')) {
             form.onsuccess = (self, results) => {
                 this.formsuccess(self, results)
@@ -5281,7 +5292,6 @@ class DataGrid extends Panel {
             }
         }
 
-
         if (!this.allowedits) { mode = 'view'; } // always true in this
 
         switch(mode) {
@@ -5296,8 +5306,9 @@ class DataGrid extends Panel {
                 form.method = this.updatemethod;
 
                 if ((this.updatecallback) && (typeof this.updatecallback === 'function')) {
-                    form.handlercallback = (self, results) => {
-                        this.updatecallback(self, results)
+                    let ourId = rowdata[this.identifier]
+                    form.handlercallback = (self, results, ourId) => {
+                        this.updatecallback(self, results, ourId)
                     }
                 }
 
@@ -5403,8 +5414,9 @@ class DataGrid extends Panel {
                 }
 
                 if ((this.deletecallback) && (typeof this.deletecallback === 'function')) {
-                    form.handlercallback = (self, results) => {
-                        this.deletecallback(self, results)
+                    let ourId = rowdata[this.identifier]
+                    form.handlercallback = (self, results, ourId) => {
+                        this.deletecallback(self, results, ourId);
                     }
                 }
 
@@ -5577,8 +5589,11 @@ class DataGrid extends Panel {
      * @param data an array of entry informations
      */
     update(data) {
-        if (!this.data) { this.data = []; }
-        for (let entry of data) {
+        //if (!this.data) { this.data = []; }
+        this.data = [];
+        this.gridbody.innerHTML = '';
+        for (let entry of data) { // incoming data
+            //this.addEntry(entry); // We can only append
             if (this.identifier) {
                 let id = entry[this.identifier];
                 let old = this.getEntry(id);
@@ -5981,8 +5996,9 @@ class DataGrid extends Panel {
      * Select a row.  This method also handles shift+click selection.
      * @param row the row to select
      * @param event (optional) the click event
+     * @param rdata the data from the row
      */
-    select(row, event) {
+    select(row, event, rdata) {
 
         if (row.getAttribute('aria-selected') === 'true') {
             this.deselect(row);
@@ -6064,7 +6080,7 @@ class DataGrid extends Panel {
             row.querySelector('input.selector').checked = true;
 
             if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-                this.selectaction(this);
+                this.selectaction(this, row, rdata);
             }
         }
     }
@@ -6485,7 +6501,7 @@ class DataGrid extends Panel {
                     document.getSelection().removeAllRanges(); // remove cursor selection
                 }
                 if (this.selectable) {
-                    this.select(row, e);
+                    this.select(row, e, rdata);
                 }
             });
 
@@ -9290,9 +9306,9 @@ class SimpleForm {
             actions: [], // An array of action elements. This are typically buttons.
             passiveactions: [], // An array of action elements that appear only when the form is in passive mode. This are buttons or keywords.
             handlercallback: null, // If present, the response from the handler will be passed to this
-                                // instead of the internal callback. Passed self and results
-                                // The internal callback expects JSON with success: true|false, and arrays of strings
-                                // for results, errors, and warnings
+                                    // instead of the internal callback. Passed self and results
+                                    // The internal callback expects JSON with success: true|false, and arrays of strings
+                                    // for results, errors, and warnings
             onsuccess: null, // What to do if the handlercallback returns success (passed self and results)
             onfailure: null, // What to do if the handlercallback returns failure (passed self and results)
             onvalid: null, // What to do when the form becomes valid (passed self)
@@ -10849,6 +10865,7 @@ class InputElement {
         this.config = Object.assign({}, InputElement.DEFAULT_CONFIG, config);
 
         if (config.hidepassiveifempty) {
+            if (!config.classes) { config.classes = []; }
             config.classes.push('hidepassiveifempty');
         }
 
@@ -11112,6 +11129,9 @@ class InputElement {
             this.passivebox.appendChild(this.passivetext);
         }
         if (this.hidewhenpassive) { this.container.setAttribute('aria-hidden', true)}
+        if ((this.hidepassiveifempty) && ((!this.value) || (this.value === ''))) {
+            this.container.setAttribute('aria-hidden', true);
+        }
         this.container.classList.add('passive');
         this.passive = true;
     }
@@ -11122,7 +11142,6 @@ class InputElement {
     activate() {
         if (!this.hascontainer) { return; }
         this.container.removeAttribute('aria-hidden');
-
         this.container.classList.remove('passive');
         this.passive = false;
     }
@@ -11235,7 +11254,7 @@ class InputElement {
     /**
      * Build the passive text box.
      */
-    buildInactiveBox() {
+    buildPassiveBox() {
         this.passivebox = document.createElement('div');
         this.passivebox.classList.add('passivebox');
         this.passivebox.appendChild(this.passivetext);
@@ -11635,7 +11654,7 @@ class InputElement {
     set passive(passive) { this.config.passive = passive; }
 
     get passivebox() {
-        if (!this._passivebox) { this.buildInactiveBox(); }
+        if (!this._passivebox) { this.buildPassiveBox(); }
         return this._passivebox;
     }
     set passivebox(passivebox) { this._passivebox = passivebox; }
@@ -12029,6 +12048,9 @@ class SelectMenu extends InputElement {
         this.listbox.setAttribute('aria-hidden', 'true');
         this.listbox.setAttribute('role', 'listbox');
         this.listbox.classList.add('selectmenu-menu');
+        for (let c of this.classes) {
+            this.listbox.classList.add(c);
+        }
         this.listbox.appendChild(this.optionlist);
 
         CFBUtils.applyDataAttributes(this.attributes, this.listbox);
@@ -12068,6 +12090,18 @@ class SelectMenu extends InputElement {
             }
             this.triggerbox.select(); // Select all the text
             this.open();
+        });
+
+        this.triggerbox.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'Tab':  // Tab
+                    // Nothing.
+                    console.log('tab');
+                    this.close();
+                    break;
+                default:
+                    break;
+            }
         });
 
         this.triggerbox.addEventListener('keyup', (e) => {
@@ -12151,7 +12185,6 @@ class SelectMenu extends InputElement {
     }
 
     buildOption(def, order) {
-
 
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
         let next = order + 1,
@@ -12528,7 +12561,7 @@ class BooleanToggle {
     /**
      * Build the passive text box.
      */
-    buildInactiveBox() {
+    buildPassiveBox() {
         this.passivebox = document.createElement('div');
         this.passivebox.classList.add('passivebox');
         this.passivebox.appendChild(this.passivetext);
@@ -12720,7 +12753,7 @@ class BooleanToggle {
     set passive(passive) { this.config.passive = passive; }
 
     get passivebox() {
-        if (!this._passivebox) { this.buildInactiveBox(); }
+        if (!this._passivebox) { this.buildPassiveBox(); }
         return this._passivebox;
     }
     set passivebox(passivebox) { this._passivebox = passivebox; }
@@ -13044,6 +13077,10 @@ class FileInput extends InputElement {
         this.disabled = false;
     }
 
+    reset() {
+        this.fileinput.value = "";
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
@@ -13121,7 +13158,9 @@ class FileInput extends InputElement {
         this.fileinput.setAttribute('id', this.id);
         this.fileinput.setAttribute('accept', this.accept);
         this.fileinput.setAttribute('multiple', this.multiple);
-        this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
+        if (this.label) {
+            this.fileinput.setAttribute('aria-labelledby', this.labelobj.id);
+        }
         this.fileinput.addEventListener('focusin', () => {
             this.triggerbox.focus();
             this.container.classList.add('active');
@@ -14105,11 +14144,27 @@ class ImageSelector extends SelectMenu {
         let div = document.createElement('div');
         div.classList.add('imagesel');
         if (def.url) {
-            let img = document.createElement('img');
-            img.setAttribute('src', def.url);
-            div.appendChild(img);
+            let image = document.createElement('div');
+            image.classList.add('thumbnail')
+            image.style.backgroundImage = `url('${def.url}')`;
+            div.appendChild(image);
         }
-        div.appendChild(super.drawPayload(def));
+        let data = document.createElement('div');
+        data.classList.add('data');
+        data.innerHTML = `<span class="text">${def.label}</span>`;
+        if ((def.filesize) || ((def.height) && (def.width))) {
+            let mdata = document.createElement('div');
+            mdata.classList.add('meta');
+            if ((def.filesize) && ((def.height) && (def.width))) {
+                mdata.innerHTML = `<span class="size">${def.filesize} bytes</span> &middot; <span class="dimensions">${def.height}px x ${def.width}px</span>`;
+            } else if (def.filesize) {
+                mdata.innerHTML = `<span class="size">${def.filesize} bytes</span>`;
+            } else if ((def.height) && (def.width)) {
+                mdata.innerHTML = `<span class="dimensions">${def.height}px x ${def.width}px</span>`;
+            }
+            data.appendChild(mdata);
+        }
+        div.appendChild(data);
         return div;
     }
 

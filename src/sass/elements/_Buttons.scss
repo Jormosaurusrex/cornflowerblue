@@ -27,7 +27,7 @@ a.button {
   border: none;
   border-radius: var(--border-radius);
   box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);;
-  > span.icon {
+  >span.icon {
     margin: 0 .5em 0 0;
     &:before {
       margin: 0; // Generates padding issues otherwise

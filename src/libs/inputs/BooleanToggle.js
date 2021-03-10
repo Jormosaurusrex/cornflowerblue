@@ -165,7 +165,7 @@ class BooleanToggle {
     /**
      * Build the passive text box.
      */
-    buildInactiveBox() {
+    buildPassiveBox() {
         this.passivebox = document.createElement('div');
         this.passivebox.classList.add('passivebox');
         this.passivebox.appendChild(this.passivetext);
@@ -357,7 +357,7 @@ class BooleanToggle {
     set passive(passive) { this.config.passive = passive; }
 
     get passivebox() {
-        if (!this._passivebox) { this.buildInactiveBox(); }
+        if (!this._passivebox) { this.buildPassiveBox(); }
         return this._passivebox;
     }
     set passivebox(passivebox) { this._passivebox = passivebox; }
