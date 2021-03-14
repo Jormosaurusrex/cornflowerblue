@@ -13,6 +13,7 @@ class InputElement {
             label: null,
             placeholder: null,
             hidewhenpassive: false,
+            hidewhenactive: false,
             hidepassiveifempty: true,
             preamble: null,
             title: null,
@@ -68,6 +69,7 @@ class InputElement {
             help: { type: 'option', datatype: 'string', description: "Help text that appears in tooltips." },
             helpwaittime: { type: 'option', datatype: 'number', description: "How long to wait before automatically showing help tooltip." },
             required: { type: 'option', datatype: 'boolean', description: "Is this a required field or not." },
+            hidewhenactive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in active mode." },
             hidewhenpassive: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode." },
             hidewhenpassivewhenempty: { type: 'option', datatype: 'boolean', description: "If true, don't display the element when in passive mode, but only do this if there is no value." },
             requiredtext: { type: 'option', datatype: 'string', description: "Text to display on required items." },
@@ -169,6 +171,12 @@ class InputElement {
     get haspassivebox() {
         return !!this._passivebox;
     }
+
+    /**
+     * Get the initial value for the input. Useful for overriding if we want to display things different.
+     * @return {string}
+     */
+    get initialvalue() { return this.config.value; }
 
     /* CORE METHODS_____________________________________________________________________ */
 
@@ -358,6 +366,7 @@ class InputElement {
      */
     pacify() {
         if (!this.hascontainer) { return; }
+        this.container.removeAttribute('aria-hidden'); // clear
         if (this.haspassivebox) {
             this.passivebox.innerHTML = '';
             this.passivebox.appendChild(this.passivetext);
@@ -378,6 +387,7 @@ class InputElement {
         this.container.removeAttribute('aria-hidden');
         this.container.classList.remove('passive');
         this.passive = false;
+        if (this.hidewhenactive) { this.container.setAttribute('aria-hidden', true); }
     }
 
     /**
@@ -477,6 +487,8 @@ class InputElement {
         }
         if (this.passive) {
             this.pacify();
+        } else {
+            this.activate();
         }
         if (this.help) {
             this.input.setAttribute('aria-describedby', `${this.id}-help-tt`);
@@ -632,7 +644,7 @@ class InputElement {
             }
         });
 
-        this.input.value = this.config.value;
+        this.input.value = this.initialvalue;
 
         if (this.required) {
             this.input.setAttribute('required', 'true');
@@ -801,6 +813,9 @@ class InputElement {
 
     get helpwaittime() { return this.config.helpwaittime; }
     set helpwaittime(helpwaittime) { this.config.helpwaittime = helpwaittime; }
+
+    get hidewhenactive() { return this.config.hidewhenactive; }
+    set hidewhenactive(hidewhenactive) { this.config.hidewhenactive = hidewhenactive; }
 
     get hidewhenpassive() { return this.config.hidewhenpassive; }
     set hidewhenpassive(hidewhenpassive) { this.config.hidewhenpassive = hidewhenpassive; }

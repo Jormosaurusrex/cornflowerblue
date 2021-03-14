@@ -310,6 +310,5 @@ class DatePicker {
     get value() { return this.config.value; }
     set value(value) { this.config.value = value; }
 
-
 }
 window.DatePicker = DatePicker;

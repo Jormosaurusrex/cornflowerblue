@@ -141,7 +141,7 @@ p.textarea-container {
       &.stepbuttons,
       &.visbutton,
       &.calbutton {
-        > button {
+        >button {
           --colors-local: var(--colors-standard);
         }
         display: flex;
@@ -159,8 +159,9 @@ p.textarea-container {
             filter: none;
           }
         }
-        button {
-          span.icon {
+        >button {
+          margin: 0 .5rem;
+          >span.icon {
             margin: 0;
           }
           @include for-hover-only {

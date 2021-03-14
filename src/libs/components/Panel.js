@@ -213,10 +213,16 @@ class Panel {
 
         this.container.appendChild(this.contentbox);
 
-
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
-            this.minimized = true;
+            if ((this.closeicon) && (this.closeiconclosed)) {
+                this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
+            }
+        } else {
+            this.container.setAttribute('aria-expanded', 'true');
+            if ((this.closeicon) && (this.closeiconclosed)) {
+                this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
+            }
         }
 
         if (this.hidden) { this.hide(); }
