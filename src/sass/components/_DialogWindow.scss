@@ -24,7 +24,7 @@ div.window-container {
     padding: 0;
     text-align: left;
     max-height: 90%;
-    min-width: 25rem;
+    min-width: var(--dialog-min-width);
     margin: 2rem auto;
     position: relative;
     border-radius: var(--border-radius);
@@ -135,7 +135,7 @@ div.window-container {
             z-index: 10;
             div.header,
             div.elements {
-              min-width: 35rem;
+              min-width: var(--dialog-content-elements-width);
               padding: 0;
             }
           }

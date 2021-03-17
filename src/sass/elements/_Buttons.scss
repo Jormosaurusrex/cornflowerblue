@@ -392,10 +392,14 @@ a.button {
     box-shadow: none;
     background: none;
     flex-direction: row-reverse;
+    align-content: center;
     transition: opacity .5s;
     span.text {
       font-size: 1rem;
       opacity: 0;
+    }
+    span.icon {
+      font-size: 1rem;
     }
     &:focus,
     &:active {

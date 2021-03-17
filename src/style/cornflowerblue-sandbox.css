@@ -59,6 +59,8 @@
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
+  --dialog-min-width: 25rem;
+  --dialog-content-elements-width: 35rem;
   --dialog-lightbox-background-color: var(--black);
   --dialog-lightbox-text-color: var(--colors-text-hot);
   --panel-max-width: 22em;
@@ -2185,6 +2187,7 @@ a.button.togglebutton {
   box-shadow: none;
   background: none;
   flex-direction: row-reverse;
+  align-content: center;
   transition: opacity 0.5s;
 }
 button.closebutton span.text, button.togglebutton span.text,
@@ -2196,6 +2199,15 @@ a.button.closebutton span.text,
 a.button.togglebutton span.text {
   font-size: 1rem;
   opacity: 0;
+}
+button.closebutton span.icon, button.togglebutton span.icon,
+input[type=submit].closebutton span.icon,
+input[type=submit].togglebutton span.icon,
+input[type=reset].closebutton span.icon,
+input[type=reset].togglebutton span.icon,
+a.button.closebutton span.icon,
+a.button.togglebutton span.icon {
+  font-size: 1rem;
 }
 button.closebutton:focus, button.closebutton:active, button.togglebutton:focus, button.togglebutton:active,
 input[type=submit].closebutton:focus,
@@ -2938,7 +2950,6 @@ p.input-container,
 div.file-container,
 div.textarea-container,
 p.textarea-container {
-  margin: 0;
   margin: 0;
   padding: 0.5rem 0 0.5rem 0;
   position: relative;
@@ -4268,7 +4279,7 @@ div.window-container div.dialog {
   padding: 0;
   text-align: left;
   max-height: 90%;
-  min-width: 25rem;
+  min-width: var(--dialog-min-width);
   margin: 2rem auto;
   position: relative;
   border-radius: var(--border-radius);
@@ -4381,7 +4392,7 @@ div.window-container div.dialog.isform div.content form div.contentbox {
 }
 div.window-container div.dialog.isform div.content form div.contentbox div.header,
 div.window-container div.dialog.isform div.content form div.contentbox div.elements {
-  min-width: 35rem;
+  min-width: var(--dialog-content-elements-width);
   padding: 0;
 }
 div.window-container div.dialog.isform div.content form div.actions {
