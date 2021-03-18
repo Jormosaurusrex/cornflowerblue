@@ -319,6 +319,7 @@ class CornflowerBlueDemo {
             { label: 'Growlers', id: 'growler' },
             { label: 'Progress Meters', id: 'progressmeters' },
             { label: 'Dialogs', id: 'dialogs' },
+            { label: 'Switch Lists', id: 'switchlists' },
             { label: 'Tabs and Menus', id: 'tabsandmenus' }
         ];
         this.complexnav = new TabBar({
@@ -360,6 +361,7 @@ class CornflowerBlueDemo {
         this.grindDialogs();
         this.grindForms();
         this.grindGrowlers();
+        this.grindSwitchLists();
         this.grindInputs();
         this.grindMessageBoxes();
         this.grindProgressMeters();
@@ -1149,9 +1151,34 @@ class CornflowerBlueDemo {
 
     }
 
-    grindGrowlers() {
-        
+    grindSwitchLists() {
 
+        document.getElementById('inputs-switchlist').appendChild(new SwitchList({
+            label: 'Foods in My Life',
+            intitle: 'Like',
+            inlist: [
+                { id: 'water', label: 'Water', value: 'water' },
+                { id: 'tuna', label: 'Tuna', value: 'tuna' },
+                { id: 'gfish', label: 'Goldfish Crackers', value: 'gfish' },
+                { id: 'pizza', label: 'Pizza', value: 'pizza' },
+                { id: 'hburg', label: 'Hamburgers', value: 'hburg' },
+                { id: 'hdogs', label: 'Hot Dogs', value: 'hdogs' },
+                { id: 'zuck', label: 'Zucchini', value: 'zuck' }
+            ],
+            outtitle: 'Dislike',
+            outlist: [
+                { id: 'eggs', label: 'Eggs', value: 'eggs' },
+                { id: 'vegs', label: 'Steamed Vegetables', value: 'vegs' },
+                { id: 'mush', label: 'Mushrooms', value: 'mush' },
+                { id: 'mayo', label: 'Mayo', value: 'mayo' },
+                { id: 'lobster', label: 'Lobster', value: 'lobster' }
+            ],
+            prefix: 'myitems-'
+        }).container);
+    }
+
+
+    grindGrowlers() {
         let positions = document.createElement('div');
         positions.classList.add('example');
         positions.classList.add('centered');

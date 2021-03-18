@@ -419,6 +419,9 @@ input[type="radio"] {
       border-radius: 50%;
     }
   }
+  &[aria-hidden="true"] {
+    display: none;
+  }
 }
 input[type=checkbox],
 input[type=checkbox] + label,

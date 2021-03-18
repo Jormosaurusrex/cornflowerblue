@@ -152,12 +152,12 @@ class BooleanToggle {
 
         if (this.labelside === 'left') {
             this.container.classList.add('leftside');
-            this.container.appendChild(this.labelobj);
+            if (this.label) { this.container.appendChild(this.labelobj) };
             this.container.appendChild(this.passivebox);
             this.container.appendChild(this.toggle);
         } else {
             this.container.appendChild(this.toggle);
-            this.container.appendChild(this.labelobj);
+            if (this.label) { this.container.appendChild(this.labelobj) };
             this.container.appendChild(this.passivebox);
         }
     }
@@ -210,9 +210,9 @@ class BooleanToggle {
         });
 
         if (this.disabled) { this.disable(); }
-        if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
+        if (this.hidden) { this.toggle.setAttribute('aria-hidden', 'true'); }
 
-        if ((this.checked) || (this.config.value)) {
+        if (this.checked) {
             this.toggle.checked = true;
             this.checked = true;
             this.toggle.setAttribute('aria-checked', 'true');

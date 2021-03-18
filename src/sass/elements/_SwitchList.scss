@@ -1,0 +1,89 @@
+div.switchlist-container {
+  >div.topline {
+
+  }
+  >div.listboxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: stretch;
+    max-height: 15rem;
+    height: 15rem;
+    min-height: 15rem;
+    overflow: hidden;
+    >div.listbox {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-content: stretch;
+      margin: 0;
+      margin-right: .5rem;
+      width: 50%;
+      overflow: hidden;
+      >label {
+
+      }
+      >ul {
+        margin: 0;
+        padding: 0;
+        background-color: var(--canvas-color-primary);
+        flex-grow: 2;
+        overflow: auto;
+        box-shadow: inset 0 0.5em .5rem 0 rgba(0, 0, 0, 0.1);
+        &.scrolled {
+          box-shadow: inset 0 0.5em .5rem 0 rgba(0, 0, 0, 0.2), inset 0 -0.5em .5rem 0 rgba(0, 0, 0, 0.2);
+        }
+        >li {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-content: center;
+          align-items: center;
+          padding: .5rem;
+          margin: .25rem 0;
+          background-color: var(--canvas-color-tertiary);
+          border-radius: var(--border-radius);
+          >span.l {
+            justify-self: flex-start;
+            margin-right: auto;
+          }
+          >span.icon {
+            display: none;
+            &:last-child {
+              display: inline-block;
+            }
+          }
+          &:focus,
+          &:focus-within {
+            background-color: var(--colors-affordance);
+            color: var(--colors-text-hot);
+            outline: var(--colors-text-hot) dashed .1em;
+            outline-offset: -.3em;
+            text-decoration: underline double;
+          }
+          @include for-hover-only {
+            &:hover {
+              background-color: var(--colors-affordance);
+              color: var(--colors-text-hot);
+            }
+          }
+        }
+      }
+      &.outlist {
+        margin-left: .5rem;
+        margin-right: 0;
+        >ul >li >span.l {
+
+        }
+        >ul >li >span.icon {
+          &:first-child {
+            display: inline-block;
+          }
+          &:last-child {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
