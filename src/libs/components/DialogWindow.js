@@ -200,6 +200,7 @@ class DialogWindow {
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
                                     mute: true,
+                                    classes: ['closebutton'],
                                     action: () => {
                                         this.close();
                                     }
@@ -209,6 +210,7 @@ class DialogWindow {
                                 this.form.actions.push(new DestructiveButton({
                                     text: this.canceltext,
                                     mute: true,
+                                    classes: ['cancelbutton'],
                                     action: () => {
                                         this.close();
                                     }

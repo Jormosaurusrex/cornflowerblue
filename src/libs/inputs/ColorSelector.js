@@ -3,16 +3,19 @@ class ColorSelector extends RadioGroup {
     static get DEFAULT_CONFIG() {
         return {
             options: [
-                { label: 'Red', value: 'var(--red)' },
-                { label: 'Orange', value: 'var(--orange)' },
-                { label: 'Yellow', value: 'var(--yellow)' },
-                { label: 'Green', value: 'var(--green)' },
-                { label: 'Blue', value: 'var(--blue)' },
-                { label: 'Dark Blue', value: 'var(--darkblue)' },
-                { label: 'Purple', value: 'var(--purple)' },
-                { label: 'Black', value: 'var(--black)' },
-                { label: 'Tan', value: 'var(--tan)' },
-                { label: 'White', value: 'var(--white)' }
+                { label: TextFactory.get('color-red'), value: 'red' },
+                { label: TextFactory.get('color-orange'), value: 'orange' },
+                { label: TextFactory.get('color-yellow'), value: 'yellow' },
+                { label: TextFactory.get('color-green'), value: 'green' },
+                { label: TextFactory.get('color-blue'), value: 'blue' },
+                { label: TextFactory.get('color-darkblue'), value: 'darkblue' },
+                { label: TextFactory.get('color-purple'), value: 'purple' },
+                { label: TextFactory.get('color-pink'), value: 'pink' },
+                { label: TextFactory.get('color-tan'), value: 'tan' },
+                { label: TextFactory.get('color-brown'), value: 'brown' },
+                { label: TextFactory.get('color-black'), value: 'black' },
+                { label: TextFactory.get('color-grey'), value: 'grey' },
+                { label: TextFactory.get('color-white'), value: 'white' }
             ]
         };
     }

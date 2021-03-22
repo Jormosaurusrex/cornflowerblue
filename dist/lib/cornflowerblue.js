@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-17
+/*! Cornflower Blue - v0.1.1 - 2021-03-22
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2010,6 +2010,19 @@ class TextFactory {
                 "password": "Password",
                 "close_pane" : "Close panel",
                 "email": "Email",
+                "color-red" : "Red",
+                "color-orange" : "Orange",
+                "color-yellow" : "Yellow",
+                "color-green" : "Green",
+                "color-blue" : "Blue",
+                "color-darkblue" : "Dark Blue",
+                "color-purple" : "Purple",
+                "color-tan" : "Tan",
+                "color-white" : "White",
+                "color-black" : "Black",
+                "color-pink" : "Pink",
+                "color-grey" : "Grey",
+                "color-brown" : "Brown",
                 "passwordinput-placeholder-enter_password": "Enter your password.",
                 "remember_me": "Remember me",
                 "loginform-error-passwords_dont_match": "Email and password do not match.",
@@ -8336,6 +8349,7 @@ class DialogWindow {
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
                                     mute: true,
+                                    classes: ['closebutton'],
                                     action: () => {
                                         this.close();
                                     }
@@ -8345,6 +8359,7 @@ class DialogWindow {
                                 this.form.actions.push(new DestructiveButton({
                                     text: this.canceltext,
                                     mute: true,
+                                    classes: ['cancelbutton'],
                                     action: () => {
                                         this.close();
                                     }
@@ -12568,12 +12583,12 @@ class BooleanToggle {
 
         if (this.labelside === 'left') {
             this.container.classList.add('leftside');
-            this.container.appendChild(this.labelobj);
+            if (this.label) { this.container.appendChild(this.labelobj) };
             this.container.appendChild(this.passivebox);
             this.container.appendChild(this.toggle);
         } else {
             this.container.appendChild(this.toggle);
-            this.container.appendChild(this.labelobj);
+            if (this.label) { this.container.appendChild(this.labelobj) };
             this.container.appendChild(this.passivebox);
         }
     }
@@ -12626,9 +12641,9 @@ class BooleanToggle {
         });
 
         if (this.disabled) { this.disable(); }
-        if (this.hidden) { this.toggle.setAttribute('hidden', 'true'); }
+        if (this.hidden) { this.toggle.setAttribute('aria-hidden', 'true'); }
 
-        if ((this.checked) || (this.config.value)) {
+        if (this.checked) {
             this.toggle.checked = true;
             this.checked = true;
             this.toggle.setAttribute('aria-checked', 'true');
@@ -12991,6 +13006,266 @@ class DateInput extends TextInput {
 }
 
 window.DateInput = DateInput;
+class SwitchList extends InputElement {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            prefix: null, // Prefix to use on itemcheckboxes, defaults to name-
+            inlist: [],    // Array of option dictionary objects.  Printed in order given.
+                            // { label: "Label to show", value: "v", id: (optional) }
+            intitle: '',
+            addicon: 'arrow-right',
+
+            outlist: [],
+            outtitle: '',
+            removeicon: 'arrow-left',
+
+        };
+    }
+
+    constructor(config) {
+        if (!config) { config = {}; }
+        config = Object.assign({}, SwitchList.DEFAULT_CONFIG, config);
+        if (!config.type) { config.type = "switchlist"; }
+        super(config);
+    }
+
+    /* PSEUDO-ACCESSSORS________________________________________________________________ */
+
+
+    /* CORE METHODS_____________________________________________________________________ */
+    sortList(list) {
+        let nodes = Array.prototype.slice.call(list.childNodes).filter((el) => {
+            return el.tagName === 'LI';
+        });
+        nodes.sort((a, b) => {
+            let va = a.getAttribute('data-label'),
+                vb = b.getAttribute('data-label');
+            if (va > vb) { return 1 }
+            if (va < vb) { return -1 }
+            return 0;
+        });
+        nodes.forEach(function(node) {
+            list.appendChild(node);
+        });
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildContainer() {
+        this.container = document.createElement('div');
+        this.container.classList.add('switchlist-container');
+        this.container.classList.add('input-container');
+        if (this.name) {
+            this.container.classList.add(`name-${this.name}`);
+        }
+        if (this.classes) {
+            for (let c of this.classes) {
+                this.container.classList.add(c);
+            }
+        }
+        if (this.id) {
+            this.container.setAttribute("id", this.id);
+        }
+
+        this.topline = document.createElement('div');
+        this.topline.classList.add('topline');
+        if (this.label) { this.topline.appendChild(this.labelobj); }
+        if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
+        this.container.appendChild(this.topline);
+
+        let listboxes = document.createElement('div');
+        listboxes.classList.add('listboxes');
+
+        listboxes.appendChild(this.buildListBox(true));
+        listboxes.appendChild(this.buildListBox(false));
+
+        this.container.appendChild(listboxes);
+        this.sortList(this.inlistlist);
+        this.sortList(this.outlistlist);
+
+    }
+
+    buildListElement(m, isin, count) {
+        let li = document.createElement('li'),
+            label = document.createElement('span'),
+            myname = `${(this.prefix) ? this.prefix : this.name}-${m['id'] ? m['id'] : count}`;
+
+        let toggle = new BooleanToggle({
+            checked: isin,
+            value: m.value,
+            hidden: true,
+            name: myname
+        });
+
+        li.appendChild(IconFactory.icon(this.removeicon));
+        li.setAttribute('data-rid', `${this.name}-r-${CFBUtils.getUniqueKey(5)}`);
+        li.setAttribute('data-label', m.label);
+        li.setAttribute('tabindex', '-1');
+
+        label.classList.add('l');
+        label.innerHTML = m.label;
+        li.appendChild(label);
+
+        li.appendChild(toggle.naked);
+        li.appendChild(IconFactory.icon(this.addicon));
+
+        li.addEventListener('keydown', (e) => {
+            let mylist = this.parentNode;
+            if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
+                this.close();
+            } else {
+                switch (e.key) {
+                    case 'Shift':
+                    case 'Control':
+                    case 'Alt':
+                    case 'CapsLock':
+                    case 'NumLock':
+                    case 'ScrollLock':
+                    case 'End':
+                    case 'Home':
+                    case 'Meta':
+                    case 'PageUp':
+                        // Nothing.
+                        break;
+                    case 'Tab':  // Tab
+                    case 'Escape': // Escape
+                    case 'ArrowUp': // Up
+                        e.preventDefault();
+                        let prev;
+                        for (let i of mylist.getElementsByTagName('li')) {
+                            if (i.getAttribute('data-rid') === li.getAttribute('data-rid')) {
+                                if (i) {
+                                    prev.focus();
+                                }
+                                break;
+                            }
+                            prev = i;
+                        }
+                        break;
+                    case 'ArrowDown': // Down
+                        e.preventDefault();
+                        let next;
+                        for (let i of mylist.getElementsByTagName('li').reverse()) {
+                            if (i.getAttribute('data-rid') === li.getAttribute('data-rid')) {
+                                if (i) {
+                                    next.focus();
+                                }
+                                break;
+                            }
+                            next = i;
+                        }
+                        break;
+                    case 'Enter':
+                        li.click(); // click the one inside
+                        break;
+                    case 'Backspace':  // Backspace
+                    case 'Delete':  // Delete
+                    case ' ': // space
+                    default:
+                        break;
+                }
+            }
+
+        });
+
+        li.addEventListener('click', () => {
+            //console.log(`checked:  ${toggle.checked}`);
+            //console.log(`toggle:  ${toggle.toggle.checked}`);
+            if (toggle.toggle.checked) {
+                toggle.checked = false;
+                this.inlistlist.removeChild(li);
+                this.outlistlist.appendChild(li);
+                this.sortList(this.outlistlist);
+            } else {
+                toggle.toggle.checked = true;
+                this.outlistlist.removeChild(li);
+                this.inlistlist.appendChild(li);
+                this.sortList(this.inlistlist);
+            }
+
+            this.validate();
+
+            if (this.form) { this.form.validate(); }
+
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(this);
+            }
+        });
+        return li;
+    }
+
+    buildListBox(isin = true) {
+
+        let title = this.intitle,
+            members = this.inlist;
+        if (!isin) {
+            title = this.outtitle;
+            members = this.outlist;
+        }
+        let lbox = document.createElement('div');
+        lbox.classList.add('listbox', `${ isin ? "inlist" : "outlist"}`);
+
+        lbox.innerHTML = `<label>${title}</lable>`
+
+        let list = document.createElement('ul'),
+            count = 0;
+        for (let m of members) {
+            list.appendChild(this.buildListElement(m, isin, count++));
+        }
+        lbox.appendChild(list);
+
+        if (isin) {
+            this.inlistbox = lbox;
+            this.inlistlist = list;
+        } else {
+            this.outlistbox = lbox;
+            this.outlistlist = list;
+        }
+        return lbox;
+    }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get addicon() { return this.config.addicon; }
+    set addicon(addicon) { this.config.addicon = addicon; }
+
+    get inlist() { return this.config.inlist; }
+    set inlist(inlist) { this.config.inlist = inlist; }
+
+    get inlistbox() { return this._inlistbox; }
+    set inlistbox(inlistbox) { this._inlistbox = inlistbox; }
+
+    get inlistlist() { return this._inlistlist; }
+    set inlistlist(inlistlist) { this._inlistlist = inlistlist; }
+
+    get intitle() { return this.config.intitle; }
+    set intitle(intitle) { this.config.intitle = intitle; }
+
+    get outicon() { return this.config.outicon; }
+    set outicon(outicon) { this.config.outicon = outicon; }
+
+    get outlist() { return this.config.outlist; }
+    set outlist(outlist) { this.config.outlist = outlist; }
+
+    get outlistbox() { return this._outlistbox; }
+    set outlistbox(outlistbox) { this._outlistbox = outlistbox; }
+
+    get outlistlist() { return this._outlistlist; }
+    set outlistlist(outlistlist) { this._outlistlist = outlistlist; }
+
+    get outtitle() { return this.config.outtitle; }
+    set outtitle(outtitle) { this.config.outtitle = outtitle; }
+
+    get prefix() { return this.config.prefix; }
+    set prefix(prefix) { this.config.prefix = prefix; }
+
+    get removeicon() { return this.config.removeicon; }
+    set removeicon(removeicon) { this.config.removeicon = removeicon; }
+
+}
+window.SwitchList = SwitchList;
+
 class EmailInput extends TextInput {
 
     static get DEFAULT_CONFIG() {
@@ -13874,16 +14149,19 @@ class ColorSelector extends RadioGroup {
     static get DEFAULT_CONFIG() {
         return {
             options: [
-                { label: 'Red', value: 'var(--red)' },
-                { label: 'Orange', value: 'var(--orange)' },
-                { label: 'Yellow', value: 'var(--yellow)' },
-                { label: 'Green', value: 'var(--green)' },
-                { label: 'Blue', value: 'var(--blue)' },
-                { label: 'Dark Blue', value: 'var(--darkblue)' },
-                { label: 'Purple', value: 'var(--purple)' },
-                { label: 'Black', value: 'var(--black)' },
-                { label: 'Tan', value: 'var(--tan)' },
-                { label: 'White', value: 'var(--white)' }
+                { label: TextFactory.get('color-red'), value: 'red' },
+                { label: TextFactory.get('color-orange'), value: 'orange' },
+                { label: TextFactory.get('color-yellow'), value: 'yellow' },
+                { label: TextFactory.get('color-green'), value: 'green' },
+                { label: TextFactory.get('color-blue'), value: 'blue' },
+                { label: TextFactory.get('color-darkblue'), value: 'darkblue' },
+                { label: TextFactory.get('color-purple'), value: 'purple' },
+                { label: TextFactory.get('color-pink'), value: 'pink' },
+                { label: TextFactory.get('color-tan'), value: 'tan' },
+                { label: TextFactory.get('color-brown'), value: 'brown' },
+                { label: TextFactory.get('color-black'), value: 'black' },
+                { label: TextFactory.get('color-grey'), value: 'grey' },
+                { label: TextFactory.get('color-white'), value: 'white' }
             ]
         };
     }
