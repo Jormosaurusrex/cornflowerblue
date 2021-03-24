@@ -1,9 +1,3 @@
-body.modalopen {
-  overflow-y: hidden;
-  @include for-phone-only {
-    overflow-y: scroll;
-  }
-}
 div.window-container {
   width: 100vw;
   height: 100vh;
@@ -29,7 +23,8 @@ div.window-container {
     position: relative;
     border-radius: var(--border-radius);
     overflow: hidden;
-    filter: var(--shadows-dropshadow-filter);
+    //filter: var(--shadows-dropshadow-filter);
+    box-shadow: var(--dialog-box-shadow);
     flex-grow: 0;
     pointer-events: auto;
     display: flex;
@@ -245,4 +240,8 @@ div.window-mask {
   right: 0;
   bottom: 0;
   z-index: 2000;
+  &.screened {
+    position: relative;
+    width: 100%;
+  }
 }

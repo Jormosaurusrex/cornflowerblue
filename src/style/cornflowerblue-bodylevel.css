@@ -719,7 +719,7 @@ form.button-menu {
   border-radius: var(--border-radius);
   background-color: var(--canvas-color-secondary);
   color: var(--colors-affordance);
-  filter: var(--shadows-dropshadow-filter);
+  box-shadow: var(--dialog-box-shadow);
 }
 ul.button-menu[aria-hidden=true],
 div.button-menu[aria-hidden=true],
@@ -890,7 +890,7 @@ div.selectmenu-menu ul.selectmenu {
   background-color: var(--canvas-color-primary);
   border: 0.1em solid var(--input-border-color);
   border-top: none;
-  filter: var(--shadows-dropshadow-filter);
+  box-shadow: var(--dialog-box-shadow);
   padding: 0;
   overflow: auto;
   max-height: 10rem;
@@ -983,6 +983,17 @@ div.selectmenu-menu[aria-hidden=true] {
   box-shadow: none;
   border: none;
   display: none;
+}
+
+body.modalopen,
+div.modalopen {
+  overflow: hidden;
+}
+@media (max-width: 599px) {
+  body.modalopen,
+div.modalopen {
+    overflow-y: scroll;
+  }
 }
 
 div.datepicker {

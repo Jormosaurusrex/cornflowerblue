@@ -1,0 +1,8 @@
+body.modalopen,
+div.modalopen {
+  overflow: hidden;
+  //overflow-y: hidden;
+  @include for-phone-only {
+    overflow-y: scroll;
+  }
+}

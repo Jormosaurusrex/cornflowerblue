@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-22
+/*! Cornflower Blue - v0.1.1 - 2021-03-23
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -8220,6 +8220,9 @@ class DialogWindow {
 
         this.mask = document.createElement('div');
         this.mask.classList.add('window-mask');
+        if (this.screen !== document.body) {
+            this.mask.classList.add('screened');
+        }
         for (let c of this.classes) {
             this.mask.classList.add(c);
         }

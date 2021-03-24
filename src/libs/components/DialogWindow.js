@@ -71,6 +71,9 @@ class DialogWindow {
 
         this.mask = document.createElement('div');
         this.mask.classList.add('window-mask');
+        if (this.screen !== document.body) {
+            this.mask.classList.add('screened');
+        }
         for (let c of this.classes) {
             this.mask.classList.add(c);
         }

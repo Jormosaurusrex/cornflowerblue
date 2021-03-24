@@ -56,6 +56,12 @@
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
   --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --shadows-panel-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
+  --dialog-box-shadow: 0 .28rem .22rem rgba(0, 0, 0, 0.02),
+                        0 .67rem .53rem rgba(0, 0, 0, 0.028),
+                        0 1.25rem 1rem rgba(0, 0, 0, 0.035),
+                        0 2.23rem 1.79rem rgba(0, 0, 0, 0.042),
+                        0 4.18rem 3.34rem rgba(0, 0, 0, 0.05),
+                        0 10rem 8rem rgba(0, 0, 0, 0.07);
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
@@ -2486,7 +2492,7 @@ form.button-menu {
   border-radius: var(--border-radius);
   background-color: var(--canvas-color-secondary);
   color: var(--colors-affordance);
-  filter: var(--shadows-dropshadow-filter);
+  box-shadow: var(--dialog-box-shadow);
 }
 ul.button-menu[aria-hidden=true],
 div.button-menu[aria-hidden=true],
@@ -4444,7 +4450,7 @@ div.selectmenu-menu ul.selectmenu {
   background-color: var(--canvas-color-primary);
   border: 0.1em solid var(--input-border-color);
   border-top: none;
-  filter: var(--shadows-dropshadow-filter);
+  box-shadow: var(--dialog-box-shadow);
   padding: 0;
   overflow: auto;
   max-height: 10rem;
@@ -4727,15 +4733,6 @@ div.datepicker.button-menu div.monthbox {
   padding: 0;
 }
 
-body.modalopen {
-  overflow-y: hidden;
-}
-@media (max-width: 599px) {
-  body.modalopen {
-    overflow-y: scroll;
-  }
-}
-
 div.window-container {
   width: 100vw;
   height: 100vh;
@@ -4762,7 +4759,7 @@ div.window-container div.dialog {
   position: relative;
   border-radius: var(--border-radius);
   overflow: hidden;
-  filter: var(--shadows-dropshadow-filter);
+  box-shadow: var(--dialog-box-shadow);
   flex-grow: 0;
   pointer-events: auto;
   display: flex;
@@ -4968,6 +4965,10 @@ div.window-mask {
   right: 0;
   bottom: 0;
   z-index: 2000;
+}
+div.window-mask.screened {
+  position: relative;
+  width: 100%;
 }
 
 div.growlbox {

@@ -14,7 +14,7 @@ form.button-menu {
   border-radius: var(--border-radius);
   background-color: var(--canvas-color-secondary);
   color: var(--colors-affordance);
-  filter: var(--shadows-dropshadow-filter);
+  box-shadow: var(--dialog-box-shadow);
   &[aria-hidden='true'] {
     display: none;
   }

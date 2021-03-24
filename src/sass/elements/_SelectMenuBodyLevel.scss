@@ -16,7 +16,7 @@ div.selectmenu-menu {
     background-color: var(--canvas-color-primary);
     border: .1em solid var(--input-border-color);
     border-top: none;
-    filter: var(--shadows-dropshadow-filter);
+    box-shadow: var(--dialog-box-shadow);
     padding: 0;
     overflow: auto;
     max-height: 10rem;

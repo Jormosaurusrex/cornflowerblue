@@ -81,6 +81,12 @@
   --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
   --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
   --shadows-panel-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
+  --dialog-box-shadow:  0 .28rem .22rem rgba(0, 0, 0, 0.02),
+                        0 .67rem .53rem rgba(0, 0, 0, 0.028),
+                        0 1.25rem 1rem rgba(0, 0, 0, 0.035),
+                        0 2.23rem 1.79rem rgba(0, 0, 0, 0.042),
+                        0 4.18rem 3.34rem rgba(0, 0, 0, 0.05),
+                        0 10rem 8rem rgba(0, 0, 0, 0.07);
 
   // Misc Values
   --border-radius: .2rem; // Applies to evverything except form inputs
