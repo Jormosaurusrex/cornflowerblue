@@ -50,6 +50,7 @@ module.exports = function(grunt) {
                     'src/libs/components/info/WarningBox.js',
                     'src/libs/components/grid/ColumnConfigurator.js',
                     'src/libs/components/grid/DataGrid.js',
+                    'src/libs/components/grid/DataList.js',
                     'src/libs/components/grid/FilterConfigurator.js',
                     'src/libs/components/grid/GridField.js',
                     'src/libs/components/DatePicker.js',

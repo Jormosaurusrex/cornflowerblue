@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-24
+/*! Cornflower Blue - v0.1.1 - 2021-03-25
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2913,7 +2913,8 @@ class ButtonMenu extends SimpleButton {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setCloseListener();
             }, 200);
-        }å
+        }
+
 
         /*
             This is gross but:
@@ -3021,7 +3022,6 @@ class ButtonMenu extends SimpleButton {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
-        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { this.close(); }
         }, { once: true });
@@ -4729,6 +4729,8 @@ class DataGrid extends Panel {
                 //console.log("row clicked");
             },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
+            mouseover: null,  // Mouse events on rows, passed (item, self, e)
+            mouseout: null,   // Mouse events on rows, passed (item, self, e)
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
@@ -6574,6 +6576,22 @@ class DataGrid extends Panel {
             }
         });
 
+        if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+            row.addEventListener('mouseover', (e) => {
+                if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+                    this.mouseover(rdata, this, e);
+                }
+            });
+        }
+
+        if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+            row.addEventListener('mouseout', (e) => {
+                if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+                    this.mouseout(rdata, this, e);
+                }
+            });
+        }
+
         if ((this.rowactions) && (this.rowactions.length > 0)) {
 
             let cell = document.createElement('td');
@@ -6943,6 +6961,22 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get mouseover() { return this.config.mouseover; }
+    set mouseover(mouseover) {
+        if (typeof mouseover !== 'function') {
+            console.error("Value provided to mouseover is not a function!");
+        }
+        this.config.mouseover = mouseover;
+    }
+
+    get mouseout() { return this.config.mouseout; }
+    set mouseout(mouseout) {
+        if (typeof mouseout !== 'function') {
+            console.error("Value provided to mouseout is not a function!");
+        }
+        this.config.mouseout = mouseout;
+    }
 
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }

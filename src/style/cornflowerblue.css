@@ -6708,6 +6708,280 @@ div.datagrid-container[aria-expanded=false] div.grid-wrapper table.grid {
     background-color: var(--canvas-color-primary);
   }
 }
+div.datalist-container {
+  --header-background-color: var(--canvas-color-secondary);
+  --list-header-color: var(--colors-affordance);
+  --icon-size: 3rem;
+  --thumbnail-size: 5rem;
+  overflow: hidden;
+  max-height: 70vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+div.datalist-container > div.listheader {
+  position: sticky;
+  z-index: 202;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  background-color: var(--header-background-color);
+  box-shadow: 0 0.3em 0.5em -0.3em rgba(0, 0, 0, 0.5);
+}
+div.datalist-container > div.listheader > div {
+  border-bottom-color: var(--canvas-color-tertiary);
+  margin: 0;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+div.datalist-container > div.listheader > div > label {
+  margin: 0;
+  font-size: 0.6rem;
+  cursor: pointer;
+}
+div.datalist-container > div.listheader > div.space {
+  width: var(--icon-size);
+  border-bottom-color: transparent;
+}
+div.datalist-container > div.listheader > div.iconspace {
+  width: 2rem;
+  border-bottom-color: transparent;
+}
+div.datalist-container > div.listheader > div.thumbspace {
+  width: var(--thumbnail-size);
+  border-bottom-color: transparent;
+}
+div.datalist-container > div.listheader > div.label {
+  box-shadow: inset 0 0 0 0 var(--colors-affordance);
+  transition: box-shadow 0.5s;
+}
+div.datalist-container > div.listheader > div.label > label {
+  color: var(--list-header-color);
+}
+div.datalist-container > div.listheader > div.label.user, div.datalist-container > div.listheader > div.label.text, div.datalist-container > div.listheader > div.label.name, div.datalist-container > div.listheader > div.label.displayname, div.datalist-container > div.listheader > div.label.subject, div.datalist-container > div.listheader > div.label.title {
+  justify-content: flex-start;
+  flex-grow: 2;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > div.listheader > div.label:hover {
+    box-shadow: inset 0 -0.2em 0 0 var(--colors-affordance);
+  }
+}
+div.datalist-container > ul.datalist {
+  list-style-type: none;
+  padding: 0;
+  overflow: auto;
+  z-index: 200;
+  flex-grow: 2;
+}
+div.datalist-container > ul.datalist > li {
+  border-top: 0.01rem solid var(--canvas-color-tertiary);
+  border-bottom: 0.01rem solid var(--canvas-color-secondary);
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0.5rem;
+  margin: 0;
+  z-index: 200;
+  transition: box-shadow 0.5s, background-image 0.5s;
+  background-image: var(--stripe-accent-null);
+  box-shadow: 0 -0.3em 0.5em -0.3em rgba(0, 0, 0, 0), 0 0.3em 0.5em -0.3em rgba(0, 0, 0, 0);
+}
+div.datalist-container > ul.datalist > li.clickable {
+  cursor: pointer;
+}
+div.datalist-container > ul.datalist > li:first-child {
+  margin-top: 0;
+}
+div.datalist-container > ul.datalist > li div.type {
+  width: var(--image-size);
+}
+div.datalist-container > ul.datalist > li.iconspace {
+  width: 2rem;
+}
+div.datalist-container > ul.datalist > li > button,
+div.datalist-container > ul.datalist > li a.button {
+  margin: 0 0.5rem;
+}
+div.datalist-container > ul.datalist > li > div.thumbnail {
+  margin: 0;
+  width: var(--thumbnail-size);
+  min-width: var(--thumbnail-size);
+  height: var(--thumbnail-size);
+  min-height: var(--thumbnail-size);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 0.1rem;
+}
+div.datalist-container > ul.datalist > li > div.thumbnail.hero {
+  background-position: center center;
+}
+div.datalist-container > ul.datalist > li > div.thumbnail.logo {
+  background-size: contain;
+  background-position: center center;
+  border-radius: 0;
+}
+div.datalist-container > ul.datalist > li > div.details,
+div.datalist-container > ul.datalist > li > div.column {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-grow: 1;
+  margin: 0 0.5rem;
+}
+div.datalist-container > ul.datalist > li > div.details > div.topline,
+div.datalist-container > ul.datalist > li > div.details > div.payload,
+div.datalist-container > ul.datalist > li > div.details > div.meta,
+div.datalist-container > ul.datalist > li > div.column > div.topline,
+div.datalist-container > ul.datalist > li > div.column > div.payload,
+div.datalist-container > ul.datalist > li > div.column > div.meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  align-content: baseline;
+}
+div.datalist-container > ul.datalist > li > div.details > div.topline > label.entitytype,
+div.datalist-container > ul.datalist > li > div.details > div.payload > label.entitytype,
+div.datalist-container > ul.datalist > li > div.details > div.meta > label.entitytype,
+div.datalist-container > ul.datalist > li > div.column > div.topline > label.entitytype,
+div.datalist-container > ul.datalist > li > div.column > div.payload > label.entitytype,
+div.datalist-container > ul.datalist > li > div.column > div.meta > label.entitytype {
+  font-size: 0.8rem;
+  margin: 0 0.5rem 0 0;
+  color: var(--colors-text-hot);
+}
+div.datalist-container > ul.datalist > li > div.details > div.meta,
+div.datalist-container > ul.datalist > li > div.column > div.meta {
+  font-size: 0.8rem;
+}
+div.datalist-container > ul.datalist > li > div.details > div.topline label,
+div.datalist-container > ul.datalist > li > div.column > div.topline label {
+  font-weight: 100;
+  margin: 0;
+  display: inline-block;
+}
+div.datalist-container > ul.datalist > li > div.details > div.topline label.name,
+div.datalist-container > ul.datalist > li > div.column > div.topline label.name {
+  font-size: 1.2rem;
+}
+div.datalist-container > ul.datalist > li > div.details label,
+div.datalist-container > ul.datalist > li > div.column label {
+  margin: 0;
+  display: inline-block;
+}
+div.datalist-container > ul.datalist > li > div.details div.joindate > label,
+div.datalist-container > ul.datalist > li > div.details div.createdate > label,
+div.datalist-container > ul.datalist > li > div.column div.joindate > label,
+div.datalist-container > ul.datalist > li > div.column div.createdate > label {
+  margin-right: 0.5rem;
+}
+div.datalist-container > ul.datalist > li > div.details a.name,
+div.datalist-container > ul.datalist > li > div.details span.subject,
+div.datalist-container > ul.datalist > li > div.column a.name,
+div.datalist-container > ul.datalist > li > div.column span.subject {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+div.datalist-container > ul.datalist > li > div.details span.secondary,
+div.datalist-container > ul.datalist > li > div.column span.secondary {
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: stretch;
+  justify-content: space-evenly;
+  font-size: 0.9rem;
+}
+div.datalist-container > ul.datalist > li > div.details span.date,
+div.datalist-container > ul.datalist > li > div.column span.date {
+  font-size: 0.9rem;
+  font-style: oblique;
+  text-align: right;
+}
+div.datalist-container > ul.datalist > li > div.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-end;
+  justify-content: space-between;
+}
+div.datalist-container > ul.datalist > li > div.actions button,
+div.datalist-container > ul.datalist > li > div.actions a.button {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+}
+div.datalist-container > ul.datalist > li > div.actions button:last-child,
+div.datalist-container > ul.datalist > li > div.actions a.button:last-child {
+  margin-bottom: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > ul.datalist > li > div.actions button:hover,
+div.datalist-container > ul.datalist > li > div.actions a.button:hover {
+    opacity: 1;
+  }
+}
+div.datalist-container > ul.datalist > li:focus {
+  outline: var(--colors-text-default) dashed 0.1rem;
+  outline-offset: -0.2rem;
+  text-decoration: underline double;
+}
+div.datalist-container > ul.datalist > li[aria-selected=true] {
+  box-shadow: inset 0.5em 0 0 0 rgb(var(--colors-focus-rgb));
+}
+div.datalist-container > ul.datalist > li[aria-selected=true] button.activebutton,
+div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebutton {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > ul.datalist > li:hover {
+    outline: none;
+    z-index: 201;
+  }
+}
+div.datalist-container > ul.datalist > li.noentriestext > div.noentries {
+  margin: 0;
+  font-size: 2rem;
+  opacity: 0.5;
+  font-style: oblique;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > ul.datalist > li.noentriestext:hover {
+    outline: none;
+    background-image: none;
+    background-color: transparent;
+  }
+}
+div.datalist-container > ul.datalist:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: inset 0 -0.3em 0.5em -0.3em rgba(0, 0, 0, 0.5);
+}
+div.datalist-container.scrolled > div.listheader {
+  box-shadow: 0 0.5em 0.5em -0.3em rgba(0, 0, 0, 0.7);
+}
+
 div.column-configurator {
   padding: 2rem;
 }
