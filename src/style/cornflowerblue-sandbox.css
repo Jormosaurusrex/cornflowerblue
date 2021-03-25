@@ -5313,21 +5313,22 @@ div.searchcontrol > input::placeholder {
 }
 div.searchcontrol > input.mute {
   padding: 0.6em 0 0.6em 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
-div.searchcontrol button {
+div.searchcontrol > button {
   margin: 0;
-}
-div.searchcontrol.open input, div.searchcontrol:focus-within input {
-  width: 100%;
-  border-radius: var(--border-radius) 0 0 var(--border-radius);
-  padding: var(--input-default-padding);
-}
-div.searchcontrol.open input::placeholder, div.searchcontrol:focus-within input::placeholder {
-  opacity: 1;
-}
-div.searchcontrol.open button, div.searchcontrol:focus-within button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+div.searchcontrol.open > input, div.searchcontrol:focus-within > input {
+  width: 100%;
+  padding: var(--input-default-padding);
+}
+div.searchcontrol.open > input::placeholder, div.searchcontrol:focus-within > input::placeholder {
+  opacity: 1;
+}
+div.searchcontrol:focus-within > button {
   background-color: var(--colors-affordance);
   color: var(--colors-text-hot);
 }

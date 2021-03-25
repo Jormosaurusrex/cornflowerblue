@@ -16,24 +16,27 @@ div.searchcontrol {
     }
     &.mute {
       padding: .6em 0 .6em 0;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
     }
   }
-  button {
+  >button {
     margin: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
   &.open,
   &:focus-within {
-    input {
+    >input {
       width: 100%;
-      border-radius: var(--border-radius) 0 0 var(--border-radius);
       padding: var(--input-default-padding);
       &::placeholder {
         opacity: 1;
       }
     }
-    button {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+  }
+  &:focus-within {
+    >button {
       background-color: var(--colors-affordance);
       color: var(--colors-text-hot);
     }

@@ -9399,6 +9399,7 @@ class SearchControl {
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
+            buttonstyle: 'normal',
             mute: false, // if true, controls are mute
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
@@ -9565,6 +9566,9 @@ class SearchControl {
 
     get action() { return this.config.action; }
     set action(action) { this.config.action = action; }
+
+    get buttonstyle() { return this.config.buttonstyle; }
+    set buttonstyle(buttonstyle) { this.config.buttonstyle = buttonstyle; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -13388,6 +13392,29 @@ class SwitchList extends InputElement {
         });
     }
 
+    popLists(member, fromlist, tolist) {
+        let newfrom = [];
+
+        for (let m of fromlist) {
+            if (member.id === m.id) {
+                if (tolist) {
+                    tolist.push(member);
+                }
+            } else {
+                newfrom.push(member);
+            }
+        }
+        fromlist = newfrom;
+    }
+
+    rebuild() {
+        this.listboxes.innerHTML = ``;
+        this.listboxes.appendChild(this.buildListBox(true));
+        this.listboxes.appendChild(this.buildListBox(false));
+        this.sortList(this.inlistlist);
+        this.sortList(this.outlistlist);
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
@@ -13412,15 +13439,11 @@ class SwitchList extends InputElement {
         if (this.topcontrol) { this.topline.appendChild(this.topcontrol); }
         this.container.appendChild(this.topline);
 
-        let listboxes = document.createElement('div');
-        listboxes.classList.add('listboxes');
+        this.listboxes = document.createElement('div');
+        this.listboxes.classList.add('listboxes');
 
-        listboxes.appendChild(this.buildListBox(true));
-        listboxes.appendChild(this.buildListBox(false));
-
-        this.container.appendChild(listboxes);
-        this.sortList(this.inlistlist);
-        this.sortList(this.outlistlist);
+        this.container.appendChild(this.listboxes);
+        this.rebuild();
 
     }
 
@@ -13508,18 +13531,19 @@ class SwitchList extends InputElement {
         });
 
         li.addEventListener('click', () => {
-            //console.log(`checked:  ${toggle.checked}`);
-            //console.log(`toggle:  ${toggle.toggle.checked}`);
             if (toggle.toggle.checked) {
                 toggle.checked = false;
                 this.inlistlist.removeChild(li);
                 this.outlistlist.appendChild(li);
                 this.sortList(this.outlistlist);
+                this.popLists(m, this.inlist, this.outlist);
+                // pop from one to the other
             } else {
                 toggle.toggle.checked = true;
                 this.outlistlist.removeChild(li);
                 this.inlistlist.appendChild(li);
                 this.sortList(this.inlistlist);
+                this.popLists(m, this.outlist, this.inlist);
             }
 
             this.validate();
@@ -13533,14 +13557,17 @@ class SwitchList extends InputElement {
         return li;
     }
 
+
     buildListBox(isin = true) {
 
         let title = this.intitle,
             members = this.inlist;
+
         if (!isin) {
             title = this.outtitle;
             members = this.outlist;
         }
+
         let lbox = document.createElement('div');
         lbox.classList.add('listbox', `${ isin ? "inlist" : "outlist"}`);
 
@@ -13579,6 +13606,9 @@ class SwitchList extends InputElement {
 
     get intitle() { return this.config.intitle; }
     set intitle(intitle) { this.config.intitle = intitle; }
+
+    get listboxes() { return this._listboxes; }
+    set listboxes(listboxes) { this._listboxes = listboxes; }
 
     get outicon() { return this.config.outicon; }
     set outicon(outicon) { this.config.outicon = outicon; }

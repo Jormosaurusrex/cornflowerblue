@@ -10,6 +10,7 @@ class SearchControl {
             maxlength: null, // Value for maxlength.
             searchtext: TextFactory.get('search'),
             searchicon: 'magnify',
+            buttonstyle: 'normal',
             mute: false, // if true, controls are mute
             focusin: null, // action to execute on focus in. Passed (event, self).
             focusout: null, // action to execute on focus out. Passed (event, self).
@@ -176,6 +177,9 @@ class SearchControl {
 
     get action() { return this.config.action; }
     set action(action) { this.config.action = action; }
+
+    get buttonstyle() { return this.config.buttonstyle; }
+    set buttonstyle(buttonstyle) { this.config.buttonstyle = buttonstyle; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
