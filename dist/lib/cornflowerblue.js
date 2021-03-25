@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-23
+/*! Cornflower Blue - v0.1.1 - 2021-03-24
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2913,8 +2913,7 @@ class ButtonMenu extends SimpleButton {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setCloseListener();
             }, 200);
-        }
-
+        }å
 
         /*
             This is gross but:
@@ -3022,6 +3021,7 @@ class ButtonMenu extends SimpleButton {
      * Sets an event listener to close the menu if the user clicks outside of it.
      */
     setCloseListener() {
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { this.close(); }
         }, { once: true });
@@ -13018,7 +13018,6 @@ class SwitchList extends InputElement {
                             // { label: "Label to show", value: "v", id: (optional) }
             intitle: '',
             addicon: 'arrow-right',
-
             outlist: [],
             outtitle: '',
             removeicon: 'arrow-left',

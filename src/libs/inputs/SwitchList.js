@@ -7,7 +7,6 @@ class SwitchList extends InputElement {
                             // { label: "Label to show", value: "v", id: (optional) }
             intitle: '',
             addicon: 'arrow-right',
-
             outlist: [],
             outtitle: '',
             removeicon: 'arrow-left',

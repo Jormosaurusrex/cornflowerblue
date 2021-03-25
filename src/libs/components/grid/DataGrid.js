@@ -54,6 +54,8 @@ class DataGrid extends Panel {
                 //console.log("row clicked");
             },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
+            mouseover: null,  // Mouse events on rows, passed (item, self, e)
+            mouseout: null,   // Mouse events on rows, passed (item, self, e)
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('datagrid-spinnertext'), //
 
@@ -1899,6 +1901,22 @@ class DataGrid extends Panel {
             }
         });
 
+        if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+            row.addEventListener('mouseover', (e) => {
+                if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+                    this.mouseover(rdata, this, e);
+                }
+            });
+        }
+
+        if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+            row.addEventListener('mouseout', (e) => {
+                if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+                    this.mouseout(rdata, this, e);
+                }
+            });
+        }
+
         if ((this.rowactions) && (this.rowactions.length > 0)) {
 
             let cell = document.createElement('td');
@@ -2268,6 +2286,22 @@ class DataGrid extends Panel {
 
     get messagebox() { return this._messagebox; }
     set messagebox(messagebox) { this._messagebox = messagebox; }
+
+    get mouseover() { return this.config.mouseover; }
+    set mouseover(mouseover) {
+        if (typeof mouseover !== 'function') {
+            console.error("Value provided to mouseover is not a function!");
+        }
+        this.config.mouseover = mouseover;
+    }
+
+    get mouseout() { return this.config.mouseout; }
+    set mouseout(mouseout) {
+        if (typeof mouseout !== 'function') {
+            console.error("Value provided to mouseout is not a function!");
+        }
+        this.config.mouseout = mouseout;
+    }
 
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
