@@ -53,6 +53,9 @@ class DataGrid extends Panel {
             selectaction: (self, row, rowdata) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
+            deselectaction: (self, row, rowdata) => {
+
+            },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
             mouseover: null,  // Mouse events on rows, passed (item, self, e)
             mouseout: null,   // Mouse events on rows, passed (item, self, e)
@@ -1348,6 +1351,9 @@ class DataGrid extends Panel {
 
         if (row.getAttribute('aria-selected') === 'true') {
             this.deselect(row);
+            if ((this.deselectaction) && (typeof this.deselectaction === 'function')) {
+                this.deselectaction(this, row, rdata);
+            }
             return;
         }
 
@@ -2144,6 +2150,14 @@ class DataGrid extends Panel {
 
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
+
+    get deselectaction() { return this.config.deselectaction; }
+    set deselectaction(deselectaction) {
+        if (typeof deselectaction !== 'function') {
+            console.error("Value provided to deselectaction is not a function!");
+        }
+        this.config.deselectaction = deselectaction;
+    }
 
     get dialog() { return this._dialog; }
     set dialog(dialog) { this._dialog = dialog; }
