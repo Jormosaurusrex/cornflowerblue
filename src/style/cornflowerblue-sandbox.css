@@ -6303,6 +6303,14 @@ div.datalist-container > div.listheader > div.label.user, div.datalist-container
 }
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > div.listheader > div.label:hover {
+    box-shadow: inset 0 -0.2em 0 0 var(--colors-hightlight);
+  }
+}
+div.datalist-container > div.listheader > div.label[data-sorted=asc], div.datalist-container > div.listheader > div.label[data-sorted=desc] {
+  box-shadow: inset 0 -0.1em 0 0 var(--colors-focus);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > div.listheader > div.label[data-sorted=asc]:hover, div.datalist-container > div.listheader > div.label[data-sorted=desc]:hover {
     box-shadow: inset 0 -0.2em 0 0 var(--colors-affordance);
   }
 }

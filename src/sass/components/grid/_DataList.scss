@@ -68,7 +68,16 @@ div.datalist-container {
       }
       @include for-hover-only {
         &:hover {
-          box-shadow: inset 0 -.2em 0 0 var(--colors-affordance);
+          box-shadow: inset 0 -.2em 0 0 var(--colors-hightlight);
+        }
+      }
+      &[data-sorted='asc'],
+      &[data-sorted='desc']{
+        box-shadow: inset 0 -.1em 0 0 var(--colors-focus);
+        @include for-hover-only {
+          &:hover {
+            box-shadow: inset 0 -.2em 0 0 var(--colors-affordance);
+          }
         }
       }
     }

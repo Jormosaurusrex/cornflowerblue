@@ -22,6 +22,7 @@ class Panel {
             closeiconclosedprefix: 'cfb',
             minimized: false,
             classes: [],
+            footer: null,
             onclose: null,
             onopen: null
         };
@@ -46,6 +47,7 @@ class Panel {
             closeicon: { type: 'option', datatype: 'string', description: "The icon to use in for the close/open button.." },
             contentid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's content." },
             headerid: { type: 'option', datatype: 'string', description: "A unique id value. This applies to the panel's header." },
+            footer: { type: 'option', datatype: 'DOM object', description: "Will be appended at the end." },
             title: { type: 'option', datatype: 'string', description: "The title to use for the panel." },
             content: { type: 'option', datatype: 'object', description: "The panel content payload." },
             style: { type: 'option', datatype: 'enumeration', description: "Various styles that can be applied to the panel. Values are plain' or 'invisible'." }
@@ -213,6 +215,10 @@ class Panel {
 
         this.container.appendChild(this.contentbox);
 
+        if (this.footer) {
+            this.container.appendChild(this.footer);
+        }
+
         if (this.minimized) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
             if ((this.closeicon) && (this.closeiconclosed)) {
@@ -296,6 +302,8 @@ class Panel {
     }
     set contentbox(contentbox) { this._contentbox = contentbox; }
 
+    get footer() { return this.config.footer; }
+    set footer(footer) { this.config.footer = footer; }
 
     get header() {
         if (!this._header) { this.buildHeader(); }

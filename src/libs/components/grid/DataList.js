@@ -219,8 +219,12 @@ class DataList extends DataGrid {
                         direction = 'desc';
                     }
                 }
+                for (let h of this.listheader.querySelectorAll('div.label')) {
+                    h.removeAttribute('data-sorted');
+                }
                 this.listheader.setAttribute('data-sort-field', col.field);
                 this.listheader.setAttribute('data-sort-direction', direction);
+                ndiv.setAttribute('data-sorted', direction);
                 this.populate(col.field, direction);
             });
             this.listheader.appendChild(ndiv);
