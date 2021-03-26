@@ -112,6 +112,8 @@ class SwitchList extends InputElement {
         li.setAttribute('data-rid', `${this.name}-r-${CFBUtils.getUniqueKey(5)}`);
         li.setAttribute('data-label', m.label);
         li.setAttribute('tabindex', '-1');
+        li.classList.add('popin');
+        //li.style.setProperty('--anim-order', `${count}`);
 
         label.classList.add('l');
         label.innerHTML = m.label;

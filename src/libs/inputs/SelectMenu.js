@@ -283,8 +283,7 @@ class SelectMenu extends InputElement {
 
     buildContainer() {
         this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        this.container.classList.add('select-container');
+        this.container.classList.add('input-container', 'select-container');
         if (this.name) {
             this.container.classList.add(`name-${this.name}`);
         }
