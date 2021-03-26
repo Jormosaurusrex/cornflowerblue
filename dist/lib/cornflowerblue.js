@@ -12395,8 +12395,7 @@ class SelectMenu extends InputElement {
 
     buildContainer() {
         this.container = document.createElement('div');
-        this.container.classList.add('input-container');
-        this.container.classList.add('select-container');
+        this.container.classList.add('input-container', 'select-container');
         if (this.name) {
             this.container.classList.add(`name-${this.name}`);
         }
@@ -12649,6 +12648,9 @@ class SelectMenu extends InputElement {
 
             if (def.unselectoption) {
                 this.triggerbox.value = '';
+                if ((this.mute) && (this.unsettext)) {
+                    this.triggerbox.value = this.unsettext;
+                }
             } else if (this.prefix) {
                 this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
@@ -12656,7 +12658,6 @@ class SelectMenu extends InputElement {
             }
 
             this.selectedoption = def;
-
 
             if (def.unselectoption) {
                 this.setPassiveboxValue(this.unsettext);
