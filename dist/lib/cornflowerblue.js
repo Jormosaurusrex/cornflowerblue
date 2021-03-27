@@ -3424,6 +3424,7 @@ class Panel {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
+            savestateprefix: 'panel',
             assection : false,
             dataattributes: null,
             attributes: null,
@@ -3486,8 +3487,75 @@ class Panel {
         } else if ((state) && (state === 'false')) {
             this.minimized = false;
         }
+        if (this.id) {
+            this.savekey = `${this.statesaveprefix}-state-${this.id}`;
+        } else {
+            this.id = `${this.statesaveprefix}-${CFBUtils.getUniqueKey(5)}`;
+        }
+
         if (!this.contentid) { this.contentid = `panel-c-${CFBUtils.getUniqueKey(5)}`; }
         if (!this.headerid) { this.headerid = `panel-h-${CFBUtils.getUniqueKey(5)}`; }
+
+        this.loadstate();
+
+    }
+
+    finalize() {
+        this.applystate();
+    }
+
+    /* PERSISTENCE METHODS______________________________________________________________ */
+
+    /**
+     * Test if this can be persisted.
+     * @return {boolean}
+     */
+    get ispersistable() {
+        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+    }
+
+    /**
+     * Persist the state
+     */
+    persist() {
+        if (!this.ispersistable) { return; }
+        this.state = this.grindstate(); // get a current copy of it.
+        localStorage.setItem(this.savekey, JSON.stringify(this.state));
+    }
+
+    /**
+     * Load a saved state from local storage
+     */
+    loadstate() {
+        if (this.ispersistable) {
+            this.state = JSON.parse(localStorage.getItem(this.savekey));
+            if (!this.state) {
+                this.state = this.grindstate();
+            }
+        } else if (!this.state) {
+            this.state = this.grindstate();
+        }
+    }
+
+    /**
+     * Apply the saved state.
+     */
+    applystate() {
+        if (!this.collapsible) { return; }
+        if (this.state.minimized) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+
+    /**
+     * Figures out the state of the panel and generates the state object
+     */
+    grindstate() {
+        return {
+            minimized: this.minimized
+        };
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -3509,7 +3577,8 @@ class Panel {
     open() {
         this.minimized = false;
         this.container.setAttribute('aria-expanded', 'true');
-        localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'false');
+        this.state.minimized = this.minimized;
+        this.persist();
         if ((this.closeicon) && (this.closeiconclosed)) {
             this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
         }
@@ -3524,7 +3593,8 @@ class Panel {
     close() {
         this.container.setAttribute('aria-expanded', 'false');
         this.minimized = true;
-        localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'true');
+        this.state.minimized = this.minimized;
+        this.persist();
         if ((this.closeicon) && (this.closeiconclosed)) {
             this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
         }
@@ -3768,6 +3838,18 @@ class Panel {
 
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }
+
+    get savekey() { return this._savekey; }
+    set savekey(savekey) { this._savekey = savekey; }
+
+    get savestate() { return this.config.savestate; }
+    set savestate(savestate) { this.config.savestate = savestate; }
+
+    get state() { return this._state; }
+    set state(state) { this._state = state; }
+
+    get statesaveprefix() { return this.config.statesaveprefix; }
+    set statesaveprefix(statesaveprefix) { this.config.statesaveprefix = statesaveprefix; }
 
     get stateful() { return this.config.stateful; }
     set stateful(stateful) { this.config.stateful = stateful; }
@@ -4686,6 +4768,11 @@ class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
         return {
+            statesaveprefix: 'grid',
+            defaultsort: {
+                column: 'name',
+                direction: 'asc'
+            },
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
@@ -4806,12 +4893,11 @@ class DataGrid extends Panel {
     constructor(config) {
         config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
         super(config);
+        this.initialize();
+    }
 
-        if (this.id) {
-            this.savekey = `grid-test-${this.id}`;
-        } else {
-            this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
-        }
+    initialize() {
+
 
         // Need to turn these into GridFields if they aren't already
         if (this.warehouse) {
@@ -4842,8 +4928,6 @@ class DataGrid extends Panel {
     }
 
     finalize() {
-        this.loadstate();
-
         this.shade.activate();
     }
 
@@ -4890,14 +4974,6 @@ class DataGrid extends Panel {
      */
     get multiselecting() {
         return this.grid.classList.contains('multiselecting');
-    }
-
-    /**
-     * Test if the grid can be persisted.
-     * @return {boolean}
-     */
-    get ispersistable() {
-        return !!((this.savestate) && (this.savekey) && (window.localStorage));
     }
 
     /**
@@ -5770,29 +5846,6 @@ class DataGrid extends Panel {
     /* PERSISTENCE METHODS______________________________________________________________ */
 
     /**
-     * Persist the grid state
-     */
-    persist() {
-        if (!this.ispersistable) { return; }
-        this.state = this.grindstate(); // get a current copy of it.
-        localStorage.setItem(this.savekey, JSON.stringify(this.state));
-    }
-
-    /**
-     * Load a saved state from local storage
-     */
-    loadstate() {
-        if (this.ispersistable) {
-            this.state = JSON.parse(localStorage.getItem(this.savekey));
-            if (!this.state) {
-                this.state = this.grindstate();
-            }
-        } else if (!this.state) {
-            this.state = this.grindstate();
-        }
-    }
-
-    /**
      * Apply the saved state to the grid
      */
     applystate() {
@@ -5810,6 +5863,7 @@ class DataGrid extends Panel {
             this.activefilters = this.state.filters;
         }
         this.applyFilters();
+        super.applystate();
     }
 
     /**
@@ -5818,8 +5872,10 @@ class DataGrid extends Panel {
     grindstate() {
 
         let state = {
+            minimized: false,
             fields: {},
             filters: [],
+            sort: this.defaultsort,
             search: null
         };
 
@@ -5830,6 +5886,7 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
+
         for (let f of this.activefilters) {
             state.filters.push({
                 filterid: f.filterid,
@@ -6816,6 +6873,9 @@ class DataGrid extends Panel {
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
 
+    get defaultsort() { return this.config.defaultsort; }
+    set defaultsort(defaultsort) { this.config.defaultsort = defaultsort; }
+
     get deletehook() { return this.config.deletehook; }
     set deletehook(deletehook) {
         if (typeof deletehook !== 'function') {
@@ -7013,12 +7073,6 @@ class DataGrid extends Panel {
     get rowactionsicon() { return this.config.rowactionsicon; }
     set rowactionsicon(rowactionsicon) { this.config.rowactionsicon = rowactionsicon; }
 
-    get savekey() { return this._savekey; }
-    set savekey(savekey) { this._savekey = savekey; }
-
-    get savestate() { return this.config.savestate; }
-    set savestate(savestate) { this.config.savestate = savestate; }
-
     get screen() { return this.config.screen; }
     set screen(screen) { this.config.screen = screen; }
 
@@ -7063,9 +7117,6 @@ class DataGrid extends Panel {
     get spinnertext() { return this.config.spinnertext; }
     set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
 
-    get state() { return this._state; }
-    set state(state) { this._state = state; }
-
     get thead() {
         if (!this._thead) { this.buildTableHead(); }
         return this._thead;
@@ -7100,8 +7151,10 @@ class DataList extends DataGrid {
 
     static get DEFAULT_CONFIG() {
         return {
+            statesaveprefix: 'datalist',
             noentriestext: TextFactory.get('datalist-noentries'),
             specialsort: null,
+            collapsible: false,
             loadcallback: null,
             drawitem: (itemdef, self) => {
 
@@ -7132,23 +7185,73 @@ class DataList extends DataGrid {
     }
 
     finalize() {
-        // load state in here, etc.
+        this.shade.activate();
     }
 
     fillData() {
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
-                this.populate();
+                this.postLoad();
+                //this.shade.deactivate();
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
                 this.update(data);
-                this.populate();
+                this.postLoad();
+                this.shade.deactivate();
             });
         } else if (this.data) {
             this.populate();
         }
+    }
+
+    setHeaderState(column = 'name', direction = 'asc') {
+        let headeritem = this.listheader.querySelector(`[data-column='${column}']`);
+        for (let h of this.listheader.querySelectorAll('div.label')) {
+            h.removeAttribute('data-sorted');
+        }
+        this.listheader.setAttribute('data-sort-field', column);
+        this.listheader.setAttribute('data-sort-direction', direction);
+
+        if (headeritem) {
+            headeritem.setAttribute('data-sorted', direction);
+        }
+    }
+
+    grindstate() {
+
+        let state = {
+            minimized: false,
+            fields: {},
+            filters: [],
+            search: null
+        };
+        if ((this.state) && (this.state.sort)) {
+            state.sort = this.state.sort;
+        } else {
+            state.sort = this.defaultsort;
+        }
+
+/*
+        for (let f of this.fields) {
+            if (f.hidden === undefined) { f.hidden = false; }
+            state.fields[f.name] = {
+                name: f.name,
+                hidden: f.hidden
+            };
+        }
+
+        for (let f of this.activefilters) {
+            state.filters.push({
+                filterid: f.filterid,
+                field: f.field,
+                comparator: f.comparator,
+                value: f.value
+            });
+        }
+*/
+        return state;
     }
 
     update(data) {
@@ -7158,16 +7261,22 @@ class DataList extends DataGrid {
                 this.data.push(entry);
             }
         }
-        this.populate();
+        this.populate(this.state.sort.column, this.state.sort.direction);
         if ((this.loadcallback) && (typeof this.loadcallback === 'function')) {
             this.loadcallback();
         }
     }
 
+    postLoad() {
+        this.applystate();
+    }
+
     populate(sort='title', direction = 'asc') {
-        let order = 1;
+        let order = 1,
+            items = this.sortOn(this.data, sort, direction);
+
         this.datalist.innerHTML = '';
-        let items = this.sortOn(this.data, sort, direction);
+
         if (items.length === 0) {
             let li = document.createElement('li');
             li.classList.add('noentriestext');
@@ -7175,6 +7284,9 @@ class DataList extends DataGrid {
             this.datalist.appendChild(li);
             return;
         }
+
+        this.setHeaderState(sort, direction);
+
         for (let item of items) {
             let next = order + 1,
                 previous = order - 1;
@@ -7182,6 +7294,8 @@ class DataList extends DataGrid {
             if (next > items.length) { next = items.length; }
 
             let li = this.drawitem(item);
+            li.style.setProperty('--anim-order', `${order}`);
+            li.setAttribute('data-order', order);
 
             if ((this.click) && (typeof this.click === 'function')) {
                 li.classList.add('clickable');
@@ -7209,8 +7323,6 @@ class DataList extends DataGrid {
                 });
             }
 
-            li.style.setProperty('--anim-order', `${order}`);
-            li.setAttribute('data-order', order);
             li.addEventListener('keyup', (e) => {
                 switch (e.key) {
                     case 'Escape':
@@ -7263,11 +7375,6 @@ class DataList extends DataGrid {
 
     }
 
-    postLoad() {
-        //this.applystate();
-        //this.grindDuplicateCells();
-    }
-
     gridPostProcess() {
         // nothing.
     }
@@ -7317,12 +7424,10 @@ class DataList extends DataGrid {
                         direction = 'desc';
                     }
                 }
-                for (let h of this.listheader.querySelectorAll('div.label')) {
-                    h.removeAttribute('data-sorted');
-                }
-                this.listheader.setAttribute('data-sort-field', col.field);
-                this.listheader.setAttribute('data-sort-direction', direction);
-                ndiv.setAttribute('data-sorted', direction);
+                this.state.sort.column = col.field;
+                this.state.sort.direction = direction;
+                this.persist();
+
                 this.populate(col.field, direction);
             });
             this.listheader.appendChild(ndiv);
