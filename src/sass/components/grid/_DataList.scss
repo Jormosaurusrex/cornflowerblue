@@ -6,7 +6,7 @@ div.datalist-container {
   --thumbnail-size: 5rem;
   overflow: hidden;
   max-height: 70vh;
-  position: relative;
+  //position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -70,7 +70,7 @@ div.datalist-container {
       @include for-hover-only {
         &:hover {
           background-color: var(--canvas-color-highlight);
-          box-shadow: inset 0 -.2em 0 0 var(--colors-highlight);
+          box-shadow: inset 0 -.2rem 0 0 var(--colors-highlight);
         }
       }
       &[data-sorted='asc'],
@@ -86,15 +86,27 @@ div.datalist-container {
   }
   >ul.datalist {
     list-style-type: none;
+    position: relative;
     padding: 0;
     overflow: auto;
     z-index: 200;
     flex-grow: 2;
-    background-color: var(--body-background-color);
+    background-color: rgba(var(--canvas-color-tertiary-rgb), 1);
     >li {
+      --hover-side-shadow-color: var(--colors-affordance);
+      --hover-side-shadow: inset .2rem 0 0 0 var(--hover-side-shadow-color);
+      --hover-side-shadow-null: inset 0 0 0 0 var(--hover-side-shadow-color);
+      --hover-shadow-null: 0 0 0 0 rgba(0, 0, 0, 0),
+                            0 0 0 0 rgba(0, 0, 0, 0),
+                            inset 0 0 0 0 var(--hover-side-shadow-color);
+      --hover-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, 1),
+                      0 .3em .5em -.3em rgba(0, 0, 0, 1),
+                      inset .4rem 0 0 0 var(--hover-side-shadow-color);
+      --hover-shadow-last: 0 -.3rem .5rem -.3rem rgba(0, 0, 0, .5),
+                           0 .3rem .5rem -.3rem rgba(0, 0, 0, .5),
+                      inset .4rem 0 0 0 var(--hover-side-shadow-color);
       border-top: .01rem solid var(--canvas-color-tertiary);
       border-bottom: .01rem solid var(--canvas-color-secondary);
-      //background-color: rgba(var(--canvas-color-primary-rgb), .5);
       display: flex;
       flex-direction: row;
       align-content: center;
@@ -103,9 +115,9 @@ div.datalist-container {
       padding:.5rem;
       margin: 0;
       z-index: 200;
-      transition: box-shadow .5s;
-      box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, 0),
-      0 .3em .5em -.3em rgba(0, 0, 0, 0);
+      transition: box-shadow .5s,
+                  background-color .5s;
+      box-shadow: var(--hover-shadow-null);
       &.clickable {
         cursor: pointer;
       }
@@ -253,15 +265,14 @@ div.datalist-container {
         outline-offset: -.3rem;
         text-decoration: underline double;
         background-color: rgba(var(--canvas-color-highlight-rgb), .7);
-        box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
-                    0 .3em .5em -.3em rgba(0, 0, 0, 1);
+        box-shadow: var(--hover-shadow);
         &:last-child {
-          box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
-                      0 .3em .5em -.3em rgba(0, 0, 0, .5);
+          box-shadow: var(--hover-shadow-last);
         }
       }
       &[aria-selected="true"] {
-        box-shadow: inset .5em 0 0 0 rgb(var(--colors-focus-rgb));
+        --hover-side-shadow-color: var(--colors-focus);
+        box-shadow: var(--hover-side-shadow);
         button.activebutton,
         a.button.activebutton {
           display: none;
@@ -272,11 +283,9 @@ div.datalist-container {
           outline: none;
           background-color: var(--canvas-color-primary);
           z-index: 201;
-          box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
-          0 .3em .5em -.3em rgba(0, 0, 0, 1);
+          box-shadow: var(--hover-shadow);
           &:last-child {
-            box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
-            0 .3em .5em -.3em rgba(0, 0, 0, .5);
+            box-shadow: var(--hover-shadow-last);
           }
         }
       }
@@ -297,6 +306,7 @@ div.datalist-container {
       }
     }
     &:after {
+      display: none;
       content: '';
       position: absolute;
       left: 0;
