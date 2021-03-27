@@ -6530,7 +6530,7 @@ div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebut
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > ul.datalist > li:hover {
     outline: none;
-    background-color: var(--canvas-color-highlight);
+    background-color: var(--canvas-color-primary);
     z-index: 201;
     box-shadow: 0 -0.3em 0.5em -0.3em rgba(0, 0, 0, 0.5), 0 0.3em 0.5em -0.3em black;
   }

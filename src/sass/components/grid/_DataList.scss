@@ -270,7 +270,7 @@ div.datalist-container {
       @include for-hover-only {
         &:hover {
           outline: none;
-          background-color: var(--canvas-color-highlight);
+          background-color: var(--canvas-color-primary);
           z-index: 201;
           box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
           0 .3em .5em -.3em rgba(0, 0, 0, 1);
