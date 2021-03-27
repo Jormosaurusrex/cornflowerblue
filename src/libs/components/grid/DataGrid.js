@@ -2,6 +2,11 @@ class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
         return {
+            statesaveprefix: 'grid',
+            defaultsort: {
+                column: 'name',
+                direction: 'asc'
+            },
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
@@ -122,12 +127,11 @@ class DataGrid extends Panel {
     constructor(config) {
         config = Object.assign({}, DataGrid.DEFAULT_CONFIG, config);
         super(config);
+        this.initialize();
+    }
 
-        if (this.id) {
-            this.savekey = `grid-test-${this.id}`;
-        } else {
-            this.id = `grid-${CFBUtils.getUniqueKey(5)}`;
-        }
+    initialize() {
+
 
         // Need to turn these into GridFields if they aren't already
         if (this.warehouse) {
@@ -158,8 +162,6 @@ class DataGrid extends Panel {
     }
 
     finalize() {
-        this.loadstate();
-
         this.shade.activate();
     }
 
@@ -206,14 +208,6 @@ class DataGrid extends Panel {
      */
     get multiselecting() {
         return this.grid.classList.contains('multiselecting');
-    }
-
-    /**
-     * Test if the grid can be persisted.
-     * @return {boolean}
-     */
-    get ispersistable() {
-        return !!((this.savestate) && (this.savekey) && (window.localStorage));
     }
 
     /**
@@ -1086,29 +1080,6 @@ class DataGrid extends Panel {
     /* PERSISTENCE METHODS______________________________________________________________ */
 
     /**
-     * Persist the grid state
-     */
-    persist() {
-        if (!this.ispersistable) { return; }
-        this.state = this.grindstate(); // get a current copy of it.
-        localStorage.setItem(this.savekey, JSON.stringify(this.state));
-    }
-
-    /**
-     * Load a saved state from local storage
-     */
-    loadstate() {
-        if (this.ispersistable) {
-            this.state = JSON.parse(localStorage.getItem(this.savekey));
-            if (!this.state) {
-                this.state = this.grindstate();
-            }
-        } else if (!this.state) {
-            this.state = this.grindstate();
-        }
-    }
-
-    /**
      * Apply the saved state to the grid
      */
     applystate() {
@@ -1126,6 +1097,7 @@ class DataGrid extends Panel {
             this.activefilters = this.state.filters;
         }
         this.applyFilters();
+        super.applystate();
     }
 
     /**
@@ -1134,8 +1106,10 @@ class DataGrid extends Panel {
     grindstate() {
 
         let state = {
+            minimized: false,
             fields: {},
             filters: [],
+            sort: this.defaultsort,
             search: null
         };
 
@@ -1146,6 +1120,7 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
+
         for (let f of this.activefilters) {
             state.filters.push({
                 filterid: f.filterid,
@@ -2132,6 +2107,9 @@ class DataGrid extends Panel {
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
 
+    get defaultsort() { return this.config.defaultsort; }
+    set defaultsort(defaultsort) { this.config.defaultsort = defaultsort; }
+
     get deletehook() { return this.config.deletehook; }
     set deletehook(deletehook) {
         if (typeof deletehook !== 'function') {
@@ -2329,12 +2307,6 @@ class DataGrid extends Panel {
     get rowactionsicon() { return this.config.rowactionsicon; }
     set rowactionsicon(rowactionsicon) { this.config.rowactionsicon = rowactionsicon; }
 
-    get savekey() { return this._savekey; }
-    set savekey(savekey) { this._savekey = savekey; }
-
-    get savestate() { return this.config.savestate; }
-    set savestate(savestate) { this.config.savestate = savestate; }
-
     get screen() { return this.config.screen; }
     set screen(screen) { this.config.screen = screen; }
 
@@ -2378,9 +2350,6 @@ class DataGrid extends Panel {
 
     get spinnertext() { return this.config.spinnertext; }
     set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
-
-    get state() { return this._state; }
-    set state(state) { this._state = state; }
 
     get thead() {
         if (!this._thead) { this.buildTableHead(); }

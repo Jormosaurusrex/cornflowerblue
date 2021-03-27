@@ -3,6 +3,7 @@ class Panel {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
+            savestateprefix: 'panel',
             assection : false,
             dataattributes: null,
             attributes: null,
@@ -65,8 +66,75 @@ class Panel {
         } else if ((state) && (state === 'false')) {
             this.minimized = false;
         }
+        if (this.id) {
+            this.savekey = `${this.statesaveprefix}-state-${this.id}`;
+        } else {
+            this.id = `${this.statesaveprefix}-${CFBUtils.getUniqueKey(5)}`;
+        }
+
         if (!this.contentid) { this.contentid = `panel-c-${CFBUtils.getUniqueKey(5)}`; }
         if (!this.headerid) { this.headerid = `panel-h-${CFBUtils.getUniqueKey(5)}`; }
+
+        this.loadstate();
+
+    }
+
+    finalize() {
+        this.applystate();
+    }
+
+    /* PERSISTENCE METHODS______________________________________________________________ */
+
+    /**
+     * Test if this can be persisted.
+     * @return {boolean}
+     */
+    get ispersistable() {
+        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+    }
+
+    /**
+     * Persist the state
+     */
+    persist() {
+        if (!this.ispersistable) { return; }
+        this.state = this.grindstate(); // get a current copy of it.
+        localStorage.setItem(this.savekey, JSON.stringify(this.state));
+    }
+
+    /**
+     * Load a saved state from local storage
+     */
+    loadstate() {
+        if (this.ispersistable) {
+            this.state = JSON.parse(localStorage.getItem(this.savekey));
+            if (!this.state) {
+                this.state = this.grindstate();
+            }
+        } else if (!this.state) {
+            this.state = this.grindstate();
+        }
+    }
+
+    /**
+     * Apply the saved state.
+     */
+    applystate() {
+        if (!this.collapsible) { return; }
+        if (this.state.minimized) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+
+    /**
+     * Figures out the state of the panel and generates the state object
+     */
+    grindstate() {
+        return {
+            minimized: this.minimized
+        };
     }
 
     /* CORE METHODS_____________________________________________________________________ */
@@ -88,7 +156,8 @@ class Panel {
     open() {
         this.minimized = false;
         this.container.setAttribute('aria-expanded', 'true');
-        localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'false');
+        this.state.minimized = this.minimized;
+        this.persist();
         if ((this.closeicon) && (this.closeiconclosed)) {
             this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
         }
@@ -103,7 +172,8 @@ class Panel {
     close() {
         this.container.setAttribute('aria-expanded', 'false');
         this.minimized = true;
-        localStorage.setItem(`cfb-panel-minimized-${this.id}`, 'true');
+        this.state.minimized = this.minimized;
+        this.persist();
         if ((this.closeicon) && (this.closeiconclosed)) {
             this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
         }
@@ -347,6 +417,18 @@ class Panel {
 
     get position() { return this.config.position; }
     set position(position) { this.config.position = position; }
+
+    get savekey() { return this._savekey; }
+    set savekey(savekey) { this._savekey = savekey; }
+
+    get savestate() { return this.config.savestate; }
+    set savestate(savestate) { this.config.savestate = savestate; }
+
+    get state() { return this._state; }
+    set state(state) { this._state = state; }
+
+    get statesaveprefix() { return this.config.statesaveprefix; }
+    set statesaveprefix(statesaveprefix) { this.config.statesaveprefix = statesaveprefix; }
 
     get stateful() { return this.config.stateful; }
     set stateful(stateful) { this.config.stateful = stateful; }

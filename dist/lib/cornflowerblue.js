@@ -4737,6 +4737,9 @@ class DataGrid extends Panel {
             selectaction: (self, row, rowdata) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
             },
+            deselectaction: (self, row, rowdata) => {
+
+            },
             doubleclick: null, // Action to take on double click. Passed (e, self); defaults to opening a view
             mouseover: null,  // Mouse events on rows, passed (item, self, e)
             mouseout: null,   // Mouse events on rows, passed (item, self, e)
@@ -6032,6 +6035,9 @@ class DataGrid extends Panel {
 
         if (row.getAttribute('aria-selected') === 'true') {
             this.deselect(row);
+            if ((this.deselectaction) && (typeof this.deselectaction === 'function')) {
+                this.deselectaction(this, row, rdata);
+            }
             return;
         }
 
@@ -6828,6 +6834,14 @@ class DataGrid extends Panel {
 
     get demphasizeduplicates() { return this.config.demphasizeduplicates; }
     set demphasizeduplicates(demphasizeduplicates) { this.config.demphasizeduplicates = demphasizeduplicates; }
+
+    get deselectaction() { return this.config.deselectaction; }
+    set deselectaction(deselectaction) {
+        if (typeof deselectaction !== 'function') {
+            console.error("Value provided to deselectaction is not a function!");
+        }
+        this.config.deselectaction = deselectaction;
+    }
 
     get dialog() { return this._dialog; }
     set dialog(dialog) { this._dialog = dialog; }
@@ -13405,22 +13419,37 @@ class SwitchList extends InputElement {
         });
     }
 
-    popLists(member, fromlist, tolist) {
-        let newfrom = [];
-
-        for (let m of fromlist) {
-            if (member.id === m.id) {
-                if (tolist) {
-                    tolist.push(member);
+    popLists(member, intoout = true) {
+        if (intoout) {
+            let newin = [];
+            for (let m of this.inlist) {
+                if (member.id === m.id) {
+                    this.outlist.push(m);
+                } else {
+                    newin.push(m);
                 }
-            } else {
-                newfrom.push(member);
             }
+            this.inlist = newin;
+        } else {
+            let newout = [];
+            for (let m of this.outlist) {
+                if (member.id === m.id) {
+                    this.inlist.push(m);
+                } else {
+                    newout.push(m);
+                }
+            }
+            this.outlist = newout;
         }
-        fromlist = newfrom;
+    }
+
+    isDirty() {
+        return true;
+        //return (this.origval !== this.value);
     }
 
     rebuild() {
+        this.touched = true;
         this.listboxes.innerHTML = ``;
         this.listboxes.appendChild(this.buildListBox(true));
         this.listboxes.appendChild(this.buildListBox(false));
@@ -13551,15 +13580,16 @@ class SwitchList extends InputElement {
                 this.inlistlist.removeChild(li);
                 this.outlistlist.appendChild(li);
                 this.sortList(this.outlistlist);
-                this.popLists(m, this.inlist, this.outlist);
+                this.popLists(m, true);
                 // pop from one to the other
             } else {
                 toggle.toggle.checked = true;
                 this.outlistlist.removeChild(li);
                 this.inlistlist.appendChild(li);
                 this.sortList(this.inlistlist);
-                this.popLists(m, this.outlist, this.inlist);
+                this.popLists(m, false);
             }
+            this.touched = true;
 
             this.validate();
 

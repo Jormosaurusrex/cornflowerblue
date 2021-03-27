@@ -2,8 +2,10 @@ class DataList extends DataGrid {
 
     static get DEFAULT_CONFIG() {
         return {
+            statesaveprefix: 'datalist',
             noentriestext: TextFactory.get('datalist-noentries'),
             specialsort: null,
+            collapsible: false,
             loadcallback: null,
             drawitem: (itemdef, self) => {
 
@@ -34,23 +36,73 @@ class DataList extends DataGrid {
     }
 
     finalize() {
-        // load state in here, etc.
+        this.shade.activate();
     }
 
     fillData() {
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
-                this.populate();
+                this.postLoad();
+                //this.shade.deactivate();
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
                 this.update(data);
-                this.populate();
+                this.postLoad();
+                this.shade.deactivate();
             });
         } else if (this.data) {
             this.populate();
         }
+    }
+
+    setHeaderState(column = 'name', direction = 'asc') {
+        let headeritem = this.listheader.querySelector(`[data-column='${column}']`);
+        for (let h of this.listheader.querySelectorAll('div.label')) {
+            h.removeAttribute('data-sorted');
+        }
+        this.listheader.setAttribute('data-sort-field', column);
+        this.listheader.setAttribute('data-sort-direction', direction);
+
+        if (headeritem) {
+            headeritem.setAttribute('data-sorted', direction);
+        }
+    }
+
+    grindstate() {
+
+        let state = {
+            minimized: false,
+            fields: {},
+            filters: [],
+            search: null
+        };
+        if ((this.state) && (this.state.sort)) {
+            state.sort = this.state.sort;
+        } else {
+            state.sort = this.defaultsort;
+        }
+
+/*
+        for (let f of this.fields) {
+            if (f.hidden === undefined) { f.hidden = false; }
+            state.fields[f.name] = {
+                name: f.name,
+                hidden: f.hidden
+            };
+        }
+
+        for (let f of this.activefilters) {
+            state.filters.push({
+                filterid: f.filterid,
+                field: f.field,
+                comparator: f.comparator,
+                value: f.value
+            });
+        }
+*/
+        return state;
     }
 
     update(data) {
@@ -60,16 +112,22 @@ class DataList extends DataGrid {
                 this.data.push(entry);
             }
         }
-        this.populate();
+        this.populate(this.state.sort.column, this.state.sort.direction);
         if ((this.loadcallback) && (typeof this.loadcallback === 'function')) {
             this.loadcallback();
         }
     }
 
+    postLoad() {
+        this.applystate();
+    }
+
     populate(sort='title', direction = 'asc') {
-        let order = 1;
+        let order = 1,
+            items = this.sortOn(this.data, sort, direction);
+
         this.datalist.innerHTML = '';
-        let items = this.sortOn(this.data, sort, direction);
+
         if (items.length === 0) {
             let li = document.createElement('li');
             li.classList.add('noentriestext');
@@ -77,6 +135,9 @@ class DataList extends DataGrid {
             this.datalist.appendChild(li);
             return;
         }
+
+        this.setHeaderState(sort, direction);
+
         for (let item of items) {
             let next = order + 1,
                 previous = order - 1;
@@ -84,6 +145,8 @@ class DataList extends DataGrid {
             if (next > items.length) { next = items.length; }
 
             let li = this.drawitem(item);
+            li.style.setProperty('--anim-order', `${order}`);
+            li.setAttribute('data-order', order);
 
             if ((this.click) && (typeof this.click === 'function')) {
                 li.classList.add('clickable');
@@ -111,8 +174,6 @@ class DataList extends DataGrid {
                 });
             }
 
-            li.style.setProperty('--anim-order', `${order}`);
-            li.setAttribute('data-order', order);
             li.addEventListener('keyup', (e) => {
                 switch (e.key) {
                     case 'Escape':
@@ -165,11 +226,6 @@ class DataList extends DataGrid {
 
     }
 
-    postLoad() {
-        //this.applystate();
-        //this.grindDuplicateCells();
-    }
-
     gridPostProcess() {
         // nothing.
     }
@@ -219,12 +275,10 @@ class DataList extends DataGrid {
                         direction = 'desc';
                     }
                 }
-                for (let h of this.listheader.querySelectorAll('div.label')) {
-                    h.removeAttribute('data-sorted');
-                }
-                this.listheader.setAttribute('data-sort-field', col.field);
-                this.listheader.setAttribute('data-sort-direction', direction);
-                ndiv.setAttribute('data-sorted', direction);
+                this.state.sort.column = col.field;
+                this.state.sort.direction = direction;
+                this.persist();
+
                 this.populate(col.field, direction);
             });
             this.listheader.appendChild(ndiv);

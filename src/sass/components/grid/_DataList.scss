@@ -1,5 +1,6 @@
 div.datalist-container {
-  --header-background-color: var(--canvas-color-secondary);
+  --header-background-color: var(--canvas-color-tertiary);
+  --body-background-color: var(--canvas-color-primary);
   --list-header-color: var(--colors-affordance);
   --icon-size: 3rem;
   --thumbnail-size: 5rem;
@@ -18,7 +19,7 @@ div.datalist-container {
     align-content: stretch;
     justify-content: flex-start;
     align-items: center;
-    padding: .5rem .5rem 0 .5rem;
+    padding: 0 .5rem;
     background-color: var(--header-background-color);
     box-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.5);
     >div {
@@ -34,7 +35,7 @@ div.datalist-container {
       cursor: pointer;
       >label {
         margin: 0;
-        font-size: .6rem;
+        font-size: .7rem;
         cursor: pointer;
       }
     }
@@ -68,7 +69,8 @@ div.datalist-container {
       }
       @include for-hover-only {
         &:hover {
-          box-shadow: inset 0 -.2em 0 0 var(--colors-hightlight);
+          background-color: var(--canvas-color-highlight);
+          box-shadow: inset 0 -.2em 0 0 var(--colors-highlight);
         }
       }
       &[data-sorted='asc'],
@@ -88,7 +90,7 @@ div.datalist-container {
     overflow: auto;
     z-index: 200;
     flex-grow: 2;
-    //background-color: var(--canvas-color-secondary);
+    background-color: var(--body-background-color);
     >li {
       border-top: .01rem solid var(--canvas-color-tertiary);
       border-bottom: .01rem solid var(--canvas-color-secondary);
@@ -97,13 +99,11 @@ div.datalist-container {
       flex-direction: row;
       align-content: center;
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: stretch;
       padding:.5rem;
       margin: 0;
       z-index: 200;
-      transition: box-shadow .5s,
-      background-image .5s;
-      background-image: var(--stripe-accent-null);
+      transition: box-shadow .5s;
       box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, 0),
       0 .3em .5em -.3em rgba(0, 0, 0, 0);
       &.clickable {
@@ -146,7 +146,7 @@ div.datalist-container {
         flex-direction: column;
         align-content: flex-start;
         align-items: stretch;
-        justify-content: flex-start;
+        justify-content: space-between;
         flex-grow: 1;
         margin: 0 0.5rem;
         >div.topline,
@@ -157,27 +157,45 @@ div.datalist-container {
           justify-content: space-between;
           align-items: baseline;
           align-content: baseline;
-          >label.entitytype {
-            font-size: .8rem;
-            margin: 0 .5rem 0 0;
-            color: var(--colors-text-hot);
+          >div {
+            margin: 0 .5rem;
+            &:first-child {
+              margin-left: 0;
+            }
+            &:last-child {
+              margin-right: 0;
+            }
           }
         }
         >div.meta {
           font-size: .8rem;
         }
         >div.topline {
-          label {
+          justify-content: flex-end;
+          >label {
             font-weight: 100;
             margin: 0;
+            margin-right: auto;
+            flex-grow: 2;
             display: inline-block;
+            justify-self: flex-start;
             &.name {
               font-size: 1.2rem;
             }
           }
+          >span.secondary {
+            margin-right: 1rem;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
         }
         >div.payload {
-
+          label {
+            font-size: .8rem;
+            margin: 0 .2rem 0 0;
+            color: var(--colors-highlight);
+          }
         }
         label {
           margin: 0;
@@ -231,9 +249,16 @@ div.datalist-container {
         }
       }
       &:focus {
-        outline: var(--colors-text-default) dashed .1rem;
-        outline-offset: -.2rem;
+        outline: var(--colors-text-default) dashed .15rem;
+        outline-offset: -.3rem;
         text-decoration: underline double;
+        background-color: rgba(var(--canvas-color-highlight-rgb), .7);
+        box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
+                    0 .3em .5em -.3em rgba(0, 0, 0, 1);
+        &:last-child {
+          box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
+                      0 .3em .5em -.3em rgba(0, 0, 0, .5);
+        }
       }
       &[aria-selected="true"] {
         box-shadow: inset .5em 0 0 0 rgb(var(--colors-focus-rgb));
@@ -245,7 +270,14 @@ div.datalist-container {
       @include for-hover-only {
         &:hover {
           outline: none;
+          background-color: var(--canvas-color-highlight);
           z-index: 201;
+          box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
+          0 .3em .5em -.3em rgba(0, 0, 0, 1);
+          &:last-child {
+            box-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, .5),
+            0 .3em .5em -.3em rgba(0, 0, 0, .5);
+          }
         }
       }
       &.noentriestext {

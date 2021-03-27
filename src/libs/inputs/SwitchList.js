@@ -41,22 +41,37 @@ class SwitchList extends InputElement {
         });
     }
 
-    popLists(member, fromlist, tolist) {
-        let newfrom = [];
-
-        for (let m of fromlist) {
-            if (member.id === m.id) {
-                if (tolist) {
-                    tolist.push(member);
+    popLists(member, intoout = true) {
+        if (intoout) {
+            let newin = [];
+            for (let m of this.inlist) {
+                if (member.id === m.id) {
+                    this.outlist.push(m);
+                } else {
+                    newin.push(m);
                 }
-            } else {
-                newfrom.push(member);
             }
+            this.inlist = newin;
+        } else {
+            let newout = [];
+            for (let m of this.outlist) {
+                if (member.id === m.id) {
+                    this.inlist.push(m);
+                } else {
+                    newout.push(m);
+                }
+            }
+            this.outlist = newout;
         }
-        fromlist = newfrom;
+    }
+
+    isDirty() {
+        return true;
+        //return (this.origval !== this.value);
     }
 
     rebuild() {
+        this.touched = true;
         this.listboxes.innerHTML = ``;
         this.listboxes.appendChild(this.buildListBox(true));
         this.listboxes.appendChild(this.buildListBox(false));
@@ -187,15 +202,16 @@ class SwitchList extends InputElement {
                 this.inlistlist.removeChild(li);
                 this.outlistlist.appendChild(li);
                 this.sortList(this.outlistlist);
-                this.popLists(m, this.inlist, this.outlist);
+                this.popLists(m, true);
                 // pop from one to the other
             } else {
                 toggle.toggle.checked = true;
                 this.outlistlist.removeChild(li);
                 this.inlistlist.appendChild(li);
                 this.sortList(this.inlistlist);
-                this.popLists(m, this.outlist, this.inlist);
+                this.popLists(m, false);
             }
+            this.touched = true;
 
             this.validate();
 
