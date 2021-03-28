@@ -62,6 +62,24 @@
                         0 2.23rem 1.79rem rgba(0, 0, 0, 0.042),
                         0 4.18rem 3.34rem rgba(0, 0, 0, 0.05),
                         0 10rem 8rem rgba(0, 0, 0, 0.07);
+  --shadows-smooth-up: 0 -.05rem .07rem -.3rem rgba(0, 0, 0, .2),
+                        0 -.14rem .15rem -.2rem rgba(0, 0, 0, .1),
+                        0 -.28rem .22rem -.1rem rgba(0, 0, 0, 0.02),
+                        0 -.67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
+                        0 -1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
+                        0 -2.23rem 1.79rem rgba(0, 0, 0, 0.042);
+  --shadows-smooth-dn: 0 .05rem .07rem -.3rem rgba(0, 0, 0, .2),
+                        0 .14rem .15rem -.2rem rgba(0, 0, 0, .1),
+                        0 .28rem .22rem -.1rem rgba(0, 0, 0, 0.02),
+                        0 .67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
+                        0 1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
+                        0 2.23rem 1.79rem rgba(0, 0, 0, 0.042);
+  --shadows-smooth-dn-small: 0 .1rem .3rem -.3rem rgba(0, 0, 0, .8),
+                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .5),
+                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .3);
+  --shadows-smooth-up-small: 0 -.1rem .3rem -.3rem rgba(0, 0, 0, .8),
+                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .5),
+                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .3);
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
@@ -5710,112 +5728,6 @@ div.datagrid-container h3 {
   --panel-text-color: var(--colors-standard);
   background-color: var(--canvas-color-secondary);
 }
-div.datagrid-container div.grid-info,
-div.datagrid-container div.grid-filterinfo {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: center;
-  padding: 0 1rem;
-  justify-content: flex-end;
-  opacity: 1;
-  transition: height, max-height, min-height, opacity;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out;
-}
-div.datagrid-container div.grid-info {
-  z-index: 900;
-  flex-grow: 0;
-  height: 3rem;
-  min-height: 3rem;
-  align-content: flex-end;
-}
-div.datagrid-container div.grid-info div.countbox {
-  margin-right: auto;
-  white-space: nowrap;
-  padding-right: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  flex-wrap: nowrap;
-}
-div.datagrid-container div.grid-info div.countbox label {
-  display: inline-block;
-  margin: 0 0.5rem 0 0;
-}
-div.datagrid-container div.grid-info div.countbox div.activity {
-  margin-left: 0.5rem;
-  color: var(--focus-color-half);
-}
-div.datagrid-container div.grid-info div.countbox div.activity > span.icon {
-  display: inline-block;
-  animation: cfb-localspin 2s infinite linear;
-}
-div.datagrid-container div.grid-info div.countbox div.activity[aria-hidden=true] {
-  display: none;
-}
-div.datagrid-container div.grid-info button:last-child {
-  margin-right: 0;
-}
-@media (max-width: 599px) {
-  div.datagrid-container div.grid-info {
-    flex-wrap: wrap;
-    height: unset;
-    min-height: unset;
-    padding: 0.5rem 0;
-  }
-  div.datagrid-container div.grid-info div.searchcontrol {
-    order: -1;
-    margin-bottom: 0.5rem;
-    margin-left: 0;
-    align-self: center;
-  }
-  div.datagrid-container div.grid-info div.searchcontrol input {
-    width: auto;
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
-    padding: var(--input-default-padding);
-    background-color: var(--canvas-color-secondary);
-  }
-  div.datagrid-container div.grid-info div.searchcontrol button {
-    --button-border-color: var(--colors-affordance);
-    box-shadow: inset -0.1em -0.1em 0 0 var(--colors-affordance), inset 0.1em -0.1em 0 0 var(--colors-affordance), inset -0.1em 0.1em 0 0 var(--colors-affordance), inset 0.1em 0.1em 0 0 var(--colors-affordance);
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  div.datagrid-container div.grid-info button {
-    margin: 0;
-    padding: 0.6rem;
-  }
-  div.datagrid-container div.grid-info button.filter span.icon {
-    margin: 0;
-  }
-  div.datagrid-container div.grid-info button.filter span.text {
-    display: none;
-  }
-}
-div.datagrid-container div.grid-filterinfo {
-  display: none;
-  background-color: var(--canvas-color-secondary);
-}
-div.datagrid-container div.grid-filterinfo label {
-  margin: 0 0.5rem 0 0;
-}
-div.datagrid-container div.grid-filterinfo div.grid-filtertags {
-  flex-grow: 2;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-div.datagrid-container div.grid-filterinfo div.grid-filtertags button.tagbutton {
-  margin: 0.5rem;
-}
-div.datagrid-container div.grid-filterinfo[aria-expanded=true] {
-  display: flex;
-}
 div.datagrid-container div.grid-wrapper {
   overflow: auto;
   position: relative;
@@ -6203,15 +6115,6 @@ div.datagrid-container div.messages div.messagebox2 div.box.warnings h4 {
 div.datagrid-container div.messages div.messagebox2 div.box.warnings div.lbox {
   border-color: transparent;
 }
-div.datagrid-container[aria-expanded=false] div.grid-info,
-div.datagrid-container[aria-expanded=false] div.grid-actions,
-div.datagrid-container[aria-expanded=false] div.grid-filterinfo {
-  max-height: 0;
-  min-height: 0;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
 div.datagrid-container[aria-expanded=false] div.grid-wrapper {
   max-height: 0;
   min-height: 0;
@@ -6237,6 +6140,199 @@ div.datagrid-container[aria-expanded=false] div.grid-wrapper table.grid {
     background-color: var(--canvas-color-primary);
   }
 }
+div.datagrid-container > div.datainfo,
+div.datagrid-container > div.footer,
+div.datagrid-container > div.grid-filterinfo,
+div.datalist-container > div.datainfo,
+div.datalist-container > div.footer,
+div.datalist-container > div.grid-filterinfo {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: flex-end;
+  opacity: 1;
+  transition: height, max-height, min-height, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+div.datagrid-container > div.datainfo button,
+div.datagrid-container > div.footer button,
+div.datagrid-container > div.grid-filterinfo button,
+div.datalist-container > div.datainfo button,
+div.datalist-container > div.footer button,
+div.datalist-container > div.grid-filterinfo button {
+  margin: 0;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+div.datagrid-container > div.datainfo button.filter span.icon,
+div.datagrid-container > div.footer button.filter span.icon,
+div.datagrid-container > div.grid-filterinfo button.filter span.icon,
+div.datalist-container > div.datainfo button.filter span.icon,
+div.datalist-container > div.footer button.filter span.icon,
+div.datalist-container > div.grid-filterinfo button.filter span.icon {
+  margin: 0;
+}
+div.datagrid-container > div.datainfo button.filter span.text,
+div.datagrid-container > div.footer button.filter span.text,
+div.datagrid-container > div.grid-filterinfo button.filter span.text,
+div.datalist-container > div.datainfo button.filter span.text,
+div.datalist-container > div.footer button.filter span.text,
+div.datalist-container > div.grid-filterinfo button.filter span.text {
+  display: none;
+}
+@media (max-width: 599px) {
+  div.datagrid-container > div.datainfo div.searchcontrol,
+div.datagrid-container > div.footer div.searchcontrol,
+div.datagrid-container > div.grid-filterinfo div.searchcontrol,
+div.datalist-container > div.datainfo div.searchcontrol,
+div.datalist-container > div.footer div.searchcontrol,
+div.datalist-container > div.grid-filterinfo div.searchcontrol {
+    order: -1;
+    margin-bottom: 0.5rem;
+    margin-left: 0;
+    align-self: center;
+  }
+  div.datagrid-container > div.datainfo div.searchcontrol input,
+div.datagrid-container > div.footer div.searchcontrol input,
+div.datagrid-container > div.grid-filterinfo div.searchcontrol input,
+div.datalist-container > div.datainfo div.searchcontrol input,
+div.datalist-container > div.footer div.searchcontrol input,
+div.datalist-container > div.grid-filterinfo div.searchcontrol input {
+    width: auto;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    padding: var(--input-default-padding);
+    background-color: var(--canvas-color-secondary);
+  }
+  div.datagrid-container > div.datainfo div.searchcontrol button,
+div.datagrid-container > div.footer div.searchcontrol button,
+div.datagrid-container > div.grid-filterinfo div.searchcontrol button,
+div.datalist-container > div.datainfo div.searchcontrol button,
+div.datalist-container > div.footer div.searchcontrol button,
+div.datalist-container > div.grid-filterinfo div.searchcontrol button {
+    --button-border-color: var(--colors-affordance);
+    box-shadow: inset -0.1rem -0.1rem 0 0 var(--colors-affordance), inset 0.1rem -0.1rem 0 0 var(--colors-affordance), inset -0.1rem 0.1rem 0 0 var(--colors-affordance), inset 0.1rem 0.1rem 0 0 var(--colors-affordance);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+div.datagrid-container > div.footer,
+div.datalist-container > div.footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  z-index: 202;
+  background-color: var(--header-background-color);
+  box-shadow: var(--shadows-smooth-up-small);
+}
+div.datagrid-container div.countbox,
+div.datagrid-container div.activity,
+div.datalist-container div.countbox,
+div.datalist-container div.activity {
+  justify-self: flex-start;
+}
+div.datagrid-container div.countbox,
+div.datalist-container div.countbox {
+  white-space: nowrap;
+  padding-right: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  margin-right: 0.5rem;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  justify-self: flex-start;
+}
+div.datagrid-container div.countbox label,
+div.datalist-container div.countbox label {
+  display: inline-block;
+  margin: 0 0.5rem 0 0;
+}
+div.datagrid-container div.activity,
+div.datalist-container div.activity {
+  margin-right: auto;
+  justify-self: flex-start;
+  color: var(--focus-color-half);
+}
+div.datagrid-container div.activity > span.icon,
+div.datalist-container div.activity > span.icon {
+  display: inline-block;
+  animation: cfb-localspin 2s infinite linear;
+}
+div.datagrid-container div.activity[aria-hidden=true],
+div.datalist-container div.activity[aria-hidden=true] {
+  display: none;
+}
+div.datagrid-container div.searchcontrol,
+div.datalist-container div.searchcontrol {
+  font-size: 0.8rem;
+  margin: 0 1rem;
+}
+div.datagrid-container > div.datainfo,
+div.datalist-container > div.datainfo {
+  z-index: 900;
+  flex-grow: 0;
+  height: 3rem;
+  min-height: 3rem;
+  align-content: flex-end;
+}
+div.datagrid-container > div.datainfo button:last-child,
+div.datalist-container > div.datainfo button:last-child {
+  margin-right: 0;
+}
+@media (max-width: 599px) {
+  div.datagrid-container > div.datainfo,
+div.datalist-container > div.datainfo {
+    flex-wrap: wrap;
+    height: unset;
+    min-height: unset;
+    padding: 0.5rem 0;
+  }
+}
+div.datagrid-container > div.grid-filterinfo,
+div.datalist-container > div.grid-filterinfo {
+  display: none;
+  background-color: var(--canvas-color-secondary);
+}
+div.datagrid-container > div.grid-filterinfo label,
+div.datalist-container > div.grid-filterinfo label {
+  margin: 0 0.5rem 0 0;
+}
+div.datagrid-container > div.grid-filterinfo div.grid-filtertags,
+div.datalist-container > div.grid-filterinfo div.grid-filtertags {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+div.datagrid-container > div.grid-filterinfo div.grid-filtertags button.tagbutton,
+div.datalist-container > div.grid-filterinfo div.grid-filtertags button.tagbutton {
+  margin: 0.5rem;
+}
+div.datagrid-container > div.grid-filterinfo[aria-expanded=true],
+div.datalist-container > div.grid-filterinfo[aria-expanded=true] {
+  display: flex;
+}
+div.datagrid-container[aria-expanded=false] > div.datainfo,
+div.datagrid-container[aria-expanded=false] > div.footer,
+div.datagrid-container[aria-expanded=false] > div.grid-actions,
+div.datagrid-container[aria-expanded=false] > div.grid-filterinfo,
+div.datalist-container[aria-expanded=false] > div.datainfo,
+div.datalist-container[aria-expanded=false] > div.footer,
+div.datalist-container[aria-expanded=false] > div.grid-actions,
+div.datalist-container[aria-expanded=false] > div.grid-filterinfo {
+  max-height: 0;
+  min-height: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
 div.datalist-container {
   --header-background-color: var(--canvas-color-tertiary);
   --body-background-color: var(--canvas-color-primary);
@@ -6245,14 +6341,13 @@ div.datalist-container {
   --thumbnail-size: 5rem;
   overflow: hidden;
   max-height: 70vh;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 div.datalist-container > div.listheader {
-  position: sticky;
   z-index: 202;
-  top: 0;
   display: flex;
   flex-direction: row;
   align-content: stretch;
@@ -6260,7 +6355,7 @@ div.datalist-container > div.listheader {
   align-items: center;
   padding: 0 0.5rem;
   background-color: var(--header-background-color);
-  box-shadow: 0 0.3em 0.5em -0.3em rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadows-smooth-dn-small);
 }
 div.datalist-container > div.listheader > div {
   border-bottom-color: var(--canvas-color-tertiary);
@@ -6323,23 +6418,13 @@ div.datalist-container > ul.datalist {
   overflow: auto;
   z-index: 200;
   flex-grow: 2;
-  background-color: rgba(var(--canvas-color-tertiary-rgb), 1);
+  background-color: rgba(var(--canvas-color-tertiary-rgb), 0.5);
 }
 div.datalist-container > ul.datalist > li {
   --hover-side-shadow-color: var(--colors-affordance);
-  --hover-side-shadow: inset .2rem 0 0 0 var(--hover-side-shadow-color);
+  --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
   --hover-side-shadow-null: inset 0 0 0 0 var(--hover-side-shadow-color);
-  --hover-shadow-null: 0 0 0 0 rgba(0, 0, 0, 0),
-                        0 0 0 0 rgba(0, 0, 0, 0),
-                        inset 0 0 0 0 var(--hover-side-shadow-color);
-  --hover-shadow: 0 -.3em .5em -.3em rgba(0, 0, 0, 1),
-                  0 .3em .5em -.3em rgba(0, 0, 0, 1),
-                  inset .4rem 0 0 0 var(--hover-side-shadow-color);
-  --hover-shadow-last: 0 -.3rem .5rem -.3rem rgba(0, 0, 0, .5),
-                       0 .3rem .5rem -.3rem rgba(0, 0, 0, .5),
-                  inset .4rem 0 0 0 var(--hover-side-shadow-color);
-  border-top: 0.01rem solid var(--canvas-color-tertiary);
-  border-bottom: 0.01rem solid var(--canvas-color-secondary);
+  --hover-shadow: var(--shadows-smooth-up), var(--shadows-smooth-dn), var(--hover-side-shadow);
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -6547,9 +6632,6 @@ div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebut
     z-index: 201;
     box-shadow: var(--hover-shadow);
   }
-  div.datalist-container > ul.datalist > li:hover:last-child {
-    box-shadow: var(--hover-shadow-last);
-  }
 }
 div.datalist-container > ul.datalist > li.noentriestext > div.noentries {
   margin: 0;
@@ -6575,6 +6657,13 @@ div.datalist-container > ul.datalist:after {
   pointer-events: none;
   /* offset-x | offset-y | blur-radius | spread-radius | color */
   box-shadow: inset 0 -0.3em 0.5em -0.3em rgba(0, 0, 0, 0.5);
+}
+div.datalist-container > div.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 202;
+  background-color: var(--header-background-color);
+  box-shadow: var(--shadows-smooth-up-small);
 }
 div.datalist-container.scrolled > div.listheader {
   box-shadow: 0 0.5em 0.5em -0.3em rgba(0, 0, 0, 0.7);

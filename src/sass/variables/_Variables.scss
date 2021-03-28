@@ -88,6 +88,29 @@
                         0 4.18rem 3.34rem rgba(0, 0, 0, 0.05),
                         0 10rem 8rem rgba(0, 0, 0, 0.07);
 
+  --shadows-smooth-up:  0 -.05rem .07rem -.3rem rgba(0, 0, 0, .2),
+                        0 -.14rem .15rem -.2rem rgba(0, 0, 0, .1),
+                        0 -.28rem .22rem -.1rem rgba(0, 0, 0, 0.02),
+                        0 -.67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
+                        0 -1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
+                        0 -2.23rem 1.79rem rgba(0, 0, 0, 0.042);
+
+  --shadows-smooth-dn:  0 .05rem .07rem -.3rem rgba(0, 0, 0, .2),
+                        0 .14rem .15rem -.2rem rgba(0, 0, 0, .1),
+                        0 .28rem .22rem -.1rem rgba(0, 0, 0, 0.02),
+                        0 .67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
+                        0 1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
+                        0 2.23rem 1.79rem rgba(0, 0, 0, 0.042);
+
+  //    box-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.5);
+  --shadows-smooth-dn-small:  0 .1rem .3rem -.3rem rgba(0, 0, 0, .8),
+                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .5),
+                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .3);
+
+  --shadows-smooth-up-small:  0 -.1rem .3rem -.3rem rgba(0, 0, 0, .8),
+                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .5),
+                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .3);
+
   // Misc Values
   --border-radius: .2rem; // Applies to evverything except form inputs
 

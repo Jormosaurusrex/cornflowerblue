@@ -40,20 +40,24 @@ class DataList extends DataGrid {
     }
 
     fillData() {
+        this.activity(true);
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
                 this.postLoad();
                 //this.shade.deactivate();
+                this.activity(false);
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
                 this.update(data);
                 this.postLoad();
                 this.shade.deactivate();
+                this.activity(false);
             });
         } else if (this.data) {
             this.populate();
+            this.activity(false);
         }
     }
 
@@ -116,6 +120,7 @@ class DataList extends DataGrid {
         if ((this.loadcallback) && (typeof this.loadcallback === 'function')) {
             this.loadcallback();
         }
+        this.postLoad();
     }
 
     postLoad() {
@@ -199,6 +204,7 @@ class DataList extends DataGrid {
             this.datalist.appendChild(li);
             order++;
         }
+        this.postProcess();
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
@@ -226,20 +232,39 @@ class DataList extends DataGrid {
 
     }
 
-    gridPostProcess() {
+    postProcess() {
         // nothing.
+        this.updateCount();
+
     }
+    applyFilters() { }
+
+    get gridwrapper() { return this.datalist; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('datalist-container');
+
+        if (this.title) {
+            this.container.appendChild(this.header);
+        }
+        if (this.filterable) {
+            this.container.appendChild(this.filterinfo);
+        }
+        this.container.appendChild(this.datainfo);
         this.container.appendChild(this.listheader);
         this.container.appendChild(this.datalist);
 
-        //this.container.appendChild(this.listheader.cloneNode(true));
+        this.messagebox = document.createElement('div');
+        this.messagebox.classList.add('messages');
+        this.messagebox.classList.add('hidden');
+        this.container.appendChild(this.messagebox);
 
+        if (this.showfooter) {
+            this.container.appendChild(this.footer);
+        }
         this.container.onscroll = () => {
             if (this.container.scrollTop > 0) {
                 this.container.classList.add('scrolled');

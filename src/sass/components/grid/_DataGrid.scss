@@ -13,115 +13,6 @@ div.datagrid-container {
     --panel-text-color: var(--colors-standard);
     background-color: var(--canvas-color-secondary);
   }
-  div.grid-info,
-  div.grid-filterinfo {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    align-items: center;
-    padding: 0 1rem;
-    justify-content: flex-end;
-    opacity: 1;
-    transition: height, max-height, min-height, opacity;
-    transition-duration: .2s;
-    transition-timing-function: ease-in-out;
-  }
-  div.grid-info {
-    z-index: 900;
-    flex-grow: 0;
-    height: 3rem;
-    min-height: 3rem;
-    align-content: flex-end;
-    div.countbox {
-      margin-right: auto;
-      white-space: nowrap;
-      padding-right: 1rem;
-      display: flex;
-      flex-direction: row;
-      align-items: baseline;
-      flex-wrap: nowrap;
-      label {
-        display: inline-block;
-        margin: 0 .5rem 0 0;
-      }
-      div.activity {
-        margin-left: .5rem;
-        color: var(--focus-color-half);
-        > span.icon {
-          display: inline-block;
-          animation: cfb-localspin 2s infinite linear;
-        }
-        &[aria-hidden=true] {
-          display: none;
-        }
-      }
-    }
-    div.searchcontrol {
-
-    }
-    button:last-child {
-      margin-right: 0;
-    }
-    @include for-phone-only {
-      flex-wrap: wrap;
-      height: unset;
-      min-height: unset;
-      padding: .5rem 0;
-      div.searchcontrol {
-        order: -1;
-        margin-bottom: .5rem;
-        margin-left: 0;
-        align-self: center;
-        input {
-          width: auto;
-          border-radius: var(--border-radius) 0 0 var(--border-radius);
-          padding: var(--input-default-padding);
-          background-color: var(--canvas-color-secondary);
-        }
-        button {
-          --button-border-color: var(--colors-affordance);
-          box-shadow: inset -.1em -.1em 0 0 var(--colors-affordance), inset .1em -.1em 0 0 var(--colors-affordance), inset -.1em .1em 0 0 var(--colors-affordance), inset .1em .1em 0 0 var(--colors-affordance);
-          border-radius: 0 var(--border-radius) var(--border-radius) 0;
-          padding-left: .5rem;
-          padding-right: .5rem;
-        }
-      }
-      button {
-        margin: 0;
-        padding: .6rem;
-        &.filter {
-          span.icon {
-            margin: 0;
-          }
-          span.text {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-  div.grid-filterinfo {
-    display: none;
-    background-color: var(--canvas-color-secondary);
-    label {
-      margin: 0 .5rem 0 0;
-    }
-    div.grid-filtertags {
-      flex-grow: 2;
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      align-items: flex-start;
-      justify-content: flex-start;
-      button.tagbutton {
-        margin: .5rem;
-      }
-    }
-    &[aria-expanded='true'] {
-      display: flex;
-    }
-  }
   div.grid-wrapper {
     overflow: auto;
     position: relative;
@@ -545,15 +436,6 @@ div.datagrid-container {
     }
   }
   &[aria-expanded=false] {
-    div.grid-info,
-    div.grid-actions,
-    div.grid-filterinfo {
-      max-height: 0;
-      min-height: 0;
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
     div.grid-wrapper {
       max-height: 0;
       min-height: 0;
@@ -573,3 +455,152 @@ div.datagrid-container {
   80% { background-color: var(--canvas-color-highlight); }
   100% { background-color: var(--canvas-color-primary); }
 }
+
+div.datagrid-container,
+div.datalist-container {
+  >div.datainfo,
+  >div.footer,
+  >div.grid-filterinfo {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    justify-content: flex-end;
+    opacity: 1;
+    transition: height, max-height, min-height, opacity;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
+    button {
+      margin: 0;
+      padding: .3rem .6rem;
+      font-size: .8rem;
+      &.filter {
+        span.icon {
+          margin: 0;
+        }
+        span.text {
+          display: none;
+        }
+      }
+    }
+    @include for-phone-only {
+      div.searchcontrol {
+        order: -1;
+        margin-bottom: .5rem;
+        margin-left: 0;
+        align-self: center;
+        input {
+          width: auto;
+          border-radius: var(--border-radius) 0 0 var(--border-radius);
+          padding: var(--input-default-padding);
+          background-color: var(--canvas-color-secondary);
+        }
+        button {
+          --button-border-color: var(--colors-affordance);
+          box-shadow: inset -.1rem -.1rem 0 0 var(--colors-affordance), inset .1rem -.1rem 0 0 var(--colors-affordance), inset -.1rem .1rem 0 0 var(--colors-affordance), inset .1rem .1rem 0 0 var(--colors-affordance);
+          border-radius: 0 var(--border-radius) var(--border-radius) 0;
+          padding-left: .5rem;
+          padding-right: .5rem;
+        }
+      }
+
+    }
+  }
+  >div.footer {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    z-index: 202;
+    background-color: var(--header-background-color);
+    box-shadow: var(--shadows-smooth-up-small);
+  }
+  div.countbox,
+  div.activity {
+    justify-self: flex-start;
+  }
+  div.countbox {
+    white-space: nowrap;
+    padding-right: .5rem;
+    display: flex;
+    flex-direction: row;
+    margin-right: .5rem;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    justify-self: flex-start;
+    label {
+      display: inline-block;
+      margin: 0 .5rem 0 0;
+    }
+  }
+  div.activity {
+    margin-right: auto;
+    justify-self: flex-start;
+    color: var(--focus-color-half);
+    >span.icon {
+      display: inline-block;
+      animation: cfb-localspin 2s infinite linear;
+    }
+    &[aria-hidden=true] {
+      display: none;
+    }
+  }
+  div.searchcontrol {
+    font-size: .8rem;
+    margin: 0 1rem;
+  }
+
+  >div.datainfo {
+    z-index: 900;
+    flex-grow: 0;
+    height: 3rem;
+    min-height: 3rem;
+    align-content: flex-end;
+    button:last-child {
+      margin-right: 0;
+    }
+    @include for-phone-only {
+      flex-wrap: wrap;
+      height: unset;
+      min-height: unset;
+      padding: .5rem 0;
+    }
+  }
+
+  >div.grid-filterinfo {
+    display: none;
+    background-color: var(--canvas-color-secondary);
+    label {
+      margin: 0 .5rem 0 0;
+    }
+    div.grid-filtertags {
+      flex-grow: 2;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
+      button.tagbutton {
+        margin: .5rem;
+      }
+    }
+    &[aria-expanded='true'] {
+      display: flex;
+    }
+  }
+
+  &[aria-expanded=false] {
+    >div.datainfo,
+    >div.footer,
+    >div.grid-actions,
+    >div.grid-filterinfo {
+      max-height: 0;
+      min-height: 0;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+  }
+}
+

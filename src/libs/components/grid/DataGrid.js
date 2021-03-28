@@ -13,6 +13,7 @@ class DataGrid extends Panel {
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
             extraelements: null,
+            showfooter: true,
             screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -835,7 +836,7 @@ class DataGrid extends Panel {
     clear() {
         this.data = [];
         this.gridbody.innerHTML = "";
-        this.gridPostProcess();
+        this.postProcess();
     }
 
     /**
@@ -846,7 +847,7 @@ class DataGrid extends Panel {
      *    - Applies search
      *    - Grinds duplicate cells
      */
-    gridPostProcess() {
+    postProcess() {
         this.updateCount();
         if (this.currentsort) {
             this.sortField(this.currentsort.field, this.currentsort.direction);
@@ -856,12 +857,23 @@ class DataGrid extends Panel {
         this.grindDuplicateCells();
     }
 
+    activity(show = true) {
+        for (let node of this.container.querySelectorAll('div.activity')) {
+            if (show) {
+                node.removeAttribute('aria-hidden');
+            } else {
+                node.setAttribute('aria-hidden', 'true');
+            }
+        }
+    }
+
     /**
      * Load data from a URL and put it into the grid. Appends by default.
      * @param url the URL to get the data from. Defaults to the source url
      * @param callback (optional) do this instead of Appending data. Takes data as an argument
      */
     fetchData(url=this.source, callback) {
+        this.activity(true);
         if (this.activitynotifier) {
             this.activitynotifier.removeAttribute('aria-hidden');
         }
@@ -890,9 +902,7 @@ class DataGrid extends Panel {
                 } else {
                     this.update(data);
                 }
-                if (this.activitynotifier) {
-                    this.activitynotifier.setAttribute('aria-hidden', 'true');
-                }
+                this.activity(false);
             })
             .catch(err => {
                 console.error(`Error while fetching data from ${url}`);
@@ -949,7 +959,7 @@ class DataGrid extends Panel {
                 this.addEntry(entry); // We can only append
             }
         }
-        this.gridPostProcess();
+        this.postProcess();
     }
 
     replace(data) {
@@ -1011,7 +1021,7 @@ class DataGrid extends Panel {
 
         this.gridbody.removeChild(this.gridbody.querySelector(`[data-rowid='${rowid}'`));
 
-        this.gridPostProcess();
+        this.postProcess();
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -1120,16 +1130,16 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
-
-        for (let f of this.activefilters) {
-            state.filters.push({
-                filterid: f.filterid,
-                field: f.field,
-                comparator: f.comparator,
-                value: f.value
-            });
+        if (this.activefilters) {
+            for (let f of this.activefilters) {
+                state.filters.push({
+                    filterid: f.filterid,
+                    field: f.field,
+                    comparator: f.comparator,
+                    value: f.value
+                });
+            }
         }
-
         return state;
     }
 
@@ -1464,7 +1474,7 @@ class DataGrid extends Panel {
             this.container.appendChild(this.header);
         }
 
-        this.container.appendChild(this.gridinfo);
+        this.container.appendChild(this.datainfo);
 
         if (this.filterable) {
             this.container.appendChild(this.filterinfo);
@@ -1478,6 +1488,10 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.appendChild(this.gridwrapper);
+
+        if (this.showfooter) {
+            this.container.appendChild(this.footer);
+        }
 
         this.gridwrapper.onscroll = () => {
             if (this.gridwrapper.scrollLeft > 0) {
@@ -1541,63 +1555,66 @@ class DataGrid extends Panel {
      * Update the count of elements in the data grid.
      */
     updateCount() {
-
         let empty = true;
         if (this.data) {
-            this.itemcount.innerHTML = this.data.length;
+            for (let node of this.container.querySelectorAll('span.itemcount')) {
+                node.innerHTML = this.data.length;
+            }
             if (this.data.length > 0) { empty = false; }
         }
         if (empty) {
-            this.messagebox.innerHTML = "";
-            let warnings = [TextFactory.get('datagrid-message-empty_grid')];
-            let mb = new WarningBox({
-                title: null,
-                warnings: warnings,
-                classes: ['hidden']
-            });
-            this.messagebox.appendChild(mb.container);
-            this.messagebox.classList.remove('hidden');
+            if (this.messagebox) {
+                this.messagebox.innerHTML = "";
+                let warnings = [TextFactory.get('datagrid-message-empty_grid')];
+                let mb = new WarningBox({
+                    title: null,
+                    warnings: warnings,
+                    classes: ['hidden']
+                });
+                this.messagebox.appendChild(mb.container);
+                this.messagebox.classList.remove('hidden');
+            }
             this.gridwrapper.classList.add('hidden');
-
         } else {
-            this.messagebox.innerHTML = "";
-            this.messagebox.classList.add('hidden');
+            if (this.messagebox) {
+                this.messagebox.innerHTML = "";
+                this.messagebox.classList.add('hidden');
+            }
             this.gridwrapper.classList.remove('hidden');
         }
     }
 
-    /**
-     * Build the grid info bit
-     */
-    buildGridInfo() {
-        this.gridinfo = document.createElement('div');
-        this.gridinfo.classList.add('grid-info');
+    buildItemCounter() {
+        let box = document.createElement('div');
+        box.classList.add('countbox');
+        box.innerHTML = `<label>${TextFactory.get('items_label')}</label> <span class="itemcount"></span>`;
+        return box;
+    }
 
-        this.itemcountlabel = document.createElement('label');
-        this.itemcountlabel.innerHTML = TextFactory.get('items_label');
-
-        this.itemcount = document.createElement('span');
-        this.itemcount.classList.add('itemcount');
-
-        this.activitynotifier = document.createElement('div');
-        this.activitynotifier.classList.add('activity');
-        this.activitynotifier.setAttribute('aria-hidden', 'true');
+    buildActivityNotifier() {
+        let activitynotifier = document.createElement('div');
+        activitynotifier.classList.add('activity');
+        activitynotifier.setAttribute('aria-hidden', 'true');
         if (this.activitynotifiericon) {
-            this.activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
+            activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
         }
         if (this.activitynotifiertext) {
             let s = document.createElement('span');
             s.innerHTML = this.activitynotifiertext;
-            this.activitynotifier.appendChild(s);
+            activitynotifier.appendChild(s);
         }
+        return activitynotifier;
+    }
 
-        this.itemcountbox = document.createElement('div');
-        this.itemcountbox.classList.add('countbox');
-        this.itemcountbox.appendChild(this.itemcountlabel);
-        this.itemcountbox.appendChild(this.itemcount);
-        this.itemcountbox.appendChild(this.activitynotifier);
+    /**
+     * Build the data info bit
+     */
+    buildDataInfo() {
+        this.datainfo = document.createElement('div');
+        this.datainfo.classList.add('datainfo');
 
-        this.gridinfo.appendChild(this.itemcountbox);
+        this.datainfo.appendChild(this.buildItemCounter());
+        this.datainfo.appendChild(this.buildActivityNotifier());
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
@@ -1609,7 +1626,7 @@ class DataGrid extends Panel {
                     this.search(value);
                 }
             });
-            this.gridinfo.appendChild(this.searchcontrol.container);
+            this.datainfo.appendChild(this.searchcontrol.container);
         }
 
         if (this.filterable) {
@@ -1623,7 +1640,7 @@ class DataGrid extends Panel {
                     this.configurator('filter');
                 }
             });
-            this.gridinfo.appendChild(this.filterbutton.button);
+            this.datainfo.appendChild(this.filterbutton.button);
         }
 
         let items = [];
@@ -1676,7 +1693,7 @@ class DataGrid extends Panel {
             items: items
         });
 
-        this.gridinfo.appendChild(this.actionsbutton.button);
+        this.datainfo.appendChild(this.actionsbutton.button);
     }
 
     /**
@@ -2016,6 +2033,8 @@ class DataGrid extends Panel {
      */
     buildFooter() {
         this.footer = document.createElement('div');
+        this.footer.appendChild(this.buildItemCounter());
+        this.footer.appendChild(this.buildActivityNotifier());
         this.footer.classList.add('footer');
     }
 
@@ -2037,9 +2056,6 @@ class DataGrid extends Panel {
 
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
-
-    get activitynotifier() { return this._activitynotifier; }
-    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
 
     get activitynotifiericon() { return this.config.activitynotifiericon; }
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
@@ -2103,6 +2119,12 @@ class DataGrid extends Panel {
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get datainfo() {
+        if (!this._datainfo) { this.buildDataInfo(); }
+        return this._datainfo;
+    }
+    set datainfo(datainfo) { this._datainfo = datainfo; }
 
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
@@ -2216,12 +2238,6 @@ class DataGrid extends Panel {
     }
     set grid(grid) { this._grid = grid; }
 
-    get gridinfo() {
-        if (!this._gridinfo) { this.buildGridInfo(); }
-        return this._gridinfo;
-    }
-    set gridinfo(gridinfo) { this._gridinfo = gridinfo; }
-
     get gridbody() {
         if (!this._gridbody) { this.buildGridBody(); }
         return this._gridbody;
@@ -2251,15 +2267,6 @@ class DataGrid extends Panel {
 
     get instructionsicon() { return this.config.instructionsicon; }
     set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
-
-    get itemcount()  { return this._itemcount; }
-    set itemcount(itemcount) { this._itemcount = itemcount; }
-
-    get itemcountbox()  { return this._itemcountbox; }
-    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
-
-    get itemcountlabel()  { return this._itemcountlabel; }
-    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
 
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
@@ -2332,6 +2339,9 @@ class DataGrid extends Panel {
         return this._shade;
     }
     set shade(shade) { this._shade = shade; }
+
+    get showfooter() { return this.config.showfooter; }
+    set showfooter(showfooter) { this.config.showfooter = showfooter; }
 
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
