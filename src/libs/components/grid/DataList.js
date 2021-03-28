@@ -214,6 +214,7 @@ class DataList extends DataGrid {
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
+        console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction);
         }
@@ -241,7 +242,7 @@ class DataList extends DataGrid {
     postProcess() {
         // nothing.
         this.updateCount();
-
+        this.search(this.searchcontrol.value);
     }
     applyFilters() { }
 

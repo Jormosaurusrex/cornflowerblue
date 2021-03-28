@@ -386,7 +386,7 @@ class DataGrid extends Panel {
                 let cells = Array.from(r.childNodes);
                 for (let c of cells) {
                     if (show) { break; }
-                    if (!c.classList.contains('mechanical')) {
+                    if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
                         if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             if (c.classList.contains('hidden')) {
                                 matchesHiddenColumns = true;
