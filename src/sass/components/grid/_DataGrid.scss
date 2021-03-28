@@ -519,16 +519,17 @@ div.datalist-container {
   div.countbox,
   div.activity {
     justify-self: flex-start;
+    margin-right: auto;
   }
   div.countbox {
     white-space: nowrap;
     padding-right: .5rem;
     display: flex;
     flex-direction: row;
-    margin-right: .5rem;
     align-items: baseline;
     flex-wrap: nowrap;
     justify-self: flex-start;
+    flex-grow: 0;
     label {
       display: inline-block;
       margin: 0 .5rem 0 0;
@@ -536,8 +537,10 @@ div.datalist-container {
   }
   div.activity {
     margin-right: auto;
+    margin-left: .5rem;
     justify-self: flex-start;
     color: var(--focus-color-half);
+    flex-grow: 2;
     >span.icon {
       display: inline-block;
       animation: cfb-localspin 2s infinite linear;

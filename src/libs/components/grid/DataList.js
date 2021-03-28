@@ -5,7 +5,11 @@ class DataList extends DataGrid {
             statesaveprefix: 'datalist',
             noentriestext: TextFactory.get('datalist-noentries'),
             specialsort: null,
+            columnconfigurable: false,
             collapsible: false,
+            exportable: false,
+            filterable: false,
+            multiselect: false,
             loadcallback: null,
             drawitem: (itemdef, self) => {
 
@@ -23,7 +27,6 @@ class DataList extends DataGrid {
         };
     }
 
-
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, DataList.DEFAULT_CONFIG, config);
@@ -34,6 +37,9 @@ class DataList extends DataGrid {
 
         super(config);
     }
+
+    get gridwrapper() { return this.datalist; }
+    get gridbody() { return this.datalist; }
 
     finalize() {
         this.shade.activate();
@@ -238,8 +244,6 @@ class DataList extends DataGrid {
 
     }
     applyFilters() { }
-
-    get gridwrapper() { return this.datalist; }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 

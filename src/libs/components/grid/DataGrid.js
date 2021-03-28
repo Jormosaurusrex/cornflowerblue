@@ -10,6 +10,7 @@ class DataGrid extends Panel {
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
+            columnconfigurable: false,
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
             extraelements: null,
@@ -315,7 +316,6 @@ class DataGrid extends Panel {
         }
 
         // XXX TODO Apply Sort?
-
         for (let d of this.data) {
 
             let include = true;
@@ -374,14 +374,12 @@ class DataGrid extends Panel {
         this.messagebox.classList.add('hidden');
         this.gridwrapper.classList.remove('hidden');
 
-        let rows = Array.from(this.gridbody.childNodes);
+        let matches = 0,
+            matchesHiddenColumns = false;
 
-        let matches = 0;
-        let matchesHiddenColumns = false;
-        for (let r of rows) {
+        for (let r of Array.from(this.gridbody.childNodes)) {
             let show = false;
             r.setAttribute('data-search-hidden', true,);
-
             if ((!value) || (value === '')) {
                 show = true;
             } else {
@@ -1655,14 +1653,16 @@ class DataGrid extends Panel {
                 }
             });
         }
-        items.push({
-            label: TextFactory.get('columns'),
-            icon: this.columnconfigurationicon,
-            tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
-            action: () => {
-                this.configurator('column');
-            }
-        });
+        if (this.columnconfigurable) {
+            items.push({
+                label: TextFactory.get('columns'),
+                icon: this.columnconfigurationicon,
+                tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
+                action: () => {
+                    this.configurator('column');
+                }
+            });
+        }
         if (this.exportable) {
             items.push({
                 label: TextFactory.get('export'),
@@ -1672,28 +1672,30 @@ class DataGrid extends Panel {
                     this.export();
                 }
             });
-            items.push({
-                label: TextFactory.get('export-current_view'),
-                tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
-                icon: this.exporticon,
-                action: () => {
-                    this.export(true);
-                }
-            });
+            if (this.columnconfigurable) {
+                items.push({
+                    label: TextFactory.get('export-current_view'),
+                    tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
+                    icon: this.exporticon,
+                    action: () => {
+                        this.export(true);
+                    }
+                });
+            }
         }
-
-        this.actionsbutton  = new ButtonMenu({
-            mute: true,
-            shape: 'square',
-            secondicon: null,
-            tooltipgravity: 'w',
-            text: TextFactory.get('actions'),
-            icon: this.actionsbuttonicon,
-            classes: ['actions'],
-            items: items
-        });
-
-        this.datainfo.appendChild(this.actionsbutton.button);
+        if (items.length > 0) {
+            this.actionsbutton  = new ButtonMenu({
+                mute: true,
+                shape: 'square',
+                secondicon: null,
+                tooltipgravity: 'w',
+                text: TextFactory.get('actions'),
+                icon: this.actionsbuttonicon,
+                classes: ['actions'],
+                items: items
+            });
+            this.datainfo.appendChild(this.actionsbutton.button);
+        }
     }
 
     /**
@@ -2065,6 +2067,9 @@ class DataGrid extends Panel {
 
     get allowedits() { return this.config.allowedits; }
     set allowedits(allowedits) { this.config.allowedits = allowedits; }
+
+    get columnconfigurable() { return this.config.columnconfigurable; }
+    set columnconfigurable(columnconfigurable) { this.config.columnconfigurable = columnconfigurable; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }

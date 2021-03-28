@@ -6234,6 +6234,7 @@ div.datagrid-container div.activity,
 div.datalist-container div.countbox,
 div.datalist-container div.activity {
   justify-self: flex-start;
+  margin-right: auto;
 }
 div.datagrid-container div.countbox,
 div.datalist-container div.countbox {
@@ -6241,10 +6242,10 @@ div.datalist-container div.countbox {
   padding-right: 0.5rem;
   display: flex;
   flex-direction: row;
-  margin-right: 0.5rem;
   align-items: baseline;
   flex-wrap: nowrap;
   justify-self: flex-start;
+  flex-grow: 0;
 }
 div.datagrid-container div.countbox label,
 div.datalist-container div.countbox label {
@@ -6254,8 +6255,10 @@ div.datalist-container div.countbox label {
 div.datagrid-container div.activity,
 div.datalist-container div.activity {
   margin-right: auto;
+  margin-left: 0.5rem;
   justify-self: flex-start;
   color: var(--focus-color-half);
+  flex-grow: 2;
 }
 div.datagrid-container div.activity > span.icon,
 div.datalist-container div.activity > span.icon {
@@ -6646,17 +6649,14 @@ div.datalist-container > ul.datalist > li.noentriestext > div.noentries {
     background-color: transparent;
   }
 }
-div.datalist-container > ul.datalist:after {
+div.datalist-container > ul.datalist > li.hidden, div.datalist-container > ul.datalist > li.filtered, div.datalist-container > ul.datalist > li[data-search-hidden=true] {
   display: none;
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  /* offset-x | offset-y | blur-radius | spread-radius | color */
-  box-shadow: inset 0 -0.3em 0.5em -0.3em rgba(0, 0, 0, 0.5);
+}
+div.datalist-container > ul.datalist > li[data-matched-filters][data-search-hidden=true] {
+  display: none;
+}
+div.datalist-container > ul.datalist.hidden {
+  display: none;
 }
 div.datalist-container > div.footer {
   position: sticky;
