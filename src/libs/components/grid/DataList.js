@@ -38,6 +38,7 @@ class DataList extends DataGrid {
         super(config);
     }
 
+    get displaytype() { return 'datalist'; }
     get gridwrapper() { return this.datalist; }
     get gridbody() { return this.datalist; }
 
@@ -156,8 +157,11 @@ class DataList extends DataGrid {
             if (next > items.length) { next = items.length; }
 
             let li = this.drawitem(item);
-            li.style.setProperty('--anim-order', `${order}`);
-            li.setAttribute('data-order', order);
+            //li.style.setProperty('--anim-order', `${order}`);
+            //li.setAttribute('data-order', order);
+            if (item['id']) {
+                li.setAttribute('data-item-id', item['id']);
+            }
 
             if ((this.click) && (typeof this.click === 'function')) {
                 li.classList.add('clickable');
@@ -242,7 +246,9 @@ class DataList extends DataGrid {
     postProcess() {
         // nothing.
         this.updateCount();
-        this.search(this.searchcontrol.value);
+        if (this.showinfo) {
+            this.search(this.searchcontrol.value);
+        }
     }
     applyFilters() { }
 
@@ -258,7 +264,9 @@ class DataList extends DataGrid {
         if (this.filterable) {
             this.container.appendChild(this.filterinfo);
         }
-        this.container.appendChild(this.datainfo);
+        if (this.showinfo) {
+            this.container.appendChild(this.datainfo);
+        }
         this.container.appendChild(this.listheader);
         this.container.appendChild(this.datalist);
 

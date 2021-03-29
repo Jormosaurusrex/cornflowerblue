@@ -14,6 +14,7 @@ class DataGrid extends Panel {
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
             extraelements: null,
+            showinfo: true,
             showfooter: true,
             screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
@@ -131,6 +132,8 @@ class DataGrid extends Panel {
         super(config);
         this.initialize();
     }
+
+    get displaytype() { return 'datagrid'; }
 
     initialize() {
 
@@ -383,8 +386,11 @@ class DataGrid extends Panel {
             if ((!value) || (value === '')) {
                 show = true;
             } else {
-                let cells = Array.from(r.childNodes);
-                for (let c of cells) {
+                let columns = Array.from(r.childNodes); // lists pull from td
+                if (this.displaytype === 'datalist') {
+                    columns = Array.from(r.querySelectorAll(`[data-column]`));
+                }
+                for (let c of columns) {
                     if (show) { break; }
                     if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
                         if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
@@ -1472,7 +1478,9 @@ class DataGrid extends Panel {
             this.container.appendChild(this.header);
         }
 
-        this.container.appendChild(this.datainfo);
+        if (this.showinfo) {
+            this.container.appendChild(this.datainfo);
+        }
 
         if (this.filterable) {
             this.container.appendChild(this.filterinfo);
@@ -2347,6 +2355,9 @@ class DataGrid extends Panel {
 
     get showfooter() { return this.config.showfooter; }
     set showfooter(showfooter) { this.config.showfooter = showfooter; }
+
+    get showinfo() { return this.config.showinfo; }
+    set showinfo(showinfo) { this.config.showinfo = showinfo; }
 
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
