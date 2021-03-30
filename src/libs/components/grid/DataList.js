@@ -170,6 +170,19 @@ class DataList extends DataGrid {
                     if ((this.click) && (typeof this.click === 'function')) {
                         this.click(item, this, e);
                     }
+                    if (this.selectable) {
+                        this.select(li, e, item);
+                    }
+                });
+            } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
+                li.classList.add('clickable');
+                li.setAttribute('tabindex', '0');
+                li.addEventListener('click', (e) => {
+                    this.select(item, e, rdata);
+                    li.setAttribute('aria-selected', 'true');
+                    if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+                        this.selectaction(this, li, rdata);
+                    }
                 });
             }
 

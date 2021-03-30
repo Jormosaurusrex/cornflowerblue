@@ -1,4 +1,6 @@
 div.datagrid-container {
+  --header-background-color: var(--canvas-color-tertiary);
+
   --vert-padding: 1rem;
   --side-padding: 1rem;
   position: relative;
@@ -43,13 +45,13 @@ div.datagrid-container {
     border-spacing: 0;
     position: relative;
     z-index: 800;
-    > thead {
+    >thead {
       tr {
         th {
           cursor: pointer;
           padding: 0;
           color: var(--colors-standard);
-          background-color: var(--canvas-color-tertiary);
+          background-color: var(--header-background-color);
           text-align: left;
           font-weight: normal;
           position: sticky;
@@ -139,7 +141,7 @@ div.datagrid-container {
         }
       }
     }
-    > tbody {
+    >tbody {
       background-color: var(--canvas-color-primary);
       tr {
         color: var(--colors-standard);
@@ -474,8 +476,6 @@ div.datalist-container {
     transition-timing-function: ease-in-out;
     button {
       margin: 0;
-      padding: .3rem .6rem;
-      font-size: .8rem;
       &.filter {
         span.icon {
           margin: 0;
@@ -507,14 +507,6 @@ div.datalist-container {
       }
 
     }
-  }
-  >div.footer {
-    position: sticky;
-    bottom: 0;
-    display: flex;
-    z-index: 202;
-    background-color: var(--header-background-color);
-    box-shadow: var(--shadows-smooth-up-small);
   }
   div.countbox,
   div.activity {
@@ -549,17 +541,15 @@ div.datalist-container {
       display: none;
     }
   }
-  div.searchcontrol {
-    font-size: .8rem;
-    margin: 0 1rem;
-  }
-
   >div.datainfo {
     z-index: 900;
     flex-grow: 0;
     height: 3rem;
     min-height: 3rem;
     align-content: flex-end;
+    div.searchcontrol {
+      margin: 0 1rem;
+    }
     button:last-child {
       margin-right: 0;
     }
@@ -570,7 +560,6 @@ div.datalist-container {
       padding: .5rem 0;
     }
   }
-
   >div.grid-filterinfo {
     display: none;
     background-color: var(--canvas-color-secondary);
@@ -591,6 +580,14 @@ div.datalist-container {
     &[aria-expanded='true'] {
       display: flex;
     }
+  }
+  >div.footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 202;
+    background-color: var(--header-background-color);
+    padding: .5rem 1rem;
+    display: flex;
   }
 
   &[aria-expanded=false] {

@@ -1411,15 +1411,19 @@ class DataGrid extends Panel {
 
             for (let r of toBeSelected) {
                 r.setAttribute('aria-selected', 'true');
-                r.querySelector('input.selector').checked = true;
+                if (r.querySelector('input.selector')) {
+                    r.querySelector('input.selector').checked = true;
+                }
             }
             row.setAttribute('aria-selected', 'true');
-            row.querySelector('input.selector').checked = true;
+            if (row.querySelector('input.selector')) {
+                row.querySelector('input.selector').checked = true;
+            }
         } else {
-
             row.setAttribute('aria-selected', 'true');
-            row.querySelector('input.selector').checked = true;
-
+            if (row.querySelector('input.selector')) {
+                row.querySelector('input.selector').checked = true;
+            }
             if ((this.selectaction) && (typeof this.selectaction === 'function')) {
                 this.selectaction(this, row, rdata);
             }
@@ -1432,7 +1436,9 @@ class DataGrid extends Panel {
      */
     deselect(row) {
         row.removeAttribute('aria-selected');
-        row.querySelector('input.selector').checked = false;
+        if (row.querySelector('input.selector')) {
+            row.querySelector('input.selector').checked = false;
+        }
     }
 
     /**

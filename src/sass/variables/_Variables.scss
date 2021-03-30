@@ -103,13 +103,14 @@
                         0 2.23rem 1.79rem rgba(0, 0, 0, 0.042);
 
   //    box-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.5);
-  --shadows-smooth-dn-small:  0 .1rem .3rem -.3rem rgba(0, 0, 0, .8),
-                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .5),
-                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .3);
+  --shadows-smooth-dn-small:  0 .1rem .3rem -.3rem rgba(0, 0, 0, .5),
+                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .3),
+                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .1);
 
-  --shadows-smooth-up-small:  0 -.1rem .3rem -.3rem rgba(0, 0, 0, .8),
-                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .5),
-                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .3);
+
+  --shadows-smooth-up-small:  0 -.1rem .3rem -.3rem rgba(0, 0, 0, .5),
+                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .3),
+                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .1);
 
   // Misc Values
   --border-radius: .2rem; // Applies to evverything except form inputs

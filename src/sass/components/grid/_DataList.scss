@@ -1,5 +1,4 @@
 div.datalist-container {
-  --header-background-color: var(--canvas-color-tertiary);
   --body-background-color: var(--canvas-color-primary);
   --list-header-color: var(--colors-affordance);
   --icon-size: 3rem;
@@ -10,6 +9,11 @@ div.datalist-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  >div.datainfo {
+    div.searchcontrol {
+      margin: 0 1rem;
+    }
+  }
   >div.listheader {
     z-index: 202;
     display: flex;
@@ -63,6 +67,7 @@ div.datalist-container {
       &.user,
       &.text,
       &.name,
+      &.label,
       &.displayname,
       &.subject,
       &.title {
@@ -99,7 +104,6 @@ div.datalist-container {
       --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
       --hover-side-shadow-null: inset 0 0 0 0 var(--hover-side-shadow-color);
       --hover-shadow: var(--shadows-smooth-up), var(--shadows-smooth-dn), var(--hover-side-shadow);
-
       display: flex;
       flex-direction: row;
       align-content: center;
@@ -172,9 +176,6 @@ div.datalist-container {
             }
           }
         }
-        >div.meta {
-          font-size: .8rem;
-        }
         >div.topline {
           justify-content: flex-end;
           >label {
@@ -184,9 +185,6 @@ div.datalist-container {
             flex-grow: 2;
             display: inline-block;
             justify-self: flex-start;
-            &.name {
-              font-size: 1.2rem;
-            }
           }
           >span.secondary {
             margin-right: 1rem;
@@ -206,29 +204,34 @@ div.datalist-container {
           margin: 0;
           display: inline-block;
         }
-        div.joindate,
-        div.createdate {
-          >label {
-            margin-right: .5rem;
-          }
-        }
-        a.name,
-        span.subject {
-          font-size: 1.2rem;
-          font-weight: 400;
-        }
-        span.secondary {
+        div.tagbox {
+          flex-grow: 2;
           display: flex;
           flex-direction: row;
-          align-content: stretch;
-          align-items: stretch;
-          justify-content: space-evenly;
-          font-size: .9rem;
-        }
-        span.date {
-          font-size: .9rem;
-          font-style: oblique;
-          text-align: right;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          >span.notags {
+            font-size: .8rem;
+            font-style: oblique;
+            color: var(--colors-text-deemphasize);
+          }
+          >span.tag {
+            border-radius: .25rem;
+            font-size: .8rem;
+            padding: .1rem .5rem .1rem .5rem;
+            background-color: rgba(var(--colors-highlight-rgb), .3);
+            transition: background-color .5s, color .5s;
+            margin: .1rem .4rem 0 0;
+            &:first-child {
+              margin-left: 0;
+            }
+            @include for-hover-only {
+              &:hover {
+                color: var(--colors-text-hot);
+                background-color: rgba(var(--colors-highlight-rgb), .7);
+              }
+            }
+          }
         }
       }
       >div.actions {
@@ -279,6 +282,22 @@ div.datalist-container {
           box-shadow: var(--hover-shadow);
         }
       }
+      [data-column="filesize"],
+      [data-column="dimensions"], {
+        font-size: .9rem;
+      }
+      [data-column="name"],
+      [data-column="subject"]{
+        font-size: 1.2rem;
+        font-weight: 400;
+      }
+      [data-column="createdate"],
+      [data-column="updatedate"],
+      [data-column="date"] {
+        font-size: .9rem;
+        font-style: oblique;
+        text-align: right;
+      }
       &.noentriestext {
         >div.noentries {
           margin: 0;
@@ -311,12 +330,9 @@ div.datalist-container {
     }
   }
   >div.footer {
-    position: sticky;
-    bottom: 0;
-    z-index: 202;
-    background-color: var(--header-background-color);
     box-shadow: var(--shadows-smooth-up-small);
   }
+
   &.scrolled {
     >div.listheader{
       box-shadow: 0 .5em .5em -.3em rgba(0, 0, 0, 0.7);

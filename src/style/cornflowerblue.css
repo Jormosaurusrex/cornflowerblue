@@ -74,12 +74,12 @@
                         0 .67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
                         0 1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
                         0 2.23rem 1.79rem rgba(0, 0, 0, 0.042);
-  --shadows-smooth-dn-small: 0 .1rem .3rem -.3rem rgba(0, 0, 0, .8),
-                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .5),
-                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .3);
-  --shadows-smooth-up-small: 0 -.1rem .3rem -.3rem rgba(0, 0, 0, .8),
-                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .5),
-                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .3);
+  --shadows-smooth-dn-small: 0 .1rem .3rem -.3rem rgba(0, 0, 0, .5),
+                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .3),
+                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .1);
+  --shadows-smooth-up-small: 0 -.1rem .3rem -.3rem rgba(0, 0, 0, .5),
+                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .3),
+                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .1);
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
@@ -1516,7 +1516,6 @@ a.button {
   box-sizing: border-box;
   position: relative;
   text-align: left;
-  vertical-align: middle;
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.2s, background-color 0.2s, box-shadow 0.5s;
@@ -6186,6 +6185,7 @@ div.tooltip.east:before {
 }
 
 div.datagrid-container {
+  --header-background-color: var(--canvas-color-tertiary);
   --vert-padding: 1rem;
   --side-padding: 1rem;
   position: relative;
@@ -6236,7 +6236,7 @@ div.datagrid-container table.grid > thead tr th {
   cursor: pointer;
   padding: 0;
   color: var(--colors-standard);
-  background-color: var(--canvas-color-tertiary);
+  background-color: var(--header-background-color);
   text-align: left;
   font-weight: normal;
   position: sticky;
@@ -6638,8 +6638,6 @@ div.datalist-container > div.datainfo button,
 div.datalist-container > div.footer button,
 div.datalist-container > div.grid-filterinfo button {
   margin: 0;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
 }
 div.datagrid-container > div.datainfo button.filter span.icon,
 div.datagrid-container > div.footer button.filter span.icon,
@@ -6693,15 +6691,6 @@ div.datalist-container > div.grid-filterinfo div.searchcontrol button {
     padding-right: 0.5rem;
   }
 }
-div.datagrid-container > div.footer,
-div.datalist-container > div.footer {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  z-index: 202;
-  background-color: var(--header-background-color);
-  box-shadow: var(--shadows-smooth-up-small);
-}
 div.datagrid-container div.countbox,
 div.datagrid-container div.activity,
 div.datalist-container div.countbox,
@@ -6742,11 +6731,6 @@ div.datagrid-container div.activity[aria-hidden=true],
 div.datalist-container div.activity[aria-hidden=true] {
   display: none;
 }
-div.datagrid-container div.searchcontrol,
-div.datalist-container div.searchcontrol {
-  font-size: 0.8rem;
-  margin: 0 1rem;
-}
 div.datagrid-container > div.datainfo,
 div.datalist-container > div.datainfo {
   z-index: 900;
@@ -6754,6 +6738,10 @@ div.datalist-container > div.datainfo {
   height: 3rem;
   min-height: 3rem;
   align-content: flex-end;
+}
+div.datagrid-container > div.datainfo div.searchcontrol,
+div.datalist-container > div.datainfo div.searchcontrol {
+  margin: 0 1rem;
 }
 div.datagrid-container > div.datainfo button:last-child,
 div.datalist-container > div.datainfo button:last-child {
@@ -6794,6 +6782,15 @@ div.datagrid-container > div.grid-filterinfo[aria-expanded=true],
 div.datalist-container > div.grid-filterinfo[aria-expanded=true] {
   display: flex;
 }
+div.datagrid-container > div.footer,
+div.datalist-container > div.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 202;
+  background-color: var(--header-background-color);
+  padding: 0.5rem 1rem;
+  display: flex;
+}
 div.datagrid-container[aria-expanded=false] > div.datainfo,
 div.datagrid-container[aria-expanded=false] > div.footer,
 div.datagrid-container[aria-expanded=false] > div.grid-actions,
@@ -6810,7 +6807,6 @@ div.datalist-container[aria-expanded=false] > div.grid-filterinfo {
 }
 
 div.datalist-container {
-  --header-background-color: var(--canvas-color-tertiary);
   --body-background-color: var(--canvas-color-primary);
   --list-header-color: var(--colors-affordance);
   --icon-size: 3rem;
@@ -6821,6 +6817,9 @@ div.datalist-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+div.datalist-container > div.datainfo div.searchcontrol {
+  margin: 0 1rem;
 }
 div.datalist-container > div.listheader {
   z-index: 202;
@@ -6869,7 +6868,7 @@ div.datalist-container > div.listheader > div.label {
 div.datalist-container > div.listheader > div.label > label {
   color: var(--list-header-color);
 }
-div.datalist-container > div.listheader > div.label.user, div.datalist-container > div.listheader > div.label.text, div.datalist-container > div.listheader > div.label.name, div.datalist-container > div.listheader > div.label.displayname, div.datalist-container > div.listheader > div.label.subject, div.datalist-container > div.listheader > div.label.title {
+div.datalist-container > div.listheader > div.label.user, div.datalist-container > div.listheader > div.label.text, div.datalist-container > div.listheader > div.label.name, div.datalist-container > div.listheader > div.label.label, div.datalist-container > div.listheader > div.label.displayname, div.datalist-container > div.listheader > div.label.subject, div.datalist-container > div.listheader > div.label.title {
   justify-content: flex-start;
   flex-grow: 2;
 }
@@ -6992,10 +6991,6 @@ div.datalist-container > ul.datalist > li > div.column > div.payload > div:last-
 div.datalist-container > ul.datalist > li > div.column > div.meta > div:last-child {
   margin-right: 0;
 }
-div.datalist-container > ul.datalist > li > div.details > div.meta,
-div.datalist-container > ul.datalist > li > div.column > div.meta {
-  font-size: 0.8rem;
-}
 div.datalist-container > ul.datalist > li > div.details > div.topline,
 div.datalist-container > ul.datalist > li > div.column > div.topline {
   justify-content: flex-end;
@@ -7008,10 +7003,6 @@ div.datalist-container > ul.datalist > li > div.column > div.topline > label {
   flex-grow: 2;
   display: inline-block;
   justify-self: flex-start;
-}
-div.datalist-container > ul.datalist > li > div.details > div.topline > label.name,
-div.datalist-container > ul.datalist > li > div.column > div.topline > label.name {
-  font-size: 1.2rem;
 }
 div.datalist-container > ul.datalist > li > div.details > div.topline > span.secondary,
 div.datalist-container > ul.datalist > li > div.column > div.topline > span.secondary {
@@ -7032,33 +7023,39 @@ div.datalist-container > ul.datalist > li > div.column label {
   margin: 0;
   display: inline-block;
 }
-div.datalist-container > ul.datalist > li > div.details div.joindate > label,
-div.datalist-container > ul.datalist > li > div.details div.createdate > label,
-div.datalist-container > ul.datalist > li > div.column div.joindate > label,
-div.datalist-container > ul.datalist > li > div.column div.createdate > label {
-  margin-right: 0.5rem;
-}
-div.datalist-container > ul.datalist > li > div.details a.name,
-div.datalist-container > ul.datalist > li > div.details span.subject,
-div.datalist-container > ul.datalist > li > div.column a.name,
-div.datalist-container > ul.datalist > li > div.column span.subject {
-  font-size: 1.2rem;
-  font-weight: 400;
-}
-div.datalist-container > ul.datalist > li > div.details span.secondary,
-div.datalist-container > ul.datalist > li > div.column span.secondary {
+div.datalist-container > ul.datalist > li > div.details div.tagbox,
+div.datalist-container > ul.datalist > li > div.column div.tagbox {
+  flex-grow: 2;
   display: flex;
   flex-direction: row;
-  align-content: stretch;
-  align-items: stretch;
-  justify-content: space-evenly;
-  font-size: 0.9rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
-div.datalist-container > ul.datalist > li > div.details span.date,
-div.datalist-container > ul.datalist > li > div.column span.date {
-  font-size: 0.9rem;
+div.datalist-container > ul.datalist > li > div.details div.tagbox > span.notags,
+div.datalist-container > ul.datalist > li > div.column div.tagbox > span.notags {
+  font-size: 0.8rem;
   font-style: oblique;
-  text-align: right;
+  color: var(--colors-text-deemphasize);
+}
+div.datalist-container > ul.datalist > li > div.details div.tagbox > span.tag,
+div.datalist-container > ul.datalist > li > div.column div.tagbox > span.tag {
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+  background-color: rgba(var(--colors-highlight-rgb), 0.3);
+  transition: background-color 0.5s, color 0.5s;
+  margin: 0.1rem 0.4rem 0 0;
+}
+div.datalist-container > ul.datalist > li > div.details div.tagbox > span.tag:first-child,
+div.datalist-container > ul.datalist > li > div.column div.tagbox > span.tag:first-child {
+  margin-left: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > ul.datalist > li > div.details div.tagbox > span.tag:hover,
+div.datalist-container > ul.datalist > li > div.column div.tagbox > span.tag:hover {
+    color: var(--colors-text-hot);
+    background-color: rgba(var(--colors-highlight-rgb), 0.7);
+  }
 }
 div.datalist-container > ul.datalist > li > div.actions {
   display: flex;
@@ -7109,6 +7106,22 @@ div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebut
     box-shadow: var(--hover-shadow);
   }
 }
+div.datalist-container > ul.datalist > li [data-column=filesize],
+div.datalist-container > ul.datalist > li [data-column=dimensions] {
+  font-size: 0.9rem;
+}
+div.datalist-container > ul.datalist > li [data-column=name],
+div.datalist-container > ul.datalist > li [data-column=subject] {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+div.datalist-container > ul.datalist > li [data-column=createdate],
+div.datalist-container > ul.datalist > li [data-column=updatedate],
+div.datalist-container > ul.datalist > li [data-column=date] {
+  font-size: 0.9rem;
+  font-style: oblique;
+  text-align: right;
+}
 div.datalist-container > ul.datalist > li.noentriestext > div.noentries {
   margin: 0;
   font-size: 2rem;
@@ -7132,10 +7145,6 @@ div.datalist-container > ul.datalist.hidden {
   display: none;
 }
 div.datalist-container > div.footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 202;
-  background-color: var(--header-background-color);
   box-shadow: var(--shadows-smooth-up-small);
 }
 div.datalist-container.scrolled > div.listheader {

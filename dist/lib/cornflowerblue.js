@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-26
+/*! Cornflower Blue - v0.1.1 - 2021-03-29
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -4776,9 +4776,12 @@ class DataGrid extends Panel {
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
+            columnconfigurable: false,
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
             extraelements: null,
+            showinfo: true,
+            showfooter: true,
             screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -4895,6 +4898,8 @@ class DataGrid extends Panel {
         super(config);
         this.initialize();
     }
+
+    get displaytype() { return 'datagrid'; }
 
     initialize() {
 
@@ -5080,7 +5085,6 @@ class DataGrid extends Panel {
         }
 
         // XXX TODO Apply Sort?
-
         for (let d of this.data) {
 
             let include = true;
@@ -5139,21 +5143,22 @@ class DataGrid extends Panel {
         this.messagebox.classList.add('hidden');
         this.gridwrapper.classList.remove('hidden');
 
-        let rows = Array.from(this.gridbody.childNodes);
+        let matches = 0,
+            matchesHiddenColumns = false;
 
-        let matches = 0;
-        let matchesHiddenColumns = false;
-        for (let r of rows) {
+        for (let r of Array.from(this.gridbody.childNodes)) {
             let show = false;
             r.setAttribute('data-search-hidden', true,);
-
             if ((!value) || (value === '')) {
                 show = true;
             } else {
-                let cells = Array.from(r.childNodes);
-                for (let c of cells) {
+                let columns = Array.from(r.childNodes); // lists pull from td
+                if (this.displaytype === 'datalist') {
+                    columns = Array.from(r.querySelectorAll(`[data-column]`));
+                }
+                for (let c of columns) {
                     if (show) { break; }
-                    if (!c.classList.contains('mechanical')) {
+                    if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
                         if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             if (c.classList.contains('hidden')) {
                                 matchesHiddenColumns = true;
@@ -5601,7 +5606,7 @@ class DataGrid extends Panel {
     clear() {
         this.data = [];
         this.gridbody.innerHTML = "";
-        this.gridPostProcess();
+        this.postProcess();
     }
 
     /**
@@ -5612,7 +5617,7 @@ class DataGrid extends Panel {
      *    - Applies search
      *    - Grinds duplicate cells
      */
-    gridPostProcess() {
+    postProcess() {
         this.updateCount();
         if (this.currentsort) {
             this.sortField(this.currentsort.field, this.currentsort.direction);
@@ -5622,12 +5627,23 @@ class DataGrid extends Panel {
         this.grindDuplicateCells();
     }
 
+    activity(show = true) {
+        for (let node of this.container.querySelectorAll('div.activity')) {
+            if (show) {
+                node.removeAttribute('aria-hidden');
+            } else {
+                node.setAttribute('aria-hidden', 'true');
+            }
+        }
+    }
+
     /**
      * Load data from a URL and put it into the grid. Appends by default.
      * @param url the URL to get the data from. Defaults to the source url
      * @param callback (optional) do this instead of Appending data. Takes data as an argument
      */
     fetchData(url=this.source, callback) {
+        this.activity(true);
         if (this.activitynotifier) {
             this.activitynotifier.removeAttribute('aria-hidden');
         }
@@ -5656,9 +5672,7 @@ class DataGrid extends Panel {
                 } else {
                     this.update(data);
                 }
-                if (this.activitynotifier) {
-                    this.activitynotifier.setAttribute('aria-hidden', 'true');
-                }
+                this.activity(false);
             })
             .catch(err => {
                 console.error(`Error while fetching data from ${url}`);
@@ -5715,7 +5729,7 @@ class DataGrid extends Panel {
                 this.addEntry(entry); // We can only append
             }
         }
-        this.gridPostProcess();
+        this.postProcess();
     }
 
     replace(data) {
@@ -5777,7 +5791,7 @@ class DataGrid extends Panel {
 
         this.gridbody.removeChild(this.gridbody.querySelector(`[data-rowid='${rowid}'`));
 
-        this.gridPostProcess();
+        this.postProcess();
     }
 
     /* COLUMN METHODS___________________________________________________________________ */
@@ -5886,16 +5900,16 @@ class DataGrid extends Panel {
                 hidden: f.hidden
             };
         }
-
-        for (let f of this.activefilters) {
-            state.filters.push({
-                filterid: f.filterid,
-                field: f.field,
-                comparator: f.comparator,
-                value: f.value
-            });
+        if (this.activefilters) {
+            for (let f of this.activefilters) {
+                state.filters.push({
+                    filterid: f.filterid,
+                    field: f.field,
+                    comparator: f.comparator,
+                    value: f.value
+                });
+            }
         }
-
         return state;
     }
 
@@ -6163,15 +6177,19 @@ class DataGrid extends Panel {
 
             for (let r of toBeSelected) {
                 r.setAttribute('aria-selected', 'true');
-                r.querySelector('input.selector').checked = true;
+                if (r.querySelector('input.selector')) {
+                    r.querySelector('input.selector').checked = true;
+                }
             }
             row.setAttribute('aria-selected', 'true');
-            row.querySelector('input.selector').checked = true;
+            if (row.querySelector('input.selector')) {
+                row.querySelector('input.selector').checked = true;
+            }
         } else {
-
             row.setAttribute('aria-selected', 'true');
-            row.querySelector('input.selector').checked = true;
-
+            if (row.querySelector('input.selector')) {
+                row.querySelector('input.selector').checked = true;
+            }
             if ((this.selectaction) && (typeof this.selectaction === 'function')) {
                 this.selectaction(this, row, rdata);
             }
@@ -6184,7 +6202,9 @@ class DataGrid extends Panel {
      */
     deselect(row) {
         row.removeAttribute('aria-selected');
-        row.querySelector('input.selector').checked = false;
+        if (row.querySelector('input.selector')) {
+            row.querySelector('input.selector').checked = false;
+        }
     }
 
     /**
@@ -6230,7 +6250,9 @@ class DataGrid extends Panel {
             this.container.appendChild(this.header);
         }
 
-        this.container.appendChild(this.gridinfo);
+        if (this.showinfo) {
+            this.container.appendChild(this.datainfo);
+        }
 
         if (this.filterable) {
             this.container.appendChild(this.filterinfo);
@@ -6244,6 +6266,10 @@ class DataGrid extends Panel {
         this.gridwrapper.appendChild(this.shade.container);
         this.gridwrapper.appendChild(this.grid);
         this.container.appendChild(this.gridwrapper);
+
+        if (this.showfooter) {
+            this.container.appendChild(this.footer);
+        }
 
         this.gridwrapper.onscroll = () => {
             if (this.gridwrapper.scrollLeft > 0) {
@@ -6307,63 +6333,66 @@ class DataGrid extends Panel {
      * Update the count of elements in the data grid.
      */
     updateCount() {
-
         let empty = true;
         if (this.data) {
-            this.itemcount.innerHTML = this.data.length;
+            for (let node of this.container.querySelectorAll('span.itemcount')) {
+                node.innerHTML = this.data.length;
+            }
             if (this.data.length > 0) { empty = false; }
         }
         if (empty) {
-            this.messagebox.innerHTML = "";
-            let warnings = [TextFactory.get('datagrid-message-empty_grid')];
-            let mb = new WarningBox({
-                title: null,
-                warnings: warnings,
-                classes: ['hidden']
-            });
-            this.messagebox.appendChild(mb.container);
-            this.messagebox.classList.remove('hidden');
+            if (this.messagebox) {
+                this.messagebox.innerHTML = "";
+                let warnings = [TextFactory.get('datagrid-message-empty_grid')];
+                let mb = new WarningBox({
+                    title: null,
+                    warnings: warnings,
+                    classes: ['hidden']
+                });
+                this.messagebox.appendChild(mb.container);
+                this.messagebox.classList.remove('hidden');
+            }
             this.gridwrapper.classList.add('hidden');
-
         } else {
-            this.messagebox.innerHTML = "";
-            this.messagebox.classList.add('hidden');
+            if (this.messagebox) {
+                this.messagebox.innerHTML = "";
+                this.messagebox.classList.add('hidden');
+            }
             this.gridwrapper.classList.remove('hidden');
         }
     }
 
-    /**
-     * Build the grid info bit
-     */
-    buildGridInfo() {
-        this.gridinfo = document.createElement('div');
-        this.gridinfo.classList.add('grid-info');
+    buildItemCounter() {
+        let box = document.createElement('div');
+        box.classList.add('countbox');
+        box.innerHTML = `<label>${TextFactory.get('items_label')}</label> <span class="itemcount"></span>`;
+        return box;
+    }
 
-        this.itemcountlabel = document.createElement('label');
-        this.itemcountlabel.innerHTML = TextFactory.get('items_label');
-
-        this.itemcount = document.createElement('span');
-        this.itemcount.classList.add('itemcount');
-
-        this.activitynotifier = document.createElement('div');
-        this.activitynotifier.classList.add('activity');
-        this.activitynotifier.setAttribute('aria-hidden', 'true');
+    buildActivityNotifier() {
+        let activitynotifier = document.createElement('div');
+        activitynotifier.classList.add('activity');
+        activitynotifier.setAttribute('aria-hidden', 'true');
         if (this.activitynotifiericon) {
-            this.activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
+            activitynotifier.appendChild(IconFactory.icon(this.activitynotifiericon));
         }
         if (this.activitynotifiertext) {
             let s = document.createElement('span');
             s.innerHTML = this.activitynotifiertext;
-            this.activitynotifier.appendChild(s);
+            activitynotifier.appendChild(s);
         }
+        return activitynotifier;
+    }
 
-        this.itemcountbox = document.createElement('div');
-        this.itemcountbox.classList.add('countbox');
-        this.itemcountbox.appendChild(this.itemcountlabel);
-        this.itemcountbox.appendChild(this.itemcount);
-        this.itemcountbox.appendChild(this.activitynotifier);
+    /**
+     * Build the data info bit
+     */
+    buildDataInfo() {
+        this.datainfo = document.createElement('div');
+        this.datainfo.classList.add('datainfo');
 
-        this.gridinfo.appendChild(this.itemcountbox);
+        this.datainfo.appendChild(this.buildItemCounter());
+        this.datainfo.appendChild(this.buildActivityNotifier());
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
@@ -6375,7 +6404,7 @@ class DataGrid extends Panel {
                     this.search(value);
                 }
             });
-            this.gridinfo.appendChild(this.searchcontrol.container);
+            this.datainfo.appendChild(this.searchcontrol.container);
         }
 
         if (this.filterable) {
@@ -6389,7 +6418,7 @@ class DataGrid extends Panel {
                     this.configurator('filter');
                 }
             });
-            this.gridinfo.appendChild(this.filterbutton.button);
+            this.datainfo.appendChild(this.filterbutton.button);
         }
 
         let items = [];
@@ -6404,14 +6433,16 @@ class DataGrid extends Panel {
                 }
             });
         }
-        items.push({
-            label: TextFactory.get('columns'),
-            icon: this.columnconfigurationicon,
-            tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
-            action: () => {
-                this.configurator('column');
-            }
-        });
+        if (this.columnconfigurable) {
+            items.push({
+                label: TextFactory.get('columns'),
+                icon: this.columnconfigurationicon,
+                tooltip: TextFactory.get('datagrid-tooltip-configure_columns'),
+                action: () => {
+                    this.configurator('column');
+                }
+            });
+        }
         if (this.exportable) {
             items.push({
                 label: TextFactory.get('export'),
@@ -6421,28 +6452,30 @@ class DataGrid extends Panel {
                     this.export();
                 }
             });
-            items.push({
-                label: TextFactory.get('export-current_view'),
-                tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
-                icon: this.exporticon,
-                action: () => {
-                    this.export(true);
-                }
-            });
+            if (this.columnconfigurable) {
+                items.push({
+                    label: TextFactory.get('export-current_view'),
+                    tooltip: TextFactory.get('datagrid-tooltip-export-current_view'),
+                    icon: this.exporticon,
+                    action: () => {
+                        this.export(true);
+                    }
+                });
+            }
         }
-
-        this.actionsbutton  = new ButtonMenu({
-            mute: true,
-            shape: 'square',
-            secondicon: null,
-            tooltipgravity: 'w',
-            text: TextFactory.get('actions'),
-            icon: this.actionsbuttonicon,
-            classes: ['actions'],
-            items: items
-        });
-
-        this.gridinfo.appendChild(this.actionsbutton.button);
+        if (items.length > 0) {
+            this.actionsbutton  = new ButtonMenu({
+                mute: true,
+                shape: 'square',
+                secondicon: null,
+                tooltipgravity: 'w',
+                text: TextFactory.get('actions'),
+                icon: this.actionsbuttonicon,
+                classes: ['actions'],
+                items: items
+            });
+            this.datainfo.appendChild(this.actionsbutton.button);
+        }
     }
 
     /**
@@ -6782,6 +6815,8 @@ class DataGrid extends Panel {
      */
     buildFooter() {
         this.footer = document.createElement('div');
+        this.footer.appendChild(this.buildItemCounter());
+        this.footer.appendChild(this.buildActivityNotifier());
         this.footer.classList.add('footer');
     }
 
@@ -6804,9 +6839,6 @@ class DataGrid extends Panel {
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
 
-    get activitynotifier() { return this._activitynotifier; }
-    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
-
     get activitynotifiericon() { return this.config.activitynotifiericon; }
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
 
@@ -6815,6 +6847,9 @@ class DataGrid extends Panel {
 
     get allowedits() { return this.config.allowedits; }
     set allowedits(allowedits) { this.config.allowedits = allowedits; }
+
+    get columnconfigurable() { return this.config.columnconfigurable; }
+    set columnconfigurable(columnconfigurable) { this.config.columnconfigurable = columnconfigurable; }
 
     get columnconfigbutton() { return this._columnconfigbutton; }
     set columnconfigbutton(columnconfigbutton) { this._columnconfigbutton = columnconfigbutton; }
@@ -6869,6 +6904,12 @@ class DataGrid extends Panel {
 
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get datainfo() {
+        if (!this._datainfo) { this.buildDataInfo(); }
+        return this._datainfo;
+    }
+    set datainfo(datainfo) { this._datainfo = datainfo; }
 
     get dataprocessor() { return this.config.dataprocessor; }
     set dataprocessor(dataprocessor) { this.config.dataprocessor = dataprocessor; }
@@ -6982,12 +7023,6 @@ class DataGrid extends Panel {
     }
     set grid(grid) { this._grid = grid; }
 
-    get gridinfo() {
-        if (!this._gridinfo) { this.buildGridInfo(); }
-        return this._gridinfo;
-    }
-    set gridinfo(gridinfo) { this._gridinfo = gridinfo; }
-
     get gridbody() {
         if (!this._gridbody) { this.buildGridBody(); }
         return this._gridbody;
@@ -7017,15 +7052,6 @@ class DataGrid extends Panel {
 
     get instructionsicon() { return this.config.instructionsicon; }
     set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
-
-    get itemcount()  { return this._itemcount; }
-    set itemcount(itemcount) { this._itemcount = itemcount; }
-
-    get itemcountbox()  { return this._itemcountbox; }
-    set itemcountbox(itemcountbox) { this._itemcountbox = itemcountbox; }
-
-    get itemcountlabel()  { return this._itemcountlabel; }
-    set itemcountlabel(itemcountlabel) { this._itemcountlabel = itemcountlabel; }
 
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
@@ -7099,6 +7125,12 @@ class DataGrid extends Panel {
     }
     set shade(shade) { this._shade = shade; }
 
+    get showfooter() { return this.config.showfooter; }
+    set showfooter(showfooter) { this.config.showfooter = showfooter; }
+
+    get showinfo() { return this.config.showinfo; }
+    set showinfo(showinfo) { this.config.showinfo = showinfo; }
+
     get sortable() { return this.config.sortable; }
     set sortable(sortable) { this.config.sortable = sortable; }
 
@@ -7154,7 +7186,11 @@ class DataList extends DataGrid {
             statesaveprefix: 'datalist',
             noentriestext: TextFactory.get('datalist-noentries'),
             specialsort: null,
+            columnconfigurable: false,
             collapsible: false,
+            exportable: false,
+            filterable: false,
+            multiselect: false,
             loadcallback: null,
             drawitem: (itemdef, self) => {
 
@@ -7172,7 +7208,6 @@ class DataList extends DataGrid {
         };
     }
 
-
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, DataList.DEFAULT_CONFIG, config);
@@ -7184,25 +7219,33 @@ class DataList extends DataGrid {
         super(config);
     }
 
+    get displaytype() { return 'datalist'; }
+    get gridwrapper() { return this.datalist; }
+    get gridbody() { return this.datalist; }
+
     finalize() {
         this.shade.activate();
     }
 
     fillData() {
+        this.activity(true);
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
                 this.postLoad();
                 //this.shade.deactivate();
+                this.activity(false);
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
                 this.update(data);
                 this.postLoad();
                 this.shade.deactivate();
+                this.activity(false);
             });
         } else if (this.data) {
             this.populate();
+            this.activity(false);
         }
     }
 
@@ -7265,6 +7308,7 @@ class DataList extends DataGrid {
         if ((this.loadcallback) && (typeof this.loadcallback === 'function')) {
             this.loadcallback();
         }
+        this.postLoad();
     }
 
     postLoad() {
@@ -7294,8 +7338,11 @@ class DataList extends DataGrid {
             if (next > items.length) { next = items.length; }
 
             let li = this.drawitem(item);
-            li.style.setProperty('--anim-order', `${order}`);
-            li.setAttribute('data-order', order);
+            //li.style.setProperty('--anim-order', `${order}`);
+            //li.setAttribute('data-order', order);
+            if (item['id']) {
+                li.setAttribute('data-item-id', item['id']);
+            }
 
             if ((this.click) && (typeof this.click === 'function')) {
                 li.classList.add('clickable');
@@ -7303,6 +7350,19 @@ class DataList extends DataGrid {
                 li.addEventListener('click', (e) => {
                     if ((this.click) && (typeof this.click === 'function')) {
                         this.click(item, this, e);
+                    }
+                    if (this.selectable) {
+                        this.select(li, e, item);
+                    }
+                });
+            } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
+                li.classList.add('clickable');
+                li.setAttribute('tabindex', '0');
+                li.addEventListener('click', (e) => {
+                    this.select(item, e, rdata);
+                    li.setAttribute('aria-selected', 'true');
+                    if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+                        this.selectaction(this, li, rdata);
                     }
                 });
             }
@@ -7348,9 +7408,11 @@ class DataList extends DataGrid {
             this.datalist.appendChild(li);
             order++;
         }
+        this.postProcess();
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
+        console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction);
         }
@@ -7375,20 +7437,41 @@ class DataList extends DataGrid {
 
     }
 
-    gridPostProcess() {
+    postProcess() {
         // nothing.
+        this.updateCount();
+        if (this.showinfo) {
+            this.search(this.searchcontrol.value);
+        }
     }
+    applyFilters() { }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
         this.container = document.createElement('div');
         this.container.classList.add('datalist-container');
+
+        if (this.title) {
+            this.container.appendChild(this.header);
+        }
+        if (this.filterable) {
+            this.container.appendChild(this.filterinfo);
+        }
+        if (this.showinfo) {
+            this.container.appendChild(this.datainfo);
+        }
         this.container.appendChild(this.listheader);
         this.container.appendChild(this.datalist);
 
-        //this.container.appendChild(this.listheader.cloneNode(true));
+        this.messagebox = document.createElement('div');
+        this.messagebox.classList.add('messages');
+        this.messagebox.classList.add('hidden');
+        this.container.appendChild(this.messagebox);
 
+        if (this.showfooter) {
+            this.container.appendChild(this.footer);
+        }
         this.container.onscroll = () => {
             if (this.container.scrollTop > 0) {
                 this.container.classList.add('scrolled');
