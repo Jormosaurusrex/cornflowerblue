@@ -231,7 +231,7 @@ class DataList extends DataGrid {
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
-        console.log(`sort: ${column} :: ${direction}`);
+        //console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction);
         }
@@ -312,10 +312,13 @@ class DataList extends DataGrid {
             let ndiv = document.createElement('div');
             ndiv.classList.add(col.field);
 
-            if ((col.field === 'space') || (col.field === 'thumbspace') || (col.field === 'avatarspace') || (col.field === 'iconspace')) {
+            if (col.field === 'spacer') {
+                ndiv.classList.add('spacer');
+                ndiv.classList.add(`size-${col.type}`);
                 this.listheader.appendChild(ndiv);
                 continue;
             }
+
             ndiv.setAttribute('data-column', col.field);
             ndiv.classList.add('label');
             ndiv.innerHTML = `<label>${col.label}</label>`;

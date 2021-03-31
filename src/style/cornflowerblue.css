@@ -17,15 +17,15 @@
   --text-shadow-corona: 0 -.03em .03em rgba(255, 255, 255, 0.1), 0 .03em .03em rgba(255, 255, 255, 0.1);
   --wide-measure: 40em;
   --thin-measure: 25em;
-  --canvas-color-primary-rgb: var(--ultralight-rgb);
-  --canvas-color-primary: rgb(var(--canvas-color-primary-rgb));
-  --canvas-color-secondary-rgb: var(--morelight-rgb);
-  --canvas-color-secondary: rgb(var(--canvas-color-secondary-rgb));
-  --canvas-color-tertiary-rgb: var(--sublight-rgb);
-  --canvas-color-tertiary: rgb(var(--canvas-color-tertiary-rgb));
+  --canvas-color-primary-rgb: var(--bright-rgb);
+  --canvas-color-secondary-rgb: var(--sublight-rgb);
+  --canvas-color-tertiary-rgb: var(--light-rgb);
   --canvas-color-highlight-rgb: var(--cornflowerblue-light-rgb);
+  --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .4);
+  --canvas-color-primary: rgb(var(--canvas-color-primary-rgb));
+  --canvas-color-secondary: rgb(var(--canvas-color-secondary-rgb));
+  --canvas-color-tertiary: rgb(var(--canvas-color-tertiary-rgb));
   --canvas-color-highlight: rgb(var(--canvas-color-highlight-rgb));
-  --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
   --colors-affordance-rgb: var(--darkblue-rgb);
   --colors-affordance: rgb(var(--colors-affordance-rgb));
   --colors-highlight-rgb: var(--darkblue-rgb);
@@ -118,6 +118,15 @@
   --growler-core-color-rgb: var(--colors-highlight-rgb);
   --growler-core-color: rgb(var(--growler-core-color-rgb));
   --growler-header-text-color: var(--colors-hot-text);
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  :root {
+    --canvas-color-primary-rgb: var(--ultralight-rgb);
+    --canvas-color-secondary-rgb: var(--morelight-rgb);
+    --canvas-color-tertiary-rgb: var(--sublight-rgb);
+    --canvas-color-highlight-rgb: var(--cornflowerblue-light-rgb);
+    --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
+  }
 }
 
 :root {
@@ -6185,7 +6194,6 @@ div.tooltip.east:before {
 }
 
 div.datagrid-container {
-  --header-background-color: var(--canvas-color-tertiary);
   --vert-padding: 1rem;
   --side-padding: 1rem;
   position: relative;
@@ -6197,9 +6205,11 @@ div.datagrid-container {
   padding: 0;
   background-color: var(--canvas-color-primary);
 }
-div.datagrid-container h3 {
+div.datagrid-container > h3.panelheader,
+div.datagrid-container > h3.panelheader.nocollapse {
   --panel-text-color: var(--colors-standard);
   background-color: var(--canvas-color-secondary);
+  padding: 0;
 }
 div.datagrid-container div.grid-wrapper {
   overflow: auto;
@@ -6232,11 +6242,14 @@ div.datagrid-container table.grid {
   position: relative;
   z-index: 800;
 }
+div.datagrid-container table.grid > thead {
+  z-index: 150;
+}
 div.datagrid-container table.grid > thead tr th {
   cursor: pointer;
   padding: 0;
   color: var(--colors-standard);
-  background-color: var(--header-background-color);
+  background-color: var(--canvas-color-tertiary);
   text-align: left;
   font-weight: normal;
   position: sticky;
@@ -6308,6 +6321,7 @@ div.datagrid-container table.grid > thead tr th[data-sort=desc] div.th:before {
   transform: rotate(180deg);
 }
 div.datagrid-container table.grid > tbody {
+  z-index: 100;
   background-color: var(--canvas-color-primary);
 }
 div.datagrid-container table.grid > tbody tr {
@@ -6613,6 +6627,10 @@ div.datagrid-container[aria-expanded=false] div.grid-wrapper table.grid {
     background-color: var(--canvas-color-primary);
   }
 }
+div.datagrid-container,
+div.datalist-container {
+  position: relative;
+}
 div.datagrid-container > div.datainfo,
 div.datagrid-container > div.footer,
 div.datagrid-container > div.grid-filterinfo,
@@ -6630,6 +6648,7 @@ div.datalist-container > div.grid-filterinfo {
   transition: height, max-height, min-height, opacity;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
+  z-index: 200;
 }
 div.datagrid-container > div.datainfo button,
 div.datagrid-container > div.footer button,
@@ -6691,46 +6710,6 @@ div.datalist-container > div.grid-filterinfo div.searchcontrol button {
     padding-right: 0.5rem;
   }
 }
-div.datagrid-container div.countbox,
-div.datagrid-container div.activity,
-div.datalist-container div.countbox,
-div.datalist-container div.activity {
-  justify-self: flex-start;
-  margin-right: auto;
-}
-div.datagrid-container div.countbox,
-div.datalist-container div.countbox {
-  white-space: nowrap;
-  padding-right: 0.5rem;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  flex-wrap: nowrap;
-  justify-self: flex-start;
-  flex-grow: 0;
-}
-div.datagrid-container div.countbox label,
-div.datalist-container div.countbox label {
-  display: inline-block;
-  margin: 0 0.5rem 0 0;
-}
-div.datagrid-container div.activity,
-div.datalist-container div.activity {
-  margin-right: auto;
-  margin-left: 0.5rem;
-  justify-self: flex-start;
-  color: var(--focus-color-half);
-  flex-grow: 2;
-}
-div.datagrid-container div.activity > span.icon,
-div.datalist-container div.activity > span.icon {
-  display: inline-block;
-  animation: cfb-localspin 2s infinite linear;
-}
-div.datagrid-container div.activity[aria-hidden=true],
-div.datalist-container div.activity[aria-hidden=true] {
-  display: none;
-}
 div.datagrid-container > div.datainfo,
 div.datalist-container > div.datainfo {
   z-index: 900;
@@ -6787,9 +6766,54 @@ div.datalist-container > div.footer {
   position: sticky;
   bottom: 0;
   z-index: 202;
-  background-color: var(--header-background-color);
+  background-color: var(--canvas-color-tertiary);
+  box-shadow: var(--shadows-smooth-up-small);
   padding: 0.5rem 1rem;
   display: flex;
+}
+div.datagrid-container > div.grid-wrapper,
+div.datalist-container > div.grid-wrapper {
+  z-index: 100;
+}
+div.datagrid-container div.countbox,
+div.datagrid-container div.activity,
+div.datalist-container div.countbox,
+div.datalist-container div.activity {
+  justify-self: flex-start;
+  margin-right: auto;
+}
+div.datagrid-container div.countbox,
+div.datalist-container div.countbox {
+  white-space: nowrap;
+  padding-right: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  justify-self: flex-start;
+  flex-grow: 0;
+}
+div.datagrid-container div.countbox label,
+div.datalist-container div.countbox label {
+  display: inline-block;
+  margin: 0 0.5rem 0 0;
+}
+div.datagrid-container div.activity,
+div.datalist-container div.activity {
+  margin-right: auto;
+  margin-left: 0.5rem;
+  justify-self: flex-start;
+  color: var(--focus-color-half);
+  flex-grow: 2;
+}
+div.datagrid-container div.activity > span.icon,
+div.datalist-container div.activity > span.icon {
+  display: inline-block;
+  animation: cfb-localspin 2s infinite linear;
+}
+div.datagrid-container div.activity[aria-hidden=true],
+div.datalist-container div.activity[aria-hidden=true] {
+  display: none;
 }
 div.datagrid-container[aria-expanded=false] > div.datainfo,
 div.datagrid-container[aria-expanded=false] > div.footer,
@@ -6807,10 +6831,7 @@ div.datalist-container[aria-expanded=false] > div.grid-filterinfo {
 }
 
 div.datalist-container {
-  --body-background-color: var(--canvas-color-primary);
   --list-header-color: var(--colors-affordance);
-  --icon-size: 3rem;
-  --thumbnail-size: 5rem;
   overflow: hidden;
   max-height: 70vh;
   position: relative;
@@ -6825,51 +6846,51 @@ div.datalist-container > div.listheader {
   z-index: 202;
   display: flex;
   flex-direction: row;
-  align-content: stretch;
-  justify-content: flex-start;
-  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: stretch;
   padding: 0 0.5rem;
-  background-color: var(--header-background-color);
+  background-color: var(--canvas-color-tertiary);
   box-shadow: var(--shadows-smooth-dn-small);
 }
-div.datalist-container > div.listheader > div {
-  border-bottom-color: var(--canvas-color-tertiary);
+div.datalist-container > div.listheader > div.spacer {
+  --icon-size: 3rem;
+  --avatar-size: 4rem;
+  --thumbnail-size: 5rem;
+  justify-self: flex-start;
+  margin-right: auto;
+}
+div.datalist-container > div.listheader > div.spacer.size-thumbnail {
+  width: var(--thumbnail-size);
+}
+div.datalist-container > div.listheader > div.spacer.size-icon {
+  width: var(--icon-size);
+}
+div.datalist-container > div.listheader > div.spacer.size-avatar {
+  width: var(--avatar-size);
+}
+div.datalist-container > div.listheader > div.label {
   margin: 0;
   padding: 0.2rem 0.5rem;
   text-align: center;
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
-}
-div.datalist-container > div.listheader > div > label {
-  margin: 0;
-  font-size: 0.7rem;
-  cursor: pointer;
-}
-div.datalist-container > div.listheader > div.space {
-  width: var(--icon-size);
-  border-bottom-color: transparent;
-}
-div.datalist-container > div.listheader > div.iconspace {
-  width: 2rem;
-  border-bottom-color: transparent;
-}
-div.datalist-container > div.listheader > div.thumbspace {
-  width: var(--thumbnail-size);
-  border-bottom-color: transparent;
-}
-div.datalist-container > div.listheader > div.label {
   box-shadow: inset 0 0 0 0 var(--colors-affordance);
   transition: box-shadow 0.5s;
 }
 div.datalist-container > div.listheader > div.label > label {
+  margin: 0;
+  font-size: 0.7rem;
+  cursor: pointer;
   color: var(--list-header-color);
 }
-div.datalist-container > div.listheader > div.label.user, div.datalist-container > div.listheader > div.label.text, div.datalist-container > div.listheader > div.label.name, div.datalist-container > div.listheader > div.label.label, div.datalist-container > div.listheader > div.label.displayname, div.datalist-container > div.listheader > div.label.subject, div.datalist-container > div.listheader > div.label.title {
-  justify-content: flex-start;
+div.datalist-container > div.listheader > div.label[data-column=name], div.datalist-container > div.listheader > div.label[data-column=label], div.datalist-container > div.listheader > div.label[data-column=displayname], div.datalist-container > div.listheader > div.label[data-column=subject], div.datalist-container > div.listheader > div.label[data-column=title], div.datalist-container > div.listheader > div.label[data-column=text] {
+  justify-self: flex-start;
+  margin-right: auto;
   flex-grow: 2;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -6893,7 +6914,12 @@ div.datalist-container > ul.datalist {
   overflow: auto;
   z-index: 200;
   flex-grow: 2;
-  background-color: rgba(var(--canvas-color-tertiary-rgb), 0.5);
+  background-color: rgba(var(--canvas-color-secondary-rgb), 0.1);
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  div.datalist-container > ul.datalist {
+    background-color: rgba(var(--canvas-color-secondary-rgb), 0.5);
+  }
 }
 div.datalist-container > ul.datalist > li {
   --hover-side-shadow-color: var(--colors-affordance);
@@ -6917,16 +6943,6 @@ div.datalist-container > ul.datalist > li.clickable {
 div.datalist-container > ul.datalist > li:first-child {
   margin-top: 0;
 }
-div.datalist-container > ul.datalist > li div.type {
-  width: var(--image-size);
-}
-div.datalist-container > ul.datalist > li.iconspace {
-  width: 2rem;
-}
-div.datalist-container > ul.datalist > li > button,
-div.datalist-container > ul.datalist > li a.button {
-  margin: 0 0.5rem;
-}
 div.datalist-container > ul.datalist > li > div.thumbnail {
   margin: 0;
   width: var(--thumbnail-size);
@@ -6945,7 +6961,15 @@ div.datalist-container > ul.datalist > li > div.thumbnail.logo {
   background-position: center center;
   border-radius: 0;
 }
-div.datalist-container > ul.datalist > li > div.details,
+div.datalist-container > ul.datalist > li > div.thumbnail.avatar {
+  margin: 0.5rem;
+  width: var(--avatar-size);
+  min-width: var(--avatar-size);
+  height: var(--avatar-size);
+  min-height: var(--avatar-size);
+  background-size: cover;
+  border-radius: 50%;
+}
 div.datalist-container > ul.datalist > li > div.column {
   display: flex;
   flex-direction: column;
@@ -6955,128 +6979,73 @@ div.datalist-container > ul.datalist > li > div.column {
   flex-grow: 1;
   margin: 0 0.5rem;
 }
-div.datalist-container > ul.datalist > li > div.details > div.topline,
-div.datalist-container > ul.datalist > li > div.details > div.payload,
-div.datalist-container > ul.datalist > li > div.details > div.meta,
-div.datalist-container > ul.datalist > li > div.column > div.topline,
-div.datalist-container > ul.datalist > li > div.column > div.payload,
-div.datalist-container > ul.datalist > li > div.column > div.meta {
+div.datalist-container > ul.datalist > li > div.column > div {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: baseline;
   align-content: baseline;
 }
-div.datalist-container > ul.datalist > li > div.details > div.topline > div,
-div.datalist-container > ul.datalist > li > div.details > div.payload > div,
-div.datalist-container > ul.datalist > li > div.details > div.meta > div,
-div.datalist-container > ul.datalist > li > div.column > div.topline > div,
-div.datalist-container > ul.datalist > li > div.column > div.payload > div,
-div.datalist-container > ul.datalist > li > div.column > div.meta > div {
+div.datalist-container > ul.datalist > li > div.column > div > * {
   margin: 0 0.5rem;
 }
-div.datalist-container > ul.datalist > li > div.details > div.topline > div:first-child,
-div.datalist-container > ul.datalist > li > div.details > div.payload > div:first-child,
-div.datalist-container > ul.datalist > li > div.details > div.meta > div:first-child,
-div.datalist-container > ul.datalist > li > div.column > div.topline > div:first-child,
-div.datalist-container > ul.datalist > li > div.column > div.payload > div:first-child,
-div.datalist-container > ul.datalist > li > div.column > div.meta > div:first-child {
-  margin-left: 0;
-}
-div.datalist-container > ul.datalist > li > div.details > div.topline > div:last-child,
-div.datalist-container > ul.datalist > li > div.details > div.payload > div:last-child,
-div.datalist-container > ul.datalist > li > div.details > div.meta > div:last-child,
-div.datalist-container > ul.datalist > li > div.column > div.topline > div:last-child,
-div.datalist-container > ul.datalist > li > div.column > div.payload > div:last-child,
-div.datalist-container > ul.datalist > li > div.column > div.meta > div:last-child {
-  margin-right: 0;
-}
-div.datalist-container > ul.datalist > li > div.details > div.topline,
-div.datalist-container > ul.datalist > li > div.column > div.topline {
-  justify-content: flex-end;
-}
-div.datalist-container > ul.datalist > li > div.details > div.topline > label,
-div.datalist-container > ul.datalist > li > div.column > div.topline > label {
-  font-weight: 100;
-  margin: 0;
-  margin-right: auto;
-  flex-grow: 2;
-  display: inline-block;
-  justify-self: flex-start;
-}
-div.datalist-container > ul.datalist > li > div.details > div.topline > span.secondary,
-div.datalist-container > ul.datalist > li > div.column > div.topline > span.secondary {
-  margin-right: 1rem;
-}
-div.datalist-container > ul.datalist > li > div.details > div.topline > span.secondary:last-child,
-div.datalist-container > ul.datalist > li > div.column > div.topline > span.secondary:last-child {
-  margin-right: 0;
-}
-div.datalist-container > ul.datalist > li > div.details > div.payload label,
-div.datalist-container > ul.datalist > li > div.column > div.payload label {
+div.datalist-container > ul.datalist > li > div.column > div > * > label {
   font-size: 0.8rem;
   margin: 0 0.2rem 0 0;
   color: var(--colors-highlight);
 }
-div.datalist-container > ul.datalist > li > div.details label,
+div.datalist-container > ul.datalist > li > div.column > div > *:last-child {
+  margin-right: 0;
+}
+div.datalist-container > ul.datalist > li > div.column > div > *:first-child {
+  justify-self: flex-start;
+  margin-right: auto;
+  margin-left: 0;
+}
 div.datalist-container > ul.datalist > li > div.column label {
   margin: 0;
   display: inline-block;
 }
-div.datalist-container > ul.datalist > li > div.details div.tagbox,
-div.datalist-container > ul.datalist > li > div.column div.tagbox {
-  flex-grow: 2;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+div.datalist-container > ul.datalist > li > div.column [data-column=filesize],
+div.datalist-container > ul.datalist > li > div.column [data-column=dimensions] {
+  font-size: 0.9rem;
 }
-div.datalist-container > ul.datalist > li > div.details div.tagbox > span.notags,
-div.datalist-container > ul.datalist > li > div.column div.tagbox > span.notags {
-  font-size: 0.8rem;
+div.datalist-container > ul.datalist > li > div.column [data-column=name],
+div.datalist-container > ul.datalist > li > div.column [data-column=subject],
+div.datalist-container > ul.datalist > li > div.column [data-column=label],
+div.datalist-container > ul.datalist > li > div.column [data-column=subject] {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+div.datalist-container > ul.datalist > li > div.column [data-column=createdate],
+div.datalist-container > ul.datalist > li > div.column [data-column=updatedate],
+div.datalist-container > ul.datalist > li > div.column [data-column=date] {
+  font-size: 0.9rem;
   font-style: oblique;
-  color: var(--colors-text-deemphasize);
-}
-div.datalist-container > ul.datalist > li > div.details div.tagbox > span.tag,
-div.datalist-container > ul.datalist > li > div.column div.tagbox > span.tag {
-  border-radius: 0.25rem;
-  font-size: 0.8rem;
-  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
-  background-color: rgba(var(--colors-highlight-rgb), 0.3);
-  transition: background-color 0.5s, color 0.5s;
-  margin: 0.1rem 0.4rem 0 0;
-}
-div.datalist-container > ul.datalist > li > div.details div.tagbox > span.tag:first-child,
-div.datalist-container > ul.datalist > li > div.column div.tagbox > span.tag:first-child {
-  margin-left: 0;
-}
-@media (hover: hover) and (pointer: fine) {
-  div.datalist-container > ul.datalist > li > div.details div.tagbox > span.tag:hover,
-div.datalist-container > ul.datalist > li > div.column div.tagbox > span.tag:hover {
-    color: var(--colors-text-hot);
-    background-color: rgba(var(--colors-highlight-rgb), 0.7);
-  }
+  text-align: right;
 }
 div.datalist-container > ul.datalist > li > div.actions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  align-content: flex-end;
-  justify-content: space-between;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-grow: 0;
 }
-div.datalist-container > ul.datalist > li > div.actions button,
-div.datalist-container > ul.datalist > li > div.actions a.button {
-  font-size: 0.8rem;
+div.datalist-container > ul.datalist > li > div.actions > button,
+div.datalist-container > ul.datalist > li > div.actions > a.button {
+  margin: 0;
   margin-bottom: 0.5rem;
+  font-size: 0.8rem;
   box-shadow: none;
 }
-div.datalist-container > ul.datalist > li > div.actions button:last-child,
-div.datalist-container > ul.datalist > li > div.actions a.button:last-child {
+div.datalist-container > ul.datalist > li > div.actions > button:last-child,
+div.datalist-container > ul.datalist > li > div.actions > a.button:last-child {
   margin-bottom: 0;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.datalist-container > ul.datalist > li > div.actions button:hover,
-div.datalist-container > ul.datalist > li > div.actions a.button:hover {
+  div.datalist-container > ul.datalist > li > div.actions > button:hover,
+div.datalist-container > ul.datalist > li > div.actions > a.button:hover {
     opacity: 1;
   }
 }
@@ -7084,7 +7053,7 @@ div.datalist-container > ul.datalist > li:focus {
   outline: var(--colors-text-default) dashed 0.15rem;
   outline-offset: -0.3rem;
   text-decoration: underline double;
-  background-color: rgba(var(--canvas-color-highlight-rgb), 0.7);
+  background-color: var(--canvas-color-primary);
   box-shadow: var(--hover-shadow);
 }
 div.datalist-container > ul.datalist > li:focus:last-child {
@@ -7105,22 +7074,6 @@ div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebut
     z-index: 201;
     box-shadow: var(--hover-shadow);
   }
-}
-div.datalist-container > ul.datalist > li [data-column=filesize],
-div.datalist-container > ul.datalist > li [data-column=dimensions] {
-  font-size: 0.9rem;
-}
-div.datalist-container > ul.datalist > li [data-column=name],
-div.datalist-container > ul.datalist > li [data-column=subject] {
-  font-size: 1.2rem;
-  font-weight: 400;
-}
-div.datalist-container > ul.datalist > li [data-column=createdate],
-div.datalist-container > ul.datalist > li [data-column=updatedate],
-div.datalist-container > ul.datalist > li [data-column=date] {
-  font-size: 0.9rem;
-  font-style: oblique;
-  text-align: right;
 }
 div.datalist-container > ul.datalist > li.noentriestext > div.noentries {
   margin: 0;

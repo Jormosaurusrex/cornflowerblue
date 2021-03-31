@@ -367,7 +367,7 @@ class BooleanToggle {
         if (typeof renderer !== 'function') {
             console.error("Value provided to renderer is not a function!");
         }
-        this.config.renderer = renderer;
+        if (this.config) { this.config.renderer = renderer; }
     }
 
     get style() { return this.config.style; }

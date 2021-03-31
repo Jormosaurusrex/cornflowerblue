@@ -1,7 +1,8 @@
+@import "lib/Mixins"; // First, always
+
 @import "variables/Variables"; // Set CSS Core variables here
 @import "variables/Colors";    // Change/redefine colors here
 
-@import "lib/Mixins";
 @import "lib/Animations";
 @import "lib/Font";
 

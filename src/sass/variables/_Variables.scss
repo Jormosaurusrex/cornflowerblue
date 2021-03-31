@@ -23,16 +23,24 @@
   --wide-measure: 40em;
   --thin-measure: 25em;
 
-  // Canvas colors
-  --canvas-color-primary-rgb: var(--ultralight-rgb);
-  --canvas-color-primary: rgb(var(--canvas-color-primary-rgb));
-  --canvas-color-secondary-rgb: var(--morelight-rgb);
-  --canvas-color-secondary: rgb(var(--canvas-color-secondary-rgb));
-  --canvas-color-tertiary-rgb: var(--sublight-rgb);
-  --canvas-color-tertiary: rgb(var(--canvas-color-tertiary-rgb));
+  --canvas-color-primary-rgb: var(--bright-rgb);
+  --canvas-color-secondary-rgb: var(--sublight-rgb);
+  --canvas-color-tertiary-rgb: var(--light-rgb);
   --canvas-color-highlight-rgb: var(--cornflowerblue-light-rgb);
+  --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .4);
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    --canvas-color-primary-rgb: var(--ultralight-rgb);
+    --canvas-color-secondary-rgb: var(--morelight-rgb);
+    --canvas-color-tertiary-rgb: var(--sublight-rgb);
+    --canvas-color-highlight-rgb: var(--cornflowerblue-light-rgb);
+    --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
+  }
+
+  --canvas-color-primary: rgb(var(--canvas-color-primary-rgb));
+  --canvas-color-secondary: rgb(var(--canvas-color-secondary-rgb));
+  --canvas-color-tertiary: rgb(var(--canvas-color-tertiary-rgb));
   --canvas-color-highlight: rgb(var(--canvas-color-highlight-rgb));
-  --canvas-color-callout-lightweight: rgba(var(--cornflowerblue-light-rgb), .3);
 
   // Semantic colors
 

@@ -1,6 +1,4 @@
 div.datagrid-container {
-  --header-background-color: var(--canvas-color-tertiary);
-
   --vert-padding: 1rem;
   --side-padding: 1rem;
   position: relative;
@@ -11,9 +9,11 @@ div.datagrid-container {
   overflow: visible;
   padding: 0;
   background-color: var(--canvas-color-primary);
-  h3 {
+  >h3.panelheader,
+  >h3.panelheader.nocollapse {
     --panel-text-color: var(--colors-standard);
     background-color: var(--canvas-color-secondary);
+    padding: 0;
   }
   div.grid-wrapper {
     overflow: auto;
@@ -46,12 +46,13 @@ div.datagrid-container {
     position: relative;
     z-index: 800;
     >thead {
+      z-index: 150;
       tr {
         th {
           cursor: pointer;
           padding: 0;
           color: var(--colors-standard);
-          background-color: var(--header-background-color);
+          background-color: var(--canvas-color-tertiary);
           text-align: left;
           font-weight: normal;
           position: sticky;
@@ -142,6 +143,7 @@ div.datagrid-container {
       }
     }
     >tbody {
+      z-index: 100;
       background-color: var(--canvas-color-primary);
       tr {
         color: var(--colors-standard);
@@ -460,6 +462,7 @@ div.datagrid-container {
 
 div.datagrid-container,
 div.datalist-container {
+  position: relative;
   >div.datainfo,
   >div.footer,
   >div.grid-filterinfo {
@@ -474,6 +477,7 @@ div.datalist-container {
     transition: height, max-height, min-height, opacity;
     transition-duration: .2s;
     transition-timing-function: ease-in-out;
+    z-index: 200;
     button {
       margin: 0;
       &.filter {
@@ -506,39 +510,6 @@ div.datalist-container {
         }
       }
 
-    }
-  }
-  div.countbox,
-  div.activity {
-    justify-self: flex-start;
-    margin-right: auto;
-  }
-  div.countbox {
-    white-space: nowrap;
-    padding-right: .5rem;
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    flex-wrap: nowrap;
-    justify-self: flex-start;
-    flex-grow: 0;
-    label {
-      display: inline-block;
-      margin: 0 .5rem 0 0;
-    }
-  }
-  div.activity {
-    margin-right: auto;
-    margin-left: .5rem;
-    justify-self: flex-start;
-    color: var(--focus-color-half);
-    flex-grow: 2;
-    >span.icon {
-      display: inline-block;
-      animation: cfb-localspin 2s infinite linear;
-    }
-    &[aria-hidden=true] {
-      display: none;
     }
   }
   >div.datainfo {
@@ -585,11 +556,47 @@ div.datalist-container {
     position: sticky;
     bottom: 0;
     z-index: 202;
-    background-color: var(--header-background-color);
+    background-color: var(--canvas-color-tertiary);
+    box-shadow: var(--shadows-smooth-up-small);
     padding: .5rem 1rem;
     display: flex;
   }
-
+  >div.grid-wrapper {
+    z-index: 100;
+  }
+  div.countbox,
+  div.activity {
+    justify-self: flex-start;
+    margin-right: auto;
+  }
+  div.countbox {
+    white-space: nowrap;
+    padding-right: .5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    justify-self: flex-start;
+    flex-grow: 0;
+    label {
+      display: inline-block;
+      margin: 0 .5rem 0 0;
+    }
+  }
+  div.activity {
+    margin-right: auto;
+    margin-left: .5rem;
+    justify-self: flex-start;
+    color: var(--focus-color-half);
+    flex-grow: 2;
+    >span.icon {
+      display: inline-block;
+      animation: cfb-localspin 2s infinite linear;
+    }
+    &[aria-hidden=true] {
+      display: none;
+    }
+  }
   &[aria-expanded=false] {
     >div.datainfo,
     >div.footer,

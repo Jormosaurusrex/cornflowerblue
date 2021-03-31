@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-29
+/*! Cornflower Blue - v0.1.1 - 2021-03-30
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -7412,7 +7412,7 @@ class DataList extends DataGrid {
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
-        console.log(`sort: ${column} :: ${direction}`);
+        //console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction);
         }
@@ -7493,10 +7493,13 @@ class DataList extends DataGrid {
             let ndiv = document.createElement('div');
             ndiv.classList.add(col.field);
 
-            if ((col.field === 'space') || (col.field === 'thumbspace') || (col.field === 'avatarspace') || (col.field === 'iconspace')) {
+            if (col.field === 'spacer') {
+                ndiv.classList.add('spacer');
+                ndiv.classList.add(col.type);
                 this.listheader.appendChild(ndiv);
                 continue;
             }
+
             ndiv.setAttribute('data-column', col.field);
             ndiv.classList.add('label');
             ndiv.innerHTML = `<label>${col.label}</label>`;
@@ -8365,7 +8368,7 @@ class GridField {
         if (typeof renderer !== 'function') {
             console.error("Value provided to renderer is not a function!");
         }
-        this.config.renderer = renderer;
+        if (this.config) { this.config.renderer = renderer; }
     }
 
     get required() { return this.config.required ; }
@@ -12268,7 +12271,7 @@ class InputElement {
         if (typeof renderer !== 'function') {
             console.error("Value provided to renderer is not a function!");
         }
-        this.config.renderer = renderer;
+        if (this.config) { this.config.renderer = renderer; }
     }
 
     get required() { return this.config.required; }
@@ -13356,7 +13359,7 @@ class BooleanToggle {
         if (typeof renderer !== 'function') {
             console.error("Value provided to renderer is not a function!");
         }
-        this.config.renderer = renderer;
+        if (this.config) { this.config.renderer = renderer; }
     }
 
     get style() { return this.config.style; }

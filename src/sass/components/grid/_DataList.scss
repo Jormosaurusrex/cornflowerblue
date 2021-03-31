@@ -1,8 +1,5 @@
 div.datalist-container {
-  --body-background-color: var(--canvas-color-primary);
   --list-header-color: var(--colors-affordance);
-  --icon-size: 3rem;
-  --thumbnail-size: 5rem;
   overflow: hidden;
   max-height: 70vh;
   position: relative;
@@ -18,60 +15,54 @@ div.datalist-container {
     z-index: 202;
     display: flex;
     flex-direction: row;
-    align-content: stretch;
-    justify-content: flex-start;
-    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: stretch;
     padding: 0 .5rem;
-    background-color: var(--header-background-color);
-    ///*          offset-x | offset-y | blur-radius | spread-radius | color */
-    //box-shadow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.5);
-
-
+    background-color: var(--canvas-color-tertiary);
     box-shadow: var(--shadows-smooth-dn-small);
-    >div {
-      border-bottom-color: var(--canvas-color-tertiary);
+    >div.spacer {
+      --icon-size: 3rem;
+      --avatar-size: 4rem;
+      --thumbnail-size: 5rem;
+      justify-self: flex-start;
+      margin-right: auto;
+      &.size-thumbnail {
+        width: var(--thumbnail-size);
+      }
+      &.size-icon {
+        width: var(--icon-size);
+      }
+      &.size-avatar {
+        width: var(--avatar-size);
+      }
+    }
+    >div.label {
       margin: 0;
       padding: .2rem .5rem;
       text-align: center;
       display: flex;
       flex-direction: row;
       align-content: center;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       cursor: pointer;
+      box-shadow: inset 0 0 0 0 var(--colors-affordance);
+      transition: box-shadow .5s;
       >label {
         margin: 0;
         font-size: .7rem;
         cursor: pointer;
-      }
-    }
-    >div.space {
-      width: var(--icon-size);
-      border-bottom-color: transparent;
-    }
-    >div.iconspace {
-      width: 2rem;
-      border-bottom-color: transparent;
-    }
-    >div.thumbspace {
-      width: var(--thumbnail-size);
-      border-bottom-color: transparent;
-    }
-    >div.label {
-      //border: .1rem solid transparent;
-      box-shadow: inset 0 0 0 0 var(--colors-affordance);
-      transition: box-shadow .5s;
-      >label {
         color: var(--list-header-color);
       }
-      &.user,
-      &.text,
-      &.name,
-      &.label,
-      &.displayname,
-      &.subject,
-      &.title {
-        justify-content: flex-start;
+      &[data-column="name"],
+      &[data-column="label"],
+      &[data-column="displayname"],
+      &[data-column="subject"],
+      &[data-column="title"],
+      &[data-column="text"] {
+        justify-self: flex-start;
+        margin-right: auto;
         flex-grow: 2;
       }
       @include for-hover-only {
@@ -98,7 +89,10 @@ div.datalist-container {
     overflow: auto;
     z-index: 200;
     flex-grow: 2;
-    background-color: rgba(var(--canvas-color-tertiary-rgb), .5);
+    background-color: rgba(var(--canvas-color-secondary-rgb), .1);
+    @include for-retina-only {
+      background-color: rgba(var(--canvas-color-secondary-rgb), .5);
+    }
     >li {
       --hover-side-shadow-color: var(--colors-affordance);
       --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
@@ -113,23 +107,13 @@ div.datalist-container {
       margin: 0;
       z-index: 200;
       transition: box-shadow .5s,
-                  background-color .5s;
+      background-color .5s;
       box-shadow: var(--hover-shadow-null);
       &.clickable {
         cursor: pointer;
       }
       &:first-child {
         margin-top: 0;
-      }
-      div.type {
-        width: var(--image-size);
-      }
-      &.iconspace {
-        width: 2rem;
-      }
-      >button,
-      a.button {
-        margin: 0 .5rem;
       }
       >div.thumbnail {
         margin: 0;
@@ -148,8 +132,16 @@ div.datalist-container {
           background-position: center center;
           border-radius: 0;
         }
+        &.avatar {
+          margin: .5rem;
+          width: var(--avatar-size);
+          min-width: var(--avatar-size);
+          height: var(--avatar-size);
+          min-height: var(--avatar-size);
+          background-size: cover;
+          border-radius: 50%;
+        }
       }
-      >div.details,
       >div.column {
         display: flex;
         flex-direction: column;
@@ -158,97 +150,68 @@ div.datalist-container {
         justify-content: space-between;
         flex-grow: 1;
         margin: 0 0.5rem;
-        >div.topline,
-        >div.payload,
-        >div.meta {
+        >div { // These end up being rows
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          justify-content: flex-end;
           align-items: baseline;
           align-content: baseline;
-          >div {
+          >* { // Columns per row
             margin: 0 .5rem;
+            >label { // secondary labels, not primary labels
+              font-size: .8rem;
+              margin: 0 .2rem 0 0;
+              color: var(--colors-highlight);
+            }
+            &:last-child {
+              margin-right: 0;
+            }
             &:first-child {
+              justify-self: flex-start;
+              margin-right: auto;
               margin-left: 0;
             }
-            &:last-child {
-              margin-right: 0;
-            }
           }
         }
-        >div.topline {
-          justify-content: flex-end;
-          >label {
-            font-weight: 100;
-            margin: 0;
-            margin-right: auto;
-            flex-grow: 2;
-            display: inline-block;
-            justify-self: flex-start;
-          }
-          >span.secondary {
-            margin-right: 1rem;
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-        }
-        >div.payload {
-          label {
-            font-size: .8rem;
-            margin: 0 .2rem 0 0;
-            color: var(--colors-highlight);
-          }
-        }
+        // Datatype styles
         label {
           margin: 0;
           display: inline-block;
         }
-        div.tagbox {
-          flex-grow: 2;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          >span.notags {
-            font-size: .8rem;
-            font-style: oblique;
-            color: var(--colors-text-deemphasize);
-          }
-          >span.tag {
-            border-radius: .25rem;
-            font-size: .8rem;
-            padding: .1rem .5rem .1rem .5rem;
-            background-color: rgba(var(--colors-highlight-rgb), .3);
-            transition: background-color .5s, color .5s;
-            margin: .1rem .4rem 0 0;
-            &:first-child {
-              margin-left: 0;
-            }
-            @include for-hover-only {
-              &:hover {
-                color: var(--colors-text-hot);
-                background-color: rgba(var(--colors-highlight-rgb), .7);
-              }
-            }
-          }
+        [data-column="filesize"],
+        [data-column="dimensions"] {
+          font-size: .9rem;
         }
+        [data-column="name"],
+        [data-column="subject"],
+        [data-column="label"],
+        [data-column="subject"] {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+        [data-column="createdate"],
+        [data-column="updatedate"],
+        [data-column="date"] {
+          font-size: .9rem;
+          font-style: oblique;
+          text-align: right;
+        }
+
       }
       >div.actions {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        align-content: flex-end;
-        justify-content: space-between;
-        button,
-        a.button {
-          font-size: .8rem;
+        align-content: flex-start;
+        justify-content: flex-start;
+        flex-grow: 0;
+        >button,
+        >a.button {
+          margin: 0;
           margin-bottom: .5rem;
-          //opacity: 0.7;
+          font-size: .8rem;
           box-shadow: none;
-          &:last-child {
-            margin-bottom: 0;
-          }
+          &:last-child { margin-bottom: 0; }
           @include for-hover-only {
             &:hover {
               opacity: 1;
@@ -260,7 +223,7 @@ div.datalist-container {
         outline: var(--colors-text-default) dashed .15rem;
         outline-offset: -.3rem;
         text-decoration: underline double;
-        background-color: rgba(var(--canvas-color-highlight-rgb), .7);
+        background-color: var(--canvas-color-primary);
         box-shadow: var(--hover-shadow);
         &:last-child {
           box-shadow: var(--hover-shadow-last);
@@ -282,22 +245,7 @@ div.datalist-container {
           box-shadow: var(--hover-shadow);
         }
       }
-      [data-column="filesize"],
-      [data-column="dimensions"], {
-        font-size: .9rem;
-      }
-      [data-column="name"],
-      [data-column="subject"]{
-        font-size: 1.2rem;
-        font-weight: 400;
-      }
-      [data-column="createdate"],
-      [data-column="updatedate"],
-      [data-column="date"] {
-        font-size: .9rem;
-        font-style: oblique;
-        text-align: right;
-      }
+
       &.noentriestext {
         >div.noentries {
           margin: 0;
