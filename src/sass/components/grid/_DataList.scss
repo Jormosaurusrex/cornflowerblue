@@ -1,5 +1,8 @@
 div.datalist-container {
   --list-header-color: var(--colors-affordance);
+  --icon-size: 3rem;
+  --avatar-size: 4rem;
+  --thumbnail-size: 5rem;
   overflow: hidden;
   max-height: 70vh;
   position: relative;
@@ -12,7 +15,8 @@ div.datalist-container {
     }
   }
   >div.listheader {
-    z-index: 202;
+    position: relative;
+    z-index: 203;
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -22,9 +26,6 @@ div.datalist-container {
     background-color: var(--canvas-color-tertiary);
     box-shadow: var(--shadows-smooth-dn-small);
     >div.spacer {
-      --icon-size: 3rem;
-      --avatar-size: 4rem;
-      --thumbnail-size: 5rem;
       justify-self: flex-start;
       margin-right: auto;
       &.size-thumbnail {
@@ -83,21 +84,19 @@ div.datalist-container {
     }
   }
   >ul.datalist {
-    list-style-type: none;
     position: relative;
+    z-index: 200;
+    list-style-type: none;
     padding: 0;
     overflow: auto;
-    z-index: 200;
     flex-grow: 2;
-    background-color: rgba(var(--canvas-color-secondary-rgb), .1);
-    @include for-retina-only {
-      background-color: rgba(var(--canvas-color-secondary-rgb), .5);
-    }
     >li {
       --hover-side-shadow-color: var(--colors-affordance);
       --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
       --hover-side-shadow-null: inset 0 0 0 0 var(--hover-side-shadow-color);
       --hover-shadow: var(--shadows-smooth-up), var(--shadows-smooth-dn), var(--hover-side-shadow);
+      position: relative;
+      z-index: 201;
       display: flex;
       flex-direction: row;
       align-content: center;
@@ -105,7 +104,6 @@ div.datalist-container {
       align-items: stretch;
       padding:.5rem;
       margin: 0;
-      z-index: 200;
       transition: box-shadow .5s,
       background-color .5s;
       box-shadow: var(--hover-shadow-null);
@@ -127,13 +125,19 @@ div.datalist-container {
         &.hero {
           background-position: center center;
         }
+        &.icon {
+          width: var(--icon-size);
+          min-width: var(--icon-size);
+          height: var(--icon-size);
+          min-height: var(--icon-size);
+        }
         &.logo {
           background-size: contain;
           background-position: center center;
           border-radius: 0;
         }
         &.avatar {
-          margin: .5rem;
+          margin: 0;
           width: var(--avatar-size);
           min-width: var(--avatar-size);
           height: var(--avatar-size);
@@ -142,62 +146,7 @@ div.datalist-container {
           border-radius: 50%;
         }
       }
-      >div.column {
-        display: flex;
-        flex-direction: column;
-        align-content: flex-start;
-        align-items: stretch;
-        justify-content: space-between;
-        flex-grow: 1;
-        margin: 0 0.5rem;
-        >div { // These end up being rows
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
-          align-items: baseline;
-          align-content: baseline;
-          >* { // Columns per row
-            margin: 0 .5rem;
-            >label { // secondary labels, not primary labels
-              font-size: .8rem;
-              margin: 0 .2rem 0 0;
-              color: var(--colors-highlight);
-            }
-            &:last-child {
-              margin-right: 0;
-            }
-            &:first-child {
-              justify-self: flex-start;
-              margin-right: auto;
-              margin-left: 0;
-            }
-          }
-        }
-        // Datatype styles
-        label {
-          margin: 0;
-          display: inline-block;
-        }
-        [data-column="filesize"],
-        [data-column="dimensions"] {
-          font-size: .9rem;
-        }
-        [data-column="name"],
-        [data-column="subject"],
-        [data-column="label"],
-        [data-column="subject"] {
-          font-size: 1.2rem;
-          font-weight: 400;
-        }
-        [data-column="createdate"],
-        [data-column="updatedate"],
-        [data-column="date"] {
-          font-size: .9rem;
-          font-style: oblique;
-          text-align: right;
-        }
-
-      }
+      >div.column { }
       >div.actions {
         display: flex;
         flex-direction: column;
@@ -220,11 +169,15 @@ div.datalist-container {
         }
       }
       &:focus {
-        outline: var(--colors-text-default) dashed .15rem;
+        z-index: 202;
+        outline: rgba(var(--colors-affordance-rgb), 0.5) dashed .15rem;
         outline-offset: -.3rem;
-        text-decoration: underline double;
         background-color: var(--canvas-color-primary);
         box-shadow: var(--hover-shadow);
+        a,
+        button {
+          text-decoration: underline double;
+        }
         &:last-child {
           box-shadow: var(--hover-shadow-last);
         }
@@ -241,11 +194,10 @@ div.datalist-container {
         &:hover {
           outline: none;
           background-color: var(--canvas-color-primary);
-          z-index: 201;
+          z-index: 202;
           box-shadow: var(--hover-shadow);
         }
       }
-
       &.noentriestext {
         >div.noentries {
           margin: 0;
@@ -256,6 +208,7 @@ div.datalist-container {
         @include for-hover-only {
           &:hover {
             outline: none;
+            z-index: 202;
             background-image: none;
             background-color: transparent;
           }
@@ -285,5 +238,62 @@ div.datalist-container {
     >div.listheader{
       box-shadow: 0 .5em .5em -.3em rgba(0, 0, 0, 0.7);
     }
+  }
+}
+
+div.column {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin: 0 0.5rem;
+  >label {
+    margin: 0;
+    &[data-target="none"] {
+      color: var(--colors-text-default);
+    }
+  }
+  >div { // These end up being rows
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    align-content: baseline;
+    >* { // Columns per row
+      margin: 0 .5rem;
+      >label { // secondary labels, not primary labels
+        font-size: .6rem;
+        margin: 0 .2rem 0 0;
+        color: var(--colors-highlight);
+        display: inline-block;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      &:first-child {
+        justify-self: flex-start;
+        margin-right: auto;
+        margin-left: 0;
+      }
+    }
+  }
+  // Datatype styles
+  [data-column="filesize"],
+  [data-column="dimensions"] {
+    font-size: .9rem;
+  }
+  [data-column="name"],
+  [data-column="subject"],
+  [data-column="label"],
+  [data-column="subject"] {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  [data-column="createdate"],
+  [data-column="updatedate"],
+  [data-column="date"] {
+    font-size: .9rem;
   }
 }

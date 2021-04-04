@@ -76,11 +76,6 @@ class Panel {
         if (!this.headerid) { this.headerid = `panel-h-${CFBUtils.getUniqueKey(5)}`; }
 
         this.loadstate();
-
-    }
-
-    finalize() {
-        this.applystate();
     }
 
     /* PERSISTENCE METHODS______________________________________________________________ */
@@ -90,7 +85,7 @@ class Panel {
      * @return {boolean}
      */
     get ispersistable() {
-        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+        return !!((this.stateful) && (this.savekey) && (window.localStorage));
     }
 
     /**
@@ -301,6 +296,7 @@ class Panel {
             }
         }
 
+        this.applystate();
         if (this.hidden) { this.hide(); }
     }
 
@@ -420,9 +416,6 @@ class Panel {
 
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
-
-    get savestate() { return this.config.savestate; }
-    set savestate(savestate) { this.config.savestate = savestate; }
 
     get state() { return this._state; }
     set state(state) { this._state = state; }

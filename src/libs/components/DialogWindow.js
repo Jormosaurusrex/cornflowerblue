@@ -121,6 +121,7 @@ class DialogWindow {
      * Closes the dialog window
      */
     close() {
+        if (!this.container.parentNode) { return; }
         this.container.parentNode.removeChild(this.container);
         this.mask.parentNode.removeChild(this.mask);
         if (this.prevfocus) {

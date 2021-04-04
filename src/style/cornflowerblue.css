@@ -50,36 +50,37 @@
   --colors-warning: rgb(var(--colors-warning-rgb));
   --colors-caution-rgb: var(--yellow-rgb);
   --colors-caution: rgb(var(--colors-caution-rgb));
-  --shadows-dropshadow-filter: drop-shadow(0 .5rem .5rem rgba(0, 0, 0, 0.2));
-  --shadows-dropshadow-filter-vertical: drop-shadow(0 -.5rem .5rem rgba(0, 0, 0, 0.2));
-  --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(0, 0, 0, 0.2);
-  --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(0, 0, 0, 0.1);
-  --shadows-panel: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
-  --shadows-panel-light: 0 .5em .5em 0 rgba(0, 0, 0, 0.2);
-  --dialog-box-shadow: 0 .28rem .22rem rgba(0, 0, 0, 0.02),
-                        0 .67rem .53rem rgba(0, 0, 0, 0.028),
-                        0 1.25rem 1rem rgba(0, 0, 0, 0.035),
-                        0 2.23rem 1.79rem rgba(0, 0, 0, 0.042),
-                        0 4.18rem 3.34rem rgba(0, 0, 0, 0.05),
-                        0 10rem 8rem rgba(0, 0, 0, 0.07);
-  --shadows-smooth-up: 0 -.05rem .07rem -.3rem rgba(0, 0, 0, .2),
-                        0 -.14rem .15rem -.2rem rgba(0, 0, 0, .1),
-                        0 -.28rem .22rem -.1rem rgba(0, 0, 0, 0.02),
-                        0 -.67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
-                        0 -1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
-                        0 -2.23rem 1.79rem rgba(0, 0, 0, 0.042);
-  --shadows-smooth-dn: 0 .05rem .07rem -.3rem rgba(0, 0, 0, .2),
-                        0 .14rem .15rem -.2rem rgba(0, 0, 0, .1),
-                        0 .28rem .22rem -.1rem rgba(0, 0, 0, 0.02),
-                        0 .67rem .53rem -.05rem rgba(0, 0, 0, 0.028),
-                        0 1.25rem 1rem -.025rem rgba(0, 0, 0, 0.035),
-                        0 2.23rem 1.79rem rgba(0, 0, 0, 0.042);
-  --shadows-smooth-dn-small: 0 .1rem .3rem -.3rem rgba(0, 0, 0, .5),
-                              0 .2rem .5rem -.2rem rgba(0, 0, 0, .3),
-                              0 .3rem .8rem -.1rem rgba(0, 0, 0, .1);
-  --shadows-smooth-up-small: 0 -.1rem .3rem -.3rem rgba(0, 0, 0, .5),
-                              0 -.2rem .5rem -.2rem rgba(0, 0, 0, .3),
-                              0 -.3rem .8rem -.1rem rgba(0, 0, 0, .1);
+  --shadow-black-rgb: 0, 0, 0;
+  --shadows-dropshadow-filter: drop-shadow(0 .5rem .5rem rgba(var(--shadow-black-rgb), 0.2));
+  --shadows-dropshadow-filter-vertical: drop-shadow(0 -.5rem .5rem rgba(var(--shadow-black-rgb), 0.2));
+  --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(var(--shadow-black-rgb), 0.2);
+  --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(var(--shadow-black-rgb), 0.1);
+  --shadows-panel: 0 .5em .5em 0 rgba(var(--shadow-black-rgb), 0.2);
+  --shadows-panel-light: 0 .5em .5em 0 rgba(var(--shadow-black-rgb), 0.2);
+  --dialog-box-shadow: 0 .28rem .22rem rgba(var(--shadow-black-rgb), 0.02),
+                        0 .67rem .53rem rgba(var(--shadow-black-rgb), 0.028),
+                        0 1.25rem 1rem rgba(var(--shadow-black-rgb), 0.035),
+                        0 2.23rem 1.79rem rgba(var(--shadow-black-rgb), 0.042),
+                        0 4.18rem 3.34rem rgba(var(--shadow-black-rgb), 0.05),
+                        0 10rem 8rem rgba(var(--shadow-black-rgb), 0.07);
+  --shadows-smooth-up: 0 -.05rem .07rem -.3rem rgba(var(--shadow-black-rgb), .2),
+                        0 -.14rem .15rem -.2rem rgba(var(--shadow-black-rgb), .1),
+                        0 -.28rem .22rem -.1rem rgba(var(--shadow-black-rgb), 0.02),
+                        0 -.67rem .53rem -.05rem rgba(var(--shadow-black-rgb), 0.028),
+                        0 -1.25rem 1rem -.025rem rgba(var(--shadow-black-rgb), 0.035),
+                        0 -2.23rem 1.79rem rgba(var(--shadow-black-rgb), 0.042);
+  --shadows-smooth-dn: 0 .05rem .07rem -.3rem rgba(var(--shadow-black-rgb), .2),
+                        0 .14rem .15rem -.2rem rgba(var(--shadow-black-rgb), .1),
+                        0 .28rem .22rem -.1rem rgba(var(--shadow-black-rgb), 0.02),
+                        0 .67rem .53rem -.05rem rgba(var(--shadow-black-rgb), 0.028),
+                        0 1.25rem 1rem -.025rem rgba(var(--shadow-black-rgb), 0.035),
+                        0 2.23rem 1.79rem rgba(var(--shadow-black-rgb), 0.042);
+  --shadows-smooth-dn-small: 0 .1rem .3rem -.3rem rgba(var(--shadow-black-rgb), .5),
+                              0 .2rem .5rem -.2rem rgba(var(--shadow-black-rgb), .3),
+                              0 .3rem .8rem -.1rem rgba(var(--shadow-black-rgb), .1);
+  --shadows-smooth-up-small: 0 -.1rem .3rem -.3rem rgba(var(--shadow-black-rgb), .5),
+                              0 -.2rem .5rem -.2rem rgba(var(--shadow-black-rgb), .3),
+                              0 -.3rem .8rem -.1rem rgba(var(--shadow-black-rgb), .1);
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
@@ -178,8 +179,12 @@
   --grey-darker: rgb(var(--grey-darker-rgb));
   --grey-onyx-rgb: 51, 51, 51;
   --grey-onyx: rgb(var(--grey-onyx-rgb));
+  --grey-ink-rgb: 41, 41, 41;
+  --grey-ink: rgb(var(--grey-onyx-rgb));
   --grey-darkest-rgb: 34, 34, 34;
   --grey-darkest: rgb(var(--grey-darkest-rgb));
+  --grey-void-rgb: 25, 25, 25;
+  --grey-void: rgb(var(--grey-darkest-rgb));
   --grey-midnight-rgb: 17, 17, 17;
   --grey-midnight: rgb(var(--grey-midnight-rgb));
   --black-rgb: 0, 0, 0;
@@ -5152,6 +5157,12 @@ div.growler.success {
   --growler-core-color: var(--colors-success);
 }
 
+:root {
+  --shade-spinner-bed-color: rgba(var(--colors-highlight-rgb), 0.3);
+  --shade-spinner-solid-color: var(--colors-highlight);
+  --shade-text-color: var(--colors-highlight);
+}
+
 div.loading-shade {
   display: flex;
   position: absolute;
@@ -5178,8 +5189,8 @@ div.loading-shade div.spinner span.icon:before {
   line-height: normal;
 }
 div.loading-shade div.spinnertext {
-  color: var(--colors-highlight);
-  font-size: 2em;
+  color: var(--shade-text-color);
+  font-size: 2rem;
   text-shadow: var(--text-shadow);
   text-transform: uppercase;
   font-weight: 100;
@@ -5190,14 +5201,15 @@ div.loading-shade[aria-hidden=true] {
 
 div.spinner.spin {
   border-radius: 50%;
-  width: 10em;
-  height: 10em;
-  min-width: 10em;
-  min-height: 10em;
+  --spinner-size: 12vw;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  min-width: var(--spinner-size);
+  min-height: var(--spinner-size);
   position: relative;
   margin: 1rem 0 1rem 0;
-  border: 0.75em solid rgba(var(--colors-highlight-rgb), 0.3);
-  border-top-color: var(--colors-highlight);
+  border: 0.75rem solid var(--shade-spinner-bed-color);
+  border-top-color: var(--shade-spinner-solid-color);
   animation: cfb-localspin 1.1s infinite linear;
 }
 
@@ -6832,6 +6844,9 @@ div.datalist-container[aria-expanded=false] > div.grid-filterinfo {
 
 div.datalist-container {
   --list-header-color: var(--colors-affordance);
+  --icon-size: 3rem;
+  --avatar-size: 4rem;
+  --thumbnail-size: 5rem;
   overflow: hidden;
   max-height: 70vh;
   position: relative;
@@ -6843,7 +6858,8 @@ div.datalist-container > div.datainfo div.searchcontrol {
   margin: 0 1rem;
 }
 div.datalist-container > div.listheader {
-  z-index: 202;
+  position: relative;
+  z-index: 203;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -6854,9 +6870,6 @@ div.datalist-container > div.listheader {
   box-shadow: var(--shadows-smooth-dn-small);
 }
 div.datalist-container > div.listheader > div.spacer {
-  --icon-size: 3rem;
-  --avatar-size: 4rem;
-  --thumbnail-size: 5rem;
   justify-self: flex-start;
   margin-right: auto;
 }
@@ -6908,24 +6921,20 @@ div.datalist-container > div.listheader > div.label[data-sorted=asc], div.datali
   }
 }
 div.datalist-container > ul.datalist {
-  list-style-type: none;
   position: relative;
+  z-index: 200;
+  list-style-type: none;
   padding: 0;
   overflow: auto;
-  z-index: 200;
   flex-grow: 2;
-  background-color: rgba(var(--canvas-color-secondary-rgb), 0.1);
-}
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  div.datalist-container > ul.datalist {
-    background-color: rgba(var(--canvas-color-secondary-rgb), 0.5);
-  }
 }
 div.datalist-container > ul.datalist > li {
   --hover-side-shadow-color: var(--colors-affordance);
   --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
   --hover-side-shadow-null: inset 0 0 0 0 var(--hover-side-shadow-color);
   --hover-shadow: var(--shadows-smooth-up), var(--shadows-smooth-dn), var(--hover-side-shadow);
+  position: relative;
+  z-index: 201;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -6933,7 +6942,6 @@ div.datalist-container > ul.datalist > li {
   align-items: stretch;
   padding: 0.5rem;
   margin: 0;
-  z-index: 200;
   transition: box-shadow 0.5s, background-color 0.5s;
   box-shadow: var(--hover-shadow-null);
 }
@@ -6956,73 +6964,25 @@ div.datalist-container > ul.datalist > li > div.thumbnail {
 div.datalist-container > ul.datalist > li > div.thumbnail.hero {
   background-position: center center;
 }
+div.datalist-container > ul.datalist > li > div.thumbnail.icon {
+  width: var(--icon-size);
+  min-width: var(--icon-size);
+  height: var(--icon-size);
+  min-height: var(--icon-size);
+}
 div.datalist-container > ul.datalist > li > div.thumbnail.logo {
   background-size: contain;
   background-position: center center;
   border-radius: 0;
 }
 div.datalist-container > ul.datalist > li > div.thumbnail.avatar {
-  margin: 0.5rem;
+  margin: 0;
   width: var(--avatar-size);
   min-width: var(--avatar-size);
   height: var(--avatar-size);
   min-height: var(--avatar-size);
   background-size: cover;
   border-radius: 50%;
-}
-div.datalist-container > ul.datalist > li > div.column {
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
-  align-items: stretch;
-  justify-content: space-between;
-  flex-grow: 1;
-  margin: 0 0.5rem;
-}
-div.datalist-container > ul.datalist > li > div.column > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: baseline;
-  align-content: baseline;
-}
-div.datalist-container > ul.datalist > li > div.column > div > * {
-  margin: 0 0.5rem;
-}
-div.datalist-container > ul.datalist > li > div.column > div > * > label {
-  font-size: 0.8rem;
-  margin: 0 0.2rem 0 0;
-  color: var(--colors-highlight);
-}
-div.datalist-container > ul.datalist > li > div.column > div > *:last-child {
-  margin-right: 0;
-}
-div.datalist-container > ul.datalist > li > div.column > div > *:first-child {
-  justify-self: flex-start;
-  margin-right: auto;
-  margin-left: 0;
-}
-div.datalist-container > ul.datalist > li > div.column label {
-  margin: 0;
-  display: inline-block;
-}
-div.datalist-container > ul.datalist > li > div.column [data-column=filesize],
-div.datalist-container > ul.datalist > li > div.column [data-column=dimensions] {
-  font-size: 0.9rem;
-}
-div.datalist-container > ul.datalist > li > div.column [data-column=name],
-div.datalist-container > ul.datalist > li > div.column [data-column=subject],
-div.datalist-container > ul.datalist > li > div.column [data-column=label],
-div.datalist-container > ul.datalist > li > div.column [data-column=subject] {
-  font-size: 1.2rem;
-  font-weight: 400;
-}
-div.datalist-container > ul.datalist > li > div.column [data-column=createdate],
-div.datalist-container > ul.datalist > li > div.column [data-column=updatedate],
-div.datalist-container > ul.datalist > li > div.column [data-column=date] {
-  font-size: 0.9rem;
-  font-style: oblique;
-  text-align: right;
 }
 div.datalist-container > ul.datalist > li > div.actions {
   display: flex;
@@ -7050,11 +7010,15 @@ div.datalist-container > ul.datalist > li > div.actions > a.button:hover {
   }
 }
 div.datalist-container > ul.datalist > li:focus {
-  outline: var(--colors-text-default) dashed 0.15rem;
+  z-index: 202;
+  outline: rgba(var(--colors-affordance-rgb), 0.5) dashed 0.15rem;
   outline-offset: -0.3rem;
-  text-decoration: underline double;
   background-color: var(--canvas-color-primary);
   box-shadow: var(--hover-shadow);
+}
+div.datalist-container > ul.datalist > li:focus a,
+div.datalist-container > ul.datalist > li:focus button {
+  text-decoration: underline double;
 }
 div.datalist-container > ul.datalist > li:focus:last-child {
   box-shadow: var(--hover-shadow-last);
@@ -7071,7 +7035,7 @@ div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebut
   div.datalist-container > ul.datalist > li:hover {
     outline: none;
     background-color: var(--canvas-color-primary);
-    z-index: 201;
+    z-index: 202;
     box-shadow: var(--hover-shadow);
   }
 }
@@ -7084,6 +7048,7 @@ div.datalist-container > ul.datalist > li.noentriestext > div.noentries {
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > ul.datalist > li.noentriestext:hover {
     outline: none;
+    z-index: 202;
     background-image: none;
     background-color: transparent;
   }
@@ -7102,6 +7067,62 @@ div.datalist-container > div.footer {
 }
 div.datalist-container.scrolled > div.listheader {
   box-shadow: 0 0.5em 0.5em -0.3em rgba(0, 0, 0, 0.7);
+}
+
+div.column {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin: 0 0.5rem;
+}
+div.column > label {
+  margin: 0;
+}
+div.column > label[data-target=none] {
+  color: var(--colors-text-default);
+}
+div.column > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
+  align-content: baseline;
+}
+div.column > div > * {
+  margin: 0 0.5rem;
+}
+div.column > div > * > label {
+  font-size: 0.6rem;
+  margin: 0 0.2rem 0 0;
+  color: var(--colors-highlight);
+  display: inline-block;
+}
+div.column > div > *:last-child {
+  margin-right: 0;
+}
+div.column > div > *:first-child {
+  justify-self: flex-start;
+  margin-right: auto;
+  margin-left: 0;
+}
+div.column [data-column=filesize],
+div.column [data-column=dimensions] {
+  font-size: 0.9rem;
+}
+div.column [data-column=name],
+div.column [data-column=subject],
+div.column [data-column=label],
+div.column [data-column=subject] {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+div.column [data-column=createdate],
+div.column [data-column=updatedate],
+div.column [data-column=date] {
+  font-size: 0.9rem;
 }
 
 div.column-configurator {
