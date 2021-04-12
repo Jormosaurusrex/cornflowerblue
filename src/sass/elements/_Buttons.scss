@@ -14,7 +14,7 @@ a.button {
   white-space: nowrap;
   transition: color .2s,
               background-color .2s,
-              box-shadow .5s;
+              box-shadow .2s;
   margin: .8em .4em .8em .4em;
   padding: .6em 1em .6em 1em;
   font-family: var(--default-font-family);
@@ -28,7 +28,7 @@ a.button {
   text-shadow: var(--text-shadow);
   border: none;
   border-radius: var(--border-radius);
-  box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);;
+  box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
   >span.icon {
     margin: 0 .5em 0 0;
     &:before {

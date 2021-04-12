@@ -12,8 +12,8 @@ div.tooltip {
   align-content: center;
   list-style-type: none;
   margin: 0;
-  padding: .5em .75em .5em .75em;
-  min-height: 2.7em;
+  padding: .5rem .75rem;
+  min-height: 2.7rem;
   overflow: visible;
   z-index: 21000;
   border-radius: var(--border-radius);
@@ -31,13 +31,13 @@ div.tooltip {
     position: absolute;
     border-style: solid;
     border-color: var(--canvas-color-highlight) transparent;
-    left: 1em;
-    bottom: -.5em;
-    border-width: .5em .5em 0 .5em;
+    left: 1rem;
+    bottom: -.5rem;
+    border-width: .5rem .5rem 0 .5rem;
   }
   span.tipicon {
     padding: 0;
-    margin: 0 1em 0 0;
+    margin: 0 1rem 0 0;
   }
   div.tiptext {
     max-width: 33em;
@@ -51,38 +51,43 @@ div.tooltip {
       min-width: unset;
     }
   }
+  &.north {
+    &:before {
+      left: calc((100% / 2) - .5rem);
+    }
+  }
   &.south {
     &:before {
       bottom: unset;
       top: -.5em;
       left: calc((100% / 2) - .5rem);
-      border-width: 0 .5em .5em .5em;
+      border-width: 0 .5rem .5rem .5rem;
     }
   }
   &.southwest {
     &:before {
       bottom: unset;
-      top: -.5em;
-      border-width: 0 .5em .5em .5em;
+      top: -.5rem;
+      border-width: 0 .5rem .5rem .5rem;
     }
   }
   &.west {
     &:before {
       left: unset;
-      right: -.5em;
+      right: -.5rem;
       bottom: unset;
-      top: .5em;
+      top: .5rem;
       border-color: transparent var(--canvas-color-highlight);
-      border-width: .5em 0 .5em .5em;
+      border-width: .5rem 0 .5rem .5rem;
     }
   }
   &.east {
     &:before {
-      left: -.5em;
+      left: -.5rem;
       bottom: unset;
-      top: .5em;
+      top: .5rem;
       border-color: transparent var(--canvas-color-highlight);
-      border-width: .5em .5em .5em 0;
+      border-width: .5rem .5rem .5rem 0;
     }
   }
 }

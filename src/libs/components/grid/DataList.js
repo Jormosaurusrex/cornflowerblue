@@ -259,7 +259,7 @@ class DataList extends DataGrid {
     postProcess() {
         // nothing.
         this.updateCount();
-        if (this.showinfo) {
+        if ((this.showinfo) && (this.searchable)) {
             this.search(this.searchcontrol.value);
         }
     }

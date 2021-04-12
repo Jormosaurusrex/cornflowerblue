@@ -1608,6 +1608,11 @@ class CornflowerBlueDemo {
             value: 23
         }).container);
 
+        radial.appendChild(new RadialProgressMeter({
+            label: "Pie Test",
+            pie: true,
+            value: 37
+        }).container);
 
         radial.appendChild(new RadialProgressMeter({
             label: "Overall Progress",
@@ -1618,7 +1623,6 @@ class CornflowerBlueDemo {
             value: 72,
             badge: 7200,
             stinger: 'Points'
-
         }).container);
         radial.appendChild(new RadialProgressMeter({
             label: "With Ticks",

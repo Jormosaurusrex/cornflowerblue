@@ -12,6 +12,8 @@ class ButtonMenu extends SimpleButton {
                     self.close();
                 }
             },
+            custompositioner: null, // A function that will be used to set the menu's position
+                                    // different from the custom one. passed (self)
             focusinside: true,  //
             menuid: null,    // If present, will only auto-close other menus of this type.
             closeopen: true, // if true, force all other open menus closed when this one opens.
@@ -60,6 +62,7 @@ class ButtonMenu extends SimpleButton {
             config.classes = ['menu'];
         }
         super(config);
+        this.emsize = CFBUtils.getSingleEmInPixels();
         if (this.menu) {
             this.processMenu();
         } else {
@@ -173,6 +176,14 @@ class ButtonMenu extends SimpleButton {
      * Position the menu
      */
     setPosition() {
+        if ((this.custompositioner) && (typeof this.custompositioner === 'function')) {
+            this.custompositioner(this);
+            return;
+        }
+        this.setPositionDefault();
+    }
+
+    setPositionDefault() {
         let bodyRect = document.body.getBoundingClientRect(),
             elemRect = this.button.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
@@ -184,36 +195,36 @@ class ButtonMenu extends SimpleButton {
             case 'w':
             case 'west':
                 this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (this.emsize / 2)}px`;
                 break;
             case 'e':
             case 'east':
                 this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
-                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
                 break;
             case 'n':
             case 'north':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
                 break;
             case 'nw':
             case 'northwest':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 'se':
             case 'southeast':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 's':
             case 'south':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - (this.menu.offsetWidth / 2) + this.button.offsetWidth }px`;
                 break;
             case 'southwest':
             default:
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
                 break;
         }
@@ -390,8 +401,14 @@ class ButtonMenu extends SimpleButton {
     get closeopen() { return this.config.closeopen; }
     set closeopen(closeopen) { this.config.closeopen = closeopen; }
 
+    get custompositioner() { return this.config.custompositioner; }
+    set custompositioner(custompositioner) { this.config.custompositioner = custompositioner; }
+
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get emsize() { return this._emsize; }
+    set emsize(emsize) { this._emsize = emsize; }
 
     get focusinside() { return this.config.focusinside; }
     set focusinside(focusinside) { this.config.focusinside = focusinside; }

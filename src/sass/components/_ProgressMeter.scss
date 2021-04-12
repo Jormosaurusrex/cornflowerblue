@@ -70,7 +70,6 @@ div.progressbar-container {
         transform-origin: 50% 50%;
         stroke-linecap: butt;
         &.gutter {
-          //background-color: red;
           stroke: var(--progressmeter-gutter-color);
           fill: transparent;
         }
@@ -79,7 +78,6 @@ div.progressbar-container {
           transition: stroke-dashoffset 1s ease-in-out;
           stroke: var(--progressmeter-core-color);
           fill: transparent;
-          filter: var(--shadows-panel);
         }
         &.tickmarks {
           stroke-dasharray: 1, 10%;

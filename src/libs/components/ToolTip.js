@@ -50,7 +50,7 @@ class ToolTip {
      * @param parent
      */
     attach(parent) {
-
+        if (!parent) return;
         if ((parent) && (parent.container)) {
            parent = parent.container;
         }
@@ -91,7 +91,9 @@ class ToolTip {
      * Do the actual opening.
      */
     openGuts() {
-
+        if ((this.parent.hasAttribute('aria-expanded')) && (this.parent.getAttribute('aria-expanded') === "true")) {
+            return;
+        }
         ToolTip.closeOpen();
 
         document.body.appendChild(this.container);
@@ -157,6 +159,10 @@ class ToolTip {
                 break;
             case 'n':
             case 'north':
+                self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - (self.container.offsetWidth / 2) + (this.parent.offsetWidth / 2 )}px`;
+                break;
+            case 'ne':
             default:
                 self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.container.style.left = `${offsetLeft}px`;
@@ -199,8 +205,11 @@ class ToolTip {
                 break;
             case 'n':
             case 'north':
-            default:
                 this.container.classList.add('north');
+                break;
+            case 'nw':
+            default:
+                this.container.classList.add('nw');
                 break;
         }
 

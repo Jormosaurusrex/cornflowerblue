@@ -30,6 +30,7 @@ class SimpleForm {
             instructions: null, // Instructions configuration.  See InstructionBox.
             passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
+            loadersize: 'medium',
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('simpleform-spinnertext'), //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
@@ -413,6 +414,7 @@ class SimpleForm {
      */
     buildShade() {
         this.shade = new LoadingShade({
+            size: this.loadersize,
             spinnertext: this.spinnertext,
             spinnerstyle: this.spinnerstyle
         });
@@ -659,6 +661,9 @@ class SimpleForm {
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get loadersize() { return this.config.loadersize; }
+    set loadersize(loadersize) { this.config.loadersize = loadersize; }
 
     get novalidate() { return this.config.novalidate; }
     set novalidate(novalidate) { this.config.novalidate = novalidate; }

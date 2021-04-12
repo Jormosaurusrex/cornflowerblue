@@ -47,6 +47,5 @@ class EmailInput extends TextInput {
             }
         }
     }
-
 }
-
+window.EmailInput = EmailInput;

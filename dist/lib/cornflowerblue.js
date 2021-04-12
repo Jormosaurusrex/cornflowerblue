@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-03-31
+/*! Cornflower Blue - v0.1.1 - 2021-04-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2782,6 +2782,8 @@ class ButtonMenu extends SimpleButton {
                     self.close();
                 }
             },
+            custompositioner: null, // A function that will be used to set the menu's position
+                                    // different from the custom one. passed (self)
             focusinside: true,  //
             menuid: null,    // If present, will only auto-close other menus of this type.
             closeopen: true, // if true, force all other open menus closed when this one opens.
@@ -2830,6 +2832,7 @@ class ButtonMenu extends SimpleButton {
             config.classes = ['menu'];
         }
         super(config);
+        this.emsize = CFBUtils.getSingleEmInPixels();
         if (this.menu) {
             this.processMenu();
         } else {
@@ -2943,6 +2946,14 @@ class ButtonMenu extends SimpleButton {
      * Position the menu
      */
     setPosition() {
+        if ((this.custompositioner) && (typeof this.custompositioner === 'function')) {
+            this.custompositioner(this);
+            return;
+        }
+        this.setPositionDefault();
+    }
+
+    setPositionDefault() {
         let bodyRect = document.body.getBoundingClientRect(),
             elemRect = this.button.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
@@ -2954,36 +2965,36 @@ class ButtonMenu extends SimpleButton {
             case 'w':
             case 'west':
                 this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (this.emsize / 2)}px`;
                 break;
             case 'e':
             case 'east':
                 this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
-                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (CFBUtils.getSingleEmInPixels() / 2)}px`;
+                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
                 break;
             case 'n':
             case 'north':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
                 break;
             case 'nw':
             case 'northwest':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 'se':
             case 'southeast':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 's':
             case 'south':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - (this.menu.offsetWidth / 2) + this.button.offsetWidth }px`;
                 break;
             case 'southwest':
             default:
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
                 break;
         }
@@ -3160,8 +3171,14 @@ class ButtonMenu extends SimpleButton {
     get closeopen() { return this.config.closeopen; }
     set closeopen(closeopen) { this.config.closeopen = closeopen; }
 
+    get custompositioner() { return this.config.custompositioner; }
+    set custompositioner(custompositioner) { this.config.custompositioner = custompositioner; }
+
     get data() { return this.config.data; }
     set data(data) { this.config.data = data; }
+
+    get emsize() { return this._emsize; }
+    set emsize(emsize) { this._emsize = emsize; }
 
     get focusinside() { return this.config.focusinside; }
     set focusinside(focusinside) { this.config.focusinside = focusinside; }
@@ -3497,11 +3514,6 @@ class Panel {
         if (!this.headerid) { this.headerid = `panel-h-${CFBUtils.getUniqueKey(5)}`; }
 
         this.loadstate();
-
-    }
-
-    finalize() {
-        this.applystate();
     }
 
     /* PERSISTENCE METHODS______________________________________________________________ */
@@ -3511,7 +3523,7 @@ class Panel {
      * @return {boolean}
      */
     get ispersistable() {
-        return !!((this.savestate) && (this.savekey) && (window.localStorage));
+        return !!((this.stateful) && (this.savekey) && (window.localStorage));
     }
 
     /**
@@ -3722,6 +3734,7 @@ class Panel {
             }
         }
 
+        this.applystate();
         if (this.hidden) { this.hide(); }
     }
 
@@ -3842,9 +3855,6 @@ class Panel {
     get savekey() { return this._savekey; }
     set savekey(savekey) { this._savekey = savekey; }
 
-    get savestate() { return this.config.savestate; }
-    set savestate(savestate) { this.config.savestate = savestate; }
-
     get state() { return this._state; }
     set state(state) { this._state = state; }
 
@@ -3876,6 +3886,7 @@ class LoadingShade {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
+            size: 'medium',
             spinnerstyle: 'spin',
             spinnertext: TextFactory.get('simpleform-spinnertext'),
             classes: []
@@ -3886,6 +3897,7 @@ class LoadingShade {
         return {
             id: { type: 'option', datatype: 'string', description: "A unique id value." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            size: { type: 'option', datatype: 'string', description: "Size of the spinner. Default medium; values tiny, small, medium, large." },
             spinnerstyle: { type: 'option', datatype: 'enumeration', description: "The type of spinner to show (spin|bounce)" },
             spinnertext: { type: 'option', datatype: 'string', description: "The text to show on the loading shade." }
         };
@@ -3930,7 +3942,7 @@ class LoadingShade {
      */
     buildContainer() {
         this.container = document.createElement('div');
-        this.container.classList.add('loading-shade');
+        this.container.classList.add('loading-shade', this.size);
         this.container.setAttribute('aria-hidden', true);
 
         for (let c of this.classes) {
@@ -3943,10 +3955,10 @@ class LoadingShade {
             this.container.appendChild(d);
         }
         if (this.spinnertext) {
-            let d = document.createElement('div');
-            d.classList.add('spinnertext');
-            d.innerHTML = this.spinnertext;
-            this.container.appendChild(d);
+            this.textobj = document.createElement('div');
+            this.textobj.classList.add('spinnertext');
+            this.textobj.innerHTML = this.spinnertext;
+            this.container.appendChild(this.textobj);
         }
     }
 
@@ -3972,12 +3984,20 @@ class LoadingShade {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
+    get size() { return this.config.size; }
+    set size(size) { this.config.size = size; }
+
     get spinnerstyle() { return this.config.spinnerstyle; }
     set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
 
-    get spinnertext() { return this.config.spinnertext; }
-    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
+    get spinnertext() {return this.config.spinnertext; }
+    set spinnertext(spinnertext) {
+        if (this.textobj) { this.textobj.innerHTML = spinnertext; }
+        this.config.spinnertext = spinnertext;
+    }
 
+    get textobj() { return this._textobj; }
+    set textobj(textobj) { this._textobj = textobj; }
 }
 window.LoadingShade = LoadingShade;
 class SimpleProgressMeter {
@@ -4782,6 +4802,7 @@ class DataGrid extends Panel {
             extraelements: null,
             showinfo: true,
             showfooter: true,
+            itemslabel: TextFactory.get('items_label'),
             screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -5873,6 +5894,12 @@ class DataGrid extends Panel {
                 }
             }
         }
+        if (this.state.selected) {
+            let row = this.grid.querySelector(`[data-id="${this.state.selected}"]`);
+            if (row) {
+                row.click();
+            }
+        }
         if (this.state.filters) {
             this.activefilters = this.state.filters;
         }
@@ -5884,11 +5911,11 @@ class DataGrid extends Panel {
      * Figures out the state of the grid and generates the state object
      */
     grindstate() {
-
         let state = {
             minimized: false,
             fields: {},
             filters: [],
+            selected: this.selectedrow,
             sort: this.defaultsort,
             search: null
         };
@@ -6125,6 +6152,7 @@ class DataGrid extends Panel {
 
         if ((sels) && (sels.length > 0)) {
             othersSelected = true;
+            this.selectedrow = null;
         }
 
         if (deselectOthers) {
@@ -6187,6 +6215,9 @@ class DataGrid extends Panel {
             }
         } else {
             row.setAttribute('aria-selected', 'true');
+            if (row.getAttribute('data-id')) {
+                this.selectedrow = row.getAttribute('data-id');
+            }
             if (row.querySelector('input.selector')) {
                 row.querySelector('input.selector').checked = true;
             }
@@ -6194,6 +6225,8 @@ class DataGrid extends Panel {
                 this.selectaction(this, row, rdata);
             }
         }
+        this.persist();
+
     }
 
     /**
@@ -6365,7 +6398,7 @@ class DataGrid extends Panel {
     buildItemCounter() {
         let box = document.createElement('div');
         box.classList.add('countbox');
-        box.innerHTML = `<label>${TextFactory.get('items_label')}</label> <span class="itemcount"></span>`;
+        box.innerHTML = `<label>${this.itemslabel}</label> <span class="itemcount"></span>`;
         return box;
     }
 
@@ -7053,6 +7086,9 @@ class DataGrid extends Panel {
     get instructionsicon() { return this.config.instructionsicon; }
     set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
 
+    get itemslabel() { return this.config.itemslabel; }
+    set itemslabel(itemslabel) { this.config.itemslabel = itemslabel; }
+
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
 
@@ -7118,6 +7154,10 @@ class DataGrid extends Panel {
         }
         this.config.selectaction = selectaction;
     }
+
+    get selectedrow() { return this._selectedrow; }
+    set selectedrow(selectedrow) { this._selectedrow = selectedrow; }
+
 
     get shade() {
         if (!this._shade) { this.buildShade(); }
@@ -7440,7 +7480,7 @@ class DataList extends DataGrid {
     postProcess() {
         // nothing.
         this.updateCount();
-        if (this.showinfo) {
+        if ((this.showinfo) && (this.searchable)) {
             this.search(this.searchcontrol.value);
         }
     }
@@ -9875,6 +9915,7 @@ class SimpleForm {
             instructions: null, // Instructions configuration.  See InstructionBox.
             passiveinstructions: null, // Passive Instructions array.  Shown when the form is set to passive.
 
+            loadersize: 'medium',
             spinnerstyle: 'spin', //
             spinnertext: TextFactory.get('simpleform-spinnertext'), //
             results: null, // Sometimes you want to pass a form the results from a different form, like with logging out.
@@ -10258,6 +10299,7 @@ class SimpleForm {
      */
     buildShade() {
         this.shade = new LoadingShade({
+            size: this.loadersize,
             spinnertext: this.spinnertext,
             spinnerstyle: this.spinnerstyle
         });
@@ -10504,6 +10546,9 @@ class SimpleForm {
 
     get name() { return this.config.name; }
     set name(name) { this.config.name = name; }
+
+    get loadersize() { return this.config.loadersize; }
+    set loadersize(loadersize) { this.config.loadersize = loadersize; }
 
     get novalidate() { return this.config.novalidate; }
     set novalidate(novalidate) { this.config.novalidate = novalidate; }
@@ -11112,7 +11157,7 @@ class ToolTip {
      * @param parent
      */
     attach(parent) {
-
+        if (!parent) return;
         if ((parent) && (parent.container)) {
            parent = parent.container;
         }
@@ -11153,7 +11198,9 @@ class ToolTip {
      * Do the actual opening.
      */
     openGuts() {
-
+        if ((this.parent.hasAttribute('aria-expanded')) && (this.parent.getAttribute('aria-expanded') === "true")) {
+            return;
+        }
         ToolTip.closeOpen();
 
         document.body.appendChild(this.container);
@@ -11219,6 +11266,10 @@ class ToolTip {
                 break;
             case 'n':
             case 'north':
+                self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft - (self.container.offsetWidth / 2) + (this.parent.offsetWidth / 2 )}px`;
+                break;
+            case 'ne':
             default:
                 self.container.style.top = `${(offsetTop - self.container.clientHeight - (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.container.style.left = `${offsetLeft}px`;
@@ -11261,8 +11312,11 @@ class ToolTip {
                 break;
             case 'n':
             case 'north':
-            default:
                 this.container.classList.add('north');
+                break;
+            case 'nw':
+            default:
+                this.container.classList.add('nw');
                 break;
         }
 
@@ -13920,9 +13974,8 @@ class EmailInput extends TextInput {
             }
         }
     }
-
 }
-
+window.EmailInput = EmailInput;
 
 class FileInput extends InputElement {
 
@@ -14994,7 +15047,6 @@ class URIInput extends TextInput {
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
-
         if ((config.value) && (URIInput.isEncoded(config.value))) {
             config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
         }
@@ -15003,7 +15055,7 @@ class URIInput extends TextInput {
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
-    get inputmode() { return "url"; }
+    get inputmode() { return "text"; }
 
     /* CORE METHODS_____________________________________________________________________ */
 
@@ -15020,7 +15072,7 @@ class URIInput extends TextInput {
     }
 
 }
-window.URLInput = URIInput;
+window.URIInput = URIInput;
 class ImageSelector extends SelectMenu {
 
     static get DEFAULT_CONFIG() {

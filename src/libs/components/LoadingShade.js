@@ -2,6 +2,7 @@ class LoadingShade {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
+            size: 'medium',
             spinnerstyle: 'spin',
             spinnertext: TextFactory.get('simpleform-spinnertext'),
             classes: []
@@ -12,6 +13,7 @@ class LoadingShade {
         return {
             id: { type: 'option', datatype: 'string', description: "A unique id value." },
             classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
+            size: { type: 'option', datatype: 'string', description: "Size of the spinner. Default medium; values tiny, small, medium, large." },
             spinnerstyle: { type: 'option', datatype: 'enumeration', description: "The type of spinner to show (spin|bounce)" },
             spinnertext: { type: 'option', datatype: 'string', description: "The text to show on the loading shade." }
         };
@@ -56,7 +58,7 @@ class LoadingShade {
      */
     buildContainer() {
         this.container = document.createElement('div');
-        this.container.classList.add('loading-shade');
+        this.container.classList.add('loading-shade', this.size);
         this.container.setAttribute('aria-hidden', true);
 
         for (let c of this.classes) {
@@ -69,10 +71,10 @@ class LoadingShade {
             this.container.appendChild(d);
         }
         if (this.spinnertext) {
-            let d = document.createElement('div');
-            d.classList.add('spinnertext');
-            d.innerHTML = this.spinnertext;
-            this.container.appendChild(d);
+            this.textobj = document.createElement('div');
+            this.textobj.classList.add('spinnertext');
+            this.textobj.innerHTML = this.spinnertext;
+            this.container.appendChild(this.textobj);
         }
     }
 
@@ -98,11 +100,19 @@ class LoadingShade {
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
 
+    get size() { return this.config.size; }
+    set size(size) { this.config.size = size; }
+
     get spinnerstyle() { return this.config.spinnerstyle; }
     set spinnerstyle(spinnerstyle) { this.config.spinnerstyle = spinnerstyle; }
 
-    get spinnertext() { return this.config.spinnertext; }
-    set spinnertext(spinnertext) { this.config.spinnertext = spinnertext; }
+    get spinnertext() {return this.config.spinnertext; }
+    set spinnertext(spinnertext) {
+        if (this.textobj) { this.textobj.innerHTML = spinnertext; }
+        this.config.spinnertext = spinnertext;
+    }
 
+    get textobj() { return this._textobj; }
+    set textobj(textobj) { this._textobj = textobj; }
 }
 window.LoadingShade = LoadingShade;

@@ -16,6 +16,7 @@ class DataGrid extends Panel {
             extraelements: null,
             showinfo: true,
             showfooter: true,
+            itemslabel: TextFactory.get('items_label'),
             screen: document.body,
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
@@ -1107,6 +1108,12 @@ class DataGrid extends Panel {
                 }
             }
         }
+        if (this.state.selected) {
+            let row = this.grid.querySelector(`[data-id="${this.state.selected}"]`);
+            if (row) {
+                row.click();
+            }
+        }
         if (this.state.filters) {
             this.activefilters = this.state.filters;
         }
@@ -1118,11 +1125,11 @@ class DataGrid extends Panel {
      * Figures out the state of the grid and generates the state object
      */
     grindstate() {
-
         let state = {
             minimized: false,
             fields: {},
             filters: [],
+            selected: this.selectedrow,
             sort: this.defaultsort,
             search: null
         };
@@ -1359,6 +1366,7 @@ class DataGrid extends Panel {
 
         if ((sels) && (sels.length > 0)) {
             othersSelected = true;
+            this.selectedrow = null;
         }
 
         if (deselectOthers) {
@@ -1421,6 +1429,9 @@ class DataGrid extends Panel {
             }
         } else {
             row.setAttribute('aria-selected', 'true');
+            if (row.getAttribute('data-id')) {
+                this.selectedrow = row.getAttribute('data-id');
+            }
             if (row.querySelector('input.selector')) {
                 row.querySelector('input.selector').checked = true;
             }
@@ -1428,6 +1439,8 @@ class DataGrid extends Panel {
                 this.selectaction(this, row, rdata);
             }
         }
+        this.persist();
+
     }
 
     /**
@@ -1599,7 +1612,7 @@ class DataGrid extends Panel {
     buildItemCounter() {
         let box = document.createElement('div');
         box.classList.add('countbox');
-        box.innerHTML = `<label>${TextFactory.get('items_label')}</label> <span class="itemcount"></span>`;
+        box.innerHTML = `<label>${this.itemslabel}</label> <span class="itemcount"></span>`;
         return box;
     }
 
@@ -2287,6 +2300,9 @@ class DataGrid extends Panel {
     get instructionsicon() { return this.config.instructionsicon; }
     set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
 
+    get itemslabel() { return this.config.itemslabel; }
+    set itemslabel(itemslabel) { this.config.itemslabel = itemslabel; }
+
     get masterselector() { return this._masterselector; }
     set masterselector(masterselector) { this._masterselector = masterselector; }
 
@@ -2352,6 +2368,10 @@ class DataGrid extends Panel {
         }
         this.config.selectaction = selectaction;
     }
+
+    get selectedrow() { return this._selectedrow; }
+    set selectedrow(selectedrow) { this._selectedrow = selectedrow; }
+
 
     get shade() {
         if (!this._shade) { this.buildShade(); }

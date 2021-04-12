@@ -34,7 +34,6 @@ class URIInput extends TextInput {
     constructor(config) {
         if (!config) { config = {}; }
         config = Object.assign({}, URIInput.DEFAULT_CONFIG, config);
-
         if ((config.value) && (URIInput.isEncoded(config.value))) {
             config.value = decodeURIComponent(config.value); // sometimes the values aren't human readable
         }
@@ -43,7 +42,7 @@ class URIInput extends TextInput {
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
-    get inputmode() { return "url"; }
+    get inputmode() { return "text"; }
 
     /* CORE METHODS_____________________________________________________________________ */
 
@@ -60,4 +59,4 @@ class URIInput extends TextInput {
     }
 
 }
-window.URLInput = URIInput;
+window.URIInput = URIInput;

@@ -1122,8 +1122,8 @@ div.tooltip {
   align-content: center;
   list-style-type: none;
   margin: 0;
-  padding: 0.5em 0.75em 0.5em 0.75em;
-  min-height: 2.7em;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.7rem;
   overflow: visible;
   z-index: 21000;
   border-radius: var(--border-radius);
@@ -1142,13 +1142,13 @@ div.tooltip:before {
   position: absolute;
   border-style: solid;
   border-color: var(--canvas-color-highlight) transparent;
-  left: 1em;
-  bottom: -0.5em;
-  border-width: 0.5em 0.5em 0 0.5em;
+  left: 1rem;
+  bottom: -0.5rem;
+  border-width: 0.5rem 0.5rem 0 0.5rem;
 }
 div.tooltip span.tipicon {
   padding: 0;
-  margin: 0 1em 0 0;
+  margin: 0 1rem 0 0;
 }
 div.tooltip div.tiptext {
   max-width: 33em;
@@ -1160,31 +1160,34 @@ div.tooltip div.tiptext {
 div.tooltip.unfixed div.tiptext {
   min-width: unset;
 }
+div.tooltip.north:before {
+  left: calc((100% / 2) - .5rem);
+}
 div.tooltip.south:before {
   bottom: unset;
   top: -0.5em;
   left: calc((100% / 2) - .5rem);
-  border-width: 0 0.5em 0.5em 0.5em;
+  border-width: 0 0.5rem 0.5rem 0.5rem;
 }
 div.tooltip.southwest:before {
   bottom: unset;
-  top: -0.5em;
-  border-width: 0 0.5em 0.5em 0.5em;
+  top: -0.5rem;
+  border-width: 0 0.5rem 0.5rem 0.5rem;
 }
 div.tooltip.west:before {
   left: unset;
-  right: -0.5em;
+  right: -0.5rem;
   bottom: unset;
-  top: 0.5em;
+  top: 0.5rem;
   border-color: transparent var(--canvas-color-highlight);
-  border-width: 0.5em 0 0.5em 0.5em;
+  border-width: 0.5rem 0 0.5rem 0.5rem;
 }
 div.tooltip.east:before {
-  left: -0.5em;
+  left: -0.5rem;
   bottom: unset;
-  top: 0.5em;
+  top: 0.5rem;
   border-color: transparent var(--canvas-color-highlight);
-  border-width: 0.5em 0.5em 0.5em 0;
+  border-width: 0.5rem 0.5rem 0.5rem 0;
 }
 
 /*# sourceMappingURL=cornflowerblue-bodylevel.css.map */

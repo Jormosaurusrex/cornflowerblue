@@ -1532,7 +1532,7 @@ a.button {
   text-align: left;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 0.2s, background-color 0.2s, box-shadow 0.5s;
+  transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
   margin: 0.8em 0.4em 0.8em 0.4em;
   padding: 0.6em 1em 0.6em 1em;
   font-family: var(--default-font-family);
@@ -4770,6 +4770,7 @@ div.growler.success {
 }
 
 div.loading-shade {
+  --spinner-size: 15rem;
   display: flex;
   position: absolute;
   left: 0;
@@ -4779,35 +4780,13 @@ div.loading-shade {
   z-index: 2000;
   background-color: var(--canvas-color-primary);
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 3rem;
   align-content: center;
   align-items: center;
 }
-div.loading-shade div.spinner span.icon {
-  display: block;
-  color: var(--colors-highlight);
-  font-size: 100pt;
-  text-shadow: var(--text-shadow);
-  margin-top: -1em;
-  animation: cfb-localspin 2s linear infinite;
-}
-div.loading-shade div.spinner span.icon:before {
-  line-height: normal;
-}
-div.loading-shade div.spinnertext {
-  color: var(--shade-text-color);
-  font-size: 2rem;
-  text-shadow: var(--text-shadow);
-  text-transform: uppercase;
-  font-weight: 100;
-}
-div.loading-shade[aria-hidden=true] {
-  display: none;
-}
-
-div.spinner.spin {
+div.loading-shade > div.spinner.spin {
   border-radius: 50%;
-  --spinner-size: 12vw;
   width: var(--spinner-size);
   height: var(--spinner-size);
   min-width: var(--spinner-size);
@@ -4818,8 +4797,7 @@ div.spinner.spin {
   border-top-color: var(--shade-spinner-solid-color);
   animation: cfb-localspin 1.1s infinite linear;
 }
-
-div.spinner.bounce {
+div.loading-shade > div.spinner.bounce {
   width: 4em;
   height: 4em;
   min-width: 4em;
@@ -4827,7 +4805,7 @@ div.spinner.bounce {
   position: relative;
   margin: -2rem 0 4rem 0;
 }
-div.spinner.bounce:before, div.spinner.bounce:after {
+div.loading-shade > div.spinner.bounce:before, div.loading-shade > div.spinner.bounce:after {
   display: block;
   content: "";
   width: 100%;
@@ -4840,8 +4818,48 @@ div.spinner.bounce:before, div.spinner.bounce:after {
   left: 0;
   animation: cfb-spinner-bounce 2s infinite ease-in-out;
 }
-div.spinner.bounce:after {
+div.loading-shade > div.spinner.bounce:after {
   animation-delay: -1s;
+}
+div.loading-shade > div.spinnertext {
+  color: var(--shade-text-color);
+  font-size: 2rem;
+  text-shadow: var(--text-shadow);
+  text-transform: uppercase;
+  font-weight: 100;
+}
+div.loading-shade.large {
+  --spinner-size: 20rem;
+}
+div.loading-shade.large > div.spinner.spin {
+  border: 1.2rem solid var(--shade-spinner-bed-color);
+}
+div.loading-shade.large > div.spinnertext {
+  font-size: 2.5rem;
+}
+div.loading-shade.small {
+  --spinner-size: 10rem;
+}
+div.loading-shade.small > div.spinner.spin {
+  border: 0.5rem solid var(--shade-spinner-bed-color);
+}
+div.loading-shade.small > div.spinnertext {
+  font-size: 1rem;
+}
+div.loading-shade.tiny {
+  --spinner-size: 2rem;
+}
+div.loading-shade.tiny > div.spinner.spin {
+  border: 0.3rem solid var(--shade-spinner-bed-color);
+}
+div.loading-shade.tiny > div.spinnertext {
+  font-size: 0.9rem;
+}
+div.loading-shade.large > div.spinner.spin, div.loading-shade.small > div.spinner.spin, div.loading-shade.tiny > div.spinner.spin {
+  border-top-color: var(--shade-spinner-solid-color);
+}
+div.loading-shade[aria-hidden=true] {
+  display: none;
 }
 
 div.messagebox {
@@ -5197,7 +5215,6 @@ div.progressbar-container div.circlewrap svg circle.radialcircle {
   transition: stroke-dashoffset 1s ease-in-out;
   stroke: var(--progressmeter-core-color);
   fill: transparent;
-  filter: var(--shadows-panel);
 }
 div.progressbar-container div.circlewrap svg circle.tickmarks {
   stroke-dasharray: 1, 10%;
