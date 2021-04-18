@@ -1198,6 +1198,8 @@ form.shaded div.actions {
   filter: blur(3px);
 }
 form div.header {
+  position: relative;
+  z-index: 10;
   flex-grow: 1;
   padding: 0.5rem 1.5rem;
 }
@@ -1205,6 +1207,8 @@ form div.header div.instructions {
   margin: 1rem 0;
 }
 form div.elements {
+  position: relative;
+  z-index: 10;
   padding: 0.5rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -1228,6 +1232,8 @@ form div.actions,
 form div.passiveactions {
   flex-grow: 1;
   display: flex;
+  position: relative;
+  z-index: 100;
   flex-direction: row;
   align-items: flex-start;
   align-content: center;

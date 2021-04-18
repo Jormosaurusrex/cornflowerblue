@@ -1,3 +1,4 @@
+// noinspection JSUnresolvedFunction
 class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
@@ -173,18 +174,25 @@ class DataGrid extends Panel {
 
     /**
      * Loads the initial data into the grid.
+     * @param callback and optional callback
      */
-    fillData() {
+    fillData(callback) {
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
                 this.postLoad();
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
                 this.shade.deactivate();
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
                 this.update(data);
                 this.postLoad();
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
                 this.shade.deactivate();
             });
         } else if (this.data) {
@@ -193,6 +201,9 @@ class DataGrid extends Panel {
             }
             setTimeout(() => {
                 this.postLoad();
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
                 this.shade.deactivate();
             }, 100);
         }
@@ -434,6 +445,7 @@ class DataGrid extends Panel {
     /**
      * Sort the table based on a field.
      * @param field the field to sort
+     * @param sort the sort direction
      */
     sortField(field, sort='asc') {
 

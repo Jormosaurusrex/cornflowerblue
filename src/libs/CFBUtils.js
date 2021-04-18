@@ -377,6 +377,18 @@ class CFBUtils {
 
     /* FORMAT METHODS___________________________________________________________________ */
 
+    static excerpt(string, maxlength = 70, striphtml = true) {
+        if (striphtml) {
+            let div = document.createElement("div"); // Strips out html
+            div.innerHTML = string;
+            string = div.textContent || div.innerText || "";
+        }
+        if (string.length > maxlength) {
+            return `${string.substring(0, maxlength -3)}...`;
+        }
+        return string;
+    }
+
     /**
      * Add commas to a number in the right place
      * @param num the number to change

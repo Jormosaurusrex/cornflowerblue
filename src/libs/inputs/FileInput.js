@@ -27,7 +27,14 @@ class FileInput extends InputElement {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     get value() {
-        if (this.selected) { return this.selected.val(); }
+        if (this.fileinput.files) {
+            let farray =  this.fileinput.files;
+            let fnames = [];
+            for (let i of farray) {
+                fnames.push(i.name);
+            }
+            return fnames.join(',');
+        }
         return ''; // Return empty string for no value.
     }
 
@@ -155,7 +162,6 @@ class FileInput extends InputElement {
         });
         this.fileinput.addEventListener('change', (event) => {
            // this.container.classList.add('filled');
-
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
                 if (this.hascontainer) {
                     this.container.classList.add('filled');
@@ -168,7 +174,7 @@ class FileInput extends InputElement {
                 }
                 if (fnames.length > 0) {
                     this.triggerbox.classList.add('files');
-                    this.triggerbox.innerHTML = `<span class="placeholder">${fnames.join(', ')}</span>`;
+                    this.triggerbox.innerHTML = `${fnames.join(', ')}`;
                 } else {
                     this.triggerbox.classList.remove('files');
                     this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;

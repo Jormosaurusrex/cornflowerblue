@@ -236,12 +236,21 @@ class DataList extends DataGrid {
             return this.specialsort(listelements, column, direction);
         }
         listelements.sort((a, b) => {
+            let aval = a[column],
+                bval = b[column];
+
+            if (typeof aval === 'string') {
+                aval = aval.toLowerCase();
+            }
+            if (typeof bval === 'string') {
+                bval = bval.toLowerCase();
+            }
             if (direction === 'asc') {
-                if (a[column] > b[column]) { return 1 }
-                if (a[column] < b[column]) { return -1 }
+                if (aval > bval) { return 1 }
+                if (aval < bval) { return -1 }
             } else {
-                if (b[column] > a[column]) { return 1 }
-                if (b[column] < a[column]) { return -1 }
+                if (bval > aval) { return 1 }
+                if (bval < aval) { return -1 }
             }
             return 0;
         });

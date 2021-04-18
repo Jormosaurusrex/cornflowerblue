@@ -262,7 +262,7 @@ class SimpleForm {
      * @param isFirstValidation set to true when the form loads so it doesn't auto-validate untouched forms
      * @return {boolean}
      */
-    validate(isFirstValidataion = false) {
+    validate(isFirstValidation = false) {
         if (this.novalidate) {
            this.runValid();
            return true;
@@ -283,7 +283,7 @@ class SimpleForm {
             valid = this.validator(this);
         }
 
-        if ((valid) && (!isFirstValidataion)) {
+        if ((valid) && (!isFirstValidation)) {
             this.runValid();
         } else {
             this.runInvalid();
@@ -432,6 +432,9 @@ class SimpleForm {
                 let p = document.createElement('p');
                 p.innerHTML = element;
                 this.elementbox.appendChild(p);
+            } else if ((typeof element === 'object') && (element.nodeType) && (element.nodeType === Node.ELEMENT_NODE)) {
+                // This is a chunk of DOM
+                this.elementbox.appendChild(element);
             } else if ((typeof element === 'object') && (element !== null) && (element.section)) { // This is a section
                 let fset = document.createElement('fieldset');
                 fset.classList.add('fset');

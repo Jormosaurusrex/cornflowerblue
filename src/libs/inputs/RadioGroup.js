@@ -48,6 +48,19 @@ class RadioGroup extends SelectMenu {
         if (this.container) { this.container.classList.remove('disabled'); }
     }
 
+    select(value) {
+        let radios = this.optionlist.querySelectorAll("input[type='radio']");
+        for (let radio of radios) {
+            if (radio.getAttribute('data-value') === value) {
+                radio.setAttribute('aria-selected', "true");
+                radio.checked = true;
+            } else {
+                radio.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
@@ -63,6 +76,10 @@ class RadioGroup extends SelectMenu {
         this.container.appendChild(this.labelobj);
         this.container.appendChild(this.optionlist);
         this.container.appendChild(this.passivebox);
+
+        if (this.value) {
+            this.select(this.value);
+        }
 
         this.postContainerScrub();
 
@@ -100,6 +117,8 @@ class RadioGroup extends SelectMenu {
         op.setAttribute('value', def.value);
         op.setAttribute('aria-label', def.label);
         op.setAttribute('role', 'radio');
+        op.setAttribute('data-value', def.value);
+
         for (let c of this.classes) {
             op.classList.add(c);
         }
@@ -129,6 +148,13 @@ class RadioGroup extends SelectMenu {
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
+
+        if (def.help) {
+            let s = document.createElement('span');
+            s.classList.add('mutehelp');
+            s.innerHTML = def.help;
+            opLabel.appendChild(s);
+        }
 
         if (((this.config.value !== null) && (this.config.value === def.value)) || (def.checked)) {
             this.origval = def.value;

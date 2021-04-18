@@ -200,7 +200,6 @@ class TextFactory {
         }
 
         if (!TextFactory.library[arguments[0]]) {
-            //console.warn(`Text key not found: ${arguments[0]}`);
             return arguments[0];
         }
         return TextFactory.library[arguments[0]];

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-04-11
+/*! Cornflower Blue - v0.1.1 - 2021-04-16
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2182,7 +2182,6 @@ class TextFactory {
         }
 
         if (!TextFactory.library[arguments[0]]) {
-            //console.warn(`Text key not found: ${arguments[0]}`);
             return arguments[0];
         }
         return TextFactory.library[arguments[0]];
@@ -4959,18 +4958,25 @@ class DataGrid extends Panel {
 
     /**
      * Loads the initial data into the grid.
+     * @param callback and optional callback
      */
-    fillData() {
+    fillData(callback) {
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
                 this.postLoad();
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
                 this.shade.deactivate();
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
                 this.update(data);
                 this.postLoad();
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
                 this.shade.deactivate();
             });
         } else if (this.data) {
@@ -4979,6 +4985,9 @@ class DataGrid extends Panel {
             }
             setTimeout(() => {
                 this.postLoad();
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
                 this.shade.deactivate();
             }, 100);
         }
@@ -7457,12 +7466,21 @@ class DataList extends DataGrid {
             return this.specialsort(listelements, column, direction);
         }
         listelements.sort((a, b) => {
+            let aval = a[column],
+                bval = b[column];
+
+            if (typeof aval === 'string') {
+                aval = aval.toLowerCase();
+            }
+            if (typeof bval === 'string') {
+                bval = bval.toLowerCase();
+            }
             if (direction === 'asc') {
-                if (a[column] > b[column]) { return 1 }
-                if (a[column] < b[column]) { return -1 }
+                if (aval > bval) { return 1 }
+                if (aval < bval) { return -1 }
             } else {
-                if (b[column] > a[column]) { return 1 }
-                if (b[column] < a[column]) { return -1 }
+                if (bval > aval) { return 1 }
+                if (bval < aval) { return -1 }
             }
             return 0;
         });
@@ -14006,7 +14024,14 @@ class FileInput extends InputElement {
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
 
     get value() {
-        if (this.selected) { return this.selected.val(); }
+        if (this.fileinput.files) {
+            let farray =  this.fileinput.files;
+            let fnames = [];
+            for (let i of farray) {
+                fnames.push(i.name);
+            }
+            return fnames.join(',');
+        }
         return ''; // Return empty string for no value.
     }
 
@@ -14134,7 +14159,6 @@ class FileInput extends InputElement {
         });
         this.fileinput.addEventListener('change', (event) => {
            // this.container.classList.add('filled');
-
             if ((this.fileinput.files) && (this.fileinput.files.length > 0)) {
                 if (this.hascontainer) {
                     this.container.classList.add('filled');
@@ -14147,7 +14171,7 @@ class FileInput extends InputElement {
                 }
                 if (fnames.length > 0) {
                     this.triggerbox.classList.add('files');
-                    this.triggerbox.innerHTML = `<span class="placeholder">${fnames.join(', ')}</span>`;
+                    this.triggerbox.innerHTML = `${fnames.join(', ')}`;
                 } else {
                     this.triggerbox.classList.remove('files');
                     this.triggerbox.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
@@ -14772,6 +14796,14 @@ class RadioGroup extends SelectMenu {
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
         opLabel.innerHTML = def.label;
+
+        if (def.help) {
+            let s = document.createElement('span');
+            s.classList.add('mutehelp');
+            s.innerHTML = def.help;
+            opLabel.appendChild(s);
+        }
+
 
         if (((this.config.value !== null) && (this.config.value === def.value)) || (def.checked)) {
             this.origval = def.value;
