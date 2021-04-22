@@ -6206,7 +6206,7 @@ div.tooltip.north:before {
 }
 div.tooltip.south:before {
   bottom: unset;
-  top: -0.5em;
+  top: -0.4em;
   left: calc((100% / 2) - .5rem);
   border-width: 0 0.5rem 0.5rem 0.5rem;
 }
@@ -6978,6 +6978,7 @@ div.datalist-container > ul.datalist > li:first-child {
   margin-top: 0;
 }
 div.datalist-container > ul.datalist > li > div.thumbnail {
+  align-self: center;
   margin: 0;
   width: var(--thumbnail-size);
   min-width: var(--thumbnail-size);
@@ -7052,10 +7053,6 @@ div.datalist-container > ul.datalist > li:focus:last-child {
 div.datalist-container > ul.datalist > li[aria-selected=true] {
   --hover-side-shadow-color: var(--colors-focus);
   box-shadow: var(--hover-side-shadow);
-}
-div.datalist-container > ul.datalist > li[aria-selected=true] button.activebutton,
-div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebutton {
-  display: none;
 }
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > ul.datalist > li:hover {

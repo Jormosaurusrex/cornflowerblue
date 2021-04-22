@@ -114,6 +114,7 @@ div.datalist-container {
         margin-top: 0;
       }
       >div.thumbnail {
+        align-self: center;
         margin: 0;
         width: var(--thumbnail-size);
         min-width: var(--thumbnail-size);
@@ -185,10 +186,6 @@ div.datalist-container {
       &[aria-selected="true"] {
         --hover-side-shadow-color: var(--colors-focus);
         box-shadow: var(--hover-side-shadow);
-        button.activebutton,
-        a.button.activebutton {
-          display: none;
-        }
       }
       @include for-hover-only {
         &:hover {

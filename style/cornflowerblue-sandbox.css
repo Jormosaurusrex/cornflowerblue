@@ -6502,6 +6502,7 @@ div.datalist-container > ul.datalist > li:first-child {
   margin-top: 0;
 }
 div.datalist-container > ul.datalist > li > div.thumbnail {
+  align-self: center;
   margin: 0;
   width: var(--thumbnail-size);
   min-width: var(--thumbnail-size);
@@ -6576,10 +6577,6 @@ div.datalist-container > ul.datalist > li:focus:last-child {
 div.datalist-container > ul.datalist > li[aria-selected=true] {
   --hover-side-shadow-color: var(--colors-focus);
   box-shadow: var(--hover-side-shadow);
-}
-div.datalist-container > ul.datalist > li[aria-selected=true] button.activebutton,
-div.datalist-container > ul.datalist > li[aria-selected=true] a.button.activebutton {
-  display: none;
 }
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > ul.datalist > li:hover {

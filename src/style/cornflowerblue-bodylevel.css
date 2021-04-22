@@ -1165,7 +1165,7 @@ div.tooltip.north:before {
 }
 div.tooltip.south:before {
   bottom: unset;
-  top: -0.5em;
+  top: -0.4em;
   left: calc((100% / 2) - .5rem);
   border-width: 0 0.5rem 0.5rem 0.5rem;
 }

@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-04-16
+/*! Cornflower Blue - v0.1.1 - 2021-04-21
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -379,6 +379,18 @@ class CFBUtils {
     }
 
     /* FORMAT METHODS___________________________________________________________________ */
+
+    static excerpt(string, maxlength = 70, striphtml = true) {
+        if (striphtml) {
+            let div = document.createElement("div"); // Strips out html
+            div.innerHTML = string;
+            string = div.textContent || div.innerText || "";
+        }
+        if (string.length > maxlength) {
+            return `${string.substring(0, maxlength -3)}...`;
+        }
+        return string;
+    }
 
     /**
      * Add commas to a number in the right place
@@ -4783,6 +4795,7 @@ class ColumnConfigurator {
     set instructions(instructions) { this.config.instructions = instructions; }
 }
 window.ColumnConfigurator = ColumnConfigurator;
+// noinspection JSUnresolvedFunction
 class DataGrid extends Panel {
 
     static get DEFAULT_CONFIG() {
@@ -5229,6 +5242,7 @@ class DataGrid extends Panel {
     /**
      * Sort the table based on a field.
      * @param field the field to sort
+     * @param sort the sort direction
      */
     sortField(field, sort='asc') {
 
@@ -10165,7 +10179,7 @@ class SimpleForm {
      * @param isFirstValidation set to true when the form loads so it doesn't auto-validate untouched forms
      * @return {boolean}
      */
-    validate(isFirstValidataion = false) {
+    validate(isFirstValidation = false) {
         if (this.novalidate) {
            this.runValid();
            return true;
@@ -10186,7 +10200,7 @@ class SimpleForm {
             valid = this.validator(this);
         }
 
-        if ((valid) && (!isFirstValidataion)) {
+        if ((valid) && (!isFirstValidation)) {
             this.runValid();
         } else {
             this.runInvalid();
@@ -10335,6 +10349,9 @@ class SimpleForm {
                 let p = document.createElement('p');
                 p.innerHTML = element;
                 this.elementbox.appendChild(p);
+            } else if ((typeof element === 'object') && (element.nodeType) && (element.nodeType === Node.ELEMENT_NODE)) {
+                // This is a chunk of DOM
+                this.elementbox.appendChild(element);
             } else if ((typeof element === 'object') && (element !== null) && (element.section)) { // This is a section
                 let fset = document.createElement('fieldset');
                 fset.classList.add('fset');
@@ -14715,6 +14732,19 @@ class RadioGroup extends SelectMenu {
         if (this.container) { this.container.classList.remove('disabled'); }
     }
 
+    select(value) {
+        let radios = this.optionlist.querySelectorAll("input[type='radio']");
+        for (let radio of radios) {
+            if (radio.getAttribute('data-value') === value) {
+                radio.setAttribute('aria-selected', "true");
+                radio.checked = true;
+            } else {
+                radio.removeAttribute('aria-selected');
+                radio.checked = false;
+            }
+        }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildContainer() {
@@ -14730,6 +14760,10 @@ class RadioGroup extends SelectMenu {
         this.container.appendChild(this.labelobj);
         this.container.appendChild(this.optionlist);
         this.container.appendChild(this.passivebox);
+
+        if (this.value) {
+            this.select(this.value);
+        }
 
         this.postContainerScrub();
 
@@ -14767,6 +14801,8 @@ class RadioGroup extends SelectMenu {
         op.setAttribute('value', def.value);
         op.setAttribute('aria-label', def.label);
         op.setAttribute('role', 'radio');
+        op.setAttribute('data-value', def.value);
+
         for (let c of this.classes) {
             op.classList.add(c);
         }
@@ -14803,7 +14839,6 @@ class RadioGroup extends SelectMenu {
             s.innerHTML = def.help;
             opLabel.appendChild(s);
         }
-
 
         if (((this.config.value !== null) && (this.config.value === def.value)) || (def.checked)) {
             this.origval = def.value;
