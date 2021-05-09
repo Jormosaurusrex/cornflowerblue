@@ -53,8 +53,8 @@
   --shadow-black-rgb: 0, 0, 0;
   --shadows-dropshadow-filter: drop-shadow(0 .5rem .5rem rgba(var(--shadow-black-rgb), 0.2));
   --shadows-dropshadow-filter-vertical: drop-shadow(0 -.5rem .5rem rgba(var(--shadow-black-rgb), 0.2));
-  --shadows-interior-frombelow: 0 .3em .5em -.3em rgba(var(--shadow-black-rgb), 0.2);
-  --shadows-interior-fromabove: 0 -.3em .5em 0 rgba(var(--shadow-black-rgb), 0.1);
+  --shadows-interior-frombelow: 0 .3rem .5rem -.3rem rgba(var(--shadow-black-rgb), 0.2);
+  --shadows-interior-fromabove: 0 -.3rem .5rem 0 rgba(var(--shadow-black-rgb), 0.1);
   --shadows-panel: 0 .5em .5em 0 rgba(var(--shadow-black-rgb), 0.2);
   --shadows-panel-light: 0 .5em .5em 0 rgba(var(--shadow-black-rgb), 0.2);
   --dialog-box-shadow: 0 .28rem .22rem rgba(var(--shadow-black-rgb), 0.02),
@@ -81,6 +81,7 @@
   --shadows-smooth-up-small: 0 -.1rem .3rem -.3rem rgba(var(--shadow-black-rgb), .5),
                               0 -.2rem .5rem -.2rem rgba(var(--shadow-black-rgb), .3),
                               0 -.3rem .8rem -.1rem rgba(var(--shadow-black-rgb), .1);
+  --stripe-accent: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--black-rgb), 0.05) .5rem, rgba(var(--black-rgb), 0.05) 1rem);
   --border-radius: .2rem;
   --dialog-window-mask-color: var(--white);
   --dialog-window-mask-opacity: .25;
@@ -5595,6 +5596,11 @@ div.progressbar-container.huge .decals {
 }
 div.progressbar-container div.circlewrap {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 div.progressbar-container div.circlewrap svg circle {
   position: relative;

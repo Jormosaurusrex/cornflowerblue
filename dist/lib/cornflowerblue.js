@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-04-21
+/*! Cornflower Blue - v0.1.1 - 2021-05-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1934,7 +1934,9 @@ class IconFactory {
             'notched-triangle-left',
             'notched-triangle-right',
             'notched-triangle-up',
-            'notched-triangle-down'
+            'notched-triangle-down',
+            'star-open',
+            'star-full'
         ];
     }
 
@@ -5202,7 +5204,7 @@ class DataGrid extends Panel {
                 for (let c of columns) {
                     if (show) { break; }
                     if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
-                        if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                        if (c.innerText.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             if (c.classList.contains('hidden')) {
                                 matchesHiddenColumns = true;
                             } else {
@@ -5258,21 +5260,39 @@ class DataGrid extends Panel {
         let elements = Array.from(this.gridbody.childNodes);
 
         elements.sort((a, b) => {
-            let textA = a.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
-            let textB = b.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
+            //(node.innerText || node.textContent)
+            let nodeA = a.querySelector(`[data-name='${field}']`),
+                nodeB = b.querySelector(`[data-name='${field}']`),
+                valA = (nodeA.innerText || nodeA.textContent),
+                valB = (nodeB.innerText || nodeB.textContent);
+
+            //let valA = a.querySelector(`[data-name='${field}']`).innerHTML;
+            //let valB = b.querySelector(`[data-name='${field}']`).innerHTML;
+
             if (this.getField(field).type === 'date') {
                 let abox = a.querySelector(`[data-name='${field}']`);
                 let bbox = b.querySelector(`[data-name='${field}']`);
-                textA = abox.getAttribute('data-millis');
-                textB = bbox.getAttribute('data-millis');
+                if (abox) {
+                    valA = abox.getAttribute('data-millis');
+                }
+                if (bbox) {
+                    valB = bbox.getAttribute('data-millis');
+                }
+            } else if (this.getField(field).type === 'number') {
+                try {
+                    valA = parseInt(valA);
+                    valB = parseInt(valB);
+                } catch (err) {
+                    console.error('Error parsing number values');
+                }
             }
 
             if (sort === 'asc') {
-                if (textA < textB) return -1;
-                if (textA > textB) return 1;
+                if (valA < valB) return -1;
+                if (valA > valB) return 1;
             } else {
-                if (textA > textB) return -1;
-                if (textA < textB) return 1;
+                if (valA > valB) return -1;
+                if (valA < valB) return 1;
             }
 
             return 0;
@@ -6524,6 +6544,7 @@ class DataGrid extends Panel {
                 mute: true,
                 shape: 'square',
                 secondicon: null,
+                gravity: 'sw',
                 tooltipgravity: 'w',
                 text: TextFactory.get('actions'),
                 icon: this.actionsbuttonicon,
@@ -6841,12 +6862,14 @@ class DataGrid extends Panel {
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
         cell.setAttribute('data-datatype', field.type);
+
         if (field.type === 'date') {
             cell.setAttribute('data-millis', new Date(d).getTime());
             if (d === null) {
                 content = "";
             }
         }
+
         cell.classList.add(field.name);
         cell.classList.add(field.type);
         if (typeof content === 'string') {
@@ -7251,6 +7274,7 @@ class DataList extends DataGrid {
             specialsort: null,
             columnconfigurable: false,
             collapsible: false,
+            astable: false,
             exportable: false,
             filterable: false,
             multiselect: false,
@@ -7477,7 +7501,7 @@ class DataList extends DataGrid {
     sortOn(listelements, column='name', direction = 'asc') {
         //console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
-            return this.specialsort(listelements, column, direction);
+            return this.specialsort(listelements, column, direction, this);
         }
         listelements.sort((a, b) => {
             let aval = a[column],
@@ -7534,7 +7558,17 @@ class DataList extends DataGrid {
             this.container.appendChild(this.datainfo);
         }
         this.container.appendChild(this.listheader);
-        this.container.appendChild(this.datalist);
+        if (this.astable) {
+            let wrapper = document.createElement('div'),
+                table = document.createElement('table');
+            wrapper.classList.add('tablewrapper');
+            table.appendChild(this.datalist);
+            wrapper.appendChild(table);
+            this.container.appendChild(wrapper);
+        } else {
+            this.container.appendChild(this.datalist);
+        }
+
 
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
@@ -7555,13 +7589,13 @@ class DataList extends DataGrid {
 
     buildListHeader() {
         this.listheader = document.createElement('div');
+
         this.listheader.classList.add('listheader');
 
         this.listheader.setAttribute('data-sort-field', 'title');
         this.listheader.setAttribute('data-sort-direction', 'asc');
 
         for (let col of this.columns) {
-
             let ndiv = document.createElement('div');
             ndiv.classList.add(col.field);
 
@@ -7590,15 +7624,21 @@ class DataList extends DataGrid {
             });
             this.listheader.appendChild(ndiv);
         }
-
     }
 
     buildDataList() {
-        this.datalist = document.createElement('ul');
+        if (this.astable) {
+            this.datalist = document.createElement('tbody');
+        } else {
+            this.datalist = document.createElement('ul');
+        }
         this.datalist.classList.add('datalist');
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get astable() { return this.config.astable; }
+    set astable(astable) { this.config.astable = astable; }
 
     get click() { return this.config.click; }
     set click(click) {

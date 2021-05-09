@@ -123,7 +123,9 @@ class IconFactory {
             'notched-triangle-left',
             'notched-triangle-right',
             'notched-triangle-up',
-            'notched-triangle-down'
+            'notched-triangle-down',
+            'star-open',
+            'star-full'
         ];
     }
 

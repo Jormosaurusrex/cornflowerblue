@@ -59,6 +59,11 @@ div.progressbar-container {
   }
   div.circlewrap {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     svg {
       circle {
         position: relative;

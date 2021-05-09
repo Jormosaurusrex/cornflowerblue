@@ -405,7 +405,7 @@ class DataGrid extends Panel {
                 for (let c of columns) {
                     if (show) { break; }
                     if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
-                        if (c.innerHTML.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                        if (c.innerText.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             if (c.classList.contains('hidden')) {
                                 matchesHiddenColumns = true;
                             } else {
@@ -461,21 +461,39 @@ class DataGrid extends Panel {
         let elements = Array.from(this.gridbody.childNodes);
 
         elements.sort((a, b) => {
-            let textA = a.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
-            let textB = b.querySelector(`[data-name='${field}']`).innerHTML.toLowerCase();
+            //(node.innerText || node.textContent)
+            let nodeA = a.querySelector(`[data-name='${field}']`),
+                nodeB = b.querySelector(`[data-name='${field}']`),
+                valA = (nodeA.innerText || nodeA.textContent),
+                valB = (nodeB.innerText || nodeB.textContent);
+
+            //let valA = a.querySelector(`[data-name='${field}']`).innerHTML;
+            //let valB = b.querySelector(`[data-name='${field}']`).innerHTML;
+
             if (this.getField(field).type === 'date') {
                 let abox = a.querySelector(`[data-name='${field}']`);
                 let bbox = b.querySelector(`[data-name='${field}']`);
-                textA = abox.getAttribute('data-millis');
-                textB = bbox.getAttribute('data-millis');
+                if (abox) {
+                    valA = abox.getAttribute('data-millis');
+                }
+                if (bbox) {
+                    valB = bbox.getAttribute('data-millis');
+                }
+            } else if (this.getField(field).type === 'number') {
+                try {
+                    valA = parseInt(valA);
+                    valB = parseInt(valB);
+                } catch (err) {
+                    console.error('Error parsing number values');
+                }
             }
 
             if (sort === 'asc') {
-                if (textA < textB) return -1;
-                if (textA > textB) return 1;
+                if (valA < valB) return -1;
+                if (valA > valB) return 1;
             } else {
-                if (textA > textB) return -1;
-                if (textA < textB) return 1;
+                if (valA > valB) return -1;
+                if (valA < valB) return 1;
             }
 
             return 0;
@@ -1727,6 +1745,7 @@ class DataGrid extends Panel {
                 mute: true,
                 shape: 'square',
                 secondicon: null,
+                gravity: 'sw',
                 tooltipgravity: 'w',
                 text: TextFactory.get('actions'),
                 icon: this.actionsbuttonicon,
@@ -2044,12 +2063,14 @@ class DataGrid extends Panel {
         let cell = document.createElement('td');
         cell.setAttribute('data-name', field.name);
         cell.setAttribute('data-datatype', field.type);
+
         if (field.type === 'date') {
             cell.setAttribute('data-millis', new Date(d).getTime());
             if (d === null) {
                 content = "";
             }
         }
+
         cell.classList.add(field.name);
         cell.classList.add(field.type);
         if (typeof content === 'string') {

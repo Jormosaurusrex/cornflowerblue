@@ -191,10 +191,15 @@ class ButtonMenu extends SimpleButton {
             offsetRight = bodyRect.right - elemRect.right,
             offsetBottom = elemRect.bottom - bodyRect.bottom;
 
+        this.menu.style.removeProperty('top');
+        this.menu.style.removeProperty('bottom');
+        this.menu.style.removeProperty('left');
+        this.menu.style.removeProperty('right');
+
         switch(this.gravity) {
             case 'w':
             case 'west':
-                this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
+                this.menu.style.top = `${offsetTop}px`;
                 this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (this.emsize / 2)}px`;
                 break;
             case 'e':
