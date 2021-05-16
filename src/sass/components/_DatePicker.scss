@@ -90,6 +90,7 @@ div.datepicker {
               outline: var(--colors-text-hot) dashed .1em;
               outline-offset: -.3em;
             }
+            &[aria-disabled="true"],
             &:disabled {
               opacity: .5;
               cursor: not-allowed;

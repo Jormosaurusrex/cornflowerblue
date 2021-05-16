@@ -63,7 +63,8 @@ a.button {
     filter: brightness(90%);
     outline: none;
   }
-  &:disabled {
+  &:disabled,
+  &[aria-disabled="true"] {
     opacity: .5;
     filter: grayscale(50%);
     cursor: not-allowed;
@@ -278,7 +279,8 @@ a.button {
     &:active {
       box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
     }
-    &:disabled {
+    &:disabled,
+    &[aria-disabled="true"] {
       box-shadow: none;
       border: none;
     }
@@ -293,7 +295,8 @@ a.button {
     &:hover,
     &:active,
     &:focus,
-    &:disabled {
+    &:disabled,
+    &[aria-disabled="true"] {
       border: none;
     }
   }
@@ -348,7 +351,8 @@ a.button {
       color: var(--colors-affordance);
       text-decoration: underline double;
     }
-    &:disabled {
+    &:disabled,
+    &[aria-disabled="true"] {
       text-shadow: none;
     }
   }

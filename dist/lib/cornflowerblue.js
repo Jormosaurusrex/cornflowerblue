@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-05-08
+/*! Cornflower Blue - v0.1.1 - 2021-05-13
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -418,10 +418,10 @@ class CFBUtils {
         thouSeparator = thouSeparator === undefined ? "," : thouSeparator;
         currencySymbol = currencySymbol === undefined ? "$" : currencySymbol;
 
-        let n = value;
-        let i;
-        let j;
-        let sign = n < 0 ? "-" : "";
+        let n = value,
+            i,
+            j,
+            sign = n < 0 ? "-" : "";
         i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "";
         j = (j = i.length) > 3 ? j % 3 : 0;
 
@@ -2366,7 +2366,7 @@ class SimpleButton {
      * Enable the button
      */
     disable() {
-        this.button.setAttribute('disabled', 'disabled');
+        this.button.setAttribute('aria-disabled', 'true');
         this.disabled = true;
         return this;
     }
@@ -2375,7 +2375,7 @@ class SimpleButton {
      * Disable the button
      */
     enable() {
-        this.button.removeAttribute('disabled');
+        this.button.removeAttribute('aria-disabled');
         this.disabled = false;
         return this;
     }
@@ -2974,10 +2974,15 @@ class ButtonMenu extends SimpleButton {
             offsetRight = bodyRect.right - elemRect.right,
             offsetBottom = elemRect.bottom - bodyRect.bottom;
 
+        this.menu.style.removeProperty('top');
+        this.menu.style.removeProperty('bottom');
+        this.menu.style.removeProperty('left');
+        this.menu.style.removeProperty('right');
+
         switch(this.gravity) {
             case 'w':
             case 'west':
-                this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
+                this.menu.style.top = `${offsetTop}px`;
                 this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (this.emsize / 2)}px`;
                 break;
             case 'e':
@@ -7557,15 +7562,16 @@ class DataList extends DataGrid {
         if (this.showinfo) {
             this.container.appendChild(this.datainfo);
         }
-        this.container.appendChild(this.listheader);
         if (this.astable) {
             let wrapper = document.createElement('div'),
                 table = document.createElement('table');
             wrapper.classList.add('tablewrapper');
+            table.appendChild(this.listheader);
             table.appendChild(this.datalist);
             wrapper.appendChild(table);
             this.container.appendChild(wrapper);
         } else {
+            this.container.appendChild(this.listheader);
             this.container.appendChild(this.datalist);
         }
 
@@ -7588,28 +7594,35 @@ class DataList extends DataGrid {
     }
 
     buildListHeader() {
-        this.listheader = document.createElement('div');
+        let row = document.createElement((this.astable) ? 'tr': 'div');
 
-        this.listheader.classList.add('listheader');
+        if (this.astable) {
+            this.listheader = document.createElement('thead');
+            this.listheader.appendChild(row);
+        } else {
+            this.listheader = row;
+        }
 
-        this.listheader.setAttribute('data-sort-field', 'title');
-        this.listheader.setAttribute('data-sort-direction', 'asc');
+        row.classList.add('listheader');
+        row.setAttribute('data-sort-field', 'title');
+        row.setAttribute('data-sort-direction', 'asc');
 
         for (let col of this.columns) {
-            let ndiv = document.createElement('div');
-            ndiv.classList.add(col.field);
-
+            let colheader = document.createElement((this.astable) ? 'th': 'div');
+            if (col.field) { colheader.classList.add(col.field); }
+            if (col.display) { colheader.classList.add(col.display); }
             if (col.field === 'spacer') {
-                ndiv.classList.add('spacer');
-                ndiv.classList.add(`size-${col.type}`);
-                this.listheader.appendChild(ndiv);
+                colheader.classList.add('spacer');
+                colheader.classList.add(`size-${col.type}`);
+                if (this.astable) { colheader.innerHTML = "&nbsp;"; }
+                row.appendChild(colheader);
                 continue;
             }
 
-            ndiv.setAttribute('data-column', col.field);
-            ndiv.classList.add('label');
-            ndiv.innerHTML = `<label>${col.label}</label>`;
-            ndiv.addEventListener('click', () => {
+            colheader.setAttribute('data-column', col.field);
+            colheader.classList.add('label');
+            colheader.innerHTML = `<label>${col.label}</label>`;
+            colheader.addEventListener('click', () => {
                 let direction = 'asc';
                 if ((this.listheader.getAttribute('data-sort-field')) && (this.listheader.getAttribute('data-sort-field') === col.field)) {
                     if ((this.listheader.getAttribute('data-sort-direction')) && (this.listheader.getAttribute('data-sort-direction') === 'asc')) {
@@ -7622,8 +7635,9 @@ class DataList extends DataGrid {
 
                 this.populate(col.field, direction);
             });
-            this.listheader.appendChild(ndiv);
+            row.appendChild(colheader);
         }
+
     }
 
     buildDataList() {

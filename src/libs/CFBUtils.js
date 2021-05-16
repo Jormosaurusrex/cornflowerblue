@@ -415,10 +415,10 @@ class CFBUtils {
         thouSeparator = thouSeparator === undefined ? "," : thouSeparator;
         currencySymbol = currencySymbol === undefined ? "$" : currencySymbol;
 
-        let n = value;
-        let i;
-        let j;
-        let sign = n < 0 ? "-" : "";
+        let n = value,
+            i,
+            j,
+            sign = n < 0 ? "-" : "";
         i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "";
         j = (j = i.length) > 3 ? j % 3 : 0;
 

@@ -5,11 +5,20 @@ div.column-configurator {
     flex-direction: column;
     flex-wrap: nowrap;
     padding: 0;
-    > li {
+    >li {
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
       margin-bottom: 1rem;
+      div.checkbox-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        align-content: center;
+        >input[type="checkbox"] {
+          margin-right: .5rem;
+        }
+      }
       div.checkbox {
         margin: 0;
       }

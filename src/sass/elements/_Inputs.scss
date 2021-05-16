@@ -28,6 +28,7 @@ textarea {
   color: var(--colors-standard);
   text-shadow:var(--text-shadow);
   vertical-align: middle;
+  &[aria-disabled="true"],
   &:disabled {
     opacity: .5;
     cursor: not-allowed;

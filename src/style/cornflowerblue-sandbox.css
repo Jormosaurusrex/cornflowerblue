@@ -1623,10 +1623,13 @@ a.button.active {
   filter: brightness(90%);
   outline: none;
 }
-button:disabled,
+button:disabled, button[aria-disabled=true],
 input[type=submit]:disabled,
+input[type=submit][aria-disabled=true],
 input[type=reset]:disabled,
-a.button:disabled {
+input[type=reset][aria-disabled=true],
+a.button:disabled,
+a.button[aria-disabled=true] {
   opacity: 0.5;
   filter: grayscale(50%);
   cursor: not-allowed;
@@ -2019,10 +2022,13 @@ a.button.circle:focus,
 a.button.circle:active {
   box-shadow: 0 0.1em 0.5em 0 rgba(50, 50, 50, 0.5);
 }
-button.circle:disabled,
+button.circle:disabled, button.circle[aria-disabled=true],
 input[type=submit].circle:disabled,
+input[type=submit].circle[aria-disabled=true],
 input[type=reset].circle:disabled,
-a.button.circle:disabled {
+input[type=reset].circle[aria-disabled=true],
+a.button.circle:disabled,
+a.button.circle[aria-disabled=true] {
   box-shadow: none;
   border: none;
 }
@@ -2040,19 +2046,22 @@ a.button.pill.ghost {
   box-shadow: none;
   border: 0.1em solid var(--colors-local);
 }
-button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled,
+button.pill:hover, button.pill:active, button.pill:focus, button.pill:disabled, button.pill[aria-disabled=true],
 input[type=submit].pill:hover,
 input[type=submit].pill:active,
 input[type=submit].pill:focus,
 input[type=submit].pill:disabled,
+input[type=submit].pill[aria-disabled=true],
 input[type=reset].pill:hover,
 input[type=reset].pill:active,
 input[type=reset].pill:focus,
 input[type=reset].pill:disabled,
+input[type=reset].pill[aria-disabled=true],
 a.button.pill:hover,
 a.button.pill:active,
 a.button.pill:focus,
-a.button.pill:disabled {
+a.button.pill:disabled,
+a.button.pill[aria-disabled=true] {
   border: none;
 }
 button.naked, button.link,
@@ -2165,10 +2174,13 @@ a.button.link.focus {
   color: var(--colors-affordance);
   text-decoration: underline double;
 }
-button.link:disabled,
+button.link:disabled, button.link[aria-disabled=true],
 input[type=submit].link:disabled,
+input[type=submit].link[aria-disabled=true],
 input[type=reset].link:disabled,
-a.button.link:disabled {
+input[type=reset].link[aria-disabled=true],
+a.button.link:disabled,
+a.button.link[aria-disabled=true] {
   text-shadow: none;
 }
 button.micro,
@@ -2970,11 +2982,16 @@ input[type=radio][aria-hidden=true] {
   display: none;
 }
 
-input[type=checkbox]:disabled,
+input[type=checkbox][aria-disabled=true], input[type=checkbox]:disabled,
+input[type=checkbox] + label[aria-disabled=true],
 input[type=checkbox] + label:disabled,
+input[type=checkbox]:checked + label[aria-disabled=true],
 input[type=checkbox]:checked + label:disabled,
+input[type=radio][aria-disabled=true],
 input[type=radio]:disabled,
+input[type=radio] + label[aria-disabled=true],
 input[type=radio] + label:disabled,
+input[type=radio]:checked + label[aria-disabled=true],
 input[type=radio]:checked + label:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -2983,23 +3000,43 @@ input[type=radio]:checked + label:disabled {
   outline: none;
   text-decoration: none;
 }
-input[type=checkbox]:disabled:before, input[type=checkbox]:disabled:after, input[type=checkbox]:disabled:checked:before, input[type=checkbox]:disabled:checked:after,
+input[type=checkbox][aria-disabled=true]:before, input[type=checkbox][aria-disabled=true]:after, input[type=checkbox][aria-disabled=true]:checked:before, input[type=checkbox][aria-disabled=true]:checked:after, input[type=checkbox]:disabled:before, input[type=checkbox]:disabled:after, input[type=checkbox]:disabled:checked:before, input[type=checkbox]:disabled:checked:after,
+input[type=checkbox] + label[aria-disabled=true]:before,
+input[type=checkbox] + label[aria-disabled=true]:after,
+input[type=checkbox] + label[aria-disabled=true]:checked:before,
+input[type=checkbox] + label[aria-disabled=true]:checked:after,
 input[type=checkbox] + label:disabled:before,
 input[type=checkbox] + label:disabled:after,
 input[type=checkbox] + label:disabled:checked:before,
 input[type=checkbox] + label:disabled:checked:after,
+input[type=checkbox]:checked + label[aria-disabled=true]:before,
+input[type=checkbox]:checked + label[aria-disabled=true]:after,
+input[type=checkbox]:checked + label[aria-disabled=true]:checked:before,
+input[type=checkbox]:checked + label[aria-disabled=true]:checked:after,
 input[type=checkbox]:checked + label:disabled:before,
 input[type=checkbox]:checked + label:disabled:after,
 input[type=checkbox]:checked + label:disabled:checked:before,
 input[type=checkbox]:checked + label:disabled:checked:after,
+input[type=radio][aria-disabled=true]:before,
+input[type=radio][aria-disabled=true]:after,
+input[type=radio][aria-disabled=true]:checked:before,
+input[type=radio][aria-disabled=true]:checked:after,
 input[type=radio]:disabled:before,
 input[type=radio]:disabled:after,
 input[type=radio]:disabled:checked:before,
 input[type=radio]:disabled:checked:after,
+input[type=radio] + label[aria-disabled=true]:before,
+input[type=radio] + label[aria-disabled=true]:after,
+input[type=radio] + label[aria-disabled=true]:checked:before,
+input[type=radio] + label[aria-disabled=true]:checked:after,
 input[type=radio] + label:disabled:before,
 input[type=radio] + label:disabled:after,
 input[type=radio] + label:disabled:checked:before,
 input[type=radio] + label:disabled:checked:after,
+input[type=radio]:checked + label[aria-disabled=true]:before,
+input[type=radio]:checked + label[aria-disabled=true]:after,
+input[type=radio]:checked + label[aria-disabled=true]:checked:before,
+input[type=radio]:checked + label[aria-disabled=true]:checked:after,
 input[type=radio]:checked + label:disabled:before,
 input[type=radio]:checked + label:disabled:after,
 input[type=radio]:checked + label:disabled:checked:before,
@@ -4194,10 +4231,14 @@ textarea {
   text-shadow: var(--text-shadow);
   vertical-align: middle;
 }
-input[type=text]:disabled,
+input[type=text][aria-disabled=true], input[type=text]:disabled,
+input[type=number][aria-disabled=true],
 input[type=number]:disabled,
+input[type=password][aria-disabled=true],
 input[type=password]:disabled,
+input[type=search][aria-disabled=true],
 input[type=search]:disabled,
+textarea[aria-disabled=true],
 textarea:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -6423,6 +6464,120 @@ div.datalist-container {
 div.datalist-container > div.datainfo div.searchcontrol {
   margin: 0 1rem;
 }
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th {
+  padding: 0 0.5rem;
+}
+div.datalist-container > div.listheader,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader {
+  position: relative;
+  z-index: 203;
+  background-color: var(--canvas-color-tertiary);
+  box-shadow: var(--shadows-smooth-dn-small);
+}
+div.datalist-container > div.listheader > div.label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+div.datalist-container > div.listheader > div.label,
+div.datalist-container > div.listheader > th.label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label {
+  margin: 0;
+  padding: 0.2rem 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 var(--colors-affordance);
+  transition: box-shadow 0.5s;
+}
+div.datalist-container > div.listheader > div.label > label,
+div.datalist-container > div.listheader > th.label > label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label > label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label > label {
+  margin: 0;
+  font-size: 0.7rem;
+  cursor: pointer;
+  color: var(--list-header-color);
+}
+div.datalist-container > div.listheader > div.label.center,
+div.datalist-container > div.listheader > th.label.center,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label.center,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label.center {
+  text-align: center;
+}
+div.datalist-container > div.listheader > div.label.center > label,
+div.datalist-container > div.listheader > th.label.center > label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label.center > label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label.center > label {
+  justify-content: center;
+}
+div.datalist-container > div.listheader > div.label.right,
+div.datalist-container > div.listheader > th.label.right,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label.right,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label.right {
+  text-align: right;
+}
+div.datalist-container > div.listheader > div.label.right > label,
+div.datalist-container > div.listheader > th.label.right > label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label.right > label,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label.right > label {
+  justify-content: flex-end;
+}
+div.datalist-container > div.listheader > div.label[data-column=name], div.datalist-container > div.listheader > div.label[data-column=label], div.datalist-container > div.listheader > div.label[data-column=displayname], div.datalist-container > div.listheader > div.label[data-column=subject], div.datalist-container > div.listheader > div.label[data-column=title], div.datalist-container > div.listheader > div.label[data-column=text],
+div.datalist-container > div.listheader > th.label[data-column=name],
+div.datalist-container > div.listheader > th.label[data-column=label],
+div.datalist-container > div.listheader > th.label[data-column=displayname],
+div.datalist-container > div.listheader > th.label[data-column=subject],
+div.datalist-container > div.listheader > th.label[data-column=title],
+div.datalist-container > div.listheader > th.label[data-column=text],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=name],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=label],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=displayname],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=subject],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=title],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=text],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=name],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=label],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=displayname],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=subject],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=title],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=text] {
+  justify-self: flex-start;
+  margin-right: auto;
+  flex-grow: 2;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > div.listheader > div.label:hover,
+div.datalist-container > div.listheader > th.label:hover,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label:hover,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label:hover {
+    background-color: var(--canvas-color-highlight);
+    box-shadow: inset 0 -0.2rem 0 0 var(--colors-highlight);
+  }
+}
+div.datalist-container > div.listheader > div.label[data-sorted=asc], div.datalist-container > div.listheader > div.label[data-sorted=desc],
+div.datalist-container > div.listheader > th.label[data-sorted=asc],
+div.datalist-container > div.listheader > th.label[data-sorted=desc],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-sorted=asc],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-sorted=desc],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-sorted=asc],
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-sorted=desc] {
+  box-shadow: inset 0 -0.1em 0 0 var(--colors-focus);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > div.listheader > div.label[data-sorted=asc]:hover, div.datalist-container > div.listheader > div.label[data-sorted=desc]:hover,
+div.datalist-container > div.listheader > th.label[data-sorted=asc]:hover,
+div.datalist-container > div.listheader > th.label[data-sorted=desc]:hover,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-sorted=asc]:hover,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-sorted=desc]:hover,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-sorted=asc]:hover,
+div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-sorted=desc]:hover {
+    box-shadow: inset 0 -0.2em 0 0 var(--colors-affordance);
+  }
+}
 div.datalist-container > div.listheader {
   position: relative;
   z-index: 203;
@@ -6479,11 +6634,11 @@ div.datalist-container > div.listheader > div.label[data-column=name], div.datal
   }
 }
 div.datalist-container > div.listheader > div.label[data-sorted=asc], div.datalist-container > div.listheader > div.label[data-sorted=desc] {
-  box-shadow: inset 0 -0.1em 0 0 var(--colors-focus);
+  box-shadow: inset 0 -0.1rem 0 0 var(--colors-focus);
 }
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > div.listheader > div.label[data-sorted=asc]:hover, div.datalist-container > div.listheader > div.label[data-sorted=desc]:hover {
-    box-shadow: inset 0 -0.2em 0 0 var(--colors-affordance);
+    box-shadow: inset 0 -0.2rem 0 0 var(--colors-affordance);
   }
 }
 div.datalist-container > div.tablewrapper {
@@ -6493,8 +6648,12 @@ div.datalist-container > div.tablewrapper {
   height: auto;
   flex-grow: 2;
 }
+div.datalist-container > div.tablewrapper > table {
+  border-spacing: 0;
+  width: 100%;
+}
 div.datalist-container > ul.datalist,
-div.datalist-container tbody.datalist {
+div.datalist-container > div.tablewrapper > table > tbody.datalist {
   position: relative;
   z-index: 200;
   list-style-type: none;
@@ -6503,44 +6662,62 @@ div.datalist-container tbody.datalist {
   flex-grow: 2;
 }
 div.datalist-container > ul.datalist > li,
-div.datalist-container tbody.datalist > li {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li {
   display: flex;
   flex-direction: row;
   align-content: center;
   justify-content: flex-start;
   align-items: stretch;
+  padding: 0.5rem;
 }
 div.datalist-container > ul.datalist > li,
 div.datalist-container > ul.datalist > tr,
-div.datalist-container tbody.datalist > li,
-div.datalist-container tbody.datalist > tr {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr {
   --hover-side-shadow-color: var(--colors-affordance);
   --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
   --hover-side-shadow-null: inset 0 0 0 0 var(--hover-side-shadow-color);
   --hover-shadow: var(--shadows-smooth-up), var(--shadows-smooth-dn), var(--hover-side-shadow);
   position: relative;
   z-index: 201;
-  padding: 0.5rem;
   margin: 0;
   transition: box-shadow 0.5s, background-color 0.5s;
   box-shadow: var(--hover-shadow-null);
 }
 div.datalist-container > ul.datalist > li.clickable,
 div.datalist-container > ul.datalist > tr.clickable,
-div.datalist-container tbody.datalist > li.clickable,
-div.datalist-container tbody.datalist > tr.clickable {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li.clickable,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr.clickable {
   cursor: pointer;
 }
 div.datalist-container > ul.datalist > li:first-child,
 div.datalist-container > ul.datalist > tr:first-child,
-div.datalist-container tbody.datalist > li:first-child,
-div.datalist-container tbody.datalist > tr:first-child {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li:first-child,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:first-child {
   margin-top: 0;
+}
+div.datalist-container > ul.datalist > li > td,
+div.datalist-container > ul.datalist > tr > td,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > td,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > td {
+  padding: 0.5rem;
+}
+div.datalist-container > ul.datalist > li > td.center,
+div.datalist-container > ul.datalist > tr > td.center,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > td.center,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > td.center {
+  text-align: center;
+}
+div.datalist-container > ul.datalist > li > td.right,
+div.datalist-container > ul.datalist > tr > td.right,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > td.right,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > td.right {
+  text-align: right;
 }
 div.datalist-container > ul.datalist > li > div.thumbnail,
 div.datalist-container > ul.datalist > tr > div.thumbnail,
-div.datalist-container tbody.datalist > li > div.thumbnail,
-div.datalist-container tbody.datalist > tr > div.thumbnail {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.thumbnail,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.thumbnail {
   align-self: center;
   margin: 0;
   width: var(--thumbnail-size);
@@ -6553,14 +6730,14 @@ div.datalist-container tbody.datalist > tr > div.thumbnail {
 }
 div.datalist-container > ul.datalist > li > div.thumbnail.hero,
 div.datalist-container > ul.datalist > tr > div.thumbnail.hero,
-div.datalist-container tbody.datalist > li > div.thumbnail.hero,
-div.datalist-container tbody.datalist > tr > div.thumbnail.hero {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.thumbnail.hero,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.thumbnail.hero {
   background-position: center center;
 }
 div.datalist-container > ul.datalist > li > div.thumbnail.icon,
 div.datalist-container > ul.datalist > tr > div.thumbnail.icon,
-div.datalist-container tbody.datalist > li > div.thumbnail.icon,
-div.datalist-container tbody.datalist > tr > div.thumbnail.icon {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.thumbnail.icon,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.thumbnail.icon {
   width: var(--icon-size);
   min-width: var(--icon-size);
   height: var(--icon-size);
@@ -6568,16 +6745,16 @@ div.datalist-container tbody.datalist > tr > div.thumbnail.icon {
 }
 div.datalist-container > ul.datalist > li > div.thumbnail.logo,
 div.datalist-container > ul.datalist > tr > div.thumbnail.logo,
-div.datalist-container tbody.datalist > li > div.thumbnail.logo,
-div.datalist-container tbody.datalist > tr > div.thumbnail.logo {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.thumbnail.logo,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.thumbnail.logo {
   background-size: contain;
   background-position: center center;
   border-radius: 0;
 }
 div.datalist-container > ul.datalist > li > div.thumbnail.avatar,
 div.datalist-container > ul.datalist > tr > div.thumbnail.avatar,
-div.datalist-container tbody.datalist > li > div.thumbnail.avatar,
-div.datalist-container tbody.datalist > tr > div.thumbnail.avatar {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.thumbnail.avatar,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.thumbnail.avatar {
   margin: 0;
   width: var(--avatar-size);
   min-width: var(--avatar-size);
@@ -6588,23 +6765,24 @@ div.datalist-container tbody.datalist > tr > div.thumbnail.avatar {
 }
 div.datalist-container > ul.datalist > li > div.actions,
 div.datalist-container > ul.datalist > tr > div.actions,
-div.datalist-container tbody.datalist > li > div.actions,
-div.datalist-container tbody.datalist > tr > div.actions {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   align-content: flex-start;
   justify-content: flex-start;
   flex-grow: 0;
+  min-width: 15rem;
 }
 div.datalist-container > ul.datalist > li > div.actions > button,
 div.datalist-container > ul.datalist > li > div.actions > a.button,
 div.datalist-container > ul.datalist > tr > div.actions > button,
 div.datalist-container > ul.datalist > tr > div.actions > a.button,
-div.datalist-container tbody.datalist > li > div.actions > button,
-div.datalist-container tbody.datalist > li > div.actions > a.button,
-div.datalist-container tbody.datalist > tr > div.actions > button,
-div.datalist-container tbody.datalist > tr > div.actions > a.button {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions > button,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions > a.button,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions > button,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions > a.button {
   margin: 0;
   margin-bottom: 0.5rem;
   font-size: 0.8rem;
@@ -6614,10 +6792,10 @@ div.datalist-container > ul.datalist > li > div.actions > button:last-child,
 div.datalist-container > ul.datalist > li > div.actions > a.button:last-child,
 div.datalist-container > ul.datalist > tr > div.actions > button:last-child,
 div.datalist-container > ul.datalist > tr > div.actions > a.button:last-child,
-div.datalist-container tbody.datalist > li > div.actions > button:last-child,
-div.datalist-container tbody.datalist > li > div.actions > a.button:last-child,
-div.datalist-container tbody.datalist > tr > div.actions > button:last-child,
-div.datalist-container tbody.datalist > tr > div.actions > a.button:last-child {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions > button:last-child,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions > a.button:last-child,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions > button:last-child,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions > a.button:last-child {
   margin-bottom: 0;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -6625,17 +6803,17 @@ div.datalist-container tbody.datalist > tr > div.actions > a.button:last-child {
 div.datalist-container > ul.datalist > li > div.actions > a.button:hover,
 div.datalist-container > ul.datalist > tr > div.actions > button:hover,
 div.datalist-container > ul.datalist > tr > div.actions > a.button:hover,
-div.datalist-container tbody.datalist > li > div.actions > button:hover,
-div.datalist-container tbody.datalist > li > div.actions > a.button:hover,
-div.datalist-container tbody.datalist > tr > div.actions > button:hover,
-div.datalist-container tbody.datalist > tr > div.actions > a.button:hover {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions > button:hover,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li > div.actions > a.button:hover,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions > button:hover,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > div.actions > a.button:hover {
     opacity: 1;
   }
 }
 div.datalist-container > ul.datalist > li:focus,
 div.datalist-container > ul.datalist > tr:focus,
-div.datalist-container tbody.datalist > li:focus,
-div.datalist-container tbody.datalist > tr:focus {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li:focus,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:focus {
   z-index: 202;
   outline: rgba(var(--colors-affordance-rgb), 0.5) dashed 0.15rem;
   outline-offset: -0.3rem;
@@ -6646,30 +6824,30 @@ div.datalist-container > ul.datalist > li:focus a,
 div.datalist-container > ul.datalist > li:focus button,
 div.datalist-container > ul.datalist > tr:focus a,
 div.datalist-container > ul.datalist > tr:focus button,
-div.datalist-container tbody.datalist > li:focus a,
-div.datalist-container tbody.datalist > li:focus button,
-div.datalist-container tbody.datalist > tr:focus a,
-div.datalist-container tbody.datalist > tr:focus button {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li:focus a,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li:focus button,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:focus a,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:focus button {
   text-decoration: underline double;
 }
 div.datalist-container > ul.datalist > li:focus:last-child,
 div.datalist-container > ul.datalist > tr:focus:last-child,
-div.datalist-container tbody.datalist > li:focus:last-child,
-div.datalist-container tbody.datalist > tr:focus:last-child {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li:focus:last-child,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:focus:last-child {
   box-shadow: var(--hover-shadow-last);
 }
 div.datalist-container > ul.datalist > li[aria-selected=true],
 div.datalist-container > ul.datalist > tr[aria-selected=true],
-div.datalist-container tbody.datalist > li[aria-selected=true],
-div.datalist-container tbody.datalist > tr[aria-selected=true] {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li[aria-selected=true],
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr[aria-selected=true] {
   --hover-side-shadow-color: var(--colors-focus);
   box-shadow: var(--hover-side-shadow);
 }
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > ul.datalist > li:hover,
 div.datalist-container > ul.datalist > tr:hover,
-div.datalist-container tbody.datalist > li:hover,
-div.datalist-container tbody.datalist > tr:hover {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li:hover,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:hover {
     outline: none;
     background-color: var(--canvas-color-primary);
     z-index: 202;
@@ -6678,8 +6856,8 @@ div.datalist-container tbody.datalist > tr:hover {
 }
 div.datalist-container > ul.datalist > li.noentriestext > div.noentries,
 div.datalist-container > ul.datalist > tr.noentriestext > div.noentries,
-div.datalist-container tbody.datalist > li.noentriestext > div.noentries,
-div.datalist-container tbody.datalist > tr.noentriestext > div.noentries {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li.noentriestext > div.noentries,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr.noentriestext > div.noentries {
   margin: 0;
   font-size: 2rem;
   opacity: 0.5;
@@ -6688,8 +6866,8 @@ div.datalist-container tbody.datalist > tr.noentriestext > div.noentries {
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > ul.datalist > li.noentriestext:hover,
 div.datalist-container > ul.datalist > tr.noentriestext:hover,
-div.datalist-container tbody.datalist > li.noentriestext:hover,
-div.datalist-container tbody.datalist > tr.noentriestext:hover {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li.noentriestext:hover,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr.noentriestext:hover {
     outline: none;
     z-index: 202;
     background-image: none;
@@ -6700,26 +6878,38 @@ div.datalist-container > ul.datalist > li.hidden, div.datalist-container > ul.da
 div.datalist-container > ul.datalist > tr.hidden,
 div.datalist-container > ul.datalist > tr.filtered,
 div.datalist-container > ul.datalist > tr[data-search-hidden=true],
-div.datalist-container tbody.datalist > li.hidden,
-div.datalist-container tbody.datalist > li.filtered,
-div.datalist-container tbody.datalist > li[data-search-hidden=true],
-div.datalist-container tbody.datalist > tr.hidden,
-div.datalist-container tbody.datalist > tr.filtered,
-div.datalist-container tbody.datalist > tr[data-search-hidden=true] {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li.hidden,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li.filtered,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li[data-search-hidden=true],
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr.hidden,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr.filtered,
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr[data-search-hidden=true] {
   display: none;
 }
 div.datalist-container > ul.datalist > li[data-matched-filters][data-search-hidden=true],
 div.datalist-container > ul.datalist > tr[data-matched-filters][data-search-hidden=true],
-div.datalist-container tbody.datalist > li[data-matched-filters][data-search-hidden=true],
-div.datalist-container tbody.datalist > tr[data-matched-filters][data-search-hidden=true] {
+div.datalist-container > div.tablewrapper > table > tbody.datalist > li[data-matched-filters][data-search-hidden=true],
+div.datalist-container > div.tablewrapper > table > tbody.datalist > tr[data-matched-filters][data-search-hidden=true] {
   display: none;
 }
 div.datalist-container > ul.datalist.hidden,
-div.datalist-container tbody.datalist.hidden {
+div.datalist-container > div.tablewrapper > table > tbody.datalist.hidden {
   display: none;
 }
 div.datalist-container > div.footer {
   box-shadow: var(--shadows-smooth-up-small);
+}
+div.datalist-container th,
+div.datalist-container td {
+  text-align: left;
+}
+div.datalist-container th.center,
+div.datalist-container td.center {
+  text-align: center;
+}
+div.datalist-container th.right,
+div.datalist-container td.right {
+  text-align: right;
 }
 div.datalist-container.scrolled > div.listheader {
   box-shadow: 0 0.5em 0.5em -0.3em rgba(0, 0, 0, 0.7);
@@ -6795,6 +6985,15 @@ div.column-configurator ul.column-list > li {
   flex-direction: column;
   flex-wrap: nowrap;
   margin-bottom: 1rem;
+}
+div.column-configurator ul.column-list > li div.checkbox-container {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+}
+div.column-configurator ul.column-list > li div.checkbox-container > input[type=checkbox] {
+  margin-right: 0.5rem;
 }
 div.column-configurator ul.column-list > li div.checkbox {
   margin: 0;

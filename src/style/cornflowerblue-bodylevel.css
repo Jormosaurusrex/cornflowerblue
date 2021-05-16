@@ -1097,7 +1097,7 @@ div.datepicker div.monthbox div.month table.month td a:active, div.datepicker di
   outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
 }
-div.datepicker div.monthbox div.month table.month td a:disabled {
+div.datepicker div.monthbox div.month table.month td a[aria-disabled=true], div.datepicker div.monthbox div.month table.month td a:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   text-shadow: none;

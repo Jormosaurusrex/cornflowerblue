@@ -108,7 +108,7 @@ class SimpleButton {
      * Enable the button
      */
     disable() {
-        this.button.setAttribute('disabled', 'disabled');
+        this.button.setAttribute('aria-disabled', 'true');
         this.disabled = true;
         return this;
     }
@@ -117,7 +117,7 @@ class SimpleButton {
      * Disable the button
      */
     enable() {
-        this.button.removeAttribute('disabled');
+        this.button.removeAttribute('aria-disabled');
         this.disabled = false;
         return this;
     }

@@ -14,6 +14,77 @@ div.datalist-container {
       margin: 0 1rem;
     }
   }
+  >div.tablewrapper >table >thead >tr.listheader {
+    >th {
+      padding: 0 .5rem;
+    }
+  }
+  >div.listheader,
+  >div.tablewrapper >table >thead >tr.listheader {
+    position: relative;
+    z-index: 203;
+    background-color: var(--canvas-color-tertiary);
+    box-shadow: var(--shadows-smooth-dn-small);
+    >div.label {
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    >div.label,
+    >th.label {
+      margin: 0;
+      padding: .2rem .5rem;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 0 var(--colors-affordance);
+      transition: box-shadow .5s;
+      >label {
+        margin: 0;
+        font-size: .7rem;
+        cursor: pointer;
+        color: var(--list-header-color);
+      }
+      &.center {
+        text-align: center;
+        >label {
+          justify-content: center;
+        }
+      }
+      &.right {
+        text-align: right;
+        >label {
+          justify-content: flex-end;
+        }
+      }
+      &[data-column="name"],
+      &[data-column="label"],
+      &[data-column="displayname"],
+      &[data-column="subject"],
+      &[data-column="title"],
+      &[data-column="text"] {
+        justify-self: flex-start;
+        margin-right: auto;
+        flex-grow: 2;
+      }
+      @include for-hover-only {
+        &:hover {
+          background-color: var(--canvas-color-highlight);
+          box-shadow: inset 0 -.2rem 0 0 var(--colors-highlight);
+        }
+      }
+      &[data-sorted='asc'],
+      &[data-sorted='desc']{
+        box-shadow: inset 0 -.1em 0 0 var(--colors-focus);
+        @include for-hover-only {
+          &:hover {
+            box-shadow: inset 0 -.2em 0 0 var(--colors-affordance);
+          }
+        }
+      }
+    }
+  }
   >div.listheader {
     position: relative;
     z-index: 203;
@@ -74,10 +145,10 @@ div.datalist-container {
       }
       &[data-sorted='asc'],
       &[data-sorted='desc']{
-        box-shadow: inset 0 -.1em 0 0 var(--colors-focus);
+        box-shadow: inset 0 -.1rem 0 0 var(--colors-focus);
         @include for-hover-only {
           &:hover {
-            box-shadow: inset 0 -.2em 0 0 var(--colors-affordance);
+            box-shadow: inset 0 -.2rem 0 0 var(--colors-affordance);
           }
         }
       }
@@ -89,9 +160,13 @@ div.datalist-container {
     width: 100%;
     height: auto;
     flex-grow: 2;
+    >table {
+      border-spacing: 0;
+      width: 100%;
+    }
   }
   >ul.datalist,
-  tbody.datalist {
+  >div.tablewrapper >table >tbody.datalist {
     position: relative;
     z-index: 200;
     list-style-type: none;
@@ -104,6 +179,7 @@ div.datalist-container {
       align-content: center;
       justify-content: flex-start;
       align-items: stretch;
+      padding:.5rem;
     }
     >li,
     >tr {
@@ -113,7 +189,6 @@ div.datalist-container {
       --hover-shadow: var(--shadows-smooth-up), var(--shadows-smooth-dn), var(--hover-side-shadow);
       position: relative;
       z-index: 201;
-      padding:.5rem;
       margin: 0;
       transition: box-shadow .5s,
       background-color .5s;
@@ -123,6 +198,15 @@ div.datalist-container {
       }
       &:first-child {
         margin-top: 0;
+      }
+      >td {
+        padding:.5rem;
+        &.center {
+          text-align: center;
+        }
+        &.right {
+          text-align: right;
+        }
       }
       >div.thumbnail {
         align-self: center;
@@ -166,6 +250,7 @@ div.datalist-container {
         align-content: flex-start;
         justify-content: flex-start;
         flex-grow: 0;
+        min-width: 15rem;
         >button,
         >a.button {
           margin: 0;
@@ -240,9 +325,18 @@ div.datalist-container {
   >div.footer {
     box-shadow: var(--shadows-smooth-up-small);
   }
-
+  th,
+  td {
+    text-align: left;
+    &.center {
+      text-align: center;
+    }
+    &.right {
+      text-align: right;
+    }
+  }
   &.scrolled {
-    >div.listheader{
+    >div.listheader {
       box-shadow: 0 .5em .5em -.3em rgba(0, 0, 0, 0.7);
     }
   }
