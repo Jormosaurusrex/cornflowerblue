@@ -131,3 +131,4 @@
 .cfb-chevron-up-thin { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8da;&nbsp;'); }
 .cfb-star-open { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8dc;&nbsp;'); }
 .cfb-star-full { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8dd;&nbsp;'); }
+.cfb-undo { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8e2;&nbsp;'); }

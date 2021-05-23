@@ -30,9 +30,9 @@ div.tooltip {
     height: 0;
     position: absolute;
     border-style: solid;
-    border-color: var(--canvas-color-highlight) transparent;
     left: 1rem;
     bottom: -.5rem;
+    border-color: var(--canvas-color-highlight) transparent;
     border-width: .5rem .5rem 0 .5rem;
   }
   span.tipicon {
