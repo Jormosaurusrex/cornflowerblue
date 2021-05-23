@@ -153,7 +153,7 @@ class Panel {
         this.container.setAttribute('aria-expanded', 'true');
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed)) {
+        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
         }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
@@ -169,7 +169,7 @@ class Panel {
         this.minimized = true;
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed)) {
+        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
         }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
@@ -291,7 +291,7 @@ class Panel {
             }
         } else {
             this.container.setAttribute('aria-expanded', 'true');
-            if ((this.closeicon) && (this.closeiconclosed)) {
+            if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
                 this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
             }
         }

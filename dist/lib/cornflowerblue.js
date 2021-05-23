@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-05-17
+/*! Cornflower Blue - v0.1.1 - 2021-05-22
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1936,7 +1936,8 @@ class IconFactory {
             'notched-triangle-up',
             'notched-triangle-down',
             'star-open',
-            'star-full'
+            'star-full',
+            'undo'
         ];
     }
 
@@ -7611,6 +7612,11 @@ class DataList extends DataGrid {
             let colheader = document.createElement((this.astable) ? 'th': 'div');
             if (col.field) { colheader.classList.add(col.field); }
             if (col.display) { colheader.classList.add(col.display); }
+            if (col.data) {
+                for (let d of col.data) {
+                    colheader.setAttribute(d.k, d.v);
+                }
+            }
             if (col.field === 'spacer') {
                 colheader.classList.add('spacer');
                 colheader.classList.add(`size-${col.type}`);
@@ -7619,6 +7625,8 @@ class DataList extends DataGrid {
                 continue;
             }
 
+
+            if (col.identifier) { colheader.setAttribute('data-identifier', "true"); }
             colheader.setAttribute('data-column', col.field);
             colheader.classList.add('label');
             colheader.innerHTML = `<label>${col.label}</label>`;
