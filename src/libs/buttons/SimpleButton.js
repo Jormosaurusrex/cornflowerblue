@@ -38,7 +38,8 @@ class SimpleButton {
             focusin: null,
             focusout: null,
             hoverin: null,
-            hoverout: null
+            hoverout: null,
+            doubleclick: null,
         };
     }
 
@@ -174,6 +175,9 @@ class SimpleButton {
                 this.secondiconactual = i;
                 this.button.appendChild(this.secondiconactual);
             }
+            this.secondicon = newicon;
+            this.iconprefixsecond = iconprefix;
+
         } else {
             if (this.icon) {
                 this.button.replaceChild(i, this.iconactual);
@@ -182,6 +186,8 @@ class SimpleButton {
                 this.iconactual = i;
                 this.button.prepend(this.iconactual);
             }
+            this.icon = newicon;
+            this.iconprefix = iconprefix;
         }
     }
 
@@ -317,8 +323,20 @@ class SimpleButton {
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', (e) => {
-                if (!this.disabled) {
-                    this.action(e, this);
+                if (this.button.getAttribute("data-dblclick") == null) {
+                    this.button.setAttribute("data-dblclick", "true");
+                    setTimeout(() => {
+                        if (this.button.getAttribute("data-dblclick") === "true") {
+                            if (!this.disabled) {
+                                this.action(e, this);
+                            }                        }
+                        this.button.removeAttribute("data-dblclick");
+                    }, 300);
+                } else {
+                    this.button.removeAttribute("data-dblclick");
+                    if ((this.doubleclick) && (typeof this.doubleclick === 'function')) {
+                        this.doubleclick(e, this);
+                    }
                 }
             });
         }
@@ -401,6 +419,14 @@ class SimpleButton {
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
+
+    get doubleclick() { return this.config.doubleclick; }
+    set doubleclick(doubleclick) {
+        if (typeof doubleclick !== 'function') {
+            console.error("Action provided to button is not a function!");
+        }
+        this.config.doubleclick = doubleclick;
+    }
 
     get focusin() { return this.config.focusin; }
     set focusin(focusin) {

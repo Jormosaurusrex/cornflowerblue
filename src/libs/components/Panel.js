@@ -153,7 +153,7 @@ class Panel {
         this.container.setAttribute('aria-expanded', 'true');
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
+        if ((this.collapsible) && (this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
         }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
@@ -169,7 +169,7 @@ class Panel {
         this.minimized = true;
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
+        if ((this.collapsible) && (this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
         }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
@@ -284,7 +284,7 @@ class Panel {
             this.container.appendChild(this.footer);
         }
 
-        if (this.minimized) { // don't call close() to avoid the callbacks.
+        if ((this.collapsible) && (this.minimized)) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
             if ((this.closeicon) && (this.closeiconclosed)) {
                 this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
@@ -432,7 +432,7 @@ class Panel {
     get title() { return this.config.title; }
     set title(title) {
         this.config.title = title;
-        if (this.togglebutton) {
+        if ((this.collapsible) && (this.togglebutton)) {
             this.togglebutton.text = title;
         } else if (this.header) {
             this.header.innerHTML = title;

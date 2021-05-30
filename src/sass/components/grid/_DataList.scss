@@ -19,6 +19,8 @@ div.datalist-container {
       padding: 0 .5rem;
     }
   }
+
+
   >div.listheader,
   >div.tablewrapper >table >thead >tr.listheader {
     position: relative;
@@ -163,6 +165,97 @@ div.datalist-container {
     >table {
       border-spacing: 0;
       width: 100%;
+      >thead {
+        z-index: 250;
+        >tr {
+          >th {
+            position: sticky;
+            top: 0;
+            z-index: 255;
+            background-color: var(--canvas-color-tertiary);
+
+            div.th {
+              position: relative;
+              white-space:nowrap;
+              &:before {
+                position: absolute;
+                right: .5em;
+                margin: 0;
+                flex-direction: column;
+                font-size: .7em;
+                justify-content: center;
+                align-items: center;
+                transition: all .2s;
+                color: var(--colors-standard);
+                opacity: 0;
+              }
+            }
+            &:focus,
+            &:active,
+            &.focus,
+            &.active {
+              color: var(--colors-affordance);
+              text-shadow: var(--text-shadow);
+              background-color: var(--canvas-color-secondary);
+              outline: none;
+            }
+            @include for-hover-only {
+              &:hover {
+                outline: none;
+                text-decoration: underline;
+                &:not(.mechanical) {
+                  color: var(--colors-text-hot);
+                  text-shadow: var(--text-shadow);
+                  background-color: var(--colors-affordance);
+                  div.th {
+                    &:before {
+                      color: var(--colors-text-hot);
+                    }
+                  }
+                }
+              }
+            }
+            &:active,
+            &.active {
+              text-decoration: none;
+              box-shadow: none;
+            }
+            &:focus,
+            &.focus {
+              outline: var(--colors-text-hot) dashed .1em;
+              outline-offset: -.3em;
+              text-decoration: underline double;
+            }
+            &.mechanical {
+              z-index: 106;
+            }
+            &[data-sort='asc'],
+            &[data-sort='desc']{
+              div.th {
+                box-shadow: inset 0 -.2em 0 0 var(--colors-focus);
+                &:before {
+                  opacity: 1;
+                }
+              }
+              @include for-hover-only {
+                &:hover {
+                  div.th {
+                    box-shadow: none;
+                  }
+                }
+              }
+
+            }
+            &[data-sort='desc'] {
+              div.th {
+                &:before {
+                  transform: rotate(180deg);
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   >ul.datalist,

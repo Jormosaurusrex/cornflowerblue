@@ -35,7 +35,7 @@ div.selectmenu-menu {
       margin: 0;
       white-space: nowrap;
       padding: var(--input-default-padding);
-      > input[type='radio'] {
+      >input[type='radio'] {
         display: none;
       }
       &:nth-child(even) {
@@ -60,6 +60,9 @@ div.selectmenu-menu {
           background-color: var(--colors-affordance);
           color: var(--colors-text-hot);
         }
+      }
+      &[data-match="false"] {
+        display: none;
       }
     }
   }
@@ -100,6 +103,7 @@ div.selectmenu-menu {
             }
           }
         }
+
       }
     }
   }

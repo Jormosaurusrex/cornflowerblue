@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-05-22
+/*! Cornflower Blue - v0.1.1 - 2021-05-29
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2433,6 +2433,9 @@ class SimpleButton {
                 this.secondiconactual = i;
                 this.button.appendChild(this.secondiconactual);
             }
+            this.secondicon = newicon;
+            this.iconprefixsecond = iconprefix;
+
         } else {
             if (this.icon) {
                 this.button.replaceChild(i, this.iconactual);
@@ -2441,6 +2444,8 @@ class SimpleButton {
                 this.iconactual = i;
                 this.button.prepend(this.iconactual);
             }
+            this.icon = newicon;
+            this.iconprefix = iconprefix;
         }
     }
 
@@ -3610,7 +3615,7 @@ class Panel {
         this.container.setAttribute('aria-expanded', 'true');
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed)) {
+        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
         }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
@@ -3626,7 +3631,7 @@ class Panel {
         this.minimized = true;
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed)) {
+        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
         }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
@@ -3748,7 +3753,7 @@ class Panel {
             }
         } else {
             this.container.setAttribute('aria-expanded', 'true');
-            if ((this.closeicon) && (this.closeiconclosed)) {
+            if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
                 this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
             }
         }
@@ -12677,6 +12682,7 @@ class SelectMenu extends InputElement {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top,
             sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
+        console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`)
 
         self.listbox.style.left = `${offsetLeft}px`;
         self.listbox.style.width = `${self.container.clientWidth}px`;
@@ -12834,18 +12840,25 @@ class SelectMenu extends InputElement {
                 e.stopPropagation();
                 return;
             }
-            this.triggerbox.select(); // Select all the text
-            this.open();
+            if (this.combobox) {
+                this.triggerbox.select(); // Select all the text
+            } else {
+                this.open();
+            }
         });
 
         this.triggerbox.addEventListener('keydown', (e) => {
             switch (e.key) {
                 case 'Tab':  // Tab
                     // Nothing.
-                    console.log('tab');
                     this.close();
                     break;
                 default:
+                    if (this.combobox) {
+                        if (this.triggerbox.value.length >=3) {
+                            this.open();
+                        }
+                    }
                     break;
             }
         });
@@ -12991,7 +13004,7 @@ class SelectMenu extends InputElement {
                         break;
                     case 'Backspace':  // Backspace
                     case 'Delete':  // Delete
-                        this.triggerbox.value = this.triggerbox.value.substring(0, this.value.length - 1);
+                        this.triggerbox.value = this.triggerbox.value.substring(0, this.triggerbox.value.length - 1);
                         this.updateSearch();
                         break;
                     case ' ': // space
@@ -13080,11 +13093,27 @@ class SelectMenu extends InputElement {
         }
     }
 
+    reduceOptions(s) {
+        if ((!s) || (typeof s !== 'string')) { return; }
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
+                li.setAttribute('data-match', 'true');
+            } else {
+                li.setAttribute('data-match', 'false');
+            }
+        }
+    }
+
     /**
      * Updates the counter
      */
     updateSearch() {
-        this.findByString(this.triggerbox.value);
+        if (this.combobox) {
+            this.reduceOptions(this.triggerbox.value);
+        } else {
+            this.findByString(this.triggerbox.value);
+        }
     }
 
     /**

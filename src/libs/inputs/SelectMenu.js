@@ -10,7 +10,8 @@ class SelectMenu extends InputElement {
             value: null,    // Use this to set the value of the item
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
-            onchange: null  // The change handler. Passed (self).
+            onenter: null,  // With a combobox, fired when the enter key is hit. passed (self)
+            onchange: null  // The change handler. Passed (self, e).
         };
     }
 
@@ -196,6 +197,7 @@ class SelectMenu extends InputElement {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top,
             sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
+        //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
         self.listbox.style.left = `${offsetLeft}px`;
         self.listbox.style.width = `${self.container.clientWidth}px`;
@@ -353,18 +355,25 @@ class SelectMenu extends InputElement {
                 e.stopPropagation();
                 return;
             }
-            this.triggerbox.select(); // Select all the text
-            this.open();
+            if (this.combobox) {
+                this.triggerbox.select(); // Select all the text
+            } else {
+                this.open();
+            }
         });
 
         this.triggerbox.addEventListener('keydown', (e) => {
             switch (e.key) {
                 case 'Tab':  // Tab
                     // Nothing.
-                    console.log('tab');
                     this.close();
                     break;
                 default:
+                    if (this.combobox) {
+                        if (this.triggerbox.value.length >=3) {
+                            this.open();
+                        }
+                    }
                     break;
             }
         });
@@ -375,6 +384,14 @@ class SelectMenu extends InputElement {
             } else {
                 switch (e.key) {
                     case 'Enter':
+                        if (this.combobox) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if ((this.onenter) && (typeof this.onenter === 'function')) {
+                                this.onenter(this);
+                            }
+                        }
+                        break;
                     case 'Shift':
                     case 'Control':
                     case 'Alt':
@@ -510,7 +527,7 @@ class SelectMenu extends InputElement {
                         break;
                     case 'Backspace':  // Backspace
                     case 'Delete':  // Delete
-                        this.triggerbox.value = this.triggerbox.value.substring(0, this.value.length - 1);
+                        this.triggerbox.value = this.triggerbox.value.substring(0, this.triggerbox.value.length - 1);
                         this.updateSearch();
                         break;
                     case ' ': // space
@@ -524,7 +541,7 @@ class SelectMenu extends InputElement {
 
         });
 
-        li.addEventListener('click', () => {
+        li.addEventListener('click', (e) => {
             let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
@@ -560,7 +577,7 @@ class SelectMenu extends InputElement {
             if (this.form) { this.form.validate(); }
 
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(this);
+                this.onchange(this, e);
             }
         });
 
@@ -599,11 +616,27 @@ class SelectMenu extends InputElement {
         }
     }
 
+    reduceOptions(s) {
+        if ((!s) || (typeof s !== 'string')) { return; }
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
+                li.setAttribute('data-match', 'true');
+            } else {
+                li.setAttribute('data-match', 'false');
+            }
+        }
+    }
+
     /**
      * Updates the counter
      */
     updateSearch() {
-        this.findByString(this.triggerbox.value);
+        if (this.combobox) {
+            this.reduceOptions(this.triggerbox.value);
+        } else {
+            this.findByString(this.triggerbox.value);
+        }
     }
 
     /**
@@ -631,6 +664,14 @@ class SelectMenu extends InputElement {
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
+
+    get onenter() { return this.config.onenter; }
+    set onenter(onenter) {
+        if (typeof onenter !== 'function') {
+            console.error("Action provided for onenter is not a function!");
+        }
+        this.config.onenter = onenter;
+    }
 
     get optionlist() {
         if (!this._optionlist) { this.buildOptions(); }

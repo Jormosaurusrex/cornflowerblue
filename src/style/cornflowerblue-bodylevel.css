@@ -951,6 +951,9 @@ div.selectmenu-menu ul.selectmenu li:focus, div.selectmenu-menu ul.selectmenu li
     color: var(--colors-text-hot);
   }
 }
+div.selectmenu-menu ul.selectmenu li[data-match=false] {
+  display: none;
+}
 div.selectmenu-menu.imageselector-container > ul.selectmenu > li {
   padding: 0;
 }

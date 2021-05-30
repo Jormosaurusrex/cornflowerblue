@@ -4175,9 +4175,6 @@ div.textarea-container div.passivebox {
   min-height: 4em;
 }
 
-div.select-container.mute > div.wrap > input.trigger::placeholder {
-  opacity: 0;
-}
 div.select-container.mute.filled > div.wrap > input.trigger::placeholder {
   opacity: 0.3;
 }
@@ -4196,10 +4193,6 @@ div.select-container.mute[aria-expanded=true] div.topline div.topcontrol {
   opacity: 1;
   display: inline-block;
 }
-div.select-container.mute[aria-expanded=true] > div.wrap > input.trigger::placeholder {
-  opacity: 0.3;
-}
-
 div.file-container.mute > div.wrap > div.trigger > span.placeholder {
   opacity: 0;
 }
@@ -6656,6 +6649,77 @@ div.datalist-container > div.tablewrapper {
 div.datalist-container > div.tablewrapper > table {
   border-spacing: 0;
   width: 100%;
+}
+div.datalist-container > div.tablewrapper > table > thead {
+  z-index: 250;
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 255;
+  background-color: var(--canvas-color-tertiary);
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th div.th {
+  position: relative;
+  white-space: nowrap;
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th div.th:before {
+  position: absolute;
+  right: 0.5em;
+  margin: 0;
+  flex-direction: column;
+  font-size: 0.7em;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  color: var(--colors-standard);
+  opacity: 0;
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th:focus, div.datalist-container > div.tablewrapper > table > thead > tr > th:active, div.datalist-container > div.tablewrapper > table > thead > tr > th.focus, div.datalist-container > div.tablewrapper > table > thead > tr > th.active {
+  color: var(--colors-affordance);
+  text-shadow: var(--text-shadow);
+  background-color: var(--canvas-color-secondary);
+  outline: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > div.tablewrapper > table > thead > tr > th:hover {
+    outline: none;
+    text-decoration: underline;
+  }
+  div.datalist-container > div.tablewrapper > table > thead > tr > th:hover:not(.mechanical) {
+    color: var(--colors-text-hot);
+    text-shadow: var(--text-shadow);
+    background-color: var(--colors-affordance);
+  }
+  div.datalist-container > div.tablewrapper > table > thead > tr > th:hover:not(.mechanical) div.th:before {
+    color: var(--colors-text-hot);
+  }
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th:active, div.datalist-container > div.tablewrapper > table > thead > tr > th.active {
+  text-decoration: none;
+  box-shadow: none;
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th:focus, div.datalist-container > div.tablewrapper > table > thead > tr > th.focus {
+  outline: var(--colors-text-hot) dashed 0.1em;
+  outline-offset: -0.3em;
+  text-decoration: underline double;
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th.mechanical {
+  z-index: 106;
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=asc] div.th, div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=desc] div.th {
+  box-shadow: inset 0 -0.2em 0 0 var(--colors-focus);
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=asc] div.th:before, div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=desc] div.th:before {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=asc]:hover div.th, div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=desc]:hover div.th {
+    box-shadow: none;
+  }
+}
+div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=desc] div.th:before {
+  transform: rotate(180deg);
 }
 div.datalist-container > ul.datalist,
 div.datalist-container > div.tablewrapper > table > tbody.datalist {
