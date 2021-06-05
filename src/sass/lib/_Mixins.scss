@@ -22,3 +22,12 @@
 @mixin for-retina-only {
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { @content; }
 }
+
+// No other place to put this than here, really.
+.scrollbar-measure {
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+  position: absolute;
+  top: -9999px;
+}

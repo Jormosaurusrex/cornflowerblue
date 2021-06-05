@@ -7,6 +7,7 @@ class DialogWindow {
             actions: null, // An array of actions. Can be buttons or keyword strings.Only used if form is null.
             // Possible keywords:  closebutton, cancelbutton
             content: null,
+            nocontentwrap: false,
             onclose: null,
             screen: document.body,
             classes: [],             // apply these classes to the dialog, if any.
@@ -33,6 +34,7 @@ class DialogWindow {
             actions: { type: 'option', datatype: 'array', description: "An array of actions. Can be SimpleButtons or keyword strings. Only used if form is null (actions exist on SimpleForm objects as well).  Possible keywords:  closebutton, cancelbutton" },
             screen: { type: "option", datatype: 'domobject', description: "The DOM element to load the dialog into.  Defaults to the body." },
             content: { type: 'option', datatype: 'domobject', description: "This is the content of the dialog.  Ignored if provided a <code>form</code>."},
+            nocontentwrap: { type: 'option', datatype: 'boolean', description: "If true, do not wrap supplied content objects inside a 'content' div." },
             header: { type: 'option', datatype: 'domobject', description: "DOM object, will be used if passed before title."},
             title: { type: 'option', datatype: 'string', description: "Adds a title to the dialog if present. header must be null." },
             trailer: { type: 'option', datatype: 'domobject', description: "Adds a trailing chunk of DOM.  Can be provided a full dom object or a string.  If it's a string, it creates a div at the bottom with the value of the text." },
@@ -237,11 +239,18 @@ class DialogWindow {
             this.window.appendChild(this.contentbox);
 
         } else if (this.content) { // It's a DOM object
-            this.contentbox = document.createElement('div');
-            this.contentbox.classList.add('content');
-            this.contentbox.appendChild(this.content);
+            if (this.nocontentwrap) {
+                this.contentbox = this.content;
+                this.contentbox.classList.add('content');
+                this.window.appendChild(this.contentbox);
+            } else {
+                this.contentbox = document.createElement('div');
+                this.contentbox.classList.add('content');
+                this.contentbox.appendChild(this.content);
 
-            this.window.appendChild(this.contentbox);
+                this.window.appendChild(this.contentbox);
+            }
+
 
             if ((this.actions) && (this.actions.length > 0)) {
                 this.actionbox = document.createElement('div');
@@ -339,6 +348,9 @@ class DialogWindow {
 
     get mask() { return this._mask; }
     set mask(mask) { this._mask = mask; }
+
+    get nocontentwrap() { return this.config.nocontentwrap; }
+    set nocontentwrap(nocontentwrap) { this.config.nocontentwrap = nocontentwrap; }
 
     get nofocus() { return this.config.nofocus; }
     set nofocus(nofocus) { this.config.nofocus = nofocus; }

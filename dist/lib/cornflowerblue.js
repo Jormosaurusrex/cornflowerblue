@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-05-29
+/*! Cornflower Blue - v0.1.1 - 2021-06-02
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2297,7 +2297,8 @@ class SimpleButton {
             focusin: null,
             focusout: null,
             hoverin: null,
-            hoverout: null
+            hoverout: null,
+            doubleclick: null,
         };
     }
 
@@ -2581,8 +2582,20 @@ class SimpleButton {
 
         if ((!this.submits) && (this.action) && (typeof this.action === 'function')) {
             this.button.addEventListener('click', (e) => {
-                if (!this.disabled) {
-                    this.action(e, this);
+                if (this.button.getAttribute("data-dblclick") == null) {
+                    this.button.setAttribute("data-dblclick", "true");
+                    setTimeout(() => {
+                        if (this.button.getAttribute("data-dblclick") === "true") {
+                            if (!this.disabled) {
+                                this.action(e, this);
+                            }                        }
+                        this.button.removeAttribute("data-dblclick");
+                    }, 300);
+                } else {
+                    this.button.removeAttribute("data-dblclick");
+                    if ((this.doubleclick) && (typeof this.doubleclick === 'function')) {
+                        this.doubleclick(e, this);
+                    }
                 }
             });
         }
@@ -2665,6 +2678,14 @@ class SimpleButton {
 
     get disabled() { return this.config.disabled; }
     set disabled(disabled) { this.config.disabled = disabled; }
+
+    get doubleclick() { return this.config.doubleclick; }
+    set doubleclick(doubleclick) {
+        if (typeof doubleclick !== 'function') {
+            console.error("Action provided to button is not a function!");
+        }
+        this.config.doubleclick = doubleclick;
+    }
 
     get focusin() { return this.config.focusin; }
     set focusin(focusin) {
@@ -3615,7 +3636,7 @@ class Panel {
         this.container.setAttribute('aria-expanded', 'true');
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
+        if ((this.collapsible) && (this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
         }
         if ((this.onopen) && (typeof this.onopen === 'function')) {
@@ -3631,7 +3652,7 @@ class Panel {
         this.minimized = true;
         this.state.minimized = this.minimized;
         this.persist();
-        if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
+        if ((this.collapsible) && (this.closeicon) && (this.closeiconclosed) && (this.title)) {
             this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
         }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
@@ -3746,7 +3767,7 @@ class Panel {
             this.container.appendChild(this.footer);
         }
 
-        if (this.minimized) { // don't call close() to avoid the callbacks.
+        if ((this.collapsible) && (this.minimized)) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
             if ((this.closeicon) && (this.closeiconclosed)) {
                 this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
@@ -3894,7 +3915,7 @@ class Panel {
     get title() { return this.config.title; }
     set title(title) {
         this.config.title = title;
-        if (this.togglebutton) {
+        if ((this.collapsible) && (this.togglebutton)) {
             this.togglebutton.text = title;
         } else if (this.header) {
             this.header.innerHTML = title;
@@ -12496,7 +12517,8 @@ class SelectMenu extends InputElement {
             value: null,    // Use this to set the value of the item
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
-            onchange: null  // The change handler. Passed (self).
+            onenter: null,  // With a combobox, fired when the enter key is hit. passed (self)
+            onchange: null  // The change handler. Passed (self, e).
         };
     }
 
@@ -12682,7 +12704,7 @@ class SelectMenu extends InputElement {
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top,
             sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
-        console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`)
+        //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
         self.listbox.style.left = `${offsetLeft}px`;
         self.listbox.style.width = `${self.container.clientWidth}px`;
@@ -12869,6 +12891,14 @@ class SelectMenu extends InputElement {
             } else {
                 switch (e.key) {
                     case 'Enter':
+                        if (this.combobox) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if ((this.onenter) && (typeof this.onenter === 'function')) {
+                                this.onenter(this);
+                            }
+                        }
+                        break;
                     case 'Shift':
                     case 'Control':
                     case 'Alt':
@@ -13018,7 +13048,7 @@ class SelectMenu extends InputElement {
 
         });
 
-        li.addEventListener('click', () => {
+        li.addEventListener('click', (e) => {
             let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
@@ -13054,7 +13084,7 @@ class SelectMenu extends InputElement {
             if (this.form) { this.form.validate(); }
 
             if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(this);
+                this.onchange(this, e);
             }
         });
 
@@ -13141,6 +13171,14 @@ class SelectMenu extends InputElement {
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
+
+    get onenter() { return this.config.onenter; }
+    set onenter(onenter) {
+        if (typeof onenter !== 'function') {
+            console.error("Action provided for onenter is not a function!");
+        }
+        this.config.onenter = onenter;
+    }
 
     get optionlist() {
         if (!this._optionlist) { this.buildOptions(); }

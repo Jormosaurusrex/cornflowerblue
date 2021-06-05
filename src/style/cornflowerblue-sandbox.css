@@ -192,6 +192,14 @@
   --black: rgb(var(--black-rgb));
 }
 
+.scrollbar-measure {
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+  position: absolute;
+  top: -9999px;
+}
+
 @keyframes cfb-localspin {
   0% {
     transform: rotate(0deg);

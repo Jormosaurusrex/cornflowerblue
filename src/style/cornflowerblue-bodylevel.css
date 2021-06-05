@@ -4,6 +4,14 @@
    This is used when CFB needs to be sandboxed within a div block.  Some stuff, though,
    must be loaded at the root level because it injects DOM elements at the body level
  */
+.scrollbar-measure {
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+  position: absolute;
+  top: -9999px;
+}
+
 @font-face {
   font-family: "cornflowerblue";
   src: url("../font/cornflowerblue.eot?541606");

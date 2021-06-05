@@ -1,4 +1,12 @@
 @charset "UTF-8";
+.scrollbar-measure {
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+  position: absolute;
+  top: -9999px;
+}
+
 /*
   We want to use variables so that they can be re-themed
  */
