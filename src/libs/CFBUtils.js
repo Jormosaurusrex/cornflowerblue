@@ -469,6 +469,14 @@ class CFBUtils {
 
     /* BROWSER AND MOBILE DETECTION METHODS_________________________________________________________ */
 
+    static selectElementContents(e) {
+        let r = document.createRange();
+        r.selectNodeContents(e);
+        let s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(r);
+    }
+
     static determineScrollbarWidth() {
         let scrollDiv = document.createElement("div");
         scrollDiv.className = "scrollbar-measure";

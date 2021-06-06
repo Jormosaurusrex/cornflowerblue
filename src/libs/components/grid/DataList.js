@@ -158,8 +158,9 @@ class DataList extends DataGrid {
             if (next > items.length) { next = items.length; }
 
             let li = this.drawitem(item);
-            //li.style.setProperty('--anim-order', `${order}`);
-            //li.setAttribute('data-order', order);
+            if (li === null) {
+                continue;
+            }
             if (item['id']) {
                 li.setAttribute('data-item-id', item['id']);
             }
