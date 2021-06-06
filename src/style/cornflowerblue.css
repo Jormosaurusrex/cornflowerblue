@@ -7168,6 +7168,9 @@ div.datalist-container > div.tablewrapper > table > thead > tr > th:focus, div.d
   background-color: var(--canvas-color-secondary);
   outline: none;
 }
+div.datalist-container > div.tablewrapper > table > thead > tr > th.mechanical {
+  pointer-events: none;
+}
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > div.tablewrapper > table > thead > tr > th:hover {
     outline: none;
@@ -7192,7 +7195,7 @@ div.datalist-container > div.tablewrapper > table > thead > tr > th:focus, div.d
   text-decoration: underline double;
 }
 div.datalist-container > div.tablewrapper > table > thead > tr > th.mechanical {
-  z-index: 106;
+  z-index: 500;
 }
 div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=asc] div.th, div.datalist-container > div.tablewrapper > table > thead > tr > th[data-sort=desc] div.th {
   box-shadow: inset 0 -0.2em 0 0 var(--colors-focus);

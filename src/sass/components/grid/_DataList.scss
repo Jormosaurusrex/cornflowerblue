@@ -173,7 +173,6 @@ div.datalist-container {
             top: 0;
             z-index: 255;
             background-color: var(--canvas-color-tertiary);
-
             div.th {
               position: relative;
               white-space:nowrap;
@@ -198,6 +197,9 @@ div.datalist-container {
               text-shadow: var(--text-shadow);
               background-color: var(--canvas-color-secondary);
               outline: none;
+            }
+            &.mechanical {
+              pointer-events: none;
             }
             @include for-hover-only {
               &:hover {
@@ -227,7 +229,7 @@ div.datalist-container {
               text-decoration: underline double;
             }
             &.mechanical {
-              z-index: 106;
+              z-index: 500;
             }
             &[data-sort='asc'],
             &[data-sort='desc']{

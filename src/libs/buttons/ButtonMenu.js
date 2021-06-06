@@ -77,7 +77,10 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
-        return this.button.hasAttribute('aria-expanded');
+        if ((this.button.getAttribute('aria-expanded')) && (this.button.getAttribute('aria-expanded') === 'true')) {
+            return true;
+        }
+        return false;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -130,7 +133,7 @@ class ButtonMenu extends SimpleButton {
 
         this.menu.classList.add(this.gravity);
 
-        if ((this.onopen) && (typeof this.onclose === 'function')) {
+        if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
 

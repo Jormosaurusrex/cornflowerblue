@@ -346,13 +346,12 @@ class DataList extends DataGrid {
                 }
             }
             if (col.field === 'spacer') {
-                colheader.classList.add('spacer');
+                colheader.classList.add('spacer', 'mechanical');
                 colheader.classList.add(`size-${col.type}`);
                 if (this.astable) { colheader.innerHTML = "&nbsp;"; }
                 row.appendChild(colheader);
                 continue;
             }
-
 
             if (col.identifier) { colheader.setAttribute('data-identifier', "true"); }
             colheader.setAttribute('data-column', col.field);
