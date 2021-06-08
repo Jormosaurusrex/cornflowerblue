@@ -4352,8 +4352,11 @@ div.textarea-container div.passivebox {
   min-height: 4em;
 }
 
-div.select-container.mute.filled > div.wrap > input.trigger::placeholder {
-  opacity: 0.3;
+div.select-container.mute > div.wrap > input.trigger::placeholder {
+  opacity: 0;
+}
+div.select-container.mute[aria-expanded=true] > div.wrap > input.trigger::placeholder, div.select-container.mute.filled > div.wrap > input.trigger::placeholder {
+  opacity: 0.5;
 }
 div.select-container.mute[aria-expanded=true] div.topline {
   margin-top: 0;
@@ -4370,6 +4373,7 @@ div.select-container.mute[aria-expanded=true] div.topline div.topcontrol {
   opacity: 1;
   display: inline-block;
 }
+
 div.file-container.mute > div.wrap > div.trigger > span.placeholder {
   opacity: 0;
 }

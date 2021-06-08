@@ -550,15 +550,16 @@ div.select-container {
     >div.wrap {
       >input.trigger {
         &::placeholder {
-          //opacity: 0;
+          opacity: 0;
         }
       }
     }
+    &[aria-expanded="true"],
     &.filled {
       >div.wrap {
         >input.trigger {
           &::placeholder {
-            opacity: .3;
+            opacity: .5;
           }
         }
       }
@@ -578,13 +579,6 @@ div.select-container {
         div.topcontrol {
           opacity: 1;
           display: inline-block;
-        }
-      }
-      >div.wrap {
-        >input.trigger {
-          &::placeholder {
-            //opacity: .3;
-          }
         }
       }
     }
