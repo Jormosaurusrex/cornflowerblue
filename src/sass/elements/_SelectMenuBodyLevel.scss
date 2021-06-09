@@ -35,6 +35,7 @@ div.selectmenu-menu {
       margin: 0;
       white-space: nowrap;
       padding: var(--input-default-padding);
+      cursor: pointer;
       >input[type='radio'] {
         display: none;
       }
@@ -47,8 +48,14 @@ div.selectmenu-menu {
         outline: var(--colors-text-hot) dashed .1em;
         outline-offset: -.3em;
       }
-      &:focus,
       &:focus-within {
+        background-color: var(--colors-affordance);
+        color: var(--colors-text-hot);
+        outline: var(--colors-text-hot) dashed .1em;
+        outline-offset: -.3em;
+        text-decoration: underline double;
+      }
+      &:focus {
         background-color: var(--colors-affordance);
         color: var(--colors-text-hot);
         outline: var(--colors-text-hot) dashed .1em;

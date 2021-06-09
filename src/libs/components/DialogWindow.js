@@ -146,6 +146,20 @@ class DialogWindow {
         }
     }
 
+    setContent(content) {
+
+        if (this.nocontentwrap) {
+            this.contentbox.remove();
+            this.contentbox = content;
+            this.contentbox.classList.add('content');
+            this.window.appendChild(this.contentbox);
+        } else {
+            this.contentbox.innerHTML = '';
+            this.content = content;
+            this.contentbox.appendChild(this.content);
+        }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**

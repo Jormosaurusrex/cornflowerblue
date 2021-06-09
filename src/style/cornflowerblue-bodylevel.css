@@ -933,6 +933,7 @@ div.selectmenu-menu ul.selectmenu li {
   margin: 0;
   white-space: nowrap;
   padding: var(--input-default-padding);
+  cursor: pointer;
 }
 div.selectmenu-menu ul.selectmenu li > input[type=radio] {
   display: none;
@@ -946,7 +947,14 @@ div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
   outline: var(--colors-text-hot) dashed 0.1em;
   outline-offset: -0.3em;
 }
-div.selectmenu-menu ul.selectmenu li:focus, div.selectmenu-menu ul.selectmenu li:focus-within {
+div.selectmenu-menu ul.selectmenu li:focus-within {
+  background-color: var(--colors-affordance);
+  color: var(--colors-text-hot);
+  outline: var(--colors-text-hot) dashed 0.1em;
+  outline-offset: -0.3em;
+  text-decoration: underline double;
+}
+div.selectmenu-menu ul.selectmenu li:focus {
   background-color: var(--colors-affordance);
   color: var(--colors-text-hot);
   outline: var(--colors-text-hot) dashed 0.1em;

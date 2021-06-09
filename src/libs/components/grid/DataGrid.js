@@ -139,7 +139,6 @@ class DataGrid extends Panel {
 
     initialize() {
 
-
         // Need to turn these into GridFields if they aren't already
         if (this.warehouse) {
             this.fields = this.warehouse.fields;

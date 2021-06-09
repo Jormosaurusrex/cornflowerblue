@@ -9,6 +9,8 @@ class DataList extends DataGrid {
             collapsible: false,
             astable: false,
             exportable: false,
+            startsort: 'title',
+            startsortdirection: 'asc',
             filterable: false,
             multiselect: false,
             loadcallback: null,
@@ -71,8 +73,14 @@ class DataList extends DataGrid {
 
     setHeaderState(column = 'name', direction = 'asc') {
         let headeritem = this.listheader.querySelector(`[data-column='${column}']`);
-        for (let h of this.listheader.querySelectorAll('div.label')) {
-            h.removeAttribute('data-sorted');
+        if (this.astable) {
+            for (let h of this.listheader.querySelectorAll('th')) {
+                h.removeAttribute('data-sorted');
+            }
+        } else {
+            for (let h of this.listheader.querySelectorAll('div.label')) {
+                h.removeAttribute('data-sorted');
+            }
         }
         this.listheader.setAttribute('data-sort-field', column);
         this.listheader.setAttribute('data-sort-direction', direction);
@@ -135,7 +143,7 @@ class DataList extends DataGrid {
         this.applystate();
     }
 
-    populate(sort='title', direction = 'asc') {
+    populate(sort= (this.startsort) ? this.startsort : 'title', direction = (this.startsortdirection) ? this.startsortdirection : 'asc') {
         let order = 1,
             items = this.sortOn(this.data, sort, direction);
 
@@ -304,11 +312,12 @@ class DataList extends DataGrid {
             this.container.appendChild(this.datalist);
         }
 
-
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
         this.container.appendChild(this.messagebox);
+
+
 
         if (this.showfooter) {
             this.container.appendChild(this.footer);
@@ -357,6 +366,8 @@ class DataList extends DataGrid {
             colheader.setAttribute('data-column', col.field);
             colheader.classList.add('label');
             colheader.innerHTML = `<label>${col.label}</label>`;
+
+
             colheader.addEventListener('click', () => {
                 let direction = 'asc';
                 if ((this.listheader.getAttribute('data-sort-field')) && (this.listheader.getAttribute('data-sort-field') === col.field)) {
@@ -367,7 +378,6 @@ class DataList extends DataGrid {
                 this.state.sort.column = col.field;
                 this.state.sort.direction = direction;
                 this.persist();
-
                 this.populate(col.field, direction);
             });
             row.appendChild(colheader);
@@ -450,6 +460,12 @@ class DataList extends DataGrid {
 
     get specialsort() { return this.config.specialsort; }
     set specialsort(specialsort) { this.config.specialsort = specialsort; }
+
+    get startsort() { return this.config.startsort; }
+    set startsort(startsort) { this.config.startsort = startsort; }
+
+    get startsortdirection() { return this.config.startsortdirection; }
+    set startsortdirection(startsortdirection) { this.config.startsortdirection = startsortdirection; }
 
 }
 window.DataList = DataList;

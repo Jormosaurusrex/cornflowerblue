@@ -3,6 +3,7 @@ class SelectMenu extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             combobox: false,
+            preventscroll: null, // An array containing elements that should not be able to scroll when the thing is open.
             placeholder: TextFactory.get('selectmenu-placeholder-default'),
             unselectedtext: null, // If present, allow for a deselect and use this text.
             icon: "chevron-down",
@@ -176,7 +177,17 @@ class SelectMenu extends InputElement {
 
         let x = window.scrollX,
             y = window.scrollY;
+
         window.onscroll = () => { window.scrollTo(x, y); };
+
+        if (this.preventscroll){
+            for (let element of this.preventscroll) {
+                let px = element.scrollX,
+                    py = element.scrollY;
+                element.classList.add('scrollfrozen');
+                element.onscroll = () => { element.scrollTo(px, py); };
+            }
+        }
 
         this.setPosition();
 
@@ -217,7 +228,14 @@ class SelectMenu extends InputElement {
      */
     close() {
         //window.removeEventListener('scroll', this.setPosition, true);
-        window.onscroll=() => {};
+        window.onscroll = () => {};
+        if (this.preventscroll){
+            for (let element of this.preventscroll) {
+                element.classList.remove('scrollfrozen');
+                element.onscroll = () => { };
+            }
+        }
+
         this.listbox.style.top = null;
         this.listbox.style.bottom = null;
         this.listbox.style.left = null;
@@ -684,6 +702,9 @@ class SelectMenu extends InputElement {
 
     get prefix() { return this.config.prefix; }
     set prefix(prefix) { this.config.prefix = prefix; }
+
+    get preventscroll() { return this.config.preventscroll; }
+    set preventscroll(preventscroll) { this.config.preventscroll = preventscroll; }
 
     get selectedoption() { return this._selectedoption; }
     set selectedoption(selectedoption) { this._selectedoption = selectedoption; }

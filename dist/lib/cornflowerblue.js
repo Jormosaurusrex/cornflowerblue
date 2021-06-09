@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-06-05
+/*! Cornflower Blue - v0.1.1 - 2021-06-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2905,7 +2905,10 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
-        return this.button.hasAttribute('aria-expanded');
+        if ((this.button.getAttribute('aria-expanded')) && (this.button.getAttribute('aria-expanded') === 'true')) {
+            return true;
+        }
+        return false;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -2958,7 +2961,7 @@ class ButtonMenu extends SimpleButton {
 
         this.menu.classList.add(this.gravity);
 
-        if ((this.onopen) && (typeof this.onclose === 'function')) {
+        if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
 
@@ -4987,7 +4990,6 @@ class DataGrid extends Panel {
     get displaytype() { return 'datagrid'; }
 
     initialize() {
-
 
         // Need to turn these into GridFields if they aren't already
         if (this.warehouse) {
@@ -7326,6 +7328,8 @@ class DataList extends DataGrid {
             collapsible: false,
             astable: false,
             exportable: false,
+            startsort: 'title',
+            startsortdirection: 'asc',
             filterable: false,
             multiselect: false,
             loadcallback: null,
@@ -7388,8 +7392,14 @@ class DataList extends DataGrid {
 
     setHeaderState(column = 'name', direction = 'asc') {
         let headeritem = this.listheader.querySelector(`[data-column='${column}']`);
-        for (let h of this.listheader.querySelectorAll('div.label')) {
-            h.removeAttribute('data-sorted');
+        if (this.astable) {
+            for (let h of this.listheader.querySelectorAll('th')) {
+                h.removeAttribute('data-sorted');
+            }
+        } else {
+            for (let h of this.listheader.querySelectorAll('div.label')) {
+                h.removeAttribute('data-sorted');
+            }
         }
         this.listheader.setAttribute('data-sort-field', column);
         this.listheader.setAttribute('data-sort-direction', direction);
@@ -7452,7 +7462,7 @@ class DataList extends DataGrid {
         this.applystate();
     }
 
-    populate(sort='title', direction = 'asc') {
+    populate(sort= (this.startsort) ? this.startsort : 'title', direction = (this.startsortdirection) ? this.startsortdirection : 'asc') {
         let order = 1,
             items = this.sortOn(this.data, sort, direction);
 
@@ -7621,11 +7631,12 @@ class DataList extends DataGrid {
             this.container.appendChild(this.datalist);
         }
 
-
         this.messagebox = document.createElement('div');
         this.messagebox.classList.add('messages');
         this.messagebox.classList.add('hidden');
         this.container.appendChild(this.messagebox);
+
+
 
         if (this.showfooter) {
             this.container.appendChild(this.footer);
@@ -7663,18 +7674,19 @@ class DataList extends DataGrid {
                 }
             }
             if (col.field === 'spacer') {
-                colheader.classList.add('spacer');
+                colheader.classList.add('spacer', 'mechanical');
                 colheader.classList.add(`size-${col.type}`);
                 if (this.astable) { colheader.innerHTML = "&nbsp;"; }
                 row.appendChild(colheader);
                 continue;
             }
 
-
             if (col.identifier) { colheader.setAttribute('data-identifier', "true"); }
             colheader.setAttribute('data-column', col.field);
             colheader.classList.add('label');
             colheader.innerHTML = `<label>${col.label}</label>`;
+
+
             colheader.addEventListener('click', () => {
                 let direction = 'asc';
                 if ((this.listheader.getAttribute('data-sort-field')) && (this.listheader.getAttribute('data-sort-field') === col.field)) {
@@ -7685,7 +7697,6 @@ class DataList extends DataGrid {
                 this.state.sort.column = col.field;
                 this.state.sort.direction = direction;
                 this.persist();
-
                 this.populate(col.field, direction);
             });
             row.appendChild(colheader);
@@ -7768,6 +7779,12 @@ class DataList extends DataGrid {
 
     get specialsort() { return this.config.specialsort; }
     set specialsort(specialsort) { this.config.specialsort = specialsort; }
+
+    get startsort() { return this.config.startsort; }
+    set startsort(startsort) { this.config.startsort = startsort; }
+
+    get startsortdirection() { return this.config.startsortdirection; }
+    set startsortdirection(startsortdirection) { this.config.startsortdirection = startsortdirection; }
 
 }
 window.DataList = DataList;
@@ -12541,6 +12558,7 @@ class SelectMenu extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             combobox: false,
+            preventscroll: null, // An array containing elements that should not be able to scroll when the thing is open.
             placeholder: TextFactory.get('selectmenu-placeholder-default'),
             unselectedtext: null, // If present, allow for a deselect and use this text.
             icon: "chevron-down",
@@ -12714,7 +12732,17 @@ class SelectMenu extends InputElement {
 
         let x = window.scrollX,
             y = window.scrollY;
+
         window.onscroll = () => { window.scrollTo(x, y); };
+
+        if (this.preventscroll){
+            for (let element of this.preventscroll) {
+                let px = element.scrollX,
+                    py = element.scrollY;
+                element.classList.add('scrollfrozen');
+                element.onscroll = () => { element.scrollTo(px, py); };
+            }
+        }
 
         this.setPosition();
 
@@ -12755,7 +12783,14 @@ class SelectMenu extends InputElement {
      */
     close() {
         //window.removeEventListener('scroll', this.setPosition, true);
-        window.onscroll=() => {};
+        window.onscroll = () => {};
+        if (this.preventscroll){
+            for (let element of this.preventscroll) {
+                element.classList.remove('scrollfrozen');
+                element.onscroll = () => { };
+            }
+        }
+
         this.listbox.style.top = null;
         this.listbox.style.bottom = null;
         this.listbox.style.left = null;
@@ -13222,6 +13257,9 @@ class SelectMenu extends InputElement {
 
     get prefix() { return this.config.prefix; }
     set prefix(prefix) { this.config.prefix = prefix; }
+
+    get preventscroll() { return this.config.preventscroll; }
+    set preventscroll(preventscroll) { this.config.preventscroll = preventscroll; }
 
     get selectedoption() { return this._selectedoption; }
     set selectedoption(selectedoption) { this._selectedoption = selectedoption; }
