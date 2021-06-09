@@ -286,12 +286,12 @@ class Panel {
 
         if ((this.collapsible) && (this.minimized)) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
-            if ((this.closeicon) && (this.closeiconclosed)) {
+            if ((this.closeicon) && (this.closeiconclosed) && (this.togglebutton)) {
                 this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
             }
         } else {
             this.container.setAttribute('aria-expanded', 'true');
-            if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
+            if ((this.closeicon) && (this.closeiconclosed) && (this.togglebutton)) {
                 this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
             }
         }
