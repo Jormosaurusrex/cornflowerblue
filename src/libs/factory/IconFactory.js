@@ -127,6 +127,8 @@ class IconFactory {
             'star-open',
             'star-full',
             'undo',
+            'short_window',
+            'tall_window',
             'maximize'
         ];
     }

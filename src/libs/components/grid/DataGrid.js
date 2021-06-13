@@ -404,7 +404,13 @@ class DataGrid extends Panel {
                 for (let c of columns) {
                     if (show) { break; }
                     if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
+                        let colname = c.getAttribute('data-column');
+
+                        if ((colname) && (colname === 'description')) {
+                            break;
+                        }
                         if (c.innerText.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+
                             if (c.classList.contains('hidden')) {
                                 matchesHiddenColumns = true;
                             } else {

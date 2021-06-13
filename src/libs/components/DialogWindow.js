@@ -147,12 +147,15 @@ class DialogWindow {
     }
 
     setContent(content) {
-
         if (this.nocontentwrap) {
             this.contentbox.remove();
             this.contentbox = content;
             this.contentbox.classList.add('content');
-            this.window.appendChild(this.contentbox);
+            if (this.title) {
+                this.header.after(this.contentbox);
+            } else {
+                this.window.prepend(this.contentbox);
+            }
         } else {
             this.contentbox.innerHTML = '';
             this.content = content;
@@ -166,7 +169,6 @@ class DialogWindow {
      * Constructs the DialogWindow's DOM elements
      */
     build() {
-
         this.container = document.createElement('div');
         this.container.classList.add('window-container');
 
@@ -351,8 +353,8 @@ class DialogWindow {
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
 
-    get header() { return this.config.header; }
-    set header(header) { this.config.header = header; }
+    get header() { return this._header; }
+    set header(header) { this._header = header; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }

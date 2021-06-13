@@ -170,7 +170,9 @@ class ButtonMenu extends SimpleButton {
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
-                this.menu.style.opacity = 1;
+                this.menu.style.opacity =  1;
+                this.menu.style.removeProperty('opacity');
+                this.menu.classList.add('open');
             }, 50);
         }
     }
@@ -285,7 +287,7 @@ class ButtonMenu extends SimpleButton {
             } else if (this.menu.contains(e.target)) {
                 this.close();
             } else if (this.button.contains(e.target)) {
-                this.toggle();
+                // Do nothing.  This will auto close.
             } else {
                 this.close();
             }

@@ -245,7 +245,17 @@ class DataList extends DataGrid {
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction, this);
         }
-        listelements.sort((a, b) => {
+        let sticklist = [],
+            sortlist = [];
+        for (let le of listelements) {
+            if (le.nosort) {
+                sticklist.push(le);
+            } else {
+                sortlist.push(le);
+            }
+        }
+
+        sticklist.sort((a, b) => {
             let aval = a[column],
                 bval = b[column];
 
@@ -264,11 +274,31 @@ class DataList extends DataGrid {
             }
             return 0;
         });
+        sortlist.sort((a, b) => {
+            let aval = a[column],
+                bval = b[column];
+
+            if (typeof aval === 'string') {
+                aval = aval.toLowerCase();
+            }
+            if (typeof bval === 'string') {
+                bval = bval.toLowerCase();
+            }
+            if (direction === 'asc') {
+                if (aval > bval) { return 1 }
+                if (aval < bval) { return -1 }
+            } else {
+                if (bval > aval) { return 1 }
+                if (bval < aval) { return -1 }
+            }
+            return 0;
+        });
+
         if (!this.currentsort) { this.currentsort = {}; }
         this.currentsort.field = column;
         this.currentsort.direction = direction;
 
-        return listelements;
+        return [].concat(sticklist).concat(sortlist);
     }
 
     openItem(item) {
@@ -317,7 +347,9 @@ class DataList extends DataGrid {
         this.messagebox.classList.add('hidden');
         this.container.appendChild(this.messagebox);
 
-
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
 
         if (this.showfooter) {
             this.container.appendChild(this.footer);

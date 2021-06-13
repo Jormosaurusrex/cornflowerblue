@@ -126,6 +126,8 @@
 .cfb-ul:before { content: '\e882'; } /* '' */
 .cfb-underline:before { content: '\e883'; } /* '' */
 .cfb-maximize:before { content: '\e885'; } /* '' */
+.cfb-short_window:before { content: '\e886'; } /* '' */
+.cfb-tall_window:before { content: '\e887'; } /* '' */
 .cfb-chevron-right-thin:before { content: '\e8d7'; } /* '' */
 .cfb-chevron-left-thin:before { content: '\e8d8'; } /* '' */
 .cfb-chevron-down-thin:before { content: '\e8d9'; } /* '' */

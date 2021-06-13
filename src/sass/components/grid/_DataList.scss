@@ -19,8 +19,6 @@ div.datalist-container {
       padding: 0 .5rem;
     }
   }
-
-
   >div.listheader,
   >div.tablewrapper >table >thead >tr.listheader {
     position: relative;
@@ -268,15 +266,6 @@ div.datalist-container {
     padding: 0;
     overflow: auto;
     flex-grow: 2;
-    >li {
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      justify-content: flex-start;
-      align-items: stretch;
-      padding:.5rem;
-    }
-    >li,
     >tr {
       --hover-side-shadow-color: var(--colors-affordance);
       --hover-side-shadow: inset .4rem 0 0 0 var(--hover-side-shadow-color);
@@ -411,6 +400,11 @@ div.datalist-container {
         &[data-search-hidden=true] {
           display: none;
         }
+      }
+    }
+    >li {
+      &[data-search-hidden=true] {
+        display: none;
       }
     }
     &.hidden {
