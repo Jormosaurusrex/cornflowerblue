@@ -206,7 +206,7 @@ p.textarea-container {
       font-variant: normal;
       text-transform: none;
       line-height: 1em;
-      content: '\30'; // circle checkmark
+      content: '\e82d'; // circle checkmark
       font-size: 1.5em;
       background-color: transparent;
       color: rgb(var(--input-status-color-rgb));
@@ -371,7 +371,7 @@ p.textarea-container {
     --input-border-color: rgb(var(--input-status-color-rgb));
     div.wrap {
       &:after {
-        content: '\51';
+        content: '\e807';
       }
     }
   }
@@ -381,7 +381,7 @@ p.textarea-container {
     div.wrap {
       &:after {
         opacity: 1;
-        content: '\30';
+        content: '\e82d';
       }
     }
     &.passive {
@@ -397,7 +397,7 @@ p.textarea-container {
     --input-border-color: rgb(var(--input-status-color-rgb));
     div.wrap {
       &:after {
-        content: '\53';
+        content: '\e819';
       }
     }
   }

@@ -3661,7 +3661,7 @@ p.textarea-container div.wrap:after {
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
-  content: "0";
+  content: "";
   font-size: 1.5em;
   background-color: transparent;
   color: rgb(var(--input-status-color-rgb));
@@ -4115,7 +4115,7 @@ p.input-container.error div.wrap:after,
 div.file-container.error div.wrap:after,
 div.textarea-container.error div.wrap:after,
 p.textarea-container.error div.wrap:after {
-  content: "Q";
+  content: "";
 }
 div.input-container.valid,
 p.input-container.valid,
@@ -4131,7 +4131,7 @@ div.file-container.valid div.wrap:after,
 div.textarea-container.valid div.wrap:after,
 p.textarea-container.valid div.wrap:after {
   opacity: 1;
-  content: "0";
+  content: "";
 }
 div.input-container.valid.passive div.wrap:after,
 p.input-container.valid.passive div.wrap:after,
@@ -4153,7 +4153,7 @@ p.input-container.warning div.wrap:after,
 div.file-container.warning div.wrap:after,
 div.textarea-container.warning div.wrap:after,
 p.textarea-container.warning div.wrap:after {
-  content: "S";
+  content: "";
 }
 div.input-container.disabled,
 p.input-container.disabled,

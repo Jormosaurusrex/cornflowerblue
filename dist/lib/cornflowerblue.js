@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-06-08
+/*! Cornflower Blue - v0.1.1 - 2021-06-16
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1955,7 +1955,10 @@ class IconFactory {
             'notched-triangle-down',
             'star-open',
             'star-full',
-            'undo'
+            'undo',
+            'short_window',
+            'tall_window',
+            'maximize'
         ];
     }
 
@@ -2998,7 +3001,9 @@ class ButtonMenu extends SimpleButton {
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
-                this.menu.style.opacity = 1;
+                this.menu.style.opacity =  1;
+                this.menu.style.removeProperty('opacity');
+                this.menu.classList.add('open');
             }, 50);
         }
     }
@@ -3113,7 +3118,7 @@ class ButtonMenu extends SimpleButton {
             } else if (this.menu.contains(e.target)) {
                 this.close();
             } else if (this.button.contains(e.target)) {
-                this.toggle();
+                // Do nothing.  This will auto close.
             } else {
                 this.close();
             }
@@ -3790,12 +3795,12 @@ class Panel {
 
         if ((this.collapsible) && (this.minimized)) { // don't call close() to avoid the callbacks.
             this.container.setAttribute('aria-expanded', 'false');
-            if ((this.closeicon) && (this.closeiconclosed)) {
+            if ((this.closeicon) && (this.closeiconclosed) && (this.togglebutton)) {
                 this.togglebutton.setIcon(this.closeiconclosed, this.closeiconclosedprefix, true);
             }
         } else {
             this.container.setAttribute('aria-expanded', 'true');
-            if ((this.closeicon) && (this.closeiconclosed) && (this.title)) {
+            if ((this.closeicon) && (this.closeiconclosed) && (this.togglebutton)) {
                 this.togglebutton.setIcon(this.closeicon, this.closeiconprefix, true);
             }
         }
@@ -5256,7 +5261,13 @@ class DataGrid extends Panel {
                 for (let c of columns) {
                     if (show) { break; }
                     if ((!c.classList.contains('mechanical')) && (!c.classList.contains('actions'))) {
+                        let colname = c.getAttribute('data-column');
+
+                        if ((colname) && (colname === 'description')) {
+                            break;
+                        }
                         if (c.innerText.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+
                             if (c.classList.contains('hidden')) {
                                 matchesHiddenColumns = true;
                             } else {
@@ -7564,7 +7575,17 @@ class DataList extends DataGrid {
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction, this);
         }
-        listelements.sort((a, b) => {
+        let sticklist = [],
+            sortlist = [];
+        for (let le of listelements) {
+            if (le.nosort) {
+                sticklist.push(le);
+            } else {
+                sortlist.push(le);
+            }
+        }
+
+        sticklist.sort((a, b) => {
             let aval = a[column],
                 bval = b[column];
 
@@ -7583,11 +7604,31 @@ class DataList extends DataGrid {
             }
             return 0;
         });
+        sortlist.sort((a, b) => {
+            let aval = a[column],
+                bval = b[column];
+
+            if (typeof aval === 'string') {
+                aval = aval.toLowerCase();
+            }
+            if (typeof bval === 'string') {
+                bval = bval.toLowerCase();
+            }
+            if (direction === 'asc') {
+                if (aval > bval) { return 1 }
+                if (aval < bval) { return -1 }
+            } else {
+                if (bval > aval) { return 1 }
+                if (bval < aval) { return -1 }
+            }
+            return 0;
+        });
+
         if (!this.currentsort) { this.currentsort = {}; }
         this.currentsort.field = column;
         this.currentsort.direction = direction;
 
-        return listelements;
+        return [].concat(sticklist).concat(sortlist);
     }
 
     openItem(item) {
@@ -7636,7 +7677,9 @@ class DataList extends DataGrid {
         this.messagebox.classList.add('hidden');
         this.container.appendChild(this.messagebox);
 
-
+        for (let c of this.classes) {
+            this.container.classList.add(c);
+        }
 
         if (this.showfooter) {
             this.container.appendChild(this.footer);
@@ -8957,14 +9000,17 @@ class DialogWindow {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
         if (!this.id) { this.id = `dialog-${CFBUtils.getUniqueKey(5)}`; }
-
-        this.build();
     }
 
     /**
      * Opens the dialog window
      */
     open() {
+
+        if (!this.initialized) {
+            this.build();
+        }
+
         CFBUtils.closeOpen();
 
         this.prevfocus = document.querySelector(':focus');
@@ -9044,13 +9090,29 @@ class DialogWindow {
         }
     }
 
+    setContent(content) {
+        if (this.nocontentwrap) {
+            this.contentbox.remove();
+            this.contentbox = content;
+            this.contentbox.classList.add('content');
+            if ((this.title) || (this.header)) {
+                this.header.after(this.contentbox);
+            } else {
+                this.window.prepend(this.contentbox);
+            }
+        } else {
+            this.contentbox.innerHTML = '';
+            this.content = content;
+            this.contentbox.appendChild(this.content);
+        }
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     /**
      * Constructs the DialogWindow's DOM elements
      */
     build() {
-
         this.container = document.createElement('div');
         this.container.classList.add('window-container');
 
@@ -9068,6 +9130,7 @@ class DialogWindow {
         }
 
         if ((this.title) || (this.header)) {
+            console.log(this.header);
             if (!this.header) {
                 this.header = document.createElement('h2');
                 let span = document.createElement('span');
@@ -9184,6 +9247,7 @@ class DialogWindow {
                 this.window.appendChild(this.actionbox);
             }
         }
+        this.initialized = true;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -9240,6 +9304,9 @@ class DialogWindow {
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get initialized() { return this._initialized; }
+    set initialized(initialized) { this._initialized = initialized; }
 
     get lightbox() { return this.config.lightbox ; }
     set lightbox(lightbox) { this.config.lightbox = lightbox; }

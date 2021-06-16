@@ -59,14 +59,17 @@ class DialogWindow {
         this.config = Object.assign({}, DialogWindow.DEFAULT_CONFIG, config);
 
         if (!this.id) { this.id = `dialog-${CFBUtils.getUniqueKey(5)}`; }
-
-        this.build();
     }
 
     /**
      * Opens the dialog window
      */
     open() {
+
+        if (!this.initialized) {
+            this.build();
+        }
+
         CFBUtils.closeOpen();
 
         this.prevfocus = document.querySelector(':focus');
@@ -151,7 +154,7 @@ class DialogWindow {
             this.contentbox.remove();
             this.contentbox = content;
             this.contentbox.classList.add('content');
-            if (this.title) {
+            if ((this.title) || (this.header)) {
                 this.header.after(this.contentbox);
             } else {
                 this.window.prepend(this.contentbox);
@@ -186,6 +189,7 @@ class DialogWindow {
         }
 
         if ((this.title) || (this.header)) {
+            console.log(this.header);
             if (!this.header) {
                 this.header = document.createElement('h2');
                 let span = document.createElement('span');
@@ -302,6 +306,7 @@ class DialogWindow {
                 this.window.appendChild(this.actionbox);
             }
         }
+        this.initialized = true;
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -353,11 +358,14 @@ class DialogWindow {
     get form() { return this.config.form; }
     set form(form) { this.config.form = form; }
 
-    get header() { return this._header; }
-    set header(header) { this._header = header; }
+    get header() { return this.config.header; }
+    set header(header) { this.config.header = header; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
+
+    get initialized() { return this._initialized; }
+    set initialized(initialized) { this._initialized = initialized; }
 
     get lightbox() { return this.config.lightbox ; }
     set lightbox(lightbox) { this.config.lightbox = lightbox; }
