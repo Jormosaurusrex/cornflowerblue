@@ -189,7 +189,6 @@ class DialogWindow {
         }
 
         if ((this.title) || (this.header)) {
-            console.log(this.header);
             if (!this.header) {
                 this.header = document.createElement('h2');
                 let span = document.createElement('span');
