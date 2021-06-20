@@ -3,6 +3,20 @@ class CFBUtils {
     /* GLOBAL METHODS___________________________________________________________________ */
 
     /**
+     * A debounce pattern for easy use
+     * @param func
+     * @param timeout
+     * @return {(function(...[*]=): void)|*}
+     */
+    static debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
+
+    /**
      * Close all open panel elements. This is for things like tooltips or select menu elements which get put in the <body>.
      */
     static closeOpen() {

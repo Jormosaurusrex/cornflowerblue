@@ -3715,6 +3715,7 @@ p.textarea-container ul.messagebox[aria-hidden=true] {
   opacity: 0;
   padding: 0;
   height: 0;
+  border: none;
 }
 div.input-container ul.messagebox[aria-hidden=true] li,
 p.input-container ul.messagebox[aria-hidden=true] li,
