@@ -1,9 +1,23 @@
-/*! Cornflower Blue - v0.1.1 - 2021-06-16
+/*! Cornflower Blue - v0.1.1 - 2021-06-21
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
 
     /* GLOBAL METHODS___________________________________________________________________ */
+
+    /**
+     * A debounce pattern for easy use
+     * @param func
+     * @param timeout
+     * @return {(function(...[*]=): void)|*}
+     */
+    static debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
 
     /**
      * Close all open panel elements. This is for things like tooltips or select menu elements which get put in the <body>.
