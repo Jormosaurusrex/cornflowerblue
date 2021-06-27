@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-06-21
+/*! Cornflower Blue - v0.1.1 - 2021-06-25
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -1859,6 +1859,10 @@ class IconFactory {
             'legend',
             'echx',
             'arrow-down',
+            'chevron-double-left',
+            'chevron-double-right',
+            'chevron-double-up',
+            'chevron-double-down',
             'clock',
             'chat',
             'check-circle-disc',
@@ -3321,7 +3325,7 @@ class CloseButton extends SimpleButton {
         return {
             icon: 'echx',
             text: TextFactory.get('close'),
-            shape: "square",
+            //shape: "square",
             iconclasses: ['closeicon'],
             classes: ["naked", "closebutton"]
         };
@@ -5084,6 +5088,9 @@ class DataGrid extends Panel {
      */
     postLoad() {
         this.applystate();
+        if ((this.state) && (this.state.sort)) {
+            this.sortField(this.state.sort.field, this.state.sort.direction);
+        }
         this.grindDuplicateCells();
     }
 
@@ -5325,6 +5332,7 @@ class DataGrid extends Panel {
      */
     sortField(field, sort='asc') {
 
+        if (!field) { return; }
         let hCell = this.thead.querySelector(`[data-name='${field}']`);
 
         let hchildren = this.thead.querySelectorAll('th');
@@ -5387,6 +5395,7 @@ class DataGrid extends Panel {
         };
 
         this.grindDuplicateCells();
+        this.persist();
     }
 
     /**
@@ -5669,7 +5678,7 @@ class DataGrid extends Panel {
                 }
 
                 if ((this.deletecallback) && (typeof this.deletecallback === 'function')) {
-                    let ourId = rowdata[this.identifier]
+                    let ourId = rowdata[this.identifier];
                     form.handlercallback = (self, results, ourId) => {
                         this.deletecallback(self, results, ourId);
                     }
@@ -5760,8 +5769,8 @@ class DataGrid extends Panel {
      */
     postProcess() {
         this.updateCount();
-        if (this.currentsort) {
-            this.sortField(this.currentsort.field, this.currentsort.direction);
+        if (this.state) {
+            this.sortField(this.state.sort.field, this.state.sort.direction);
         }
         this.applyFilters();
         this.search(this.searchcontrol.value);
@@ -6023,6 +6032,10 @@ class DataGrid extends Panel {
         if (this.state.filters) {
             this.activefilters = this.state.filters;
         }
+        if (this.state.sort) {
+            this.currentsort = this.state.sort;
+            //this.sortField(this.currentsort.field, this.currentsort.direction);
+        }
         this.applyFilters();
         super.applystate();
     }
@@ -6036,7 +6049,7 @@ class DataGrid extends Panel {
             fields: {},
             filters: [],
             selected: this.selectedrow,
-            sort: this.defaultsort,
+            sort: (this.currentsort) ? this.currentsort : this.defaultsort,
             search: null
         };
 
@@ -6057,6 +6070,7 @@ class DataGrid extends Panel {
                 });
             }
         }
+
         return state;
     }
 
@@ -12647,7 +12661,8 @@ class SelectMenu extends InputElement {
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onenter: null,  // With a combobox, fired when the enter key is hit. passed (self)
-            onchange: null  // The change handler. Passed (self, e).
+            onchange: null,  // The change handler. Passed (self, e).
+            drawitem: null  // passed (itemdef, self)
         };
     }
 
@@ -12751,6 +12766,9 @@ class SelectMenu extends InputElement {
     }
 
     drawPayload(def) {
+        if ((this.drawitem) && (typeof this.drawitem === 'function')) {
+            return this.drawitem(def, this);
+        }
         let text = document.createElement('span');
         text.classList.add('text');
         text.innerHTML = def.label;
@@ -12990,9 +13008,6 @@ class SelectMenu extends InputElement {
         this.postContainerScrub();
     }
 
-    /**
-     * Builds the trigger box for the select.
-     */
     buildTriggerBox() {
 
         this.triggerbox = document.createElement('input');
@@ -13314,6 +13329,9 @@ class SelectMenu extends InputElement {
 
     get combobox() { return this.config.combobox; }
     set combobox(combobox) { this.config.combobox = combobox; }
+
+    get drawitem() { return this.config.drawitem; }
+    set drawitem(drawitem) { this.config.drawitem = drawitem; }
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }
@@ -13940,14 +13958,14 @@ class SwitchList extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             prefix: null, // Prefix to use on itemcheckboxes, defaults to name-
-            inlist: [],    // Array of option dictionary objects.  Printed in order given.
-                            // { label: "Label to show", value: "v", id: (optional) }
+            inlist: [],   // Array of option dictionary objects.  Printed in order given.
+                          // { label: "Label to show", value: "v", id: (optional) }
             intitle: '',
             addicon: 'arrow-right',
             outlist: [],
             outtitle: '',
             removeicon: 'arrow-left',
-
+            drawitem: null  // passed (itemdef, self)
         };
     }
 
@@ -14050,7 +14068,6 @@ class SwitchList extends InputElement {
 
     buildListElement(m, isin, count) {
         let li = document.createElement('li'),
-            label = document.createElement('span'),
             myname = `${(this.prefix) ? this.prefix : this.name}-${m['id'] ? m['id'] : count}`;
 
         let toggle = new BooleanToggle({
@@ -14064,12 +14081,8 @@ class SwitchList extends InputElement {
         li.setAttribute('data-rid', `${this.name}-r-${CFBUtils.getUniqueKey(5)}`);
         li.setAttribute('data-label', m.label);
         li.setAttribute('tabindex', '-1');
-        li.classList.add('popin');
-        //li.style.setProperty('--anim-order', `${count}`);
 
-        label.classList.add('l');
-        label.innerHTML = m.label;
-        li.appendChild(label);
+        li.appendChild(this.drawPayload(m));
 
         li.appendChild(toggle.naked);
         li.appendChild(IconFactory.icon(this.addicon));
@@ -14161,6 +14174,16 @@ class SwitchList extends InputElement {
         return li;
     }
 
+    drawPayload(def) {
+        if ((this.drawitem) && (typeof this.drawitem === 'function')) {
+            return this.drawitem(def, this);
+        }
+        let text = document.createElement('span');
+        text.classList.add('l');
+        text.innerHTML = def.label;
+        return text;
+    }
+
 
     buildListBox(isin = true) {
 
@@ -14198,6 +14221,9 @@ class SwitchList extends InputElement {
 
     get addicon() { return this.config.addicon; }
     set addicon(addicon) { this.config.addicon = addicon; }
+
+    get drawitem() { return this.config.drawitem; }
+    set drawitem(drawitem) { this.config.drawitem = drawitem; }
 
     get inlist() { return this.config.inlist; }
     set inlist(inlist) { this.config.inlist = inlist; }

@@ -3,14 +3,14 @@ class SwitchList extends InputElement {
     static get DEFAULT_CONFIG() {
         return {
             prefix: null, // Prefix to use on itemcheckboxes, defaults to name-
-            inlist: [],    // Array of option dictionary objects.  Printed in order given.
-                            // { label: "Label to show", value: "v", id: (optional) }
+            inlist: [],   // Array of option dictionary objects.  Printed in order given.
+                          // { label: "Label to show", value: "v", id: (optional) }
             intitle: '',
             addicon: 'arrow-right',
             outlist: [],
             outtitle: '',
             removeicon: 'arrow-left',
-
+            drawitem: null  // passed (itemdef, self)
         };
     }
 
@@ -113,7 +113,6 @@ class SwitchList extends InputElement {
 
     buildListElement(m, isin, count) {
         let li = document.createElement('li'),
-            label = document.createElement('span'),
             myname = `${(this.prefix) ? this.prefix : this.name}-${m['id'] ? m['id'] : count}`;
 
         let toggle = new BooleanToggle({
@@ -127,12 +126,8 @@ class SwitchList extends InputElement {
         li.setAttribute('data-rid', `${this.name}-r-${CFBUtils.getUniqueKey(5)}`);
         li.setAttribute('data-label', m.label);
         li.setAttribute('tabindex', '-1');
-        li.classList.add('popin');
-        //li.style.setProperty('--anim-order', `${count}`);
 
-        label.classList.add('l');
-        label.innerHTML = m.label;
-        li.appendChild(label);
+        li.appendChild(this.drawPayload(m));
 
         li.appendChild(toggle.naked);
         li.appendChild(IconFactory.icon(this.addicon));
@@ -224,6 +219,16 @@ class SwitchList extends InputElement {
         return li;
     }
 
+    drawPayload(def) {
+        if ((this.drawitem) && (typeof this.drawitem === 'function')) {
+            return this.drawitem(def, this);
+        }
+        let text = document.createElement('span');
+        text.classList.add('l');
+        text.innerHTML = def.label;
+        return text;
+    }
+
 
     buildListBox(isin = true) {
 
@@ -261,6 +266,9 @@ class SwitchList extends InputElement {
 
     get addicon() { return this.config.addicon; }
     set addicon(addicon) { this.config.addicon = addicon; }
+
+    get drawitem() { return this.config.drawitem; }
+    set drawitem(drawitem) { this.config.drawitem = drawitem; }
 
     get inlist() { return this.config.inlist; }
     set inlist(inlist) { this.config.inlist = inlist; }

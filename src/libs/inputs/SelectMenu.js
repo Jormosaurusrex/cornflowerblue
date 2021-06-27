@@ -12,7 +12,8 @@ class SelectMenu extends InputElement {
             options: [],    // Array of option dictionary objects.  Printed in order given.
                             // { label: "Label to show", value: "v", checked: true }
             onenter: null,  // With a combobox, fired when the enter key is hit. passed (self)
-            onchange: null  // The change handler. Passed (self, e).
+            onchange: null,  // The change handler. Passed (self, e).
+            drawitem: null  // passed (itemdef, self)
         };
     }
 
@@ -116,6 +117,9 @@ class SelectMenu extends InputElement {
     }
 
     drawPayload(def) {
+        if ((this.drawitem) && (typeof this.drawitem === 'function')) {
+            return this.drawitem(def, this);
+        }
         let text = document.createElement('span');
         text.classList.add('text');
         text.innerHTML = def.label;
@@ -355,9 +359,6 @@ class SelectMenu extends InputElement {
         this.postContainerScrub();
     }
 
-    /**
-     * Builds the trigger box for the select.
-     */
     buildTriggerBox() {
 
         this.triggerbox = document.createElement('input');
@@ -679,6 +680,9 @@ class SelectMenu extends InputElement {
 
     get combobox() { return this.config.combobox; }
     set combobox(combobox) { this.config.combobox = combobox; }
+
+    get drawitem() { return this.config.drawitem; }
+    set drawitem(drawitem) { this.config.drawitem = drawitem; }
 
     get listbox() { return this._listbox; }
     set listbox(listbox) { this._listbox = listbox; }

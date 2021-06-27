@@ -213,6 +213,9 @@ class DataGrid extends Panel {
      */
     postLoad() {
         this.applystate();
+        if ((this.state) && (this.state.sort)) {
+            this.sortField(this.state.sort.field, this.state.sort.direction);
+        }
         this.grindDuplicateCells();
     }
 
@@ -454,6 +457,7 @@ class DataGrid extends Panel {
      */
     sortField(field, sort='asc') {
 
+        if (!field) { return; }
         let hCell = this.thead.querySelector(`[data-name='${field}']`);
 
         let hchildren = this.thead.querySelectorAll('th');
@@ -516,6 +520,7 @@ class DataGrid extends Panel {
         };
 
         this.grindDuplicateCells();
+        this.persist();
     }
 
     /**
@@ -798,7 +803,7 @@ class DataGrid extends Panel {
                 }
 
                 if ((this.deletecallback) && (typeof this.deletecallback === 'function')) {
-                    let ourId = rowdata[this.identifier]
+                    let ourId = rowdata[this.identifier];
                     form.handlercallback = (self, results, ourId) => {
                         this.deletecallback(self, results, ourId);
                     }
@@ -889,8 +894,8 @@ class DataGrid extends Panel {
      */
     postProcess() {
         this.updateCount();
-        if (this.currentsort) {
-            this.sortField(this.currentsort.field, this.currentsort.direction);
+        if (this.state) {
+            this.sortField(this.state.sort.field, this.state.sort.direction);
         }
         this.applyFilters();
         this.search(this.searchcontrol.value);
@@ -1152,6 +1157,10 @@ class DataGrid extends Panel {
         if (this.state.filters) {
             this.activefilters = this.state.filters;
         }
+        if (this.state.sort) {
+            this.currentsort = this.state.sort;
+            //this.sortField(this.currentsort.field, this.currentsort.direction);
+        }
         this.applyFilters();
         super.applystate();
     }
@@ -1165,7 +1174,7 @@ class DataGrid extends Panel {
             fields: {},
             filters: [],
             selected: this.selectedrow,
-            sort: this.defaultsort,
+            sort: (this.currentsort) ? this.currentsort : this.defaultsort,
             search: null
         };
 
@@ -1186,6 +1195,7 @@ class DataGrid extends Panel {
                 });
             }
         }
+
         return state;
     }
 

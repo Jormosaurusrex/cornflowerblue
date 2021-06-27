@@ -3,7 +3,7 @@ class CloseButton extends SimpleButton {
         return {
             icon: 'echx',
             text: TextFactory.get('close'),
-            shape: "square",
+            //shape: "square",
             iconclasses: ['closeicon'],
             classes: ["naked", "closebutton"]
         };
