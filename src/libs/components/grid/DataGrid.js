@@ -8,6 +8,7 @@ class DataGrid extends Panel {
                 column: 'name',
                 direction: 'asc'
             },
+            nodeselectself: true,
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
@@ -59,6 +60,7 @@ class DataGrid extends Panel {
             actionsbuttonicon: 'menu',
             filterbuttonicon: 'filter',
             mute: false, // if true, inputs are set to mute.
+            defaultselectedid: null,
             selectable: true, //  Data rows can be selected.
             selectaction: (self, row, rowdata) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
@@ -1148,8 +1150,11 @@ class DataGrid extends Panel {
                 }
             }
         }
+        if ((!this.state.selected) && (this.defaultselectedid)) {
+            this.state.selected = this.defaultselectedid;
+        }
         if (this.state.selected) {
-            let row = this.grid.querySelector(`[data-id="${this.state.selected}"]`);
+            let row = this.gridbody.querySelector(`[data-id="${this.state.selected}"]`);
             if (row) {
                 row.click();
             }
@@ -1389,8 +1394,7 @@ class DataGrid extends Panel {
      * @param rdata the data from the row
      */
     select(row, event, rdata) {
-
-        if (row.getAttribute('aria-selected') === 'true') {
+        if ((!this.nodeselectself) && (row.getAttribute('aria-selected') === 'true')) {
             this.deselect(row);
             if ((this.deselectaction) && (typeof this.deselectaction === 'function')) {
                 this.deselectaction(this, row, rdata);
@@ -1473,6 +1477,7 @@ class DataGrid extends Panel {
                 row.querySelector('input.selector').checked = true;
             }
         } else {
+
             row.setAttribute('aria-selected', 'true');
             if (row.getAttribute('data-id')) {
                 this.selectedrow = row.getAttribute('data-id');
@@ -2212,6 +2217,9 @@ class DataGrid extends Panel {
     get defaultsort() { return this.config.defaultsort; }
     set defaultsort(defaultsort) { this.config.defaultsort = defaultsort; }
 
+    get defaultselectedid() { return this.config.defaultselectedid; }
+    set defaultselectedid(defaultselectedid) { this.config.defaultselectedid = defaultselectedid; }
+
     get deletehook() { return this.config.deletehook; }
     set deletehook(deletehook) {
         if (typeof deletehook !== 'function') {
@@ -2388,6 +2396,9 @@ class DataGrid extends Panel {
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
 
+    get nodeselectself() { return this.config.nodeselectself; }
+    set nodeselectself(nodeselectself) { this.config.nodeselectself = nodeselectself; }
+
     get passiveeditinstructions() { return this.config.passiveeditinstructions; }
     set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }
 
@@ -2419,7 +2430,6 @@ class DataGrid extends Panel {
 
     get selectedrow() { return this._selectedrow; }
     set selectedrow(selectedrow) { this._selectedrow = selectedrow; }
-
 
     get shade() {
         if (!this._shade) { this.buildShade(); }

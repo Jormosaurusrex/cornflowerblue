@@ -1515,10 +1515,8 @@ p {
   text-shadow: var(--text-shadow);
 }
 p.dropcap:first-letter {
-  font-size: 5.5rem;
+  font: 5.5rem/0.6;
   float: left;
-  line-height: 0.6;
-  /* from 1 */
   margin-right: 0.05rem;
 }
 p:only-child {

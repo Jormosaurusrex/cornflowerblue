@@ -124,11 +124,8 @@ class ButtonMenu extends SimpleButton {
         this.menu.style.opacity = 0;
         document.body.appendChild(this.menu);
 
-        if ((this.items) && (this.items.length > 0)) {
-            let items = Array.from(this.menu.querySelector('li'));
-            for (let li of items) {
-                li.setAttribute('tabindex', '0');
-            }
+        for (let li of this.menu.querySelectorAll('li')) {
+            li.setAttribute('tabindex', '0');
         }
 
         this.menu.classList.add(this.gravity);
@@ -151,7 +148,6 @@ class ButtonMenu extends SimpleButton {
                 this.setCloseListener();
             }, 200);
         }
-
 
         /*
             This is gross but:

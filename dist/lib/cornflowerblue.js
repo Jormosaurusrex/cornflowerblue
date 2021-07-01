@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-06-25
+/*! Cornflower Blue - v0.1.1 - 2021-07-01
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2973,11 +2973,8 @@ class ButtonMenu extends SimpleButton {
         this.menu.style.opacity = 0;
         document.body.appendChild(this.menu);
 
-        if ((this.items) && (this.items.length > 0)) {
-            let items = Array.from(this.menu.querySelector('li'));
-            for (let li of items) {
-                li.setAttribute('tabindex', '0');
-            }
+        for (let li of this.menu.querySelectorAll('li')) {
+            li.setAttribute('tabindex', '0');
         }
 
         this.menu.classList.add(this.gravity);
@@ -4883,6 +4880,7 @@ class DataGrid extends Panel {
                 column: 'name',
                 direction: 'asc'
             },
+            nodeselectself: true,
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
             sortable: true, //  Data columns can be sorted
@@ -4934,6 +4932,7 @@ class DataGrid extends Panel {
             actionsbuttonicon: 'menu',
             filterbuttonicon: 'filter',
             mute: false, // if true, inputs are set to mute.
+            defaultselectedid: null,
             selectable: true, //  Data rows can be selected.
             selectaction: (self, row, rowdata) => {  // What to do when a single row is selected.
                 //console.log("row clicked");
@@ -6023,8 +6022,11 @@ class DataGrid extends Panel {
                 }
             }
         }
+        if ((!this.state.selected) && (this.defaultselectedid)) {
+            this.state.selected = this.defaultselectedid;
+        }
         if (this.state.selected) {
-            let row = this.grid.querySelector(`[data-id="${this.state.selected}"]`);
+            let row = this.gridbody.querySelector(`[data-id="${this.state.selected}"]`);
             if (row) {
                 row.click();
             }
@@ -6264,8 +6266,7 @@ class DataGrid extends Panel {
      * @param rdata the data from the row
      */
     select(row, event, rdata) {
-
-        if (row.getAttribute('aria-selected') === 'true') {
+        if ((!this.nodeselectself) && (row.getAttribute('aria-selected') === 'true')) {
             this.deselect(row);
             if ((this.deselectaction) && (typeof this.deselectaction === 'function')) {
                 this.deselectaction(this, row, rdata);
@@ -6348,6 +6349,7 @@ class DataGrid extends Panel {
                 row.querySelector('input.selector').checked = true;
             }
         } else {
+
             row.setAttribute('aria-selected', 'true');
             if (row.getAttribute('data-id')) {
                 this.selectedrow = row.getAttribute('data-id');
@@ -7087,6 +7089,9 @@ class DataGrid extends Panel {
     get defaultsort() { return this.config.defaultsort; }
     set defaultsort(defaultsort) { this.config.defaultsort = defaultsort; }
 
+    get defaultselectedid() { return this.config.defaultselectedid; }
+    set defaultselectedid(defaultselectedid) { this.config.defaultselectedid = defaultselectedid; }
+
     get deletehook() { return this.config.deletehook; }
     set deletehook(deletehook) {
         if (typeof deletehook !== 'function') {
@@ -7263,6 +7268,9 @@ class DataGrid extends Panel {
     get mute() { return this.config.mute; }
     set mute(mute) { this.config.mute = mute; }
 
+    get nodeselectself() { return this.config.nodeselectself; }
+    set nodeselectself(nodeselectself) { this.config.nodeselectself = nodeselectself; }
+
     get passiveeditinstructions() { return this.config.passiveeditinstructions; }
     set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }
 
@@ -7294,7 +7302,6 @@ class DataGrid extends Panel {
 
     get selectedrow() { return this._selectedrow; }
     set selectedrow(selectedrow) { this._selectedrow = selectedrow; }
-
 
     get shade() {
         if (!this._shade) { this.buildShade(); }
@@ -7372,6 +7379,7 @@ class DataList extends DataGrid {
             filterable: false,
             multiselect: false,
             loadcallback: null,
+            onpostload: null,
             drawitem: (itemdef, self) => {
 
             },
@@ -7454,6 +7462,7 @@ class DataList extends DataGrid {
             minimized: false,
             fields: {},
             filters: [],
+            selected: this.selectedrow,
             search: null
         };
         if ((this.state) && (this.state.sort)) {
@@ -7499,6 +7508,9 @@ class DataList extends DataGrid {
 
     postLoad() {
         this.applystate();
+        if ((this.onpostload) && (typeof this.onpostload === 'function')) {
+            this.onpostload(this);
+        }
     }
 
     populate(sort= (this.startsort) ? this.startsort : 'title', direction = (this.startsortdirection) ? this.startsortdirection : 'asc') {
@@ -7529,24 +7541,25 @@ class DataList extends DataGrid {
             }
             if (item['id']) {
                 li.setAttribute('data-item-id', item['id']);
+                li.setAttribute('data-id', item['id']);
             }
 
             if ((this.click) && (typeof this.click === 'function')) {
                 li.classList.add('clickable');
                 li.setAttribute('tabindex', '0');
                 li.addEventListener('click', (e) => {
-                    if ((this.click) && (typeof this.click === 'function')) {
-                        this.click(item, this, e);
-                    }
                     if (this.selectable) {
                         this.select(li, e, item);
+                    }
+                    if ((this.click) && (typeof this.click === 'function')) {
+                        this.click(item, this, e);
                     }
                 });
             } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
                 li.classList.add('clickable');
                 li.setAttribute('tabindex', '0');
                 li.addEventListener('click', (e) => {
-                    this.select(item, e, rdata);
+                    this.select(li, e, item);
                     li.setAttribute('aria-selected', 'true');
                     if ((this.selectaction) && (typeof this.selectaction === 'function')) {
                         this.selectaction(this, li, rdata);
@@ -7599,7 +7612,6 @@ class DataList extends DataGrid {
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
-        //console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction, this);
         }
@@ -7847,6 +7859,9 @@ class DataList extends DataGrid {
 
     get loadcallback() { return this.config.loadcallback; }
     set loadcallback(loadcallback) { this.config.loadcallback = loadcallback; }
+
+    get onpostload() { return this.config.onpostload; }
+    set onpostload(onpostload) { this.config.onpostload = onpostload; }
 
     get specialsort() { return this.config.specialsort; }
     set specialsort(specialsort) { this.config.specialsort = specialsort; }

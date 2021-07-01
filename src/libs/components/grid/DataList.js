@@ -14,6 +14,7 @@ class DataList extends DataGrid {
             filterable: false,
             multiselect: false,
             loadcallback: null,
+            onpostload: null,
             drawitem: (itemdef, self) => {
 
             },
@@ -96,6 +97,7 @@ class DataList extends DataGrid {
             minimized: false,
             fields: {},
             filters: [],
+            selected: this.selectedrow,
             search: null
         };
         if ((this.state) && (this.state.sort)) {
@@ -141,6 +143,9 @@ class DataList extends DataGrid {
 
     postLoad() {
         this.applystate();
+        if ((this.onpostload) && (typeof this.onpostload === 'function')) {
+            this.onpostload(this);
+        }
     }
 
     populate(sort= (this.startsort) ? this.startsort : 'title', direction = (this.startsortdirection) ? this.startsortdirection : 'asc') {
@@ -171,24 +176,25 @@ class DataList extends DataGrid {
             }
             if (item['id']) {
                 li.setAttribute('data-item-id', item['id']);
+                li.setAttribute('data-id', item['id']);
             }
 
             if ((this.click) && (typeof this.click === 'function')) {
                 li.classList.add('clickable');
                 li.setAttribute('tabindex', '0');
                 li.addEventListener('click', (e) => {
-                    if ((this.click) && (typeof this.click === 'function')) {
-                        this.click(item, this, e);
-                    }
                     if (this.selectable) {
                         this.select(li, e, item);
+                    }
+                    if ((this.click) && (typeof this.click === 'function')) {
+                        this.click(item, this, e);
                     }
                 });
             } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
                 li.classList.add('clickable');
                 li.setAttribute('tabindex', '0');
                 li.addEventListener('click', (e) => {
-                    this.select(item, e, rdata);
+                    this.select(li, e, item);
                     li.setAttribute('aria-selected', 'true');
                     if ((this.selectaction) && (typeof this.selectaction === 'function')) {
                         this.selectaction(this, li, rdata);
@@ -241,7 +247,6 @@ class DataList extends DataGrid {
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
-        //console.log(`sort: ${column} :: ${direction}`);
         if ((this.specialsort) && (typeof this.specialsort === 'function')) {
             return this.specialsort(listelements, column, direction, this);
         }
@@ -489,6 +494,9 @@ class DataList extends DataGrid {
 
     get loadcallback() { return this.config.loadcallback; }
     set loadcallback(loadcallback) { this.config.loadcallback = loadcallback; }
+
+    get onpostload() { return this.config.onpostload; }
+    set onpostload(onpostload) { this.config.onpostload = onpostload; }
 
     get specialsort() { return this.config.specialsort; }
     set specialsort(specialsort) { this.config.specialsort = specialsort; }

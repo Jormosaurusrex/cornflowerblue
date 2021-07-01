@@ -4,9 +4,8 @@ p {
   text-shadow: var(--text-shadow);
   &.dropcap {
     &:first-letter {
-      font-size: 5.5rem;
+      font: 5.5rem / .6;
       float: left;
-      line-height: .6; /* from 1 */
       margin-right: 0.05rem;
     }
   }
