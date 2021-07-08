@@ -464,7 +464,7 @@ div.datagrid-container,
 div.datalist-container {
   position: relative;
   >div.datainfo,
-  >div.footer,
+  >footer,
   >div.grid-filterinfo {
     position: relative;
     display: flex;
@@ -552,7 +552,7 @@ div.datalist-container {
       display: flex;
     }
   }
-  >div.footer {
+  >footer {
     position: sticky;
     bottom: 0;
     z-index: 202;
@@ -599,7 +599,7 @@ div.datalist-container {
   }
   &[aria-expanded=false] {
     >div.datainfo,
-    >div.footer,
+    >footer,
     >div.grid-actions,
     >div.grid-filterinfo {
       max-height: 0;

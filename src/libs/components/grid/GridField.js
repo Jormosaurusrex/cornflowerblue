@@ -110,7 +110,7 @@ class GridField {
                             if (d > 0) { return document.createTextNode('True'); }
                             return document.createTextNode('False');
                         }
-                        return d;
+                        return document.createTextNode('False');
                     }
                 }
                 break;
@@ -193,7 +193,12 @@ class GridField {
             case 'string':
             default:
                 if (!this.renderer) {
-                    this.renderer = (d) => { return document.createTextNode(d); }
+                    this.renderer = (d) => {
+                        if ((!d) || (d === null) || (typeof d === 'undefined')) {
+                            return document.createTextNode("");
+                        }
+                        return document.createTextNode(d);
+                    }
                 }
                 break;
         }

@@ -114,6 +114,8 @@ class ColorSelector extends RadioGroup {
         swatch.classList.add('swatch');
         swatch.style.backgroundColor = def.value;
 
+        op.style.backgroundColor = def.value;
+
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);
         opLabel.appendChild(swatch);

@@ -2091,10 +2091,11 @@ class DataGrid extends Panel {
             }
         }
 
-        cell.classList.add(field.name);
-        cell.classList.add(field.type);
         if (typeof content === 'string') {
             content = document.createTextNode(content);
+        }
+        if (content === null) {
+            content = document.createTextNode("");
         }
         cell.appendChild(content);
 
@@ -2114,10 +2115,9 @@ class DataGrid extends Panel {
      * Build the footer element
      */
     buildFooter() {
-        this.footer = document.createElement('div');
+        this.footer = document.createElement('footer');
         this.footer.appendChild(this.buildItemCounter());
         this.footer.appendChild(this.buildActivityNotifier());
-        this.footer.classList.add('footer');
     }
 
     /* UTILITY METHODS__________________________________________________________________ */

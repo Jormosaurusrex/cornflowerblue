@@ -144,7 +144,11 @@ div.colorselector-container {
         margin-left: 0;
       }
       input[type="radio"] {
-        display: none;
+        //display: none;
+        &::after {
+          background-color: var(--colors-highlight);
+          border-color: var(--colors-highlight);
+        }
       }
       label {
         margin: 0;
@@ -166,10 +170,15 @@ div.colorselector-container {
           border-radius: 50%;
         }
       }
+      label { display: none; }
       &[aria-selected="true"] {
-        label {
+        input[type="radio"] {
           background-color: var(--colors-highlight);
           border: .1rem dotted var(--colors-highlight);
+          &:after {
+            display: inline-block;
+            opacity: .5;
+          }
         }
       }
     }

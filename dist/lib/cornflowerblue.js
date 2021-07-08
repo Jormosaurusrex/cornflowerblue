@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-07-01
+/*! Cornflower Blue - v0.1.1 - 2021-07-08
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2997,7 +2997,6 @@ class ButtonMenu extends SimpleButton {
                 this.setCloseListener();
             }, 200);
         }
-
 
         /*
             This is gross but:
@@ -6963,10 +6962,11 @@ class DataGrid extends Panel {
             }
         }
 
-        cell.classList.add(field.name);
-        cell.classList.add(field.type);
         if (typeof content === 'string') {
             content = document.createTextNode(content);
+        }
+        if (content === null) {
+            content = document.createTextNode("");
         }
         cell.appendChild(content);
 
@@ -6986,10 +6986,9 @@ class DataGrid extends Panel {
      * Build the footer element
      */
     buildFooter() {
-        this.footer = document.createElement('div');
+        this.footer = document.createElement('footer');
         this.footer.appendChild(this.buildItemCounter());
         this.footer.appendChild(this.buildActivityNotifier());
-        this.footer.classList.add('footer');
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -8346,7 +8345,7 @@ class GridField {
                             if (d > 0) { return document.createTextNode('True'); }
                             return document.createTextNode('False');
                         }
-                        return d;
+                        return document.createTextNode('False');
                     }
                 }
                 break;
@@ -8429,7 +8428,12 @@ class GridField {
             case 'string':
             default:
                 if (!this.renderer) {
-                    this.renderer = (d) => { return document.createTextNode(d); }
+                    this.renderer = (d) => {
+                        if ((!d) || (d === null) || (typeof d === 'undefined')) {
+                            return document.createTextNode("");
+                        }
+                        return document.createTextNode(d);
+                    }
                 }
                 break;
         }
@@ -15303,6 +15307,8 @@ class ColorSelector extends RadioGroup {
         let swatch = document.createElement('span');
         swatch.classList.add('swatch');
         swatch.style.backgroundColor = def.value;
+
+        op.style.backgroundColor = def.value;
 
         let opLabel = document.createElement('label');
         opLabel.setAttribute('for', lId);

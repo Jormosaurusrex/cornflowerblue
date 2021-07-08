@@ -2713,8 +2713,9 @@ div.colorselector-container ul.colorselector li.radio {
 div.colorselector-container ul.colorselector li.radio:first-child {
   margin-left: 0;
 }
-div.colorselector-container ul.colorselector li.radio input[type=radio] {
-  display: none;
+div.colorselector-container ul.colorselector li.radio input[type=radio]::after {
+  background-color: var(--colors-highlight);
+  border-color: var(--colors-highlight);
 }
 div.colorselector-container ul.colorselector li.radio label {
   margin: 0;
@@ -2736,9 +2737,16 @@ div.colorselector-container ul.colorselector li.radio label span.swatch {
   display: inline-block;
   border-radius: 50%;
 }
-div.colorselector-container ul.colorselector li.radio[aria-selected=true] label {
+div.colorselector-container ul.colorselector li.radio label {
+  display: none;
+}
+div.colorselector-container ul.colorselector li.radio[aria-selected=true] input[type=radio] {
   background-color: var(--colors-highlight);
   border: 0.1rem dotted var(--colors-highlight);
+}
+div.colorselector-container ul.colorselector li.radio[aria-selected=true] input[type=radio]:after {
+  display: inline-block;
+  opacity: 0.5;
 }
 div.colorselector-container.required ul.radiogroup li.radio label:after {
   display: none;
@@ -6295,10 +6303,10 @@ div.datalist-container {
   position: relative;
 }
 div.datagrid-container > div.datainfo,
-div.datagrid-container > div.footer,
+div.datagrid-container > footer,
 div.datagrid-container > div.grid-filterinfo,
 div.datalist-container > div.datainfo,
-div.datalist-container > div.footer,
+div.datalist-container > footer,
 div.datalist-container > div.grid-filterinfo {
   position: relative;
   display: flex;
@@ -6314,35 +6322,35 @@ div.datalist-container > div.grid-filterinfo {
   z-index: 200;
 }
 div.datagrid-container > div.datainfo button,
-div.datagrid-container > div.footer button,
+div.datagrid-container > footer button,
 div.datagrid-container > div.grid-filterinfo button,
 div.datalist-container > div.datainfo button,
-div.datalist-container > div.footer button,
+div.datalist-container > footer button,
 div.datalist-container > div.grid-filterinfo button {
   margin: 0;
 }
 div.datagrid-container > div.datainfo button.filter span.icon,
-div.datagrid-container > div.footer button.filter span.icon,
+div.datagrid-container > footer button.filter span.icon,
 div.datagrid-container > div.grid-filterinfo button.filter span.icon,
 div.datalist-container > div.datainfo button.filter span.icon,
-div.datalist-container > div.footer button.filter span.icon,
+div.datalist-container > footer button.filter span.icon,
 div.datalist-container > div.grid-filterinfo button.filter span.icon {
   margin: 0;
 }
 div.datagrid-container > div.datainfo button.filter span.text,
-div.datagrid-container > div.footer button.filter span.text,
+div.datagrid-container > footer button.filter span.text,
 div.datagrid-container > div.grid-filterinfo button.filter span.text,
 div.datalist-container > div.datainfo button.filter span.text,
-div.datalist-container > div.footer button.filter span.text,
+div.datalist-container > footer button.filter span.text,
 div.datalist-container > div.grid-filterinfo button.filter span.text {
   display: none;
 }
 @media (max-width: 599px) {
   div.datagrid-container > div.datainfo div.searchcontrol,
-div.datagrid-container > div.footer div.searchcontrol,
+div.datagrid-container > footer div.searchcontrol,
 div.datagrid-container > div.grid-filterinfo div.searchcontrol,
 div.datalist-container > div.datainfo div.searchcontrol,
-div.datalist-container > div.footer div.searchcontrol,
+div.datalist-container > footer div.searchcontrol,
 div.datalist-container > div.grid-filterinfo div.searchcontrol {
     order: -1;
     margin-bottom: 0.5rem;
@@ -6350,10 +6358,10 @@ div.datalist-container > div.grid-filterinfo div.searchcontrol {
     align-self: center;
   }
   div.datagrid-container > div.datainfo div.searchcontrol input,
-div.datagrid-container > div.footer div.searchcontrol input,
+div.datagrid-container > footer div.searchcontrol input,
 div.datagrid-container > div.grid-filterinfo div.searchcontrol input,
 div.datalist-container > div.datainfo div.searchcontrol input,
-div.datalist-container > div.footer div.searchcontrol input,
+div.datalist-container > footer div.searchcontrol input,
 div.datalist-container > div.grid-filterinfo div.searchcontrol input {
     width: auto;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
@@ -6361,10 +6369,10 @@ div.datalist-container > div.grid-filterinfo div.searchcontrol input {
     background-color: var(--canvas-color-secondary);
   }
   div.datagrid-container > div.datainfo div.searchcontrol button,
-div.datagrid-container > div.footer div.searchcontrol button,
+div.datagrid-container > footer div.searchcontrol button,
 div.datagrid-container > div.grid-filterinfo div.searchcontrol button,
 div.datalist-container > div.datainfo div.searchcontrol button,
-div.datalist-container > div.footer div.searchcontrol button,
+div.datalist-container > footer div.searchcontrol button,
 div.datalist-container > div.grid-filterinfo div.searchcontrol button {
     --button-border-color: var(--colors-affordance);
     box-shadow: inset -0.1rem -0.1rem 0 0 var(--colors-affordance), inset 0.1rem -0.1rem 0 0 var(--colors-affordance), inset -0.1rem 0.1rem 0 0 var(--colors-affordance), inset 0.1rem 0.1rem 0 0 var(--colors-affordance);
@@ -6424,8 +6432,8 @@ div.datagrid-container > div.grid-filterinfo[aria-expanded=true],
 div.datalist-container > div.grid-filterinfo[aria-expanded=true] {
   display: flex;
 }
-div.datagrid-container > div.footer,
-div.datalist-container > div.footer {
+div.datagrid-container > footer,
+div.datalist-container > footer {
   position: sticky;
   bottom: 0;
   z-index: 202;
@@ -6479,11 +6487,11 @@ div.datalist-container div.activity[aria-hidden=true] {
   display: none;
 }
 div.datagrid-container[aria-expanded=false] > div.datainfo,
-div.datagrid-container[aria-expanded=false] > div.footer,
+div.datagrid-container[aria-expanded=false] > footer,
 div.datagrid-container[aria-expanded=false] > div.grid-actions,
 div.datagrid-container[aria-expanded=false] > div.grid-filterinfo,
 div.datalist-container[aria-expanded=false] > div.datainfo,
-div.datalist-container[aria-expanded=false] > div.footer,
+div.datalist-container[aria-expanded=false] > footer,
 div.datalist-container[aria-expanded=false] > div.grid-actions,
 div.datalist-container[aria-expanded=false] > div.grid-filterinfo {
   max-height: 0;
@@ -6801,7 +6809,7 @@ div.datalist-container > div.tablewrapper > table > tbody.datalist > tr:first-ch
 }
 div.datalist-container > ul.datalist > tr > td,
 div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > td {
-  padding: 0.5rem;
+  padding: 0 0.5rem;
 }
 div.datalist-container > ul.datalist > tr > td.center,
 div.datalist-container > div.tablewrapper > table > tbody.datalist > tr > td.center {
@@ -6949,7 +6957,7 @@ div.datalist-container > ul.datalist.hidden,
 div.datalist-container > div.tablewrapper > table > tbody.datalist.hidden {
   display: none;
 }
-div.datalist-container > div.footer {
+div.datalist-container > footer {
   box-shadow: var(--shadows-smooth-up-small);
 }
 div.datalist-container th,
