@@ -13,6 +13,10 @@ div.window-container {
   display: flex;
   flex-direction: column;
   pointer-events: none;
+  &.screened {
+    width: 100%;
+    position: absolute;
+  }
   div.dialog {
     background-color: var(--canvas-color-primary);
     padding: 0;
@@ -228,7 +232,6 @@ div.window-container {
     background-color: var(--dialog-lightbox-background-color);
   }
 }
-
 div.window-mask {
   background-color: var(--dialog-window-mask-color);
   opacity: var(--dialog-window-mask-opacity);

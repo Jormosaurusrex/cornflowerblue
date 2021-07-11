@@ -8,7 +8,8 @@ class DialogWindow {
             // Possible keywords:  closebutton, cancelbutton
             content: null,
             nocontentwrap: false,
-            onclose: null,
+            onclose: null, // passed self
+            onopen: null, // passed self
             screen: document.body,
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // DOM object, will be used if passed before title.
@@ -78,6 +79,7 @@ class DialogWindow {
         this.mask.classList.add('window-mask');
         if (this.screen !== document.body) {
             this.mask.classList.add('screened');
+            this.container.classList.add('screened');
         }
         for (let c of this.classes) {
             this.mask.classList.add(c);
@@ -119,6 +121,10 @@ class DialogWindow {
             if (this.escapecloses) {
                 document.addEventListener('keyup', this.escapelistener);
             }
+            if ((this.onopen) && (typeof this.onopen === 'function')) {
+                this.onopen(this);
+            }
+
         }, 100);
     }
 
@@ -129,6 +135,8 @@ class DialogWindow {
         if (!this.container.parentNode) { return; }
         this.container.parentNode.removeChild(this.container);
         this.mask.parentNode.removeChild(this.mask);
+        this.mask.classList.remove('screened');
+        this.container.classList.remove('screened');
         if (this.prevfocus) {
             this.prevfocus.focus();
         }
@@ -380,6 +388,9 @@ class DialogWindow {
 
     get onclose() { return this.config.onclose; }
     set onclose(onclose) { this.config.onclose = onclose; }
+
+    get onopen() { return this.config.onopen; }
+    set onopen(onopen) { this.config.onopen = onopen; }
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }

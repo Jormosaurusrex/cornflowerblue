@@ -110,6 +110,7 @@ class GridField {
                             if (d > 0) { return document.createTextNode('True'); }
                             return document.createTextNode('False');
                         }
+                        if (d) { return document.createTextNode('True'); }
                         return document.createTextNode('False');
                     }
                 }

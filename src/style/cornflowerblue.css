@@ -4902,6 +4902,10 @@ div.window-container {
   flex-direction: column;
   pointer-events: none;
 }
+div.window-container.screened {
+  width: 100%;
+  position: absolute;
+}
 div.window-container div.dialog {
   background-color: var(--canvas-color-primary);
   padding: 0;
@@ -6352,7 +6356,7 @@ div.tooltip.east:before {
 }
 
 div.datagrid-container {
-  --vert-padding: 1rem;
+  --vert-padding: .5rem;
   --side-padding: 1rem;
   position: relative;
   display: flex;
