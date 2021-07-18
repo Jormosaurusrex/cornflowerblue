@@ -1,5 +1,4 @@
-body.modalopen,
-div.modalopen {
+.modalopen {
   overflow: hidden;
   //overflow-y: hidden;
   @include for-phone-only {

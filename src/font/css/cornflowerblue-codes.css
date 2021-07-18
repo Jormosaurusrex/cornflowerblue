@@ -139,3 +139,8 @@
 .cfb-star-open:before { content: '\e8dc'; } /* '' */
 .cfb-star-full:before { content: '\e8dd'; } /* '' */
 .cfb-undo:before { content: '\e8e2'; } /* '' */
+.cfb-reply-right:before { content: '\e8ea'; } /* '' */
+.cfb-reply-left:before { content: '\e8eb'; } /* '' */
+.cfb-gripdots-center:before { content: '\e8ec'; } /* '' */
+.cfb-gripdots-left:before { content: '\e8ed'; } /* '' */
+.cfb-gripdots-right:before { content: '\e8ee'; } /* '' */

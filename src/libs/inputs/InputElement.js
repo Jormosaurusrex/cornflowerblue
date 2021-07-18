@@ -180,6 +180,10 @@ class InputElement {
 
     /* CORE METHODS_____________________________________________________________________ */
 
+    setCursorPosition(position) {
+        CFBUtils.setCursorPosition(this.input, position);
+    }
+
     /**
      * Reset the component to its original state
      */

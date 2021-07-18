@@ -133,7 +133,12 @@ class IconFactory {
             'undo',
             'short_window',
             'tall_window',
-            'maximize'
+            'maximize',
+            'reply-right',
+            'reply-left',
+            'gripdots-left',
+            'gripdots-right',
+            'gripdots-center'
         ];
     }
 
