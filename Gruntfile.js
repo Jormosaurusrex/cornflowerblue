@@ -82,8 +82,12 @@ module.exports = function(grunt) {
                     'src/libs/inputs/menu/ImageSelector.js',
                     'src/libs/inputs/menu/CountryMenu.js',
                     'src/libs/inputs/menu/StateMenu.js',
-                    'src/libs/inputs/menu/TimezoneMenu.js'
+                    'src/libs/inputs/menu/TimezoneMenu.js',
 
+
+                    'src/libs/charts/Chart.js',
+                    'src/libs/charts/LineChart.js',
+                    'src/libs/charts/BarChart.js'
                 ],
                 dest: 'dist/lib/cornflowerblue.js'
             },

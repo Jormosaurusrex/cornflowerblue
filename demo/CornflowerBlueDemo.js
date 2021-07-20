@@ -320,7 +320,8 @@ class CornflowerBlueDemo {
             { label: 'Progress Meters', id: 'progressmeters' },
             { label: 'Dialogs', id: 'dialogs' },
             { label: 'Switch Lists', id: 'switchlists' },
-            { label: 'Tabs and Menus', id: 'tabsandmenus' }
+            { label: 'Tabs and Menus', id: 'tabsandmenus' },
+            { label: 'Charts', id: 'charts' }
         ];
         this.complexnav = new TabBar({
             classes: ['subnav'],
@@ -336,7 +337,6 @@ class CornflowerBlueDemo {
 
 
         document.getElementById('inputs-textarea-docbox').appendChild(this.getOptionGrid(TextArea).container);
-
         document.getElementById('inputs-textinput-docbox').appendChild(this.getOptionGrid(TextInput).container);
         document.getElementById('inputs-date-docbox').appendChild(this.getOptionGrid(DateInput).container);
         document.getElementById('inputs-file-docbox').appendChild(this.getOptionGrid(FileInput).container);
@@ -370,6 +370,9 @@ class CornflowerBlueDemo {
         this.grindStyledCheckboxes();
         this.grindTabsAndMenus();
         this.grindTextAreas();
+
+        this.grindCharts();
+
 
         this.handleInternalLinks();
         this.handleWikiCitations();
@@ -1531,6 +1534,14 @@ class CornflowerBlueDemo {
         }).container);
 
         document.getElementById('boxes-responses').appendChild(responses);
+    }
+
+
+    grindCharts() {
+
+        let line = document.getElementById('chart-line'),
+            bar = document.getElementById('chart-bar');
+
     }
 
     grindProgressMeters() {

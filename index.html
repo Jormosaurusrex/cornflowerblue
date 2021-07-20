@@ -26,6 +26,11 @@
         <link rel="stylesheet" type="text/css" href="demo/style/guide.css" />
         <link rel="stylesheet" type="text/css" href="example/passwordgenerator/src/style/passwordgenerator.css" />
 
+        <script type="text/javascript" src="demo/d3.js"></script>
+        <script type="text/javascript" src="demo/nv.d3.min.js"></script>
+
+        <script type="text/javascript" src="src/libs/CFBUtils.js"></script>
+
         <script type="text/javascript" src="src/libs/bo/BusinessObject.js"></script>
         <script type="text/javascript" src="src/libs/bo/TimeZoneDefinition.js"></script>
         <script type="text/javascript" src="src/libs/bo/StateProvince.js"></script>
@@ -83,7 +88,11 @@
         <script type="text/javascript" src="src/libs/components/grid/FilterConfigurator.js"></script>
         <script type="text/javascript" src="src/libs/components/grid/ColumnConfigurator.js"></script>
         <script type="text/javascript" src="src/libs/components/SimpleForm.js"></script>
-        <script type="text/javascript" src="src/libs/CFBUtils.js"></script>
+
+        <script type="text/javascript" src="src/libs/chart/Chart.js"></script>
+        <script type="text/javascript" src="src/libs/chart/LineChart.js"></script>
+        <script type="text/javascript" src="src/libs/chart/BarChart.js"></script>
+
         <script type="text/javascript" src="demo/CornflowerBlueDemo.js"></script>
         <script type="text/javascript" src="demo/LZSong.js"></script>
         <script type="text/javascript" src="example/passwordgenerator/src/lib/PasswordGenerator.js"></script>
@@ -602,7 +611,6 @@
                             </div>
 
                         </section>
-
                         <section aria-hidden="true" tabindex="-1" id="section-tabsandmenus">
                             <h2 role="heading" aria-level="2">Tabs and Menus</h2>
                             <div class="demobox" id="tabsmenus-buttonmenu">
@@ -618,6 +626,16 @@
                                 <p>It can also take a <code>vertical: true</code> parameter, which is better for sidebar menus (like this demo!).</p>
                             </div>
                         </section>
+
+                        <section aria-hidden="true" tabindex="-1" id="section-charts">
+                            <h2 role="heading" aria-level="2">Charts</h2>
+                            <h3 role="heading" aria-level="3">Bar</h3>
+
+                            <div class="demobox example" id="chart-line"></div>
+                            <div class="demobox example vert" id="chart-bar"></div>
+
+                        </section>
+
                     </div>
                 </article>
             </main>

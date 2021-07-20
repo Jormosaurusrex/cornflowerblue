@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-07-09
+/*! Cornflower Blue - v0.1.1 - 2021-07-20
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -62,6 +62,20 @@ class CFBUtils {
         if ((!mapping) || (!element)) { return; }
         for (let k of Object.keys(mapping)) {
             element.setAttribute(`data-${k}`, mapping[k]);
+        }
+    }
+
+    static setCursorPosition(element, position = 0) {
+        if (!element) { return; }
+        if (element.setSelectionRange) {
+            element.focus();
+            element.setSelectionRange(position, position);
+        } else if (element.createTextRange) {
+            let range = element.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', position);
+            range.moveStart('character', position);
+            range.select();
         }
     }
 
@@ -1976,7 +1990,12 @@ class IconFactory {
             'undo',
             'short_window',
             'tall_window',
-            'maximize'
+            'maximize',
+            'reply-right',
+            'reply-left',
+            'gripdots-left',
+            'gripdots-right',
+            'gripdots-center'
         ];
     }
 
@@ -8997,7 +9016,8 @@ class DialogWindow {
             // Possible keywords:  closebutton, cancelbutton
             content: null,
             nocontentwrap: false,
-            onclose: null,
+            onclose: null, // passed self
+            onopen: null, // passed self
             screen: document.body,
             classes: [],             // apply these classes to the dialog, if any.
             header: null, // DOM object, will be used if passed before title.
@@ -9109,6 +9129,10 @@ class DialogWindow {
             if (this.escapecloses) {
                 document.addEventListener('keyup', this.escapelistener);
             }
+            if ((this.onopen) && (typeof this.onopen === 'function')) {
+                this.onopen(this);
+            }
+
         }, 100);
     }
 
@@ -9372,6 +9396,9 @@ class DialogWindow {
 
     get onclose() { return this.config.onclose; }
     set onclose(onclose) { this.config.onclose = onclose; }
+
+    get onopen() { return this.config.onopen; }
+    set onopen(onopen) { this.config.onopen = onopen; }
 
     get prevfocus() { return this._prevfocus; }
     set prevfocus(prevfocus) { this._prevfocus = prevfocus; }
@@ -11868,6 +11895,10 @@ class InputElement {
     get initialvalue() { return this.config.value; }
 
     /* CORE METHODS_____________________________________________________________________ */
+
+    setCursorPosition(position) {
+        CFBUtils.setCursorPosition(this.input, position);
+    }
 
     /**
      * Reset the component to its original state
