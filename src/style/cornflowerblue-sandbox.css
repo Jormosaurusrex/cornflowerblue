@@ -141,6 +141,8 @@
   --blue: var(--cornflowerblue);
   --blue-rgb: --cornflowerblue-rgb;
   --red-rgb: 145, 0, 0;
+  --purple-rgb: 90, 40, 100;
+  --purple: rgb(var(--purple-rgb));
   --red: rgb(var(--red-rgb));
   --pink-rgb: 230, 100, 160;
   --pink: rgb(var(--pink-rgb));
@@ -152,8 +154,6 @@
   --green: rgb(var(--green-rgb));
   --tan-rgb: 234, 220, 188;
   --tan: rgb(var(--tan-rgb));
-  --purple-rgb: 86, 59, 103;
-  --purple: rgb(var(--purple-rgb));
   --brown-rgb: 145, 85, 30;
   --brown: rgb(var(--brown-rgb));
   --white-rgb: 255, 255, 255;
