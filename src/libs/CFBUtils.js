@@ -76,6 +76,11 @@ class CFBUtils {
         }
     }
 
+    static stripHTML(html){
+        let doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    }
+
     /* GENERAL METHODS__________________________________________________________________ */
 
     /**

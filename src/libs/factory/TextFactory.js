@@ -206,6 +206,7 @@ class TextFactory {
     }
 
     static determineLocale() {
+        if ((typeof LOCALE !== 'undefined') && (LOCALE !== null)) { return LOCALE; }
         if ((typeof TextFactory.LOCALE !== 'undefined') && (TextFactory.LOCALE !== null)) {
             return TextFactory.LOCALE;
         }
@@ -256,6 +257,18 @@ class TextFactory {
                 console.error(`Error while fetching data from ${url}`);
                 console.error(err);
             });
+    }
+
+    /**
+     * Set a dictionary directly to the locale
+     * @param dictionary
+     * @param locale
+     */
+    setDictionary(dictionary, locale) {
+        let dict = TextFactory.library[locale];
+        if (!dict) { dict = {}; }
+        dict = Object.assign({}, dict, dictionary);
+        TextFactory._library[locale] = dict;
     }
 
 }

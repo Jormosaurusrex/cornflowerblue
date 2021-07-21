@@ -82,17 +82,17 @@ div.window-container {
       align-items: center;
       align-content: center;
       justify-content: space-between;
-      height: 5em;
-      min-height: 5em;
-      max-height: 5em;
+      //height: 5em;
+      //min-height: 5em;
+      //max-height: 5em;
       overflow: hidden;
       z-index: 9;
-      padding: 1rem 1.5rem;
+      padding: .5rem 1rem;
       background-color: var(--canvas-color-secondary);
       border-top: .1em solid var(--canvas-color-tertiary);
       box-shadow: var(--shadows-interior-fromabove);
       button {
-        margin-right: 1em;
+        margin: 0 1rem 0 0;
         &.fill {
           margin: 0;
         }
