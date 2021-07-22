@@ -264,7 +264,7 @@ class TextFactory {
      * @param dictionary
      * @param locale
      */
-    setDictionary(dictionary, locale) {
+    static setDictionary(dictionary, locale) {
         let dict = TextFactory.library[locale];
         if (!dict) { dict = {}; }
         dict = Object.assign({}, dict, dictionary);

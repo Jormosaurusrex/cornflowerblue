@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-07-20
+/*! Cornflower Blue - v0.1.1 - 2021-07-21
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -77,6 +77,11 @@ class CFBUtils {
             range.moveStart('character', position);
             range.select();
         }
+    }
+
+    static stripHTML(html){
+        let doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
     }
 
     /* GENERAL METHODS__________________________________________________________________ */
@@ -2261,6 +2266,7 @@ class TextFactory {
     }
 
     static determineLocale() {
+        if ((typeof LOCALE !== 'undefined') && (LOCALE !== null)) { return LOCALE; }
         if ((typeof TextFactory.LOCALE !== 'undefined') && (TextFactory.LOCALE !== null)) {
             return TextFactory.LOCALE;
         }
@@ -2311,6 +2317,18 @@ class TextFactory {
                 console.error(`Error while fetching data from ${url}`);
                 console.error(err);
             });
+    }
+
+    /**
+     * Set a dictionary directly to the locale
+     * @param dictionary
+     * @param locale
+     */
+    static setDictionary(dictionary, locale) {
+        let dict = TextFactory.library[locale];
+        if (!dict) { dict = {}; }
+        dict = Object.assign({}, dict, dictionary);
+        TextFactory._library[locale] = dict;
     }
 
 }
