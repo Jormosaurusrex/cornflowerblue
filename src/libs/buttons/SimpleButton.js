@@ -159,7 +159,7 @@ class SimpleButton {
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
-    setIcon(newicon, iconprefix, secondicon = false) {
+    setIcon(newicon, iconprefix ='cfb', secondicon = false) {
         let i = IconFactory.icon(newicon, "", iconprefix);
         if ((this.iconclasses) && (this.iconclasses.length > 0)) {
             for (let ic of this.iconclasses) {

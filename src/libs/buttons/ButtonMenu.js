@@ -399,6 +399,12 @@ class ButtonMenu extends SimpleButton {
         });
     }
 
+    setMenu(menu) {
+        this.menu.remove();
+        this.menu = menu;
+        this.processMenu();
+    }
+
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get autoclose() { return this.config.autoclose; }
