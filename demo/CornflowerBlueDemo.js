@@ -1673,6 +1673,7 @@ class CornflowerBlueDemo {
         let standard = document.createElement('div');
         standard.classList.add('example');
         standard.classList.add('vert');
+        standard.innerHTML = `<p>${TextFactory.get("plural_test", 1)}</p><p>${TextFactory.get("plural_test", 6)}</p><p>${TextFactory.get("plural_test", 'aaah')}</p>`;
         standard.appendChild(new RadioGroup({
             label: "Best Avenger",
             name: "avenger",

@@ -177,7 +177,8 @@ class TextFactory {
                 "time_zone": "Time zone",
                 "offset": "Offset",
                 "code": "Code",
-                "alternate_names": "Alternate names"
+                "alternate_names": "Alternate names",
+                "plural_test" : "It's $1 {{plural:$1|meter|meters}} down."
             }
         };
     }
@@ -192,6 +193,31 @@ class TextFactory {
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
             if (t) {
+                //"plural_test" : "It's {{plural:$1|meter|meters}} down."
+                for (let m of t.matchAll(/\{\{plural:(.*?)\|(.*?)\|(.*?)\}\}/g)) {
+                    let nt = t;
+                    try { // wrap entire thing
+                        let argkey = m[1],
+                            num;
+                        argkey = argkey.replace('\$', '');
+                        if (typeof argkey !== 'number') {
+                            argkey = parseInt(argkey);
+                        }
+
+                        num = arguments[argkey];
+
+                        if (typeof num !== 'number') {
+                            num = parseInt(num);
+                        }
+                        if (num === 1) {
+                            t = t.replace(m[0], m[2]);
+                        } else {
+                            t = t.replace(m[0], m[3]);
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
                 for (let arg = 1; arg <= arguments.length; arg++) {
                     t = t.replace(`$${arg}`, arguments[arg]);
                 }

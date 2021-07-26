@@ -209,12 +209,19 @@ div.colorselector-container {
     -moz-appearance: none;
   }
 }
+:root {
+  --checkbox-size: 1.5rem; // Total box size
+  --cb-border-width: .15rem; // 1.8 left
+  --checkbox-toggle-offset: .1rem; // 1.4 left
+  --checkbox-toggle-size: 1rem;
+  --checkbox-font-size: 2rem; // For the checkmark symbol
+}
 input[type="checkbox"],
 input[type="radio"] {
   transition: all .2s;
   box-sizing: border-box;
   background-color: var(--canvas-color-secondary);
-  border: .15em solid var(--input-border-color);
+  border: var(--cb-border-width) solid var(--input-border-color);
   border-radius: var(--border-radius);
   display: inline-block;
   position: relative;
@@ -233,21 +240,22 @@ input[type="radio"] {
     max-height: var(--checkbox-toggle-size);
     background-color: var(--input-border-color);
     position: absolute;
-    left: var(--checkbox-toggle-offset);
+
     top: var(--checkbox-toggle-offset);
-    border: .5em solid var(--input-border-color);
+    left: var(--checkbox-toggle-offset);
+    border: var(--cb-border-width) solid var(--input-border-color);
     border-radius: var(--input-border-color);
     box-shadow: none;
   }
   &:before {
     display: none;
     font-family: "cornflowerblue", serif;
-    line-height: 1em;
+    line-height: 1rem;
     content: '\e82f';
     font-size: var(--checkbox-font-size);
     position: absolute;
     left: 0;
-    top: -.05em;
+    top: -.05rem;
     color: var(--colors-text-hot);
     text-shadow: var(--text-shadow);
   }
@@ -282,20 +290,20 @@ input[type="radio"] {
   &:active{
     border-color: var(--colors-affordance);
     background-color: rgba(var(--colors-affordance-rgb), 0.5);
-    box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
+    box-shadow: 0 .1rem .1rem 0 rgba(50, 50, 50, 0.5);
   }
   &:focus,
   &.focus {
-    outline-width: .2em;
+    outline-width: .2rem;
     outline-style: dashed;
     outline-color: var(--colors-affordance);
-    outline-offset: .3em;
+    outline-offset: .3rem;
   }
   @include for-hover-only {
     &:hover {
       border-color: var(--colors-affordance);
       background-color: rgba(var(--colors-affordance-rgb), 0.5);
-      box-shadow: 0 .1em .1em 0 rgba(50, 50, 50, 0.5);
+      box-shadow: 0 .1rem .1rem 0 rgba(50, 50, 50, 0.5);
     }
   }
   &:focus,
@@ -324,7 +332,7 @@ input[type="radio"] {
       &:hover {
         &:after {
           background-color: var(--colors-text-hot);
-          border: .4em solid var(--colors-affordance);
+          border: .4rem solid var(--colors-affordance);
         }
       }
     }
@@ -344,7 +352,7 @@ input[type="radio"] {
           }
           &:after {
             background-color: var(--colors-text-hot);
-            border: .3em solid var(--colors-affordance);
+            border: .3rem solid var(--colors-affordance);
           }
         }
       }
