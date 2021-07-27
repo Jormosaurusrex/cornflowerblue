@@ -210,18 +210,20 @@ div.colorselector-container {
   }
 }
 :root {
-  --checkbox-size: 1.5rem; // Total box size
-  --cb-border-width: .15rem; // 1.8 left
-  --checkbox-toggle-offset: .1rem; // 1.4 left
-  --checkbox-toggle-size: 1rem;
-  --checkbox-font-size: 2rem; // For the checkmark symbol
+  --checkbox-size: 1.2rem; // Total box size
+  --cb-border-width: .05rem; // Not overly relevant, as this is a box-shadow
+  --checkbox-toggle-offset: .2rem; //
+  --checkbox-toggle-size: .8rem;
+  --checkbox-font-size: 1.4rem; // For the checkmark symbol
 }
 input[type="checkbox"],
 input[type="radio"] {
   transition: all .2s;
   box-sizing: border-box;
   background-color: var(--canvas-color-secondary);
-  border: var(--cb-border-width) solid var(--input-border-color);
+  //border: var(--cb-border-width) solid var(--input-border-color);
+  box-shadow: inset 0 0 0 var(--cb-border-width) var(--input-border-color);
+
   border-radius: var(--border-radius);
   display: inline-block;
   position: relative;
@@ -243,7 +245,7 @@ input[type="radio"] {
 
     top: var(--checkbox-toggle-offset);
     left: var(--checkbox-toggle-offset);
-    border: var(--cb-border-width) solid var(--input-border-color);
+    //border: var(--cb-border-width) solid var(--input-border-color);
     border-radius: var(--input-border-color);
     box-shadow: none;
   }
