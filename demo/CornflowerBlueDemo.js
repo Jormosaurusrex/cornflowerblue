@@ -1547,6 +1547,11 @@ class CornflowerBlueDemo {
         barcharts.appendChild(new Chart({
             label: "Letter Prevalence",
             name: "letters",
+            xaxiskey: 'letter',
+            yaxiskey: 'frequency',
+            xaxislabel: 'Letter of the Alphabet',
+            yaxislabel: 'Frequency of Occurance',
+
             data: [
                 {
                     "letter": "A",
@@ -1654,8 +1659,6 @@ class CornflowerBlueDemo {
                 }
             ]
         }).container);
-
-
 
     }
 

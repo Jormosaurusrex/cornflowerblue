@@ -1,6 +1,60 @@
 div.chart-container {
   //width: 960px;
   //height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  align-content: stretch;
+  >div.topbar {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    >label {
+      margin: 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+  }
+  >div.c {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    >div.yaxis {
+      flex-grow: 0;
+      width: 1.5rem;
+      display: block;
+      position: relative;
+      >label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        font-size: .8rem;
+        text-transform: uppercase;
+        transform: rotate(90deg);
+        transform-origin: bottom left;
+        white-space: nowrap;
+      }
+    }
+    >svg {
+      flex-grow: 2;
+    }
+  }
+  >div.xaxis {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    >label {
+      margin: 0;
+      font-size: .8rem;
+      text-transform: uppercase;
+    }
+  }
+
+
   svg {
    // width: 960px;
     //height: 500px;

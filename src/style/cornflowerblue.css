@@ -7669,6 +7669,60 @@ div.filter-configurator div.filter-actions button:first-child {
   margin-left: 0;
 }
 
+div.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  align-content: stretch;
+}
+div.chart-container > div.topbar {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+div.chart-container > div.topbar > label {
+  margin: 0;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+div.chart-container > div.c {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+div.chart-container > div.c > div.yaxis {
+  flex-grow: 0;
+  width: 1.5rem;
+  display: block;
+  position: relative;
+}
+div.chart-container > div.c > div.yaxis > label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  transform: rotate(90deg);
+  transform-origin: bottom left;
+  white-space: nowrap;
+}
+div.chart-container > div.c > svg {
+  flex-grow: 2;
+}
+div.chart-container > div.xaxis {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+div.chart-container > div.xaxis > label {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
 div.chart-container svg .bar {
   fill: steelblue;
 }

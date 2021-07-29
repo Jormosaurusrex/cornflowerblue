@@ -60,8 +60,8 @@ class Chart {
     }
 
     chart() {
-        this.d3x.domain(this.data.map((d) => { return d.letter; }));
-        this.d3y.domain([0, d3.max(this.data, (d) => { return d.frequency; })]);
+        this.d3x.domain(this.data.map((d) => { return d[this.xaxiskey]; }));
+        this.d3y.domain([0, d3.max(this.data, (d) => { return d[this.yaxiskey]; })]);
 
         this.d3g.append("g")
             .attr("class", "axis axis--x")
@@ -82,10 +82,10 @@ class Chart {
             .data(this.data)
             .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", (d) => { return this.d3x(d.letter); })
-            .attr("y", (d) => { return this.d3y(d.frequency); })
+            .attr("x", (d) => { return this.d3x(d[this.xaxiskey]); })
+            .attr("y", (d) => { return this.d3y(d[this.yaxiskey]); })
             .attr("width", this.d3x.bandwidth())
-            .attr("height", (d) => { return this.d3height - this.d3y(d.frequency); });
+            .attr("height", (d) => { return this.d3height - this.d3y(d[this.yaxiskey]); });
     }
 
     load(callback) {
@@ -113,9 +113,40 @@ class Chart {
      * Builds the container
      */
     buildContainer() {
+
         this.container = document.createElement('div');
         this.container.classList.add('chart-container');
-        this.container.appendChild(this.svg);
+
+
+        /*
+            These are constructed in rows; the middle row will hold many things.
+            These rows aren't needed to be captured; they are variable in size.
+            only centerdiv is guaranteed
+         */
+        let centerdiv = document.createElement('div');
+        centerdiv.classList.add('c');
+
+        if (this.label) {
+            this.container.innerHTML = `<div class="toprow"><label>${this.label}</label></label>`;
+        }
+
+        if (this.yaxislabel) {
+            let yaxisdiv = document.createElement('div');
+            yaxisdiv.classList.add('yaxis');
+            yaxisdiv.innerHTML = `<label>${this.yaxislabel}</label>`;
+            centerdiv.appendChild(yaxisdiv);
+        }
+
+        centerdiv.appendChild(this.svg);
+        this.container.appendChild(centerdiv);
+
+        if (this.xaxislabel) {
+            let xaxisdiv = document.createElement('div');
+            xaxisdiv.classList.add('xaxis');
+            xaxisdiv.innerHTML = `<label>${this.xaxislabel}</label>`;
+            this.container.appendChild(xaxisdiv);
+        }
+
         window.setTimeout(() => {
             if ((this.data) && (this.data.length > 0)) {
                 this.compile();
@@ -244,6 +275,18 @@ class Chart {
 
     get svgId() { return this.config.svgId; }
     set svgId(svgId) { this.config.svgId = svgId; }
+
+    get xaxiskey() { return this.config.xaxiskey; }
+    set xaxiskey(xaxiskey) { this.config.xaxiskey = xaxiskey; }
+
+    get xaxislabel() { return this.config.xaxislabel; }
+    set xaxislabel(xaxislabel) { this.config.xaxislabel = xaxislabel; }
+
+    get yaxiskey() { return this.config.yaxiskey; }
+    set yaxiskey(yaxiskey) { this.config.yaxiskey = yaxiskey; }
+
+    get yaxislabel() { return this.config.yaxislabel; }
+    set yaxislabel(yaxislabel) { this.config.yaxislabel = yaxislabel; }
 
 }
 window.Chart = Chart;
