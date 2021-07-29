@@ -175,7 +175,6 @@ class BooleanToggle {
      * Builds the DOM.
      */
     build() {
-
         this.toggle = document.createElement('input');
         this.toggle.setAttribute('type', "checkbox");
         this.toggle.setAttribute('id', this.id);

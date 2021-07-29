@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-07-27
+/*! Cornflower Blue - v0.1.1 - 2021-07-28
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -12841,7 +12841,7 @@ class SelectMenu extends InputElement {
     getOptionLabel(value) {
         let label = "";
         for (let o of this.options) {
-            if (o.value === value) {
+            if (o.value.toString() === value.toString()) {
                 label = o.label;
             }
         }
@@ -13227,7 +13227,7 @@ class SelectMenu extends InputElement {
         }
 
         for (let opt of this.options) {
-            if ((this.origval) && (this.origval === opt.value)) {
+            if ((this.origval) && (this.origval.toString() === opt.value.toString())) {
                 opt.checked = true;
                 this.selectedoption = opt;
             } else {
