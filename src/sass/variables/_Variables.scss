@@ -165,6 +165,11 @@
   --checkbox-toggle-size: 1.3em; // For filled checkboxes and radios
   --checkbox-toggle-offset: 0.2em;
 
+  // Charts
+  //--chart-bar-fillcolor: #4a0e63;
+  --chart-bar-fillcolor: var(--darkblue);
+  --chart-bar-overcolor: var(--colors-focus);
+
   // Input
   --input-default-top-padding: .5rem;
   --input-default-bottom-padding: .5rem;

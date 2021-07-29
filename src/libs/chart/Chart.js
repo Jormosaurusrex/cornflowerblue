@@ -6,6 +6,8 @@ class Chart {
             classes: [],
             label: null,
             source: null,
+            width: 500,
+            height: 500,
             data: [],
             svgId: null,
             sourcetype: "application/json",
@@ -15,20 +17,11 @@ class Chart {
         };
     }
 
-    static get DOCUMENTATION() {
-        return {
-            id: { type: 'option', datatype: 'string', description: "A unique id value. The dialog object will have this as it's id." },
-            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
-            label: { type: 'option', datatype: 'string', description: "The title for the progress meter." }
-        };
-    }
-
     constructor(config) {
         this.config = Object.assign({}, Chart.DEFAULT_CONFIG, config);
         if (!this.id) { this.id = `chart-${CFBUtils.getUniqueKey(5)}`; }
         if (!this.svgId) { this.svgId = `chart-${this.charttype}-${CFBUtils.getUniqueKey(5)}`; }
     }
-
 
     get sourcebody() {
         if (this.sourcemethod.toLowerCase() === 'get') { return null; }
@@ -41,7 +34,6 @@ class Chart {
 
     compile() {
         // This is mostly to create data portability
-        console.log(`svg#${this.svgId}`);
         this.d3svg = d3.select(`svg#${this.svgId}`);
 
         this.d3margin = {top: 20, right: 20, bottom: 30, left: 40};
@@ -169,8 +161,10 @@ class Chart {
 
         //this.svg.classList.add('chart', this.charttype);
         this.svg.setAttribute('id', this.svgId);
-        this.svg.setAttribute('width', 960);
-        this.svg.setAttribute('height', 500);
+        this.svg.setAttribute('width', this.width);
+        this.svg.setAttribute('height', this.height);
+        this.svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}` );
+        this.svg.setAttribute('preserveAspectRatio','xMinYMin');
     }
 
     /**
@@ -240,6 +234,9 @@ class Chart {
     get data() { return this.config.data; }
     set data(data) { this.config.data; }
 
+    get height() { return this.config.height; }
+    set height(height) { this.config.height = height; }
+
     get help() { return this.config.help; }
     set help(help) { this.config.help = help; }
 
@@ -275,6 +272,9 @@ class Chart {
 
     get svgId() { return this.config.svgId; }
     set svgId(svgId) { this.config.svgId = svgId; }
+
+    get width() { return this.config.width; }
+    set width(width) { this.config.width = width; }
 
     get xaxiskey() { return this.config.xaxiskey; }
     set xaxiskey(xaxiskey) { this.config.xaxiskey = xaxiskey; }

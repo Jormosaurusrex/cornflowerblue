@@ -110,6 +110,8 @@
   --checkbox-font-size: 2em;
   --checkbox-toggle-size: 1.3em;
   --checkbox-toggle-offset: 0.2em;
+  --chart-bar-fillcolor: var(--darkblue);
+  --chart-bar-overcolor: var(--colors-focus);
   --input-default-top-padding: .5rem;
   --input-default-bottom-padding: .5rem;
   --input-default-left-padding: 1.5rem;

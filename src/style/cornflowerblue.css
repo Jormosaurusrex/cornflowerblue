@@ -118,6 +118,8 @@
   --checkbox-font-size: 2em;
   --checkbox-toggle-size: 1.3em;
   --checkbox-toggle-offset: 0.2em;
+  --chart-bar-fillcolor: var(--darkblue);
+  --chart-bar-overcolor: var(--colors-focus);
   --input-default-top-padding: .5rem;
   --input-default-bottom-padding: .5rem;
   --input-default-left-padding: 1.5rem;
@@ -7724,10 +7726,13 @@ div.chart-container > div.xaxis > label {
   text-transform: uppercase;
 }
 div.chart-container svg .bar {
-  fill: steelblue;
+  fill: var(--chart-bar-fillcolor);
+  transition: fill 0.2s;
 }
-div.chart-container svg .bar:hover {
-  fill: brown;
+@media (hover: hover) and (pointer: fine) {
+  div.chart-container svg .bar:hover {
+    fill: var(--chart-bar-overcolor);
+  }
 }
 div.chart-container svg .axis--x path {
   display: none;

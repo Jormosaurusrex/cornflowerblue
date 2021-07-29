@@ -1542,7 +1542,6 @@ class CornflowerBlueDemo {
         let barcharts = document.getElementById('chart-bar'),
             linecharts = document.getElementById('chart-line');
 
-
         barcharts.classList.add('example');
         barcharts.appendChild(new Chart({
             label: "Letter Prevalence",
@@ -1551,7 +1550,8 @@ class CornflowerBlueDemo {
             yaxiskey: 'frequency',
             xaxislabel: 'Letter of the Alphabet',
             yaxislabel: 'Frequency of Occurance',
-
+            width: 700,
+            height: 300,
             data: [
                 {
                     "letter": "A",
