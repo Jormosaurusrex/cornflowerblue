@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-07-28
+/*! Cornflower Blue - v0.1.1 - 2021-07-29
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -13657,7 +13657,6 @@ class BooleanToggle {
      * Builds the DOM.
      */
     build() {
-
         this.toggle = document.createElement('input');
         this.toggle.setAttribute('type', "checkbox");
         this.toggle.setAttribute('id', this.id);
