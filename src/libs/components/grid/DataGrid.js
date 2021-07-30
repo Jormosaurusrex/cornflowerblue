@@ -16,6 +16,7 @@ class DataGrid extends Panel {
             collapsible: true, // can the panel collapse (passed to the Panel)
             elementname: null,
             extraelements: null,
+            searchplaceholder: TextFactory.get('search_this_data'),
             showinfo: true,
             showfooter: true,
             itemslabel: TextFactory.get('items_label'),
@@ -1693,8 +1694,8 @@ class DataGrid extends Panel {
 
         if (this.searchable) {
             this.searchcontrol = new SearchControl({
-                arialabel: TextFactory.get('search_this_data'),
-                placeholder: TextFactory.get('search_this_data'),
+                arialabel: this.searchplaceholder,
+                placeholder: this.searchplaceholder,
                 mute: this.mute,
                 searchtext: TextFactory.get('search'),
                 action: (value) => {
@@ -2416,6 +2417,9 @@ class DataGrid extends Panel {
 
     get searchcontrol() { return this._searchcontrol; }
     set searchcontrol(searchcontrol) { this._searchcontrol = searchcontrol; }
+
+    get searchplaceholder() { return this.config.searchplaceholder; }
+    set searchplaceholder(searchplaceholder) { this.config.searchplaceholder = searchplaceholder; }
 
     get selectable() { return this.config.selectable; }
     set selectable(selectable) { this.config.selectable = selectable; }

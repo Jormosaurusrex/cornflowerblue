@@ -7737,5 +7737,9 @@ div.chart-container svg .bar {
 div.chart-container svg .axis--x path {
   display: none;
 }
+div.chart-container svg .axis text {
+  fill: var(--red);
+  font-size: 120%;
+}
 
 /*# sourceMappingURL=cornflowerblue.css.map */

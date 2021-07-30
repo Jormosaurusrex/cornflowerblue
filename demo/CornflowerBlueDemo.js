@@ -1807,7 +1807,7 @@ class CornflowerBlueDemo {
         linecharts.appendChild(new LineChart({
             label: "Ooop Oop",
             yaxiskey: 'create_date',
-            xaxiskey: 'carded_count',
+            xaxiskey: 'total_session_count',
             width: 700,
             height: 300,
             data: linedata

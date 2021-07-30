@@ -64,6 +64,14 @@ div.chart-container {
     .axis--x path {
       display: none;
     }
+    .axis {
+      text {
+        fill: var(--red);
+        //fill: var(--colors-standard);
+        //font-family: Georgia;
+        font-size: 120%;
+      }
+    }
   }
 }
 
