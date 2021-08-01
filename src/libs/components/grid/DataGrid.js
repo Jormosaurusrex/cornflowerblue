@@ -21,6 +21,9 @@ class DataGrid extends Panel {
             showfooter: true,
             itemslabel: TextFactory.get('items_label'),
             screen: document.body,
+            onpostprocess: (self) => {
+
+            },
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
                              // and will instead pull all information from the warehouse
@@ -896,6 +899,9 @@ class DataGrid extends Panel {
      *    - Grinds duplicate cells
      */
     postProcess() {
+        if ((this.onpostprocess) && (typeof this.onpostprocess === 'function')) {
+            this.onpostprocess(this);
+        }
         this.updateCount();
         if (this.state) {
             this.sortField(this.state.sort.field, this.state.sort.direction);
@@ -2399,6 +2405,14 @@ class DataGrid extends Panel {
 
     get nodeselectself() { return this.config.nodeselectself; }
     set nodeselectself(nodeselectself) { this.config.nodeselectself = nodeselectself; }
+
+    get onpostprocess() { return this.config.onpostprocess; }
+    set onpostprocess(onpostprocess) {
+        if (typeof onpostprocess !== 'function') {
+            console.error("Value provided to onpostprocess is not a function!");
+        }
+        this.config.onpostprocess = onpostprocess;
+    }
 
     get passiveeditinstructions() { return this.config.passiveeditinstructions; }
     set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }

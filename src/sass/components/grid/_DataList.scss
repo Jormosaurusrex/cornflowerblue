@@ -23,7 +23,7 @@ div.datalist-container {
   >div.tablewrapper >table >thead >tr.listheader {
     position: relative;
     z-index: 203;
-    background-color: var(--canvas-color-tertiary);
+    background-color: var(--canvas-color-primary);
     box-shadow: var(--shadows-smooth-dn-small);
     >div.label {
       display: flex;
@@ -94,7 +94,7 @@ div.datalist-container {
     justify-content: flex-end;
     align-items: stretch;
     padding: 0 .5rem;
-    background-color: var(--canvas-color-tertiary);
+    background-color: var(--canvas-color-primary);
     box-shadow: var(--shadows-smooth-dn-small);
     >div.spacer {
       justify-self: flex-start;

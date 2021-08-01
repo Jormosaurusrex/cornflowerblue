@@ -214,7 +214,7 @@ div.colorselector-container {
   --cb-border-width: .05rem; // Not overly relevant, as this is a box-shadow
   --checkbox-toggle-offset: .2rem; //
   --checkbox-toggle-size: .8rem;
-  --checkbox-font-size: 1.4rem; // For the checkmark symbol
+  --checkbox-font-size: var(--checkbox-size); // For the checkmark symbol
 }
 input[type="checkbox"],
 input[type="radio"] {
@@ -252,7 +252,7 @@ input[type="radio"] {
   &:before {
     display: none;
     font-family: "cornflowerblue", serif;
-    line-height: 1rem;
+    line-height: var(--checkbox-font-size);
     content: '\e82f';
     font-size: var(--checkbox-font-size);
     position: absolute;
@@ -296,10 +296,10 @@ input[type="radio"] {
   }
   &:focus,
   &.focus {
-    outline-width: .2rem;
+    outline-width: .1rem;
     outline-style: dashed;
     outline-color: var(--colors-affordance);
-    outline-offset: .3rem;
+    outline-offset: .2rem;
   }
   @include for-hover-only {
     &:hover {

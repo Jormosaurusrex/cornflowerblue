@@ -45,19 +45,23 @@ class DataList extends DataGrid {
     get displaytype() { return 'datalist'; }
     get gridwrapper() { return this.datalist; }
     get gridbody() { return this.datalist; }
+    get multiselecting() { return this.multiselect; }
+
 
     finalize() {
         this.shade.activate();
     }
 
-    fillData() {
+    fillData(callback) {
         this.activity(true);
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
                 this.postLoad();
-                //this.shade.deactivate();
                 this.activity(false);
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
@@ -65,10 +69,16 @@ class DataList extends DataGrid {
                 this.postLoad();
                 this.shade.deactivate();
                 this.activity(false);
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
             });
         } else if (this.data) {
             this.populate();
             this.activity(false);
+            if ((callback) && (typeof callback === 'function')) {
+                callback();
+            }
         }
     }
 
@@ -179,71 +189,81 @@ class DataList extends DataGrid {
                 li.setAttribute('data-id', item['id']);
             }
 
-            if ((this.click) && (typeof this.click === 'function')) {
-                li.classList.add('clickable');
-                li.setAttribute('tabindex', '0');
-                li.addEventListener('click', (e) => {
-                    if (this.selectable) {
-                        this.select(li, e, item);
-                    }
-                    if ((this.click) && (typeof this.click === 'function')) {
-                        this.click(item, this, e);
-                    }
-                });
-            } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
-                li.classList.add('clickable');
-                li.setAttribute('tabindex', '0');
-                li.addEventListener('click', (e) => {
-                    this.select(li, e, item);
-                    li.setAttribute('aria-selected', 'true');
-                    if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-                        this.selectaction(this, li, rdata);
-                    }
-                });
-            }
-
-            if ((this.mouseover) && (typeof this.mouseover === 'function')) {
-                li.addEventListener('mouseover', (e) => {
-                    if ((this.mouseover) && (typeof this.mouseover === 'function')) {
-                        this.mouseover(item, this, e);
-                    }
-                });
-            }
-
-            if ((this.mouseout) && (typeof this.mouseout === 'function')) {
-                li.addEventListener('mouseout', (e) => {
-                    if ((this.mouseout) && (typeof this.mouseout === 'function')) {
-                        this.mouseout(item, this, e);
-                    }
-                });
-            }
-
-            li.addEventListener('keyup', (e) => {
-                switch (e.key) {
-                    case 'Escape':
-                        this.close();
-                        break;
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        let p = this.datalist.querySelector(`[data-order='${previous}']`);
-                        if (p) { p.focus(); }
-                        break;
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        let n = this.datalist.querySelector(`[data-order='${next}']`);
-                        if (n) { n.focus(); }
-                        break;
-                    case 'Enter': // Enter
-                    case ' ': // Space
-                        li.click(); // click the one inside
-                        break;
-                }
-            });
+            this.elementProcess(li, item);
 
             this.datalist.appendChild(li);
             order++;
         }
         this.postProcess();
+    }
+
+    elementProcess(li, item) {
+        if ((this.click) && (typeof this.click === 'function')) {
+            li.classList.add('clickable');
+            li.setAttribute('tabindex', '0');
+            li.addEventListener('click', (e) => {
+                if (this.selectable) {
+                    this.select(li, e, item);
+                }
+                if ((this.click) && (typeof this.click === 'function')) {
+                    this.click(item, this, e);
+                }
+            });
+        } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
+            li.classList.add('clickable');
+            li.setAttribute('tabindex', '0');
+            li.addEventListener('click', (e) => {
+                this.select(li, e, item);
+                //li.setAttribute('aria-selected', 'true');
+                if (li.getAttribute('aria-selected') === 'true') {
+                    if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+                        this.selectaction(this, li, item);
+                    }
+                } else {
+                    if ((this.deselectaction) && (typeof this.deselectaction === 'function')) {
+                        this.deselectaction(this, li, item);
+                    }
+                }
+            });
+        }
+
+        if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+            li.addEventListener('mouseover', (e) => {
+                if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+                    this.mouseover(item, this, e);
+                }
+            });
+        }
+
+        if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+            li.addEventListener('mouseout', (e) => {
+                if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+                    this.mouseout(item, this, e);
+                }
+            });
+        }
+
+        li.addEventListener('keyup', (e) => {
+            switch (e.key) {
+                case 'Escape':
+                    this.close();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    let p = this.datalist.querySelector(`[data-order='${previous}']`);
+                    if (p) { p.focus(); }
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    let n = this.datalist.querySelector(`[data-order='${next}']`);
+                    if (n) { n.focus(); }
+                    break;
+                case 'Enter': // Enter
+                case ' ': // Space
+                    li.click(); // click the one inside
+                    break;
+            }
+        });
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
@@ -312,10 +332,14 @@ class DataList extends DataGrid {
 
     postProcess() {
         // nothing.
+        if ((this.onpostprocess) && (typeof this.onpostprocess === 'function')) {
+            this.onpostprocess(this);
+        }
         this.updateCount();
         if ((this.showinfo) && (this.searchable)) {
             this.search(this.searchcontrol.value);
         }
+
     }
     applyFilters() { }
 
