@@ -34,8 +34,8 @@ class LineChart extends Chart {
         }));
 
         xScale.domain(d3.extent(this.data, (d) =>{
-            console.log(d.date);
-            console.log(timeConv(d.date));
+            //console.log(d.date);
+            //.log(timeConv(d.date));
             return timeConv(d.date)
         }));
 

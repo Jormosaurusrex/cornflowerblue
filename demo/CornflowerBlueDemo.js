@@ -1803,6 +1803,8 @@ class CornflowerBlueDemo {
                 }
             ];
 
+        linecharts.innerHTML = `<p>${TextFactory.get('interpolation_text', "A $2 dollar shot")}</p>`
+
         linecharts.classList.add('example');
         linecharts.appendChild(new LineChart({
             label: "Ooop Oop",

@@ -178,6 +178,7 @@ class TextFactory {
                 "offset": "Offset",
                 "code": "Code",
                 "alternate_names": "Alternate names",
+                "interpolation_text" : "Copy of $1",
                 "plural_test" : "It's $1 {{plural:$1|meter|meters}} down."
             }
         };
@@ -193,7 +194,6 @@ class TextFactory {
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
             if (t) {
-                //"plural_test" : "It's {{plural:$1|meter|meters}} down."
                 for (let m of t.matchAll(/\{\{plural:(.*?)\|(.*?)\|(.*?)\}\}/g)) {
                     let nt = t;
                     try { // wrap entire thing
@@ -218,7 +218,7 @@ class TextFactory {
                         console.error(e);
                     }
                 }
-                for (let arg = 1; arg <= arguments.length; arg++) {
+                for (let arg = 1; arg < arguments.length; arg++) {
                     t = t.replace(`$${arg}`, arguments[arg]);
                 }
                 return t;
