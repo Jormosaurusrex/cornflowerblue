@@ -7735,9 +7735,41 @@ div.chart-container svg .bar {
 div.chart-container svg .axis--x path {
   display: none;
 }
+div.chart-container svg .axis line {
+  stroke: var(--grey-dark);
+  stroke-width: 0.5;
+  shape-rendering: crispEdges;
+}
+div.chart-container svg .axis path {
+  stroke: var(--grey-dark);
+  stroke-width: 0.7;
+  shape-rendering: crispEdges;
+}
 div.chart-container svg .axis text {
-  fill: var(--red);
+  fill: var(--grey-darker);
+  font-family: Georgia;
+  font-family: var(--default-font-family);
+  text-transform: uppercase;
   font-size: 120%;
+}
+div.chart-container svg path.chart-line {
+  fill: none;
+  stroke: var(--red);
+  stroke-dasharray: 6;
+}
+div.chart-container svg path.chart-line.line-0 {
+  fill: none;
+  stroke: var(--red);
+}
+div.chart-container svg path.chart-line.line-1 {
+  fill: none;
+  stroke: var(--red);
+  stroke-dasharray: 2;
+}
+div.chart-container svg path.chart-line.line-2 {
+  fill: none;
+  stroke: var(--red);
+  stroke-dasharray: 6;
 }
 
 /*# sourceMappingURL=cornflowerblue.css.map */
