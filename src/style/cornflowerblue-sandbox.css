@@ -1,7 +1,5 @@
 @charset "UTF-8";
-/*
-  We want to use variables so that they can be re-themed
- */
+/* We want to use variables so that they can be re-themed */
 :root {
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
@@ -148,11 +146,11 @@
   --red: rgb(var(--red-rgb));
   --pink-rgb: 230, 100, 160;
   --pink: rgb(var(--pink-rgb));
-  --orange-rgb: 255, 153, 0;
+  --orange-rgb: 255, 150, 0;
   --orange: rgb(var(--orange-rgb));
-  --yellow-rgb: 255, 221, 27;
+  --yellow-rgb: 250, 220, 30;
   --yellow: rgb(var(--yellow-rgb));
-  --green-rgb: 0, 94, 32;
+  --green-rgb: 0, 130, 65;
   --green: rgb(var(--green-rgb));
   --tan-rgb: 234, 220, 188;
   --tan: rgb(var(--tan-rgb));
@@ -5586,6 +5584,10 @@ ul.tabbar li > a {
   justify-content: flex-start;
   flex-grow: 1;
   transition: all 0.1s linear;
+  text-decoration: none;
+}
+ul.tabbar li > a:link {
+  text-decoration: none;
 }
 ul.tabbar li > a:active, ul.tabbar li > a:focus {
   color: var(--colors-text-hot);
@@ -5603,6 +5605,7 @@ ul.tabbar li > a:focus {
     color: var(--colors-text-hot);
     background-color: var(--colors-affordance);
     text-shadow: var(--text-shadow);
+    text-decoration: underline double;
     filter: none;
   }
 }
@@ -7180,6 +7183,143 @@ div.filter-configurator div.filter-actions {
 }
 div.filter-configurator div.filter-actions button:first-child {
   margin-left: 0;
+}
+
+div.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  align-content: stretch;
+}
+div.chart-container > div.topbar {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+div.chart-container > div.topbar > label {
+  margin: 0;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+div.chart-container > div.c {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+div.chart-container > div.c > div.yaxis {
+  flex-grow: 0;
+  width: 1.5rem;
+  display: block;
+  position: relative;
+}
+div.chart-container > div.c > div.yaxis > label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  transform: rotate(90deg);
+  transform-origin: bottom left;
+  white-space: nowrap;
+}
+div.chart-container > div.c > svg {
+  flex-grow: 2;
+}
+div.chart-container > div.xaxis {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+div.chart-container > div.xaxis > label {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+div.chart-container svg .bar {
+  fill: var(--chart-bar-fillcolor);
+  transition: fill 0.2s;
+}
+@media (hover: hover) and (pointer: fine) {
+  div.chart-container svg .bar:hover {
+    fill: var(--chart-bar-overcolor);
+  }
+}
+div.chart-container svg .axis--x path {
+  display: none;
+}
+div.chart-container svg .axis line {
+  stroke: var(--grey-dark);
+  stroke-width: 0.5;
+  shape-rendering: crispEdges;
+}
+div.chart-container svg .axis path {
+  stroke: var(--grey-dark);
+  stroke-width: 0.7;
+  shape-rendering: crispEdges;
+}
+div.chart-container svg .axis text {
+  fill: var(--grey-darker);
+  font-family: Georgia;
+  font-family: var(--default-font-family);
+  text-transform: uppercase;
+  font-size: 120%;
+}
+div.chart-container svg path.chart-line {
+  fill: none;
+  stroke: var(--red);
+  stroke-dasharray: 6;
+  stroke-width: 2;
+}
+div.chart-container svg path.chart-line.line-0 {
+  fill: none;
+  stroke: var(--red);
+}
+div.chart-container svg path.chart-line.line-1 {
+  fill: none;
+  stroke: var(--red);
+  stroke-dasharray: 2;
+}
+div.chart-container svg path.chart-line.line-2 {
+  fill: none;
+  stroke: var(--red);
+  stroke-dasharray: 6;
+}
+div.chart-container svg circle.point {
+  stroke: none;
+  fill: var(--grey-dark);
+}
+div.chart-container svg circle.pointhover {
+  fill: var(--colors-focus);
+}
+
+div.d3tooltip {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+  font-size: 1.5rem;
+  animation: cfb-fadein 0.5s;
+  opacity: 1;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.7rem;
+  overflow: visible;
+  z-index: 21000;
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
+  filter: var(--shadows-dropshadow-filter);
 }
 
 /*# sourceMappingURL=cornflowerblue-sandbox.css.map */

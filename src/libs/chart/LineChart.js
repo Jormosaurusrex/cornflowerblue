@@ -36,27 +36,16 @@ class LineChart extends Chart {
         }));
 
         xScale.domain(d3.extent(this.data, (d) =>{
-            //console.log(d.date);
-            //console.log(timeConv(d.date));
-            console.log(d);
             return d.date;
-            return timeConv(d.date)
         }));
-
-
-        //console.log(this.data);
 
         const yaxis = d3.axisLeft()
             .ticks(this.data.length)
             .scale(yScale);
 
-        //const xaxis = d3.axisBottom().scale(xScale);
-
         const xaxis = d3.axisBottom()
             .ticks(this.data.length)
-            //.tickFormat(d3.timeFormat('%b %d'))
             .scale(xScale);
-
 
         const line = d3.line()
             .x((d) => {
@@ -76,7 +65,6 @@ class LineChart extends Chart {
             .style("text-anchor", "end")
             .text("Total Session Count");
 
-
         this.d3svg.append("g")
             .attr("class", "axis")
             .attr("transform", `translate(0, ${this.height})`)
@@ -87,14 +75,73 @@ class LineChart extends Chart {
             .enter()
             .append("g");
 
-
         lines.append("path")
             .attr("class", "chart-line")
             .attr("d", (d) => {
-                //lines.append("path")
-                //     .attr("d", function(d) { return line(d.values); });
-                console.log(d);
                 return line(d);
+            });
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "d3tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute");
+
+        lines.selectAll("points")
+            .data((d) => {
+                return d;
+            })
+            .enter()
+            .append("circle")
+            .attr("class", "pointmarker")
+            .attr("cx", (d) => {
+                return xScale(d.date);
+            })
+            .attr("cy", (d) => {
+                return yScale(d.value);
+            })
+            .attr("r", 3)
+            .attr("class","point")
+            .style("opacity", 1);
+
+        lines.selectAll("circles")
+            .data((d) => { return(d); } )
+            .enter()
+            .append("circle")
+            .attr("class", "pointhover")
+            .attr("cx", (d) => { return xScale(d.date); })
+            .attr("cy", (d) => { return yScale(d.value); })
+            .attr('r', 10)
+            .style("opacity", 0)
+            .on('mouseover', function (e, d) { // can't use inline this syntax
+                tooltip.transition()
+                    .delay(30)
+                    .duration(200)
+                    .style("opacity", 1);
+                tooltip.html(d.value)
+                    .style("left", (e.pageX + 25) + "px")
+                    .style("top", (e.pageY) + "px");
+                //add this
+                const selection = d3.select(this).raise();
+                selection
+                    .transition()
+                    .delay("20")
+                    .duration("200")
+                    .style("opacity", 1);
+
+            })
+            .on("mouseout", function (e) {
+                tooltip.transition()
+                    .duration(100)
+                    .style("opacity", 0);
+
+                const selection = d3.select(this);
+
+                selection
+                    .transition()
+                    .delay("20")
+                    .duration("200")
+                    .attr("r", 10)
+                    .style("opacity", 0);
             });
 
     }

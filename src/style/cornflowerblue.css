@@ -7,9 +7,7 @@
   top: -9999px;
 }
 
-/*
-  We want to use variables so that they can be re-themed
- */
+/* We want to use variables so that they can be re-themed */
 :root {
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
@@ -156,11 +154,11 @@
   --red: rgb(var(--red-rgb));
   --pink-rgb: 230, 100, 160;
   --pink: rgb(var(--pink-rgb));
-  --orange-rgb: 255, 153, 0;
+  --orange-rgb: 255, 150, 0;
   --orange: rgb(var(--orange-rgb));
-  --yellow-rgb: 255, 221, 27;
+  --yellow-rgb: 250, 220, 30;
   --yellow: rgb(var(--yellow-rgb));
-  --green-rgb: 0, 94, 32;
+  --green-rgb: 0, 130, 65;
   --green: rgb(var(--green-rgb));
   --tan-rgb: 234, 220, 188;
   --tan: rgb(var(--tan-rgb));
@@ -5991,6 +5989,10 @@ ul.tabbar li > a {
   justify-content: flex-start;
   flex-grow: 1;
   transition: all 0.1s linear;
+  text-decoration: none;
+}
+ul.tabbar li > a:link {
+  text-decoration: none;
 }
 ul.tabbar li > a:active, ul.tabbar li > a:focus {
   color: var(--colors-text-hot);
@@ -6008,6 +6010,7 @@ ul.tabbar li > a:focus {
     color: var(--colors-text-hot);
     background-color: var(--colors-affordance);
     text-shadow: var(--text-shadow);
+    text-decoration: underline double;
     filter: none;
   }
 }
@@ -7756,6 +7759,7 @@ div.chart-container svg path.chart-line {
   fill: none;
   stroke: var(--red);
   stroke-dasharray: 6;
+  stroke-width: 2;
 }
 div.chart-container svg path.chart-line.line-0 {
   fill: none;
@@ -7770,6 +7774,39 @@ div.chart-container svg path.chart-line.line-2 {
   fill: none;
   stroke: var(--red);
   stroke-dasharray: 6;
+}
+div.chart-container svg circle.point {
+  stroke: none;
+  fill: var(--grey-dark);
+}
+div.chart-container svg circle.pointhover {
+  fill: var(--colors-focus);
+}
+
+div.d3tooltip {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+  font-size: 1.5rem;
+  animation: cfb-fadein 0.5s;
+  opacity: 1;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.7rem;
+  overflow: visible;
+  z-index: 21000;
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
+  filter: var(--shadows-dropshadow-filter);
 }
 
 /*# sourceMappingURL=cornflowerblue.css.map */
