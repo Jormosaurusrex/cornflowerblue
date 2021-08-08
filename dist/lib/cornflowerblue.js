@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-07-30
+/*! Cornflower Blue - v0.1.1 - 2021-08-06
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -4961,6 +4961,9 @@ class DataGrid extends Panel {
             showfooter: true,
             itemslabel: TextFactory.get('items_label'),
             screen: document.body,
+            onpostprocess: (self) => {
+
+            },
             warehouse: null, // A BusinessObject singleton.  If present,
                              // the grid will ignore any values in fields, data, and source
                              // and will instead pull all information from the warehouse
@@ -5836,6 +5839,9 @@ class DataGrid extends Panel {
      *    - Grinds duplicate cells
      */
     postProcess() {
+        if ((this.onpostprocess) && (typeof this.onpostprocess === 'function')) {
+            this.onpostprocess(this);
+        }
         this.updateCount();
         if (this.state) {
             this.sortField(this.state.sort.field, this.state.sort.direction);
@@ -7340,6 +7346,14 @@ class DataGrid extends Panel {
     get nodeselectself() { return this.config.nodeselectself; }
     set nodeselectself(nodeselectself) { this.config.nodeselectself = nodeselectself; }
 
+    get onpostprocess() { return this.config.onpostprocess; }
+    set onpostprocess(onpostprocess) {
+        if (typeof onpostprocess !== 'function') {
+            console.error("Value provided to onpostprocess is not a function!");
+        }
+        this.config.onpostprocess = onpostprocess;
+    }
+
     get passiveeditinstructions() { return this.config.passiveeditinstructions; }
     set passiveeditinstructions(passiveeditinstructions) { this.config.passiveeditinstructions = passiveeditinstructions; }
 
@@ -7482,19 +7496,23 @@ class DataList extends DataGrid {
     get displaytype() { return 'datalist'; }
     get gridwrapper() { return this.datalist; }
     get gridbody() { return this.datalist; }
+    get multiselecting() { return this.multiselect; }
+
 
     finalize() {
         this.shade.activate();
     }
 
-    fillData() {
+    fillData(callback) {
         this.activity(true);
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
                 this.postLoad();
-                //this.shade.deactivate();
                 this.activity(false);
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
             });
         } else if (this.source) {
             this.fetchData(this.source, (data) => {
@@ -7502,10 +7520,16 @@ class DataList extends DataGrid {
                 this.postLoad();
                 this.shade.deactivate();
                 this.activity(false);
+                if ((callback) && (typeof callback === 'function')) {
+                    callback();
+                }
             });
         } else if (this.data) {
             this.populate();
             this.activity(false);
+            if ((callback) && (typeof callback === 'function')) {
+                callback();
+            }
         }
     }
 
@@ -7616,71 +7640,81 @@ class DataList extends DataGrid {
                 li.setAttribute('data-id', item['id']);
             }
 
-            if ((this.click) && (typeof this.click === 'function')) {
-                li.classList.add('clickable');
-                li.setAttribute('tabindex', '0');
-                li.addEventListener('click', (e) => {
-                    if (this.selectable) {
-                        this.select(li, e, item);
-                    }
-                    if ((this.click) && (typeof this.click === 'function')) {
-                        this.click(item, this, e);
-                    }
-                });
-            } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
-                li.classList.add('clickable');
-                li.setAttribute('tabindex', '0');
-                li.addEventListener('click', (e) => {
-                    this.select(li, e, item);
-                    li.setAttribute('aria-selected', 'true');
-                    if ((this.selectaction) && (typeof this.selectaction === 'function')) {
-                        this.selectaction(this, li, rdata);
-                    }
-                });
-            }
-
-            if ((this.mouseover) && (typeof this.mouseover === 'function')) {
-                li.addEventListener('mouseover', (e) => {
-                    if ((this.mouseover) && (typeof this.mouseover === 'function')) {
-                        this.mouseover(item, this, e);
-                    }
-                });
-            }
-
-            if ((this.mouseout) && (typeof this.mouseout === 'function')) {
-                li.addEventListener('mouseout', (e) => {
-                    if ((this.mouseout) && (typeof this.mouseout === 'function')) {
-                        this.mouseout(item, this, e);
-                    }
-                });
-            }
-
-            li.addEventListener('keyup', (e) => {
-                switch (e.key) {
-                    case 'Escape':
-                        this.close();
-                        break;
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        let p = this.datalist.querySelector(`[data-order='${previous}']`);
-                        if (p) { p.focus(); }
-                        break;
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        let n = this.datalist.querySelector(`[data-order='${next}']`);
-                        if (n) { n.focus(); }
-                        break;
-                    case 'Enter': // Enter
-                    case ' ': // Space
-                        li.click(); // click the one inside
-                        break;
-                }
-            });
+            this.elementProcess(li, item);
 
             this.datalist.appendChild(li);
             order++;
         }
         this.postProcess();
+    }
+
+    elementProcess(li, item) {
+        if ((this.click) && (typeof this.click === 'function')) {
+            li.classList.add('clickable');
+            li.setAttribute('tabindex', '0');
+            li.addEventListener('click', (e) => {
+                if (this.selectable) {
+                    this.select(li, e, item);
+                }
+                if ((this.click) && (typeof this.click === 'function')) {
+                    this.click(item, this, e);
+                }
+            });
+        } else if ((this.selectable) && (this.selectaction) && (typeof this.selectaction === 'function')) {
+            li.classList.add('clickable');
+            li.setAttribute('tabindex', '0');
+            li.addEventListener('click', (e) => {
+                this.select(li, e, item);
+                //li.setAttribute('aria-selected', 'true');
+                if (li.getAttribute('aria-selected') === 'true') {
+                    if ((this.selectaction) && (typeof this.selectaction === 'function')) {
+                        this.selectaction(this, li, item);
+                    }
+                } else {
+                    if ((this.deselectaction) && (typeof this.deselectaction === 'function')) {
+                        this.deselectaction(this, li, item);
+                    }
+                }
+            });
+        }
+
+        if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+            li.addEventListener('mouseover', (e) => {
+                if ((this.mouseover) && (typeof this.mouseover === 'function')) {
+                    this.mouseover(item, this, e);
+                }
+            });
+        }
+
+        if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+            li.addEventListener('mouseout', (e) => {
+                if ((this.mouseout) && (typeof this.mouseout === 'function')) {
+                    this.mouseout(item, this, e);
+                }
+            });
+        }
+
+        li.addEventListener('keyup', (e) => {
+            switch (e.key) {
+                case 'Escape':
+                    this.close();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    let p = this.datalist.querySelector(`[data-order='${previous}']`);
+                    if (p) { p.focus(); }
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    let n = this.datalist.querySelector(`[data-order='${next}']`);
+                    if (n) { n.focus(); }
+                    break;
+                case 'Enter': // Enter
+                case ' ': // Space
+                    li.click(); // click the one inside
+                    break;
+            }
+        });
     }
 
     sortOn(listelements, column='name', direction = 'asc') {
@@ -7749,10 +7783,14 @@ class DataList extends DataGrid {
 
     postProcess() {
         // nothing.
+        if ((this.onpostprocess) && (typeof this.onpostprocess === 'function')) {
+            this.onpostprocess(this);
+        }
         this.updateCount();
         if ((this.showinfo) && (this.searchable)) {
             this.search(this.searchcontrol.value);
         }
+
     }
     applyFilters() { }
 
@@ -15720,3 +15758,465 @@ class TimezoneMenu extends SelectMenu {
     }
 }
 window.TimezoneMenu = TimezoneMenu;
+class Chart {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            id: null,
+            classes: [],
+            label: null,
+            source: null,
+            width: 500,
+            height: 500,
+            data: [],
+            svgId: null,
+            sourcetype: "application/json",
+            sourcemethod: 'GET',
+            charttype: 'bar',
+            help: null
+        };
+    }
+
+    constructor(config) {
+        this.config = Object.assign({}, Chart.DEFAULT_CONFIG, config);
+        if (!this.id) { this.id = `chart-${CFBUtils.getUniqueKey(5)}`; }
+        if (!this.svgId) { this.svgId = `chart-${this.charttype}-${CFBUtils.getUniqueKey(5)}`; }
+    }
+
+    get sourcebody() {
+        if (this.sourcemethod.toLowerCase() === 'get') { return null; }
+        return JSON.stringify({
+            id: this.id
+        })
+    }
+
+    /* CORE METHODS_____________________________________________________________________ */
+
+    compile() {
+        // This is mostly to create data portability
+        this.d3svg = d3.select(`svg#${this.svgId}`);
+
+        this.d3margin = {top: 20, right: 20, bottom: 30, left: 40};
+
+        this.d3width = + this.d3svg.attr("width") - this.d3margin.left - this.d3margin.right;
+        this.d3height = + this.d3svg.attr("height") - this.d3margin.top - this.d3margin.bottom;
+
+        this.d3x = d3.scaleBand().rangeRound([0, this.d3width]).padding(0.1);
+        this.d3y = d3.scaleLinear().rangeRound([this.d3height, 0]);
+        this.d3g = this.d3svg.append("g");
+
+        this.d3g.attr("transform", `translate(${this.d3margin.left}, ${this.d3margin.top})`);
+
+        this.chart();
+
+    }
+
+    chart() {
+        this.d3x.domain(this.data.map((d) => { return d[this.xaxiskey]; }));
+        this.d3y.domain([0, d3.max(this.data, (d) => { return d[this.yaxiskey]; })]);
+
+        this.d3g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", `translate(0, ${this.d3height})`)
+            .call(d3.axisBottom(this.d3x));
+
+        this.d3g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(this.d3y).ticks(10, "%"))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+            .attr("text-anchor", "end")
+            .text("Frequency");
+
+        this.d3g.selectAll(".bar")
+            .data(this.data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", (d) => { return this.d3x(d[this.xaxiskey]); })
+            .attr("y", (d) => { return this.d3y(d[this.yaxiskey]); })
+            .attr("width", this.d3x.bandwidth())
+            .attr("height", (d) => { return this.d3height - this.d3y(d[this.yaxiskey]); });
+    }
+
+    load(callback) {
+        fetch(this.source, {
+            method: this.sourcemethod,
+            headers: { 'Content-Type': this.sourcetype },
+            body: this.sourcebody
+        })
+            .then(response => response.json())
+            .then(data => {
+                if ((callback) && (typeof callback === 'function')) {
+                    callback(data);
+                }
+            })
+            .catch(error => {
+                console.error(error)
+            });
+    }
+
+    /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    /**
+     * Builds the container
+     */
+    buildContainer() {
+
+        this.container = document.createElement('div');
+        this.container.classList.add('chart-container');
+
+
+        /*
+            These are constructed in rows; the middle row will hold many things.
+            These rows aren't needed to be captured; they are variable in size.
+            only centerdiv is guaranteed
+         */
+        let centerdiv = document.createElement('div');
+        centerdiv.classList.add('c');
+
+        if (this.label) {
+            this.container.innerHTML = `<div class="toprow"><label>${this.label}</label></label>`;
+        }
+
+        if (this.yaxislabel) {
+            let yaxisdiv = document.createElement('div');
+            yaxisdiv.classList.add('yaxis');
+            yaxisdiv.innerHTML = `<label>${this.yaxislabel}</label>`;
+            centerdiv.appendChild(yaxisdiv);
+        }
+
+        centerdiv.appendChild(this.svg);
+        this.container.appendChild(centerdiv);
+
+        if (this.xaxislabel) {
+            let xaxisdiv = document.createElement('div');
+            xaxisdiv.classList.add('xaxis');
+            xaxisdiv.innerHTML = `<label>${this.xaxislabel}</label>`;
+            this.container.appendChild(xaxisdiv);
+        }
+
+        window.setTimeout(() => {
+            if ((this.data) && (this.data.length > 0)) {
+                this.compile();
+            } else if (this.source) {
+                this.load((results) => {
+                    console.log('done loading');
+                    if (results.data) {
+                        this.data = results.data;
+                    }
+                    this.compile();
+                });
+            }
+        }, 200);
+
+    }
+
+    buildSVG() {
+        //this.svg = document.createElement('svg');
+        this.svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+
+        //this.svg.classList.add('chart', this.charttype);
+        this.svg.setAttribute('id', this.svgId);
+        this.svg.setAttribute('width', this.width);
+        this.svg.setAttribute('height', this.height);
+        this.svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}` );
+        this.svg.setAttribute('preserveAspectRatio','xMinYMin');
+    }
+
+    /**
+     * Builds the label
+     */
+    buildLabel() {
+        if (!this.label) { return null; }
+        this.labelobj = document.createElement('label');
+        this.labelobj.setAttribute('for', this.id);
+        this.labelobj.innerHTML = this.label;
+
+        if (this.help) {
+            this.helpicon = new HelpButton({ help: this.help });
+            this.labelobj.appendChild(this.helpicon.button);
+            this.labelobj.addEventListener('onmouseover', () => {
+                this.helpicon.open();
+            });
+            this.labelobj.addEventListener('onmouseout', () => {
+                this.helpicon.close();
+            });
+        }
+    }
+
+    /* UTILITY METHODS__________________________________________________________________ */
+
+    /**
+     * Dump this object as a string.
+     * @returns {string}
+     */
+    toString () { return CFBUtils.getConfig(this); }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get charttype() { return this.config.charttype; }
+    set charttype(charttype) { this.config.charttype = charttype; }
+
+    get classes() { return this.config.classes; }
+    set classes(classes) { this.config.classes = classes; }
+
+    get container() {
+        if (!this._container) { this.buildContainer(); }
+        return this._container;
+    }
+    set container(container) { this._container = container; }
+
+    get d3g() { return this._d3g; }
+    set d3g(d3g) { this._d3g = d3g; }
+
+    get d3height() { return this._d3height; }
+    set d3height(d3height) { this._d3height = d3height; }
+
+    get d3margin() { return this._d3margin; }
+    set d3margin(d3margin) { this._d3margin = d3margin; }
+
+    get d3svg() { return this._d3svg; }
+    set d3svg(d3svg) { this._d3svg = d3svg; }
+
+    get d3width() { return this._d3width; }
+    set d3width(d3width) { this._d3width = d3width; }
+
+    get d3x() { return this._d3x; }
+    set d3x(d3x) { this._d3x = d3x; }
+
+    get d3y() { return this._d3y; }
+    set d3y(d3y) { this._d3y = d3y; }
+
+    get data() { return this.config.data; }
+    set data(data) { this.config.data; }
+
+    get height() { return this.config.height; }
+    set height(height) { this.config.height = height; }
+
+    get help() { return this.config.help; }
+    set help(help) { this.config.help = help; }
+
+    get helpicon() { return this._helpicon; }
+    set helpicon(helpicon) { this._helpicon = helpicon; }
+
+    get id() { return this.config.id; }
+    set id(id) { this.config.id = id; }
+
+    get label() { return this.config.label; }
+    set label(label) { this.config.label = label; }
+
+    get labelobj() {
+        if (!this._labelobj) { this.buildLabel(); }
+        return this._labelobj;
+    }
+    set labelobj(labelobj) { this._labelobj = labelobj; }
+
+    get source() { return this.config.source; }
+    set source(source) { this.config.source = source; }
+
+    get sourcemethod() { return this.config.sourcemethod; }
+    set sourcemethod(sourcemethod) { this.config.sourcemethod = sourcemethod; }
+
+    get sourcetype() { return this.config.sourcetype; }
+    set sourcetype(sourcetype) { this.config.sourcetype = sourcetype; }
+
+    get svg() {
+        if (!this._svg) { this.buildSVG(); }
+        return this._svg;
+    }
+    set svg(svg) { this._svg = svg; }
+
+    get svgId() { return this.config.svgId; }
+    set svgId(svgId) { this.config.svgId = svgId; }
+
+    get width() { return this.config.width; }
+    set width(width) { this.config.width = width; }
+
+    get xaxiskey() { return this.config.xaxiskey; }
+    set xaxiskey(xaxiskey) { this.config.xaxiskey = xaxiskey; }
+
+    get xaxislabel() { return this.config.xaxislabel; }
+    set xaxislabel(xaxislabel) { this.config.xaxislabel = xaxislabel; }
+
+    get yaxiskey() { return this.config.yaxiskey; }
+    set yaxiskey(yaxiskey) { this.config.yaxiskey = yaxiskey; }
+
+    get yaxislabel() { return this.config.yaxislabel; }
+    set yaxislabel(yaxislabel) { this.config.yaxislabel = yaxislabel; }
+
+}
+window.Chart = Chart;
+
+class BarChart extends Chart {
+
+    static get DEFAULT_CONFIG() {
+        return {
+            classes: ["barchart"]
+        };
+    }
+    constructor(config) {
+        config = Object.assign({}, BarChart.DEFAULT_CONFIG, config);
+        super(config);
+    }
+}
+window.BarChart = BarChart;
+
+class LineChart extends Chart {
+    static get DEFAULT_CONFIG() {
+        return {
+            classes: ["linechart"]
+        };
+    }
+    constructor(config) {
+        config = Object.assign({}, LineChart.DEFAULT_CONFIG, config);
+        super(config);
+    }
+
+    compile() {
+        let adj = 30;
+
+        this.svg.setAttribute("viewBox", `-${(adj * 2)} -${adj} ${(this.width + (adj * 3))} ${(this.height + (adj * 3))}`);
+
+        this.d3svg = d3.select(`svg#${this.svgId}`)
+            .style("padding", 0)
+            .style("margin", 0);
+
+        const timeConv = d3.timeFormat("%d-%b");
+        const timeFormat = d3.timeFormat("%d-%b-%Y");
+        //const dataset = d3.csv("data.csv");
+
+
+        for (let d of this.data) {
+            d.date = new Date(d.date);
+        }
+
+        // XXX if time/number
+        const yScale = d3.scaleLinear().rangeRound([this.height, 0]);
+        const xScale = d3.scaleTime().range([0, this.width]);
+
+        yScale.domain(d3.extent(this.data, (d) =>{
+            return d.value
+        }));
+
+        xScale.domain(d3.extent(this.data, (d) =>{
+            //console.log(d.date);
+            //console.log(timeConv(d.date));
+            return d.date;
+        }));
+
+        const yaxis = d3.axisLeft()
+            .ticks(this.data.length)
+            .scale(yScale);
+
+        const xaxis = d3.axisBottom()
+            .ticks(this.data.length)
+            .scale(xScale);
+
+        const line = d3.line()
+            .x((d) => {
+                return xScale(d.date);
+            })
+            .y((d) => {
+                return yScale(d.value);
+            });
+
+        this.d3svg.append("g")
+            .attr("class", "axis")
+            .call(yaxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("dy", ".75em")
+            .attr("y", 6)
+            .style("text-anchor", "end")
+            .text("Total Session Count");
+
+        this.d3svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", `translate(0, ${this.height})`)
+            .call(xaxis);
+
+        const lines = this.d3svg.selectAll("lines")
+            .data([this.data])
+            .enter()
+            .append("g");
+
+        lines.append("path")
+            .attr("class", "chart-line")
+            .attr("d", (d) => {
+                return line(d);
+            });
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "d3tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute");
+
+        lines.selectAll("points")
+            .data((d) => {
+                return d;
+            })
+            .enter()
+            .append("circle")
+            .attr("class", "pointmarker")
+            .attr("cx", (d) => {
+                return xScale(d.date);
+            })
+            .attr("cy", (d) => {
+                return yScale(d.value);
+            })
+            .attr("r", 3)
+            .attr("class","point")
+            .style("opacity", 1);
+
+        lines.selectAll("circles")
+            .data((d) => { return(d); } )
+            .enter()
+            .append("circle")
+            .attr("class", "pointhover")
+            .attr("cx", (d) => { return xScale(d.date); })
+            .attr("cy", (d) => { return yScale(d.value); })
+            .attr('r', 10)
+            .style("opacity", 0)
+            .on('mouseover', function (e, d) { // can't use inline this syntax
+                tooltip.transition()
+                    .delay(30)
+                    .duration(200)
+                    .style("opacity", 1);
+                tooltip.html(d.value)
+                    .style("left", (e.pageX + 25) + "px")
+                    .style("top", (e.pageY) + "px");
+                //add this
+                const selection = d3.select(this).raise();
+                selection
+                    .transition()
+                    .delay("20")
+                    .duration("200")
+                    .style("opacity", 1);
+
+            })
+            .on("mouseout", function (e) {
+                tooltip.transition()
+                    .duration(100)
+                    .style("opacity", 0);
+
+                const selection = d3.select(this);
+
+                selection
+                    .transition()
+                    .delay("20")
+                    .duration("200")
+                    .attr("r", 10)
+                    .style("opacity", 0);
+            });
+
+
+
+    }
+    /* ACCESSOR METHODS_________________________________________________________________ */
+
+    get dataset() { return this._dataset; }
+    set dataset(dataset) { this._dataset = dataset; }
+}
+window.LineChart = LineChart;

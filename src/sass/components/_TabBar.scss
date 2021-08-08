@@ -28,7 +28,7 @@ ul.tabbar {
         display: flex;
       }
     }
-    > a {
+    >a {
       padding: 0 1rem 0 1rem;
       white-space: nowrap;
       color: var(--colors-affordance);
@@ -41,6 +41,10 @@ ul.tabbar {
       justify-content: flex-start;
       flex-grow: 1;
       transition: all .1s linear;
+      text-decoration: none;
+      &:link {
+        text-decoration: none;
+      }
       &:active,
       &:focus {
         color: var(--colors-text-hot);
@@ -58,6 +62,7 @@ ul.tabbar {
           color: var(--colors-text-hot);
           background-color: var(--colors-affordance);
           text-shadow: var(--text-shadow);
+          text-decoration: underline double;
           filter: none;
         }
       }

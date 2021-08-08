@@ -84,6 +84,9 @@ module.exports = function(grunt) {
                     'src/libs/inputs/menu/StateMenu.js',
                     'src/libs/inputs/menu/TimezoneMenu.js',
 
+                    'src/libs/chart/Chart.js',
+                    'src/libs/chart/BarChart.js',
+                    'src/libs/chart/LineChart.js',
 
                     'src/libs/charts/Chart.js',
                     'src/libs/charts/LineChart.js',
