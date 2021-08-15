@@ -971,9 +971,9 @@ div.selectmenu-menu ul.selectmenu {
   flex-direction: column;
   flex-wrap: nowrap;
   background-color: var(--canvas-color-primary);
-  border: 0.1em solid var(--input-border-color);
+  box-shadow: inset 0 0 0 0.05rem rgb(var(--input-border-color-rgb));
+  filter: var(--shadows-dropshadow-filter);
   border-top: none;
-  box-shadow: var(--dialog-box-shadow);
   padding: 0;
   overflow: auto;
   max-height: 10rem;
@@ -990,7 +990,7 @@ div.selectmenu-menu ul.selectmenu li {
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  margin: 0;
+  margin: 0 0.05rem;
   white-space: nowrap;
   padding: var(--input-default-padding);
   cursor: pointer;
@@ -1280,6 +1280,32 @@ div.tooltip.east:before {
   top: 0.5rem;
   border-color: transparent var(--canvas-color-highlight);
   border-width: 0.5rem 0.5rem 0.5rem 0;
+}
+
+div.d3tooltip {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+  font-size: 1.5rem;
+  animation: cfb-fadein 0.5s;
+  opacity: 1;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.7rem;
+  overflow: visible;
+  z-index: 21000;
+  border-radius: var(--border-radius);
+  background-color: var(--canvas-color-highlight);
+  color: var(--colors-standard);
+  text-shadow: var(--text-shadow);
+  filter: var(--shadows-dropshadow-filter);
 }
 
 /*# sourceMappingURL=cornflowerblue-bodylevel.css.map */

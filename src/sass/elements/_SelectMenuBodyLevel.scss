@@ -14,9 +14,9 @@ div.selectmenu-menu {
     flex-direction: column;
     flex-wrap: nowrap;
     background-color: var(--canvas-color-primary);
-    border: .1em solid var(--input-border-color);
+    box-shadow: inset 0 0 0 .05rem rgb(var(--input-border-color-rgb));
+    filter: var(--shadows-dropshadow-filter);
     border-top: none;
-    box-shadow: var(--dialog-box-shadow);
     padding: 0;
     overflow: auto;
     max-height: 10rem;
@@ -32,7 +32,7 @@ div.selectmenu-menu {
       justify-content: flex-start;
       align-items: center;
       align-content: center;
-      margin: 0;
+      margin: 0 .05rem;
       white-space: nowrap;
       padding: var(--input-default-padding);
       cursor: pointer;

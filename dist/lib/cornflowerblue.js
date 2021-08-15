@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-08-06
+/*! Cornflower Blue - v0.1.1 - 2021-08-11
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2238,6 +2238,7 @@ class TextFactory {
                 "offset": "Offset",
                 "code": "Code",
                 "alternate_names": "Alternate names",
+                "interpolation_text" : "Copy of $1",
                 "plural_test" : "It's $1 {{plural:$1|meter|meters}} down."
             }
         };
@@ -2253,7 +2254,6 @@ class TextFactory {
         if (arguments.length > 1) {
             let t = TextFactory.library[arguments[0]];
             if (t) {
-                //"plural_test" : "It's {{plural:$1|meter|meters}} down."
                 for (let m of t.matchAll(/\{\{plural:(.*?)\|(.*?)\|(.*?)\}\}/g)) {
                     let nt = t;
                     try { // wrap entire thing
@@ -2278,7 +2278,7 @@ class TextFactory {
                         console.error(e);
                     }
                 }
-                for (let arg = 1; arg <= arguments.length; arg++) {
+                for (let arg = 1; arg < arguments.length; arg++) {
                     t = t.replace(`$${arg}`, arguments[arg]);
                 }
                 return t;
@@ -16101,8 +16101,6 @@ class LineChart extends Chart {
         }));
 
         xScale.domain(d3.extent(this.data, (d) =>{
-            //console.log(d.date);
-            //console.log(timeConv(d.date));
             return d.date;
         }));
 
@@ -16210,8 +16208,6 @@ class LineChart extends Chart {
                     .attr("r", 10)
                     .style("opacity", 0);
             });
-
-
 
     }
     /* ACCESSOR METHODS_________________________________________________________________ */

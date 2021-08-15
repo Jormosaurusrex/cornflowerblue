@@ -260,6 +260,11 @@ class InputElement {
      */
     showMessages() {
         this.messagebox.innerHTML = "";
+        if ((this.errors.length === 0) && (this.warnings.length === 0)) {
+            this.container.classList.remove('error');
+            this.container.classList.remove('warning');
+            this.messagebox.setAttribute('aria-hidden', 'true');
+        }
         for (let error of this.errors) {
             this.addError(error);
         }

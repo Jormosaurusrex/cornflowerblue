@@ -8,6 +8,7 @@ class DataGrid extends Panel {
                 column: 'name',
                 direction: 'asc'
             },
+            fetchbody: null,
             nodeselectself: true,
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
@@ -931,16 +932,15 @@ class DataGrid extends Panel {
         if (this.activitynotifier) {
             this.activitynotifier.removeAttribute('aria-hidden');
         }
-        fetch(url, {
+        let config = {
             method: this.sourcemethod,
-            /*
-                XXX TO DO NEED TO ALLOW FOR
-                body:
-                headers:
-
-             */
             headers: { "Content-Type": "application/json; charset=utf-8" }
-        })
+        }
+        if (this.fetchbody) {
+            config.body = this.fetchbody;
+        }
+
+        fetch(url, config)
             .then(response => response.json()) // response -> json
             .then(data => { // do the thing.
                 // Expects data in json format like this:
@@ -2146,6 +2146,9 @@ class DataGrid extends Panel {
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
 
+    get activitynotifier() { return this._activitynotifier; }
+    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
+
     get activitynotifiericon() { return this.config.activitynotifiericon; }
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
 
@@ -2154,6 +2157,9 @@ class DataGrid extends Panel {
 
     get allowedits() { return this.config.allowedits; }
     set allowedits(allowedits) { this.config.allowedits = allowedits; }
+
+    get fetchbody() { return this.config.fetchbody; }
+    set fetchbody(fetchbody) { this.config.fetchbody = fetchbody; }
 
     get columnconfigurable() { return this.config.columnconfigurable; }
     set columnconfigurable(columnconfigurable) { this.config.columnconfigurable = columnconfigurable; }

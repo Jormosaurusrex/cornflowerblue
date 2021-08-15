@@ -4408,22 +4408,22 @@ div.select-container div.wrap input.trigger.mute::placeholder, div.select-contai
 div.select-container div.wrap:before {
   cursor: pointer;
 }
-div.select-container div.wrap[aria-expanded=true] input.trigger, div.select-container div.wrap:focus-within input.trigger {
+div.select-container[aria-expanded=true] input.trigger, div.select-container:focus-within input.trigger {
   --input-border-color-rgb: var(--colors-affordance-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
-  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0 0 0 0.05rem rgb(var(--input-border-color-rgb));
   color: rgba(var(--colors-standard-rgb), 0.5);
 }
-div.select-container div.wrap[aria-expanded=true]:before {
+div.select-container[aria-expanded=true]:before {
   transform: rotate(180deg);
 }
 div.select-container.mute label {
   opacity: 1;
 }
-div.select-container.mute div.wrap[aria-expanded=true] input.trigger, div.select-container.mute div.wrap:focus-within input.trigger {
+div.select-container.mute[aria-expanded=true] div.wrap input.trigger {
   --input-border-color-rgb: var(--colors-affordance-rgb);
   background-color: rgba(var(--input-border-color-rgb), 0.05);
-  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0 0 0 0.05rem rgb(var(--input-border-color-rgb));
 }
 div.select-container.imageselector-container > div.passivebox > img {
   width: 100%;
@@ -7294,32 +7294,6 @@ div.chart-container svg circle.point {
 }
 div.chart-container svg circle.pointhover {
   fill: var(--colors-focus);
-}
-
-div.d3tooltip {
-  font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
-  font-size: 1.5rem;
-  animation: cfb-fadein 0.5s;
-  opacity: 1;
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-start;
-  align-content: center;
-  list-style-type: none;
-  margin: 0;
-  padding: 0.5rem 0.75rem;
-  min-height: 2.7rem;
-  overflow: visible;
-  z-index: 21000;
-  border-radius: var(--border-radius);
-  background-color: var(--canvas-color-highlight);
-  color: var(--colors-standard);
-  text-shadow: var(--text-shadow);
-  filter: var(--shadows-dropshadow-filter);
 }
 
 /*# sourceMappingURL=cornflowerblue-sandbox.css.map */

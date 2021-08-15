@@ -14,19 +14,19 @@ div.select-container {
     &:before {
       cursor: pointer;
     }
-    &[aria-expanded="true"],
-    &:focus-within {
-      input.trigger {
-        --input-border-color-rgb: var(--colors-affordance-rgb);
-        --input-border-color: rgb(var(--input-border-color-rgb));
-        box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset .1em -.1em 0 0 rgb(var(--input-border-color-rgb)), inset -.1em .1em 0 0 rgb(var(--input-border-color-rgb)), inset .1em .1em 0 0 rgb(var(--input-border-color-rgb));
-        color: rgba(var(--colors-standard-rgb), 0.5);
-      }
+  }
+  &[aria-expanded="true"],
+  &:focus-within {
+    input.trigger {
+      --input-border-color-rgb: var(--colors-affordance-rgb);
+      --input-border-color: rgb(var(--input-border-color-rgb));
+      box-shadow: inset .5em 0 0 rgb(var(--input-border-color-rgb)), inset 0 0 0 .05rem rgb(var(--input-border-color-rgb));
+      color: rgba(var(--colors-standard-rgb), 0.5);
     }
-    &[aria-expanded="true"] {
-      &:before {
-        transform: rotate(180deg);
-      }
+  }
+  &[aria-expanded="true"] {
+    &:before {
+      transform: rotate(180deg);
     }
   }
   &.mute {
@@ -37,17 +37,17 @@ div.select-container {
       input.trigger {
 
       }
-      &[aria-expanded="true"],
-      &:focus-within {
+    }
+    &[aria-expanded="true"] {
+      div.wrap {
         input.trigger {
           --input-border-color-rgb: var(--colors-affordance-rgb);
           background-color: rgba(var(--input-border-color-rgb), 0.05);
-          box-shadow: inset 0 -.2em 0 0 rgb(var(--input-border-color-rgb));
+          box-shadow: inset 0 0 0 .05rem rgb(var(--input-border-color-rgb));
           //color: rgba(var(--colors-standard-rgb), 0.5);
         }
       }
     }
-
   }
   &.imageselector-container {
     >div.passivebox {
