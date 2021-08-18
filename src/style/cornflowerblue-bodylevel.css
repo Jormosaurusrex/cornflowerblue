@@ -1186,6 +1186,9 @@ div.datepicker div.monthbox div.month table.month td a[aria-disabled=true], div.
   box-shadow: none;
   pointer-events: none;
 }
+div.datepicker div.timeinput-container {
+  padding: 0 0.5rem;
+}
 div.datepicker.button-menu {
   padding: 0;
   position: absolute;
@@ -1198,6 +1201,110 @@ div.datepicker.button-menu {
 }
 div.datepicker.button-menu div.monthbox {
   padding: 0;
+}
+
+div.timebox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+div.timebox input[data-time=hours],
+div.timebox input[data-time=minutes] {
+  max-width: 2rem;
+  width: 2rem;
+  box-shadow: none;
+  background-color: var(--canvas-color-secondary);
+  font-size: 0.8em;
+}
+div.timebox input[data-time=hours] {
+  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0 0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0.1rem 0 0 rgb(var(--input-border-color-rgb));
+}
+div.timebox > span {
+  transition: opacity 0.2s, box-shadow 0.2s;
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0 0.1rem 0 rgb(var(--input-border-color-rgb));
+  font-style: oblique;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+div.timebox input[data-time=minutes] {
+  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0 0.1rem 0 rgb(var(--input-border-color-rgb)), inset -0.1rem 0 0 rgb(var(--input-border-color-rgb));
+}
+div.timebox > div.toggleset {
+  flex-grow: 0;
+  margin: 0 0.5rem;
+  font-size: 0.8rem;
+}
+div.timebox.focus {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+}
+div.timebox.mute > input[data-time=hours],
+div.timebox.mute > input[data-time=minutes],
+div.timebox.mute > span {
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset 0 -0.1rem 0 0 rgb(var(--input-border-color-rgb));
+}
+div.timebox.mute.focus > input,
+div.timebox.mute.focus > span {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.2rem 0 0 rgb(var(--input-border-color-rgb));
+}
+
+div.toggleset {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: stretch;
+  align-items: baseline;
+}
+div.toggleset > button,
+div.toggleset > a.button {
+  margin: 0;
+  border-radius: 0;
+  background-color: rgba(var(--canvas-color-tertiary-rgb), 0.5);
+  color: var(--colors-affordance);
+  background-image: none;
+  box-shadow: inset -0.1em 0 0 0 var(--grey);
+}
+div.toggleset > button:first-child,
+div.toggleset > a.button:first-child {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+div.toggleset > button:last-child,
+div.toggleset > a.button:last-child {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  box-shadow: none;
+}
+div.toggleset > button[aria-selected=true],
+div.toggleset > a.button[aria-selected=true] {
+  --button-border-color: var(--colors-local);
+  box-shadow: inset 0 0 0 0.1em var(--button-border-color);
+  background-color: rgba(var(--colors-highlight-rgb), 0.2);
+}
+div.toggleset > button:focus, div.toggleset > button.focus, div.toggleset > button:active, div.toggleset > button.active,
+div.toggleset > a.button:focus,
+div.toggleset > a.button.focus,
+div.toggleset > a.button:active,
+div.toggleset > a.button.active {
+  color: var(--colors-text-hot);
+  background-color: var(--colors-local);
+  text-shadow: var(--text-shadow);
+  box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.toggleset > button:hover,
+div.toggleset > a.button:hover {
+    color: var(--colors-text-hot);
+    background-color: var(--colors-local);
+    text-shadow: var(--text-shadow);
+    box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
+  }
 }
 
 div.tooltip {

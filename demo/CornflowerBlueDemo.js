@@ -1422,7 +1422,19 @@ class CornflowerBlueDemo {
             mute: true,
             value: '1972-11-28'
         }).container);
+
+        dateinput.appendChild(new DateInput({
+            label: "Mute DateTime",
+            mute: true,
+            timepicker: true,
+            value: '1972-11-28'
+        }).container);
+
+
+
         document.getElementById('inputs-date').appendChild(dateinput);
+
+
 
         let email = document.createElement('div');
         email.classList.add('example');

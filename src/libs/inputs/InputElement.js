@@ -604,6 +604,9 @@ class InputElement {
                 e.preventDefault();
                 e.stopPropagation();
                 this.onreturn(e, this);
+            } else if ((e.key === 'Tab') // Tab
+                && (this.ontab) && (typeof this.ontab === 'function')) {
+                this.ontab(e, this);
             } else if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
                 this.onkeyup(e, this);
             }

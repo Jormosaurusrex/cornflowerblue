@@ -5,6 +5,7 @@ class DatePicker {
             startdate: null,
             value: null,
             timezone: 'GMT',
+            timepicker: false,
             basetime: '12:00:00', // Time to set dates on
             locale: 'en-US',
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -56,12 +57,21 @@ class DatePicker {
             e.stopPropagation();
         });
 
+        this.container.appendChild(this.monthbox);
+
+        if (this.timepicker) {
+            this.timeinput = new TimeInput({
+                mute: true
+            });
+            this.container.appendChild(this.timeinput.container);
+        }
+
+    }
+
+    buildMonthBox() {
         this.monthbox = document.createElement('div');
         this.monthbox.classList.add('monthbox');
-
         this.renderMonth(this.startdate); // initial
-
-        this.container.appendChild(this.monthbox);
     }
 
     /**
@@ -289,7 +299,10 @@ class DatePicker {
     get locale() { return this.config.locale; }
     set locale(locale) { this.config.locale = locale; }
 
-    get monthbox() { return this._monthbox; }
+    get monthbox() {
+        if (!this._monthbox) { this.buildMonthBox(); }
+        return this._monthbox;
+    }
     set monthbox(monthbox) { this._monthbox = monthbox; }
 
     get months() { return this.config.months; }
@@ -300,6 +313,12 @@ class DatePicker {
 
     get startdate() { return this.config.startdate; }
     set startdate(startdate) { this.config.startdate = startdate; }
+
+    get timeinput() { return this._timeinput; }
+    set timeinput(timeinput) { this._timeinput = timeinput; }
+
+    get timepicker() { return this.config.timepicker; }
+    set timepicker(timepicker) { this.config.timepicker = timepicker; }
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }

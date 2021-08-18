@@ -6,6 +6,7 @@ class DateInput extends TextInput {
             timezone: 'GMT',
             type: 'text',
             gravity: 'south',
+            timepicker: false,
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             format: (self) => {
@@ -95,6 +96,7 @@ class DateInput extends TextInput {
 
         this.datepicker = new DatePicker({
             classes: ['menu'],
+            timepicker: this.timepicker,
             onselect: (value) => {
                 this.value = value;
                 this.triggerbutton.close();
@@ -170,6 +172,9 @@ class DateInput extends TextInput {
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
+
+    get timepicker() { return this.config.timepicker; }
+    set timepicker(timepicker) { this.config.timepicker = timepicker; }
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }

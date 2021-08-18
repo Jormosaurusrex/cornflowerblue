@@ -35,6 +35,8 @@ class SimpleButton {
             link: false,
             naked: false,
             action: null,
+            onkeyup: null,
+            onkeydown: null,
             focusin: null,
             focusout: null,
             hoverin: null,
@@ -64,6 +66,8 @@ class SimpleButton {
             tooltip: { type: 'option', datatype: 'string', description: "An optional tooltip."},
             tipicon: { type: 'option', datatype: 'string', description: "An icon for the tooltip."},
             tipgravity: { type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
+            onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
+            onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
             icon: { type: 'option', datatype: 'string', description: "If present, will be attached to the text inside the button. This can be passed a DOM object." },
             iconprefix: { type: 'option', datatype: 'string', description: "Changes the icon class prefix." },
             iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply to ALL icons in the header." },
@@ -262,26 +266,48 @@ class SimpleButton {
         CFBUtils.applyAttributes(this.attributes, this.button);
         CFBUtils.applyDataAttributes(this.dataattributes, this.button);
 
-        this.button.addEventListener('focusin', (e) => {
-            if ((this.focusin) && (typeof this.focusin === 'function')) {
-                this.focusin(e, this);
-            }
-        });
-        this.button.addEventListener('focusout', (e) => {
-            if ((this.focusout) && (typeof this.focusout === 'function')) {
-                this.focusout(e, this);
-            }
-        });
-        this.button.addEventListener('mouseover', (e) => {
-            if ((this.hoverin) && (typeof this.hoverin === 'function')) {
-                this.hoverin(e, this);
-            }
-        });
-        this.button.addEventListener('mouseout', (e) => {
-            if ((this.hoverout) && (typeof this.hoverout === 'function')) {
-                this.hoverout(e, this);
-            }
-        });
+        if (this.focusin) {
+            this.button.addEventListener('focusin', (e) => {
+                if ((this.focusin) && (typeof this.focusin === 'function')) {
+                    this.focusin(e, this);
+                }
+            });
+        }
+        if (this.focusout) {
+            this.button.addEventListener('focusout', (e) => {
+                if ((this.focusout) && (typeof this.focusout === 'function')) {
+                    this.focusout(e, this);
+                }
+            });
+        }
+        if (this.hoverin) {
+            this.button.addEventListener('mouseover', (e) => {
+                if ((this.hoverin) && (typeof this.hoverin === 'function')) {
+                    this.hoverin(e, this);
+                }
+            });
+        }
+        if (this.hoverout) {
+            this.button.addEventListener('mouseout', (e) => {
+                if ((this.hoverout) && (typeof this.hoverout === 'function')) {
+                    this.hoverout(e, this);
+                }
+            });
+        }
+        if (this.onkeyup) {
+            this.button.addEventListener('keyup', (e) => {
+                if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
+                    this.onkeyup(e, this);
+                }
+            });
+        }
+        if (this.onkeydown) {
+            this.button.addEventListener('keydown', (e) => {
+                if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
+                    this.onkeydown(e, this);
+                }
+            });
+        }
 
         if (this.tooltip) {
             this.tooltipobj = new ToolTip({
@@ -507,6 +533,22 @@ class SimpleButton {
 
     get notab() { return this.config.notab; }
     set notab(notab) { this.config.notab = notab; }
+
+    get onkeydown() { return this.config.onkeydown; }
+    set onkeydown(onkeydown) {
+        if (typeof onkeydown !== 'function') {
+            console.error("Action provided for onkeydown is not a function!");
+        }
+        this.config.onkeydown = onkeydown;
+    }
+
+    get onkeyup() { return this.config.onkeyup; }
+    set onkeyup(onkeyup) {
+        if (typeof onkeyup !== 'function') {
+            console.error("Action provided for onkeyup is not a function!");
+        }
+        this.config.onkeyup = onkeyup;
+    }
 
     get payload() { return this.config.payload; }
     set payload(payload) { this.config.payload = payload; }

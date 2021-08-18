@@ -1870,7 +1870,7 @@ input[type=submit].ghost,
 input[type=reset].ghost,
 a.button.ghost {
   --button-border-color: var(--colors-local);
-  box-shadow: inset -0.1em -0.1em 0 0 var(--button-border-color), inset 0.1em -0.1em 0 0 var(--button-border-color), inset -0.1em 0.1em 0 0 var(--button-border-color), inset 0.1em 0.1em 0 0 var(--button-border-color);
+  box-shadow: inset 0 0 0 0.1em var(--button-border-color);
   color: var(--colors-local);
   background-color: transparent;
 }
@@ -3303,6 +3303,7 @@ input[type=radio]:checked + label:disabled:checked:after {
 div.input-container,
 p.input-container,
 div.file-container,
+div.timepicker-container,
 div.textarea-container,
 p.textarea-container {
   margin: 0;
@@ -3315,6 +3316,7 @@ p.textarea-container {
 div.input-container p.preamble,
 p.input-container p.preamble,
 div.file-container p.preamble,
+div.timepicker-container p.preamble,
 div.textarea-container p.preamble,
 p.textarea-container p.preamble {
   margin: 1rem 0 0 0;
@@ -3322,6 +3324,7 @@ p.textarea-container p.preamble {
 div.input-container div.topline,
 p.input-container div.topline,
 div.file-container div.topline,
+div.timepicker-container div.topline,
 div.textarea-container div.topline,
 p.textarea-container div.topline {
   position: relative;
@@ -3335,6 +3338,7 @@ p.textarea-container div.topline {
 div.input-container div.topline label,
 p.input-container div.topline label,
 div.file-container div.topline label,
+div.timepicker-container div.topline label,
 div.textarea-container div.topline label,
 p.textarea-container div.topline label {
   margin-top: 0;
@@ -3347,6 +3351,8 @@ p.input-container div.topline label button.help,
 p.input-container div.topline label:after,
 div.file-container div.topline label button.help,
 div.file-container div.topline label:after,
+div.timepicker-container div.topline label button.help,
+div.timepicker-container div.topline label:after,
 div.textarea-container div.topline label button.help,
 div.textarea-container div.topline label:after,
 p.textarea-container div.topline label button.help,
@@ -3357,6 +3363,7 @@ p.textarea-container div.topline label:after {
 div.input-container div.topline label > span.mutehelp,
 p.input-container div.topline label > span.mutehelp,
 div.file-container div.topline label > span.mutehelp,
+div.timepicker-container div.topline label > span.mutehelp,
 div.textarea-container div.topline label > span.mutehelp,
 p.textarea-container div.topline label > span.mutehelp {
   opacity: 1;
@@ -3368,6 +3375,7 @@ p.textarea-container div.topline label > span.mutehelp {
 div.input-container div.topline label > span.mutehelp:before,
 p.input-container div.topline label > span.mutehelp:before,
 div.file-container div.topline label > span.mutehelp:before,
+div.timepicker-container div.topline label > span.mutehelp:before,
 div.textarea-container div.topline label > span.mutehelp:before,
 p.textarea-container div.topline label > span.mutehelp:before {
   margin-right: 0.5rem;
@@ -3382,6 +3390,9 @@ p.input-container div.topline div.datedisplay,
 div.file-container div.topline div.charcounter,
 div.file-container div.topline div.searchdisplay,
 div.file-container div.topline div.datedisplay,
+div.timepicker-container div.topline div.charcounter,
+div.timepicker-container div.topline div.searchdisplay,
+div.timepicker-container div.topline div.datedisplay,
 div.textarea-container div.topline div.charcounter,
 div.textarea-container div.topline div.searchdisplay,
 div.textarea-container div.topline div.datedisplay,
@@ -3403,6 +3414,9 @@ p.input-container div.topline div.datedisplay.danger,
 div.file-container div.topline div.charcounter.danger,
 div.file-container div.topline div.searchdisplay.danger,
 div.file-container div.topline div.datedisplay.danger,
+div.timepicker-container div.topline div.charcounter.danger,
+div.timepicker-container div.topline div.searchdisplay.danger,
+div.timepicker-container div.topline div.datedisplay.danger,
 div.textarea-container div.topline div.charcounter.danger,
 div.textarea-container div.topline div.searchdisplay.danger,
 div.textarea-container div.topline div.datedisplay.danger,
@@ -3420,6 +3434,9 @@ p.input-container div.topline div.datedisplay.outofbounds,
 div.file-container div.topline div.charcounter.outofbounds,
 div.file-container div.topline div.searchdisplay.outofbounds,
 div.file-container div.topline div.datedisplay.outofbounds,
+div.timepicker-container div.topline div.charcounter.outofbounds,
+div.timepicker-container div.topline div.searchdisplay.outofbounds,
+div.timepicker-container div.topline div.datedisplay.outofbounds,
 div.textarea-container div.topline div.charcounter.outofbounds,
 div.textarea-container div.topline div.searchdisplay.outofbounds,
 div.textarea-container div.topline div.datedisplay.outofbounds,
@@ -3431,6 +3448,7 @@ p.textarea-container div.topline div.datedisplay.outofbounds {
 div.input-container div.topline div.topcontrol,
 p.input-container div.topline div.topcontrol,
 div.file-container div.topline div.topcontrol,
+div.timepicker-container div.topline div.topcontrol,
 div.textarea-container div.topline div.topcontrol,
 p.textarea-container div.topline div.topcontrol {
   opacity: 1;
@@ -3443,6 +3461,7 @@ p.textarea-container div.topline div.topcontrol {
 div.input-container div.wrap,
 p.input-container div.wrap,
 div.file-container div.wrap,
+div.timepicker-container div.wrap,
 div.textarea-container div.wrap,
 p.textarea-container div.wrap {
   position: relative;
@@ -3451,6 +3470,7 @@ p.textarea-container div.wrap {
 div.input-container div.wrap div.trigger,
 p.input-container div.wrap div.trigger,
 div.file-container div.wrap div.trigger,
+div.timepicker-container div.wrap div.trigger,
 div.textarea-container div.wrap div.trigger,
 p.textarea-container div.wrap div.trigger {
   height: 2.5rem;
@@ -3476,6 +3496,7 @@ p.textarea-container div.wrap div.trigger {
 div.input-container div.wrap div.trigger span.placeholder,
 p.input-container div.wrap div.trigger span.placeholder,
 div.file-container div.wrap div.trigger span.placeholder,
+div.timepicker-container div.wrap div.trigger span.placeholder,
 div.textarea-container div.wrap div.trigger span.placeholder,
 p.textarea-container div.wrap div.trigger span.placeholder {
   opacity: 0;
@@ -3483,6 +3504,7 @@ p.textarea-container div.wrap div.trigger span.placeholder {
 div.input-container div.wrap div.trigger.files,
 p.input-container div.wrap div.trigger.files,
 div.file-container div.wrap div.trigger.files,
+div.timepicker-container div.wrap div.trigger.files,
 div.textarea-container div.wrap div.trigger.files,
 p.textarea-container div.wrap div.trigger.files {
   color: var(--input-default-text-color);
@@ -3491,6 +3513,7 @@ p.textarea-container div.wrap div.trigger.files {
 div.input-container div.wrap div.trigger:before,
 p.input-container div.wrap div.trigger:before,
 div.file-container div.wrap div.trigger:before,
+div.timepicker-container div.wrap div.trigger:before,
 div.textarea-container div.wrap div.trigger:before,
 p.textarea-container div.wrap div.trigger:before {
   position: absolute;
@@ -3505,6 +3528,7 @@ p.textarea-container div.wrap div.trigger:before {
 div.input-container div.wrap div.trigger:focus,
 p.input-container div.wrap div.trigger:focus,
 div.file-container div.wrap div.trigger:focus,
+div.timepicker-container div.wrap div.trigger:focus,
 div.textarea-container div.wrap div.trigger:focus,
 p.textarea-container div.wrap div.trigger:focus {
   --input-border-color-rgb: var(--colors-affordance-rgb);
@@ -3514,6 +3538,7 @@ p.textarea-container div.wrap div.trigger:focus {
 div.input-container div.wrap div.trigger:focus::placeholder,
 p.input-container div.wrap div.trigger:focus::placeholder,
 div.file-container div.wrap div.trigger:focus::placeholder,
+div.timepicker-container div.wrap div.trigger:focus::placeholder,
 div.textarea-container div.wrap div.trigger:focus::placeholder,
 p.textarea-container div.wrap div.trigger:focus::placeholder {
   opacity: 0.3;
@@ -3521,6 +3546,7 @@ p.textarea-container div.wrap div.trigger:focus::placeholder {
 div.input-container div.wrap div.trigger.mute,
 p.input-container div.wrap div.trigger.mute,
 div.file-container div.wrap div.trigger.mute,
+div.timepicker-container div.wrap div.trigger.mute,
 div.textarea-container div.wrap div.trigger.mute,
 p.textarea-container div.wrap div.trigger.mute {
   background-color: var(--canvas-color-secondary);
@@ -3530,6 +3556,7 @@ p.textarea-container div.wrap div.trigger.mute {
 div.input-container div.wrap div.trigger.mute:focus,
 p.input-container div.wrap div.trigger.mute:focus,
 div.file-container div.wrap div.trigger.mute:focus,
+div.timepicker-container div.wrap div.trigger.mute:focus,
 div.textarea-container div.wrap div.trigger.mute:focus,
 p.textarea-container div.wrap div.trigger.mute:focus {
   --input-border-color-rgb: var(--colors-affordance-rgb);
@@ -3539,6 +3566,7 @@ p.textarea-container div.wrap div.trigger.mute:focus {
 div.input-container div.wrap div.trigger.mute:focus::placeholder,
 p.input-container div.wrap div.trigger.mute:focus::placeholder,
 div.file-container div.wrap div.trigger.mute:focus::placeholder,
+div.timepicker-container div.wrap div.trigger.mute:focus::placeholder,
 div.textarea-container div.wrap div.trigger.mute:focus::placeholder,
 p.textarea-container div.wrap div.trigger.mute:focus::placeholder {
   opacity: 0;
@@ -3546,6 +3574,7 @@ p.textarea-container div.wrap div.trigger.mute:focus::placeholder {
 div.input-container div.wrap div.trigger.mute:focus span.placeholder,
 p.input-container div.wrap div.trigger.mute:focus span.placeholder,
 div.file-container div.wrap div.trigger.mute:focus span.placeholder,
+div.timepicker-container div.wrap div.trigger.mute:focus span.placeholder,
 div.textarea-container div.wrap div.trigger.mute:focus span.placeholder,
 p.textarea-container div.wrap div.trigger.mute:focus span.placeholder {
   opacity: 0.5;
@@ -3553,6 +3582,7 @@ p.textarea-container div.wrap div.trigger.mute:focus span.placeholder {
 div.input-container div.wrap div.inputcontrol,
 p.input-container div.wrap div.inputcontrol,
 div.file-container div.wrap div.inputcontrol,
+div.timepicker-container div.wrap div.inputcontrol,
 div.textarea-container div.wrap div.inputcontrol,
 p.textarea-container div.wrap div.inputcontrol {
   transition: all 0.2s;
@@ -3568,6 +3598,9 @@ p.input-container div.wrap div.inputcontrol.calbutton,
 div.file-container div.wrap div.inputcontrol.stepbuttons,
 div.file-container div.wrap div.inputcontrol.visbutton,
 div.file-container div.wrap div.inputcontrol.calbutton,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons,
+div.timepicker-container div.wrap div.inputcontrol.visbutton,
+div.timepicker-container div.wrap div.inputcontrol.calbutton,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons,
 div.textarea-container div.wrap div.inputcontrol.visbutton,
 div.textarea-container div.wrap div.inputcontrol.calbutton,
@@ -3591,6 +3624,9 @@ p.input-container div.wrap div.inputcontrol.calbutton > button,
 div.file-container div.wrap div.inputcontrol.stepbuttons > button,
 div.file-container div.wrap div.inputcontrol.visbutton > button,
 div.file-container div.wrap div.inputcontrol.calbutton > button,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons > button,
+div.timepicker-container div.wrap div.inputcontrol.visbutton > button,
+div.timepicker-container div.wrap div.inputcontrol.calbutton > button,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons > button,
 div.textarea-container div.wrap div.inputcontrol.visbutton > button,
 div.textarea-container div.wrap div.inputcontrol.calbutton > button,
@@ -3607,6 +3643,9 @@ p.input-container div.wrap div.inputcontrol.calbutton:hover,
 div.file-container div.wrap div.inputcontrol.stepbuttons:hover,
 div.file-container div.wrap div.inputcontrol.visbutton:hover,
 div.file-container div.wrap div.inputcontrol.calbutton:hover,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons:hover,
+div.timepicker-container div.wrap div.inputcontrol.visbutton:hover,
+div.timepicker-container div.wrap div.inputcontrol.calbutton:hover,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons:hover,
 div.textarea-container div.wrap div.inputcontrol.visbutton:hover,
 div.textarea-container div.wrap div.inputcontrol.calbutton:hover,
@@ -3624,6 +3663,9 @@ p.input-container div.wrap div.inputcontrol.calbutton > button,
 div.file-container div.wrap div.inputcontrol.stepbuttons > button,
 div.file-container div.wrap div.inputcontrol.visbutton > button,
 div.file-container div.wrap div.inputcontrol.calbutton > button,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons > button,
+div.timepicker-container div.wrap div.inputcontrol.visbutton > button,
+div.timepicker-container div.wrap div.inputcontrol.calbutton > button,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons > button,
 div.textarea-container div.wrap div.inputcontrol.visbutton > button,
 div.textarea-container div.wrap div.inputcontrol.calbutton > button,
@@ -3639,6 +3681,9 @@ p.input-container div.wrap div.inputcontrol.calbutton > button > span.icon,
 div.file-container div.wrap div.inputcontrol.stepbuttons > button > span.icon,
 div.file-container div.wrap div.inputcontrol.visbutton > button > span.icon,
 div.file-container div.wrap div.inputcontrol.calbutton > button > span.icon,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons > button > span.icon,
+div.timepicker-container div.wrap div.inputcontrol.visbutton > button > span.icon,
+div.timepicker-container div.wrap div.inputcontrol.calbutton > button > span.icon,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons > button > span.icon,
 div.textarea-container div.wrap div.inputcontrol.visbutton > button > span.icon,
 div.textarea-container div.wrap div.inputcontrol.calbutton > button > span.icon,
@@ -3655,6 +3700,9 @@ p.input-container div.wrap div.inputcontrol.calbutton > button:hover,
 div.file-container div.wrap div.inputcontrol.stepbuttons > button:hover,
 div.file-container div.wrap div.inputcontrol.visbutton > button:hover,
 div.file-container div.wrap div.inputcontrol.calbutton > button:hover,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons > button:hover,
+div.timepicker-container div.wrap div.inputcontrol.visbutton > button:hover,
+div.timepicker-container div.wrap div.inputcontrol.calbutton > button:hover,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons > button:hover,
 div.textarea-container div.wrap div.inputcontrol.visbutton > button:hover,
 div.textarea-container div.wrap div.inputcontrol.calbutton > button:hover,
@@ -3671,6 +3719,9 @@ p.input-container div.wrap div.inputcontrol.calbutton > button .menu,
 div.file-container div.wrap div.inputcontrol.stepbuttons > button .menu,
 div.file-container div.wrap div.inputcontrol.visbutton > button .menu,
 div.file-container div.wrap div.inputcontrol.calbutton > button .menu,
+div.timepicker-container div.wrap div.inputcontrol.stepbuttons > button .menu,
+div.timepicker-container div.wrap div.inputcontrol.visbutton > button .menu,
+div.timepicker-container div.wrap div.inputcontrol.calbutton > button .menu,
 div.textarea-container div.wrap div.inputcontrol.stepbuttons > button .menu,
 div.textarea-container div.wrap div.inputcontrol.visbutton > button .menu,
 div.textarea-container div.wrap div.inputcontrol.calbutton > button .menu,
@@ -3683,6 +3734,7 @@ p.textarea-container div.wrap div.inputcontrol.calbutton > button .menu {
 div.input-container div.wrap:before,
 p.input-container div.wrap:before,
 div.file-container div.wrap:before,
+div.timepicker-container div.wrap:before,
 div.textarea-container div.wrap:before,
 p.textarea-container div.wrap:before {
   position: absolute;
@@ -3699,6 +3751,7 @@ p.textarea-container div.wrap:before {
 div.input-container div.wrap:after,
 p.input-container div.wrap:after,
 div.file-container div.wrap:after,
+div.timepicker-container div.wrap:after,
 div.textarea-container div.wrap:after,
 p.textarea-container div.wrap:after {
   opacity: 0;
@@ -3731,6 +3784,7 @@ p.textarea-container div.wrap:after {
 div.input-container ul.messagebox,
 p.input-container ul.messagebox,
 div.file-container ul.messagebox,
+div.timepicker-container ul.messagebox,
 div.textarea-container ul.messagebox,
 p.textarea-container ul.messagebox {
   transition: all 0.2s;
@@ -3747,6 +3801,7 @@ p.textarea-container ul.messagebox {
 div.input-container ul.messagebox li,
 p.input-container ul.messagebox li,
 div.file-container ul.messagebox li,
+div.timepicker-container ul.messagebox li,
 div.textarea-container ul.messagebox li,
 p.textarea-container ul.messagebox li {
   margin: 0.5rem 0 0.5rem 0;
@@ -3754,6 +3809,7 @@ p.textarea-container ul.messagebox li {
 div.input-container ul.messagebox li.error,
 p.input-container ul.messagebox li.error,
 div.file-container ul.messagebox li.error,
+div.timepicker-container ul.messagebox li.error,
 div.textarea-container ul.messagebox li.error,
 p.textarea-container ul.messagebox li.error {
   color: var(--colors-text-default);
@@ -3761,6 +3817,7 @@ p.textarea-container ul.messagebox li.error {
 div.input-container ul.messagebox li.warning,
 p.input-container ul.messagebox li.warning,
 div.file-container ul.messagebox li.warning,
+div.timepicker-container ul.messagebox li.warning,
 div.textarea-container ul.messagebox li.warning,
 p.textarea-container ul.messagebox li.warning {
   color: var(--colors-text-default);
@@ -3768,6 +3825,7 @@ p.textarea-container ul.messagebox li.warning {
 div.input-container ul.messagebox[aria-hidden=true],
 p.input-container ul.messagebox[aria-hidden=true],
 div.file-container ul.messagebox[aria-hidden=true],
+div.timepicker-container ul.messagebox[aria-hidden=true],
 div.textarea-container ul.messagebox[aria-hidden=true],
 p.textarea-container ul.messagebox[aria-hidden=true] {
   opacity: 0;
@@ -3778,6 +3836,7 @@ p.textarea-container ul.messagebox[aria-hidden=true] {
 div.input-container ul.messagebox[aria-hidden=true] li,
 p.input-container ul.messagebox[aria-hidden=true] li,
 div.file-container ul.messagebox[aria-hidden=true] li,
+div.timepicker-container ul.messagebox[aria-hidden=true] li,
 div.textarea-container ul.messagebox[aria-hidden=true] li,
 p.textarea-container ul.messagebox[aria-hidden=true] li {
   display: none;
@@ -3785,6 +3844,7 @@ p.textarea-container ul.messagebox[aria-hidden=true] li {
 div.input-container div.passivebox,
 p.input-container div.passivebox,
 div.file-container div.passivebox,
+div.timepicker-container div.passivebox,
 div.textarea-container div.passivebox,
 p.textarea-container div.passivebox {
   transition: opacity 0.2s;
@@ -3797,6 +3857,7 @@ p.textarea-container div.passivebox {
 div.input-container.minimal,
 p.input-container.minimal,
 div.file-container.minimal,
+div.timepicker-container.minimal,
 div.textarea-container.minimal,
 p.textarea-container.minimal {
   display: inline-block;
@@ -3805,6 +3866,7 @@ p.textarea-container.minimal {
 div.input-container.minimal div.wrap div.inputcontrol,
 p.input-container.minimal div.wrap div.inputcontrol,
 div.file-container.minimal div.wrap div.inputcontrol,
+div.timepicker-container.minimal div.wrap div.inputcontrol,
 div.textarea-container.minimal div.wrap div.inputcontrol,
 p.textarea-container.minimal div.wrap div.inputcontrol {
   right: 1rem;
@@ -3812,6 +3874,7 @@ p.textarea-container.minimal div.wrap div.inputcontrol {
 div.input-container.minimal div.wrap:after,
 p.input-container.minimal div.wrap:after,
 div.file-container.minimal div.wrap:after,
+div.timepicker-container.minimal div.wrap:after,
 div.textarea-container.minimal div.wrap:after,
 p.textarea-container.minimal div.wrap:after {
   display: none;
@@ -3819,6 +3882,7 @@ p.textarea-container.minimal div.wrap:after {
 div.input-container.minimal div.wrap:before,
 p.input-container.minimal div.wrap:before,
 div.file-container.minimal div.wrap:before,
+div.timepicker-container.minimal div.wrap:before,
 div.textarea-container.minimal div.wrap:before,
 p.textarea-container.minimal div.wrap:before {
   right: 1rem;
@@ -3826,6 +3890,7 @@ p.textarea-container.minimal div.wrap:before {
 div.input-container.minimal input.trigger,
 p.input-container.minimal input.trigger,
 div.file-container.minimal input.trigger,
+div.timepicker-container.minimal input.trigger,
 div.textarea-container.minimal input.trigger,
 p.textarea-container.minimal input.trigger {
   padding-right: 2rem;
@@ -3833,6 +3898,7 @@ p.textarea-container.minimal input.trigger {
 div.input-container.mute div.topline,
 p.input-container.mute div.topline,
 div.file-container.mute div.topline,
+div.timepicker-container.mute div.topline,
 div.textarea-container.mute div.topline,
 p.textarea-container.mute div.topline {
   margin-top: 2.1em;
@@ -3844,6 +3910,7 @@ p.textarea-container.mute div.topline {
 div.input-container.mute div.topline label,
 p.input-container.mute div.topline label,
 div.file-container.mute div.topline label,
+div.timepicker-container.mute div.topline label,
 div.textarea-container.mute div.topline label,
 p.textarea-container.mute div.topline label {
   opacity: 1;
@@ -3855,6 +3922,7 @@ p.textarea-container.mute div.topline label {
 div.input-container.mute div.topline label button.help,
 p.input-container.mute div.topline label button.help,
 div.file-container.mute div.topline label button.help,
+div.timepicker-container.mute div.topline label button.help,
 div.textarea-container.mute div.topline label button.help,
 p.textarea-container.mute div.topline label button.help {
   opacity: 0;
@@ -3864,6 +3932,7 @@ p.textarea-container.mute div.topline label button.help {
 div.input-container.mute div.topline div.topcontrol,
 p.input-container.mute div.topline div.topcontrol,
 div.file-container.mute div.topline div.topcontrol,
+div.timepicker-container.mute div.topline div.topcontrol,
 div.textarea-container.mute div.topline div.topcontrol,
 p.textarea-container.mute div.topline div.topcontrol {
   display: inline-block;
@@ -3875,6 +3944,8 @@ p.input-container.mute div.wrap input::placeholder,
 p.input-container.mute div.wrap textarea::placeholder,
 div.file-container.mute div.wrap input::placeholder,
 div.file-container.mute div.wrap textarea::placeholder,
+div.timepicker-container.mute div.wrap input::placeholder,
+div.timepicker-container.mute div.wrap textarea::placeholder,
 div.textarea-container.mute div.wrap input::placeholder,
 div.textarea-container.mute div.wrap textarea::placeholder,
 p.textarea-container.mute div.wrap input::placeholder,
@@ -3884,6 +3955,7 @@ p.textarea-container.mute div.wrap textarea::placeholder {
 div.input-container.mute div.wrap div.trigger span.placeholder,
 p.input-container.mute div.wrap div.trigger span.placeholder,
 div.file-container.mute div.wrap div.trigger span.placeholder,
+div.timepicker-container.mute div.wrap div.trigger span.placeholder,
 div.textarea-container.mute div.wrap div.trigger span.placeholder,
 p.textarea-container.mute div.wrap div.trigger span.placeholder {
   opacity: 0.5;
@@ -3891,6 +3963,7 @@ p.textarea-container.mute div.wrap div.trigger span.placeholder {
 div.input-container.mute div.wrap:after,
 p.input-container.mute div.wrap:after,
 div.file-container.mute div.wrap:after,
+div.timepicker-container.mute div.wrap:after,
 div.textarea-container.mute div.wrap:after,
 p.textarea-container.mute div.wrap:after {
   right: 0;
@@ -3902,6 +3975,9 @@ p.input-container.mute.passive div.topline,
 div.file-container.mute.active div.topline,
 div.file-container.mute.filled div.topline,
 div.file-container.mute.passive div.topline,
+div.timepicker-container.mute.active div.topline,
+div.timepicker-container.mute.filled div.topline,
+div.timepicker-container.mute.passive div.topline,
 div.textarea-container.mute.active div.topline,
 div.textarea-container.mute.filled div.topline,
 div.textarea-container.mute.passive div.topline,
@@ -3920,6 +3996,9 @@ p.input-container.mute.passive div.topline label,
 div.file-container.mute.active div.topline label,
 div.file-container.mute.filled div.topline label,
 div.file-container.mute.passive div.topline label,
+div.timepicker-container.mute.active div.topline label,
+div.timepicker-container.mute.filled div.topline label,
+div.timepicker-container.mute.passive div.topline label,
 div.textarea-container.mute.active div.topline label,
 div.textarea-container.mute.filled div.topline label,
 div.textarea-container.mute.passive div.topline label,
@@ -3941,6 +4020,12 @@ div.file-container.mute.filled div.topline label button.help,
 div.file-container.mute.filled div.topline label:after,
 div.file-container.mute.passive div.topline label button.help,
 div.file-container.mute.passive div.topline label:after,
+div.timepicker-container.mute.active div.topline label button.help,
+div.timepicker-container.mute.active div.topline label:after,
+div.timepicker-container.mute.filled div.topline label button.help,
+div.timepicker-container.mute.filled div.topline label:after,
+div.timepicker-container.mute.passive div.topline label button.help,
+div.timepicker-container.mute.passive div.topline label:after,
 div.textarea-container.mute.active div.topline label button.help,
 div.textarea-container.mute.active div.topline label:after,
 div.textarea-container.mute.filled div.topline label button.help,
@@ -3962,6 +4047,9 @@ p.input-container.mute.passive div.topline div.topcontrol,
 div.file-container.mute.active div.topline div.topcontrol,
 div.file-container.mute.filled div.topline div.topcontrol,
 div.file-container.mute.passive div.topline div.topcontrol,
+div.timepicker-container.mute.active div.topline div.topcontrol,
+div.timepicker-container.mute.filled div.topline div.topcontrol,
+div.timepicker-container.mute.passive div.topline div.topcontrol,
 div.textarea-container.mute.active div.topline div.topcontrol,
 div.textarea-container.mute.filled div.topline div.topcontrol,
 div.textarea-container.mute.passive div.topline div.topcontrol,
@@ -3974,6 +4062,7 @@ p.textarea-container.mute.passive div.topline div.topcontrol {
 div.input-container.required label:after,
 p.input-container.required label:after,
 div.file-container.required label:after,
+div.timepicker-container.required label:after,
 div.textarea-container.required label:after,
 p.textarea-container.required label:after {
   content: attr(data-required-text);
@@ -3986,6 +4075,9 @@ p.input-container.warning,
 div.file-container.valid,
 div.file-container.error,
 div.file-container.warning,
+div.timepicker-container.valid,
+div.timepicker-container.error,
+div.timepicker-container.warning,
 div.textarea-container.valid,
 div.textarea-container.error,
 div.textarea-container.warning,
@@ -4002,6 +4094,9 @@ p.input-container.warning div.wrap:after,
 div.file-container.valid div.wrap:after,
 div.file-container.error div.wrap:after,
 div.file-container.warning div.wrap:after,
+div.timepicker-container.valid div.wrap:after,
+div.timepicker-container.error div.wrap:after,
+div.timepicker-container.warning div.wrap:after,
 div.textarea-container.valid div.wrap:after,
 div.textarea-container.error div.wrap:after,
 div.textarea-container.warning div.wrap:after,
@@ -4053,6 +4148,21 @@ div.file-container.warning.mute input[type=number],
 div.file-container.warning.mute input[type=password],
 div.file-container.warning.mute input[type=search],
 div.file-container.warning.mute textarea,
+div.timepicker-container.valid.mute input[type=text],
+div.timepicker-container.valid.mute input[type=number],
+div.timepicker-container.valid.mute input[type=password],
+div.timepicker-container.valid.mute input[type=search],
+div.timepicker-container.valid.mute textarea,
+div.timepicker-container.error.mute input[type=text],
+div.timepicker-container.error.mute input[type=number],
+div.timepicker-container.error.mute input[type=password],
+div.timepicker-container.error.mute input[type=search],
+div.timepicker-container.error.mute textarea,
+div.timepicker-container.warning.mute input[type=text],
+div.timepicker-container.warning.mute input[type=number],
+div.timepicker-container.warning.mute input[type=password],
+div.timepicker-container.warning.mute input[type=search],
+div.timepicker-container.warning.mute textarea,
 div.textarea-container.valid.mute input[type=text],
 div.textarea-container.valid.mute input[type=number],
 div.textarea-container.valid.mute input[type=password],
@@ -4128,6 +4238,21 @@ div.file-container.warning.mute input[type=number]:focus,
 div.file-container.warning.mute input[type=password]:focus,
 div.file-container.warning.mute input[type=search]:focus,
 div.file-container.warning.mute textarea:focus,
+div.timepicker-container.valid.mute input[type=text]:focus,
+div.timepicker-container.valid.mute input[type=number]:focus,
+div.timepicker-container.valid.mute input[type=password]:focus,
+div.timepicker-container.valid.mute input[type=search]:focus,
+div.timepicker-container.valid.mute textarea:focus,
+div.timepicker-container.error.mute input[type=text]:focus,
+div.timepicker-container.error.mute input[type=number]:focus,
+div.timepicker-container.error.mute input[type=password]:focus,
+div.timepicker-container.error.mute input[type=search]:focus,
+div.timepicker-container.error.mute textarea:focus,
+div.timepicker-container.warning.mute input[type=text]:focus,
+div.timepicker-container.warning.mute input[type=number]:focus,
+div.timepicker-container.warning.mute input[type=password]:focus,
+div.timepicker-container.warning.mute input[type=search]:focus,
+div.timepicker-container.warning.mute textarea:focus,
 div.textarea-container.valid.mute input[type=text]:focus,
 div.textarea-container.valid.mute input[type=number]:focus,
 div.textarea-container.valid.mute input[type=password]:focus,
@@ -4163,6 +4288,7 @@ p.textarea-container.warning.mute textarea:focus {
 div.input-container.error,
 p.input-container.error,
 div.file-container.error,
+div.timepicker-container.error,
 div.textarea-container.error,
 p.textarea-container.error {
   --input-status-color-rgb: var(--colors-error-rgb);
@@ -4172,6 +4298,7 @@ p.textarea-container.error {
 div.input-container.error div.wrap:after,
 p.input-container.error div.wrap:after,
 div.file-container.error div.wrap:after,
+div.timepicker-container.error div.wrap:after,
 div.textarea-container.error div.wrap:after,
 p.textarea-container.error div.wrap:after {
   content: "";
@@ -4179,6 +4306,7 @@ p.textarea-container.error div.wrap:after {
 div.input-container.valid,
 p.input-container.valid,
 div.file-container.valid,
+div.timepicker-container.valid,
 div.textarea-container.valid,
 p.textarea-container.valid {
   --input-status-color-rgb: var(--colors-success-rgb);
@@ -4187,6 +4315,7 @@ p.textarea-container.valid {
 div.input-container.valid div.wrap:after,
 p.input-container.valid div.wrap:after,
 div.file-container.valid div.wrap:after,
+div.timepicker-container.valid div.wrap:after,
 div.textarea-container.valid div.wrap:after,
 p.textarea-container.valid div.wrap:after {
   opacity: 1;
@@ -4195,6 +4324,7 @@ p.textarea-container.valid div.wrap:after {
 div.input-container.valid.passive div.wrap:after,
 p.input-container.valid.passive div.wrap:after,
 div.file-container.valid.passive div.wrap:after,
+div.timepicker-container.valid.passive div.wrap:after,
 div.textarea-container.valid.passive div.wrap:after,
 p.textarea-container.valid.passive div.wrap:after {
   opacity: 0;
@@ -4202,6 +4332,7 @@ p.textarea-container.valid.passive div.wrap:after {
 div.input-container.warning,
 p.input-container.warning,
 div.file-container.warning,
+div.timepicker-container.warning,
 div.textarea-container.warning,
 p.textarea-container.warning {
   --input-status-color-rgb: var(--colors-warning-rgb);
@@ -4210,6 +4341,7 @@ p.textarea-container.warning {
 div.input-container.warning div.wrap:after,
 p.input-container.warning div.wrap:after,
 div.file-container.warning div.wrap:after,
+div.timepicker-container.warning div.wrap:after,
 div.textarea-container.warning div.wrap:after,
 p.textarea-container.warning div.wrap:after {
   content: "";
@@ -4217,6 +4349,7 @@ p.textarea-container.warning div.wrap:after {
 div.input-container.disabled,
 p.input-container.disabled,
 div.file-container.disabled,
+div.timepicker-container.disabled,
 div.textarea-container.disabled,
 p.textarea-container.disabled {
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 0.5rem, rgba(var(--input-status-color-rgb), 0.05) 1rem);
@@ -4227,6 +4360,7 @@ p.textarea-container.disabled {
 div.input-container.disabled div.topline,
 p.input-container.disabled div.topline,
 div.file-container.disabled div.topline,
+div.timepicker-container.disabled div.topline,
 div.textarea-container.disabled div.topline,
 p.textarea-container.disabled div.topline {
   opacity: 0.5;
@@ -4235,6 +4369,7 @@ p.textarea-container.disabled div.topline {
 div.input-container.active label,
 p.input-container.active label,
 div.file-container.active label,
+div.timepicker-container.active label,
 div.textarea-container.active label,
 p.textarea-container.active label {
   color: var(--colors-affordance);
@@ -4242,6 +4377,7 @@ p.textarea-container.active label {
 div.input-container.active div.wrap:after,
 p.input-container.active div.wrap:after,
 div.file-container.active div.wrap:after,
+div.timepicker-container.active div.wrap:after,
 div.textarea-container.active div.wrap:after,
 p.textarea-container.active div.wrap:after {
   opacity: 0;
@@ -4249,6 +4385,7 @@ p.textarea-container.active div.wrap:after {
 div.input-container.active div.wrap div.stepbuttons,
 p.input-container.active div.wrap div.stepbuttons,
 div.file-container.active div.wrap div.stepbuttons,
+div.timepicker-container.active div.wrap div.stepbuttons,
 div.textarea-container.active div.wrap div.stepbuttons,
 p.textarea-container.active div.wrap div.stepbuttons {
   opacity: 1;
@@ -4256,6 +4393,7 @@ p.textarea-container.active div.wrap div.stepbuttons {
 div.input-container.active div.wrap div.topcontrol,
 p.input-container.active div.wrap div.topcontrol,
 div.file-container.active div.wrap div.topcontrol,
+div.timepicker-container.active div.wrap div.topcontrol,
 div.textarea-container.active div.wrap div.topcontrol,
 p.textarea-container.active div.wrap div.topcontrol {
   opacity: 1;
@@ -4264,6 +4402,7 @@ p.textarea-container.active div.wrap div.topcontrol {
 div.input-container.active div.wrap div.inputcontrol,
 p.input-container.active div.wrap div.inputcontrol,
 div.file-container.active div.wrap div.inputcontrol,
+div.timepicker-container.active div.wrap div.inputcontrol,
 div.textarea-container.active div.wrap div.inputcontrol,
 p.textarea-container.active div.wrap div.inputcontrol {
   opacity: 1;
@@ -4271,6 +4410,7 @@ p.textarea-container.active div.wrap div.inputcontrol {
 div.input-container.active.mute div.topline,
 p.input-container.active.mute div.topline,
 div.file-container.active.mute div.topline,
+div.timepicker-container.active.mute div.topline,
 div.textarea-container.active.mute div.topline,
 p.textarea-container.active.mute div.topline {
   margin-top: 0;
@@ -4280,6 +4420,7 @@ p.textarea-container.active.mute div.topline {
 div.input-container.active.mute div.topline label,
 p.input-container.active.mute div.topline label,
 div.file-container.active.mute div.topline label,
+div.timepicker-container.active.mute div.topline label,
 div.textarea-container.active.mute div.topline label,
 p.textarea-container.active.mute div.topline label {
   padding-left: 0;
@@ -4289,6 +4430,8 @@ p.input-container.active.mute div.topline label button.help,
 p.input-container.active.mute div.topline label:after,
 div.file-container.active.mute div.topline label button.help,
 div.file-container.active.mute div.topline label:after,
+div.timepicker-container.active.mute div.topline label button.help,
+div.timepicker-container.active.mute div.topline label:after,
 div.textarea-container.active.mute div.topline label button.help,
 div.textarea-container.active.mute div.topline label:after,
 p.textarea-container.active.mute div.topline label button.help,
@@ -4298,6 +4441,7 @@ p.textarea-container.active.mute div.topline label:after {
 div.input-container.active.mute div.topline div.topcontrol,
 p.input-container.active.mute div.topline div.topcontrol,
 div.file-container.active.mute div.topline div.topcontrol,
+div.timepicker-container.active.mute div.topline div.topcontrol,
 div.textarea-container.active.mute div.topline div.topcontrol,
 p.textarea-container.active.mute div.topline div.topcontrol {
   opacity: 1;
@@ -4306,6 +4450,7 @@ p.textarea-container.active.mute div.topline div.topcontrol {
 div.input-container.passive p.preamble,
 p.input-container.passive p.preamble,
 div.file-container.passive p.preamble,
+div.timepicker-container.passive p.preamble,
 div.textarea-container.passive p.preamble,
 p.textarea-container.passive p.preamble {
   height: 0;
@@ -4315,6 +4460,7 @@ p.textarea-container.passive p.preamble {
 div.input-container.passive div.topline label,
 p.input-container.passive div.topline label,
 div.file-container.passive div.topline label,
+div.timepicker-container.passive div.topline label,
 div.textarea-container.passive div.topline label,
 p.textarea-container.passive div.topline label {
   opacity: 1;
@@ -4324,6 +4470,8 @@ p.input-container.passive div.topline label button.help,
 p.input-container.passive div.topline label:after,
 div.file-container.passive div.topline label button.help,
 div.file-container.passive div.topline label:after,
+div.timepicker-container.passive div.topline label button.help,
+div.timepicker-container.passive div.topline label:after,
 div.textarea-container.passive div.topline label button.help,
 div.textarea-container.passive div.topline label:after,
 p.textarea-container.passive div.topline label button.help,
@@ -4334,6 +4482,7 @@ p.textarea-container.passive div.topline label:after {
 div.input-container.passive div.topline label > span.mutehelp,
 p.input-container.passive div.topline label > span.mutehelp,
 div.file-container.passive div.topline label > span.mutehelp,
+div.timepicker-container.passive div.topline label > span.mutehelp,
 div.textarea-container.passive div.topline label > span.mutehelp,
 p.textarea-container.passive div.topline label > span.mutehelp {
   display: none;
@@ -4342,6 +4491,7 @@ p.textarea-container.passive div.topline label > span.mutehelp {
 div.input-container.passive div.topline div.topcontrol,
 p.input-container.passive div.topline div.topcontrol,
 div.file-container.passive div.topline div.topcontrol,
+div.timepicker-container.passive div.topline div.topcontrol,
 div.textarea-container.passive div.topline div.topcontrol,
 p.textarea-container.passive div.topline div.topcontrol {
   display: none !important;
@@ -4356,6 +4506,9 @@ p.input-container.passive ul.selectmenu,
 div.file-container.passive div.wrap,
 div.file-container.passive ul.messagebox,
 div.file-container.passive ul.selectmenu,
+div.timepicker-container.passive div.wrap,
+div.timepicker-container.passive ul.messagebox,
+div.timepicker-container.passive ul.selectmenu,
 div.textarea-container.passive div.wrap,
 div.textarea-container.passive ul.messagebox,
 div.textarea-container.passive ul.selectmenu,
@@ -4367,6 +4520,7 @@ p.textarea-container.passive ul.selectmenu {
 div.input-container.passive div.passivebox,
 p.input-container.passive div.passivebox,
 div.file-container.passive div.passivebox,
+div.timepicker-container.passive div.passivebox,
 div.textarea-container.passive div.passivebox,
 p.textarea-container.passive div.passivebox {
   display: block;
@@ -4374,6 +4528,7 @@ p.textarea-container.passive div.passivebox {
 div.input-container.passive div.passivebox a img,
 p.input-container.passive div.passivebox a img,
 div.file-container.passive div.passivebox a img,
+div.timepicker-container.passive div.passivebox a img,
 div.textarea-container.passive div.passivebox a img,
 p.textarea-container.passive div.passivebox a img {
   height: 3em;
@@ -4382,6 +4537,7 @@ p.textarea-container.passive div.passivebox a img {
 div.input-container.passive.hidepassiveifempty:not(.filled),
 p.input-container.passive.hidepassiveifempty:not(.filled),
 div.file-container.passive.hidepassiveifempty:not(.filled),
+div.timepicker-container.passive.hidepassiveifempty:not(.filled),
 div.textarea-container.passive.hidepassiveifempty:not(.filled),
 p.textarea-container.passive.hidepassiveifempty:not(.filled) {
   display: none;
@@ -4389,6 +4545,7 @@ p.textarea-container.passive.hidepassiveifempty:not(.filled) {
 div.input-container[aria-hidden=true],
 p.input-container[aria-hidden=true],
 div.file-container[aria-hidden=true],
+div.timepicker-container[aria-hidden=true],
 div.textarea-container[aria-hidden=true],
 p.textarea-container[aria-hidden=true] {
   display: none;
@@ -4465,7 +4622,7 @@ textarea {
   --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
   --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
   --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
-  transition: all 0.2s;
+  transition: opacity 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
   outline: none;
   position: relative;
@@ -4904,6 +5061,9 @@ div.datepicker div.monthbox div.month table.month td a[aria-disabled=true], div.
   box-shadow: none;
   pointer-events: none;
 }
+div.datepicker div.timeinput-container {
+  padding: 0 0.5rem;
+}
 div.datepicker.button-menu {
   padding: 0;
   position: absolute;
@@ -4916,6 +5076,110 @@ div.datepicker.button-menu {
 }
 div.datepicker.button-menu div.monthbox {
   padding: 0;
+}
+
+div.timebox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+div.timebox input[data-time=hours],
+div.timebox input[data-time=minutes] {
+  max-width: 2rem;
+  width: 2rem;
+  box-shadow: none;
+  background-color: var(--canvas-color-secondary);
+  font-size: 0.8em;
+}
+div.timebox input[data-time=hours] {
+  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0 0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0.1rem 0 0 rgb(var(--input-border-color-rgb));
+}
+div.timebox > span {
+  transition: opacity 0.2s, box-shadow 0.2s;
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0 0.1rem 0 rgb(var(--input-border-color-rgb));
+  font-style: oblique;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+div.timebox input[data-time=minutes] {
+  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--input-border-color-rgb)), inset 0 0.1rem 0 rgb(var(--input-border-color-rgb)), inset -0.1rem 0 0 rgb(var(--input-border-color-rgb));
+}
+div.timebox > div.toggleset {
+  flex-grow: 0;
+  margin: 0 0.5rem;
+  font-size: 0.8rem;
+}
+div.timebox.focus {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+}
+div.timebox.mute > input[data-time=hours],
+div.timebox.mute > input[data-time=minutes],
+div.timebox.mute > span {
+  background-color: var(--canvas-color-secondary);
+  box-shadow: inset 0 -0.1rem 0 0 rgb(var(--input-border-color-rgb));
+}
+div.timebox.mute.focus > input,
+div.timebox.mute.focus > span {
+  --input-border-color-rgb: var(--colors-affordance-rgb);
+  background-color: rgba(var(--input-border-color-rgb), 0.05);
+  box-shadow: inset 0 -0.2rem 0 0 rgb(var(--input-border-color-rgb));
+}
+
+div.toggleset {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: stretch;
+  align-items: baseline;
+}
+div.toggleset > button,
+div.toggleset > a.button {
+  margin: 0;
+  border-radius: 0;
+  background-color: rgba(var(--canvas-color-tertiary-rgb), 0.5);
+  color: var(--colors-affordance);
+  background-image: none;
+  box-shadow: inset -0.1em 0 0 0 var(--grey);
+}
+div.toggleset > button:first-child,
+div.toggleset > a.button:first-child {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+div.toggleset > button:last-child,
+div.toggleset > a.button:last-child {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  box-shadow: none;
+}
+div.toggleset > button[aria-selected=true],
+div.toggleset > a.button[aria-selected=true] {
+  --button-border-color: var(--colors-local);
+  box-shadow: inset 0 0 0 0.1em var(--button-border-color);
+  background-color: rgba(var(--colors-highlight-rgb), 0.2);
+}
+div.toggleset > button:focus, div.toggleset > button.focus, div.toggleset > button:active, div.toggleset > button.active,
+div.toggleset > a.button:focus,
+div.toggleset > a.button.focus,
+div.toggleset > a.button:active,
+div.toggleset > a.button.active {
+  color: var(--colors-text-hot);
+  background-color: var(--colors-local);
+  text-shadow: var(--text-shadow);
+  box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
+}
+@media (hover: hover) and (pointer: fine) {
+  div.toggleset > button:hover,
+div.toggleset > a.button:hover {
+    color: var(--colors-text-hot);
+    background-color: var(--colors-local);
+    text-shadow: var(--text-shadow);
+    box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
+  }
 }
 
 div.window-container {

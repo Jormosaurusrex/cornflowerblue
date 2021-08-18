@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-08-11
+/*! Cornflower Blue - v0.1.1 - 2021-08-17
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -82,6 +82,17 @@ class CFBUtils {
     static stripHTML(html){
         let doc = new DOMParser().parseFromString(html, 'text/html');
         return doc.body.textContent || "";
+    }
+
+    static formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
     }
 
     /* GENERAL METHODS__________________________________________________________________ */
@@ -2183,6 +2194,7 @@ class TextFactory {
                 "no_provided_content": 'No provided content',
                 "no_results": 'No results',
                 "not_set": "(Not Set)",
+                "timeinput-label-default" : "Time",
                 "numberinput-error-maximum_value": "The maximum value for this field is '$1'.",
                 "numberinput-error-minimum_value": "The minimum value for this field is '$1'.",
                 "numberinput-error-must_be_whole_numbers": 'Values must be whole numbers.',
@@ -4948,6 +4960,7 @@ class DataGrid extends Panel {
                 column: 'name',
                 direction: 'asc'
             },
+            fetchbody: null,
             nodeselectself: true,
             title: null, // the title for the grid
             id: null, // The id. An id is required to save a grid's state.
@@ -5871,16 +5884,15 @@ class DataGrid extends Panel {
         if (this.activitynotifier) {
             this.activitynotifier.removeAttribute('aria-hidden');
         }
-        fetch(url, {
+        let config = {
             method: this.sourcemethod,
-            /*
-                XXX TO DO NEED TO ALLOW FOR
-                body:
-                headers:
-
-             */
             headers: { "Content-Type": "application/json; charset=utf-8" }
-        })
+        }
+        if (this.fetchbody) {
+            config.body = this.fetchbody;
+        }
+
+        fetch(url, config)
             .then(response => response.json()) // response -> json
             .then(data => { // do the thing.
                 // Expects data in json format like this:
@@ -7086,6 +7098,9 @@ class DataGrid extends Panel {
     get activefilters() { return this._activefilters; }
     set activefilters(activefilters) { this._activefilters = activefilters; }
 
+    get activitynotifier() { return this._activitynotifier; }
+    set activitynotifier(activitynotifier) { this._activitynotifier = activitynotifier; }
+
     get activitynotifiericon() { return this.config.activitynotifiericon; }
     set activitynotifiericon(activitynotifiericon) { this.config.activitynotifiericon = activitynotifiericon; }
 
@@ -7094,6 +7109,9 @@ class DataGrid extends Panel {
 
     get allowedits() { return this.config.allowedits; }
     set allowedits(allowedits) { this.config.allowedits = allowedits; }
+
+    get fetchbody() { return this.config.fetchbody; }
+    set fetchbody(fetchbody) { this.config.fetchbody = fetchbody; }
 
     get columnconfigurable() { return this.config.columnconfigurable; }
     set columnconfigurable(columnconfigurable) { this.config.columnconfigurable = columnconfigurable; }
@@ -8791,6 +8809,7 @@ class DatePicker {
             startdate: null,
             value: null,
             timezone: 'GMT',
+            timepicker: false,
             basetime: '12:00:00', // Time to set dates on
             locale: 'en-US',
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -8842,12 +8861,21 @@ class DatePicker {
             e.stopPropagation();
         });
 
+        this.container.appendChild(this.monthbox);
+
+        if (this.timepicker) {
+            this.timeinput = new TimeInput({
+                mute: true
+            });
+            this.container.appendChild(this.timeinput.container);
+        }
+
+    }
+
+    buildMonthBox() {
         this.monthbox = document.createElement('div');
         this.monthbox.classList.add('monthbox');
-
         this.renderMonth(this.startdate); // initial
-
-        this.container.appendChild(this.monthbox);
     }
 
     /**
@@ -9075,7 +9103,10 @@ class DatePicker {
     get locale() { return this.config.locale; }
     set locale(locale) { this.config.locale = locale; }
 
-    get monthbox() { return this._monthbox; }
+    get monthbox() {
+        if (!this._monthbox) { this.buildMonthBox(); }
+        return this._monthbox;
+    }
     set monthbox(monthbox) { this._monthbox = monthbox; }
 
     get months() { return this.config.months; }
@@ -9086,6 +9117,12 @@ class DatePicker {
 
     get startdate() { return this.config.startdate; }
     set startdate(startdate) { this.config.startdate = startdate; }
+
+    get timeinput() { return this._timeinput; }
+    set timeinput(timeinput) { this._timeinput = timeinput; }
+
+    get timepicker() { return this.config.timepicker; }
+    set timepicker(timepicker) { this.config.timepicker = timepicker; }
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }
@@ -12068,6 +12105,11 @@ class InputElement {
      */
     showMessages() {
         this.messagebox.innerHTML = "";
+        if ((this.errors.length === 0) && (this.warnings.length === 0)) {
+            this.container.classList.remove('error');
+            this.container.classList.remove('warning');
+            this.messagebox.setAttribute('aria-hidden', 'true');
+        }
         for (let error of this.errors) {
             this.addError(error);
         }
@@ -13921,6 +13963,7 @@ class DateInput extends TextInput {
             timezone: 'GMT',
             type: 'text',
             gravity: 'south',
+            timepicker: false,
             triggerarialabel: TextFactory.get('dateinput-trigger-arialabel'),
             forceconstraints: true,
             format: (self) => {
@@ -14010,6 +14053,7 @@ class DateInput extends TextInput {
 
         this.datepicker = new DatePicker({
             classes: ['menu'],
+            timepicker: this.timepicker,
             onselect: (value) => {
                 this.value = value;
                 this.triggerbutton.close();
@@ -14085,6 +14129,9 @@ class DateInput extends TextInput {
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
+
+    get timepicker() { return this.config.timepicker; }
+    set timepicker(timepicker) { this.config.timepicker = timepicker; }
 
     get timezone() { return this.config.timezone; }
     set timezone(timezone) { this.config.timezone = timezone; }

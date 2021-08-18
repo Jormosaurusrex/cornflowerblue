@@ -168,7 +168,7 @@ a.button {
   }
   &.ghost {
     --button-border-color: var(--colors-local);
-    box-shadow: inset -.1em -.1em 0 0 var(--button-border-color), inset .1em -.1em 0 0 var(--button-border-color), inset -.1em .1em 0 0 var(--button-border-color), inset .1em .1em 0 0 var(--button-border-color);
+    box-shadow: inset 0 0 0 .1em var(--button-border-color);
     color: var(--colors-local);
     background-color: transparent;
     &:focus,
