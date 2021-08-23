@@ -519,7 +519,6 @@ class SimpleForm {
         }
     }
 
-
     /* ELEMENT MAP METHODS______________________________________________________________ */
 
     getElement(element) {

@@ -11,7 +11,7 @@
 :root {
   --fontstack-serif: "Times New Roman", Times, serif;
   --fontstack-sansserif: "Helvetica Neue", Arial, serif;
-  --fontstack-monospace: "Lucida Console", Monaco, monospace;
+  --fontstack-monospace: Monaco, Courier New, monospace;
   --default-font-family: var(--fontstack-sansserif);
   --default-font-size: 13pt;
   --colors-text-default: var(--grey-dark);
@@ -2596,7 +2596,7 @@ a.button > span.badge {
   left: 0.5rem;
   bottom: 0.5rem;
   background-color: var(--red);
-  border: 0.1rem solid var(--colors-highlight);
+  box-shadow: 0 0 0 0.1rem var(--colors-highlight);
   color: var(--colors-highlight);
   border-radius: 50%;
   width: 1.5rem;
@@ -4618,10 +4618,10 @@ input[type=number],
 input[type=password],
 input[type=search],
 textarea {
-  --input-mute-box-shadow: inset 0 -.1em 0 0 var(--input-border-color);
-  --input-mute-focus-box-shadow: inset 0 -.2em 0 0 var(--input-border-color);
-  --input-mute-textarea-box-shadow: inset .1em 0 0 0 var(--input-border-color);
-  --input-mute-focus-textarea-box-shadow: inset .2em 0 0 0 var(--input-border-color);
+  --input-mute-box-shadow: inset 0 -.1rem 0 0 var(--input-border-color);
+  --input-mute-focus-box-shadow: inset 0 -.2rem 0 0 var(--input-border-color);
+  --input-mute-textarea-box-shadow: inset .1rem 0 0 0 var(--input-border-color);
+  --input-mute-focus-textarea-box-shadow: inset .2rem 0 0 0 var(--input-border-color);
   transition: opacity 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
   outline: none;
@@ -4634,7 +4634,7 @@ textarea {
   margin: 0;
   border: none;
   background-color: var(--canvas-color-secondary);
-  box-shadow: inset -0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0 0 0 0.1rem rgb(var(--input-border-color-rgb));
   padding: var(--input-default-padding);
   border-radius: var(--input-border-radius);
   color: var(--colors-standard);
@@ -4662,7 +4662,7 @@ input[type=search]:focus,
 textarea:focus {
   --input-border-color-rgb: var(--colors-affordance-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
-  box-shadow: inset 0.5em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em -0.1em 0 0 rgb(var(--input-border-color-rgb)), inset -0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb)), inset 0.1em 0.1em 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0 0 0 0.1rem rgb(var(--input-border-color-rgb)), inset 0.5rem 0 0 rgb(var(--input-border-color-rgb));
 }
 input[type=text]:focus::placeholder, input[type=text]:focus::-ms-input-placeholder,
 input[type=number]:focus::placeholder,
@@ -4681,7 +4681,7 @@ input[type=password].mute,
 input[type=search].mute,
 textarea.mute {
   background-color: var(--canvas-color-secondary);
-  box-shadow: inset 0 -0.1em 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0 -0.1rem 0 0 rgb(var(--input-border-color-rgb));
   padding: 0.5em 1em 0.5em 1.5em;
 }
 input[type=text].mute:focus,
@@ -4691,7 +4691,7 @@ input[type=search].mute:focus,
 textarea.mute:focus {
   --input-border-color-rgb: var(--colors-affordance-rgb);
   background-color: rgba(var(--input-border-color-rgb), 0.05);
-  box-shadow: inset 0 -0.2em 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0 -0.2rem 0 0 rgb(var(--input-border-color-rgb));
 }
 
 textarea {
@@ -4705,11 +4705,11 @@ textarea:before {
 }
 textarea.mute {
   padding: 1em 1em 1em 2em;
-  box-shadow: inset 0.1em 0 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0.1rem 0 0 0 rgb(var(--input-border-color-rgb));
   border-bottom: none;
 }
 textarea.mute:focus {
-  box-shadow: inset 0.2em 0 0 0 rgb(var(--input-border-color-rgb));
+  box-shadow: inset 0.2rem 0 0 0 rgb(var(--input-border-color-rgb));
 }
 
 input[type=file] {
@@ -7838,6 +7838,12 @@ div.column [data-column=label],
 div.column [data-column=subject] {
   font-size: 1.2rem;
   font-weight: 400;
+}
+div.column [data-column=id] {
+  font-size: 0.9rem;
+}
+div.column [data-column=id].invite {
+  text-transform: uppercase;
 }
 div.column [data-column=createdate],
 div.column [data-column=updatedate],

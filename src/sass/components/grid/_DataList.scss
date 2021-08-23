@@ -481,6 +481,12 @@ div.column {
     font-size: 1.2rem;
     font-weight: 400;
   }
+  [data-column="id"] {
+    font-size: .9rem;
+    &.invite {
+      text-transform: uppercase;
+    }
+  }
   [data-column="createdate"],
   [data-column="updatedate"],
   [data-column="date"] {
