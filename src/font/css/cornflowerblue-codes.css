@@ -144,3 +144,5 @@
 .cfb-gripdots-center:before { content: '\e8ec'; } /* '' */
 .cfb-gripdots-left:before { content: '\e8ed'; } /* '' */
 .cfb-gripdots-right:before { content: '\e8ee'; } /* '' */
+.cfb-flower-2:before { content: '\e8f4'; } /* '' */
+.cfb-flower:before { content: '\e8f5'; } /* '' */

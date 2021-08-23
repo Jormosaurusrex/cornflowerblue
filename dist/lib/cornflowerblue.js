@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-08-18
+/*! Cornflower Blue - v0.1.1 - 2021-08-22
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -10890,7 +10890,6 @@ class SimpleForm {
         }
     }
 
-
     /* ELEMENT MAP METHODS______________________________________________________________ */
 
     getElement(element) {
@@ -11921,7 +11920,7 @@ class InputElement {
             autocomplete: 'off',
             arialabel: null,
             maxlength: null,
-            value: '',
+            value: null,
             disabled: false,
             classes: [],
             onchange: null,
@@ -12007,13 +12006,8 @@ class InputElement {
 
         if (!this.name) { this.name = this.id; }
 
-        if (!this.config.value) { this.config.value = ''; }
+        this.origval = this.config.value;
 
-        if (this.config.value) { // store the supplied value if any
-            this.origval = this.config.value;
-        } else {
-            this.origval = '';
-        }
 
         this.touched = false; // set untouched on creation.
     }
@@ -12113,27 +12107,32 @@ class InputElement {
             this.validator(this);
         }
         if ((this.errors.length > 0) || (this.warnings.length > 0)) {
-            this.showMessages();
-            this.container.classList.remove('valid');
+            if (this.hascontainer) {
+                this.showMessages();
+                this.container.classList.remove('valid');
+            }
             this.input.removeAttribute('aria-invalid');
             if (this.errors.length > 0) {
                 this.input.setAttribute('aria-invalid', 'true');
             }
         } else {
-            this.clearMessages();
             this.input.removeAttribute('aria-invalid');
-            if ((!this.value) || ((this.value) && (this.value.length === 0))) { // it's cleared.
-                this.container.classList.remove('valid');
-                this.container.classList.remove('filled');
-            } else if ((this.isDirty()) && (!onload)) { // This has to be valid
-                this.container.classList.add('valid');
-                this.container.classList.add('filled');
-            } else if (this.value) {
-                this.container.classList.remove('valid');
-                this.container.classList.add('filled');
-            } else {
-                this.container.classList.remove('valid');
+            if (this.hascontainer) {
+                this.clearMessages();
+                if ((!this.value) || ((this.value) && (this.value.length === 0))) { // it's cleared.
+                    this.container.classList.remove('valid');
+                    this.container.classList.remove('filled');
+                } else if ((this.isDirty()) && (!onload)) { // This has to be valid
+                    this.container.classList.add('valid');
+                    this.container.classList.add('filled');
+                } else if (this.value) {
+                    this.container.classList.remove('valid');
+                    this.container.classList.add('filled');
+                } else {
+                    this.container.classList.remove('valid');
+                }
             }
+
         }
         return (this.errors.length < 1);
     }
@@ -12441,11 +12440,13 @@ class InputElement {
                 this.input.classList.add(c);
             }
         }
-        this.input.addEventListener('change', () => {
-            if ((this.onchange) && (typeof this.onchange === 'function')) {
-                this.onchange(this);
-            }
-        });
+        if (this.onchange) {
+            this.input.addEventListener('change', () => {
+                if ((this.onchange) && (typeof this.onchange === 'function')) {
+                    this.onchange(this);
+                }
+            });
+        }
 
         this.input.addEventListener('paste', () => {
             this.input.removeAttribute('aria-invalid');
@@ -12524,7 +12525,6 @@ class InputElement {
                     this.passivebox.innerHTML = '';
                     this.passivebox.appendChild(this.passivetext);
                 }
-
                 if (this.helptimer) {
                     clearTimeout(this.helptimer);
                     if (this.helpbutton) {
@@ -12544,6 +12544,7 @@ class InputElement {
             if ((this.focusout) && (typeof this.focusout === 'function')) {
                 this.focusout(e, this);
             }
+
         });
 
         this.input.value = this.initialvalue;

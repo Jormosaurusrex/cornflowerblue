@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-08-18
+/*! Cornflower Blue - v0.1.1 - 2021-08-22
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class PasswordChangeForm {

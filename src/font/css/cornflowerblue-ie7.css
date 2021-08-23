@@ -155,3 +155,5 @@
 .cfb-gripdots-center { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8ec;&nbsp;'); }
 .cfb-gripdots-left { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8ed;&nbsp;'); }
 .cfb-gripdots-right { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8ee;&nbsp;'); }
+.cfb-flower-2 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8f4;&nbsp;'); }
+.cfb-flower { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8f5;&nbsp;'); }
