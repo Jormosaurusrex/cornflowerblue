@@ -56,7 +56,7 @@ module.exports = function(grunt) {
                     'src/libs/components/DatePicker.js',
                     'src/libs/components/DialogWindow.js',
                     'src/libs/components/FloatingPanel.js',
-                    'src/libs/components/Growler.js',
+                    'src/libs/components/Toast.js',
                     'src/libs/components/RadialProgressMeter.js',
                     'src/libs/components/SearchControl.js',
                     'src/libs/components/SimpleForm.js',

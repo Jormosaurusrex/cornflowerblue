@@ -178,9 +178,9 @@
   --input-border-color-rgb: var(--colors-standard-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
 
-  // Growler keys
-  --growler-core-color-rgb: var(--colors-highlight-rgb);
-  --growler-core-color: rgb(var(--growler-core-color-rgb));
-  --growler-header-text-color: var(--colors-hot-text);
+  // Toast keys
+  --toast-core-color-rgb: var(--colors-highlight-rgb);
+  --toast-core-color: rgb(var(--toast-core-color-rgb));
+  --toast-header-text-color: var(--colors-hot-text);
 
 }

@@ -26,7 +26,7 @@ div.growlbox {
     left: 1rem;
     margin-left: auto;
     margin-right: auto;
-    .growler {
+    .toast {
       margin-left: auto;
       margin-right: auto;
     }
@@ -39,8 +39,8 @@ div.growlbox {
     margin-right: auto;
   }
 }
-div.growler {
-  --growler-max-width: 20rem;
+div.toast {
+  --toast-max-width: 20rem;
   animation: cfb-fadein .5s;
   opacity: 1;
   position: relative;
@@ -51,9 +51,9 @@ div.growler {
   background-color: var(--canvas-color-secondary);
   margin: 0 auto 1rem auto;
   padding: 0;
-  width: var(--growler-max-width);
-  max-width: var(--growler-max-width);
-  min-width: var(--growler-max-width);
+  width: var(--toast-max-width);
+  max-width: var(--toast-max-width);
+  min-width: var(--toast-max-width);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -77,9 +77,9 @@ div.growler {
     }
   }
   h3 {
-    --growler-header-text-color: var(--colors-text-hot);
-    background-color: var(--growler-core-color);
-    color: var(--growler-header-text-color);
+    --toast-header-text-color: var(--colors-text-hot);
+    background-color: var(--toast-core-color);
+    color: var(--toast-header-text-color);
     display: flex;
     margin: 0;
     padding: .5em 1rem;
@@ -94,7 +94,7 @@ div.growler {
       text-shadow: var(--text-shadow);
     }
     button.closebutton {
-      color: var(--growler-header-text-color);
+      color: var(--toast-header-text-color);
       margin: 0;
       position: relative;
       left: auto;
@@ -109,7 +109,7 @@ div.growler {
     }
   }
   div.payload {
-    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--growler-core-color-rgb), 0.05) .5rem, rgba(var(--growler-core-color-rgb), 0.05) 1rem);
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent .5rem, rgba(var(--toast-core-color-rgb), 0.05) .5rem, rgba(var(--toast-core-color-rgb), 0.05) 1rem);
     padding: 1rem;
     display: flex;
     flex-direction: row;
@@ -134,22 +134,22 @@ div.growler {
     }
   }
   &.error {
-    --growler-core-color-rgb: var(--colors-error-rgb);
-    --growler-core-color: var(--colors-error);
+    --toast-core-color-rgb: var(--colors-error-rgb);
+    --toast-core-color: var(--colors-error);
   }
   &.warn {
-    --growler-core-color-rgb: var(--colors-warning-rgb);
-    --growler-header-text-color: var(--colors-standard);
-    --growler-core-color: var(--colors-warning);
+    --toast-core-color-rgb: var(--colors-warning-rgb);
+    --toast-header-text-color: var(--colors-standard);
+    --toast-core-color: var(--colors-warning);
   }
   &.caution {
-    --growler-core-color-rgb: var(--colors-caution-rgb);
-    --growler-header-text-color: var(--colors-standard);
-    --growler-core-color: var(--colors-caution);
+    --toast-core-color-rgb: var(--colors-caution-rgb);
+    --toast-header-text-color: var(--colors-standard);
+    --toast-core-color: var(--colors-caution);
   }
   &.success {
-    --growler-core-color-rgb: var(--colors-success-rgb);
-    --growler-core-color: var(--colors-success);
+    --toast-core-color-rgb: var(--colors-success-rgb);
+    --toast-core-color: var(--colors-success);
   }
 }
 

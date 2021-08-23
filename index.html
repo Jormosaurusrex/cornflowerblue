@@ -71,7 +71,7 @@
         <script type="text/javascript" src="src/libs/components/DialogWindow.js"></script>
         <script type="text/javascript" src="src/libs/components/Panel.js"></script>
         <script type="text/javascript" src="src/libs/components/FloatingPanel.js"></script>
-        <script type="text/javascript" src="src/libs/components/Growler.js"></script>
+        <script type="text/javascript" src="src/libs/components/Toast.js"></script>
         <script type="text/javascript" src="src/libs/components/info/MessageBox.js"></script>
         <script type="text/javascript" src="src/libs/components/info/InstructionBox.js"></script>
         <script type="text/javascript" src="src/libs/components/info/ErrorBox.js"></script>
@@ -477,25 +477,25 @@
                                 <h3 role="heading" aria-level="3">Data Grid</h3>
                             </div>
                         </section>
-                        <section aria-hidden="true" tabindex="-1" id="section-growler">
-                            <h2 role="heading" aria-level="2">Growlers</h2>
-                            <code class="invoker">new Growler({options});</code>
-                            <p>A <dfn>Growler</dfn> is a short-lived, auto-dismissable notifications that presents a simple payloads.</p>
+                        <section aria-hidden="true" tabindex="-1" id="section-toast">
+                            <h2 role="heading" aria-level="2">Toasts</h2>
+                            <code class="invoker">new Toast({options});</code>
+                            <p>A <dfn>Toast</dfn> is a short-lived, auto-dismissable notifications that presents a simple payloads.</p>
                             <p>They can be targeted to open in any one of six positions. They can be configured to show title or text payload individually.  Supplied icons will be included in the title if no payload is provided.</p>
                             <p>It is possible to set them to require manual dismissal by setting the <code>duration</code> to 0 or -1.</p>
-                            <div class="docbox" id="growlers-docbox"></div>
-                            <div class="demobox" id="growlers-positions">
+                            <div class="docbox" id="toasts-docbox"></div>
+                            <div class="demobox" id="toasts-positions">
                                 <h3 role="heading" aria-level="3">Positions</h3>
                             </div>
-                            <div class="demobox" id="growlers-special">
+                            <div class="demobox" id="toasts-special">
                                 <h3 role="heading" aria-level="3">Special Types</h3>
-                                <p>Growlers can be invoked with shorthand static methods. These growlers are lightweight and pre-configured.</p>
+                                <p>Toasts can be invoked with shorthand static methods. These toasts are lightweight and pre-configured.</p>
                                 <code class="block">
-                                    Growler.growl('This is a growl message!', 'Growler.growl');<br />
-                                    Growler.success('This is a success message!');<br />
-                                    Growler.error('This is an error message!');<br />
-                                    Growler.warn('This is an warning message!');<br />
-                                    Growler.caution('This is an caution message!');<br />
+                                    Toast.growl('This is a growl message!', 'Toast.growl');<br />
+                                    Toast.success('This is a success message!');<br />
+                                    Toast.error('This is an error message!');<br />
+                                    Toast.warn('This is an warning message!');<br />
+                                    Toast.caution('This is an caution message!');<br />
                                 </code>
                             </div>
                         </section>

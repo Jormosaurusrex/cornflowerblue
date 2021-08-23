@@ -53,7 +53,7 @@ class CornflowerBlueDemo {
                     text: TextFactory.get('create_account'),
                     mute: true,
                     action: function() {
-                        new Growler({
+                        new Toast({
                             position: 'top-left',
                             icon: 'warn-triangle',
                             title: 'Clicked',
@@ -151,7 +151,7 @@ class CornflowerBlueDemo {
                     text: "Create Account",
                     mute: true,
                     action: () => {
-                        new Growler({
+                        new Toast({
                             position: 'top-left',
                             icon: 'warn-triangle',
                             title: 'Clicked',
@@ -166,7 +166,7 @@ class CornflowerBlueDemo {
                         if ((btn.form) && (btn.form.dialog)) {
                             btn.form.dialog.close();
                         } else {
-                            new Growler({
+                            new Toast({
                                 position: 'top-left',
                                 icon: 'warn-triangle',
                                 title: 'Cancel',
@@ -316,7 +316,7 @@ class CornflowerBlueDemo {
             { label: 'Message Boxes', id: 'messageboxes', selected: true },
             { label: 'Forms', id: 'forms' },
             { label: 'Data Grids', id: 'datagrid' },
-            { label: 'Growlers', id: 'growler' },
+            { label: 'Toasts', id: 'toast' },
             { label: 'Progress Meters', id: 'progressmeters' },
             { label: 'Dialogs', id: 'dialogs' },
             { label: 'Switch Lists', id: 'switchlists' },
@@ -349,7 +349,7 @@ class CornflowerBlueDemo {
         document.getElementById('inputs-booleantoggle-docbox').appendChild(this.getOptionGrid(BooleanToggle).container);
         document.getElementById('buttons-docbox').appendChild(this.getOptionGrid(SimpleButton).container);
 
-        document.getElementById('growlers-docbox').appendChild(this.getOptionGrid(Growler).container);
+        document.getElementById('toasts-docbox').appendChild(this.getOptionGrid(Toast).container);
         document.getElementById('dialogwindow-docbox').appendChild(this.getOptionGrid(DialogWindow).container);
         document.getElementById('simpleprogress-docbox').appendChild(this.getOptionGrid(SimpleProgressMeter).container);
         document.getElementById('radialprogress-docbox').appendChild(this.getOptionGrid(RadialProgressMeter).container);
@@ -360,7 +360,7 @@ class CornflowerBlueDemo {
         this.grindDataGrids();
         this.grindDialogs();
         this.grindForms();
-        this.grindGrowlers();
+        this.grindToasts();
         this.grindSwitchLists();
         this.grindInputs();
         this.grindMessageBoxes();
@@ -1181,18 +1181,18 @@ class CornflowerBlueDemo {
     }
 
 
-    grindGrowlers() {
+    grindToasts() {
         let positions = document.createElement('div');
         positions.classList.add('example');
         positions.classList.add('centered');
         positions.appendChild(new SimpleButton({
             text: "Top Left",
             action: () => {
-                new Growler({
+                new Toast({
                     position: 'top-left',
                     icon: 'globe',
-                    title: 'Top Left Growler',
-                    text: 'A growler is here!',
+                    title: 'Top Left Toast',
+                    text: 'A toast is here!',
                     onopen: (g) => { this.dumpConfig(g);}
                 });
 
@@ -1201,10 +1201,10 @@ class CornflowerBlueDemo {
         positions.appendChild(new SimpleButton({
             text: "Top Center",
             action: () => {
-                new Growler({
+                new Toast({
                     position: 'top-center',
                     icon: 'chat',
-                    text: 'A top-center growler with an icon and no title.',
+                    text: 'A top-center toast with an icon and no title.',
                     onopen: (g) => { this.dumpConfig(g);}
                 });
             }
@@ -1212,15 +1212,15 @@ class CornflowerBlueDemo {
         positions.appendChild(new SimpleButton({
             text: "Top Right",
             action: () => {
-                new Growler({
+                new Toast({
                     position: 'top-right',
                     icon: 'star',
-                    title: 'Growler with no text.',
+                    title: 'Toast with no text.',
                     onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
-        document.getElementById('growlers-positions').appendChild(positions);
+        document.getElementById('toasts-positions').appendChild(positions);
 
         let positionslower = document.createElement('div');
         positionslower.classList.add('example');
@@ -1228,10 +1228,10 @@ class CornflowerBlueDemo {
         positionslower.appendChild(new SimpleButton({
             text: "Bottom Left",
             action: () => {
-                new Growler({
+                new Toast({
                     position: 'bottom-left',
-                    title: 'Bottom Left Growler',
-                    text: 'This growler has duration:0, and will stay until dismissed.',
+                    title: 'Bottom Left Toast',
+                    text: 'This toast has duration:0, and will stay until dismissed.',
                     duration: 0,
                     onopen: (g) => { this.dumpConfig(g);}
                 });
@@ -1240,11 +1240,11 @@ class CornflowerBlueDemo {
         positionslower.appendChild(new SimpleButton({
             text: "Bottom Center",
             action: () => {
-                new Growler({
+                new Toast({
                     position: 'bottom-center',
                     icon: 'heart',
-                    title: 'Bottom Center Growler',
-                    text: 'This growler has duration:0, so will stay until dismissed.',
+                    title: 'Bottom Center Toast',
+                    text: 'This toast has duration:0, so will stay until dismissed.',
                     duration: 0,
                     onopen: (g) => { this.dumpConfig(g);}
                 });
@@ -1253,15 +1253,15 @@ class CornflowerBlueDemo {
         positionslower.appendChild(new SimpleButton({
             text: "Bottom Right",
             action: () => {
-                new Growler({
+                new Toast({
                     position: 'bottom-right',
-                    title: 'Bottom Right Growler',
-                    text: 'Another growler over here!',
+                    title: 'Bottom Right Toast',
+                    text: 'Another toast over here!',
                     onopen: (g) => { this.dumpConfig(g);}
                 });
             }
         }).button);
-        document.getElementById('growlers-positions').appendChild(positionslower);
+        document.getElementById('toasts-positions').appendChild(positionslower);
 
 
         let special = document.createElement('div');
@@ -1270,40 +1270,40 @@ class CornflowerBlueDemo {
         special.appendChild(new SimpleButton({
             text: "Quick Growl",
             action: () => {
-                Growler.growl('This is a growl message!', 'Growler.growl');
-                this.writeConfig("Growler.growl", `Growler.growl('This is a growl message!', 'Growler.growl');`);
+                Toast.growl('This is a growl message!', 'Toast.growl');
+                this.writeConfig("Toast.growl", `Toast.growl('This is a growl message!', 'Toast.growl');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Success",
             action: () => {
-                Growler.success('This is a success message!');
-                this.writeConfig("Growler.success", `Growler.success('This is a success message!');`);
+                Toast.success('This is a success message!');
+                this.writeConfig("Toast.success", `Toast.success('This is a success message!');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Error",
             action: () => {
-                Growler.error('This is an error message!');
-                this.writeConfig("Growler.error", `Growler.error('This is an error message!');`);
+                Toast.error('This is an error message!');
+                this.writeConfig("Toast.error", `Toast.error('This is an error message!');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Warn",
             action: () => {
-                Growler.warn('This is a warning message!');
-                this.writeConfig("Growler.warn", `Growler.warn('This is a warning message!');`);
+                Toast.warn('This is a warning message!');
+                this.writeConfig("Toast.warn", `Toast.warn('This is a warning message!');`);
             }
         }).button);
         special.appendChild(new SimpleButton({
             text: "Caution",
             action: () => {
-                Growler.caution('This is a caution message!');
-                this.writeConfig("Growler.caution", `Growler.caution('This is a caution message!');`);
+                Toast.caution('This is a caution message!');
+                this.writeConfig("Toast.caution", `Toast.caution('This is a caution message!');`);
 
             }
         }).button);
-        document.getElementById('growlers-special').appendChild(special);
+        document.getElementById('toasts-special').appendChild(special);
     }
 
     grindInputs() {
@@ -2356,10 +2356,10 @@ class CornflowerBlueDemo {
             text: "User",
             icon: 'user-circle',
             items: [
-                { label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'User'") } },
-                { label: "Preferences", icon: 'gear', action: () => { Growler.growl("Clicked 'Preferences'") } },
-                { label: "Schedule", icon: 'calendar', action: () => { Growler.growl("Clicked 'Schedule'") } },
-                { label: "Log Out", icon: 'lock-open', action: () => { Growler.growl("Clicked 'Log Out'") } }
+                { label: "Profile", icon: 'user', action: () => { Toast.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: () => { Toast.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: () => { Toast.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: () => { Toast.growl("Clicked 'Log Out'") } }
             ]
         }).container);
         buttonmenu.appendChild(new ButtonMenu({
@@ -2367,10 +2367,10 @@ class CornflowerBlueDemo {
             icon: 'user-circle',
             mute: true,
             items: [
-                { label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'User'") } },
-                { label: "Preferences", icon: 'gear', action: () => { Growler.growl("Clicked 'Preferences'") } },
-                { label: "Schedule", icon: 'calendar', action: () => { Growler.growl("Clicked 'Schedule'") } },
-                { label: "Log Out", icon: 'lock-open', action: () => { Growler.growl("Clicked 'Log Out'") } }
+                { label: "Profile", icon: 'user', action: () => { Toast.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: () => { Toast.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: () => { Toast.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: () => { Toast.growl("Clicked 'Log Out'") } }
             ]
         }).container);
         buttonmenu.appendChild(new ButtonMenu({
@@ -2378,10 +2378,10 @@ class CornflowerBlueDemo {
             icon: 'user-circle',
             disabled: true,
             items: [
-                { label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'User'") } },
-                { label: "Preferences", icon: 'gear', action: () => { Growler.growl("Clicked 'Preferences'") } },
-                { label: "Schedule", icon: 'calendar', action: () => { Growler.growl("Clicked 'Schedule'") } },
-                { label: "Log Out", icon: 'lock-open', action: () => { Growler.growl("Clicked 'Log Out'") } }
+                { label: "Profile", icon: 'user', action: () => { Toast.growl("Clicked 'User'") } },
+                { label: "Preferences", icon: 'gear', action: () => { Toast.growl("Clicked 'Preferences'") } },
+                { label: "Schedule", icon: 'calendar', action: () => { Toast.growl("Clicked 'Schedule'") } },
+                { label: "Log Out", icon: 'lock-open', action: () => { Toast.growl("Clicked 'Log Out'") } }
             ]
         }).container);
         document.getElementById('tabsmenus-buttonmenu').appendChild(buttonmenu);
@@ -2390,10 +2390,10 @@ class CornflowerBlueDemo {
         tabbar.classList.add('example');
         tabbar.appendChild(new TabBar({
             tabs: [
-                { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: () => { Growler.growl("Clicked 'Home'") } },
-                { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: () => { Growler.growl("Clicked 'Feed'") } },
-                { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: () => { Growler.growl("Clicked 'Messages'") } },
-                { id: 'dt-1-profile', label: "Profile", icon: 'user', action: () => { Growler.growl("Clicked 'Profile'") } }
+                { id: 'dt-1-home', label: "Home", selected: true, icon: 'heart', action: () => { Toast.growl("Clicked 'Home'") } },
+                { id: 'dt-1-feed', label: "Feed", icon: 'legend', action: () => { Toast.growl("Clicked 'Feed'") } },
+                { id: 'dt-1-messages', label: "Messages", icon: 'chat', action: () => { Toast.growl("Clicked 'Messages'") } },
+                { id: 'dt-1-profile', label: "Profile", icon: 'user', action: () => { Toast.growl("Clicked 'Profile'") } }
             ]
         }).container);
         document.getElementById('tabsmenus-tabbar').appendChild(tabbar);

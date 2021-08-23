@@ -183,7 +183,6 @@ class DataGrid extends Panel {
      * @param callback and optional callback
      */
     fillData(callback) {
-        console.log("FILL DATA");
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);

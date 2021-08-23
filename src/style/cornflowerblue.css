@@ -125,9 +125,9 @@
   --input-default-padding: var(--input-default-top-padding) var(--input-default-right-padding) var(--input-default-bottom-padding) var(--input-default-left-padding);
   --input-border-color-rgb: var(--colors-standard-rgb);
   --input-border-color: rgb(var(--input-border-color-rgb));
-  --growler-core-color-rgb: var(--colors-highlight-rgb);
-  --growler-core-color: rgb(var(--growler-core-color-rgb));
-  --growler-header-text-color: var(--colors-hot-text);
+  --toast-core-color-rgb: var(--colors-highlight-rgb);
+  --toast-core-color: rgb(var(--toast-core-color-rgb));
+  --toast-header-text-color: var(--colors-hot-text);
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   :root {
@@ -5451,7 +5451,7 @@ div.growlbox.top-center {
   margin-left: auto;
   margin-right: auto;
 }
-div.growlbox.top-center .growler {
+div.growlbox.top-center .toast {
   margin-left: auto;
   margin-right: auto;
 }
@@ -5463,8 +5463,8 @@ div.growlbox.bottom-center {
   margin-right: auto;
 }
 
-div.growler {
-  --growler-max-width: 20rem;
+div.toast {
+  --toast-max-width: 20rem;
   animation: cfb-fadein 0.5s;
   opacity: 1;
   position: relative;
@@ -5475,18 +5475,18 @@ div.growler {
   background-color: var(--canvas-color-secondary);
   margin: 0 auto 1rem auto;
   padding: 0;
-  width: var(--growler-max-width);
-  max-width: var(--growler-max-width);
-  min-width: var(--growler-max-width);
+  width: var(--toast-max-width);
+  max-width: var(--toast-max-width);
+  min-width: var(--toast-max-width);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
 }
-div.growler[aria-hidden=true] {
+div.toast[aria-hidden=true] {
   opacity: 0;
 }
-div.growler > button.closebutton {
+div.toast > button.closebutton {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
@@ -5496,13 +5496,13 @@ div.growler > button.closebutton {
   text-shadow: var(--text-shadow);
   font-size: 1rem;
 }
-div.growler > button.closebutton:active, div.growler > button.closebutton:focus, div.growler > button.closebutton:hover {
+div.toast > button.closebutton:active, div.toast > button.closebutton:focus, div.toast > button.closebutton:hover {
   opacity: 1;
 }
-div.growler h3 {
-  --growler-header-text-color: var(--colors-text-hot);
-  background-color: var(--growler-core-color);
-  color: var(--growler-header-text-color);
+div.toast h3 {
+  --toast-header-text-color: var(--colors-text-hot);
+  background-color: var(--toast-core-color);
+  color: var(--toast-header-text-color);
   display: flex;
   margin: 0;
   padding: 0.5em 1rem;
@@ -5514,11 +5514,11 @@ div.growler h3 {
   text-transform: unset;
   white-space: nowrap;
 }
-div.growler h3 span.text {
+div.toast h3 span.text {
   text-shadow: var(--text-shadow);
 }
-div.growler h3 button.closebutton {
-  color: var(--growler-header-text-color);
+div.toast h3 button.closebutton {
+  color: var(--toast-header-text-color);
   margin: 0;
   position: relative;
   left: auto;
@@ -5527,12 +5527,12 @@ div.growler h3 button.closebutton {
   height: unset;
 }
 @media (hover: hover) and (pointer: fine) {
-  div.growler h3 button.closebutton:hover {
+  div.toast h3 button.closebutton:hover {
     text-shadow: var(--text-shadow);
   }
 }
-div.growler div.payload {
-  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--growler-core-color-rgb), 0.05) 0.5rem, rgba(var(--growler-core-color-rgb), 0.05) 1rem);
+div.toast div.payload {
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.5rem, rgba(var(--toast-core-color-rgb), 0.05) 0.5rem, rgba(var(--toast-core-color-rgb), 0.05) 1rem);
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -5542,7 +5542,7 @@ div.growler div.payload {
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
 }
-div.growler div.payload span.icon.i {
+div.toast div.payload span.icon.i {
   font-size: 30pt;
   display: flex;
   flex-direction: row;
@@ -5552,27 +5552,27 @@ div.growler div.payload span.icon.i {
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
 }
-div.growler div.payload div.text {
+div.toast div.payload div.text {
   font-size: 1.1rem;
   padding: 0 0 0 0.5em;
 }
-div.growler.error {
-  --growler-core-color-rgb: var(--colors-error-rgb);
-  --growler-core-color: var(--colors-error);
+div.toast.error {
+  --toast-core-color-rgb: var(--colors-error-rgb);
+  --toast-core-color: var(--colors-error);
 }
-div.growler.warn {
-  --growler-core-color-rgb: var(--colors-warning-rgb);
-  --growler-header-text-color: var(--colors-standard);
-  --growler-core-color: var(--colors-warning);
+div.toast.warn {
+  --toast-core-color-rgb: var(--colors-warning-rgb);
+  --toast-header-text-color: var(--colors-standard);
+  --toast-core-color: var(--colors-warning);
 }
-div.growler.caution {
-  --growler-core-color-rgb: var(--colors-caution-rgb);
-  --growler-header-text-color: var(--colors-standard);
-  --growler-core-color: var(--colors-caution);
+div.toast.caution {
+  --toast-core-color-rgb: var(--colors-caution-rgb);
+  --toast-header-text-color: var(--colors-standard);
+  --toast-core-color: var(--colors-caution);
 }
-div.growler.success {
-  --growler-core-color-rgb: var(--colors-success-rgb);
-  --growler-core-color: var(--colors-success);
+div.toast.success {
+  --toast-core-color-rgb: var(--colors-success-rgb);
+  --toast-core-color: var(--colors-success);
 }
 
 :root {
