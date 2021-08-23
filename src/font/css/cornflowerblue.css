@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?95920455');
-  src: url('../font/cornflowerblue.eot?95920455#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?95920455') format('woff2'),
-       url('../font/cornflowerblue.woff?95920455') format('woff'),
-       url('../font/cornflowerblue.ttf?95920455') format('truetype'),
-       url('../font/cornflowerblue.svg?95920455#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?3693159');
+  src: url('../font/cornflowerblue.eot?3693159#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?3693159') format('woff2'),
+       url('../font/cornflowerblue.woff?3693159') format('woff'),
+       url('../font/cornflowerblue.ttf?3693159') format('truetype'),
+       url('../font/cornflowerblue.svg?3693159#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?95920455#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?3693159#cornflowerblue') format('svg');
   }
 }
 */
@@ -187,6 +187,8 @@
 .cfb-chevron-double-right:before { content: '\e889'; } /* '' */
 .cfb-chevron-double-up:before { content: '\e88a'; } /* '' */
 .cfb-chevron-double-down:before { content: '\e88b'; } /* '' */
+.cfb-flower:before { content: '\e891'; } /* '' */
+.cfb-info:before { content: '\e892'; } /* '' */
 .cfb-chevron-right-thin:before { content: '\e8d7'; } /* '' */
 .cfb-chevron-left-thin:before { content: '\e8d8'; } /* '' */
 .cfb-chevron-down-thin:before { content: '\e8d9'; } /* '' */
@@ -199,5 +201,3 @@
 .cfb-gripdots-center:before { content: '\e8ec'; } /* '' */
 .cfb-gripdots-left:before { content: '\e8ed'; } /* '' */
 .cfb-gripdots-right:before { content: '\e8ee'; } /* '' */
-.cfb-flower-2:before { content: '\e8f4'; } /* '' */
-.cfb-flower:before { content: '\e8f5'; } /* '' */

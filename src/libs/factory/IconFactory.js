@@ -138,7 +138,9 @@ class IconFactory {
             'reply-left',
             'gripdots-left',
             'gripdots-right',
-            'gripdots-center'
+            'gripdots-center',
+            'flower',
+            'info'
         ];
     }
 

@@ -132,6 +132,8 @@
 .cfb-chevron-double-right:before { content: '\e889'; } /* '' */
 .cfb-chevron-double-up:before { content: '\e88a'; } /* '' */
 .cfb-chevron-double-down:before { content: '\e88b'; } /* '' */
+.cfb-flower:before { content: '\e891'; } /* '' */
+.cfb-info:before { content: '\e892'; } /* '' */
 .cfb-chevron-right-thin:before { content: '\e8d7'; } /* '' */
 .cfb-chevron-left-thin:before { content: '\e8d8'; } /* '' */
 .cfb-chevron-down-thin:before { content: '\e8d9'; } /* '' */
@@ -144,5 +146,3 @@
 .cfb-gripdots-center:before { content: '\e8ec'; } /* '' */
 .cfb-gripdots-left:before { content: '\e8ed'; } /* '' */
 .cfb-gripdots-right:before { content: '\e8ee'; } /* '' */
-.cfb-flower-2:before { content: '\e8f4'; } /* '' */
-.cfb-flower:before { content: '\e8f5'; } /* '' */
