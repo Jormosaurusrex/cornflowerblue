@@ -229,10 +229,10 @@
     transform: translateX(0);
   }
   10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-10px);
+    transform: translateX(-0.1rem);
   }
   20%, 40%, 60%, 80% {
-    transform: translateX(10px);
+    transform: translateX(0.1rem);
   }
 }
 @keyframes cfb-fadein {
@@ -3978,93 +3978,118 @@ div.textarea-container.mute div.wrap:after,
 p.textarea-container.mute div.wrap:after {
   right: 0;
 }
-div.input-container.mute.active div.topline, div.input-container.mute.filled div.topline, div.input-container.mute.passive div.topline,
+div.input-container.mute.active div.topline, div.input-container.mute.filled div.topline, div.input-container.mute.vigilant div.topline, div.input-container.mute.passive div.topline,
 p.input-container.mute.active div.topline,
 p.input-container.mute.filled div.topline,
+p.input-container.mute.vigilant div.topline,
 p.input-container.mute.passive div.topline,
 div.file-container.mute.active div.topline,
 div.file-container.mute.filled div.topline,
+div.file-container.mute.vigilant div.topline,
 div.file-container.mute.passive div.topline,
 div.timepicker-container.mute.active div.topline,
 div.timepicker-container.mute.filled div.topline,
+div.timepicker-container.mute.vigilant div.topline,
 div.timepicker-container.mute.passive div.topline,
 div.textarea-container.mute.active div.topline,
 div.textarea-container.mute.filled div.topline,
+div.textarea-container.mute.vigilant div.topline,
 div.textarea-container.mute.passive div.topline,
 p.textarea-container.mute.active div.topline,
 p.textarea-container.mute.filled div.topline,
+p.textarea-container.mute.vigilant div.topline,
 p.textarea-container.mute.passive div.topline {
   margin-top: 0;
   margin-bottom: 0;
   pointer-events: unset;
   opacity: 1;
 }
-div.input-container.mute.active div.topline label, div.input-container.mute.filled div.topline label, div.input-container.mute.passive div.topline label,
+div.input-container.mute.active div.topline label, div.input-container.mute.filled div.topline label, div.input-container.mute.vigilant div.topline label, div.input-container.mute.passive div.topline label,
 p.input-container.mute.active div.topline label,
 p.input-container.mute.filled div.topline label,
+p.input-container.mute.vigilant div.topline label,
 p.input-container.mute.passive div.topline label,
 div.file-container.mute.active div.topline label,
 div.file-container.mute.filled div.topline label,
+div.file-container.mute.vigilant div.topline label,
 div.file-container.mute.passive div.topline label,
 div.timepicker-container.mute.active div.topline label,
 div.timepicker-container.mute.filled div.topline label,
+div.timepicker-container.mute.vigilant div.topline label,
 div.timepicker-container.mute.passive div.topline label,
 div.textarea-container.mute.active div.topline label,
 div.textarea-container.mute.filled div.topline label,
+div.textarea-container.mute.vigilant div.topline label,
 div.textarea-container.mute.passive div.topline label,
 p.textarea-container.mute.active div.topline label,
 p.textarea-container.mute.filled div.topline label,
+p.textarea-container.mute.vigilant div.topline label,
 p.textarea-container.mute.passive div.topline label {
   padding-left: 0;
 }
-div.input-container.mute.active div.topline label button.help, div.input-container.mute.active div.topline label:after, div.input-container.mute.filled div.topline label button.help, div.input-container.mute.filled div.topline label:after, div.input-container.mute.passive div.topline label button.help, div.input-container.mute.passive div.topline label:after,
+div.input-container.mute.active div.topline label button.help, div.input-container.mute.active div.topline label:after, div.input-container.mute.filled div.topline label button.help, div.input-container.mute.filled div.topline label:after, div.input-container.mute.vigilant div.topline label button.help, div.input-container.mute.vigilant div.topline label:after, div.input-container.mute.passive div.topline label button.help, div.input-container.mute.passive div.topline label:after,
 p.input-container.mute.active div.topline label button.help,
 p.input-container.mute.active div.topline label:after,
 p.input-container.mute.filled div.topline label button.help,
 p.input-container.mute.filled div.topline label:after,
+p.input-container.mute.vigilant div.topline label button.help,
+p.input-container.mute.vigilant div.topline label:after,
 p.input-container.mute.passive div.topline label button.help,
 p.input-container.mute.passive div.topline label:after,
 div.file-container.mute.active div.topline label button.help,
 div.file-container.mute.active div.topline label:after,
 div.file-container.mute.filled div.topline label button.help,
 div.file-container.mute.filled div.topline label:after,
+div.file-container.mute.vigilant div.topline label button.help,
+div.file-container.mute.vigilant div.topline label:after,
 div.file-container.mute.passive div.topline label button.help,
 div.file-container.mute.passive div.topline label:after,
 div.timepicker-container.mute.active div.topline label button.help,
 div.timepicker-container.mute.active div.topline label:after,
 div.timepicker-container.mute.filled div.topline label button.help,
 div.timepicker-container.mute.filled div.topline label:after,
+div.timepicker-container.mute.vigilant div.topline label button.help,
+div.timepicker-container.mute.vigilant div.topline label:after,
 div.timepicker-container.mute.passive div.topline label button.help,
 div.timepicker-container.mute.passive div.topline label:after,
 div.textarea-container.mute.active div.topline label button.help,
 div.textarea-container.mute.active div.topline label:after,
 div.textarea-container.mute.filled div.topline label button.help,
 div.textarea-container.mute.filled div.topline label:after,
+div.textarea-container.mute.vigilant div.topline label button.help,
+div.textarea-container.mute.vigilant div.topline label:after,
 div.textarea-container.mute.passive div.topline label button.help,
 div.textarea-container.mute.passive div.topline label:after,
 p.textarea-container.mute.active div.topline label button.help,
 p.textarea-container.mute.active div.topline label:after,
 p.textarea-container.mute.filled div.topline label button.help,
 p.textarea-container.mute.filled div.topline label:after,
+p.textarea-container.mute.vigilant div.topline label button.help,
+p.textarea-container.mute.vigilant div.topline label:after,
 p.textarea-container.mute.passive div.topline label button.help,
 p.textarea-container.mute.passive div.topline label:after {
   opacity: 1;
 }
-div.input-container.mute.active div.topline div.topcontrol, div.input-container.mute.filled div.topline div.topcontrol, div.input-container.mute.passive div.topline div.topcontrol,
+div.input-container.mute.active div.topline div.topcontrol, div.input-container.mute.filled div.topline div.topcontrol, div.input-container.mute.vigilant div.topline div.topcontrol, div.input-container.mute.passive div.topline div.topcontrol,
 p.input-container.mute.active div.topline div.topcontrol,
 p.input-container.mute.filled div.topline div.topcontrol,
+p.input-container.mute.vigilant div.topline div.topcontrol,
 p.input-container.mute.passive div.topline div.topcontrol,
 div.file-container.mute.active div.topline div.topcontrol,
 div.file-container.mute.filled div.topline div.topcontrol,
+div.file-container.mute.vigilant div.topline div.topcontrol,
 div.file-container.mute.passive div.topline div.topcontrol,
 div.timepicker-container.mute.active div.topline div.topcontrol,
 div.timepicker-container.mute.filled div.topline div.topcontrol,
+div.timepicker-container.mute.vigilant div.topline div.topcontrol,
 div.timepicker-container.mute.passive div.topline div.topcontrol,
 div.textarea-container.mute.active div.topline div.topcontrol,
 div.textarea-container.mute.filled div.topline div.topcontrol,
+div.textarea-container.mute.vigilant div.topline div.topcontrol,
 div.textarea-container.mute.passive div.topline div.topcontrol,
 p.textarea-container.mute.active div.topline div.topcontrol,
 p.textarea-container.mute.filled div.topline div.topcontrol,
+p.textarea-container.mute.vigilant div.topline div.topcontrol,
 p.textarea-container.mute.passive div.topline div.topcontrol {
   opacity: 1;
   display: inline-block;
