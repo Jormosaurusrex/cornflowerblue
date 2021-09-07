@@ -145,6 +145,7 @@ p.textarea-container {
           --colors-local: var(--colors-standard);
         }
         display: flex;
+        z-index: 100;
         top: .2em;
         bottom: .2em;
         right: 3.5em;

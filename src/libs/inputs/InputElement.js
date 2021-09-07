@@ -41,6 +41,7 @@ class InputElement {
             onreturn: null,
             ontab: null,
             onkeyup: null,
+            onpaste: null,
             onkeydown: null,
             focusin: null,
             focusout: null,
@@ -88,6 +89,7 @@ class InputElement {
             ontab: { type: 'option', datatype: 'function', description: "The action to execute on hitting the tab key. Passed (event, self) as arguments." },
             onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
             onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
+            onpaste: { type: 'option', datatype: 'function', description: "The action to execute on paste within. Passed (event, self) as arguments." },
             focusin: { type: 'option', datatype: 'function', description: "The action to execute on focus in. Passed (event, self) as arguments." },
             focusout: { type: 'option', datatype: 'function', description: "The action to execute on focus out. Passed (event, self) as arguments." },
             validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
@@ -566,7 +568,7 @@ class InputElement {
             });
         }
 
-        this.input.addEventListener('paste', () => {
+        this.input.addEventListener('paste', (e) => {
             this.input.removeAttribute('aria-invalid');
             if (this.hascontainer) {
                 this.updateCounter();
@@ -575,6 +577,9 @@ class InputElement {
             if ((this.form) && (this.required) // If this is the only thing required, tell the form.
                 && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
                 if (this.form) { this.form.validate(); }
+            }
+            if ((this.onpaste) && (typeof this.onpaste === 'function')) {
+                this.onpaste(e, this);
             }
         });
 
@@ -914,6 +919,14 @@ class InputElement {
             console.error("Action provided for ontab is not a function!");
         }
         this.config.ontab = ontab;
+    }
+
+    get onpaste() { return this.config.onpaste; }
+    set onpaste(onpaste) {
+        if (typeof ontab !== 'function') {
+            console.error("Action provided for onpaste is not a function!");
+        }
+        this.config.onpaste = onpaste;
     }
 
     get origval() { return this.config.origval; }

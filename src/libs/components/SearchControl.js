@@ -136,11 +136,6 @@ class SearchControl {
         this.searchinput.addEventListener('focusout', (e) => {
             if (((this.value) && (this.value.length > 0)) || (this.stayopen)) {
                 this.container.classList.add('open');
-                if (this.autoexecute) {
-                    if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, this);
-                    }
-                }
             } else {
                 this.container.classList.remove('open');
             }

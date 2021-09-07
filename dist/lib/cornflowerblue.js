@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-08-23
+/*! Cornflower Blue - v0.1.1 - 2021-08-31
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -11910,10 +11910,13 @@ class InputElement {
             title: null,
             pattern: null,
             icon: null,
+            mute: null,
+            vigilant: null,
             minimal: false,
             passive: false,
             unsettext: TextFactory.get('not_set'),
             help: null,
+            size: null,
             helpwaittime: 5000,
             required: false,
             requiredtext: TextFactory.get('required_lc'),
@@ -12376,6 +12379,7 @@ class InputElement {
             this.input.setAttribute('required', 'required');
         }
         if (this.mute) { this.container.classList.add('mute'); }
+        if (this.vigilant) { this.container.classList.add('vigilant'); }
         if (this.disabled) { this.container.classList.add('disabled'); }
 
         if (this.hidden) {
@@ -12424,7 +12428,10 @@ class InputElement {
         this.input.setAttribute('aria-describedby', `msg-${this.id}`);
         this.input.setAttribute('role', 'textbox');
         this.input.setAttribute('tabindex', '0');
-        if (this.mute) {
+        if (this.size) {
+            this.input.setAttribute('size', this.size);
+        }
+        if ((this.mute) && (!this.vigilant)) {
             this.input.setAttribute('placeholder', '');
         } else {
             this.input.setAttribute('placeholder', this.placeholder);
@@ -12505,7 +12512,7 @@ class InputElement {
             }
         });
         this.input.addEventListener('focusin', (e) => {
-            if ((this.mute) && (this.placeholder) && (this.placeholder !== this.label)) {
+            if ((this.mute) && (!this.vigilant) && (this.placeholder) && (this.placeholder !== this.label)) {
                 this.input.setAttribute('placeholder', this.placeholder);
             }
             if (this.hascontainer) {
@@ -12533,7 +12540,7 @@ class InputElement {
                         this.helpbutton.closeTooltip();
                     }
                 }
-                if ((this.mute) && (this.label)) {
+                if ((this.mute) && (!this.vigilant) && (this.label)) {
                     this.input.setAttribute('placeholder', '');
                 }
                 this.container.classList.remove('active');
@@ -12561,9 +12568,8 @@ class InputElement {
         CFBUtils.applyDataAttributes(this.attributes, this.input);
         CFBUtils.applyDataAttributes(this.dataattributes, this.input);
 
-        if (this.mute) {
-            this.input.classList.add('mute');
-        }
+        if (this.mute) { this.input.classList.add('mute'); }
+        if (this.vigilant) { this.input.classList.add('vigilant'); }
 
         if (this.hidden) { this.input.setAttribute('hidden', 'hidden'); }
         if (this.disabled) { this.disable(); }
@@ -12842,6 +12848,9 @@ class InputElement {
     get requiredtext() { return this.config.requiredtext; }
     set requiredtext(requiredtext) { this.config.requiredtext = requiredtext; }
 
+    get size() { return this.config.size; }
+    set size(size) { this.config.size = size; }
+
     get title() { return this.config.title; }
     set title(title) { this.config.title = title; }
 
@@ -12872,6 +12881,9 @@ class InputElement {
             this.validate();
         }
     }
+
+    get vigilant() { return this.config.vigilant; }
+    set vigilant(vigilant) { this.config.vigilant = vigilant; }
 
     get warnings() { return this._warnings; }
     set warnings(warnings) { this._warnings = warnings; }
@@ -15123,8 +15135,6 @@ class PasswordInput extends TextInput {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildVisibilityControl() {
-
-
         let icon = this.hideicon,
             arialabel = TextFactory.get('hide_password');
 
@@ -15140,6 +15150,7 @@ class PasswordInput extends TextInput {
             arialabel: arialabel,
             tooltip: TextFactory.get('passwordinput-change_visibility'),
             action: (e, self) => {
+                console.log('clickify');
                 this.toggleVisibility();
                 e.stopPropagation();
             },

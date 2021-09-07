@@ -42,8 +42,6 @@ class PasswordInput extends TextInput {
     /* CONSTRUCTION METHODS_____________________________________________________________ */
 
     buildVisibilityControl() {
-
-
         let icon = this.hideicon,
             arialabel = TextFactory.get('hide_password');
 
@@ -59,6 +57,7 @@ class PasswordInput extends TextInput {
             arialabel: arialabel,
             tooltip: TextFactory.get('passwordinput-change_visibility'),
             action: (e, self) => {
+                console.log('clickify');
                 this.toggleVisibility();
                 e.stopPropagation();
             },
