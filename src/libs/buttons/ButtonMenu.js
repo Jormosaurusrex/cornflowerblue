@@ -15,8 +15,11 @@ class ButtonMenu extends SimpleButton {
             custompositioner: null, // A function that will be used to set the menu's position
                                     // different from the custom one. passed (self)
             focusinside: true,  //
-            menuid: null,    // If present, will only auto-close other menus of this type.
+            menuid: 'cfb-menu',    // If present, will only auto-close other menus of this type.
+
+            // killed
             closeopen: true, // if true, force all other open menus closed when this one opens.
+
             onopen: null,    // Function to execute on open. passed "self" as argument
             onclose: null,   // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
@@ -32,7 +35,6 @@ class ButtonMenu extends SimpleButton {
                         // {
                         //    label: "Menu Text", // text
                         //    tooltip: null, // Tooltip text
-                        //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
                         //    action: () => { } // what to do when the tab is clicked.
                         // }
@@ -44,12 +46,12 @@ class ButtonMenu extends SimpleButton {
      */
     static closeOpen(menuid) {
         if (menuid) {
-            if ((ButtonMenu.activeMenuTypes) && (ButtonMenu.activeMenuTypes[menuid])) {
-                ButtonMenu.activeMenuTypes[menuid].close();
+            for (let menu of document.body.querySelectorAll(`>*[data-menuid="${menuid}"]`)) {
+                menu.setAttribute('aria-hidden', 'true');
             }
         } else {
-            if (ButtonMenu.activeMenu) {
-                ButtonMenu.activeMenu.close();
+            for (let menu of document.body.querySelectorAll(`>*[data-menuid]`)) {
+                menu.setAttribute('aria-hidden', 'true');
             }
         }
     }
@@ -63,11 +65,6 @@ class ButtonMenu extends SimpleButton {
         }
         super(config);
         this.emsize = CFBUtils.getSingleEmInPixels();
-        if (this.menu) {
-            this.processMenu();
-        } else {
-            this.buildMenu();
-        }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -99,40 +96,38 @@ class ButtonMenu extends SimpleButton {
     open() {
         if (this.isopen) { return; }
 
-        if (this.closeopen) {
-            ButtonMenu.closeOpen(this.menuid); // close open menus
-        }
+        this.menuactual = document.getElementById(`menu-${this.menuid}`);
 
-        if (this.menuid) {
-            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
-                ButtonMenu.activeMenuTypes = {};
-            }
-            ButtonMenu.activeMenuTypes[this.menuid] = this;
-        } else {
-            if (typeof ButtonMenu.activeMenu === 'undefined' ) {
-                ButtonMenu.activeMenu = this;
+        if (!this.menuactual) {
+            if (this.menu) {
+                this.processMenu();
             } else {
-                ButtonMenu.activeMenu = this;
+                this.buildMenuActual();
+                this.buildMenu();
             }
         }
 
         this.button.setAttribute('aria-expanded', 'true');
-        this.menu.removeAttribute('aria-hidden');
-        this.menu.style.opacity = 0;
-        document.body.appendChild(this.menu);
+        this.menuactual.removeAttribute('aria-hidden');
+        this.menuactual.style.opacity = 0;
 
-        for (let li of this.menu.querySelectorAll('li')) {
-            li.setAttribute('tabindex', '0');
+        // clear classlist, and readd
+        this.menuactual.classList.remove(...this.menuactual.classList);
+        for (let c of this.classes) {
+            this.menuactual.classList.add(c);
         }
 
-        this.menu.classList.add(this.gravity);
+
+        for (let li of this.menuactual.querySelectorAll('li')) {
+            li.setAttribute('tabindex', '0');
+        }
 
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
 
         if (this.focusinside) {
-            let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
+            let focusable = this.menuactual.querySelectorAll('[tabindex]:not([tabindex="-1"])');
             window.setTimeout(() => { // Do the focus thing late
                 if ((focusable) && (focusable.length > 0)) {
                     focusable[0].focus();
@@ -163,9 +158,8 @@ class ButtonMenu extends SimpleButton {
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
-                this.menu.style.opacity =  1;
-                this.menu.style.removeProperty('opacity');
-                this.menu.classList.add('open');
+                this.menuactual.style.opacity =  1;
+                this.menuactual.style.removeProperty('opacity');
             }, 50);
         }
     }
@@ -189,46 +183,48 @@ class ButtonMenu extends SimpleButton {
             offsetRight = bodyRect.right - elemRect.right,
             offsetBottom = elemRect.bottom - bodyRect.bottom;
 
-        this.menu.style.removeProperty('top');
-        this.menu.style.removeProperty('bottom');
-        this.menu.style.removeProperty('left');
-        this.menu.style.removeProperty('right');
+        this.menuactual.style.removeProperty('top');
+        this.menuactual.style.removeProperty('bottom');
+        this.menuactual.style.removeProperty('left');
+        this.menuactual.style.removeProperty('right');
+
+        this.menuactual.setAttribute('data-gravity', this.gravity);
 
         switch(this.gravity) {
             case 'w':
             case 'west':
-                this.menu.style.top = `${offsetTop}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (this.emsize / 2)}px`;
+                this.menuactual.style.top = `${offsetTop}px`;
+                this.menuactual.style.left = `${offsetLeft - this.menuactual.clientWidth - (this.emsize / 2)}px`;
                 break;
             case 'e':
             case 'east':
-                this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
-                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
+                this.menuactual.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
+                this.menuactual.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
                 break;
             case 'n':
             case 'north':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
+                this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - this.menuactual.offsetWidth + this.button.offsetWidth}px`;
                 break;
             case 'nw':
             case 'northwest':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
+                this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 'se':
             case 'southeast':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
                 break;
             case 's':
             case 'south':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - (this.menu.offsetWidth / 2) + this.button.offsetWidth }px`;
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + this.button.offsetWidth }px`;
                 break;
             case 'southwest':
             default:
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - this.menuactual.offsetWidth + this.button.offsetWidth}px`;
                 break;
         }
 
@@ -238,12 +234,11 @@ class ButtonMenu extends SimpleButton {
      * Closes the button
      */
     close() {
-        this.button.appendChild(this.menu);
         this.button.removeAttribute('aria-expanded');
-        this.menu.setAttribute('aria-hidden', 'true');
+        this.menuactual.setAttribute('aria-hidden', 'true');
 
         if ((this.items) && (this.items.length > 0)) {
-            let items = Array.from(this.menu.querySelector('li'));
+            let items = Array.from(this.menuactual.querySelector('li'));
             for (let li of items) {
                 li.setAttribute('tabindex', '-1');
             }
@@ -253,14 +248,6 @@ class ButtonMenu extends SimpleButton {
             this.onclose(this);
         }
 
-        if (this.menuid) {
-            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
-                ButtonMenu.activeMenuTypes = {};
-            }
-            ButtonMenu.activeMenuTypes[this.menuid] = null;
-        } else {
-            ButtonMenu.activeMenu = null;
-        }
     }
 
     /**
@@ -272,14 +259,14 @@ class ButtonMenu extends SimpleButton {
         }, { once: true });
 
         window.addEventListener('click', (e) => {
-            let tag = this.menu.tagName.toLowerCase();
-            if (((this.menu.contains(e.target))) && (this.stayopen)) {
+            let tag = this.menuactual.tagName.toLowerCase();
+            if (((this.menuactual.contains(e.target))) && (this.stayopen)) {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
-            } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+            } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 // Do nothing.
-            } else if (this.menu.contains(e.target)) {
+            } else if (this.menuactual.contains(e.target)) {
                 this.close();
-            } else if (this.button.contains(e.target)) {
+            } else if (this.menuactual.contains(e.target)) {
                 // Do nothing.  This will auto close.
             } else {
                 this.close();
@@ -294,16 +281,8 @@ class ButtonMenu extends SimpleButton {
      * @returns DOM representation
      */
     buildMenu() {
-        this.menu = document.createElement('ul');
-        this.menu.classList.add('button-menu');
-        this.menu.setAttribute('aria-hidden', 'true');
-        this.menu.setAttribute('tabindex', '0');
-
-        for (let c of this.classes) {
-            this.menu.classList.add(c);
-        }
-
         let order = 1;
+        this.menuactual.innerHTML = "";
 
         for (let item of this.items) {
 
@@ -314,7 +293,7 @@ class ButtonMenu extends SimpleButton {
 
             let menuitem = document.createElement('li');
             menuitem.setAttribute('tabindex', '-1');
-            menuitem.setAttribute('data-order', order);
+            menuitem.setAttribute('data-order', `${order}`);
 
             menuitem.addEventListener('keyup', (e) => {
                 switch (e.key) {
@@ -324,11 +303,11 @@ class ButtonMenu extends SimpleButton {
                         break;
                     case 'ArrowUp':
                         e.preventDefault();
-                        this.menu.querySelector(`[data-order='${previous}']`).focus();
+                        this.menuactual.querySelector(`[data-order='${previous}']`).focus();
                         break;
                     case 'ArrowDown':
                         e.preventDefault();
-                        this.menu.querySelector(`[data-order='${next}']`).focus();
+                        this.menuactual.querySelector(`[data-order='${next}']`).focus();
                         break;
                     case 'Enter': // Enter
                     case ' ': // Space
@@ -366,49 +345,53 @@ class ButtonMenu extends SimpleButton {
             if (item.tooltip) {
                 new ToolTip({
                     text: item.tooltip,
-                    icon: item.tipicon,
                     gravity: this.tooltipgravity
                 }).attach(menuitem);
             }
 
-            this.menu.appendChild(menuitem);
+            this.menuactual.appendChild(menuitem);
 
             order++;
         }
-        this.button.appendChild(this.menu);
+    }
+
+    buildMenuActual() {
+        this.menuactual = document.createElement('ul');
+        this.menuactual.setAttribute('aria-hidden', 'true');
+        this.menuactual.setAttribute('tabindex', '0');
+        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+        this.menuactual.setAttribute('data-menuid', `${this.menuid}`);
+        document.body.appendChild(this.menuactual);
     }
 
     /**
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
-        this.menu.setAttribute('aria-hidden', 'true');
-        this.menu.setAttribute('tabindex', '0');
-        this.menu.classList.add('button-menu');
+        this.menuactual = this.menu;
+        this.menuactual.setAttribute('aria-hidden', 'true');
+        this.menuactual.setAttribute('tabindex', '0');
+        this.menuactual.setAttribute('data-menuid', this.menuid);
+        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+
+        document.body.appendChild(this.menuactual);
+
         for (let c of this.classes) {
             this.menu.classList.add(c);
         }
-        this.button.appendChild(this.menu);
+
         this.menu.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
                 this.close();
             }
         });
-    }
 
-    setMenu(menu) {
-        this.menu.remove();
-        this.menu = menu;
-        this.processMenu();
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get autoclose() { return this.config.autoclose; }
     set autoclose(autoclose) { this.config.autoclose = autoclose; }
-
-    get closeopen() { return this.config.closeopen; }
-    set closeopen(closeopen) { this.config.closeopen = closeopen; }
 
     get custompositioner() { return this.config.custompositioner; }
     set custompositioner(custompositioner) { this.config.custompositioner = custompositioner; }
@@ -427,6 +410,9 @@ class ButtonMenu extends SimpleButton {
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
+
+    get menuactual() { return this.config.menuactual; }
+    set menuactual(menuactual) { this.config.menuactual = menuactual; }
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }

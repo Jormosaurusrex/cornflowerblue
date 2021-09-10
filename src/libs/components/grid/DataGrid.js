@@ -94,7 +94,6 @@ class DataGrid extends Panel {
             // label: <string>,
             // icon: <iconid>,
             // tooltip: <tooltip string>,
-            // tipicon: <iconid>, // if you want to change the tooltip icon
             // type: <string>     // Action types are:
             //                    // view - loads the item into a view window.
             //                    //        If allowedits=true, this window has an edit toggle
@@ -2011,7 +2010,6 @@ class DataGrid extends Panel {
             /*
                         //    label: "Menu Text", // text
                         //    tooltip: null, // Tooltip text
-                        //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
                         //    action: () => { } // what to do when the tab is clicked.
                         // }
@@ -2022,8 +2020,7 @@ class DataGrid extends Panel {
                 let myaction = {
                     label: ra.label,
                     toolip: ra.tooltip,
-                    icon: ra.icon,
-                    tipicon: ra.tipicon
+                    icon: ra.icon
                 };
                 switch(ra.type) {
                     case 'edit':

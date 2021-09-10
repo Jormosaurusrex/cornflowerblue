@@ -172,7 +172,6 @@ class TabBar {
         if (tabdef.tooltip) {
             new ToolTip({
                 text: tabdef.tooltip,
-                icon: tabdef.tipicon,
                 gravity: (tabdef.tooltipgravity ? tabdef.tooltipgravity : 's')
             }).attach(li);
         }

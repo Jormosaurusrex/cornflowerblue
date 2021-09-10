@@ -2,7 +2,6 @@ class ToolTip {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null,
             containerId: 'cfb-tooltip',
             gravity: 'n',
             text: null,
@@ -13,10 +12,6 @@ class ToolTip {
 
     static get DOCUMENTATION() {
         return {
-            id: { type: 'option', datatype: 'string', description: "A unique id value. The tooltip wrapper object will have this as it's id." },
-            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
-            icon: { type: 'option', datatype: 'string', description: "The icon to use in the tooltip." },
-            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
             gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip into." },
             text: { type: 'option', datatype: 'string', description: "The text to use in the tooltip." },
             parent: { type: 'option', datatype: 'object', description: "The parent object this fires off." },
@@ -77,6 +72,12 @@ class ToolTip {
         this.parent.addEventListener('mouseover', onmouseover);
         this.parent.addEventListener('focusin', onfocusin);
 
+    }
+    /* PSEUDO-ACCESSORS ________________________________________________________________ */
+
+    get isopen() {
+        if (!ToolTip.activeTooltip) { return false; }
+        return ToolTip.activeTooltip.container.hasAttribute('aria-hidden');
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -204,17 +205,12 @@ class ToolTip {
     }
 
     /**
-     * Closes the help tooltip.
+     * Closes the tooltip.
      */
     close() {
         if (!ToolTip.activeTooltip) return;
         ToolTip.activeTooltip.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
-    }
-
-    get isopen() {
-        if (!ToolTip.activeTooltip) { return false; }
-        return ToolTip.activeTooltip.container.hasAttribute('aria-hidden');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */

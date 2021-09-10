@@ -21,7 +21,6 @@ class SimpleButton {
             icon: null,
             iconclasses: [],
             iconprefixsecond: 'cfb',
-            tipicon: null,
             tipgravity: 'n',
             classes: [],
             image: null,
@@ -64,7 +63,6 @@ class SimpleButton {
             shape: { type: 'option', datatype: 'string', description: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle." },
             size: { type: 'option', datatype: 'string', description: "The size of the button: micro, small, medium (default), large, fill" },
             tooltip: { type: 'option', datatype: 'string', description: "An optional tooltip."},
-            tipicon: { type: 'option', datatype: 'string', description: "An icon for the tooltip."},
             tipgravity: { type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
             onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
             onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
@@ -313,7 +311,6 @@ class SimpleButton {
             this.tooltipobj = new ToolTip({
                 id: `${this.id}-tt`,
                 text: this.tooltip,
-                icon: this.tipicon,
                 gravity: this.tipgravity,
             });
             this.tooltipobj.attach(this.button);
@@ -579,9 +576,6 @@ class SimpleButton {
 
     get tipgravity() { return this.config.tipgravity; }
     set tipgravity(tipgravity) { this.config.tipgravity = tipgravity; }
-
-    get tipicon() { return this.config.tipicon; }
-    set tipicon(tipicon) { this.config.tipicon = tipicon; }
 
     get tooltip() { return this.config.tooltip; }
     set tooltip(tooltip) { this.config.tooltip = tooltip; }

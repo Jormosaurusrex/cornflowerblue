@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-08-31
+/*! Cornflower Blue - v0.1.1 - 2021-09-09
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3048,10 +3048,7 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
-        if ((this.button.getAttribute('aria-expanded')) && (this.button.getAttribute('aria-expanded') === 'true')) {
-            return true;
-        }
-        return false;
+        return !!((this.button.getAttribute('aria-expanded')) && (this.button.getAttribute('aria-expanded') === 'true'));
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -10271,11 +10268,6 @@ class SearchControl {
         this.searchinput.addEventListener('focusout', (e) => {
             if (((this.value) && (this.value.length > 0)) || (this.stayopen)) {
                 this.container.classList.add('open');
-                if (this.autoexecute) {
-                    if ((this.action) && (typeof this.action === 'function')) {
-                        this.action(this.value, this);
-                    }
-                }
             } else {
                 this.container.classList.remove('open');
             }
@@ -11599,23 +11591,16 @@ class ToolTip {
 
     static get DEFAULT_CONFIG() {
         return {
-            id : null,
-            icon: 'help-circle',
+            containerId: 'cfb-tooltip',
             gravity: 'n',
-            iconclasses: [],
             text: null,
             parent: null,
-            waittime: 1000,
-            classes: []
+            waittime: 1000
         };
     }
 
     static get DOCUMENTATION() {
         return {
-            id: { type: 'option', datatype: 'string', description: "A unique id value. The tooltip wrapper object will have this as it's id." },
-            classes: { type: 'option', datatype: 'stringarray', description: "An array of css class names to apply." },
-            icon: { type: 'option', datatype: 'string', description: "The icon to use in the tooltip." },
-            iconclasses: { type: 'option', datatype: 'stringarray', description: "An array of css classes to apply to the icon." },
             gravity: { type: 'option', datatype: 'string', description: "The direction to open the tooltip into." },
             text: { type: 'option', datatype: 'string', description: "The text to use in the tooltip." },
             parent: { type: 'option', datatype: 'object', description: "The parent object this fires off." },
@@ -11637,7 +11622,6 @@ class ToolTip {
      */
     constructor(config) {
         this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `tt-${CFBUtils.getUniqueKey(5)}`; }
         return this;
     }
 
@@ -11652,22 +11636,37 @@ class ToolTip {
            parent = parent.container;
         }
         this.parent = parent;
-        this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
-        this.parent.addEventListener('mouseover', () => {
-            this.open();
-        });
-        this.parent.addEventListener('mouseout', () => {
+
+        const onmouseout = (e) => {
             clearTimeout(ToolTip.timer);
             this.close();
-        });
-        this.parent.addEventListener('focusin', () => {
+            this.parent.removeEventListener('mouseout', onmouseout);
+        }
+        const onmouseover = (e) => {
             this.open();
-        });
-        this.parent.addEventListener('focusout', () => {
+            this.parent.addEventListener('mouseout', onmouseout);
+        }
+
+        const onfocusout = (e) => {
             clearTimeout(ToolTip.timer);
             this.close();
-        });
+            this.parent.removeEventListener('focusout', onfocusout);
+        }
+        const onfocusin = (e) => {
+            this.open();
+            this.parent.addEventListener('focusout', onfocusout);
+        }
+
+        this.parent.addEventListener('mouseover', onmouseover);
+        this.parent.addEventListener('focusin', onfocusin);
+
+    }
+    /* PSEUDO-ACCESSORS ________________________________________________________________ */
+
+    get isopen() {
+        if (!ToolTip.activeTooltip) { return false; }
+        return ToolTip.activeTooltip.container.hasAttribute('aria-hidden');
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -11677,7 +11676,6 @@ class ToolTip {
      * This actually only starts a timer.  The actual opening happens in openGuts()
      */
     open() {
-
         ToolTip.closeOpen();
         ToolTip.timer = setTimeout(()  => {
             this.openGuts();
@@ -11693,13 +11691,41 @@ class ToolTip {
         }
         ToolTip.closeOpen();
 
-        document.body.appendChild(this.container);
+        this.container = document.getElementById(`${this.containerId}`);
+
+        if (!this.container) {
+            this.buildContainer();
+        }
+
+        this.container.innerHTML = this.text;
         this.container.removeAttribute('aria-hidden');
 
         if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;
         } else {
             ToolTip.activeTooltip = this;
+        }
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.setAttribute('data-gravity', 's');
+                break;
+            case 'w':
+            case 'west':
+                this.container.setAttribute('data-gravity', 'w');
+                break;
+            case 'e':
+            case 'east':
+                this.container.setAttribute('data-gravity', 'e');
+                break;
+            case 'n':
+            case 'north':
+                this.container.setAttribute('data-gravity', 'n');
+                break;
+            case 'nw':
+            default:
+                this.container.setAttribute('data-gravity', 'nw');
+                break;
         }
 
         this.setPosition();
@@ -11717,7 +11743,6 @@ class ToolTip {
             }
             me.setPosition();
         }, true);
-
 
     }
 
@@ -11769,11 +11794,11 @@ class ToolTip {
     }
 
     /**
-     * Closes the help tooltip.
+     * Closes the tooltip.
      */
     close() {
-        this.parent.appendChild(this.container);
-        this.container.setAttribute('aria-hidden', 'true');
+        if (!ToolTip.activeTooltip) return;
+        ToolTip.activeTooltip.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
     }
 
@@ -11784,58 +11809,10 @@ class ToolTip {
      */
     buildContainer() {
         this.container = document.createElement('div');
+        this.container.setAttribute('id', this.containerId)
         this.container.classList.add('tooltip');
         this.container.setAttribute('aria-hidden', 'true');
-        if (this.id) { this.container.setAttribute('id', this.id); }
-        switch(this.gravity) {
-            case 's':
-            case 'south':
-                this.container.classList.add('south');
-                break;
-            case 'w':
-            case 'west':
-                this.container.classList.add('west');
-                break;
-            case 'e':
-            case 'east':
-                this.container.classList.add('east');
-                break;
-            case 'n':
-            case 'north':
-                this.container.classList.add('north');
-                break;
-            case 'nw':
-            default:
-                this.container.classList.add('nw');
-                break;
-        }
-
-        if ((this.classes) && (this.classes.length > 0)) {
-            for (let c of this.classes) {
-                this.container.classList.add(c);
-            }
-        }
-
-        if ((this.icon) && (this.icon !== '')) {
-            let icon = IconFactory.icon(this.icon);
-            icon.classList.add('tipicon');
-            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-                for (let ic of this.iconclasses) {
-                    icon.classList.add(ic);
-                }
-            }
-            this.container.appendChild(icon);
-        }
-
-        this.tiptext = document.createElement('div');
-        this.tiptext.classList.add('tiptext');
-        this.tiptext.setAttribute('id', `${this.id}-text`);
-        if (this.text) {
-            this.tiptext.innerHTML = this.text;
-        }
-
-        this.container.appendChild(this.tiptext);
-
+        document.body.appendChild(this.container);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -11848,23 +11825,14 @@ class ToolTip {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
+    get container() { return this._container; }
     set container(container) { this._container = container; }
+
+    get containerId() { return this.config.containerId; }
+    set containerId(containerId) { this.config.containerId = containerId; }
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get iconclasses() { return this.config.iconclasses; }
-    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -11877,9 +11845,6 @@ class ToolTip {
 
     get timer() { return this._timer; }
     set timer(timer) { this._timer = timer; }
-
-    get tiptext() { return this._tiptext; }
-    set tiptext(tiptext) { this._tiptext = tiptext; }
 
     get tooltip() { return this._tooltip; }
     set tooltip(tooltip) { this._tooltip = tooltip; }
@@ -11932,6 +11897,7 @@ class InputElement {
             onreturn: null,
             ontab: null,
             onkeyup: null,
+            onpaste: null,
             onkeydown: null,
             focusin: null,
             focusout: null,
@@ -11979,6 +11945,7 @@ class InputElement {
             ontab: { type: 'option', datatype: 'function', description: "The action to execute on hitting the tab key. Passed (event, self) as arguments." },
             onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
             onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
+            onpaste: { type: 'option', datatype: 'function', description: "The action to execute on paste within. Passed (event, self) as arguments." },
             focusin: { type: 'option', datatype: 'function', description: "The action to execute on focus in. Passed (event, self) as arguments." },
             focusout: { type: 'option', datatype: 'function', description: "The action to execute on focus out. Passed (event, self) as arguments." },
             validator: { type: 'option', datatype: 'function', description: "A function to run to test validity. Passed the self as arguments." },
@@ -12457,7 +12424,7 @@ class InputElement {
             });
         }
 
-        this.input.addEventListener('paste', () => {
+        this.input.addEventListener('paste', (e) => {
             this.input.removeAttribute('aria-invalid');
             if (this.hascontainer) {
                 this.updateCounter();
@@ -12466,6 +12433,9 @@ class InputElement {
             if ((this.form) && (this.required) // If this is the only thing required, tell the form.
                 && ((this.input.value.length === 0) || (this.input.value.length >= 1))) { // Only these two lengths matter
                 if (this.form) { this.form.validate(); }
+            }
+            if ((this.onpaste) && (typeof this.onpaste === 'function')) {
+                this.onpaste(e, this);
             }
         });
 
@@ -12805,6 +12775,14 @@ class InputElement {
             console.error("Action provided for ontab is not a function!");
         }
         this.config.ontab = ontab;
+    }
+
+    get onpaste() { return this.config.onpaste; }
+    set onpaste(onpaste) {
+        if (typeof ontab !== 'function') {
+            console.error("Action provided for onpaste is not a function!");
+        }
+        this.config.onpaste = onpaste;
     }
 
     get origval() { return this.config.origval; }

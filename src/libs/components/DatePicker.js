@@ -148,7 +148,6 @@ class DatePicker {
             let th = document.createElement('th');
             th.innerHTML = weekday.charAt(0);
             let celltip = new ToolTip({
-                tipicon: '',
                 classes: ['unfixed'],
                 text: weekday
             });

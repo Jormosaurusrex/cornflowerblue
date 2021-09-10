@@ -1,6 +1,4 @@
-ul.button-menu,
-div.button-menu,
-form.button-menu {
+*[data-menuid] {
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   flex-direction: column;
@@ -10,14 +8,11 @@ form.button-menu {
   margin: 0;
   padding: 0;
   overflow: visible;
-  z-index: 20000;
   border-radius: var(--border-radius);
   background-color: var(--canvas-color-secondary);
   color: var(--colors-affordance);
   box-shadow: var(--dialog-box-shadow);
-  &[aria-hidden='true'] {
-    display: none;
-  }
+  z-index: 20000;
   &:before {
     content: "";
     width: 0;
@@ -29,23 +24,22 @@ form.button-menu {
     border-style: solid;
     border-color: var(--canvas-color-secondary) transparent;
   }
-  &.s,
-  &.south {
+  &[aria-hidden='true'] {
+    display: none;
+  }
+  &[data-gravity="s"] {
     &:before {
       right: calc((100% / 2) + .35rem);
     }
   }
-  &.southeast,
-  &.se {
+  &[data-gravity="se"] {
     &:before {
       left: .2rem;
       top: -.7rem;
     }
   }
-  &.north,
-  &.n,
-  &.ne,
-  &.northeast {
+  &[data-gravity="n"],
+  &[data-gravity="ne"] {
     &:before {
       bottom: -.7rem;
       right: .2rem;
@@ -54,8 +48,7 @@ form.button-menu {
       border-width: .7rem .7rem 0 .7rem;
     }
   }
-  &.nw,
-  &.northwest {
+  &[data-gravity="nw"] {
     &:before {
       bottom: -.7rem;
       left: .2rem;
@@ -63,8 +56,7 @@ form.button-menu {
       border-width: .7rem .7rem 0 .7rem;
     }
   }
-  &.west,
-  &.w {
+  &[data-gravity="w"] {
     &:before {
       left: unset;
       right: -.5rem;
@@ -74,8 +66,7 @@ form.button-menu {
       border-width: .5rem 0 .5rem .5rem;
     }
   }
-  &.east,
-  &.e {
+  &[data-gravity="e"] {
     &:before {
       left: -.5rem;
       bottom: unset;
@@ -85,7 +76,7 @@ form.button-menu {
     }
   }
 }
-ul.button-menu {
+ul[data-menuid] {
   display: flex;
   li {
     --link-color: var(--colors-affordance);
@@ -133,7 +124,7 @@ ul.button-menu {
     }
   }
 }
-form.button-menu {
+form[data-menuid] {
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   min-width: 20em;
@@ -155,4 +146,3 @@ form.button-menu {
     }
   }
 }
-
