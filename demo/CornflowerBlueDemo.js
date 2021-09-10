@@ -2355,6 +2355,7 @@ class CornflowerBlueDemo {
         buttonmenu.appendChild(new ButtonMenu({
             text: "User",
             icon: 'user-circle',
+            gravity: 's',
             items: [
                 { label: "Profile", icon: 'user', action: () => { Toast.growl("Clicked 'User'") } },
                 { label: "Preferences", icon: 'gear', action: () => { Toast.growl("Clicked 'Preferences'") } },
@@ -2365,6 +2366,7 @@ class CornflowerBlueDemo {
         buttonmenu.appendChild(new ButtonMenu({
             text: "User",
             icon: 'user-circle',
+            gravity: 'se',
             mute: true,
             items: [
                 { label: "Profile", icon: 'user', action: () => { Toast.growl("Clicked 'User'") } },

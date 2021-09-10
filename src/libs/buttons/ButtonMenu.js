@@ -198,33 +198,39 @@ class ButtonMenu extends SimpleButton {
                 break;
             case 'e':
             case 'east':
-                this.menuactual.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
+                this.menuactual.style.top = `${offsetTop}px`;
                 this.menuactual.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
                 break;
             case 'n':
             case 'north':
                 this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
-                this.menuactual.style.left = `${offsetLeft - this.menuactual.offsetWidth + this.button.offsetWidth}px`;
+                this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + (this.button.offsetWidth / 2)}px`;
                 break;
             case 'nw':
             case 'northwest':
                 this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
-                this.menuactual.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
+                this.menuactual.style.left = `${offsetLeft}px`;
                 break;
-            case 'se':
-            case 'southeast':
-                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menuactual.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
+            case 'ne':
+            case 'northeast':
+                this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
+                this.menuactual.style.right = `${offsetRight}px`;
                 break;
             case 's':
             case 'south':
                 this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + this.button.offsetWidth }px`;
+                this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + (this.button.offsetWidth / 2)}px`;
+                break;
+            case 'se':
+            case 'southeast':
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft}px`;
                 break;
             case 'southwest':
+            case 'sw':
             default:
                 this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menuactual.style.left = `${offsetLeft - this.menuactual.offsetWidth + this.button.offsetWidth}px`;
+                this.menuactual.style.right = `${offsetRight}px`;
                 break;
         }
 

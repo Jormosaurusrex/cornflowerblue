@@ -1,4 +1,5 @@
 *[data-menuid] {
+  --menu-bg-color: var(--canvas-color-secondary);
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
   flex-direction: column;
@@ -9,7 +10,7 @@
   padding: 0;
   overflow: visible;
   border-radius: var(--border-radius);
-  background-color: var(--canvas-color-secondary);
+  background-color: var(--menu-bg-color);
   color: var(--colors-affordance);
   box-shadow: var(--dialog-box-shadow);
   z-index: 20000;
@@ -22,14 +23,14 @@
     top: -.7rem;
     border-width: 0 .7rem .7rem .7rem;
     border-style: solid;
-    border-color: var(--canvas-color-secondary) transparent;
+    border-color: var(--menu-bg-color) transparent;
   }
   &[aria-hidden='true'] {
     display: none;
   }
   &[data-gravity="s"] {
     &:before {
-      right: calc((100% / 2) + .35rem);
+      right: calc((100% / 2) - .7rem);
     }
   }
   &[data-gravity="se"] {
@@ -42,10 +43,15 @@
   &[data-gravity="ne"] {
     &:before {
       bottom: -.7rem;
-      right: .2rem;
-      left: unset;
+      left: .2rem;
       top: unset;
       border-width: .7rem .7rem 0 .7rem;
+    }
+  }
+  &[data-gravity="ne"] {
+    &:before {
+      right: .2rem;
+      left: unset;
     }
   }
   &[data-gravity="nw"] {
@@ -62,7 +68,7 @@
       right: -.5rem;
       bottom: unset;
       top: .5rem;
-      border-color: transparent var(--canvas-color-secondary);
+      border-color: transparent var(--menu-bg-color);
       border-width: .5rem 0 .5rem .5rem;
     }
   }
@@ -71,13 +77,14 @@
       left: -.5rem;
       bottom: unset;
       top: .5rem;
-      border-color: transparent var(--canvas-color-secondary);
+      border-color: transparent var(--menu-bg-color);
       border-width: .5rem .5rem .5rem 0;
     }
   }
 }
 ul[data-menuid] {
   display: flex;
+  padding: .5rem 0;
   li {
     --link-color: var(--colors-affordance);
     padding: 0;
@@ -85,6 +92,7 @@ ul[data-menuid] {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    margin: 0;
     &:active,
     &:focus {
       --link-color: var(--colors-text-hot);
@@ -102,10 +110,10 @@ ul[data-menuid] {
     }
     a {
       --colors-affordance: var(--link-color);
-      padding: 0.6rem 1rem 0.6rem 1rem;
+      padding: 0.5rem 1rem;
       white-space: nowrap;
       background-color: transparent;
-      font-size: 1em;
+      font-size: 1rem;
       cursor: pointer;
       display: flex;
       flex-direction: row;
@@ -113,7 +121,6 @@ ul[data-menuid] {
       align-items: center;
       flex-grow: 1;
       &:focus {
-        margin: .3rem;
         outline: var(--colors-text-hot) dashed .1rem;
         outline-offset: .2rem;
         text-decoration: underline double;
