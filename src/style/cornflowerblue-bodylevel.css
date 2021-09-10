@@ -1329,8 +1329,8 @@ div.toggleset > a.button:hover {
 
 div.tooltip {
   font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
-  animation: cfb-fadein 0.5s;
+  font-size: 1em;
+  animation: cfb-fadein 0.2s;
   opacity: 1;
   position: absolute;
   display: flex;
@@ -1339,9 +1339,8 @@ div.tooltip {
   align-items: center;
   justify-content: flex-start;
   align-content: center;
-  list-style-type: none;
   margin: 0;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem;
   min-height: 2.7rem;
   overflow: visible;
   z-index: 21000;
@@ -1350,6 +1349,10 @@ div.tooltip {
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
   filter: var(--shadows-dropshadow-filter);
+  max-width: 33em;
+  white-space: normal;
+  line-height: 1.2;
+  text-align: left;
 }
 div.tooltip[aria-hidden=true] {
   display: none;
@@ -1365,35 +1368,24 @@ div.tooltip:before {
   border-color: var(--canvas-color-highlight) transparent;
   border-width: 0.5rem 0.5rem 0 0.5rem;
 }
-div.tooltip span.tipicon {
-  padding: 0;
-  margin: 0 1rem 0 0;
-}
-div.tooltip div.tiptext {
-  max-width: 33em;
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-  font-size: 1em;
-}
-div.tooltip.unfixed div.tiptext {
+div.tooltip.unfixed {
   min-width: unset;
 }
-div.tooltip.north:before {
+div.tooltip[data-gravity=n]:before {
   left: calc((100% / 2) - .5rem);
 }
-div.tooltip.south:before {
+div.tooltip[data-gravity=s]:before {
   bottom: unset;
   top: -0.4em;
   left: calc((100% / 2) - .5rem);
   border-width: 0 0.5rem 0.5rem 0.5rem;
 }
-div.tooltip.southwest:before {
+div.tooltip[data-gravity=sw]:before {
   bottom: unset;
   top: -0.5rem;
   border-width: 0 0.5rem 0.5rem 0.5rem;
 }
-div.tooltip.west:before {
+div.tooltip[data-gravity=w]:before {
   left: unset;
   right: -0.5rem;
   bottom: unset;
@@ -1401,7 +1393,7 @@ div.tooltip.west:before {
   border-color: transparent var(--canvas-color-highlight);
   border-width: 0.5rem 0 0.5rem 0.5rem;
 }
-div.tooltip.east:before {
+div.tooltip[data-gravity=e]:before {
   left: -0.5rem;
   bottom: unset;
   top: 0.5rem;

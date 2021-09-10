@@ -3,13 +3,11 @@ class ToolTip {
     static get DEFAULT_CONFIG() {
         return {
             id : null,
-            icon: 'help-circle',
+            containerId: 'cfb-tooltip',
             gravity: 'n',
-            iconclasses: [],
             text: null,
             parent: null,
-            waittime: 1000,
-            classes: []
+            waittime: 1000
         };
     }
 
@@ -40,7 +38,6 @@ class ToolTip {
      */
     constructor(config) {
         this.config = Object.assign({}, ToolTip.DEFAULT_CONFIG, config);
-        if (!this.id) { this.id = `tt-${CFBUtils.getUniqueKey(5)}`; }
         return this;
     }
 
@@ -55,22 +52,31 @@ class ToolTip {
            parent = parent.container;
         }
         this.parent = parent;
-        this.parent.appendChild(this.container);
         this.parent.setAttribute('data-tooltip', 'closed');
-        this.parent.addEventListener('mouseover', () => {
-            this.open();
-        });
-        this.parent.addEventListener('mouseout', () => {
+
+        const onmouseout = (e) => {
             clearTimeout(ToolTip.timer);
             this.close();
-        });
-        this.parent.addEventListener('focusin', () => {
+            this.parent.removeEventListener('mouseout', onmouseout);
+        }
+        const onmouseover = (e) => {
             this.open();
-        });
-        this.parent.addEventListener('focusout', () => {
+            this.parent.addEventListener('mouseout', onmouseout);
+        }
+
+        const onfocusout = (e) => {
             clearTimeout(ToolTip.timer);
             this.close();
-        });
+            this.parent.removeEventListener('focusout', onfocusout);
+        }
+        const onfocusin = (e) => {
+            this.open();
+            this.parent.addEventListener('focusout', onfocusout);
+        }
+
+        this.parent.addEventListener('mouseover', onmouseover);
+        this.parent.addEventListener('focusin', onfocusin);
+
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -80,7 +86,6 @@ class ToolTip {
      * This actually only starts a timer.  The actual opening happens in openGuts()
      */
     open() {
-
         ToolTip.closeOpen();
         ToolTip.timer = setTimeout(()  => {
             this.openGuts();
@@ -96,13 +101,41 @@ class ToolTip {
         }
         ToolTip.closeOpen();
 
-        document.body.appendChild(this.container);
+        this.container = document.getElementById(`${this.containerId}`);
+
+        if (!this.container) {
+            this.buildContainer();
+        }
+
+        this.container.innerHTML = this.text;
         this.container.removeAttribute('aria-hidden');
 
         if (typeof ToolTip.activeTooltip === 'undefined' ) {
             ToolTip.activeTooltip = this;
         } else {
             ToolTip.activeTooltip = this;
+        }
+        switch(this.gravity) {
+            case 's':
+            case 'south':
+                this.container.setAttribute('data-gravity', 's');
+                break;
+            case 'w':
+            case 'west':
+                this.container.setAttribute('data-gravity', 'w');
+                break;
+            case 'e':
+            case 'east':
+                this.container.setAttribute('data-gravity', 'e');
+                break;
+            case 'n':
+            case 'north':
+                this.container.setAttribute('data-gravity', 'n');
+                break;
+            case 'nw':
+            default:
+                this.container.setAttribute('data-gravity', 'nw');
+                break;
         }
 
         this.setPosition();
@@ -120,7 +153,6 @@ class ToolTip {
             }
             me.setPosition();
         }, true);
-
 
     }
 
@@ -175,9 +207,14 @@ class ToolTip {
      * Closes the help tooltip.
      */
     close() {
-        this.parent.appendChild(this.container);
-        this.container.setAttribute('aria-hidden', 'true');
+        if (!ToolTip.activeTooltip) return;
+        ToolTip.activeTooltip.container.setAttribute('aria-hidden', 'true');
         ToolTip.activeTooltip = null;
+    }
+
+    get isopen() {
+        if (!ToolTip.activeTooltip) { return false; }
+        return ToolTip.activeTooltip.container.hasAttribute('aria-hidden');
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -187,58 +224,10 @@ class ToolTip {
      */
     buildContainer() {
         this.container = document.createElement('div');
+        this.container.setAttribute('id', this.containerId)
         this.container.classList.add('tooltip');
         this.container.setAttribute('aria-hidden', 'true');
-        if (this.id) { this.container.setAttribute('id', this.id); }
-        switch(this.gravity) {
-            case 's':
-            case 'south':
-                this.container.classList.add('south');
-                break;
-            case 'w':
-            case 'west':
-                this.container.classList.add('west');
-                break;
-            case 'e':
-            case 'east':
-                this.container.classList.add('east');
-                break;
-            case 'n':
-            case 'north':
-                this.container.classList.add('north');
-                break;
-            case 'nw':
-            default:
-                this.container.classList.add('nw');
-                break;
-        }
-
-        if ((this.classes) && (this.classes.length > 0)) {
-            for (let c of this.classes) {
-                this.container.classList.add(c);
-            }
-        }
-
-        if ((this.icon) && (this.icon !== '')) {
-            let icon = IconFactory.icon(this.icon);
-            icon.classList.add('tipicon');
-            if ((this.iconclasses) && (this.iconclasses.length > 0)) {
-                for (let ic of this.iconclasses) {
-                    icon.classList.add(ic);
-                }
-            }
-            this.container.appendChild(icon);
-        }
-
-        this.tiptext = document.createElement('div');
-        this.tiptext.classList.add('tiptext');
-        this.tiptext.setAttribute('id', `${this.id}-text`);
-        if (this.text) {
-            this.tiptext.innerHTML = this.text;
-        }
-
-        this.container.appendChild(this.tiptext);
-
+        document.body.appendChild(this.container);
     }
 
     /* UTILITY METHODS__________________________________________________________________ */
@@ -251,23 +240,14 @@ class ToolTip {
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
-    get classes() { return this.config.classes; }
-    set classes(classes) { this.config.classes = classes; }
-
-    get container() {
-        if (!this._container) { this.buildContainer(); }
-        return this._container;
-    }
+    get container() { return this._container; }
     set container(container) { this._container = container; }
+
+    get containerId() { return this.config.containerId; }
+    set containerId(containerId) { this.config.containerId = containerId; }
 
     get gravity() { return this.config.gravity; }
     set gravity(gravity) { this.config.gravity = gravity; }
-
-    get icon() { return this.config.icon; }
-    set icon(icon) { this.config.icon = icon; }
-
-    get iconclasses() { return this.config.iconclasses; }
-    set iconclasses(iconclasses) { this.config.iconclasses = iconclasses; }
 
     get id() { return this.config.id; }
     set id(id) { this.config.id = id; }
@@ -280,9 +260,6 @@ class ToolTip {
 
     get timer() { return this._timer; }
     set timer(timer) { this._timer = timer; }
-
-    get tiptext() { return this._tiptext; }
-    set tiptext(tiptext) { this._tiptext = tiptext; }
 
     get tooltip() { return this._tooltip; }
     set tooltip(tooltip) { this._tooltip = tooltip; }

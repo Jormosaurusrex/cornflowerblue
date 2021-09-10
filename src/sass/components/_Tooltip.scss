@@ -1,7 +1,7 @@
 div.tooltip {
   font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
-  animation: cfb-fadein .5s;
+  font-size: 1em;
+  animation: cfb-fadein .2s;
   opacity: 1;
   position: absolute;
   display: flex;
@@ -10,9 +10,8 @@ div.tooltip {
   align-items: center;
   justify-content: flex-start;
   align-content: center;
-  list-style-type: none;
   margin: 0;
-  padding: .5rem .75rem;
+  padding: .5rem;
   min-height: 2.7rem;
   overflow: visible;
   z-index: 21000;
@@ -21,6 +20,10 @@ div.tooltip {
   color: var(--colors-standard);
   text-shadow: var(--text-shadow);
   filter: var(--shadows-dropshadow-filter);
+  max-width: 33em;
+  white-space: normal;
+  line-height: 1.2;
+  text-align: left;
   &[aria-hidden='true'] {
     display: none;
   }
@@ -35,28 +38,15 @@ div.tooltip {
     border-color: var(--canvas-color-highlight) transparent;
     border-width: .5rem .5rem 0 .5rem;
   }
-  span.tipicon {
-    padding: 0;
-    margin: 0 1rem 0 0;
-  }
-  div.tiptext {
-    max-width: 33em;
-    white-space: normal;
-    line-height: 1.2;
-    text-align: left;
-    font-size: 1em;
-  }
   &.unfixed {
-    div.tiptext{
-      min-width: unset;
-    }
+    min-width: unset;
   }
-  &.north {
+  &[data-gravity="n"] {
     &:before {
       left: calc((100% / 2) - .5rem);
     }
   }
-  &.south {
+  &[data-gravity="s"] {
     &:before {
       bottom: unset;
       top: -.4em;
@@ -64,14 +54,14 @@ div.tooltip {
       border-width: 0 .5rem .5rem .5rem;
     }
   }
-  &.southwest {
+  &[data-gravity="sw"] {
     &:before {
       bottom: unset;
       top: -.5rem;
       border-width: 0 .5rem .5rem .5rem;
     }
   }
-  &.west {
+  &[data-gravity="w"] {
     &:before {
       left: unset;
       right: -.5rem;
@@ -81,7 +71,7 @@ div.tooltip {
       border-width: .5rem 0 .5rem .5rem;
     }
   }
-  &.east {
+  &[data-gravity="e"] {
     &:before {
       left: -.5rem;
       bottom: unset;

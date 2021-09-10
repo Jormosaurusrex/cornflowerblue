@@ -77,10 +77,7 @@ class ButtonMenu extends SimpleButton {
      * @return true if it is!
      */
     get isopen() {
-        if ((this.button.getAttribute('aria-expanded')) && (this.button.getAttribute('aria-expanded') === 'true')) {
-            return true;
-        }
-        return false;
+        return !!((this.button.getAttribute('aria-expanded')) && (this.button.getAttribute('aria-expanded') === 'true'));
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
