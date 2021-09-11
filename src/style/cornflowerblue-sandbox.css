@@ -4607,6 +4607,9 @@ div.select-container div.wrap {
   display: block;
   position: relative;
 }
+div.select-container div.wrap input.trigger {
+  cursor: pointer;
+}
 div.select-container div.wrap input.trigger.mute::placeholder, div.select-container div.wrap input.trigger.mute::-ms-input-placeholder {
   opacity: 0;
 }

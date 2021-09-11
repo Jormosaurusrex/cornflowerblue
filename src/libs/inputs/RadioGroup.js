@@ -169,7 +169,7 @@ class RadioGroup extends SelectMenu {
         return li;
     }
 
-    buildOptions() {
+    buildOptionList() {
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('radiogroup');
         this.optionlist.setAttribute('tabindex', '-1');
@@ -182,6 +182,14 @@ class RadioGroup extends SelectMenu {
             this.optionlist.appendChild(o);
         }
     }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+    get optionlist() {
+        if (!this._optionlist) { this.buildOptionList(); }
+        return this._optionlist;
+    }
+    set optionlist(optionlist) { this._optionlist = optionlist; }
+
 
 }
 window.RadioGroup = RadioGroup;

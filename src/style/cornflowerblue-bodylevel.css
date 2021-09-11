@@ -946,35 +946,32 @@ form[data-menuid].noactions div.header {
   display: none;
 }
 
-div.selectmenu-menu {
+ul#cfb-selectmenu {
   --image-width: 2rem;
   --thumbnail-size: 3rem;
+  --menu-bg-color: var(--canvas-color-primary);
   font-family: var(--default-font-family);
   font-size: var(--default-font-size);
-  animation: cfb-fadein 0.5s;
+  animation: cfb-fadein 0.2s;
   opacity: 1;
   position: absolute;
   z-index: 20000;
-}
-div.selectmenu-menu ul.selectmenu {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  background-color: var(--canvas-color-primary);
+  background-color: var(--menu-bg-color);
   box-shadow: inset 0 0 0 0.05rem rgb(var(--input-border-color-rgb));
   filter: var(--shadows-dropshadow-filter);
   border-top: none;
   padding: 0;
   overflow: auto;
   max-height: 10rem;
-  z-index: 201;
-  position: absolute;
   margin: 0;
   width: 100%;
   transition: all 0.2s;
 }
-div.selectmenu-menu ul.selectmenu li {
+ul#cfb-selectmenu li {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -986,52 +983,17 @@ div.selectmenu-menu ul.selectmenu li {
   padding: var(--input-default-padding);
   cursor: pointer;
 }
-div.selectmenu-menu ul.selectmenu li > input[type=radio] {
+ul#cfb-selectmenu li > input[type=radio] {
   display: none;
 }
-div.selectmenu-menu ul.selectmenu li:nth-child(even) {
-  background-color: rgba(var(--canvas-color-secondary-rgb), 0.8);
-}
-div.selectmenu-menu ul.selectmenu li[aria-selected=true] {
-  background-color: var(--colors-focus);
-  color: var(--colors-text-hot);
-  outline: var(--colors-text-hot) dashed 0.1em;
-  outline-offset: -0.3em;
-}
-div.selectmenu-menu ul.selectmenu li:focus-within {
-  background-color: var(--colors-affordance);
-  color: var(--colors-text-hot);
-  outline: var(--colors-text-hot) dashed 0.1em;
-  outline-offset: -0.3em;
-  text-decoration: underline double;
-}
-div.selectmenu-menu ul.selectmenu li:focus {
-  background-color: var(--colors-affordance);
-  color: var(--colors-text-hot);
-  outline: var(--colors-text-hot) dashed 0.1em;
-  outline-offset: -0.3em;
-  text-decoration: underline double;
-}
-@media (hover: hover) and (pointer: fine) {
-  div.selectmenu-menu ul.selectmenu li:hover {
-    background-color: var(--colors-affordance);
-    color: var(--colors-text-hot);
-  }
-}
-div.selectmenu-menu ul.selectmenu li[data-match=false] {
-  display: none;
-}
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li {
-  padding: 0;
-}
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel {
+ul#cfb-selectmenu li > div.imagesel {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
 }
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel div.thumbnail {
+ul#cfb-selectmenu li > div.imagesel div.thumbnail {
   --thumbnail-size: 5rem;
   margin: 0 1rem 0 0;
   width: var(--thumbnail-size);
@@ -1042,27 +1004,59 @@ div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel 
   background-position: center;
   border-radius: 0.1rem;
 }
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > div.data {
+ul#cfb-selectmenu li > div.imagesel > div.data {
   padding: var(--input-default-top-padding) var(--input-default-right-padding) var(--input-default-bottom-padding) var(--input-default-right-padding);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: flex-start;
 }
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > div.data > span.text {
+ul#cfb-selectmenu li > div.imagesel > div.data > span.text {
   font-size: 1.2rem;
 }
-div.selectmenu-menu.imageselector-container > ul.selectmenu > li > div.imagesel > div.data > div.meta {
+ul#cfb-selectmenu li > div.imagesel > div.data > div.meta {
   opacity: 1;
   transition: opacity 0.2s;
   font-size: 0.75em;
 }
-div.selectmenu-menu.vert ul.selectmenu {
+ul#cfb-selectmenu li:nth-child(even) {
+  background-color: rgba(var(--canvas-color-secondary-rgb), 0.8);
+}
+ul#cfb-selectmenu li[aria-selected=true] {
+  background-color: var(--colors-focus);
+  color: var(--colors-text-hot);
+  outline: var(--colors-text-hot) dashed 0.1em;
+  outline-offset: -0.3em;
+}
+ul#cfb-selectmenu li:focus-within {
+  background-color: var(--colors-affordance);
+  color: var(--colors-text-hot);
+  outline: var(--colors-text-hot) dashed 0.1em;
+  outline-offset: -0.3em;
+  text-decoration: underline double;
+}
+ul#cfb-selectmenu li:focus {
+  background-color: var(--colors-affordance);
+  color: var(--colors-text-hot);
+  outline: var(--colors-text-hot) dashed 0.1em;
+  outline-offset: -0.3em;
+  text-decoration: underline double;
+}
+@media (hover: hover) and (pointer: fine) {
+  ul#cfb-selectmenu li:hover {
+    background-color: var(--colors-affordance);
+    color: var(--colors-text-hot);
+  }
+}
+ul#cfb-selectmenu li[data-match=false] {
+  display: none;
+}
+ul#cfb-selectmenu.vert {
   filter: var(--shadows-dropshadow-filter-vertical);
   border-top: 0.1em solid var(--input-border-color);
   border-bottom: none;
 }
-div.selectmenu-menu[aria-hidden=true] {
+ul#cfb-selectmenu[aria-hidden=true] {
   height: 0;
   max-height: 0;
   box-shadow: none;

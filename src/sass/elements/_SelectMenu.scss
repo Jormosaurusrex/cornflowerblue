@@ -4,6 +4,7 @@ div.select-container {
     display: block;
     position: relative;
     input.trigger {
+      cursor: pointer;
       &.mute {
         &::placeholder,
         &::-ms-input-placeholder {

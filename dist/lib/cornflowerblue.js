@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-09-09
+/*! Cornflower Blue - v0.1.1 - 2021-09-10
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2399,7 +2399,6 @@ class SimpleButton {
             icon: null,
             iconclasses: [],
             iconprefixsecond: 'cfb',
-            tipicon: null,
             tipgravity: 'n',
             classes: [],
             image: null,
@@ -2442,7 +2441,6 @@ class SimpleButton {
             shape: { type: 'option', datatype: 'string', description: "Make the button a special shape, with these values: null|square|circle|pill.  Default is null, which makes a rectangle." },
             size: { type: 'option', datatype: 'string', description: "The size of the button: micro, small, medium (default), large, fill" },
             tooltip: { type: 'option', datatype: 'string', description: "An optional tooltip."},
-            tipicon: { type: 'option', datatype: 'string', description: "An icon for the tooltip."},
             tipgravity: { type: 'option', datatype: 'string', description: "Tooltip gravity, default 'n'."},
             onkeyup: { type: 'option', datatype: 'function', description: "The action to execute on key up. Passed (event, self) as arguments." },
             onkeydown: { type: 'option', datatype: 'function', description: "The action to execute on key down. Passed (event, self) as arguments." },
@@ -2691,7 +2689,6 @@ class SimpleButton {
             this.tooltipobj = new ToolTip({
                 id: `${this.id}-tt`,
                 text: this.tooltip,
-                icon: this.tipicon,
                 gravity: this.tipgravity,
             });
             this.tooltipobj.attach(this.button);
@@ -2958,9 +2955,6 @@ class SimpleButton {
     get tipgravity() { return this.config.tipgravity; }
     set tipgravity(tipgravity) { this.config.tipgravity = tipgravity; }
 
-    get tipicon() { return this.config.tipicon; }
-    set tipicon(tipicon) { this.config.tipicon = tipicon; }
-
     get tooltip() { return this.config.tooltip; }
     set tooltip(tooltip) { this.config.tooltip = tooltip; }
 
@@ -2986,8 +2980,11 @@ class ButtonMenu extends SimpleButton {
             custompositioner: null, // A function that will be used to set the menu's position
                                     // different from the custom one. passed (self)
             focusinside: true,  //
-            menuid: null,    // If present, will only auto-close other menus of this type.
+            menuid: 'cfb-menu',    // If present, will only auto-close other menus of this type.
+
+            // killed
             closeopen: true, // if true, force all other open menus closed when this one opens.
+
             onopen: null,    // Function to execute on open. passed "self" as argument
             onclose: null,   // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
@@ -3003,7 +3000,6 @@ class ButtonMenu extends SimpleButton {
                         // {
                         //    label: "Menu Text", // text
                         //    tooltip: null, // Tooltip text
-                        //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
                         //    action: () => { } // what to do when the tab is clicked.
                         // }
@@ -3015,12 +3011,12 @@ class ButtonMenu extends SimpleButton {
      */
     static closeOpen(menuid) {
         if (menuid) {
-            if ((ButtonMenu.activeMenuTypes) && (ButtonMenu.activeMenuTypes[menuid])) {
-                ButtonMenu.activeMenuTypes[menuid].close();
+            for (let menu of document.body.querySelectorAll(`>*[data-menuid="${menuid}"]`)) {
+                menu.setAttribute('aria-hidden', 'true');
             }
         } else {
-            if (ButtonMenu.activeMenu) {
-                ButtonMenu.activeMenu.close();
+            for (let menu of document.body.querySelectorAll(`>*[data-menuid]`)) {
+                menu.setAttribute('aria-hidden', 'true');
             }
         }
     }
@@ -3034,11 +3030,6 @@ class ButtonMenu extends SimpleButton {
         }
         super(config);
         this.emsize = CFBUtils.getSingleEmInPixels();
-        if (this.menu) {
-            this.processMenu();
-        } else {
-            this.buildMenu();
-        }
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -3070,40 +3061,38 @@ class ButtonMenu extends SimpleButton {
     open() {
         if (this.isopen) { return; }
 
-        if (this.closeopen) {
-            ButtonMenu.closeOpen(this.menuid); // close open menus
-        }
+        this.menuactual = document.getElementById(`menu-${this.menuid}`);
 
-        if (this.menuid) {
-            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
-                ButtonMenu.activeMenuTypes = {};
-            }
-            ButtonMenu.activeMenuTypes[this.menuid] = this;
-        } else {
-            if (typeof ButtonMenu.activeMenu === 'undefined' ) {
-                ButtonMenu.activeMenu = this;
+        if (!this.menuactual) {
+            if (this.menu) {
+                this.processMenu();
             } else {
-                ButtonMenu.activeMenu = this;
+                this.buildMenuActual();
+                this.buildMenu();
             }
         }
 
         this.button.setAttribute('aria-expanded', 'true');
-        this.menu.removeAttribute('aria-hidden');
-        this.menu.style.opacity = 0;
-        document.body.appendChild(this.menu);
+        this.menuactual.removeAttribute('aria-hidden');
+        this.menuactual.style.opacity = 0;
 
-        for (let li of this.menu.querySelectorAll('li')) {
-            li.setAttribute('tabindex', '0');
+        // clear classlist, and readd
+        this.menuactual.classList.remove(...this.menuactual.classList);
+        for (let c of this.classes) {
+            this.menuactual.classList.add(c);
         }
 
-        this.menu.classList.add(this.gravity);
+
+        for (let li of this.menuactual.querySelectorAll('li')) {
+            li.setAttribute('tabindex', '0');
+        }
 
         if ((this.onopen) && (typeof this.onopen === 'function')) {
             this.onopen(this);
         }
 
         if (this.focusinside) {
-            let focusable = this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"])');
+            let focusable = this.menuactual.querySelectorAll('[tabindex]:not([tabindex="-1"])');
             window.setTimeout(() => { // Do the focus thing late
                 if ((focusable) && (focusable.length > 0)) {
                     focusable[0].focus();
@@ -3134,9 +3123,8 @@ class ButtonMenu extends SimpleButton {
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
                 this.setPosition();
-                this.menu.style.opacity =  1;
-                this.menu.style.removeProperty('opacity');
-                this.menu.classList.add('open');
+                this.menuactual.style.opacity =  1;
+                this.menuactual.style.removeProperty('opacity');
             }, 50);
         }
     }
@@ -3160,46 +3148,54 @@ class ButtonMenu extends SimpleButton {
             offsetRight = bodyRect.right - elemRect.right,
             offsetBottom = elemRect.bottom - bodyRect.bottom;
 
-        this.menu.style.removeProperty('top');
-        this.menu.style.removeProperty('bottom');
-        this.menu.style.removeProperty('left');
-        this.menu.style.removeProperty('right');
+        this.menuactual.style.removeProperty('top');
+        this.menuactual.style.removeProperty('bottom');
+        this.menuactual.style.removeProperty('left');
+        this.menuactual.style.removeProperty('right');
+
+        this.menuactual.setAttribute('data-gravity', this.gravity);
 
         switch(this.gravity) {
             case 'w':
             case 'west':
-                this.menu.style.top = `${offsetTop}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.clientWidth - (this.emsize / 2)}px`;
+                this.menuactual.style.top = `${offsetTop}px`;
+                this.menuactual.style.left = `${offsetLeft - this.menuactual.clientWidth - (this.emsize / 2)}px`;
                 break;
             case 'e':
             case 'east':
-                this.menu.style.top = `${offsetTop - (this.button.clientHeight / 2)}px`;
-                this.menu.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
+                this.menuactual.style.top = `${offsetTop}px`;
+                this.menuactual.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
                 break;
             case 'n':
             case 'north':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
+                this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + (this.button.offsetWidth / 2)}px`;
                 break;
             case 'nw':
             case 'northwest':
-                this.menu.style.top = `${(offsetTop - this.menu.clientHeight - (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
+                this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft}px`;
                 break;
-            case 'se':
-            case 'southeast':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - (this.button.clientWidth / 2)}px`;
+            case 'ne':
+            case 'northeast':
+                this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
+                this.menuactual.style.right = `${offsetRight}px`;
                 break;
             case 's':
             case 'south':
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - (this.menu.offsetWidth / 2) + this.button.offsetWidth }px`;
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + (this.button.offsetWidth / 2)}px`;
+                break;
+            case 'se':
+            case 'southeast':
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.left = `${offsetLeft}px`;
                 break;
             case 'southwest':
+            case 'sw':
             default:
-                this.menu.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
-                this.menu.style.left = `${offsetLeft - this.menu.offsetWidth + this.button.offsetWidth}px`;
+                this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
+                this.menuactual.style.right = `${offsetRight}px`;
                 break;
         }
 
@@ -3209,12 +3205,11 @@ class ButtonMenu extends SimpleButton {
      * Closes the button
      */
     close() {
-        this.button.appendChild(this.menu);
         this.button.removeAttribute('aria-expanded');
-        this.menu.setAttribute('aria-hidden', 'true');
+        this.menuactual.setAttribute('aria-hidden', 'true');
 
         if ((this.items) && (this.items.length > 0)) {
-            let items = Array.from(this.menu.querySelector('li'));
+            let items = Array.from(this.menuactual.querySelector('li'));
             for (let li of items) {
                 li.setAttribute('tabindex', '-1');
             }
@@ -3224,14 +3219,6 @@ class ButtonMenu extends SimpleButton {
             this.onclose(this);
         }
 
-        if (this.menuid) {
-            if (typeof ButtonMenu.activeMenuTypes === 'undefined' ) {
-                ButtonMenu.activeMenuTypes = {};
-            }
-            ButtonMenu.activeMenuTypes[this.menuid] = null;
-        } else {
-            ButtonMenu.activeMenu = null;
-        }
     }
 
     /**
@@ -3243,14 +3230,14 @@ class ButtonMenu extends SimpleButton {
         }, { once: true });
 
         window.addEventListener('click', (e) => {
-            let tag = this.menu.tagName.toLowerCase();
-            if (((this.menu.contains(e.target))) && (this.stayopen)) {
+            let tag = this.menuactual.tagName.toLowerCase();
+            if (((this.menuactual.contains(e.target))) && (this.stayopen)) {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
-            } else if ((this.menu.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
+            } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 // Do nothing.
-            } else if (this.menu.contains(e.target)) {
+            } else if (this.menuactual.contains(e.target)) {
                 this.close();
-            } else if (this.button.contains(e.target)) {
+            } else if (this.menuactual.contains(e.target)) {
                 // Do nothing.  This will auto close.
             } else {
                 this.close();
@@ -3265,16 +3252,8 @@ class ButtonMenu extends SimpleButton {
      * @returns DOM representation
      */
     buildMenu() {
-        this.menu = document.createElement('ul');
-        this.menu.classList.add('button-menu');
-        this.menu.setAttribute('aria-hidden', 'true');
-        this.menu.setAttribute('tabindex', '0');
-
-        for (let c of this.classes) {
-            this.menu.classList.add(c);
-        }
-
         let order = 1;
+        this.menuactual.innerHTML = "";
 
         for (let item of this.items) {
 
@@ -3285,7 +3264,7 @@ class ButtonMenu extends SimpleButton {
 
             let menuitem = document.createElement('li');
             menuitem.setAttribute('tabindex', '-1');
-            menuitem.setAttribute('data-order', order);
+            menuitem.setAttribute('data-order', `${order}`);
 
             menuitem.addEventListener('keyup', (e) => {
                 switch (e.key) {
@@ -3295,11 +3274,11 @@ class ButtonMenu extends SimpleButton {
                         break;
                     case 'ArrowUp':
                         e.preventDefault();
-                        this.menu.querySelector(`[data-order='${previous}']`).focus();
+                        this.menuactual.querySelector(`[data-order='${previous}']`).focus();
                         break;
                     case 'ArrowDown':
                         e.preventDefault();
-                        this.menu.querySelector(`[data-order='${next}']`).focus();
+                        this.menuactual.querySelector(`[data-order='${next}']`).focus();
                         break;
                     case 'Enter': // Enter
                     case ' ': // Space
@@ -3337,49 +3316,53 @@ class ButtonMenu extends SimpleButton {
             if (item.tooltip) {
                 new ToolTip({
                     text: item.tooltip,
-                    icon: item.tipicon,
                     gravity: this.tooltipgravity
                 }).attach(menuitem);
             }
 
-            this.menu.appendChild(menuitem);
+            this.menuactual.appendChild(menuitem);
 
             order++;
         }
-        this.button.appendChild(this.menu);
+    }
+
+    buildMenuActual() {
+        this.menuactual = document.createElement('ul');
+        this.menuactual.setAttribute('aria-hidden', 'true');
+        this.menuactual.setAttribute('tabindex', '0');
+        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+        this.menuactual.setAttribute('data-menuid', `${this.menuid}`);
+        document.body.appendChild(this.menuactual);
     }
 
     /**
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
-        this.menu.setAttribute('aria-hidden', 'true');
-        this.menu.setAttribute('tabindex', '0');
-        this.menu.classList.add('button-menu');
+        this.menuactual = this.menu;
+        this.menuactual.setAttribute('aria-hidden', 'true');
+        this.menuactual.setAttribute('tabindex', '0');
+        this.menuactual.setAttribute('data-menuid', this.menuid);
+        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+
+        document.body.appendChild(this.menuactual);
+
         for (let c of this.classes) {
             this.menu.classList.add(c);
         }
-        this.button.appendChild(this.menu);
+
         this.menu.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
                 this.close();
             }
         });
-    }
 
-    setMenu(menu) {
-        this.menu.remove();
-        this.menu = menu;
-        this.processMenu();
     }
 
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get autoclose() { return this.config.autoclose; }
     set autoclose(autoclose) { this.config.autoclose = autoclose; }
-
-    get closeopen() { return this.config.closeopen; }
-    set closeopen(closeopen) { this.config.closeopen = closeopen; }
 
     get custompositioner() { return this.config.custompositioner; }
     set custompositioner(custompositioner) { this.config.custompositioner = custompositioner; }
@@ -3398,6 +3381,9 @@ class ButtonMenu extends SimpleButton {
 
     get items() { return this.config.items; }
     set items(items) { this.config.items = items; }
+
+    get menuactual() { return this.config.menuactual; }
+    set menuactual(menuactual) { this.config.menuactual = menuactual; }
 
     get menu() { return this.config.menu; }
     set menu(menu) { this.config.menu = menu; }
@@ -3552,7 +3538,6 @@ class HelpButton extends SimpleButton {
         return {
             action: (e, self) => { self.tooltip.open(); },
             icon: 'help-circle',
-            tipicon: 'help-circle',
             tipgravity: 'n',
             arialabel: TextFactory.get('help'),
             iconclasses: ['helpicon'],
@@ -5090,7 +5075,6 @@ class DataGrid extends Panel {
             // label: <string>,
             // icon: <iconid>,
             // tooltip: <tooltip string>,
-            // tipicon: <iconid>, // if you want to change the tooltip icon
             // type: <string>     // Action types are:
             //                    // view - loads the item into a view window.
             //                    //        If allowedits=true, this window has an edit toggle
@@ -7007,7 +6991,6 @@ class DataGrid extends Panel {
             /*
                         //    label: "Menu Text", // text
                         //    tooltip: null, // Tooltip text
-                        //    tipicon: null, // Tooltip icon, if any
                         //    icon: null, // Icon to use in the menu, if any
                         //    action: () => { } // what to do when the tab is clicked.
                         // }
@@ -7018,8 +7001,7 @@ class DataGrid extends Panel {
                 let myaction = {
                     label: ra.label,
                     toolip: ra.tooltip,
-                    icon: ra.icon,
-                    tipicon: ra.tipicon
+                    icon: ra.icon
                 };
                 switch(ra.type) {
                     case 'edit':
@@ -8996,7 +8978,6 @@ class DatePicker {
             let th = document.createElement('th');
             th.innerHTML = weekday.charAt(0);
             let celltip = new ToolTip({
-                tipicon: '',
                 classes: ['unfixed'],
                 text: weekday
             });
@@ -11277,7 +11258,6 @@ class TabBar {
         if (tabdef.tooltip) {
             new ToolTip({
                 text: tabdef.tooltip,
-                icon: tabdef.tipicon,
                 gravity: (tabdef.tooltipgravity ? tabdef.tooltipgravity : 's')
             }).attach(li);
         }
@@ -11610,9 +11590,8 @@ class ToolTip {
 
     static closeOpen() {
         clearTimeout(ToolTip.timer);
-        if (ToolTip.activeTooltip) {
-            clearTimeout(ToolTip.activeTooltip.timer);
-            ToolTip.activeTooltip.close();
+        for (let tt of document.body.querySelectorAll('div.tooltip')) {
+            tt.setAttribute('aria-hidden', 'true');
         }
     }
 
@@ -11689,7 +11668,6 @@ class ToolTip {
         if ((this.parent.hasAttribute('aria-expanded')) && (this.parent.getAttribute('aria-expanded') === "true")) {
             return;
         }
-        ToolTip.closeOpen();
 
         this.container = document.getElementById(`${this.containerId}`);
 
@@ -11797,9 +11775,10 @@ class ToolTip {
      * Closes the tooltip.
      */
     close() {
-        if (!ToolTip.activeTooltip) return;
-        ToolTip.activeTooltip.container.setAttribute('aria-hidden', 'true');
-        ToolTip.activeTooltip = null;
+        if (!this.container) { this.container = document.getElementById(this.containerId); }
+        if (this.container) {
+            this.container.setAttribute('aria-hidden', 'true');
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
@@ -12912,8 +12891,10 @@ class SelectMenu extends InputElement {
      * Close open menus
      */
     static closeOpen() {
-        if (SelectMenu.activeMenu) {
-            SelectMenu.activeMenu.close();
+        let menu = document.getElementById(`cfb-selectmenu`);
+        if (menu) {
+            menu.setAttribute('aria-hidden', 'true');
+
         }
     }
 
@@ -12947,20 +12928,31 @@ class SelectMenu extends InputElement {
      * @return {HTMLElement}
      */
     get selected() {
+        if (!this.optionlist) {
+            this.buildOptionList();
+        }
         let sel = this.optionlist.querySelector(`input[name=${this.name}]:checked`);
         if (sel) { return sel; }
         return null;
     }
 
     get value() {
-        if (!this.selected) { return null; }
-        return this.selected.value;
+        return this.input.value;
     }
 
     set value(value) {
         this.config.value = value;
+        this.input.value = value;
         this.triggerbox.value = this.getOptionLabel(value);
         this.setPassiveboxValue(value);
+    }
+
+    get passivetext() {
+        let p = this.unsettext;
+        if (this.selectedoption) { p = this.selectedoption.label; }
+        if (this.value) { p = this.value; }
+        if (this.config.value) { p = this.config.value; }
+        return document.createTextNode(this.getOptionLabel(p));
     }
 
     getOptionLabel(value) {
@@ -12984,14 +12976,6 @@ class SelectMenu extends InputElement {
 
     setPassiveboxValue(value) {
         this.passivebox.innerHTML = this.getOptionLabel(value);
-    }
-
-    get passivetext() {
-        let p = this.unsettext;
-        if (this.selectedoption) { p = this.selectedoption.label; }
-        if (this.value) { p = this.value; }
-        if (this.config.value) { p = this.config.value; }
-        return document.createTextNode(this.getOptionLabel(p));
     }
 
     drawPayload(def) {
@@ -13040,10 +13024,14 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-        SelectMenu.closeOpen(); // close open menus
-        document.body.appendChild(this.listbox);
 
-        this.listbox.removeAttribute('aria-hidden');
+        this.optionlist.classList.remove(...this.optionlist.classList);
+
+        for (let c of this.classes) {
+            this.optionlist.classList.add(c);
+        }
+        this.fillOptions();
+
         this.wrapper.setAttribute('aria-expanded', true);
         this.container.setAttribute('aria-expanded', true);
 
@@ -13072,10 +13060,42 @@ class SelectMenu extends InputElement {
         }
 
         this.setPosition();
+        this.optionlist.removeAttribute('aria-hidden');
 
+        this.setCloseListener();
         setTimeout(() => { // Set this after, or else we'll get bouncing.
-            this.setCloseListener();
+            //
         }, 100);
+    }
+
+    fillOptions() {
+        this.optionlist.innerHTML = "";
+
+        let order = 0;
+
+        if (this.unselectedtext) {
+            let unsel = {
+                label: this.unselectedtext,
+                value: '',
+                unselectoption: true
+            };
+            if (!this.value) {
+                unsel.checked = true;
+                this.selectedoption = unsel;
+            }
+            this.optionlist.appendChild(this.buildOption(unsel, order++));
+        }
+
+        for (let opt of this.options) {
+            if ((this.origval) && (this.origval.toString() === opt.value.toString())) {
+                opt.checked = true;
+                this.selectedoption = opt;
+            } else {
+                delete opt.checked;
+            }
+
+            this.optionlist.appendChild(this.buildOption(opt, order++));
+        }
     }
 
     /**
@@ -13092,23 +13112,23 @@ class SelectMenu extends InputElement {
             sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
-        self.listbox.style.left = `${offsetLeft}px`;
-        self.listbox.style.width = `${self.container.clientWidth}px`;
+        self.optionlist.style.left = `${offsetLeft}px`;
+        self.optionlist.style.width = `${self.container.clientWidth}px`;
 
         if ((elemRect.top + sumHeight) > window.innerHeight) {
-            self.listbox.classList.add('vert');
-            self.listbox.style.top = `${(offsetTop - self.optionlist.clientHeight)}px`;
-            self.listbox.style.bottom = `${offsetTop}px`;
+            self.optionlist.classList.add('vert');
+            self.optionlist.style.top = `${(offsetTop - self.optionlist.clientHeight)}px`;
+            self.optionlist.style.bottom = `${offsetTop}px`;
         } else {
-            self.listbox.classList.remove('vert');
-            self.listbox.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
+            self.optionlist.classList.remove('vert');
+            self.optionlist.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
         }
     }
 
     /**
      * Closes the option list.
      */
-    close() {
+    close(callback) {
         //window.removeEventListener('scroll', this.setPosition, true);
         window.onscroll = () => {};
         if (this.preventscroll){
@@ -13118,22 +13138,23 @@ class SelectMenu extends InputElement {
             }
         }
 
-        this.listbox.style.top = null;
-        this.listbox.style.bottom = null;
-        this.listbox.style.left = null;
-        this.listbox.style.width = null;
+        this.optionlist.style.top = null;
+        this.optionlist.style.bottom = null;
+        this.optionlist.style.left = null;
+        this.optionlist.style.width = null;
 
-        this.listbox.setAttribute('aria-hidden', 'true');
-        this.listbox.setAttribute('tabindex', '-1');
+        this.optionlist.setAttribute('aria-hidden', 'true');
+        this.optionlist.setAttribute('tabindex', '-1');
         this.wrapper.setAttribute('aria-expanded', false);
         this.container.setAttribute('aria-expanded', false);
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');
         }
-
-        this.container.appendChild(this.listbox);
         SelectMenu.activeMenu = null;
+        if ((callback) && (typeof callback === 'function')) {
+            callback();
+        }
     }
 
     disable() {
@@ -13159,6 +13180,7 @@ class SelectMenu extends InputElement {
 
     activate() {
         this.container.classList.remove('passive');
+
         this.optionlist.removeAttribute('aria-hidden');
         this.passive = false;
     }
@@ -13168,20 +13190,89 @@ class SelectMenu extends InputElement {
      * @param value the value to select
      */
     select(value) {
-        let allopts = this.listbox.querySelectorAll('li');
+        let allopts = this.optionlist.querySelectorAll('li');
         for (let o of allopts) {
-            let radio = o.querySelector(`input[name=${this.name}`);
             if (o.getAttribute('data-value') === value) {
                 o.setAttribute('aria-selected', true);
-                radio.checked = true;
             } else {
                 o.removeAttribute('aria-selected');
-                radio.checked = false;
             }
         }
     }
 
+    /* CONTROL METHODS__________________________________________________________________ */
+
+    /**
+     * Search the list of options and scroll to it
+     * @param s the string to search
+     */
+    findByString(s) {
+        if ((!s) || (typeof s !== 'string')) { return; }
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
+                this.scrollto(li);
+                li.focus();
+                break;
+            }
+        }
+    }
+
+    reduceOptions(s) {
+        if ((!s) || (typeof s !== 'string')) { return; }
+        for (let li of this.optionlist.querySelectorAll('li')) {
+            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
+            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
+                li.setAttribute('data-match', 'true');
+            } else {
+                li.setAttribute('data-match', 'false');
+            }
+        }
+    }
+
+    /**
+     * Updates the counter
+     */
+    updateSearch() {
+        if (this.combobox) {
+            this.reduceOptions(this.triggerbox.value);
+        } else {
+            this.findByString(this.triggerbox.value);
+        }
+    }
+
+    /**
+     * Sets an event listener to close the menu if the user clicks outside of it.
+     */
+    setCloseListener() {
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { this.close(); }
+        }, { once: true });
+
+        window.addEventListener('click', (e) => {
+            if (this.triggerbox.contains(e.target)) {
+                if (!this.isopen) {
+                    this.open();
+                }
+                this.setCloseListener();
+            } else if ((this.wrapper.contains(e.target)) || (this.optionlist.contains(e.target))) {
+                this.setCloseListener();
+            } else {
+                if (SelectMenu.activeMenu === this) {
+                    this.close();
+                }
+            }
+        }, { once: true });
+    }
+
     /* CONSTRUCTION METHODS_____________________________________________________________ */
+
+    buildInput() {
+        this.input = document.createElement('input');
+        this.input.setAttribute('type', 'hidden');
+        this.input.setAttribute('name', this.name);
+    }
 
     buildContainer() {
         this.container = document.createElement('div');
@@ -13208,21 +13299,9 @@ class SelectMenu extends InputElement {
         if (this.icon) { this.wrapper.classList.add(`cfb-${this.icon}`); }
         this.wrapper.appendChild(this.triggerbox);
 
+        this.wrapper.appendChild(this.input);
+
         this.container.appendChild(this.wrapper);
-
-        this.listbox = document.createElement('div');
-        this.listbox.setAttribute('id', `${this.id}-options`);
-        this.listbox.setAttribute('aria-hidden', 'true');
-        this.listbox.setAttribute('role', 'listbox');
-        this.listbox.classList.add('selectmenu-menu');
-        for (let c of this.classes) {
-            this.listbox.classList.add(c);
-        }
-        this.listbox.appendChild(this.optionlist);
-
-        CFBUtils.applyDataAttributes(this.attributes, this.listbox);
-
-        this.container.appendChild(this.listbox);
 
         if (!this.minimal) {
             this.container.appendChild(this.passivebox);
@@ -13247,15 +13326,27 @@ class SelectMenu extends InputElement {
         this.triggerbox.setAttribute('aria-activedescendant', '');
         this.triggerbox.setAttribute('placeholder', this.placeholder);
 
+        if (this.mute) { this.triggerbox.classList.add('mute'); }
+
         this.triggerbox.addEventListener('focusin', (e) => {
             if (this.disabled) {
                 e.stopPropagation();
                 return;
             }
-            if (this.combobox) {
-                this.triggerbox.select(); // Select all the text
+            if ((SelectMenu.activeMenu) && (SelectMenu.activeMenu.isopen)) {
+                SelectMenu.activeMenu.close(() => {
+                    if (this.combobox) {
+                        this.triggerbox.select(); // Select all the text
+                    } else {
+                        this.open();
+                    }
+                });
             } else {
-                this.open();
+                if (this.combobox) {
+                    this.triggerbox.select(); // Select all the text
+                } else {
+                    this.open();
+                }
             }
         });
 
@@ -13323,49 +13414,22 @@ class SelectMenu extends InputElement {
             }
         });
 
-        if (this.mute) { this.triggerbox.classList.add('mute'); }
     }
 
-    buildOptions() {
-
+    buildOptionList() {
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('selectmenu');
-        this.optionlist.setAttribute('id', this.id);
+        this.optionlist.setAttribute('role', 'listbox');
+        this.optionlist.setAttribute('aria-hidden', 'true');
+        this.optionlist.setAttribute('id', `cfb-selectmenu`);
         this.optionlist.setAttribute('tabindex', '-1');
-
-        let order = 0;
-        if (this.unselectedtext) {
-            let unsel = {
-                label: this.unselectedtext,
-                value: '',
-                unselectoption: true
-            };
-            if (!this.value) {
-                unsel.checked = true;
-                this.selectedoption = unsel;
-            }
-            if (this.options) {
-                this.options.unshift(unsel);
-            } else {
-                console.log("NO OPTIONS");
-            }
-        }
-
-        for (let opt of this.options) {
-            if ((this.origval) && (this.origval.toString() === opt.value.toString())) {
-                opt.checked = true;
-                this.selectedoption = opt;
-            } else {
-                delete opt.checked;
-            }
-
-            this.optionlist.appendChild(this.buildOption(opt, order++));
-        }
+        document.body.appendChild(this.optionlist);
     }
 
     buildOption(def, order) {
 
         const lId = `${this.id}-${CFBUtils.getUniqueKey(5)}`;
+
         let next = order + 1,
             previous = order - 1;
         if (this.unselectedtext) {
@@ -13375,22 +13439,12 @@ class SelectMenu extends InputElement {
         }
         if (next > this.options.length) { next = this.options.length; }
 
-        let opt = document.createElement('input');
-        opt.setAttribute('type', 'radio');
-        opt.setAttribute('name', this.name);
-        opt.value = def.value;
-        if (def.checked) {
-            opt.checked = true;
-        }
-
         let li = document.createElement('li');
         li.setAttribute('tabindex', '-1');
         li.setAttribute('id', `li-${lId}`);
         li.setAttribute('data-menuorder', order);
         li.setAttribute('role', 'option');
         li.setAttribute('data-value', def.value);
-
-        li.appendChild(opt);
 
         li.addEventListener('keydown', (e) => {
             if ((e.shiftKey) && (e.key === 'Escape')) {  // Shift + Tab
@@ -13435,18 +13489,15 @@ class SelectMenu extends InputElement {
                         break;
                 }
             }
-
         });
 
         li.addEventListener('click', (e) => {
             let listentries = this.optionlist.querySelectorAll('li');
             for (let le of listentries) {
                 le.removeAttribute('aria-selected');
-                let opt = le.querySelector(`input[name=${this.name}]`);
-                if (opt) { opt.removeAttribute('checked') ; }
             }
             li.setAttribute('aria-selected', 'true');
-            li.querySelector(`input[name=${this.name}]`).checked = true;
+            this.input.value = def.value;
 
             if (def.unselectoption) {
                 this.triggerbox.value = '';
@@ -13495,65 +13546,6 @@ class SelectMenu extends InputElement {
         return li;
     }
 
-    /* CONTROL METHODS__________________________________________________________________ */
-
-    /**
-     * Search the list of options and scroll to it
-     * @param s the string to search
-     */
-    findByString(s) {
-        if ((!s) || (typeof s !== 'string')) { return; }
-        for (let li of this.optionlist.querySelectorAll('li')) {
-            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
-            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
-                this.scrollto(li);
-                li.focus();
-                break;
-            }
-        }
-    }
-
-    reduceOptions(s) {
-        if ((!s) || (typeof s !== 'string')) { return; }
-        for (let li of this.optionlist.querySelectorAll('li')) {
-            let optiontext = li.querySelector('span.text').innerHTML.toUpperCase();
-            if (optiontext.indexOf(s.toUpperCase()) !== -1) {
-                li.setAttribute('data-match', 'true');
-            } else {
-                li.setAttribute('data-match', 'false');
-            }
-        }
-    }
-
-    /**
-     * Updates the counter
-     */
-    updateSearch() {
-        if (this.combobox) {
-            this.reduceOptions(this.triggerbox.value);
-        } else {
-            this.findByString(this.triggerbox.value);
-        }
-    }
-
-    /**
-     * Sets an event listener to close the menu if the user clicks outside of it.
-     */
-    setCloseListener() {
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { this.close(); }
-        }, { once: true });
-
-        window.addEventListener('click', (e) => {
-            if ((this.wrapper.contains(e.target)) || (this.listbox.contains(e.target))) {
-                this.setCloseListener();
-            } else {
-                this.close();
-            }
-        }, { once: true });
-    }
-
     /* ACCESSOR METHODS_________________________________________________________________ */
 
     get combobox() { return this.config.combobox; }
@@ -13561,9 +13553,6 @@ class SelectMenu extends InputElement {
 
     get drawitem() { return this.config.drawitem; }
     set drawitem(drawitem) { this.config.drawitem = drawitem; }
-
-    get listbox() { return this._listbox; }
-    set listbox(listbox) { this._listbox = listbox; }
 
     get onenter() { return this.config.onenter; }
     set onenter(onenter) {
@@ -13574,7 +13563,12 @@ class SelectMenu extends InputElement {
     }
 
     get optionlist() {
-        if (!this._optionlist) { this.buildOptions(); }
+        if (!this._optionlist) {
+            this.optionlist = document.getElementById(`cfb-selectmenu`);
+            if (!this._optionlist) {
+                this.buildOptionList();
+            }
+        }
         return this._optionlist;
     }
     set optionlist(optionlist) { this._optionlist = optionlist; }
@@ -15389,7 +15383,7 @@ class RadioGroup extends SelectMenu {
         return li;
     }
 
-    buildOptions() {
+    buildOptionList() {
         this.optionlist = document.createElement('ul');
         this.optionlist.classList.add('radiogroup');
         this.optionlist.setAttribute('tabindex', '-1');
@@ -15402,6 +15396,14 @@ class RadioGroup extends SelectMenu {
             this.optionlist.appendChild(o);
         }
     }
+
+    /* ACCESSOR METHODS_________________________________________________________________ */
+    get optionlist() {
+        if (!this._optionlist) { this.buildOptionList(); }
+        return this._optionlist;
+    }
+    set optionlist(optionlist) { this._optionlist = optionlist; }
+
 
 }
 window.RadioGroup = RadioGroup;

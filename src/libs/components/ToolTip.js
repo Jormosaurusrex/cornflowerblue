@@ -21,9 +21,8 @@ class ToolTip {
 
     static closeOpen() {
         clearTimeout(ToolTip.timer);
-        if (ToolTip.activeTooltip) {
-            clearTimeout(ToolTip.activeTooltip.timer);
-            ToolTip.activeTooltip.close();
+        for (let tt of document.body.querySelectorAll('div.tooltip')) {
+            tt.setAttribute('aria-hidden', 'true');
         }
     }
 
@@ -100,7 +99,6 @@ class ToolTip {
         if ((this.parent.hasAttribute('aria-expanded')) && (this.parent.getAttribute('aria-expanded') === "true")) {
             return;
         }
-        ToolTip.closeOpen();
 
         this.container = document.getElementById(`${this.containerId}`);
 
@@ -208,9 +206,10 @@ class ToolTip {
      * Closes the tooltip.
      */
     close() {
-        if (!ToolTip.activeTooltip) return;
-        ToolTip.activeTooltip.container.setAttribute('aria-hidden', 'true');
-        ToolTip.activeTooltip = null;
+        if (!this.container) { this.container = document.getElementById(this.containerId); }
+        if (this.container) {
+            this.container.setAttribute('aria-hidden', 'true');
+        }
     }
 
     /* CONSTRUCTION METHODS_____________________________________________________________ */
