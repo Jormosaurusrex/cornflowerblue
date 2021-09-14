@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-09-10
+/*! Cornflower Blue - v0.1.1 - 2021-09-13
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3070,7 +3070,14 @@ class ButtonMenu extends SimpleButton {
                 this.buildMenuActual();
                 this.buildMenu();
             }
+        } else {
+            if (this.menu) {
+                this.processMenu();
+            } else {
+                this.buildMenu();
+            }
         }
+
 
         this.button.setAttribute('aria-expanded', 'true');
         this.menuactual.removeAttribute('aria-hidden');
@@ -3153,51 +3160,60 @@ class ButtonMenu extends SimpleButton {
         this.menuactual.style.removeProperty('left');
         this.menuactual.style.removeProperty('right');
 
-        this.menuactual.setAttribute('data-gravity', this.gravity);
 
         switch(this.gravity) {
             case 'w':
             case 'west':
                 this.menuactual.style.top = `${offsetTop}px`;
                 this.menuactual.style.left = `${offsetLeft - this.menuactual.clientWidth - (this.emsize / 2)}px`;
+                this.gravity = 'w';
                 break;
             case 'e':
             case 'east':
                 this.menuactual.style.top = `${offsetTop}px`;
                 this.menuactual.style.left = `${offsetLeft + this.button.offsetWidth + (this.emsize / 2)}px`;
+                this.gravity = 'e';
                 break;
             case 'n':
             case 'north':
                 this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
                 this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + (this.button.offsetWidth / 2)}px`;
+                this.gravity = 'n';
                 break;
             case 'nw':
             case 'northwest':
                 this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
                 this.menuactual.style.left = `${offsetLeft}px`;
+                this.gravity = 'nw';
                 break;
             case 'ne':
             case 'northeast':
                 this.menuactual.style.top = `${(offsetTop - this.menuactual.clientHeight - (this.emsize / 2))}px`;
                 this.menuactual.style.right = `${offsetRight}px`;
+                this.gravity = 'ne';
                 break;
             case 's':
             case 'south':
                 this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menuactual.style.left = `${offsetLeft - (this.menuactual.offsetWidth / 2) + (this.button.offsetWidth / 2)}px`;
+                this.gravity = 's';
                 break;
             case 'se':
             case 'southeast':
                 this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menuactual.style.left = `${offsetLeft}px`;
+                this.gravity = 'se';
                 break;
             case 'southwest':
             case 'sw':
             default:
                 this.menuactual.style.top = `${(offsetTop + this.button.clientHeight + (this.emsize / 2))}px`;
                 this.menuactual.style.right = `${offsetRight}px`;
+                this.gravity = 'sw';
                 break;
         }
+
+        this.menuactual.setAttribute('data-gravity', this.gravity);
 
     }
 

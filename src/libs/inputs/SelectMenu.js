@@ -252,11 +252,16 @@ class SelectMenu extends InputElement {
             elemRect = self.triggerbox.getBoundingClientRect(),
             offsetLeft = elemRect.left - bodyRect.left,
             offsetTop = elemRect.top - bodyRect.top,
+            offsetRight = bodyRect.right - elemRect.right,
             sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
         self.optionlist.style.left = `${offsetLeft}px`;
+        console.log(self.container);
+        self.optionlist.style.right = `${offsetLeft + self.container.clientWidth}px`;
+        console.log(`${offsetLeft} + ${self.container.clientWidth} = ${offsetLeft + self.container.clientWidth}`);
         self.optionlist.style.width = `${self.container.clientWidth}px`;
+
 
         if ((elemRect.top + sumHeight) > window.innerHeight) {
             self.optionlist.classList.add('vert');
@@ -265,6 +270,11 @@ class SelectMenu extends InputElement {
         } else {
             self.optionlist.classList.remove('vert');
             self.optionlist.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
+            if ((offsetTop + self.triggerbox.clientHeight + self.optionlist.clientHeight) >= (bodyRect.height - offsetTop)) {
+                self.optionlist.style.bottom = `${(bodyRect.height - offsetTop)}px`;
+            } else {
+                delete self.optionlist.style.bottom;
+            }
         }
     }
 
