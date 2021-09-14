@@ -2668,6 +2668,10 @@ a.button > span.badge {
   right: 0.2rem;
   left: unset;
 }
+*[data-menuid][data-gravity=n]:before {
+  right: calc((100% / 2) - .7rem);
+  left: unset;
+}
 *[data-menuid][data-gravity=nw]:before {
   bottom: -0.7rem;
   left: 0.2rem;
@@ -5187,6 +5191,11 @@ div.toggleset > a.button:hover {
     text-shadow: var(--text-shadow);
     box-shadow: 0 0.1em 0.5em 0 rgba(var(--grey-darker-rgb), 0.7);
   }
+}
+
+*[data-menuid].datepicker {
+  position: absolute;
+  margin: 0;
 }
 
 div.window-container {
