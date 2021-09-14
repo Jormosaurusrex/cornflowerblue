@@ -105,7 +105,7 @@ class DateInput extends TextInput {
             }
         });
         this.triggerbutton = new ButtonMenu({
-            classes: ['naked'],
+            classes: ['naked', 'datepicker'],
             shape: 'square',
             gravity: 'n',
             icon: this.dateicon,

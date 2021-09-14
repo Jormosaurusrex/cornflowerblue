@@ -228,3 +228,7 @@ div.toggleset {
     }
   }
 }
+*[data-menuid].datepicker {
+  position: absolute;
+  margin: 0;
+}
