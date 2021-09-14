@@ -54,6 +54,12 @@
       left: unset;
     }
   }
+  &[data-gravity="n"] {
+    &:before {
+      right: calc((100% / 2) - .7rem);
+      left: unset;
+    }
+  }
   &[data-gravity="nw"] {
     &:before {
       bottom: -.7rem;
