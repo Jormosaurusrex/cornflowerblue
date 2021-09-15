@@ -54,6 +54,7 @@ class SelectMenu extends InputElement {
         if (config.value) {
             this.origval = config.value;
         }
+        this.emsize = CFBUtils.getSingleEmInPixels();
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -249,23 +250,22 @@ class SelectMenu extends InputElement {
 
         let self = SelectMenu.activeMenu,
             bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.triggerbox.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top,
-            offsetRight = bodyRect.right - elemRect.right,
-            sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
+            triggerRect = self.triggerbox.getBoundingClientRect(),
+            offsetLeft = triggerRect.left - bodyRect.left,
+            offsetTop = triggerRect.top - bodyRect.top,
+            offsetRight = bodyRect.right - triggerRect.right,
+            menuHeight = this.emsize * 10,
+            sumHeight = self.triggerbox.clientHeight + menuHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
         self.optionlist.style.left = `${offsetLeft}px`;
-        console.log(self.container);
         self.optionlist.style.right = `${offsetLeft + self.container.clientWidth}px`;
-        console.log(`${offsetLeft} + ${self.container.clientWidth} = ${offsetLeft + self.container.clientWidth}`);
         self.optionlist.style.width = `${self.container.clientWidth}px`;
 
 
-        if ((elemRect.top + sumHeight) > window.innerHeight) {
+        if ((triggerRect.top + sumHeight) > window.innerHeight) {
             self.optionlist.classList.add('vert');
-            self.optionlist.style.top = `${(offsetTop - self.optionlist.clientHeight)}px`;
+            self.optionlist.style.top = `${(offsetTop - menuHeight)}px`;
             self.optionlist.style.bottom = `${offsetTop}px`;
         } else {
             self.optionlist.classList.remove('vert');
@@ -706,6 +706,9 @@ class SelectMenu extends InputElement {
 
     get drawitem() { return this.config.drawitem; }
     set drawitem(drawitem) { this.config.drawitem = drawitem; }
+
+    get emsize() { return this._emsize; }
+    set emsize(emsize) { this._emsize = emsize; }
 
     get onenter() { return this.config.onenter; }
     set onenter(onenter) {
