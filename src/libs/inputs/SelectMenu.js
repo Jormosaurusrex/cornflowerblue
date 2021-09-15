@@ -258,6 +258,31 @@ class SelectMenu extends InputElement {
             sumHeight = self.triggerbox.clientHeight + menuHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
+        self.optionlist.style.width = `${self.container.clientWidth}px`;
+
+        self.optionlist.style.left = `${triggerRect.x}px`;
+        self.optionlist.style.right = `${triggerRect.x + self.container.clientWidth}px`;
+        self.optionlist.style.top = `${triggerRect.y + self.triggerbox.clientHeight}px`;
+
+        self.optionlist.style.position = 'fixed';
+
+
+    }
+
+
+    setPositionOld() {
+        if (!SelectMenu.activeMenu) { return; }
+
+        let self = SelectMenu.activeMenu,
+            bodyRect = document.body.getBoundingClientRect(),
+            triggerRect = self.triggerbox.getBoundingClientRect(),
+            offsetLeft = triggerRect.left - bodyRect.left,
+            offsetTop = triggerRect.top - bodyRect.top,
+            offsetRight = bodyRect.right - triggerRect.right,
+            menuHeight = this.emsize * 10,
+            sumHeight = self.triggerbox.clientHeight + menuHeight;
+        //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
+
         self.optionlist.style.left = `${offsetLeft}px`;
         self.optionlist.style.right = `${offsetLeft + self.container.clientWidth}px`;
         self.optionlist.style.width = `${self.container.clientWidth}px`;
