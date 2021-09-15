@@ -254,18 +254,24 @@ class SelectMenu extends InputElement {
             offsetLeft = triggerRect.left - bodyRect.left,
             offsetTop = triggerRect.top - bodyRect.top,
             offsetRight = bodyRect.right - triggerRect.right,
-            menuHeight = this.emsize * 10,
+            menuHeight = this.emsize * 15,
             sumHeight = self.triggerbox.clientHeight + menuHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
+        self.optionlist.style.height = null;
         self.optionlist.style.width = `${self.container.clientWidth}px`;
-
+        self.optionlist.style.position = 'fixed';
         self.optionlist.style.left = `${triggerRect.x}px`;
         self.optionlist.style.right = `${triggerRect.x + self.container.clientWidth}px`;
         self.optionlist.style.top = `${triggerRect.y + self.triggerbox.clientHeight}px`;
+        self.optionlist.style.height = `${menuHeight}px`;
 
-        self.optionlist.style.position = 'fixed';
+        if (((triggerRect.y + self.triggerbox.clientHeight) + menuHeight) > (window.innerHeight - self.triggerbox.clientHeight)) { // open vert
+            self.optionlist.style.bottom = `${triggerRect.y}px`;
+            self.optionlist.style.top = `${(triggerRect.y - menuHeight)}px`;
+            self.optionlist.style.height = `${menuHeight}px`;
 
+        }
 
     }
 
