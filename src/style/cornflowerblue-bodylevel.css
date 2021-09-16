@@ -955,8 +955,6 @@ ul#cfb-selectmenu {
   flex-direction: column;
   flex-wrap: nowrap;
   background-color: var(--menu-bg-color);
-  box-shadow: inset 0 0 0 0.1rem rgb(var(--input-border-color-rgb));
-  padding: 0;
   filter: var(--shadows-dropshadow-filter);
   border-top: none;
   overflow: auto;

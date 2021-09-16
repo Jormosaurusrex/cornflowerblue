@@ -37,7 +37,6 @@ class SelectMenu extends InputElement {
         let menu = document.getElementById(`cfb-selectmenu`);
         if (menu) {
             menu.setAttribute('aria-hidden', 'true');
-
         }
     }
 
@@ -64,7 +63,7 @@ class SelectMenu extends InputElement {
      * @return boolean true if it is!
      */
     get isopen() {
-        return (this.wrapper.getAttribute('aria-expanded') === 'true');
+        return (this.optionlist.getAttribute('aria-hidden') !== 'true');
     }
 
     /**
@@ -168,7 +167,7 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-
+        console.log('OPEN');
         this.optionlist.classList.remove(...this.optionlist.classList);
 
         for (let c of this.classes) {
@@ -273,45 +272,6 @@ class SelectMenu extends InputElement {
 
         }
 
-    }
-
-
-    setPositionOld() {
-        if (!SelectMenu.activeMenu) { return; }
-
-        let self = SelectMenu.activeMenu,
-            bodyRect = document.body.getBoundingClientRect(),
-            triggerRect = self.triggerbox.getBoundingClientRect(),
-            offsetLeft = triggerRect.left - bodyRect.left,
-            offsetTop = triggerRect.top - bodyRect.top,
-            offsetRight = bodyRect.right - triggerRect.right,
-            menuHeight = this.emsize * 10,
-            sumHeight = self.triggerbox.clientHeight + menuHeight;
-        //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
-
-        self.optionlist.style.left = `${offsetLeft}px`;
-        self.optionlist.style.right = `${offsetLeft + self.container.clientWidth}px`;
-        self.optionlist.style.width = `${self.container.clientWidth}px`;
-
-
-        if ((triggerRect.top + sumHeight) > window.innerHeight) {
-            console.log('a');
-            self.optionlist.classList.add('vert');
-            self.optionlist.style.top = `${(offsetTop - menuHeight)}px`;
-            self.optionlist.style.bottom = `${offsetTop}px`;
-        } else {
-            console.log('b');
-            self.optionlist.classList.remove('vert');
-            self.optionlist.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
-
-            if ((self.triggerbox.clientHeight + menuHeight) >= (window.innerHeight - self.triggerbox.clientHeight)) {
-                console.log(`c: ${(offsetTop)} ${(self.triggerbox.clientHeight)} ${(menuHeight)} ${(window.innerHeight - self.triggerbox.clientHeight)}`);
-                //self.optionlist.style.bottom = `${(window.innerHeight - self.triggerbox.clientHeight)}px`;
-            } else {
-                console.log('d');
-                delete self.optionlist.style.bottom;
-            }
-        }
     }
 
     /**

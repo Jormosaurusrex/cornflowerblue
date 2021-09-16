@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-09-14
+/*! Cornflower Blue - v0.1.1 - 2021-09-16
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -12910,7 +12910,6 @@ class SelectMenu extends InputElement {
         let menu = document.getElementById(`cfb-selectmenu`);
         if (menu) {
             menu.setAttribute('aria-hidden', 'true');
-
         }
     }
 
@@ -12927,6 +12926,8 @@ class SelectMenu extends InputElement {
         if (config.value) {
             this.origval = config.value;
         }
+        this.emsize = CFBUtils.getSingleEmInPixels();
+        console.log(this.config);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
@@ -12936,7 +12937,7 @@ class SelectMenu extends InputElement {
      * @return boolean true if it is!
      */
     get isopen() {
-        return (this.wrapper.getAttribute('aria-expanded') === 'true');
+        return (this.optionlist.getAttribute('aria-hidden') !== 'true');
     }
 
     /**
@@ -13040,7 +13041,7 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-
+        console.log('OPEN');
         this.optionlist.classList.remove(...this.optionlist.classList);
 
         for (let c of this.classes) {
@@ -13122,33 +13123,29 @@ class SelectMenu extends InputElement {
 
         let self = SelectMenu.activeMenu,
             bodyRect = document.body.getBoundingClientRect(),
-            elemRect = self.triggerbox.getBoundingClientRect(),
-            offsetLeft = elemRect.left - bodyRect.left,
-            offsetTop = elemRect.top - bodyRect.top,
-            offsetRight = bodyRect.right - elemRect.right,
-            sumHeight = self.triggerbox.clientHeight + self.optionlist.clientHeight;
+            triggerRect = self.triggerbox.getBoundingClientRect(),
+            offsetLeft = triggerRect.left - bodyRect.left,
+            offsetTop = triggerRect.top - bodyRect.top,
+            offsetRight = bodyRect.right - triggerRect.right,
+            menuHeight = this.emsize * 15,
+            sumHeight = self.triggerbox.clientHeight + menuHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
-        self.optionlist.style.left = `${offsetLeft}px`;
-        console.log(self.container);
-        self.optionlist.style.right = `${offsetLeft + self.container.clientWidth}px`;
-        console.log(`${offsetLeft} + ${self.container.clientWidth} = ${offsetLeft + self.container.clientWidth}`);
+        self.optionlist.style.height = null;
         self.optionlist.style.width = `${self.container.clientWidth}px`;
+        self.optionlist.style.position = 'fixed';
+        self.optionlist.style.left = `${triggerRect.x}px`;
+        self.optionlist.style.right = `${triggerRect.x + self.container.clientWidth}px`;
+        self.optionlist.style.top = `${triggerRect.y + self.triggerbox.clientHeight}px`;
+        self.optionlist.style.height = `${menuHeight}px`;
 
+        if (((triggerRect.y + self.triggerbox.clientHeight) + menuHeight) > (window.innerHeight - self.triggerbox.clientHeight)) { // open vert
+            self.optionlist.style.bottom = `${triggerRect.y}px`;
+            self.optionlist.style.top = `${(triggerRect.y - menuHeight)}px`;
+            self.optionlist.style.height = `${menuHeight}px`;
 
-        if ((elemRect.top + sumHeight) > window.innerHeight) {
-            self.optionlist.classList.add('vert');
-            self.optionlist.style.top = `${(offsetTop - self.optionlist.clientHeight)}px`;
-            self.optionlist.style.bottom = `${offsetTop}px`;
-        } else {
-            self.optionlist.classList.remove('vert');
-            self.optionlist.style.top = `${(offsetTop + self.triggerbox.clientHeight)}px`;
-            if ((offsetTop + self.triggerbox.clientHeight + self.optionlist.clientHeight) >= (bodyRect.height - offsetTop)) {
-                self.optionlist.style.bottom = `${(bodyRect.height - offsetTop)}px`;
-            } else {
-                delete self.optionlist.style.bottom;
-            }
         }
+
     }
 
     /**
@@ -13579,6 +13576,9 @@ class SelectMenu extends InputElement {
 
     get drawitem() { return this.config.drawitem; }
     set drawitem(drawitem) { this.config.drawitem = drawitem; }
+
+    get emsize() { return this._emsize; }
+    set emsize(emsize) { this._emsize = emsize; }
 
     get onenter() { return this.config.onenter; }
     set onenter(onenter) {
@@ -16105,7 +16105,7 @@ class Chart {
     set d3y(d3y) { this._d3y = d3y; }
 
     get data() { return this.config.data; }
-    set data(data) { this.config.data; }
+    set data(data) { this.config.data = data; }
 
     get height() { return this.config.height; }
     set height(height) { this.config.height = height; }

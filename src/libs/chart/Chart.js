@@ -230,7 +230,7 @@ class Chart {
     set d3y(d3y) { this._d3y = d3y; }
 
     get data() { return this.config.data; }
-    set data(data) { this.config.data; }
+    set data(data) { this.config.data = data; }
 
     get height() { return this.config.height; }
     set height(height) { this.config.height = height; }
