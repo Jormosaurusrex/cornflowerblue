@@ -96,7 +96,7 @@ class ButtonMenu extends SimpleButton {
     open() {
         if (this.isopen) { return; }
 
-        this.menuactual = document.getElementById(`menu-${this.menuid}`);
+        this.menuactual = document.querySelector(`[data-menuid="${this.menuid}"]`);
 
         if (!this.menuactual) {
             if (this.menu) {
@@ -144,6 +144,7 @@ class ButtonMenu extends SimpleButton {
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
+                console.log('setting close listender');
                 this.setCloseListener();
             }, 200);
         }
@@ -194,7 +195,6 @@ class ButtonMenu extends SimpleButton {
         this.menuactual.style.removeProperty('bottom');
         this.menuactual.style.removeProperty('left');
         this.menuactual.style.removeProperty('right');
-
 
         switch(this.gravity) {
             case 'w':
@@ -381,7 +381,7 @@ class ButtonMenu extends SimpleButton {
         this.menuactual = document.createElement('ul');
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');
-        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+        //this.menuactual.setAttribute('id', `menu-${this.menuid}`);
         this.menuactual.setAttribute('data-menuid', `${this.menuid}`);
         document.body.appendChild(this.menuactual);
     }
@@ -390,11 +390,13 @@ class ButtonMenu extends SimpleButton {
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
+        console.log('processMenu');
+        console.log(this.menu);
         this.menuactual = this.menu;
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');
         this.menuactual.setAttribute('data-menuid', this.menuid);
-        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+        //this.menuactual.setAttribute('id', `menu-${this.menuid}`);
 
         document.body.appendChild(this.menuactual);
 

@@ -12927,7 +12927,6 @@ class SelectMenu extends InputElement {
             this.origval = config.value;
         }
         this.emsize = CFBUtils.getSingleEmInPixels();
-        console.log(this.config);
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
