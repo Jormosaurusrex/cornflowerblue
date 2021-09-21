@@ -2136,6 +2136,7 @@ class CornflowerBlueDemo {
             label: "Year",
             name: "year-select",
             required: true,
+            value: 2017,
             prefix: 'Year:',
             unselectedtext: '(No selection)',
             options: yearOptions

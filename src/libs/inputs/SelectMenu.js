@@ -80,13 +80,17 @@ class SelectMenu extends InputElement {
     }
 
     get value() {
-        return this.input.value;
+        return this.config.value;
     }
 
     set value(value) {
         this.config.value = value;
         this.input.value = value;
-        this.triggerbox.value = this.getOptionLabel(value);
+        if (this.prefix) {
+            this.triggerbox.value = `${this.prefix} ${this.getOptionLabel(value)}`;
+        } else {
+            this.triggerbox.value = this.getOptionLabel(value);
+        }
         this.setPassiveboxValue(value);
     }
 
@@ -94,7 +98,6 @@ class SelectMenu extends InputElement {
         let p = this.unsettext;
         if (this.selectedoption) { p = this.selectedoption.label; }
         if (this.value) { p = this.value; }
-        if (this.config.value) { p = this.config.value; }
         return document.createTextNode(this.getOptionLabel(p));
     }
 
@@ -323,14 +326,13 @@ class SelectMenu extends InputElement {
 
     pacify() {
         this.container.classList.add('passive');
-        this.optionlist.setAttribute('aria-hidden', true);
+        //this.optionlist.setAttribute('aria-hidden', true);
         this.passive = true;
     }
 
     activate() {
         this.container.classList.remove('passive');
-
-        this.optionlist.removeAttribute('aria-hidden');
+        //this.optionlist.removeAttribute('aria-hidden');
         this.passive = false;
     }
 
@@ -459,7 +461,11 @@ class SelectMenu extends InputElement {
         if (this.minimal) { this.container.classList.add('minimal'); }
 
         if (this.value) {
-            this.select(this.value);
+            if (this.prefix) {
+                this.triggerbox.value = `${this.prefix} ${this.getOptionLabel(this.value)}`;
+            } else {
+                this.triggerbox.value = this.getOptionLabel(this.value);
+            }
         }
 
         this.postContainerScrub();
