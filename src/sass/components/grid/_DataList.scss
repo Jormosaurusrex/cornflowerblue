@@ -375,22 +375,6 @@ div.datalist-container {
           box-shadow: var(--hover-shadow);
         }
       }
-      &.noentriestext {
-        >div.noentries {
-          margin: 0;
-          font-size: 2rem;
-          opacity: .5;
-          font-style: oblique;
-        }
-        @include for-hover-only {
-          &:hover {
-            outline: none;
-            z-index: 202;
-            background-image: none;
-            background-color: transparent;
-          }
-        }
-      }
       &.hidden,
       &.filtered,
       &[data-search-hidden=true] {
@@ -427,6 +411,32 @@ div.datalist-container {
   &.scrolled {
     >div.listheader {
       box-shadow: 0 .5em .5em -.3em rgba(0, 0, 0, 0.7);
+    }
+  }
+  &.tight {
+    >ul.datalist,
+    >div.tablewrapper >table >tbody.datalist {
+      overflow: none;
+    }
+  }
+}
+div.break {
+  white-space: break-spaces;
+}
+li.noentriestext,
+tr.noentriestext {
+  div.noentries {
+    margin: 1rem;
+    font-size: 2rem;
+    opacity: .5;
+    font-style: oblique;
+  }
+  @include for-hover-only {
+    &:hover {
+      outline: none;
+      z-index: 202;
+      background-image: none;
+      background-color: transparent;
     }
   }
 }

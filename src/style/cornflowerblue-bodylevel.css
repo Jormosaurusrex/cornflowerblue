@@ -949,7 +949,7 @@ ul#cfb-selectmenu {
   animation: cfb-fadein 0.2s;
   opacity: 1;
   position: absolute;
-  z-index: 20000;
+  z-index: 200000;
   list-style-type: none;
   display: flex;
   flex-direction: column;

@@ -15,12 +15,12 @@ a.button {
   transition: color .2s,
               background-color .2s,
               box-shadow .2s;
-  margin: .8em .4em .8em .4em;
-  padding: .6em 1em .6em 1em;
+  margin: .8rem .4rem .8rem .4rem;
+  padding: .6rem 1rem .6rem 1rem;
   font-family: var(--default-font-family);
   font-weight: normal;
-  font-size: 1em;
-  line-height: 1;
+  font-size: 1rem;
+  line-height: normal;
   touch-action: manipulation;
   cursor: pointer;
   color: var(--colors-text-hot);
@@ -28,14 +28,14 @@ a.button {
   text-shadow: var(--text-shadow);
   border: none;
   border-radius: var(--border-radius);
-  box-shadow: 0 .1em .2em 0 rgba(var(--grey-darker-rgb), 0.5);
+  box-shadow: 0 .1rem .2rem 0 rgba(var(--grey-darker-rgb), 0.5);
   >span.icon {
-    margin: 0 .5em 0 0;
+    margin: 0 .5rem 0 0;
     &:before {
       margin: 0; // Generates padding issues otherwise
     }
     &.secondicon {
-      margin: 0 0 0 .5em;
+      margin: 0 0 0 .5rem;
     }
   }
   @include for-hover-only {
@@ -44,20 +44,20 @@ a.button {
       outline: none;
       background-image: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);
       text-decoration: underline;
-      box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+      box-shadow: 0 .1rem .5rem 0 rgba(var(--grey-darker-rgb), 0.7);
       filter: brightness(120%);
     }
   }
   &:focus,
   &.focus {
     outline: var(--colors-local) dashed .1rem;
-    outline-offset: .2em;
+    outline-offset: .2rem;
     text-decoration: underline double;
     background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%);
   }
   &:active,
   &.active {
-    box-shadow: 0 .1em .1em 0 rgba(var(--grey-darker-rgb), 0.5);
+    box-shadow: 0 .1rem .1rem 0 rgba(var(--grey-darker-rgb), 0.5);
     text-decoration: none;
     background-image: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);;
     filter: brightness(90%);
@@ -83,7 +83,7 @@ a.button {
   &.righticon {
     flex-direction: row-reverse;
     span.icon {
-      margin: 0 0 0 .5em;
+      margin: 0 0 0 .5rem;
     }
   }
   &.expander {
@@ -120,22 +120,22 @@ a.button {
     --colors-local: var(--colors-text-hot);
     span.magichamburger {
       display: inline-block;
-      width: 1em;
+      width: 1rem;
       > span {
-        width: 1em;
-        height: .2em;
+        width: 1rem;
+        height: .2rem;
         background-color: var(--colors-local);
         display: block;
         margin: 0;
         transition: all 0.5s;
-        border-radius: .1em;
+        border-radius: .1rem;
         &:first-child {
           transform: translateX(0) rotate(0);
           transform-origin: top left;
         }
         &:nth-child(2) {
-          width: 1em;
-          margin: .2em auto .2em auto;
+          width: 1rem;
+          margin: .2rem auto .2rem auto;
         }
         &:last-child {
           transform: translateX(0) rotate(0);
@@ -150,16 +150,16 @@ a.button {
       span.magichamburger {
         span {
           &:first-child {
-            width: 1.25em;
-            transform: translateX(.15em) rotate(45deg);
+            width: 1.25rem;
+            transform: translateX(.15rem) rotate(45deg);
             transform-origin: top left;
           }
           &:nth-child(2) {
-            width: .1em;
+            width: .1rem;
           }
           &:last-child {
-            width: 1.25em;
-            transform: translateX(.15em) rotate(-45deg);
+            width: 1.25rem;
+            transform: translateX(.15rem) rotate(-45deg);
             transform-origin: bottom left;
           }
         }
@@ -168,7 +168,7 @@ a.button {
   }
   &.ghost {
     --button-border-color: var(--colors-local);
-    box-shadow: inset 0 0 0 .1em var(--button-border-color);
+    box-shadow: inset 0 0 0 .1rem var(--button-border-color);
     color: var(--colors-local);
     background-color: transparent;
     &:focus,
@@ -178,7 +178,7 @@ a.button {
       color: var(--colors-text-hot);
       background-color: var(--colors-local);
       text-shadow: var(--text-shadow);
-      box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+      box-shadow: 0 .1rem .5rem 0 rgba(var(--grey-darker-rgb), 0.7);
     }
     @include for-hover-only {
       &:hover,
@@ -186,7 +186,7 @@ a.button {
         color: var(--colors-text-hot);
         background-color: var(--colors-local);
         text-shadow: var(--text-shadow);
-        box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+        box-shadow: 0 .1rem .5rem 0 rgba(var(--grey-darker-rgb), 0.7);
       }
     }
   }
@@ -203,14 +203,14 @@ a.button {
     &.active,
     &:focus,
     &.focus {
-      box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+      box-shadow: 0 .1rem .5rem 0 rgba(var(--grey-darker-rgb), 0.7);
     }
     @include for-hover-only {
       &:hover,
       &.hover {
         text-decoration: underline;
         filter: brightness(120%);
-        box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+        box-shadow: 0 .1rem .5rem 0 rgba(var(--grey-darker-rgb), 0.7);
       }
     }
 
@@ -237,17 +237,17 @@ a.button {
     }
     &:focus,
     &.focus {
-      outline: var(--button-default-color) dashed .1em;
-      outline-offset: .2em;
+      outline: var(--button-default-color) dashed .1rem;
+      outline-offset: .2rem;
       text-decoration: underline double;
     }
 
   }
   &.square,
   &.circle {
-    padding: .5em;
-    width: 2em;
-    height: 2em;
+    padding: .5rem;
+    width: 2rem;
+    height: 2rem;
     line-height: 1;
     display: flex;
     justify-content: center;
@@ -255,7 +255,7 @@ a.button {
     flex-direction: column;
     span.icon {
       margin: 0;
-      font-size: 1.2em;
+      font-size: 1.2rem;
     }
     span.secondicon,
     span.text {
@@ -268,7 +268,7 @@ a.button {
     }
   }
   &.circle {
-    border: .1em solid var(--colors-local);
+    border: .1rem solid var(--colors-local);
     box-shadow: none;
     border-radius: 50%;
     &.mute {
@@ -277,7 +277,7 @@ a.button {
     &:hover,
     &:focus,
     &:active {
-      box-shadow: 0 .1em .5em 0 rgba(50, 50, 50, 0.5);
+      box-shadow: 0 .1rem .5rem 0 rgba(50, 50, 50, 0.5);
     }
     &:disabled,
     &[aria-disabled="true"] {
@@ -286,11 +286,11 @@ a.button {
     }
   }
   &.pill {
-    border-radius: 1.5em;
+    border-radius: 1.5rem;
     margin: 0;
     &.ghost {
       box-shadow: none;
-      border: .1em solid var(--colors-local);
+      border: .1rem solid var(--colors-local);
     }
     &:hover,
     &:active,
@@ -357,23 +357,23 @@ a.button {
     }
   }
   &.micro {
-    font-size: .6em;
+    font-size: .6rem;
   }
   &.small {
-    font-size: .8em;
+    font-size: .8rem;
   }
   &.large {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     @include for-phone-only {
-      font-size: 1em;
+      font-size: 1rem;
     }
   }
   &.fill {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     width: 100%;
     height: 100%;
     @include for-phone-only {
-      font-size: 1em;
+      font-size: 1rem;
     }
   }
 
@@ -479,29 +479,29 @@ a.button {
   }
   &.tagbutton {
     overflow: visible;
-    font-size: .8em;
-    padding: .2em 1em .2em 1em;
+    font-size: .8rem;
+    padding: .2rem 1rem .2rem 1rem;
     span.tagicon {
-      margin-right: 1em;
+      margin-right: 1rem;
       margin-left: 0;
       border-radius: 50%;
       color: var(--colors-local);
       background-color: var(--colors-text-hot);
-      padding: .2em;
+      padding: .2rem;
     }
     div.tooltip {
-      left: -1em;
-      bottom: 2.5em;
+      left: -1rem;
+      bottom: 2.5rem;
       &:before {
-        left: 1em;
-        bottom: -.5em;
+        left: 1rem;
+        bottom: -.5rem;
       }
     }
     &.righticon {
-      padding-right: .2em;
+      padding-right: .2rem;
       span.tagicon {
         margin-right: 0;
-        margin-left: 1em;
+        margin-left: 1rem;
       }
     }
   }
@@ -513,9 +513,9 @@ a.button {
       form,
       div {
         &.menu {
-          font-size: 1em;
+          font-size: 1rem;
           &:before {
-            right: .25em;
+            right: .25rem;
           }
         }
       }
@@ -524,7 +524,7 @@ a.button {
       color: var(--colors-text-hot);
       text-shadow: var(--text-shadow);
       background-color: var(--colors-local);
-      box-shadow: 0 .1em .5em 0 rgba(var(--grey-darker-rgb), 0.7);
+      box-shadow: 0 .1rem .5rem 0 rgba(var(--grey-darker-rgb), 0.7);
       outline: none;
       text-decoration: none;
       ul.menu {

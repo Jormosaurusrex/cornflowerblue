@@ -80,7 +80,7 @@ class SelectMenu extends InputElement {
     }
 
     get value() {
-        return this.config.value;
+        return this.input.value;
     }
 
     set value(value) {
@@ -170,7 +170,6 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-        console.log('OPEN');
         this.optionlist.classList.remove(...this.optionlist.classList);
 
         for (let c of this.classes) {
@@ -460,7 +459,8 @@ class SelectMenu extends InputElement {
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
 
-        if (this.value) {
+        if (this.config.value) {
+            this.input.value = this.config.value;
             if (this.prefix) {
                 this.triggerbox.value = `${this.prefix} ${this.getOptionLabel(this.value)}`;
             } else {
@@ -647,13 +647,7 @@ class SelectMenu extends InputElement {
         });
 
         li.addEventListener('click', (e) => {
-            let listentries = this.optionlist.querySelectorAll('li');
-            for (let le of listentries) {
-                le.removeAttribute('aria-selected');
-            }
-            li.setAttribute('aria-selected', 'true');
             this.input.value = def.value;
-
             if (def.unselectoption) {
                 this.triggerbox.value = '';
                 if ((this.mute) && (this.unsettext)) {
@@ -663,6 +657,12 @@ class SelectMenu extends InputElement {
                 this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
                 this.triggerbox.value = def.label;
+            }
+
+            if ((this.triggerbox.value) && (this.triggerbox.value !== '')) {
+                this.container.classList.add('filled');
+            } else {
+                this.container.classList.remove('filled');
             }
 
             this.selectedoption = def;

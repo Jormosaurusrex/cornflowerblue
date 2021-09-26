@@ -31,21 +31,13 @@ div.select-container {
     }
   }
   &.mute {
-    label {
-      opacity: 1;
-    }
-    div.wrap {
-      input.trigger {
-
-      }
-    }
+    label { opacity: 1; }
     &[aria-expanded="true"] {
       div.wrap {
         input.trigger {
           --input-border-color-rgb: var(--colors-affordance-rgb);
           background-color: rgba(var(--input-border-color-rgb), 0.05);
           box-shadow: inset 0 0 0 .05rem rgb(var(--input-border-color-rgb));
-          //color: rgba(var(--colors-standard-rgb), 0.5);
         }
       }
     }

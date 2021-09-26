@@ -165,10 +165,17 @@ class DataList extends DataGrid {
         this.datalist.innerHTML = '';
 
         if (items.length === 0) {
-            let li = document.createElement('li');
-            li.classList.add('noentriestext');
-            li.innerHTML = `<div class="noentries">${this.noentriestext}</div>`;
-            this.datalist.appendChild(li);
+            let row,
+                theHTML = `<div class="noentries">${this.noentriestext}</div>`;
+            if (this.astable) {
+                row = document.createElement('tr');
+                row.innerHTML = `<td colspan="${this.columns.length}">${theHTML}</td>`
+            } else {
+                row = document.createElement('li');
+                row.innerHTML = theHTML;
+            }
+            row.classList.add('noentriestext');
+            this.datalist.appendChild(row);
             return;
         }
 

@@ -144,7 +144,6 @@ class ButtonMenu extends SimpleButton {
 
         if (this.autoclose) {
             window.setTimeout(() => { // Set this after, or else we'll get bouncing.
-                console.log('setting close listender');
                 this.setCloseListener();
             }, 200);
         }
@@ -390,8 +389,6 @@ class ButtonMenu extends SimpleButton {
      * Applies handlers and classes to a provided menu.
      */
     processMenu() {
-        console.log('processMenu');
-        console.log(this.menu);
         this.menuactual = this.menu;
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');

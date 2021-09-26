@@ -233,7 +233,6 @@ class DialogWindow {
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
                                     mute: true,
-                                    classes: ['closebutton'],
                                     action: () => {
                                         this.close();
                                     }

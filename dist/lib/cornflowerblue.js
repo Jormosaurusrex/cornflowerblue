@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-09-16
+/*! Cornflower Blue - v0.1.1 - 2021-09-23
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3061,7 +3061,7 @@ class ButtonMenu extends SimpleButton {
     open() {
         if (this.isopen) { return; }
 
-        this.menuactual = document.getElementById(`menu-${this.menuid}`);
+        this.menuactual = document.querySelector(`[data-menuid="${this.menuid}"]`);
 
         if (!this.menuactual) {
             if (this.menu) {
@@ -3159,7 +3159,6 @@ class ButtonMenu extends SimpleButton {
         this.menuactual.style.removeProperty('bottom');
         this.menuactual.style.removeProperty('left');
         this.menuactual.style.removeProperty('right');
-
 
         switch(this.gravity) {
             case 'w':
@@ -3346,7 +3345,7 @@ class ButtonMenu extends SimpleButton {
         this.menuactual = document.createElement('ul');
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');
-        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+        //this.menuactual.setAttribute('id', `menu-${this.menuid}`);
         this.menuactual.setAttribute('data-menuid', `${this.menuid}`);
         document.body.appendChild(this.menuactual);
     }
@@ -3359,7 +3358,7 @@ class ButtonMenu extends SimpleButton {
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');
         this.menuactual.setAttribute('data-menuid', this.menuid);
-        this.menuactual.setAttribute('id', `menu-${this.menuid}`);
+        //this.menuactual.setAttribute('id', `menu-${this.menuid}`);
 
         document.body.appendChild(this.menuactual);
 
@@ -7676,10 +7675,17 @@ class DataList extends DataGrid {
         this.datalist.innerHTML = '';
 
         if (items.length === 0) {
-            let li = document.createElement('li');
-            li.classList.add('noentriestext');
-            li.innerHTML = `<div class="noentries">${this.noentriestext}</div>`;
-            this.datalist.appendChild(li);
+            let row,
+                theHTML = `<div class="noentries">${this.noentriestext}</div>`;
+            if (this.astable) {
+                row = document.createElement('tr');
+                row.innerHTML = `<td colspan="${this.columns.length}">${theHTML}</td>`
+            } else {
+                row = document.createElement('li');
+                row.innerHTML = theHTML;
+            }
+            row.classList.add('noentriestext');
+            this.datalist.appendChild(row);
             return;
         }
 
@@ -9411,7 +9417,6 @@ class DialogWindow {
                                 this.form.actions.push(new SimpleButton({
                                     text: this.closetext,
                                     mute: true,
-                                    classes: ['closebutton'],
                                     action: () => {
                                         this.close();
                                     }
@@ -12959,7 +12964,11 @@ class SelectMenu extends InputElement {
     set value(value) {
         this.config.value = value;
         this.input.value = value;
-        this.triggerbox.value = this.getOptionLabel(value);
+        if (this.prefix) {
+            this.triggerbox.value = `${this.prefix} ${this.getOptionLabel(value)}`;
+        } else {
+            this.triggerbox.value = this.getOptionLabel(value);
+        }
         this.setPassiveboxValue(value);
     }
 
@@ -12967,7 +12976,6 @@ class SelectMenu extends InputElement {
         let p = this.unsettext;
         if (this.selectedoption) { p = this.selectedoption.label; }
         if (this.value) { p = this.value; }
-        if (this.config.value) { p = this.config.value; }
         return document.createTextNode(this.getOptionLabel(p));
     }
 
@@ -13040,7 +13048,6 @@ class SelectMenu extends InputElement {
      * Opens the option list.
      */
     open() {
-        console.log('OPEN');
         this.optionlist.classList.remove(...this.optionlist.classList);
 
         for (let c of this.classes) {
@@ -13196,14 +13203,13 @@ class SelectMenu extends InputElement {
 
     pacify() {
         this.container.classList.add('passive');
-        this.optionlist.setAttribute('aria-hidden', true);
+        //this.optionlist.setAttribute('aria-hidden', true);
         this.passive = true;
     }
 
     activate() {
         this.container.classList.remove('passive');
-
-        this.optionlist.removeAttribute('aria-hidden');
+        //this.optionlist.removeAttribute('aria-hidden');
         this.passive = false;
     }
 
@@ -13331,8 +13337,13 @@ class SelectMenu extends InputElement {
         }
         if (this.minimal) { this.container.classList.add('minimal'); }
 
-        if (this.value) {
-            this.select(this.value);
+        if (this.config.value) {
+            this.input.value = this.config.value;
+            if (this.prefix) {
+                this.triggerbox.value = `${this.prefix} ${this.getOptionLabel(this.value)}`;
+            } else {
+                this.triggerbox.value = this.getOptionLabel(this.value);
+            }
         }
 
         this.postContainerScrub();
@@ -13514,13 +13525,7 @@ class SelectMenu extends InputElement {
         });
 
         li.addEventListener('click', (e) => {
-            let listentries = this.optionlist.querySelectorAll('li');
-            for (let le of listentries) {
-                le.removeAttribute('aria-selected');
-            }
-            li.setAttribute('aria-selected', 'true');
             this.input.value = def.value;
-
             if (def.unselectoption) {
                 this.triggerbox.value = '';
                 if ((this.mute) && (this.unsettext)) {
@@ -13530,6 +13535,12 @@ class SelectMenu extends InputElement {
                 this.triggerbox.value = `${this.prefix} ${def.label}`;
             } else {
                 this.triggerbox.value = def.label;
+            }
+
+            if ((this.triggerbox.value) && (this.triggerbox.value !== '')) {
+                this.container.classList.add('filled');
+            } else {
+                this.container.classList.remove('filled');
             }
 
             this.selectedoption = def;

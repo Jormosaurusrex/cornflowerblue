@@ -1,5 +1,11 @@
 class RadioGroup extends SelectMenu {
 
+    static get DEFAULT_CONFIG() {
+        return {
+
+        };
+    }
+
     /**
      * Define the RadioGroup
      * @param config a dictionary object
@@ -17,6 +23,12 @@ class RadioGroup extends SelectMenu {
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get value() {
+        let opt = this.optionlist.querySelector(`input[name="${this.name}"][aria-checked="true"]`);
+        if (opt) { return opt.value; }
+        return null;
+    }
 
     get input() { return this.optionlist; }
 
@@ -123,10 +135,13 @@ class RadioGroup extends SelectMenu {
             op.classList.add(c);
         }
         op.addEventListener('change', () => {
+            for (let opt of this.optionlist.querySelectorAll('input[type="radio"]')) {
+                opt.removeAttribute('aria-checked');
+                opt.removeAttribute('aria-selected');
+            }
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
-            } else {
-                op.removeAttribute('aria-checked');
+                op.setAttribute('aria-selected', 'true');
             }
 
             this.selectedoption = def;
