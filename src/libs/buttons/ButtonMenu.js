@@ -285,8 +285,8 @@ class ButtonMenu extends SimpleButton {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 // Do nothing.
-            } else if (this.menuactual.contains(e.target)) {
-                this.close();
+            } else if (this.button.contains(e.target)) {
+                //this.close();
             } else if (this.menuactual.contains(e.target)) {
                 // Do nothing.  This will auto close.
             } else {
@@ -380,7 +380,6 @@ class ButtonMenu extends SimpleButton {
         this.menuactual = document.createElement('ul');
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');
-        //this.menuactual.setAttribute('id', `menu-${this.menuid}`);
         this.menuactual.setAttribute('data-menuid', `${this.menuid}`);
         document.body.appendChild(this.menuactual);
     }

@@ -125,7 +125,7 @@ div.radiogroup-container {
   }
 }
 div.colorselector-container {
-  ul.colorselector {
+  ul.radiogroup {
     list-style-type: none;
     display: flex;
     flex-direction: row;
@@ -145,9 +145,16 @@ div.colorselector-container {
       }
       input[type="radio"] {
         //display: none;
-        &::after {
-          background-color: var(--colors-highlight);
-          border-color: var(--colors-highlight);
+        box-shadow: none;
+        &[aria-selected="true"],
+        &[aria-checked="true"] {
+          box-shadow: 0 0 0 .2rem var(--colors-highlight);
+          &:after { display: none; }
+        }
+        @include for-hover-only {
+          &:hover {
+            &:after { display: none; }
+          }
         }
       }
       label {
@@ -171,16 +178,6 @@ div.colorselector-container {
         }
       }
       label { display: none; }
-      &[aria-selected="true"] {
-        input[type="radio"] {
-          background-color: var(--colors-highlight);
-          border: .1rem dotted var(--colors-highlight);
-          &:after {
-            display: inline-block;
-            opacity: .5;
-          }
-        }
-      }
     }
   }
   &.required {

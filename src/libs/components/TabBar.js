@@ -12,7 +12,16 @@ class TabBar {
 
             vertical: false, // Vertical or horizontal
             animation: 'popin', // Set to null to disable animations
-            tabs: [], // An array of tab definitions
+            tabs: [
+                {
+                    label: 'a',
+                    classes: ['nano'],
+                    selected: false,
+                    action: (id, self) => {
+                        this.setFontSize('nano');
+                    }
+                }
+            ], // An array of tab definitions
             // {
             //    classes: [] // An array of css classes to add
                               // include "mobileonly" to only show item in mobile
@@ -29,6 +38,10 @@ class TabBar {
                           // This is what will fire if there is no action defined on the tab definition.
             classes: [] //Extra css classes to apply
         };
+    }
+
+    setFontSize(size = 'medium') {
+        document.body.setAttribute('font-size')
     }
 
     /**

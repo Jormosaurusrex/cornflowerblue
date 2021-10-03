@@ -84,14 +84,13 @@ class ColorSelector extends RadioGroup {
             op.classList.add(c);
         }
         op.addEventListener('change', () => {
+            for (let opt of this.optionlist.querySelectorAll('input[type="radio"]')) {
+                opt.removeAttribute('aria-checked');
+                opt.removeAttribute('aria-selected');
+            }
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
-                for (let l of this.optionlist.querySelectorAll('li')) {
-                    l.removeAttribute('aria-selected');
-                }
-                li.setAttribute('aria-selected', 'true');
-            } else {
-                op.removeAttribute('aria-checked');
+                op.setAttribute('aria-selected', 'true');
             }
 
             this.selectedoption = def;
