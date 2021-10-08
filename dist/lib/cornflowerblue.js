@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-09-23
+/*! Cornflower Blue - v0.1.1 - 2021-10-06
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2007,6 +2007,8 @@ class IconFactory {
             'short_window',
             'tall_window',
             'maximize',
+            'open',
+            'opendot',
             'reply-right',
             'reply-left',
             'gripdots-left',
@@ -3250,8 +3252,8 @@ class ButtonMenu extends SimpleButton {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 // Do nothing.
-            } else if (this.menuactual.contains(e.target)) {
-                this.close();
+            } else if (this.button.contains(e.target)) {
+                //this.close();
             } else if (this.menuactual.contains(e.target)) {
                 // Do nothing.  This will auto close.
             } else {
@@ -3345,7 +3347,6 @@ class ButtonMenu extends SimpleButton {
         this.menuactual = document.createElement('ul');
         this.menuactual.setAttribute('aria-hidden', 'true');
         this.menuactual.setAttribute('tabindex', '0');
-        //this.menuactual.setAttribute('id', `menu-${this.menuid}`);
         this.menuactual.setAttribute('data-menuid', `${this.menuid}`);
         document.body.appendChild(this.menuactual);
     }
@@ -11119,7 +11120,16 @@ class TabBar {
 
             vertical: false, // Vertical or horizontal
             animation: 'popin', // Set to null to disable animations
-            tabs: [], // An array of tab definitions
+            tabs: [
+                {
+                    label: 'a',
+                    classes: ['nano'],
+                    selected: false,
+                    action: (id, self) => {
+                        this.setFontSize('nano');
+                    }
+                }
+            ], // An array of tab definitions
             // {
             //    classes: [] // An array of css classes to add
                               // include "mobileonly" to only show item in mobile
@@ -11136,6 +11146,10 @@ class TabBar {
                           // This is what will fire if there is no action defined on the tab definition.
             classes: [] //Extra css classes to apply
         };
+    }
+
+    setFontSize(size = 'medium') {
+        document.body.setAttribute('font-size')
     }
 
     /**
@@ -15250,6 +15264,12 @@ class PasswordInput extends TextInput {
 window.PasswordInput = PasswordInput;
 class RadioGroup extends SelectMenu {
 
+    static get DEFAULT_CONFIG() {
+        return {
+
+        };
+    }
+
     /**
      * Define the RadioGroup
      * @param config a dictionary object
@@ -15267,6 +15287,12 @@ class RadioGroup extends SelectMenu {
     }
 
     /* PSEUDO-GETTER METHODS____________________________________________________________ */
+
+    get value() {
+        let opt = this.optionlist.querySelector(`input[name="${this.name}"][aria-checked="true"]`);
+        if (opt) { return opt.value; }
+        return null;
+    }
 
     get input() { return this.optionlist; }
 
@@ -15373,10 +15399,13 @@ class RadioGroup extends SelectMenu {
             op.classList.add(c);
         }
         op.addEventListener('change', () => {
+            for (let opt of this.optionlist.querySelectorAll('input[type="radio"]')) {
+                opt.removeAttribute('aria-checked');
+                opt.removeAttribute('aria-selected');
+            }
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
-            } else {
-                op.removeAttribute('aria-checked');
+                op.setAttribute('aria-selected', 'true');
             }
 
             this.selectedoption = def;
@@ -15529,14 +15558,13 @@ class ColorSelector extends RadioGroup {
             op.classList.add(c);
         }
         op.addEventListener('change', () => {
+            for (let opt of this.optionlist.querySelectorAll('input[type="radio"]')) {
+                opt.removeAttribute('aria-checked');
+                opt.removeAttribute('aria-selected');
+            }
             if (op.checked) {
                 op.setAttribute('aria-checked', 'true');
-                for (let l of this.optionlist.querySelectorAll('li')) {
-                    l.removeAttribute('aria-selected');
-                }
-                li.setAttribute('aria-selected', 'true');
-            } else {
-                op.removeAttribute('aria-checked');
+                op.setAttribute('aria-selected', 'true');
             }
 
             this.selectedoption = def;

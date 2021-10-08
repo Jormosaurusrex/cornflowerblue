@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'cornflowerblue';
-  src: url('../font/cornflowerblue.eot?95019578');
-  src: url('../font/cornflowerblue.eot?95019578#iefix') format('embedded-opentype'),
-       url('../font/cornflowerblue.woff2?95019578') format('woff2'),
-       url('../font/cornflowerblue.woff?95019578') format('woff'),
-       url('../font/cornflowerblue.ttf?95019578') format('truetype'),
-       url('../font/cornflowerblue.svg?95019578#cornflowerblue') format('svg');
+  src: url('../font/cornflowerblue.eot?98105530');
+  src: url('../font/cornflowerblue.eot?98105530#iefix') format('embedded-opentype'),
+       url('../font/cornflowerblue.woff2?98105530') format('woff2'),
+       url('../font/cornflowerblue.woff?98105530') format('woff'),
+       url('../font/cornflowerblue.ttf?98105530') format('truetype'),
+       url('../font/cornflowerblue.svg?98105530#cornflowerblue') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'cornflowerblue';
-    src: url('../font/cornflowerblue.svg?95019578#cornflowerblue') format('svg');
+    src: url('../font/cornflowerblue.svg?98105530#cornflowerblue') format('svg');
   }
 }
 */
@@ -189,8 +189,14 @@
 .cfb-chevron-double-down:before { content: '\e88b'; } /* '' */
 .cfb-flower:before { content: '\e891'; } /* '' */
 .cfb-info:before { content: '\e892'; } /* '' */
+.cfb-open_dot:before { content: '\e894'; } /* '' */
+.cfb-eraser:before { content: '\e895'; } /* '' */
+.cfb-shape:before { content: '\e896'; } /* '' */
+.cfb-polygon:before { content: '\e897'; } /* '' */
+.cfb-polyline:before { content: '\e898'; } /* '' */
+.cfb-polyrect:before { content: '\e899'; } /* '' */
+.cfb-polycircle:before { content: '\e89a'; } /* '' */
 .cfb-open:before { content: '\e8c7'; } /* '' */
-.cfb-open_dot:before { content: '\e8c8'; } /* '' */
 .cfb-chevron-right-thin:before { content: '\e8d7'; } /* '' */
 .cfb-chevron-left-thin:before { content: '\e8d8'; } /* '' */
 .cfb-chevron-down-thin:before { content: '\e8d9'; } /* '' */

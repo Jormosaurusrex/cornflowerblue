@@ -134,8 +134,14 @@
 .cfb-chevron-double-down:before { content: '\e88b'; } /* '' */
 .cfb-flower:before { content: '\e891'; } /* '' */
 .cfb-info:before { content: '\e892'; } /* '' */
+.cfb-open_dot:before { content: '\e894'; } /* '' */
+.cfb-eraser:before { content: '\e895'; } /* '' */
+.cfb-shape:before { content: '\e896'; } /* '' */
+.cfb-polygon:before { content: '\e897'; } /* '' */
+.cfb-polyline:before { content: '\e898'; } /* '' */
+.cfb-polyrect:before { content: '\e899'; } /* '' */
+.cfb-polycircle:before { content: '\e89a'; } /* '' */
 .cfb-open:before { content: '\e8c7'; } /* '' */
-.cfb-open_dot:before { content: '\e8c8'; } /* '' */
 .cfb-chevron-right-thin:before { content: '\e8d7'; } /* '' */
 .cfb-chevron-left-thin:before { content: '\e8d8'; } /* '' */
 .cfb-chevron-down-thin:before { content: '\e8d9'; } /* '' */
