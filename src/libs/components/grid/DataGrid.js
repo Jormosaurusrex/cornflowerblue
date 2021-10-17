@@ -1241,6 +1241,8 @@ class DataGrid extends Panel {
         this.filtertags.innerHTML = '';
 
         if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            console.log('active filters');
+            console.log(this.activefilters);
             this.filterinfo.setAttribute('aria-expanded', true);
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({

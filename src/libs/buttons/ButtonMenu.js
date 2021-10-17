@@ -280,8 +280,13 @@ class ButtonMenu extends SimpleButton {
         }, { once: true });
 
         window.addEventListener('click', (e) => {
-            let tag = this.menuactual.tagName.toLowerCase();
-            if (((this.menuactual.contains(e.target))) && (this.stayopen)) {
+            let tag = this.menuactual.tagName.toLowerCase(),
+                menu = document.getElementById('cfb-selectmenu');
+
+            if ((
+                (this.menuactual.contains(e.target)) ||
+                ((menu) && (menu.contains(e.target)))
+                ) && (this.stayopen)) {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 // Do nothing.

@@ -62,8 +62,8 @@ class FilterConfigurator {
 
         let filter,
             filterid = li.getAttribute('data-filterid'),
-            fieldField = li.querySelector(`input[name="primeselector-${filterid}"]:checked`),
-            comparatorField = li.querySelector(`input[name="comparator-${filterid}"]:checked`),
+            fieldField = li.querySelector(`input[name="primeselector-${filterid}"]`),
+            comparatorField = li.querySelector(`input[name="comparator-${filterid}"]`),
             valueField = li.querySelector(`input[name="valuefield-${filterid}"]`);
 
         if ((fieldField) && (comparatorField) && (valueField)) {
@@ -237,6 +237,12 @@ class FilterConfigurator {
                 }
             }
         });
+
+        //filterid = li.getAttribute('data-filterid'),
+        //    fieldField = li.querySelector(`input[name="primeselector-${filterid}"]:checked`),
+        //    comparatorField = li.querySelector(`input[name="comparator-${filterid}"]:checked`),
+        //    valueField = li.querySelector(`input[name="valuefield-${filterid}"]`);
+
         return primeSelector;
     }
 
@@ -294,7 +300,7 @@ class FilterConfigurator {
      */
     makeValueSelector(filterid, field, value) {
         let config = {
-            value: value,
+            value: value ? value : "",
             name: `valuefield-${filterid}`,
             minimal: true,
             mute: this.mute,

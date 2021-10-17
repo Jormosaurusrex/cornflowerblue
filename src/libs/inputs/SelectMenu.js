@@ -204,12 +204,13 @@ class SelectMenu extends InputElement {
             }
         }
 
-        this.setPosition();
-        this.optionlist.removeAttribute('aria-hidden');
-
-        this.setCloseListener();
         setTimeout(() => { // Set this after, or else we'll get bouncing.
             //
+            this.setPosition();
+            this.optionlist.removeAttribute('aria-hidden');
+
+            this.setCloseListener();
+
         }, 100);
     }
 
@@ -249,28 +250,27 @@ class SelectMenu extends InputElement {
     setPosition() {
         if (!SelectMenu.activeMenu) { return; }
 
-        let self = SelectMenu.activeMenu,
-            bodyRect = document.body.getBoundingClientRect(),
-            triggerRect = self.triggerbox.getBoundingClientRect(),
+        let bodyRect = document.body.getBoundingClientRect(),
+            triggerRect = this.triggerbox.getBoundingClientRect(),
             offsetLeft = triggerRect.left - bodyRect.left,
             offsetTop = triggerRect.top - bodyRect.top,
             offsetRight = bodyRect.right - triggerRect.right,
             menuHeight = this.emsize * 15,
-            sumHeight = self.triggerbox.clientHeight + menuHeight;
+            sumHeight = this.triggerbox.clientHeight + menuHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
-        self.optionlist.style.height = null;
-        self.optionlist.style.width = `${self.container.clientWidth}px`;
-        self.optionlist.style.position = 'fixed';
-        self.optionlist.style.left = `${triggerRect.x}px`;
-        self.optionlist.style.right = `${triggerRect.x + self.container.clientWidth}px`;
-        self.optionlist.style.top = `${triggerRect.y + self.triggerbox.clientHeight}px`;
-        self.optionlist.style.height = `${menuHeight}px`;
-
-        if (((triggerRect.y + self.triggerbox.clientHeight) + menuHeight) > (window.innerHeight - self.triggerbox.clientHeight)) { // open vert
-            self.optionlist.style.bottom = `${triggerRect.y}px`;
-            self.optionlist.style.top = `${(triggerRect.y - menuHeight)}px`;
-            self.optionlist.style.height = `${menuHeight}px`;
+        this.optionlist.style.height = null;
+        this.optionlist.style.maxWidth = `${this.emsize * 10}px`;
+        //this.optionlist.style.width = `${this.container.clientWidth}px`;
+        this.optionlist.style.position = 'fixed';
+        this.optionlist.style.left = `${triggerRect.x}px`;
+        //this.optionlist.style.right = `${triggerRect.x + this.container.clientWidth}px`;
+        this.optionlist.style.top = `${triggerRect.y + this.triggerbox.clientHeight}px`;
+        //this.optionlist.style.height = `${menuHeight}px`;
+        if (((triggerRect.y + this.triggerbox.clientHeight) + menuHeight) > (window.innerHeight - this.triggerbox.clientHeight)) { // open vert
+            this.optionlist.style.bottom = `${triggerRect.y}px`;
+            this.optionlist.style.top = `${(triggerRect.y - menuHeight)}px`;
+            this.optionlist.style.height = `${menuHeight}px`;
 
         }
 

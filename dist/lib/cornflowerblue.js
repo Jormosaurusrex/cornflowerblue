@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-10-10
+/*! Cornflower Blue - v0.1.1 - 2021-10-14
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -3247,8 +3247,13 @@ class ButtonMenu extends SimpleButton {
         }, { once: true });
 
         window.addEventListener('click', (e) => {
-            let tag = this.menuactual.tagName.toLowerCase();
-            if (((this.menuactual.contains(e.target))) && (this.stayopen)) {
+            let tag = this.menuactual.tagName.toLowerCase(),
+                menu = document.getElementById('cfb-selectmenu');
+
+            if ((
+                (this.menuactual.contains(e.target)) ||
+                ((menu) && (menu.contains(e.target)))
+                ) && (this.stayopen)) {
                 window.setTimeout(() => { this.setCloseListener(); }, 20);
             } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
                 // Do nothing.
@@ -6238,6 +6243,8 @@ class DataGrid extends Panel {
         this.filtertags.innerHTML = '';
 
         if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
+            console.log('active filters');
+            console.log(this.activefilters);
             this.filterinfo.setAttribute('aria-expanded', true);
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
@@ -8115,8 +8122,8 @@ class FilterConfigurator {
 
         let filter,
             filterid = li.getAttribute('data-filterid'),
-            fieldField = li.querySelector(`input[name="primeselector-${filterid}"]:checked`),
-            comparatorField = li.querySelector(`input[name="comparator-${filterid}"]:checked`),
+            fieldField = li.querySelector(`input[name="primeselector-${filterid}"]`),
+            comparatorField = li.querySelector(`input[name="comparator-${filterid}"]`),
             valueField = li.querySelector(`input[name="valuefield-${filterid}"]`);
 
         if ((fieldField) && (comparatorField) && (valueField)) {
@@ -8290,6 +8297,12 @@ class FilterConfigurator {
                 }
             }
         });
+
+        //filterid = li.getAttribute('data-filterid'),
+        //    fieldField = li.querySelector(`input[name="primeselector-${filterid}"]:checked`),
+        //    comparatorField = li.querySelector(`input[name="comparator-${filterid}"]:checked`),
+        //    valueField = li.querySelector(`input[name="valuefield-${filterid}"]`);
+
         return primeSelector;
     }
 
@@ -8347,7 +8360,7 @@ class FilterConfigurator {
      */
     makeValueSelector(filterid, field, value) {
         let config = {
-            value: value,
+            value: value ? value : "",
             name: `valuefield-${filterid}`,
             minimal: true,
             mute: this.mute,
@@ -13096,12 +13109,13 @@ class SelectMenu extends InputElement {
             }
         }
 
-        this.setPosition();
-        this.optionlist.removeAttribute('aria-hidden');
-
-        this.setCloseListener();
         setTimeout(() => { // Set this after, or else we'll get bouncing.
             //
+            this.setPosition();
+            this.optionlist.removeAttribute('aria-hidden');
+
+            this.setCloseListener();
+
         }, 100);
     }
 
@@ -13141,28 +13155,27 @@ class SelectMenu extends InputElement {
     setPosition() {
         if (!SelectMenu.activeMenu) { return; }
 
-        let self = SelectMenu.activeMenu,
-            bodyRect = document.body.getBoundingClientRect(),
-            triggerRect = self.triggerbox.getBoundingClientRect(),
+        let bodyRect = document.body.getBoundingClientRect(),
+            triggerRect = this.triggerbox.getBoundingClientRect(),
             offsetLeft = triggerRect.left - bodyRect.left,
             offsetTop = triggerRect.top - bodyRect.top,
             offsetRight = bodyRect.right - triggerRect.right,
             menuHeight = this.emsize * 15,
-            sumHeight = self.triggerbox.clientHeight + menuHeight;
+            sumHeight = this.triggerbox.clientHeight + menuHeight;
         //console.log(`offsetTop: ${offsetTop} ${elemRect.top} ${bodyRect.top}`);
 
-        self.optionlist.style.height = null;
-        self.optionlist.style.width = `${self.container.clientWidth}px`;
-        self.optionlist.style.position = 'fixed';
-        self.optionlist.style.left = `${triggerRect.x}px`;
-        self.optionlist.style.right = `${triggerRect.x + self.container.clientWidth}px`;
-        self.optionlist.style.top = `${triggerRect.y + self.triggerbox.clientHeight}px`;
-        self.optionlist.style.height = `${menuHeight}px`;
-
-        if (((triggerRect.y + self.triggerbox.clientHeight) + menuHeight) > (window.innerHeight - self.triggerbox.clientHeight)) { // open vert
-            self.optionlist.style.bottom = `${triggerRect.y}px`;
-            self.optionlist.style.top = `${(triggerRect.y - menuHeight)}px`;
-            self.optionlist.style.height = `${menuHeight}px`;
+        this.optionlist.style.height = null;
+        this.optionlist.style.maxWidth = `${this.emsize * 10}px`;
+        //this.optionlist.style.width = `${this.container.clientWidth}px`;
+        this.optionlist.style.position = 'fixed';
+        this.optionlist.style.left = `${triggerRect.x}px`;
+        //this.optionlist.style.right = `${triggerRect.x + this.container.clientWidth}px`;
+        this.optionlist.style.top = `${triggerRect.y + this.triggerbox.clientHeight}px`;
+        //this.optionlist.style.height = `${menuHeight}px`;
+        if (((triggerRect.y + this.triggerbox.clientHeight) + menuHeight) > (window.innerHeight - this.triggerbox.clientHeight)) { // open vert
+            this.optionlist.style.bottom = `${triggerRect.y}px`;
+            this.optionlist.style.top = `${(triggerRect.y - menuHeight)}px`;
+            this.optionlist.style.height = `${menuHeight}px`;
 
         }
 
