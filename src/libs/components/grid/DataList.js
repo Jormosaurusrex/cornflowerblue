@@ -40,6 +40,7 @@ class DataList extends DataGrid {
         }
 
         super(config);
+        this.initialized = false;
     }
 
     get displaytype() { return 'datalist'; }
@@ -53,7 +54,16 @@ class DataList extends DataGrid {
     }
 
     fillData(callback) {
+
         this.activity(true);
+        if ((!this.initialized) && (this.data)) {
+            this.populate();
+            this.activity(false);
+            if ((callback) && (typeof callback === 'function')) {
+                callback();
+            }
+            return;
+        }
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);

@@ -169,7 +169,9 @@ class DataGrid extends Panel {
         this.finalize();
 
         setTimeout(() =>{
-            this.fillData();
+            this.fillData(() => {
+                this.initialized = true;
+            });
         }, 100);
     }
 
@@ -1241,8 +1243,6 @@ class DataGrid extends Panel {
         this.filtertags.innerHTML = '';
 
         if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
-            console.log('active filters');
-            console.log(this.activefilters);
             this.filterinfo.setAttribute('aria-expanded', true);
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
@@ -2364,6 +2364,9 @@ class DataGrid extends Panel {
 
     get identifier() { return this._identifier; }
     set identifier(identifier) { this._identifier = identifier; }
+
+    get initialized() { return this._initialized; }
+    set initialized(initialized) { this._initialized = initialized; }
 
     get instructionsicon() { return this.config.instructionsicon; }
     set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }

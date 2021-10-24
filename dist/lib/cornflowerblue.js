@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-10-14
+/*! Cornflower Blue - v0.1.1 - 2021-10-24
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -5171,7 +5171,9 @@ class DataGrid extends Panel {
         this.finalize();
 
         setTimeout(() =>{
-            this.fillData();
+            this.fillData(() => {
+                this.initialized = true;
+            });
         }, 100);
     }
 
@@ -6243,8 +6245,6 @@ class DataGrid extends Panel {
         this.filtertags.innerHTML = '';
 
         if ((this.activefilters) && (Object.values(this.activefilters).length > 0)) {
-            console.log('active filters');
-            console.log(this.activefilters);
             this.filterinfo.setAttribute('aria-expanded', true);
             for (let f of this.activefilters) {
                 f.tagbutton = new TagButton({
@@ -7367,6 +7367,9 @@ class DataGrid extends Panel {
     get identifier() { return this._identifier; }
     set identifier(identifier) { this._identifier = identifier; }
 
+    get initialized() { return this._initialized; }
+    set initialized(initialized) { this._initialized = initialized; }
+
     get instructionsicon() { return this.config.instructionsicon; }
     set instructionsicon(instructionsicon) { this.config.instructionsicon = instructionsicon; }
 
@@ -7558,6 +7561,7 @@ class DataList extends DataGrid {
         }
 
         super(config);
+        this.initialized = false;
     }
 
     get displaytype() { return 'datalist'; }
@@ -7571,7 +7575,16 @@ class DataList extends DataGrid {
     }
 
     fillData(callback) {
+
         this.activity(true);
+        if ((!this.initialized) && (this.data)) {
+            this.populate();
+            this.activity(false);
+            if ((callback) && (typeof callback === 'function')) {
+                callback();
+            }
+            return;
+        }
         if (this.warehouse) {
             this.warehouse.load((data) => {
                 this.update(data);
