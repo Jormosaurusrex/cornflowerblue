@@ -49,12 +49,13 @@ div.tooltip {
   &[data-gravity="s"] {
     &:before {
       bottom: unset;
-      top: -.4em;
+      top: -.5rem;
       left: calc((100% / 2) - .5rem);
       border-width: 0 .5rem .5rem .5rem;
     }
   }
-  &[data-gravity="sw"] {
+  &[data-gravity="sw"],
+  &[data-gravity="se"] {
     &:before {
       bottom: unset;
       top: -.5rem;

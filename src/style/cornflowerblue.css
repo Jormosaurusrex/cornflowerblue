@@ -6677,11 +6677,11 @@ div.tooltip[data-gravity=n]:before {
 }
 div.tooltip[data-gravity=s]:before {
   bottom: unset;
-  top: -0.4em;
+  top: -0.5rem;
   left: calc((100% / 2) - .5rem);
   border-width: 0 0.5rem 0.5rem 0.5rem;
 }
-div.tooltip[data-gravity=sw]:before {
+div.tooltip[data-gravity=sw]:before, div.tooltip[data-gravity=se]:before {
   bottom: unset;
   top: -0.5rem;
   border-width: 0 0.5rem 0.5rem 0.5rem;

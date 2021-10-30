@@ -119,6 +119,14 @@ class ToolTip {
             case 'south':
                 this.container.setAttribute('data-gravity', 's');
                 break;
+            case 'sw':
+            case 'southwest':
+                this.container.setAttribute('data-gravity', 'sw');
+                break;
+            case 'se':
+            case 'southeast':
+                this.container.setAttribute('data-gravity', 'se');
+                break;
             case 'w':
             case 'west':
                 this.container.setAttribute('data-gravity', 'w');
@@ -177,6 +185,11 @@ class ToolTip {
             case 'southwest':
                 self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+            case 'se':
+            case 'southeast':
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft}px`;
                 break;
             case 'w':
             case 'west':

@@ -104,7 +104,7 @@ class SelectMenu extends InputElement {
     getOptionLabel(value) {
         let label = "";
         for (let o of this.options) {
-            if (o.value.toString() === value.toString()) {
+            if ((o.value) && (o.value.toString() === value.toString())) {
                 label = o.label;
             }
         }
@@ -296,8 +296,12 @@ class SelectMenu extends InputElement {
 
         this.optionlist.setAttribute('aria-hidden', 'true');
         this.optionlist.setAttribute('tabindex', '-1');
-        this.wrapper.setAttribute('aria-expanded', false);
-        this.container.setAttribute('aria-expanded', false);
+        if (this.wrapper) {
+            this.wrapper.setAttribute('aria-expanded', false);
+        }
+        if (this.container) {
+            this.container.setAttribute('aria-expanded', false);
+        }
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');

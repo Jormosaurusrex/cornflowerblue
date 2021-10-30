@@ -183,7 +183,8 @@ class TextFactory {
                 "code": "Code",
                 "alternate_names": "Alternate names",
                 "interpolation_text" : "Copy of $1",
-                "plural_test" : "It's $1 {{plural:$1|meter|meters}} down."
+                "plural_test" : "It's $1 {{plural:$1|meter|meters}} down.",
+                "multi_test" : "Use clipboard $1 ($2$1) $3"
             }
         };
     }
@@ -203,7 +204,7 @@ class TextFactory {
                     try { // wrap entire thing
                         let argkey = m[1],
                             num;
-                        argkey = argkey.replace('\$', '');
+                        argkey = argkey.replaceAll('\$', '');
                         if (typeof argkey !== 'number') {
                             argkey = parseInt(argkey);
                         }
@@ -223,7 +224,7 @@ class TextFactory {
                     }
                 }
                 for (let arg = 1; arg < arguments.length; arg++) {
-                    t = t.replace(`$${arg}`, arguments[arg]);
+                    t = t.replaceAll(`$${arg}`, arguments[arg]);
                 }
                 return t;
             }

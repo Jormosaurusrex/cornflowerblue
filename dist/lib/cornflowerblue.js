@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-10-24
+/*! Cornflower Blue - v0.1.1 - 2021-10-30
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -2008,7 +2008,7 @@ class IconFactory {
             'tall_window',
             'maximize',
             'open',
-            'opendot',
+            'open_dot',
             'reply-right',
             'reply-left',
             'gripdots-left',
@@ -2258,7 +2258,8 @@ class TextFactory {
                 "code": "Code",
                 "alternate_names": "Alternate names",
                 "interpolation_text" : "Copy of $1",
-                "plural_test" : "It's $1 {{plural:$1|meter|meters}} down."
+                "plural_test" : "It's $1 {{plural:$1|meter|meters}} down.",
+                "multi_test" : "Use clipboard $1 ($2$1) $3"
             }
         };
     }
@@ -2278,7 +2279,7 @@ class TextFactory {
                     try { // wrap entire thing
                         let argkey = m[1],
                             num;
-                        argkey = argkey.replace('\$', '');
+                        argkey = argkey.replaceAll('\$', '');
                         if (typeof argkey !== 'number') {
                             argkey = parseInt(argkey);
                         }
@@ -2298,7 +2299,7 @@ class TextFactory {
                     }
                 }
                 for (let arg = 1; arg < arguments.length; arg++) {
-                    t = t.replace(`$${arg}`, arguments[arg]);
+                    t = t.replaceAll(`$${arg}`, arguments[arg]);
                 }
                 return t;
             }
@@ -2986,7 +2987,6 @@ class ButtonMenu extends SimpleButton {
 
             // killed
             closeopen: true, // if true, force all other open menus closed when this one opens.
-
             onopen: null,    // Function to execute on open. passed "self" as argument
             onclose: null,   // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
@@ -3224,14 +3224,10 @@ class ButtonMenu extends SimpleButton {
     close() {
         this.button.removeAttribute('aria-expanded');
         this.menuactual.setAttribute('aria-hidden', 'true');
-
-        if ((this.items) && (this.items.length > 0)) {
-            let items = Array.from(this.menuactual.querySelector('li'));
-            for (let li of items) {
-                li.setAttribute('tabindex', '-1');
-            }
+        let items = Array.from(this.menuactual.querySelector('li'));
+        for (let li of items) {
+            li.setAttribute('tabindex', '-1');
         }
-
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -3249,20 +3245,22 @@ class ButtonMenu extends SimpleButton {
         window.addEventListener('click', (e) => {
             let tag = this.menuactual.tagName.toLowerCase(),
                 menu = document.getElementById('cfb-selectmenu');
-
             if ((
+                    (this.menuactual.contains(e.target)) || // if i'm actually the menu
+                    ((menu) && (menu.contains(e.target))) // if i'm a select menu from inside the menu
+                ) &&
+                (this.stayopen)) { // and i'm set to NOT autoclose
+                window.setTimeout(() => {
+                    this.setCloseListener();
+                }, 20);
+            } else if (
+                ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) ||
                 (this.menuactual.contains(e.target)) ||
-                ((menu) && (menu.contains(e.target)))
-                ) && (this.stayopen)) {
-                window.setTimeout(() => { this.setCloseListener(); }, 20);
-            } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
-                // Do nothing.
-            } else if (this.button.contains(e.target)) {
-                //this.close();
-            } else if (this.menuactual.contains(e.target)) {
+                (this.button.contains(e.target)) // my parent
+            ){
                 // Do nothing.  This will auto close.
             } else {
-                this.close();
+                this.close(); // force close
             }
         }, { once: true, });
     }
@@ -11749,6 +11747,14 @@ class ToolTip {
             case 'south':
                 this.container.setAttribute('data-gravity', 's');
                 break;
+            case 'sw':
+            case 'southwest':
+                this.container.setAttribute('data-gravity', 'sw');
+                break;
+            case 'se':
+            case 'southeast':
+                this.container.setAttribute('data-gravity', 'se');
+                break;
             case 'w':
             case 'west':
                 this.container.setAttribute('data-gravity', 'w');
@@ -11807,6 +11813,11 @@ class ToolTip {
             case 'southwest':
                 self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
                 self.container.style.left = `${offsetLeft - CFBUtils.getSingleEmInPixels()}px`;
+                break;
+            case 'se':
+            case 'southeast':
+                self.container.style.top = `${(offsetTop + self.container.clientHeight + (CFBUtils.getSingleEmInPixels() / 2))}px`;
+                self.container.style.left = `${offsetLeft}px`;
                 break;
             case 'w':
             case 'west':
@@ -13022,7 +13033,7 @@ class SelectMenu extends InputElement {
     getOptionLabel(value) {
         let label = "";
         for (let o of this.options) {
-            if (o.value.toString() === value.toString()) {
+            if ((o.value) && (o.value.toString() === value.toString())) {
                 label = o.label;
             }
         }
@@ -13214,8 +13225,12 @@ class SelectMenu extends InputElement {
 
         this.optionlist.setAttribute('aria-hidden', 'true');
         this.optionlist.setAttribute('tabindex', '-1');
-        this.wrapper.setAttribute('aria-expanded', false);
-        this.container.setAttribute('aria-expanded', false);
+        if (this.wrapper) {
+            this.wrapper.setAttribute('aria-expanded', false);
+        }
+        if (this.container) {
+            this.container.setAttribute('aria-expanded', false);
+        }
 
         for (let li of Array.from(this.optionlist.querySelectorAll('li'))) {
             li.setAttribute('tabindex', '-1');

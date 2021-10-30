@@ -135,7 +135,7 @@ class IconFactory {
             'tall_window',
             'maximize',
             'open',
-            'opendot',
+            'open_dot',
             'reply-right',
             'reply-left',
             'gripdots-left',

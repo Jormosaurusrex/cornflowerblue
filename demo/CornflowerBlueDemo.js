@@ -381,6 +381,10 @@ class CornflowerBlueDemo {
     }
 
     drawFontGlyphs() {
+        let t = document.createElement('div');
+        t.innerHTML = TextFactory.get('multi_test', 'foo', 'bar', 'baz');
+        document.getElementById('glyphs').appendChild(t);
+
         let glyphs = IconFactory.LIST;
         glyphs.sort();
 
@@ -414,6 +418,7 @@ class CornflowerBlueDemo {
         }
         table.appendChild(tbody);
         document.getElementById('glyphs').appendChild(table);
+
     }
 
     handleInternalLinks() {

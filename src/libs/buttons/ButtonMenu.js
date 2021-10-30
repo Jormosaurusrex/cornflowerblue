@@ -19,7 +19,6 @@ class ButtonMenu extends SimpleButton {
 
             // killed
             closeopen: true, // if true, force all other open menus closed when this one opens.
-
             onopen: null,    // Function to execute on open. passed "self" as argument
             onclose: null,   // Function to execute on open. passed "self" as argument
             stayopen: false, // Set true for it to stay open when elements are clicked within.
@@ -257,14 +256,10 @@ class ButtonMenu extends SimpleButton {
     close() {
         this.button.removeAttribute('aria-expanded');
         this.menuactual.setAttribute('aria-hidden', 'true');
-
-        if ((this.items) && (this.items.length > 0)) {
-            let items = Array.from(this.menuactual.querySelector('li'));
-            for (let li of items) {
-                li.setAttribute('tabindex', '-1');
-            }
+        let items = Array.from(this.menuactual.querySelector('li'));
+        for (let li of items) {
+            li.setAttribute('tabindex', '-1');
         }
-
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
@@ -282,20 +277,22 @@ class ButtonMenu extends SimpleButton {
         window.addEventListener('click', (e) => {
             let tag = this.menuactual.tagName.toLowerCase(),
                 menu = document.getElementById('cfb-selectmenu');
-
             if ((
+                    (this.menuactual.contains(e.target)) || // if i'm actually the menu
+                    ((menu) && (menu.contains(e.target))) // if i'm a select menu from inside the menu
+                ) &&
+                (this.stayopen)) { // and i'm set to NOT autoclose
+                window.setTimeout(() => {
+                    this.setCloseListener();
+                }, 20);
+            } else if (
+                ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) ||
                 (this.menuactual.contains(e.target)) ||
-                ((menu) && (menu.contains(e.target)))
-                ) && (this.stayopen)) {
-                window.setTimeout(() => { this.setCloseListener(); }, 20);
-            } else if ((this.menuactual.contains(e.target)) && ((tag === 'form') || (tag === 'div'))) {
-                // Do nothing.
-            } else if (this.button.contains(e.target)) {
-                //this.close();
-            } else if (this.menuactual.contains(e.target)) {
+                (this.button.contains(e.target)) // my parent
+            ){
                 // Do nothing.  This will auto close.
             } else {
-                this.close();
+                this.close(); // force close
             }
         }, { once: true, });
     }
