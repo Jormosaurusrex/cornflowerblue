@@ -159,8 +159,9 @@ class IconFactory {
         }
         let i = document.createElement('span');
         i.classList.add('icon');
-        i.classList.add(`${iconprefix}-${icon}`);
-
+        if ((icon) && (icon !== '')) {
+            i.classList.add(`${iconprefix}-${icon}`);
+        }
         if ((arialabel) && (arialabel !== '')) {
             i.setAttribute('aria-label', arialabel);
         } else {

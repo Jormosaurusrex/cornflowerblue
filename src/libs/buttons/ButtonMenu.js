@@ -256,9 +256,10 @@ class ButtonMenu extends SimpleButton {
     close() {
         this.button.removeAttribute('aria-expanded');
         this.menuactual.setAttribute('aria-hidden', 'true');
-        let items = Array.from(this.menuactual.querySelector('li'));
-        for (let li of items) {
-            li.setAttribute('tabindex', '-1');
+        if (this.menuactual) {
+            for (let li of this.menuactual.querySelectorAll('li')) {
+                li.setAttribute('tabindex', '-1');
+            }
         }
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);

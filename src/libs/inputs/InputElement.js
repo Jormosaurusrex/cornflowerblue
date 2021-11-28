@@ -560,15 +560,9 @@ class InputElement {
                 this.input.classList.add(c);
             }
         }
-        if (this.onchange) {
-            this.input.addEventListener('change', () => {
-                if ((this.onchange) && (typeof this.onchange === 'function')) {
-                    this.onchange(this);
-                }
-            });
-        }
 
-        this.input.addEventListener('paste', (e) => {
+
+        const paste = (e) => {
             this.input.removeAttribute('aria-invalid');
             if (this.hascontainer) {
                 this.updateCounter();
@@ -581,9 +575,16 @@ class InputElement {
             if ((this.onpaste) && (typeof this.onpaste === 'function')) {
                 this.onpaste(e, this);
             }
-        });
+        }
+        this.input.addEventListener('paste', paste);
 
-        this.input.addEventListener('keydown', (e) => {
+        const change = (e) => {
+            if ((this.onchange) && (typeof this.onchange === 'function')) {
+                this.onchange(this);
+            }
+        }
+
+        const keydown = (e) => {
             // Reset this to keep readers from constantly beeping. It will re-validate later.
             this.input.removeAttribute('aria-invalid');
             if (this.hascontainer) {
@@ -593,8 +594,8 @@ class InputElement {
             if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
                 this.onkeydown(e, this);
             }
-        });
-        this.input.addEventListener('keyup', (e) => {
+        }
+        const keyup = (e) => {
             this.config.value = this.value;
             if (this.hascontainer) {
                 if (this.helptimer) {
@@ -624,25 +625,8 @@ class InputElement {
             } else if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
                 this.onkeyup(e, this);
             }
-        });
-        this.input.addEventListener('focusin', (e) => {
-            if ((this.mute) && (!this.vigilant) && (this.placeholder) && (this.placeholder !== this.label)) {
-                this.input.setAttribute('placeholder', this.placeholder);
-            }
-            if (this.hascontainer) {
-                this.container.classList.add('active');
-                if ((this.help) && (this.helpbutton)) {
-                    this.helptimer = setTimeout(() => {
-                        this.helpbutton.openTooltip();
-                    }, this.helpwaittime);
-                }
-            }
-            if ((this.focusin) && (typeof this.focusin === 'function')) {
-                this.focusin(e, this);
-            }
-        });
-        this.input.addEventListener('focusout', (e) => {
-
+        }
+        const focusout = (e) => {
             if (this.hascontainer) {
                 if (this.passivebox) {
                     this.passivebox.innerHTML = '';
@@ -663,12 +647,39 @@ class InputElement {
                 if (this.form) { this.form.validate(); }
 
             }
-
+            this.input.removeEventListener('keydown', keydown);
+            this.input.removeEventListener('keyup', keyup);
+            this.input.removeEventListener('focusout', focusout);
+            if (this.onchange) {
+                this.input.removeEventListener('change', change);
+            }
             if ((this.focusout) && (typeof this.focusout === 'function')) {
                 this.focusout(e, this);
             }
-
-        });
+        }
+        const focusin = (e) => {
+            this.input.addEventListener('keydown', keydown);
+            this.input.addEventListener('keyup', keyup);
+            this.input.addEventListener('focusout', focusout);
+            if (this.onchange) {
+                this.input.addEventListener('change', change);
+            }
+            if ((this.mute) && (!this.vigilant) && (this.placeholder) && (this.placeholder !== this.label)) {
+                this.input.setAttribute('placeholder', this.placeholder);
+            }
+            if (this.hascontainer) {
+                this.container.classList.add('active');
+                if ((this.help) && (this.helpbutton)) {
+                    this.helptimer = setTimeout(() => {
+                        this.helpbutton.openTooltip();
+                    }, this.helpwaittime);
+                }
+            }
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, this);
+            }
+        }
+        this.input.addEventListener('focusin', focusin);
 
         this.input.value = this.initialvalue;
 

@@ -4194,7 +4194,7 @@ p.textarea-container.warning.mute input[type=number]:focus,
 p.textarea-container.warning.mute input[type=password]:focus,
 p.textarea-container.warning.mute input[type=search]:focus,
 p.textarea-container.warning.mute textarea:focus {
-  box-shadow: inset 0 -0.4rem 0 0 rgb(var(--input-status-color-rgb));
+  box-shadow: inset 0 -0.2rem 0 0 rgb(var(--input-status-color-rgb));
 }
 div.input-container.error,
 p.input-container.error,
@@ -4843,7 +4843,6 @@ div.window-container div.dialog div.actions {
   z-index: 9;
   padding: 0.5rem 1rem;
   background-color: var(--canvas-color-secondary);
-  border-top: 0.1em solid var(--canvas-color-tertiary);
   box-shadow: var(--shadows-interior-fromabove);
 }
 div.window-container div.dialog div.actions button {
