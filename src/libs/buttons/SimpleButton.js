@@ -264,49 +264,61 @@ class SimpleButton {
         CFBUtils.applyAttributes(this.attributes, this.button);
         CFBUtils.applyDataAttributes(this.dataattributes, this.button);
 
-        if (this.focusin) {
-            this.button.addEventListener('focusin', (e) => {
-                if ((this.focusin) && (typeof this.focusin === 'function')) {
-                    this.focusin(e, this);
-                }
-            });
+        const focusout = (e) => {
+            this.button.removeEventListener('focusout', focusout);
+            if ((this.focusout) && (typeof this.focusout === 'function')) {
+                this.focusout(e, this);
+            }
         }
-        if (this.focusout) {
-            this.button.addEventListener('focusout', (e) => {
-                if ((this.focusout) && (typeof this.focusout === 'function')) {
-                    this.focusout(e, this);
-                }
-            });
+        const keyup = (e) => {
+            if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
+                this.onkeyup(e, this);
+            }
+        }
+        const keydown = (e) => {
+            if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
+                this.onkeydown(e, this);
+            }
+        }
+        const focusin = (e) => {
+            this.button.addEventListener('focusout', focusout);
+            if (this.onkeyup) {
+                this.button.addEventListener('keyup', keyup);
+            }
+            if (this.onkeydown) {
+                this.button.addEventListener('keydown', keydown);
+            }
+
+            if ((this.focusin) && (typeof this.focusin === 'function')) {
+                this.focusin(e, this);
+            }
+        }
+        this.button.addEventListener('focusin', focusin);
+
+        const mouseover = (e) => {
+            if ((this.hoverin) && (typeof this.hoverin === 'function')) {
+                this.hoverin(e, this);
+            }
+        }
+        const mouseout = (e) => {
+            if (this.onkeyup) {
+                this.button.removeEventListener('keyup', keyup);
+            }
+            if (this.onkeydown) {
+                this.button.removeEventListener('keydown', keydown);
+            }
+
+            if ((this.hoverout) && (typeof this.hoverout === 'function')) {
+                this.hoverout(e, this);
+            }
         }
         if (this.hoverin) {
-            this.button.addEventListener('mouseover', (e) => {
-                if ((this.hoverin) && (typeof this.hoverin === 'function')) {
-                    this.hoverin(e, this);
-                }
-            });
+            this.button.addEventListener('mouseover', mouseover);
         }
         if (this.hoverout) {
-            this.button.addEventListener('mouseout', (e) => {
-                if ((this.hoverout) && (typeof this.hoverout === 'function')) {
-                    this.hoverout(e, this);
-                }
-            });
+            this.button.addEventListener('mouseout', mouseout);
         }
-        if (this.onkeyup) {
-            this.button.addEventListener('keyup', (e) => {
-                if ((this.onkeyup) && (typeof this.onkeyup === 'function')) {
-                    this.onkeyup(e, this);
-                }
-            });
-        }
-        if (this.onkeydown) {
-            this.button.addEventListener('keydown', (e) => {
-                if ((this.onkeydown) && (typeof this.onkeydown === 'function')) {
-                    this.onkeydown(e, this);
-                }
-            });
-        }
-
+        
         if (this.tooltip) {
             this.tooltipobj = new ToolTip({
                 id: `${this.id}-tt`,
