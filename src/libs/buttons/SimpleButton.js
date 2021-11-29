@@ -318,7 +318,7 @@ class SimpleButton {
         if (this.hoverout) {
             this.button.addEventListener('mouseout', mouseout);
         }
-        
+
         if (this.tooltip) {
             this.tooltipobj = new ToolTip({
                 id: `${this.id}-tt`,
@@ -402,7 +402,6 @@ class SimpleButton {
             this.button.appendChild(this.badgeobj);
         }
     }
-
 
     /* UTILITY METHODS__________________________________________________________________ */
 
