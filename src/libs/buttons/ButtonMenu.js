@@ -123,7 +123,6 @@ class ButtonMenu extends SimpleButton {
             this.menuactual.classList.add(c);
         }
 
-
         for (let li of this.menuactual.querySelectorAll('li')) {
             li.setAttribute('tabindex', '0');
         }
@@ -264,7 +263,6 @@ class ButtonMenu extends SimpleButton {
         if ((this.onclose) && (typeof this.onclose === 'function')) {
             this.onclose(this);
         }
-
     }
 
     /**

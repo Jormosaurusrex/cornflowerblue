@@ -54,7 +54,6 @@ class DataList extends DataGrid {
     }
 
     fillData(callback) {
-
         this.activity(true);
         if ((!this.initialized) && (this.data)) {
             this.populate();
