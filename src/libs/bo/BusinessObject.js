@@ -62,14 +62,9 @@ class BusinessObject {
      * @return an array of the objects, sorted
      */
     get list() {
-        let list = [];
-        for (let o of Object.values(this.cache)) {
-            list.push(o);
-        }
-        list.sort((a, b) => {
+        return Object.values(this.cache).sort((a, b) => {
             return this.sortfunction(a, b);
         });
-        return list;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
