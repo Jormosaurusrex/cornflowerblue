@@ -93,7 +93,6 @@ class DateInput extends TextInput {
      * Build the calendar button and attach the DatePicker
      */
     buildCalendarButton() {
-
         this.datepicker = new DatePicker({
             classes: ['menu'],
             timepicker: this.timepicker,
@@ -102,6 +101,9 @@ class DateInput extends TextInput {
                 this.triggerbutton.close();
                 this.input.focus();
                 this.validate();
+                if ((this.onchange) && (typeof this.onchange === 'function')) {
+                    this.onchange(this);
+                }
             }
         });
         this.triggerbutton = new ButtonMenu({

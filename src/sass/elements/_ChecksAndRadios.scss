@@ -15,6 +15,7 @@ div.checkbox-container {
   input[type="checkbox"],
   input[type="radio"] {
     margin: 0;
+    flex-shrink: 0;
   }
   >div.passivebox {
     display: none;
@@ -26,7 +27,7 @@ div.checkbox-container {
   }
   &.passive {
     justify-content: flex-start;
-    > input {
+    >input {
       display: none;
     }
     >label {
@@ -403,6 +404,7 @@ input[type="radio"] {
       transition: all .2s;
     }
     &:checked {
+      background-color: rgba(var(--colors-constructive-rgb), .5);
       &:before { display: none; }
       &:after {
         border: .3em solid var(--input-border-color);
@@ -417,6 +419,8 @@ input[type="radio"] {
         border-color: var(--colors-text-hot);
         background-color: var(--colors-affordance);
       }
+    }
+    &[aria-checked="true"] {
     }
     @include for-hover-only {
       &:hover {

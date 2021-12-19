@@ -2820,6 +2820,7 @@ div.checkbox-container label {
 div.checkbox-container input[type=checkbox],
 div.checkbox-container input[type=radio] {
   margin: 0;
+  flex-shrink: 0;
 }
 div.checkbox-container > div.passivebox {
   display: none;
@@ -3209,6 +3210,11 @@ input[type=radio].switch:after {
   background-color: var(--input-border-color);
   box-shadow: none;
   transition: all 0.2s;
+}
+input[type=checkbox].toggle:checked, input[type=checkbox].switch:checked,
+input[type=radio].toggle:checked,
+input[type=radio].switch:checked {
+  background-color: rgba(var(--colors-constructive-rgb), 0.5);
 }
 input[type=checkbox].toggle:checked:before, input[type=checkbox].switch:checked:before,
 input[type=radio].toggle:checked:before,

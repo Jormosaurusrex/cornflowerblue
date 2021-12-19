@@ -1,4 +1,4 @@
-/*! Cornflower Blue - v0.1.1 - 2021-12-05
+/*! Cornflower Blue - v0.1.1 - 2021-12-18
 * http://www.gaijin.com/cornflowerblue/
 * Copyright (c) 2021 Brandon Harris; Licensed MIT */
 class CFBUtils {
@@ -671,14 +671,9 @@ class BusinessObject {
      * @return an array of the objects, sorted
      */
     get list() {
-        let list = [];
-        for (let o of Object.values(this.cache)) {
-            list.push(o);
-        }
-        list.sort((a, b) => {
+        return Object.values(this.cache).sort((a, b) => {
             return this.sortfunction(a, b);
         });
-        return list;
     }
 
     /* CONTROL METHODS__________________________________________________________________ */
@@ -12106,6 +12101,12 @@ class InputElement {
      */
     reset() {
         this.value = this.origval;
+        this.input.removeAttribute('aria-invalid');
+        if (this.hascontainer) {
+            this.container.classList.remove('valid');
+            this.container.classList.remove('filled');
+            this.clearMessages();
+        }
         if (this.haspassivebox) {
             this.passivebox.innerHTML = '';
             this.passivebox.appendChild(this.passivetext);
@@ -14197,7 +14198,6 @@ class DateInput extends TextInput {
      * Build the calendar button and attach the DatePicker
      */
     buildCalendarButton() {
-
         this.datepicker = new DatePicker({
             classes: ['menu'],
             timepicker: this.timepicker,
@@ -14206,6 +14206,9 @@ class DateInput extends TextInput {
                 this.triggerbutton.close();
                 this.input.focus();
                 this.validate();
+                if ((this.onchange) && (typeof this.onchange === 'function')) {
+                    this.onchange(this);
+                }
             }
         });
         this.triggerbutton = new ButtonMenu({

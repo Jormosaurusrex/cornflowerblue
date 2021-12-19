@@ -189,6 +189,12 @@ class InputElement {
      */
     reset() {
         this.value = this.origval;
+        this.input.removeAttribute('aria-invalid');
+        if (this.hascontainer) {
+            this.container.classList.remove('valid');
+            this.container.classList.remove('filled');
+            this.clearMessages();
+        }
         if (this.haspassivebox) {
             this.passivebox.innerHTML = '';
             this.passivebox.appendChild(this.passivetext);
