@@ -16,6 +16,7 @@ div.checkbox-container {
   input[type="radio"] {
     margin: 0;
     flex-shrink: 0;
+    align-self: baseline;
   }
   >div.passivebox {
     display: none;
