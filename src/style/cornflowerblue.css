@@ -7444,29 +7444,6 @@ div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.
 div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label.right > label {
   justify-content: flex-end;
 }
-div.datalist-container > div.listheader > div.label[data-column=name], div.datalist-container > div.listheader > div.label[data-column=label], div.datalist-container > div.listheader > div.label[data-column=displayname], div.datalist-container > div.listheader > div.label[data-column=subject], div.datalist-container > div.listheader > div.label[data-column=title], div.datalist-container > div.listheader > div.label[data-column=text],
-div.datalist-container > div.listheader > th.label[data-column=name],
-div.datalist-container > div.listheader > th.label[data-column=label],
-div.datalist-container > div.listheader > th.label[data-column=displayname],
-div.datalist-container > div.listheader > th.label[data-column=subject],
-div.datalist-container > div.listheader > th.label[data-column=title],
-div.datalist-container > div.listheader > th.label[data-column=text],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=name],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=label],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=displayname],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=subject],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=title],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > div.label[data-column=text],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=name],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=label],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=displayname],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=subject],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=title],
-div.datalist-container > div.tablewrapper > table > thead > tr.listheader > th.label[data-column=text] {
-  justify-self: flex-start;
-  margin-right: auto;
-  flex-grow: 2;
-}
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > div.listheader > div.label:hover,
 div.datalist-container > div.listheader > th.label:hover,
@@ -7539,11 +7516,6 @@ div.datalist-container > div.listheader > div.label > label {
   font-size: 0.7rem;
   cursor: pointer;
   color: var(--list-header-color);
-}
-div.datalist-container > div.listheader > div.label[data-column=name], div.datalist-container > div.listheader > div.label[data-column=label], div.datalist-container > div.listheader > div.label[data-column=displayname], div.datalist-container > div.listheader > div.label[data-column=subject], div.datalist-container > div.listheader > div.label[data-column=title], div.datalist-container > div.listheader > div.label[data-column=text] {
-  justify-self: flex-start;
-  margin-right: auto;
-  flex-grow: 2;
 }
 @media (hover: hover) and (pointer: fine) {
   div.datalist-container > div.listheader > div.label:hover {

@@ -58,16 +58,6 @@ div.datalist-container {
           justify-content: flex-end;
         }
       }
-      &[data-column="name"],
-      &[data-column="label"],
-      &[data-column="displayname"],
-      &[data-column="subject"],
-      &[data-column="title"],
-      &[data-column="text"] {
-        justify-self: flex-start;
-        margin-right: auto;
-        flex-grow: 2;
-      }
       @include for-hover-only {
         &:hover {
           background-color: var(--canvas-color-highlight);
@@ -126,16 +116,6 @@ div.datalist-container {
         font-size: .7rem;
         cursor: pointer;
         color: var(--list-header-color);
-      }
-      &[data-column="name"],
-      &[data-column="label"],
-      &[data-column="displayname"],
-      &[data-column="subject"],
-      &[data-column="title"],
-      &[data-column="text"] {
-        justify-self: flex-start;
-        margin-right: auto;
-        flex-grow: 2;
       }
       @include for-hover-only {
         &:hover {
