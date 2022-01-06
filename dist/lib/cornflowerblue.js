@@ -1,6 +1,6 @@
-/*! Cornflower Blue - v0.1.1 - 2021-12-19
+/*! Cornflower Blue - v0.1.1 - 2022-01-05
 * http://www.gaijin.com/cornflowerblue/
-* Copyright (c) 2021 Brandon Harris; Licensed MIT */
+* Copyright (c) 2022 Brandon Harris; Licensed MIT */
 class CFBUtils {
 
     /* GLOBAL METHODS___________________________________________________________________ */
@@ -14139,7 +14139,22 @@ class DateInput extends TextInput {
      * @returns {boolean} true or false, depending
      */
     static isValid(date) {
-        let d = new Date(date);
+        let d = new Date(date),
+            valid = true;
+        switch (d.getMonth()) {
+            case 2:
+                if (d.getDay() > 29) { valid = false; }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if (d.getDay() > 30) { valid = false; }
+                break;
+            default:
+                break;
+        }
+        if (!valid) return false;
         return d instanceof Date && !isNaN(d.getTime());
     }
 

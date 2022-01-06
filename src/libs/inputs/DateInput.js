@@ -34,7 +34,23 @@ class DateInput extends TextInput {
      * @returns {boolean} true or false, depending
      */
     static isValid(date) {
-        let d = new Date(date);
+        let d = new Date(date),
+            valid = true;
+        switch (d.getMonth()) {
+            case 2:
+                if (d.getDay() > 29) { valid = false; }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if (d.getDay() > 30) { valid = false; }
+                break;
+            default:
+                if (d.getDay() > 31) { valid = false; }
+                break;
+        }
+        if (!valid) return false;
         return d instanceof Date && !isNaN(d.getTime());
     }
 
