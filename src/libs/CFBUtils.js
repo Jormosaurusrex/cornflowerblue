@@ -91,7 +91,12 @@ class CFBUtils {
 
         return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
     }
-
+    function stripHtml(html)
+    {
+        let tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || "";
+    }
     /* GENERAL METHODS__________________________________________________________________ */
 
     /**
@@ -421,11 +426,15 @@ class CFBUtils {
 
     /* FORMAT METHODS___________________________________________________________________ */
 
+    static stripHTML(string) {
+        let div = document.createElement("div"); // Strips out html
+        div.innerHTML = string;
+        return div.textContent || div.innerText || "";
+    }
+
     static excerpt(string, maxlength = 70, striphtml = true) {
         if (striphtml) {
-            let div = document.createElement("div"); // Strips out html
-            div.innerHTML = string;
-            string = div.textContent || div.innerText || "";
+            string = CFBUtils.stripHTML();
         }
         if (string.length > maxlength) {
             return `${string.substring(0, maxlength -3)}...`;
