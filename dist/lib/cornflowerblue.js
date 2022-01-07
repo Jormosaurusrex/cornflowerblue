@@ -94,12 +94,7 @@ class CFBUtils {
 
         return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
     }
-    function stripHtml(html)
-    {
-        let tmp = document.createElement("DIV");
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || "";
-    }
+
     /* GENERAL METHODS__________________________________________________________________ */
 
     /**
