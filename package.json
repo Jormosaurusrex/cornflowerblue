@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Jormosaurusrex/cornflowerblue#readme",
   "devDependencies": {
-    "grunt": "^1.0.4",
+    "grunt": "^1.5.3",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-nodeunit": "^2.1.0",
